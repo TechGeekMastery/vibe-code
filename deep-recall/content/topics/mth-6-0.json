@@ -17,7 +17,7 @@
    "url": "https://sites.millersville.edu/bikenaga/math-proof/truth-tables/truth-tables.pdf"
   },
   {
-   "title": "D. Velleman, How to Prove It, 3rd ed., Chapters 1–2 (Sentential and Quantificational Logic), Cambridge University Press",
+   "title": "D. Velleman, How to Prove It, 2nd ed., Chapters 1–2 (Sentential and Quantificational Logic), Cambridge University Press",
    "url": "https://assets.cambridge.org/97805216/75994/frontmatter/9780521675994_frontmatter.pdf"
   }
  ],
@@ -245,8 +245,7 @@
      "rubric": [
       "Negation: n² is odd and n is not odd (n is even)",
       "Justifies via ¬(P → Q) ≡ P ∧ ¬Q",
-      "Explains P → ¬Q differs from P ∧ ¬Q when P is false: the conditional is (vacuously) true while the conjunction is false",
-      "Could illustrate with n = 2: n² odd is false"
+      "Explains P → ¬Q differs from P ∧ ¬Q when P is false: the conditional is (vacuously) true while the conjunction is false"
      ],
      "model": "With \\( P \\): \"\\( n^{2} \\) is odd\" and \\( Q \\): \"\\( n \\) is odd\", the negation of \\( P \\to Q \\) is \\( P \\wedge \\neg Q \\): \"\\( n^{2} \\) is odd and \\( n \\) is even.\"\n\nThe sentence \"If \\( n^{2} \\) is odd, then \\( n \\) is even\" is \\( P \\to \\neg Q \\). When \\( P \\) is false (for example \\( n = 2 \\), where \\( n^{2} = 4 \\) is even), \\( P \\to \\neg Q \\) is vacuously true, but \\( P \\wedge \\neg Q \\) is false. A negation must have the opposite truth value to the original in every case; \\( P \\to \\neg Q \\) and the original \\( P \\to Q \\) are both true whenever \\( P \\) is false, so \\( P \\to \\neg Q \\) cannot be the negation.",
      "why": "A conditional is false only when its hypothesis is true and conclusion false, so its negation asserts exactly that: a conjunction."
@@ -481,6 +480,58 @@
   {
    "t": "affirming the consequent",
    "d": "The invalid inference from \\( P \\to Q \\) and \\( Q \\) to \\( P \\)."
+  },
+  {
+   "t": "propositional logic",
+   "d": "The logic of statements combined by connectives (\\( \\neg, \\wedge, \\vee, \\to, \\leftrightarrow \\)), in which the truth value of a compound depends only on the truth values of its parts."
+  },
+  {
+   "t": "predicate logic",
+   "d": "The extension of propositional logic by predicates (open sentences) and the quantifiers \\( \\forall \\) and \\( \\exists \\)."
+  },
+  {
+   "t": "propositional variable",
+   "d": "A letter such as \\( P, Q, R \\) standing for a statement."
+  },
+  {
+   "t": "logical connective",
+   "d": "An operation such as \\( \\neg, \\wedge, \\vee, \\to, \\leftrightarrow \\) that builds compound statements from simpler ones."
+  },
+  {
+   "t": "exclusive or",
+   "d": "\"\\( P \\) or \\( Q \\) but not both\": \\( (P \\vee Q) \\wedge \\neg (P \\wedge Q) \\); distinct from the inclusive \\( \\vee \\)."
+  },
+  {
+   "t": "truth-functional",
+   "d": "Said of a connective whose compound's truth value depends only on the truth values of its parts."
+  },
+  {
+   "t": "hypothesis (antecedent) and conclusion (consequent)",
+   "d": "In \\( P \\to Q \\), \\( P \\) is the hypothesis or antecedent and \\( Q \\) is the conclusion or consequent."
+  },
+  {
+   "t": "main connective",
+   "d": "The connective applied last in building a formula; its column in a truth table gives the value of the whole formula."
+  },
+  {
+   "t": "bound and free variables",
+   "d": "A variable governed by a quantifier is bound; one that is not is free. A formula with no free variables is a statement."
+  },
+  {
+   "t": "restricted quantifier",
+   "d": "\\( \\forall x \\in A\\ P(x) \\) abbreviates \\( \\forall x\\,(x \\in A \\to P(x)) \\); \\( \\exists x \\in A\\ P(x) \\) abbreviates \\( \\exists x\\,(x \\in A \\wedge P(x)) \\)."
+  },
+  {
+   "t": "argument (premises, conclusion)",
+   "d": "A list of statements, the premises, together with a statement claimed to follow from them, the conclusion."
+  },
+  {
+   "t": "denying the antecedent",
+   "d": "The invalid inference from \\( P \\to Q \\) and \\( \\neg P \\) to \\( \\neg Q \\)."
+  },
+  {
+   "t": "universal instantiation",
+   "d": "The rule that from \\( \\forall x\\, P(x) \\) one may infer \\( P(a) \\) for any particular element \\( a \\) of the domain."
   }
  ],
  "cards": [
@@ -536,8 +587,8 @@
   {
    "id": "c8",
    "type": "concept",
-   "front": "Which of the converse and inverse of a conditional are equivalent to each other?",
-   "back": "Both: converse \\( Q \\to P \\) and inverse \\( \\neg P \\to \\neg Q \\) are equivalent to each other (each is the other's contrapositive), but not to the original.",
+   "front": "Are the converse and the inverse of a conditional equivalent to each other? To the original?",
+   "back": "Yes to each other: converse \\( Q \\to P \\) and inverse \\( \\neg P \\to \\neg Q \\) are equivalent to each other (each is the other's contrapositive), but not to the original.",
    "kp": "k5"
   },
   {
@@ -882,7 +933,7 @@
     "formula": "\\( P \\to Q \\equiv \\neg Q \\to \\neg P \\)",
     "when": "Rewriting a conditional into a more convenient equivalent form.",
     "example": "'If \\( n^{2} \\) even then \\( n \\) even' is equivalent to 'if \\( n \\) odd then \\( n^{2} \\) odd'.",
-    "watch": "The converse \\( Q \to P \\) is not equivalent."
+    "watch": "The converse \\( Q \\to P \\) is not equivalent."
    },
    {
     "name": "De Morgan",
@@ -910,7 +961,7 @@
     "formula": "\\( \\neg \\forall x\\,P(x) \\equiv \\exists x\\,\\neg P(x) \\), \\( \\neg \\exists x\\,P(x) \\equiv \\forall x\\,\\neg P(x) \\)",
     "when": "Negating any quantified statement, left to right.",
     "example": "\\( \\neg \\forall \\varepsilon > 0\\,\\exists N \\ldots \\equiv \\exists \\varepsilon > 0\\,\\forall N\\,\\neg \\ldots \\)",
-    "watch": "Restrictions like ε > 0 are not negated."
+    "watch": "Restrictions like \\( \\varepsilon > 0 \\) are not negated."
    },
    {
     "name": "Restricted quantifiers",
@@ -931,7 +982,7 @@
    "To test a claimed equivalence quickly, hunt for one row where the two sides differ; if the search fails in every case, the formulas are equivalent.",
    "Before negating, ask: what exact situation makes the original false? Your negation must describe exactly that.",
    "Convert every conditional to a disjunction, simplify with De Morgan and distributivity, then convert back.",
-   "For nested quantifiers, read left to right as a game: ∀ is the opponent's choice, ∃ is your reply, and your reply may depend on earlier choices.",
+   "For nested quantifiers, read left to right as a game: \\( \\forall \\) is the opponent's choice, \\( \\exists \\) is your reply, and your reply may depend on earlier choices.",
    "To check an argument, assume the conclusion false and all premises true, and propagate forced values until you reach a contradiction or a bad row."
   ]
  }

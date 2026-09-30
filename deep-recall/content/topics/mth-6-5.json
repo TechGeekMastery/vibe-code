@@ -382,6 +382,10 @@
   {
    "t": "stars and bars",
    "d": "The count \\(\\binom{n+k-1}{k-1}\\) of solutions of \\(x_1 + \\dots + x_k = n\\) in nonnegative integers."
+  },
+  {
+   "t": "Ramsey theory",
+   "d": "The study of the fact that sufficiently large structures cannot avoid containing orderly substructures; its first case is \\(R(3,3) = 6\\)."
   }
  ],
  "cards": [
@@ -799,7 +803,7 @@
     "name": "General inclusion–exclusion (none form)",
     "formula": "\\(\\#\\text{none} = \\sum_{k=0}^{n}(-1)^k S_k\\)",
     "when": "Objects defined by the absence of several properties.",
-    "example": "Coprime to 360 in \\(\\{1..360\\}\\): \\(360-372+120-12=96\\).",
+    "example": "Coprime to 360 in \\(\\{1, \\dots, 360\\}\\): \\(360-372+120-12=96\\).",
     "watch": "\\(S_k\\) sums over all \\(\\binom nk\\) intersections."
    },
    {

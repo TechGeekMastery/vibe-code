@@ -13,7 +13,7 @@
    "url": "https://runestone.academy/ns/books/published/DiscreteMathText/contradiction4-5.html"
   },
   {
-   "title": "D. Velleman, How to Prove It, 3rd ed., Chapter 3 (Proofs), Cambridge University Press",
+   "title": "D. Velleman, How to Prove It, 2nd ed., Chapter 3 (Proofs), Cambridge University Press",
    "url": "https://assets.cambridge.org/97805216/75994/frontmatter/9780521675994_frontmatter.pdf"
   }
  ],
@@ -396,6 +396,22 @@
   {
    "t": "lemma",
    "d": "A proved statement used mainly as a step toward a larger theorem."
+  },
+  {
+   "t": "givens and goal",
+   "d": "At each stage of a proof, the statements you may use (givens) and the statement you must prove (goal); the logical form of the goal dictates the next step."
+  },
+  {
+   "t": "witness",
+   "d": "A specific object \\( a \\) exhibited to prove \\( \\exists x\\, P(x) \\) by verifying \\( P(a) \\)."
+  },
+  {
+   "t": "scratch work",
+   "d": "Unrecorded exploration, forward from the hypotheses and backward from the goal, used to find a proof before writing it forward."
+  },
+  {
+   "t": "exhaustive cases",
+   "d": "Cases \\( P_{1}, \\dots, P_{k} \\) whose disjunction \\( P_{1} \\vee \\cdots \\vee P_{k} \\) is known to be true, so that every possibility is covered."
   }
  ],
  "cards": [
@@ -437,7 +453,7 @@
   {
    "id": "c6",
    "type": "concept",
-   "front": "Why must two odd integers be written with different letters, 2k + 1 and 2l + 1?",
+   "front": "Why must two odd integers be written with different letters, \\( 2k + 1 \\) and \\( 2l + 1 \\)?",
    "back": "Using the same letter assumes the integers are equal, so the proof covers only that special case.",
    "kp": "k3"
   },
@@ -452,7 +468,7 @@
    "id": "c8",
    "type": "concept",
    "front": "Signal that contraposition may be easier than a direct proof",
-   "back": "The negated conclusion unpacks into a usable equation while the hypothesis does not (e.g. hypothesis about n², conclusion about n).",
+   "back": "The negated conclusion unpacks into a usable equation while the hypothesis does not (e.g. hypothesis about \\( n^{2} \\), conclusion about \\( n \\)).",
    "kp": "k4"
   },
   {
@@ -524,7 +540,7 @@
    "id": "c18",
    "type": "concept",
    "front": "Why is 'start from the conclusion and derive something true' not a proof?",
-   "back": "It proves conclusion → truth; inferring the conclusion from that is affirming the consequent. Valid only if every step reverses and is written forward.",
+   "back": "It proves (conclusion) \\( \\to \\) (true statement); inferring the conclusion from that is affirming the consequent. Valid only if every step reverses and is written forward.",
    "kp": "k2"
   }
  ],
@@ -729,7 +745,7 @@
    "rubric": [
     "(a) Case n = 2k: n² + n = 2(2k² + k); case n = 2k + 1: n² + n = 4k² + 6k + 2 = 2(2k² + 3k + 1)",
     "(b) n² + n = n(n + 1), a product of consecutive integers, one of which is even",
-    "Recognizes that (b) still implicitly relies on a parity case split unless justified",
+    "(b) justifies that one of n, n + 1 is even (if n is odd, n + 1 is even), which is itself a small parity case split",
     "Reasoned comment on generalization, e.g. n(n + 1)(n + 2) divisible by 6 follows the factor-based idea"
    ],
    "model": "(a) *Case \\( n = 2k \\):* \\( n^{2} + n = 4k^{2} + 2k = 2(2k^{2} + k) \\). *Case \\( n = 2k + 1 \\):* \\( n^{2} + n = 4k^{2} + 4k + 1 + 2k + 1 = 4k^{2} + 6k + 2 = 2(2k^{2} + 3k + 1) \\). Both even; the cases are exhaustive.\n\n(b) \\( n^{2} + n = n(n + 1) \\). Of the consecutive integers \\( n \\) and \\( n + 1 \\), one is even (if \\( n \\) is odd, \\( n + 1 \\) is even), and a product with an even factor is even.\n\nThe factorization proof generalizes more easily: the same idea shows that a product of \\( k \\) consecutive integers is divisible by \\( k \\) (one of them is a multiple of \\( k \\)), e.g. \\( 3 \\mid n(n + 1)(n + 2) \\), whereas the expansion-by-cases approach grows messier with each new case. Note that (b) still rests on a small case split to justify \"one of two consecutive integers is even\".",
@@ -810,7 +826,7 @@
    }
   ],
   "stuck": [
-   "Write down the logical form of the goal (∀, ∃, →, ↔, ∨) and let it choose the method.",
+   "Write down the logical form of the goal (\\( \\forall, \\exists, \\to, \\leftrightarrow, \\vee \\)) and let it choose the method.",
    "Unfold every definition in both the hypothesis and the conclusion, then look for how to connect the equations.",
    "If the hypothesis gives nothing to compute with, try the contrapositive; if the statement is negative ('no', 'not', 'irrational', 'infinitely many'), try contradiction.",
    "Test small, zero, negative and equal values; a counterexample or the reason none exists often appears.",

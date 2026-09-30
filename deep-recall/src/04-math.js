@@ -39,7 +39,24 @@ const MX = {
       ok++; diffs.push(x - y);
       if (!upToConst && Math.abs(x - y) > 1e-6 * Math.max(1, Math.abs(y))) return false;
     }
-    if (ok < 4) return null;
+    if (ok < 4) return this.equivInt(A, B, vars, upToConst);
+    if (upToConst) { const d0 = diffs[0]; return diffs.every(d => Math.abs(d - d0) < 1e-6 * Math.max(1, Math.abs(d0))); }
+    return true;
+  },
+  /* sequence answers such as 3^n + (-2)^n are only real at integers: compare them there */
+  equivInt(A, B, vars, upToConst) {
+    const diffs = [];
+    for (let t = 0; t < 14; t++) {
+      const scope = {};
+      vars.forEach((v, j) => { scope[v] = 1 + ((t + 3 * j) % 12); });
+      let x, y;
+      try { x = this.num(A.evaluate(scope)); } catch (e) { x = NaN; }
+      try { y = this.num(B.evaluate(scope)); } catch (e) { y = NaN; }
+      if (!isFinite(x) || !isFinite(y)) continue;
+      diffs.push(x - y);
+      if (!upToConst && Math.abs(x - y) > 1e-6 * Math.max(1, Math.abs(y))) return false;
+    }
+    if (diffs.length < 4) return null;
     if (upToConst) { const d0 = diffs[0]; return diffs.every(d => Math.abs(d - d0) < 1e-6 * Math.max(1, Math.abs(d0))); }
     return true;
   },

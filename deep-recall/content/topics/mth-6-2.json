@@ -1,0 +1,835 @@
+{
+ "key": "mth-6-2",
+ "title": "Mathematical induction",
+ "v": 1,
+ "scope": "Ordinary induction (sums, divisibility, inequalities, strengthening the hypothesis), analysis of flawed induction proofs, strong induction with several base cases, and the well-ordering principle with proof by smallest counterexample; solving recurrences, structural induction and uniqueness of prime factorization are left to other topics.",
+ "sources": [
+  {
+   "title": "R. Hammack, Book of Proof, 3rd ed., Chapter 10 (Mathematical Induction)",
+   "url": "https://richardhammack.github.io/BookOfProof/"
+  },
+  {
+   "title": "E. Lehman, F. T. Leighton, A. R. Meyer, Mathematics for Computer Science (MIT 6.042J), Chapter 3: Induction",
+   "url": "https://ocw.mit.edu/courses/6-042j-mathematics-for-computer-science-fall-2010/93cad640cf3ed0b23ef70688f452d4d5_MIT6_042JF10_notes.pdf"
+  },
+  {
+   "title": "O. Levin, Discrete Mathematics: An Open Introduction, 4th ed., §4.5 Proof by Induction and §4.6 Strong Induction",
+   "url": "https://discrete.openmathbooks.org/dmoi4/sec_seq-induction.html"
+  }
+ ],
+ "pre": [
+  "mth-6-0",
+  "mth-6-1"
+ ],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Principle of mathematical induction",
+   "d": "State the principle with an arbitrary starting integer and explain why the base case and inductive step together reach every n.",
+   "type": "concept"
+  },
+  {
+   "id": "k2",
+   "t": "Structure of an induction proof",
+   "d": "Write an induction proof in the standard format: P(n), base case, inductive hypothesis for arbitrary k, goal P(k+1), conclusion.",
+   "type": "procedure"
+  },
+  {
+   "id": "k3",
+   "t": "Induction for summation identities",
+   "d": "Prove closed forms for sums by separating the last term and applying the inductive hypothesis.",
+   "type": "skill"
+  },
+  {
+   "id": "k4",
+   "t": "Induction for divisibility",
+   "d": "Prove d | f(n) by writing f(k+1) as a multiple of f(k) plus visible multiples of d.",
+   "type": "skill"
+  },
+  {
+   "id": "k5",
+   "t": "Induction for inequalities",
+   "d": "Prove inequalities by chaining with the inductive hypothesis and an auxiliary inequality, choosing the correct base case.",
+   "type": "skill"
+  },
+  {
+   "id": "k6",
+   "t": "Diagnosing flawed induction proofs",
+   "d": "Locate the failure in a bogus induction proof: missing base, a step that fails at the smallest k, or the hypothesis applied outside its range.",
+   "type": "skill"
+  },
+  {
+   "id": "k7",
+   "t": "Strong induction",
+   "d": "State strong induction, derive it from ordinary induction, and use it when P(k+1) depends on earlier cases than P(k).",
+   "type": "procedure"
+  },
+  {
+   "id": "k8",
+   "t": "Base cases for strong induction",
+   "d": "Determine exactly which base cases a strong induction step requires from how far back it reaches.",
+   "type": "procedure"
+  },
+  {
+   "id": "k9",
+   "t": "Well-ordering and smallest counterexample",
+   "d": "State the well-ordering principle, use it in smallest-counterexample proofs, and relate it to induction.",
+   "type": "concept"
+  },
+  {
+   "id": "k10",
+   "t": "Strengthening the inductive hypothesis",
+   "d": "Recognize when a statement is too weak to carry its own inductive step and prove a stronger statement instead.",
+   "type": "skill"
+  }
+ ],
+ "intro": "Many theorems are claims about every natural number: a closed form for \\( 1 + 2 + \\cdots + n \\), the divisibility of \\( 4^{n} - 1 \\) by 3, the inequality \\( 2^{n} > n^{2} \\) for large \\( n \\), the existence of a prime factorization for every integer greater than 1. Each is an infinite list of statements \\( P(1), P(2), P(3), \\dots \\). The methods of the previous topic handle such a list only when one algebraic argument happens to cover every \\( n \\) at once. Often none does: the natural reason that \\( P(n+1) \\) holds is that \\( P(n) \\) holds, or that some earlier cases hold.\n\n**Mathematical induction** is the proof method built for this recursive structure. It reduces an infinite list of claims to two finite tasks: verify a starting case, and prove that each case implies the next. This topic develops ordinary induction and its standard uses, the ways an induction proof can fail, strong induction, and the well-ordering principle that is logically equivalent to both.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "The principle of mathematical induction",
+   "kps": [
+    "k1",
+    "k2"
+   ],
+   "md": "This section states the principle that lets a finite argument establish infinitely many statements, and fixes the format in which every induction proof in this course is written.\n\nMany theorems have the form \\( \\forall n \\ge a\\ P(n) \\), where \\( P(n) \\) is a statement about the integer \\( n \\); for instance\n\\[ P(n):\\quad 1 + 3 + 5 + \\cdots + (2n - 1) = n^{2}. \\]\nVerifying \\( P(1), \\dots, P(100) \\) proves one hundred instances and nothing more. What makes this statement provable is a relation between consecutive instances: the sum up to \\( 2n + 1 \\) is the sum up to \\( 2n - 1 \\) plus one more term. Induction turns such a relation into a proof.\n\n> **Principle of mathematical induction.** Let \\( a \\) be an integer and let \\( P(n) \\) be a predicate defined for integers \\( n \\ge a \\). Suppose\n> 1. \\( P(a) \\) is true, and\n> 2. for every integer \\( k \\ge a \\), the conditional \\( P(k) \\to P(k+1) \\) is true.\n>\n> Then \\( P(n) \\) is true for every integer \\( n \\ge a \\).\n\nStep 1 is the **base case** (or basis step). Step 2 is the **inductive step**; inside it, the assumption \\( P(k) \\) is called the **inductive hypothesis**.\n\n**Why it is believable.** The base case gives \\( P(a) \\). The inductive step with \\( k = a \\) gives \\( P(a) \\to P(a+1) \\), so \\( P(a+1) \\) by modus ponens; with \\( k = a + 1 \\) it gives \\( P(a+2) \\); and so on. Any particular \\( n \\ge a \\) is reached after \\( n - a \\) applications of modus ponens. The principle asserts more than any such finite chain, namely the conclusion for all \\( n \\) at once, and for that reason it is taken as an axiom about the natural numbers (it is one of the Peano axioms), or derived from the equivalent well-ordering principle, as is done in the last section of this topic.\n\n**The logic of the inductive step.** Step 2 is itself a universal conditional, \\( \\forall k \\ge a\\,\\bigl(P(k) \\to P(k+1)\\bigr) \\), and it is proved exactly as in the previous topic: let \\( k \\) be an arbitrary integer with \\( k \\ge a \\), assume \\( P(k) \\), and deduce \\( P(k+1) \\). Assuming \\( P(k) \\) for one arbitrary \\( k \\) is not assuming the theorem. The theorem is the universal statement \\( \\forall n \\ge a\\ P(n) \\), and it is never assumed.\n\n**Template.** Every induction proof in this course is written in four parts.\n\n1. State \\( P(n) \\) explicitly, together with the range \\( n \\ge a \\).\n2. *Base case.* Verify \\( P(a) \\) by direct computation, evaluating both sides.\n3. *Inductive step.* \"Let \\( k \\ge a \\) be an integer and assume \\( P(k) \\).\" Write out \\( P(k) \\), write out the goal \\( P(k+1) \\), and deduce the goal, indicating where the inductive hypothesis is used.\n4. *Conclusion.* \"By induction, \\( P(n) \\) holds for every integer \\( n \\ge a \\).\"\n\n**Worked example.** Prove that for every integer \\( n \\ge 1 \\), \\( 1 + 3 + \\cdots + (2n - 1) = n^{2} \\).\n\n*Proof.* Let \\( P(n) \\) be the statement \\( \\sum_{i=1}^{n} (2i - 1) = n^{2} \\).\n\n*Base case* (\\( n = 1 \\)). The left side is \\( 2 \\cdot 1 - 1 = 1 \\) and the right side is \\( 1^{2} = 1 \\).\n\n*Inductive step.* Let \\( k \\ge 1 \\) and assume \\( \\sum_{i=1}^{k} (2i - 1) = k^{2} \\). We must show \\( \\sum_{i=1}^{k+1} (2i - 1) = (k+1)^{2} \\). Separating the last term and then applying the inductive hypothesis,\n\\[ \\sum_{i=1}^{k+1} (2i - 1) = \\sum_{i=1}^{k} (2i - 1) + \\bigl(2(k+1) - 1\\bigr) = k^{2} + 2k + 1 = (k+1)^{2}. \\]\n\n*Conclusion.* By induction, the formula holds for every integer \\( n \\ge 1 \\). \\( \\blacksquare \\)\n\n**The common mistakes.** Writing the inductive hypothesis as \"assume \\( P(n) \\) is true for all \\( n \\)\", which assumes the conclusion; starting from the equation \\( P(k+1) \\) and manipulating both sides until something true appears, which is the backward reasoning criticized in the previous topic; and treating the base case as a formality. The section on failed proofs shows that each of the two steps can fail while the other succeeds.",
+   "questions": [
+    {
+     "id": "s1q1",
+     "kp": "k2",
+     "type": "written",
+     "prompt": "Prove by induction that for every integer \\( n \\ge 1 \\), \\( 1 + 2 + \\cdots + n = \\frac{n(n+1)}{2} \\). Label the base case, state the inductive hypothesis and the goal of the inductive step explicitly, and indicate the line where the inductive hypothesis is used.",
+     "rubric": [
+      "Base case n = 1: both sides equal 1",
+      "Inductive hypothesis for an arbitrary integer k ≥ 1: 1 + ⋯ + k = k(k + 1)/2; goal: 1 + ⋯ + (k + 1) = (k + 1)(k + 2)/2",
+      "Separates the last term and applies the hypothesis: k(k + 1)/2 + (k + 1)",
+      "Simplifies to (k + 1)(k + 2)/2 and concludes by induction for all n ≥ 1"
+     ],
+     "model": "Let \\( P(n) \\) be \\( \\sum_{i=1}^{n} i = \\frac{n(n+1)}{2} \\).\n\n*Base case.* For \\( n = 1 \\) the left side is \\( 1 \\) and the right side is \\( \\frac{1 \\cdot 2}{2} = 1 \\).\n\n*Inductive step.* Let \\( k \\ge 1 \\) be an integer and assume \\( \\sum_{i=1}^{k} i = \\frac{k(k+1)}{2} \\) (inductive hypothesis). Goal: \\( \\sum_{i=1}^{k+1} i = \\frac{(k+1)(k+2)}{2} \\). Then\n\\[ \\sum_{i=1}^{k+1} i = \\sum_{i=1}^{k} i + (k+1) = \\frac{k(k+1)}{2} + (k+1) = \\frac{(k+1)(k+2)}{2}, \\]\nwhere the second equality is the inductive hypothesis.\n\n*Conclusion.* By induction, \\( 1 + 2 + \\cdots + n = \\frac{n(n+1)}{2} \\) for every integer \\( n \\ge 1 \\). \\( \\blacksquare \\)",
+     "why": "Factoring \\( k + 1 \\) out of \\( \\frac{k(k+1)}{2} + (k+1) \\) gives \\( (k+1)\\left(\\frac{k}{2} + 1\\right) = \\frac{(k+1)(k+2)}{2} \\) directly, with no expansion."
+    },
+    {
+     "id": "s1q2",
+     "kp": "k1",
+     "type": "mcq",
+     "prompt": "In a proof by induction that \\( P(n) \\) holds for every integer \\( n \\ge 1 \\), what exactly must the inductive step establish?",
+     "options": [
+      "For every integer \\( k \\ge 1 \\), if \\( P(k) \\) is true then \\( P(k+1) \\) is true.",
+      "\\( P(k) \\) is true for every integer \\( k \\ge 1 \\), and therefore \\( P(k+1) \\) is true.",
+      "For every integer \\( k \\ge 1 \\), if \\( P(k+1) \\) is true then \\( P(k) \\) is true.",
+      "\\( P(k) \\to P(k+1) \\) for some particular integer \\( k \\ge 1 \\) at which the algebra works out."
+     ],
+     "answer": 0,
+     "why": "The inductive step is the universal conditional \\( \\forall k \\ge 1\\,(P(k) \\to P(k+1)) \\). The second option assumes the theorem itself. The third is the converse implication, which propagates truth downward, not upward. The fourth proves the implication for only one \\( k \\), which breaks the chain at every other link."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "Sums and divisibility",
+   "kps": [
+    "k3",
+    "k4"
+   ],
+   "md": "The two most common kinds of statement proved by induction are closed forms for sums and divisibility properties of expressions in \\( n \\). This section gives the standard technique for each. In both, the work of the inductive step is to express the \\( (k+1) \\)-st instance in terms of the \\( k \\)-th.\n\n**Sums.** Summation notation is defined recursively:\n\\[ \\sum_{i=1}^{1} a_{i} = a_{1}, \\qquad \\sum_{i=1}^{k+1} a_{i} = \\Bigl(\\sum_{i=1}^{k} a_{i}\\Bigr) + a_{k+1}. \\]\nThe second equation is exactly the link an inductive step needs. To prove \\( \\sum_{i=1}^{n} a_{i} = F(n) \\), separate the last term of the \\( (k+1) \\)-sum, replace the remaining sum by \\( F(k) \\) using the inductive hypothesis, and show that \\( F(k) + a_{k+1} = F(k+1) \\). Write out \\( F(k+1) \\) before you start, and aim for its factored form: factor out common factors rather than expanding everything.\n\n**Worked example 1.** Prove that for every integer \\( n \\ge 1 \\), \\( \\sum_{i=1}^{n} i^{2} = \\frac{n(n+1)(2n+1)}{6} \\).\n\n*Base case.* For \\( n = 1 \\): left side \\( 1 \\), right side \\( \\frac{1 \\cdot 2 \\cdot 3}{6} = 1 \\).\n\n*Inductive step.* Let \\( k \\ge 1 \\) and assume \\( \\sum_{i=1}^{k} i^{2} = \\frac{k(k+1)(2k+1)}{6} \\). The goal is \\( \\sum_{i=1}^{k+1} i^{2} = \\frac{(k+1)(k+2)(2k+3)}{6} \\). By the inductive hypothesis,\n\\[ \\sum_{i=1}^{k+1} i^{2} = \\frac{k(k+1)(2k+1)}{6} + (k+1)^{2} = \\frac{(k+1)\\bigl[k(2k+1) + 6(k+1)\\bigr]}{6} = \\frac{(k+1)(2k^{2} + 7k + 6)}{6}, \\]\nand \\( 2k^{2} + 7k + 6 = (k+2)(2k+3) \\), which gives the goal. By induction the formula holds for all \\( n \\ge 1 \\). \\( \\blacksquare \\)\n\nFactoring out \\( k + 1 \\) at once, because it appears in the target, avoids expanding to a cubic and refactoring.\n\n**Divisibility.** To prove \\( d \\mid f(n) \\) for all \\( n \\ge a \\), the inductive hypothesis supplies an integer: \\( f(k) = dm \\) for some integer \\( m \\). The inductive step must produce an integer \\( m' \\) with \\( f(k+1) = dm' \\). The usual method is to rewrite \\( f(k+1) \\) as an integer multiple of \\( f(k) \\) plus terms that are visibly multiples of \\( d \\).\n\n**Worked example 2.** Prove that \\( 3 \\mid (4^{n} - 1) \\) for every integer \\( n \\ge 0 \\).\n\n*Base case.* \\( 4^{0} - 1 = 0 = 3 \\cdot 0 \\).\n\n*Inductive step.* Let \\( k \\ge 0 \\) and assume \\( 3 \\mid (4^{k} - 1) \\), so \\( 4^{k} = 3m + 1 \\) for some integer \\( m \\). Then\n\\[ 4^{k+1} - 1 = 4 \\cdot 4^{k} - 1 = 4(3m + 1) - 1 = 12m + 3 = 3(4m + 1), \\]\nand \\( 4m + 1 \\) is an integer, so \\( 3 \\mid (4^{k+1} - 1) \\). By induction the claim holds for all \\( n \\ge 0 \\). \\( \\blacksquare \\)\n\n**Worked example 3.** Prove that \\( 3 \\mid (n^{3} + 2n) \\) for every integer \\( n \\ge 0 \\).\n\n*Base case.* \\( 0^{3} + 2 \\cdot 0 = 0 = 3 \\cdot 0 \\).\n\n*Inductive step.* Let \\( k \\ge 0 \\) and assume \\( k^{3} + 2k = 3m \\) for an integer \\( m \\). Expanding,\n\\[ (k+1)^{3} + 2(k+1) = k^{3} + 3k^{2} + 3k + 1 + 2k + 2 = (k^{3} + 2k) + 3(k^{2} + k + 1) = 3\\bigl(m + k^{2} + k + 1\\bigr). \\]\nSince \\( m + k^{2} + k + 1 \\) is an integer, \\( 3 \\mid \\bigl((k+1)^{3} + 2(k+1)\\bigr) \\), and the claim follows by induction. \\( \\blacksquare \\)\n\nIn both divisibility examples the inductive hypothesis enters as an equation with a fresh integer \\( m \\), exactly as definitions were unfolded in the previous topic, and the goal is met by exhibiting the new integer explicitly.\n\n**The common mistakes.** Asserting that \\( f(k+1) \\) is divisible by \\( d \\) because it \"contains\" \\( f(k) \\), without writing the integer multiple; expanding the sum and the target into polynomials and declaring them equal without displaying the algebra; and, in sums, adding the wrong last term, for instance \\( a_{k} \\) instead of \\( a_{k+1} \\), or \\( 2k - 1 \\) instead of \\( 2k + 1 \\) in the sum of odd numbers.",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k3",
+     "type": "written",
+     "prompt": "Prove by induction that for every integer \\( n \\ge 0 \\), \\( \\sum_{i=0}^{n} 2^{i} = 2^{n+1} - 1 \\).",
+     "rubric": [
+      "Base case n = 0: 2⁰ = 1 = 2¹ − 1",
+      "Inductive hypothesis for arbitrary k ≥ 0 and goal Σ_{i=0}^{k+1} 2^i = 2^{k+2} − 1 stated",
+      "Separates the last term: (2^{k+1} − 1) + 2^{k+1}",
+      "Simplifies to 2·2^{k+1} − 1 = 2^{k+2} − 1 and concludes by induction"
+     ],
+     "model": "Let \\( P(n) \\) be \\( \\sum_{i=0}^{n} 2^{i} = 2^{n+1} - 1 \\).\n\n*Base case.* For \\( n = 0 \\): \\( \\sum_{i=0}^{0} 2^{i} = 1 \\) and \\( 2^{1} - 1 = 1 \\).\n\n*Inductive step.* Let \\( k \\ge 0 \\) and assume \\( \\sum_{i=0}^{k} 2^{i} = 2^{k+1} - 1 \\). Goal: \\( \\sum_{i=0}^{k+1} 2^{i} = 2^{k+2} - 1 \\). Using the hypothesis,\n\\[ \\sum_{i=0}^{k+1} 2^{i} = \\bigl(2^{k+1} - 1\\bigr) + 2^{k+1} = 2 \\cdot 2^{k+1} - 1 = 2^{k+2} - 1. \\]\nBy induction, the formula holds for every \\( n \\ge 0 \\). \\( \\blacksquare \\)",
+     "why": "This is the geometric sum with ratio 2; the doubling \\( 2^{k+1} + 2^{k+1} = 2^{k+2} \\) is the whole inductive step."
+    },
+    {
+     "id": "s2q2",
+     "kp": "k4",
+     "type": "written",
+     "prompt": "Prove by induction that \\( 6 \\mid (n^{3} + 5n) \\) for every integer \\( n \\ge 0 \\). You may use the fact, proved in the previous topic, that \\( k(k+1) \\) is even for every integer \\( k \\).",
+     "rubric": [
+      "Base case n = 0: 0 = 6·0",
+      "Assumes k³ + 5k = 6m for an integer m",
+      "Expands (k + 1)³ + 5(k + 1) = (k³ + 5k) + 3k(k + 1) + 6",
+      "Uses k(k + 1) = 2j to write 3k(k + 1) = 6j, obtaining 6(m + j + 1) and concluding by induction"
+     ],
+     "model": "*Base case.* \\( 0^{3} + 5 \\cdot 0 = 0 = 6 \\cdot 0 \\).\n\n*Inductive step.* Let \\( k \\ge 0 \\) and assume \\( k^{3} + 5k = 6m \\) for an integer \\( m \\). Then\n\\[ (k+1)^{3} + 5(k+1) = k^{3} + 3k^{2} + 3k + 1 + 5k + 5 = (k^{3} + 5k) + 3k(k+1) + 6. \\]\nSince \\( k(k+1) \\) is even, \\( k(k+1) = 2j \\) for an integer \\( j \\), so \\( 3k(k+1) = 6j \\). Hence\n\\[ (k+1)^{3} + 5(k+1) = 6m + 6j + 6 = 6(m + j + 1), \\]\nand \\( m + j + 1 \\) is an integer. By induction, \\( 6 \\mid (n^{3} + 5n) \\) for all \\( n \\ge 0 \\). \\( \\blacksquare \\)",
+     "why": "The difference between consecutive instances is \\( 3k^{2} + 3k + 6 = 3k(k+1) + 6 \\). Divisibility of \\( 3k(k+1) \\) by 6, not merely by 3, is where the parity fact is needed."
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "Inequalities and strengthening the hypothesis",
+   "kps": [
+    "k5",
+    "k10"
+   ],
+   "md": "Inequalities are proved by induction in the same four-part format, but the inductive step is a chain of inequalities rather than equalities, and two new issues arise: the statement may be true only from some starting value onward, and the inductive hypothesis may be too weak to carry the step. This section treats both.\n\n**Chaining inequalities.** In the inductive step, begin with one side of \\( P(k+1) \\), use the inductive hypothesis to replace part of it by something larger (when proving an upper bound) or smaller (when proving a lower bound), and then prove an **auxiliary inequality** that closes the remaining gap. The auxiliary inequality often holds only for \\( k \\) beyond some value, and the base case must be chosen consistently with it.\n\n**Worked example 1.** Prove that \\( 2^{n} > n^{2} \\) for every integer \\( n \\ge 5 \\).\n\nFirst, the statement is false for \\( n = 2, 3, 4 \\): the inequalities \\( 4 > 4 \\), \\( 8 > 9 \\) and \\( 16 > 16 \\) all fail. So the proof cannot start at \\( n = 1 \\), even though \\( 2 > 1 \\).\n\n*Base case.* \\( n = 5 \\): \\( 2^{5} = 32 > 25 = 5^{2} \\).\n\n*Inductive step.* Let \\( k \\ge 5 \\) and assume \\( 2^{k} > k^{2} \\). Then\n\\[ 2^{k+1} = 2 \\cdot 2^{k} > 2k^{2}. \\]\nIt remains to show \\( 2k^{2} \\ge (k+1)^{2} \\), that is, \\( k^{2} - 2k - 1 \\ge 0 \\), that is, \\( (k-1)^{2} \\ge 2 \\). This holds because \\( k \\ge 5 \\) gives \\( (k-1)^{2} \\ge 16 \\). Hence \\( 2^{k+1} > 2k^{2} \\ge (k+1)^{2} \\). By induction, \\( 2^{n} > n^{2} \\) for all \\( n \\ge 5 \\). \\( \\blacksquare \\)\n\nThe auxiliary inequality \\( (k-1)^{2} \\ge 2 \\) already holds for \\( k \\ge 3 \\), so the inductive step is valid from \\( k = 3 \\) on; it is the base case that fixes the start at 5. Both parts are needed, and the base case decides where the conclusion begins.\n\n**Strengthening the hypothesis.** Sometimes a true statement cannot be proved by induction as stated, because the inductive hypothesis does not give enough to reach \\( P(k+1) \\). The remedy is to prove a *stronger* statement. A stronger statement means a stronger goal, but also a stronger hypothesis, and the second can outweigh the first. This is called **strengthening the inductive hypothesis**.\n\n**Worked example 2.** Prove that \\( \\sum_{i=1}^{n} \\frac{1}{i^{2}} < 2 \\) for every integer \\( n \\ge 1 \\).\n\nA direct attempt fails: from \\( \\sum_{i=1}^{k} \\frac{1}{i^{2}} < 2 \\) we only get \\( \\sum_{i=1}^{k+1} \\frac{1}{i^{2}} < 2 + \\frac{1}{(k+1)^{2}} \\), which is not a bound of 2. The hypothesis leaves no room for the next term. So we prove instead\n\\[ Q(n):\\quad \\sum_{i=1}^{n} \\frac{1}{i^{2}} \\le 2 - \\frac{1}{n}, \\]\nwhich builds the room into the statement.\n\n*Base case.* \\( n = 1 \\): \\( 1 \\le 2 - 1 = 1 \\).\n\n*Inductive step.* Let \\( k \\ge 1 \\) and assume \\( Q(k) \\). Then\n\\[ \\sum_{i=1}^{k+1} \\frac{1}{i^{2}} \\le 2 - \\frac{1}{k} + \\frac{1}{(k+1)^{2}}. \\]\nThis is at most \\( 2 - \\frac{1}{k+1} \\) provided \\( \\frac{1}{(k+1)^{2}} \\le \\frac{1}{k} - \\frac{1}{k+1} = \\frac{1}{k(k+1)} \\), and that holds because \\( k(k+1) < (k+1)^{2} \\). So \\( Q(k+1) \\) holds, and by induction \\( Q(n) \\) holds for all \\( n \\ge 1 \\). Since \\( 2 - \\frac{1}{n} < 2 \\), the original claim follows. \\( \\blacksquare \\)\n\nThe strengthened statement is found by asking what the inductive step needs: a bound below 2 whose margin \\( \\frac{1}{n} \\) shrinks slowly enough that each new term \\( \\frac{1}{(k+1)^{2}} \\) fits inside the decrease of the margin. (The infinite series converges to \\( \\frac{\\pi^{2}}{6} \\approx 1.645 \\), a theorem of Euler; induction gives only the bound.)\n\n**The common mistakes.** Using the inductive hypothesis in the wrong direction (to show \\( A < B \\), you may replace part of \\( A \\) by something larger, never by something smaller); multiplying an inequality by a quantity whose sign has not been checked; and choosing the base case without checking that the inductive step is valid for every \\( k \\) from the base case on.",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k5",
+     "type": "written",
+     "prompt": "Prove **Bernoulli's inequality**: for every real number \\( x \\ge -1 \\) and every integer \\( n \\ge 0 \\), \\( (1 + x)^{n} \\ge 1 + nx \\). Fix \\( x \\) and induct on \\( n \\). Point out the exact line where the hypothesis \\( x \\ge -1 \\) is used, and explain why the step would be invalid without it.",
+     "rubric": [
+      "Base case n = 0: (1 + x)⁰ = 1 = 1 + 0·x",
+      "Multiplies the hypothesis (1 + x)^k ≥ 1 + kx by 1 + x, justified because 1 + x ≥ 0",
+      "Expands (1 + kx)(1 + x) = 1 + (k + 1)x + kx² and drops kx² ≥ 0",
+      "Explains that multiplying an inequality by a negative number reverses it, so x ≥ −1 is essential"
+     ],
+     "model": "Fix a real \\( x \\ge -1 \\) and let \\( P(n) \\) be \\( (1 + x)^{n} \\ge 1 + nx \\).\n\n*Base case.* \\( n = 0 \\): \\( (1 + x)^{0} = 1 = 1 + 0 \\cdot x \\).\n\n*Inductive step.* Let \\( k \\ge 0 \\) and assume \\( (1 + x)^{k} \\ge 1 + kx \\). Since \\( x \\ge -1 \\), the number \\( 1 + x \\) is nonnegative, so multiplying both sides of the hypothesis by it preserves the inequality:\n\\[ (1 + x)^{k+1} = (1 + x)^{k}(1 + x) \\ge (1 + kx)(1 + x) = 1 + (k+1)x + kx^{2} \\ge 1 + (k+1)x, \\]\nthe last step because \\( kx^{2} \\ge 0 \\). By induction, \\( P(n) \\) holds for every \\( n \\ge 0 \\). \\( \\blacksquare \\)\n\nThe hypothesis \\( x \\ge -1 \\) is used in multiplying by \\( 1 + x \\). If \\( 1 + x < 0 \\), multiplication would reverse the inequality and the chain would break. (The inequality itself can then fail: for \\( x = -4 \\) and \\( n = 3 \\), \\( (1 + x)^{3} = -27 \\), while \\( 1 + 3x = -11 \\).)",
+     "why": "Every multiplication of an inequality needs a sign check. Here the sign condition is exactly the hypothesis of the theorem."
+    },
+    {
+     "id": "s3q2",
+     "kp": "k5",
+     "type": "written",
+     "prompt": "Find the least integer \\( n_{0} \\ge 1 \\) with \\( n_{0}! > 2^{n_{0}} \\), and prove by induction that \\( n! > 2^{n} \\) for every integer \\( n \\ge n_{0} \\).",
+     "rubric": [
+      "Checks 1! = 1 < 2, 2! = 2 < 4, 3! = 6 < 8, 4! = 24 > 16, so n₀ = 4",
+      "Base case n = 4",
+      "Step: (k + 1)! = (k + 1)·k! > (k + 1)·2^k",
+      "Uses k + 1 ≥ 5 > 2 to get (k + 1)·2^k > 2^{k+1}; concludes by induction"
+     ],
+     "model": "We have \\( 1! = 1 < 2 \\), \\( 2! = 2 < 4 \\), \\( 3! = 6 < 8 \\) and \\( 4! = 24 > 16 \\), so \\( n_{0} = 4 \\).\n\n*Base case.* \\( 4! = 24 > 16 = 2^{4} \\).\n\n*Inductive step.* Let \\( k \\ge 4 \\) and assume \\( k! > 2^{k} \\). Since \\( k + 1 > 0 \\),\n\\[ (k+1)! = (k+1)\\,k! > (k+1)\\,2^{k} \\ge 5 \\cdot 2^{k} > 2 \\cdot 2^{k} = 2^{k+1}. \\]\nBy induction, \\( n! > 2^{n} \\) for every \\( n \\ge 4 \\). \\( \\blacksquare \\)",
+     "why": "The auxiliary inequality \\( k + 1 > 2 \\) holds for every \\( k \\ge 2 \\); the base case, not the step, is what forces the start at 4."
+    },
+    {
+     "id": "s3q3",
+     "kp": "k10",
+     "type": "written",
+     "prompt": "Explain why a direct induction proof of \\( \\sum_{i=1}^{n} \\frac{1}{i^{3}} < \\frac{3}{2} \\) (for \\( n \\ge 1 \\)) gets stuck, and then prove it by first proving the stronger statement \\( \\sum_{i=1}^{n} \\frac{1}{i^{3}} \\le \\frac{3}{2} - \\frac{1}{2n^{2}} \\).",
+     "rubric": [
+      "Direct attempt: the hypothesis gives only < 3/2 + 1/(k + 1)³, which is not a bound of 3/2",
+      "Base case of the stronger statement: 1 ≤ 3/2 − 1/2",
+      "Reduces the step to 1/(k + 1)³ ≤ 1/(2k²) − 1/(2(k + 1)²) = (2k + 1)/(2k²(k + 1)²)",
+      "Verifies it: equivalent to 2k² ≤ (2k + 1)(k + 1) = 2k² + 3k + 1; concludes the original bound"
+     ],
+     "model": "*Why the direct attempt fails.* The hypothesis \\( \\sum_{i=1}^{k} \\frac{1}{i^{3}} < \\frac{3}{2} \\) gives only \\( \\sum_{i=1}^{k+1} \\frac{1}{i^{3}} < \\frac{3}{2} + \\frac{1}{(k+1)^{3}} \\), which exceeds the target bound. A hypothesis with no margin below \\( \\frac{3}{2} \\) cannot absorb a new positive term.\n\n*Stronger statement.* Let \\( Q(n) \\) be \\( \\sum_{i=1}^{n} \\frac{1}{i^{3}} \\le \\frac{3}{2} - \\frac{1}{2n^{2}} \\).\n\n*Base case.* \\( n = 1 \\): \\( 1 \\le \\frac{3}{2} - \\frac{1}{2} = 1 \\).\n\n*Inductive step.* Let \\( k \\ge 1 \\) and assume \\( Q(k) \\). Then \\( \\sum_{i=1}^{k+1} \\frac{1}{i^{3}} \\le \\frac{3}{2} - \\frac{1}{2k^{2}} + \\frac{1}{(k+1)^{3}} \\), and this is at most \\( \\frac{3}{2} - \\frac{1}{2(k+1)^{2}} \\) provided\n\\[ \\frac{1}{(k+1)^{3}} \\le \\frac{1}{2k^{2}} - \\frac{1}{2(k+1)^{2}} = \\frac{2k + 1}{2k^{2}(k+1)^{2}}. \\]\nMultiplying by the positive number \\( 2k^{2}(k+1)^{3} \\), this is equivalent to \\( 2k^{2} \\le (2k+1)(k+1) = 2k^{2} + 3k + 1 \\), which is true. So \\( Q(k+1) \\) holds, and by induction \\( Q(n) \\) holds for all \\( n \\ge 1 \\). Since \\( \\frac{3}{2} - \\frac{1}{2n^{2}} < \\frac{3}{2} \\), the original bound follows. \\( \\blacksquare \\)",
+     "why": "The margin \\( \\frac{1}{2n^{2}} \\) decreases by \\( \\frac{2k+1}{2k^{2}(k+1)^{2}} \\) from \\( k \\) to \\( k + 1 \\), which is at least the new term \\( \\frac{1}{(k+1)^{3}} \\)."
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "How induction proofs fail",
+   "kps": [
+    "k6"
+   ],
+   "md": "An induction proof has two parts, and each is indispensable. Because the inductive step is usually the harder part, it is tempting to treat the base case as a formality and to accept an inductive step that works \"in general\". This section shows, with arguments that look convincing, what goes wrong when either part is defective, and gives a checklist for your own proofs.\n\n**A valid step with no true base.** Consider the claim \"\\( n^{2} + n \\) is odd for every integer \\( n \\ge 1 \\)\". Its inductive step is correct: if \\( k^{2} + k \\) is odd, then\n\\[ (k+1)^{2} + (k+1) = (k^{2} + k) + 2(k + 1) \\]\nis an odd number plus an even number, hence odd. Yet the claim is false for every \\( n \\), since \\( n^{2} + n = n(n+1) \\) is always even (a result of the previous topic). The base case fails: \\( 1^{2} + 1 = 2 \\). The inductive step shows only that the truth of one instance would propagate to the next; if no instance is true, nothing propagates. An inductive step without a verified base case proves nothing.\n\n**A true base with a step that fails at one value.** The classical example is the following argument.\n\n*Claim.* In every set of \\( n \\ge 1 \\) horses, all the horses have the same color.\n\n*\"Proof.\"* Base case: a set of one horse has only one color. Inductive step: assume every set of \\( k \\) horses is of one color, and let \\( \\{h_{1}, \\dots, h_{k+1}\\} \\) be a set of \\( k + 1 \\) horses. The \\( k \\) horses \\( h_{1}, \\dots, h_{k} \\) share a color, and so do the \\( k \\) horses \\( h_{2}, \\dots, h_{k+1} \\). The two sets overlap, so all \\( k + 1 \\) horses share a color.\n\nThe base case is correct, and the inductive step is correct *for \\( k \\ge 2 \\)*. The flaw is the word \"overlap\": the two sets have \\( h_{2}, \\dots, h_{k} \\) in common, and when \\( k = 1 \\) that list is empty. For \\( k = 1 \\) the sets are \\( \\{h_{1}\\} \\) and \\( \\{h_{2}\\} \\), and nothing links their colors. So the implication \\( P(1) \\to P(2) \\) was never proved (and it is false), and the chain of implications is broken at its first link. The inductive step must be valid for **every** \\( k \\ge a \\), including the smallest. An argument written for a \"typical\" \\( k \\) must be checked at \\( k = a \\), where a list such as \\( h_{2}, \\dots, h_{k} \\) may be empty.\n\n**Applying the hypothesis outside its range.** A subtler form of the same error occurs when the inductive step applies the inductive hypothesis to an object that does not satisfy its conditions.\n\n*Claim.* For every integer \\( n \\ge 1 \\): if \\( a \\) and \\( b \\) are positive integers with \\( \\max(a, b) = n \\), then \\( a = b \\).\n\n*\"Proof.\"* Base case: if \\( \\max(a, b) = 1 \\), then \\( a = b = 1 \\). Inductive step: assume the statement for \\( k \\), and let \\( \\max(a, b) = k + 1 \\). Then \\( \\max(a - 1, b - 1) = k \\), so by the inductive hypothesis \\( a - 1 = b - 1 \\), and \\( a = b \\).\n\nThe inductive hypothesis concerns *positive* integers. If \\( a = 1 \\) and \\( b = k + 1 \\), then \\( a - 1 = 0 \\) is not positive, and the hypothesis says nothing about the pair \\( (0, k) \\). Whenever the inductive step hands a new object to the inductive hypothesis, you must verify that the object satisfies every condition the hypothesis requires.\n\n**Checklist for your own proofs.**\n\n1. Is the base case actually verified, with both sides computed?\n2. Is the inductive step valid for the smallest \\( k \\) allowed, not only for \"large\" \\( k \\)?\n3. Does every use of the inductive hypothesis apply it to an object within its range?\n4. Does the step run forward from \\( P(k) \\) to \\( P(k+1) \\), rather than from \\( P(k+1) \\) back to something true?\n\nA useful habit is to test the inductive step on the first transition, \\( P(a) \\to P(a+1) \\), with concrete objects: the horse argument collapses as soon as you try it with two horses.",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k6",
+     "type": "written",
+     "prompt": "A student argues: \\\"Assume \\( 3 \\mid (4^{k} + 1) \\), say \\( 4^{k} + 1 = 3m \\). Then \\( 4^{k+1} + 1 = 4(4^{k} + 1) - 3 = 3(4m - 1) \\). Hence by induction \\( 3 \\mid (4^{n} + 1) \\) for all \\( n \\ge 1 \\).\\\" (a) Is the inductive step valid? (b) Where does the proof fail? (c) Is \\( 3 \\mid (4^{n} + 1) \\) true for any \\( n \\ge 0 \\)? Justify (c) using a result proved in this topic.",
+     "rubric": [
+      "(a) The inductive step is algebraically valid: 4(4^k + 1) − 3 = 4^{k+1} + 1 and 12m − 3 = 3(4m − 1)",
+      "(b) No base case was checked, and it fails: 4¹ + 1 = 5 is not divisible by 3",
+      "(c) Uses 3 | (4^n − 1): 4^n = 3j + 1, so 4^n + 1 = 3j + 2, never divisible by 3",
+      "Concludes the statement is false for every n ≥ 0, illustrating that a step without a base proves nothing"
+     ],
+     "model": "(a) The step is valid: \\( 4(4^{k} + 1) - 3 = 4^{k+1} + 4 - 3 = 4^{k+1} + 1 \\), and if \\( 4^{k} + 1 = 3m \\) this equals \\( 12m - 3 = 3(4m - 1) \\) with \\( 4m - 1 \\) an integer.\n\n(b) The proof has no base case, and none is available: \\( 4^{1} + 1 = 5 \\), which is not divisible by 3.\n\n(c) It is false for every \\( n \\ge 0 \\). By the result proved in this topic, \\( 3 \\mid (4^{n} - 1) \\), so \\( 4^{n} = 3j + 1 \\) for an integer \\( j \\). Then \\( 4^{n} + 1 = 3j + 2 \\) leaves remainder 2 on division by 3, so \\( 3 \\nmid (4^{n} + 1) \\). The valid inductive step merely says that a true instance would propagate; since no instance is true, nothing is proved.",
+     "why": "The step \\( P(k) \\to P(k+1) \\) can be valid for every \\( k \\) while every \\( P(n) \\) is false; the base case is what starts the chain."
+    },
+    {
+     "id": "s4q2",
+     "kp": "k6",
+     "type": "written",
+     "prompt": "Consider the claim: \\\"for every \\( n \\ge 2 \\), any \\( n \\) distinct lines in the plane, no two of which are parallel, all pass through one common point\\\". The \\\"proof\\\": base case \\( n = 2 \\): two non-parallel lines meet in a point. Inductive step: given lines \\( \\ell_{1}, \\dots, \\ell_{k+1} \\), the lines \\( \\ell_{1}, \\dots, \\ell_{k} \\) pass through a common point \\( P \\), and \\( \\ell_{2}, \\dots, \\ell_{k+1} \\) pass through a common point \\( Q \\); both \\( P \\) and \\( Q \\) lie on each of \\( \\ell_{2}, \\dots, \\ell_{k} \\), hence \\( P = Q \\) and all \\( k + 1 \\) lines pass through it. Find the exact value of \\( k \\) at which the inductive step fails, and explain why it fails there and nowhere else.",
+     "rubric": [
+      "Identifies the failure at k = 2 (the step from 2 lines to 3 lines)",
+      "At k = 2 the common family ℓ₂, …, ℓ_k is the single line ℓ₂; two points on one line need not coincide",
+      "For k ≥ 3 at least two distinct non-parallel lines are common, and they meet in exactly one point, so P = Q is justified",
+      "Notes the claim is false already for n = 3 (e.g. the three sides of a triangle, extended)"
+     ],
+     "model": "The step fails at \\( k = 2 \\), that is, in the passage from two lines to three. The argument infers \\( P = Q \\) from the fact that both points lie on every line among \\( \\ell_{2}, \\dots, \\ell_{k} \\). Two distinct non-parallel lines meet in exactly one point, so if that family contains at least two lines (which is the case exactly when \\( k \\ge 3 \\)), then \\( P \\) and \\( Q \\) both equal their unique intersection point and \\( P = Q \\) is justified. When \\( k = 2 \\) the family is the single line \\( \\ell_{2} \\), and two points on one line need not be equal. So \\( P(2) \\to P(3) \\) is not proved, and it is false: the three lines extending the sides of a triangle are pairwise non-parallel but have no common point. Since the chain breaks at its first link, the valid implications \\( P(k) \\to P(k+1) \\) for \\( k \\ge 3 \\) are never activated.",
+     "why": "This is the horse argument in geometric form: the overlap that the step relies on is too small at the smallest \\( k \\)."
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "Strong induction",
+   "kps": [
+    "k7",
+    "k8"
+   ],
+   "md": "In ordinary induction, \\( P(k+1) \\) is deduced from \\( P(k) \\) alone. Many statements do not decompose that way. To show that an integer has a prime factorization, one splits it as a product \\( ab \\), and the factors are much smaller than the integer, not one less. To show that an amount of postage can be paid with 4-cent and 5-cent stamps, one removes a 4-cent stamp and reaches the amount four smaller. This section develops the form of induction suited to such arguments.\n\n> **Principle of strong induction.** Let \\( P(n) \\) be a predicate defined for integers \\( n \\ge a \\). Suppose\n> 1. \\( P(a) \\) is true, and\n> 2. for every integer \\( k \\ge a \\), if \\( P(a), P(a+1), \\dots, P(k) \\) are all true, then \\( P(k+1) \\) is true.\n>\n> Then \\( P(n) \\) is true for every integer \\( n \\ge a \\).\n\nThe only change is the inductive hypothesis: you may assume every earlier case, not just the immediately preceding one. (The term **complete induction** is also used.)\n\n**Why it is valid.** Strong induction follows from ordinary induction. Let \\( Q(n) \\) be the statement \"\\( P(a), P(a+1), \\dots, P(n) \\) are all true\". Then \\( Q(a) \\) is \\( P(a) \\), which holds by (1). If \\( Q(k) \\) holds, then (2) gives \\( P(k+1) \\), so \\( Q(k+1) \\) holds. By ordinary induction \\( Q(n) \\) holds for all \\( n \\ge a \\), and \\( Q(n) \\) includes \\( P(n) \\). So strong induction is not a stronger axiom; it is ordinary induction applied to a stronger statement, and \"strong\" refers to the hypothesis.\n\n**Worked example 1 (existence of prime factorizations).** Every integer \\( n \\ge 2 \\) is a product of primes. (A prime counts as a product with one factor.)\n\n*Proof.* By strong induction on \\( n \\ge 2 \\).\n\n*Base case.* \\( 2 \\) is prime.\n\n*Inductive step.* Let \\( k \\ge 2 \\) and assume every integer \\( m \\) with \\( 2 \\le m \\le k \\) is a product of primes. Consider \\( k + 1 \\). If \\( k + 1 \\) is prime, it is a product of one prime. Otherwise \\( k + 1 \\) has a divisor \\( a \\) with \\( 1 < a < k + 1 \\), so \\( k + 1 = ab \\) where also \\( 1 < b < k + 1 \\). Thus \\( 2 \\le a, b \\le k \\), and by the inductive hypothesis \\( a = p_{1} \\cdots p_{r} \\) and \\( b = q_{1} \\cdots q_{s} \\) with every \\( p_{i}, q_{j} \\) prime. Then \\( k + 1 = p_{1} \\cdots p_{r}\\, q_{1} \\cdots q_{s} \\) is a product of primes. By strong induction the claim holds for every \\( n \\ge 2 \\). \\( \\blacksquare \\)\n\nOrdinary induction would be useless here: a factorization of \\( k \\) says nothing about \\( k + 1 \\). An immediate consequence is that every integer \\( n \\ge 2 \\) has a prime divisor, the fact assumed in Euclid's proof of the infinitude of primes in the previous topic. That the factorization is *unique* is a separate and deeper theorem, proved in the topic on modular arithmetic and primes.\n\n**Several base cases.** When the inductive step reaches back a fixed distance, the base cases must cover every value the step cannot reach.\n\n**Worked example 2.** Every integer amount \\( n \\ge 12 \\) (in cents) can be paid exactly with 4-cent and 5-cent stamps.\n\n*Base cases.* \\( 12 = 4 + 4 + 4 \\), \\( 13 = 4 + 4 + 5 \\), \\( 14 = 4 + 5 + 5 \\), \\( 15 = 5 + 5 + 5 \\).\n\n*Inductive step.* Let \\( k \\ge 15 \\) and assume every amount from 12 to \\( k \\) can be paid. Then \\( 12 \\le k - 3 \\le k \\), so \\( k - 3 \\) can be paid, and adding one 4-cent stamp pays \\( (k - 3) + 4 = k + 1 \\). By strong induction every amount \\( n \\ge 12 \\) can be paid. \\( \\blacksquare \\)\n\nWhy four base cases? The step deduces \\( P(k+1) \\) from \\( P(k - 3) \\), which requires \\( k - 3 \\ge 12 \\), that is, \\( k + 1 \\ge 16 \\). The values 12, 13, 14, 15 are not produced by the step and must be checked directly. In general, if the step derives \\( P(k+1) \\) from \\( P(k+1-j) \\), the base cases must be \\( P(a), \\dots, P(a + j - 1) \\). This fits the principle as stated: formally, the inductive step splits into cases, and for \\( k + 1 \\le a + j - 1 \\) the \"case\" is a direct verification that uses no hypothesis at all. With the single base case 12, the step would claim to obtain 13 from 9, a value the proof never established. The threshold 12 is sharp: 11 cannot be paid, since neither 11, 6 nor 1 is a multiple of 4.\n\n**The common mistakes.** Too few base cases, so that the step silently uses \\( P \\) at a value below \\( a \\); stating the inductive hypothesis as \\( P(k) \\) alone and then using \\( P(k - 3) \\); and, in factorization arguments, failing to check that the factors lie in the range \\( 2 \\le m \\le k \\) where the hypothesis applies.",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k8",
+     "type": "written",
+     "prompt": "Prove by strong induction that every integer amount \\( n \\ge 8 \\) can be paid exactly with 3-cent and 5-cent stamps. Explain how you determined the number of base cases, and show that 7 cannot be paid.",
+     "rubric": [
+      "Base cases 8 = 3 + 5, 9 = 3 + 3 + 3, 10 = 5 + 5",
+      "Step for k ≥ 10: k − 2 lies between 8 and k, so it can be paid; add a 3-cent stamp",
+      "Explains three base cases: the step reaches back 3 (uses P(k + 1 − 3)), valid only when k − 2 ≥ 8",
+      "Shows 7 is impossible: 7, 7 − 5 = 2 are not multiples of 3"
+     ],
+     "model": "*Base cases.* \\( 8 = 3 + 5 \\), \\( 9 = 3 + 3 + 3 \\), \\( 10 = 5 + 5 \\).\n\n*Inductive step.* Let \\( k \\ge 10 \\) and assume every amount from 8 to \\( k \\) can be paid. Since \\( k \\ge 10 \\), \\( 8 \\le k - 2 \\le k \\), so \\( k - 2 \\) can be paid; adding one 3-cent stamp pays \\( (k - 2) + 3 = k + 1 \\). By strong induction every \\( n \\ge 8 \\) can be paid. \\( \\blacksquare \\)\n\n*Number of base cases.* The step obtains \\( P(k+1) \\) from \\( P(k - 2) \\), three values back, and this requires \\( k - 2 \\ge 8 \\), i.e. \\( k + 1 \\ge 11 \\). So 8, 9 and 10 are not reached by the step and must be verified directly.\n\n*7 is impossible.* A payment of 7 uses no 5-cent stamp or one. With none, 7 would be a multiple of 3; with one, \\( 7 - 5 = 2 \\) would be. Neither is.",
+     "why": "The number of base cases equals the distance the step reaches back: removing a 3-cent stamp reaches back 3 values."
+    },
+    {
+     "id": "s5q2",
+     "kp": "k7",
+     "type": "written",
+     "prompt": "Prove by strong induction that every integer \\( n \\ge 1 \\) is a sum of distinct powers of 2 (a power of 2 alone counts as such a sum). Hint: let \\( 2^{j} \\) be the largest power of 2 with \\( 2^{j} \\le n \\), and consider \\( n - 2^{j} \\). Explain why ordinary induction from \\( n \\) to \\( n + 1 \\) is not the natural route.",
+     "rubric": [
+      "Base case n = 1 = 2⁰",
+      "Chooses the largest 2^j ≤ n; if n = 2^j done; else 1 ≤ n − 2^j < n and the strong hypothesis applies",
+      "Shows n − 2^j < 2^j (since n < 2^{j+1}), so every power in its representation is less than 2^j and adding 2^j keeps the powers distinct",
+      "Remarks that the reduction goes from n to n − 2^j, which is generally much smaller than n − 1"
+     ],
+     "model": "*Base case.* \\( 1 = 2^{0} \\).\n\n*Inductive step.* Let \\( k \\ge 1 \\) and assume every integer \\( m \\) with \\( 1 \\le m \\le k \\) is a sum of distinct powers of 2. Let \\( n = k + 1 \\) and let \\( 2^{j} \\) be the largest power of 2 with \\( 2^{j} \\le n \\); then \\( n < 2^{j+1} \\). If \\( n = 2^{j} \\), we are done. Otherwise \\( r = n - 2^{j} \\) satisfies \\( 1 \\le r \\le k \\), so by the hypothesis \\( r \\) is a sum of distinct powers of 2. Moreover \\( r < 2^{j+1} - 2^{j} = 2^{j} \\), so every power appearing in that sum is less than \\( 2^{j} \\). Hence \\( n = 2^{j} + r \\) is a sum of distinct powers of 2. By strong induction the claim holds for every \\( n \\ge 1 \\). \\( \\blacksquare \\)\n\nOrdinary induction would require obtaining a representation of \\( k + 1 \\) from one of \\( k \\); adding \\( 1 = 2^{0} \\) may repeat a power (for example \\( 3 = 2 + 1 \\) and \\( 4 = 3 + 1 \\)), and repairing that leads to carrying. The natural reduction is from \\( n \\) to \\( n - 2^{j} \\), a much smaller number, which is exactly what strong induction permits.",
+     "why": "This is the existence half of binary representation. Distinctness is the delicate point, secured by \\( r < 2^{j} \\)."
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "title": "The well-ordering principle and smallest counterexamples",
+   "kps": [
+    "k9"
+   ],
+   "md": "Induction climbs upward from a base case. An equivalent principle looks downward: if a statement about natural numbers had a counterexample, it would have a smallest one, and a smallest counterexample can often be shown to be impossible. This section states the principle, uses it to justify a step taken for granted in the previous topic, and shows that it is equivalent to induction.\n\n> **Well-ordering principle.** Every nonempty set of natural numbers has a least element.\n\nHere the natural numbers are \\( 0, 1, 2, \\dots \\); by shifting, the principle applies equally to every nonempty set of integers that are all \\( \\ge a \\) for some fixed integer \\( a \\). Each hypothesis matters. The empty set has no least element. The set of all integers has none, since \\( m - 1 < m \\) for every \\( m \\). The set of positive rational numbers has none, since \\( \\frac{r}{2} < r \\), as shown in an exercise of the previous topic. The principle expresses a specific property of the natural numbers: there is no infinite strictly decreasing sequence of natural numbers.\n\n**Proof by smallest counterexample.** To prove \\( P(n) \\) for all integers \\( n \\ge a \\):\n\n1. Verify \\( P(a) \\).\n2. Suppose, for contradiction, that the set \\( C = \\{ n \\ge a : P(n) \\text{ is false} \\} \\) is nonempty, and let \\( m \\) be its least element.\n3. Since \\( P(a) \\) is true, \\( m > a \\), so \\( m - 1 \\ge a \\); and every \\( n \\) with \\( a \\le n < m \\) satisfies \\( P(n) \\), because \\( m \\) is the smallest counterexample.\n4. Derive a contradiction, usually by proving \\( P(m) \\) from the smaller cases, or by constructing a counterexample smaller than \\( m \\).\n\n**Induction from well-ordering.** Step 3 shows how the principles are related. Suppose \\( P(a) \\) holds and \\( P(k) \\to P(k+1) \\) for every \\( k \\ge a \\). If \\( C \\) were nonempty, its least element \\( m \\) would satisfy \\( m > a \\) and \\( P(m - 1) \\); the inductive step with \\( k = m - 1 \\) gives \\( P(m) \\), contradicting \\( m \\in C \\). So \\( C \\) is empty, and \\( P(n) \\) holds for all \\( n \\ge a \\). This derives the principle of induction from the well-ordering principle. Conversely, well-ordering can be proved by strong induction (an exercise in the practice set). Ordinary induction, strong induction and well-ordering are therefore equivalent, and the choice among them is a matter of which makes the argument clearest.\n\n**Worked example 1 (lowest terms).** Every positive rational number \\( r \\) can be written as \\( \\frac{a}{b} \\) with positive integers \\( a, b \\) that have no common divisor greater than 1.\n\n*Proof.* Write \\( r = \\frac{p}{q} \\) with integers \\( p, q \\), \\( q \\ne 0 \\); since \\( r > 0 \\), also \\( r = \\frac{|p|}{|q|} \\) with \\( |p|, |q| \\ge 1 \\). So the set\n\\[ S = \\Bigl\\{ a \\ge 1 : r = \\tfrac{a}{b} \\text{ for some integer } b \\ge 1 \\Bigr\\} \\]\nis a nonempty set of positive integers. By well-ordering it has a least element \\( a_{0} \\); write \\( r = \\frac{a_{0}}{b_{0}} \\). If some integer \\( d > 1 \\) divided both \\( a_{0} \\) and \\( b_{0} \\), then \\( r = \\frac{a_{0}/d}{b_{0}/d} \\) would exhibit \\( a_{0}/d \\in S \\) with \\( a_{0}/d < a_{0} \\), contradicting minimality. So \\( a_{0} \\) and \\( b_{0} \\) have no common divisor greater than 1. \\( \\blacksquare \\)\n\nThis justifies the phrase \"we may assume the fraction is in lowest terms\" in the proof that \\( \\sqrt{2} \\) is irrational.\n\n**Worked example 2 (smallest counterexample).** Every integer \\( n \\ge 2 \\) has a prime divisor.\n\n*Proof.* Suppose not, and let \\( m \\) be the least integer \\( m \\ge 2 \\) with no prime divisor. Then \\( m \\) is not prime, since a prime divides itself. So \\( m = ab \\) with \\( 1 < a < m \\). Since \\( 2 \\le a < m \\), minimality of \\( m \\) gives a prime \\( p \\) with \\( p \\mid a \\); and \\( a \\mid m \\), so \\( p \\mid m \\) by transitivity of divisibility. This contradicts the choice of \\( m \\). \\( \\blacksquare \\)\n\nCompare the strong-induction proof of the previous section: minimality supplies the \"all smaller cases\" hypothesis automatically.\n\n**The common mistakes.** Applying well-ordering to a set that is not a set of integers bounded below (\"let \\( x \\) be the smallest positive real number with…\" is meaningless); failing to show the set is nonempty; omitting the base value, without which \\( m - 1 \\) may fall outside the range; and stopping at a statement about \\( m \\) that is not actually a contradiction.",
+   "questions": [
+    {
+     "id": "s6q1",
+     "kp": "k9",
+     "type": "written",
+     "prompt": "Prove by smallest counterexample that every integer \\( n \\ge 1 \\) can be written as \\( n = 2^{e} m \\) with \\( e \\ge 0 \\) an integer and \\( m \\) odd.",
+     "rubric": [
+      "Assumes a counterexample exists and takes the least one, n, by well-ordering",
+      "n cannot be odd, since then n = 2⁰·n",
+      "So n = 2j with 1 ≤ j < n; by minimality j = 2^e m with m odd",
+      "Then n = 2^{e+1} m, contradicting that n is a counterexample"
+     ],
+     "model": "*Proof.* Suppose, for contradiction, that some integer \\( \\ge 1 \\) has no such representation, and by the well-ordering principle let \\( n \\) be the least one. If \\( n \\) were odd, \\( n = 2^{0} n \\) would be a representation; so \\( n \\) is even, \\( n = 2j \\) with \\( j \\) an integer and \\( 1 \\le j < n \\). By minimality, \\( j \\) has a representation \\( j = 2^{e} m \\) with \\( e \\ge 0 \\) and \\( m \\) odd. Then \\( n = 2^{e+1} m \\) with \\( e + 1 \\ge 0 \\) and \\( m \\) odd, contradicting the choice of \\( n \\). Hence every \\( n \\ge 1 \\) has such a representation. \\( \\blacksquare \\)",
+     "why": "The number \\( m \\) is the odd part of \\( n \\), used as a pigeonhole device in the topic on pigeonhole and inclusion–exclusion."
+    },
+    {
+     "id": "s6q2",
+     "kp": "k9",
+     "type": "written",
+     "prompt": "Assuming the well-ordering principle, prove the principle of mathematical induction with base \\( a = 0 \\): if \\( P(0) \\) is true and \\( P(k) \\to P(k+1) \\) for every \\( k \\ge 0 \\), then \\( P(n) \\) is true for every \\( n \\ge 0 \\). Point out where each of the two hypotheses is used.",
+     "rubric": [
+      "Assumes for contradiction that C = {n ≥ 0 : P(n) false} is nonempty and takes its least element m",
+      "Uses P(0) to conclude m ≠ 0, so m − 1 ≥ 0",
+      "Uses minimality to get P(m − 1), then the inductive step with k = m − 1 to get P(m)",
+      "Contradiction with m ∈ C; concludes C is empty"
+     ],
+     "model": "*Proof.* Suppose \\( P(0) \\) holds and \\( P(k) \\to P(k+1) \\) for all \\( k \\ge 0 \\), and suppose, for contradiction, that \\( C = \\{ n \\ge 0 : P(n) \\text{ is false} \\} \\) is nonempty. By well-ordering, \\( C \\) has a least element \\( m \\). Since \\( P(0) \\) is true (first hypothesis), \\( m \\ne 0 \\), so \\( m - 1 \\ge 0 \\). Because \\( m - 1 < m \\) and \\( m \\) is least in \\( C \\), \\( m - 1 \\notin C \\), so \\( P(m - 1) \\) is true. The inductive step with \\( k = m - 1 \\) (second hypothesis) gives \\( P(m) \\), contradicting \\( m \\in C \\). Hence \\( C \\) is empty, and \\( P(n) \\) holds for every \\( n \\ge 0 \\). \\( \\blacksquare \\)",
+     "why": "The base case guarantees that the smallest counterexample has a predecessor in the range; the inductive step then rules it out."
+    }
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "t": "principle of mathematical induction",
+   "d": "If \\( P(a) \\) is true and \\( P(k) \\to P(k+1) \\) for every integer \\( k \\ge a \\), then \\( P(n) \\) is true for every integer \\( n \\ge a \\)."
+  },
+  {
+   "t": "base case",
+   "d": "The verification of \\( P(a) \\), the first instance of the statement, in an induction proof. Also called the basis step."
+  },
+  {
+   "t": "inductive step",
+   "d": "The proof of \\( \\forall k \\ge a\\,(P(k) \\to P(k+1)) \\) (or its strong form) in an induction proof."
+  },
+  {
+   "t": "inductive hypothesis",
+   "d": "The assumption, made inside the inductive step for an arbitrary \\( k \\ge a \\), that \\( P(k) \\) holds (in strong induction, that \\( P(a), \\dots, P(k) \\) all hold)."
+  },
+  {
+   "t": "summation notation (recursive definition)",
+   "d": "\\( \\sum_{i=1}^{1} a_{i} = a_{1} \\) and \\( \\sum_{i=1}^{k+1} a_{i} = \\sum_{i=1}^{k} a_{i} + a_{k+1} \\); the second equation is the link used in inductive proofs about sums."
+  },
+  {
+   "t": "auxiliary inequality",
+   "d": "An inequality proved inside the inductive step of an inequality proof to close the gap between the bound supplied by the inductive hypothesis and the goal.",
+   "ex": "In proving \\( 2^{n} > n^{2} \\), the auxiliary inequality is \\( 2k^{2} \\ge (k+1)^{2} \\) for \\( k \\ge 3 \\)."
+  },
+  {
+   "t": "strengthening the inductive hypothesis",
+   "d": "Proving a stronger statement than the one required, so that the inductive hypothesis provides enough to carry the inductive step.",
+   "ex": "\\( \\sum_{i=1}^{n} 1/i^{2} \\le 2 - 1/n \\) instead of \\( < 2 \\)."
+  },
+  {
+   "t": "Bernoulli's inequality",
+   "d": "For every real \\( x \\ge -1 \\) and integer \\( n \\ge 0 \\), \\( (1+x)^{n} \\ge 1 + nx \\)."
+  },
+  {
+   "t": "strong induction",
+   "d": "If \\( P(a) \\) is true and, for every \\( k \\ge a \\), \\( P(a), \\dots, P(k) \\) together imply \\( P(k+1) \\), then \\( P(n) \\) holds for all \\( n \\ge a \\). Also called complete induction; equivalent to ordinary induction."
+  },
+  {
+   "t": "well-ordering principle",
+   "d": "Every nonempty set of natural numbers has a least element (equivalently, every nonempty set of integers bounded below has a least element)."
+  },
+  {
+   "t": "proof by smallest counterexample",
+   "d": "A proof that assumes the set of counterexamples is nonempty, takes its least element by well-ordering, and derives a contradiction."
+  },
+  {
+   "t": "prime factorization (existence)",
+   "d": "Every integer \\( n \\ge 2 \\) is a product of one or more primes; proved by strong induction."
+  },
+  {
+   "t": "Peano axioms",
+   "d": "The standard axioms for the natural numbers, one of which is the principle of induction."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "term",
+   "front": "State the principle of mathematical induction (starting at \\( a \\)).",
+   "back": "If \\( P(a) \\) holds and \\( P(k) \\to P(k+1) \\) for every integer \\( k \\ge a \\), then \\( P(n) \\) holds for every integer \\( n \\ge a \\).",
+   "kp": "k1"
+  },
+  {
+   "id": "c2",
+   "type": "term",
+   "front": "Define: inductive hypothesis",
+   "back": "The assumption \\( P(k) \\), for an arbitrary integer \\( k \\ge a \\), made inside the inductive step in order to deduce \\( P(k+1) \\).",
+   "kp": "k2"
+  },
+  {
+   "id": "c3",
+   "type": "concept",
+   "front": "Why is assuming \\( P(k) \\) in the inductive step not circular?",
+   "back": "\\( k \\) is one arbitrary integer and \\( P(k) \\) is the hypothesis of a conditional; the theorem \\( \\forall n\\,P(n) \\) is never assumed.",
+   "kp": "k1"
+  },
+  {
+   "id": "c4",
+   "type": "concept",
+   "front": "Give a false statement whose inductive step is valid.",
+   "back": "\\\"\\( n^{2} + n \\) is odd\\\": if \\( k^{2} + k \\) is odd, so is \\( (k^{2} + k) + 2(k+1) \\). The base \\( 1^{2} + 1 = 2 \\) fails.",
+   "kp": "k6"
+  },
+  {
+   "id": "c5",
+   "type": "formula",
+   "front": "\\( \\sum_{i=1}^{n} i \\)",
+   "back": "\\( \\frac{n(n+1)}{2} \\)",
+   "kp": "k3"
+  },
+  {
+   "id": "c6",
+   "type": "formula",
+   "front": "\\( \\sum_{i=1}^{n} i^{2} \\)",
+   "back": "\\( \\frac{n(n+1)(2n+1)}{6} \\)",
+   "kp": "k3"
+  },
+  {
+   "id": "c7",
+   "type": "formula",
+   "front": "\\( \\sum_{i=0}^{n} 2^{i} \\)",
+   "back": "\\( 2^{n+1} - 1 \\)",
+   "kp": "k3"
+  },
+  {
+   "id": "c8",
+   "type": "concept",
+   "front": "Standard first move in the inductive step for a sum formula",
+   "back": "Separate the last term: \\( \\sum_{i=1}^{k+1} a_{i} = \\sum_{i=1}^{k} a_{i} + a_{k+1} \\), then apply the hypothesis.",
+   "kp": "k3"
+  },
+  {
+   "id": "c9",
+   "type": "concept",
+   "front": "Standard move in the inductive step for \\( d \\mid f(n) \\)",
+   "back": "Write \\( f(k) = dm \\) and express \\( f(k+1) \\) as a multiple of \\( f(k) \\) plus visible multiples of \\( d \\), then exhibit the new integer.",
+   "kp": "k4"
+  },
+  {
+   "id": "c10",
+   "type": "problem",
+   "front": "Least \\( n_{0} \\) such that \\( 2^{n} > n^{2} \\) for every \\( n \\ge n_{0} \\)",
+   "back": "\\( n_{0} = 5 \\) (\\( 32 > 25 \\)); it fails at \\( n = 2, 3, 4 \\).",
+   "kp": "k5",
+   "answer": "5",
+   "check": "number"
+  },
+  {
+   "id": "c11",
+   "type": "concept",
+   "front": "Why can a stronger statement be easier to prove by induction?",
+   "back": "The stronger statement is also a stronger inductive hypothesis, which may supply exactly what the step needs.",
+   "kp": "k10"
+  },
+  {
+   "id": "c12",
+   "type": "term",
+   "front": "State the principle of strong induction.",
+   "back": "If \\( P(a) \\) holds and, for every \\( k \\ge a \\), \\( P(a) \\wedge \\cdots \\wedge P(k) \\) implies \\( P(k+1) \\), then \\( P(n) \\) holds for all \\( n \\ge a \\).",
+   "kp": "k7"
+  },
+  {
+   "id": "c13",
+   "type": "concept",
+   "front": "How is strong induction derived from ordinary induction?",
+   "back": "Apply ordinary induction to \\( Q(n) \\): \\\"\\( P(a), \\dots, P(n) \\) all hold\\\".",
+   "kp": "k7"
+  },
+  {
+   "id": "c14",
+   "type": "concept",
+   "front": "The step derives \\( P(k+1) \\) from \\( P(k+1-j) \\). Which base cases are needed?",
+   "back": "\\( P(a), P(a+1), \\dots, P(a+j-1) \\): the \\( j \\) values the step cannot reach.",
+   "kp": "k8"
+  },
+  {
+   "id": "c15",
+   "type": "concept",
+   "front": "Where does the \"all horses are the same color\" induction fail?",
+   "back": "At \\( k = 1 \\): the sets \\( \\{h_{1}\\} \\) and \\( \\{h_{2}\\} \\) do not overlap, so \\( P(1) \\to P(2) \\) is not proved.",
+   "kp": "k6"
+  },
+  {
+   "id": "c16",
+   "type": "term",
+   "front": "State the well-ordering principle.",
+   "back": "Every nonempty set of natural numbers has a least element.",
+   "kp": "k9"
+  },
+  {
+   "id": "c17",
+   "type": "concept",
+   "front": "Why does the set of positive rationals have no least element?",
+   "back": "If \\( r > 0 \\) is rational, so is \\( r/2 \\), and \\( r/2 < r \\).",
+   "kp": "k9"
+  },
+  {
+   "id": "c18",
+   "type": "concept",
+   "front": "Outline of a proof by smallest counterexample",
+   "back": "Check \\( P(a) \\); assume counterexamples exist; take the least, \\( m > a \\); all \\( n < m \\) satisfy \\( P \\); derive a contradiction.",
+   "kp": "k9"
+  },
+  {
+   "id": "c19",
+   "type": "problem",
+   "front": "\\( \\sum_{i=1}^{10} i^{2} \\)",
+   "back": "\\( \\frac{10 \\cdot 11 \\cdot 21}{6} = 385 \\)",
+   "kp": "k3",
+   "answer": "385",
+   "check": "number"
+  },
+  {
+   "id": "c20",
+   "type": "problem",
+   "front": "Largest amount that cannot be paid with 4-cent and 5-cent stamps",
+   "back": "11 (12, 13, 14, 15 can, and adding 4-cent stamps reaches everything beyond).",
+   "kp": "k8",
+   "answer": "11",
+   "check": "number"
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k3",
+   "type": "written",
+   "prompt": "Prove by induction that for every integer \\( n \\ge 1 \\), \\( \\sum_{i=1}^{n} i^{3} = \\left( \\frac{n(n+1)}{2} \\right)^{2} \\).",
+   "rubric": [
+    "Base case n = 1: 1 = 1²",
+    "Separates the last term: k²(k + 1)²/4 + (k + 1)³",
+    "Factors (k + 1)²[k² + 4(k + 1)]/4 = (k + 1)²(k + 2)²/4",
+    "Concludes by induction"
+   ],
+   "model": "*Base case.* \\( n = 1 \\): \\( 1^{3} = 1 = \\left(\\frac{1 \\cdot 2}{2}\\right)^{2} \\).\n\n*Inductive step.* Let \\( k \\ge 1 \\) and assume \\( \\sum_{i=1}^{k} i^{3} = \\frac{k^{2}(k+1)^{2}}{4} \\). Then\n\\[ \\sum_{i=1}^{k+1} i^{3} = \\frac{k^{2}(k+1)^{2}}{4} + (k+1)^{3} = \\frac{(k+1)^{2}\\bigl[k^{2} + 4(k+1)\\bigr]}{4} = \\frac{(k+1)^{2}(k+2)^{2}}{4} = \\left(\\frac{(k+1)(k+2)}{2}\\right)^{2}. \\]\nBy induction the formula holds for all \\( n \\ge 1 \\). \\( \\blacksquare \\)",
+   "why": "Factoring out \\( (k+1)^{2} \\) leaves \\( k^{2} + 4k + 4 = (k+2)^{2} \\). Note the identity says the sum of the first \\( n \\) cubes is the square of the sum of the first \\( n \\) integers."
+  },
+  {
+   "id": "p2",
+   "kp": "k3",
+   "type": "written",
+   "prompt": "Prove by induction that for every integer \\( n \\ge 1 \\), \\( \\sum_{i=1}^{n} \\frac{1}{i(i+1)} = \\frac{n}{n+1} \\).",
+   "rubric": [
+    "Base case n = 1: 1/2 = 1/2",
+    "Adds the term 1/((k + 1)(k + 2)) to k/(k + 1)",
+    "Combines to (k² + 2k + 1)/((k + 1)(k + 2)) = (k + 1)/(k + 2)",
+    "Concludes by induction"
+   ],
+   "model": "*Base case.* \\( n = 1 \\): \\( \\frac{1}{1 \\cdot 2} = \\frac{1}{2} = \\frac{1}{1 + 1} \\).\n\n*Inductive step.* Let \\( k \\ge 1 \\) and assume \\( \\sum_{i=1}^{k} \\frac{1}{i(i+1)} = \\frac{k}{k+1} \\). Then\n\\[ \\sum_{i=1}^{k+1} \\frac{1}{i(i+1)} = \\frac{k}{k+1} + \\frac{1}{(k+1)(k+2)} = \\frac{k(k+2) + 1}{(k+1)(k+2)} = \\frac{(k+1)^{2}}{(k+1)(k+2)} = \\frac{k+1}{k+2}. \\]\nBy induction the formula holds for all \\( n \\ge 1 \\). \\( \\blacksquare \\)",
+   "why": "The same result follows without induction from \\( \\frac{1}{i(i+1)} = \\frac{1}{i} - \\frac{1}{i+1} \\), a telescoping sum; induction verifies the closed form once it has been guessed."
+  },
+  {
+   "id": "p3",
+   "kp": "k4",
+   "type": "written",
+   "prompt": "Prove by induction that \\( 7 \\mid (3^{2n} - 2^{n}) \\) for every integer \\( n \\ge 0 \\).",
+   "rubric": [
+    "Base case n = 0: 1 − 1 = 0",
+    "Rewrites 3^{2(k+1)} − 2^{k+1} = 9·9^k − 2·2^k",
+    "Splits as 9(9^k − 2^k) + 7·2^k",
+    "Uses 9^k − 2^k = 7m to get 7(9m + 2^k); concludes"
+   ],
+   "model": "Note \\( 3^{2n} = 9^{n} \\).\n\n*Base case.* \\( n = 0 \\): \\( 9^{0} - 2^{0} = 0 = 7 \\cdot 0 \\).\n\n*Inductive step.* Let \\( k \\ge 0 \\) and assume \\( 9^{k} - 2^{k} = 7m \\) for an integer \\( m \\). Then\n\\[ 9^{k+1} - 2^{k+1} = 9 \\cdot 9^{k} - 2 \\cdot 2^{k} = 9(9^{k} - 2^{k}) + 7 \\cdot 2^{k} = 7\\bigl(9m + 2^{k}\\bigr), \\]\nand \\( 9m + 2^{k} \\) is an integer. By induction, \\( 7 \\mid (3^{2n} - 2^{n}) \\) for all \\( n \\ge 0 \\). \\( \\blacksquare \\)",
+   "why": "Adding and subtracting \\( 9 \\cdot 2^{k} \\) makes \\( f(k) \\) appear; the leftover \\( (9 - 2)2^{k} \\) is visibly a multiple of 7."
+  },
+  {
+   "id": "p4",
+   "kp": "k5",
+   "type": "written",
+   "prompt": "Prove by induction that \\( \\sum_{i=1}^{n} \\frac{1}{\\sqrt{i}} \\ge \\sqrt{n} \\) for every integer \\( n \\ge 1 \\). State the auxiliary inequality your step requires and prove it.",
+   "rubric": [
+    "Base case n = 1: 1 ≥ 1",
+    "Step reduces to √k + 1/√(k + 1) ≥ √(k + 1)",
+    "Auxiliary inequality: multiplying by √(k + 1) > 0 gives √(k(k + 1)) + 1 ≥ k + 1, i.e. √(k(k + 1)) ≥ k",
+    "Justifies √(k(k + 1)) ≥ √(k²) = k and concludes"
+   ],
+   "model": "*Base case.* \\( n = 1 \\): \\( 1 \\ge 1 \\).\n\n*Inductive step.* Let \\( k \\ge 1 \\) and assume \\( \\sum_{i=1}^{k} \\frac{1}{\\sqrt{i}} \\ge \\sqrt{k} \\). Then \\( \\sum_{i=1}^{k+1} \\frac{1}{\\sqrt{i}} \\ge \\sqrt{k} + \\frac{1}{\\sqrt{k+1}} \\), so it suffices to prove the auxiliary inequality\n\\[ \\sqrt{k} + \\frac{1}{\\sqrt{k+1}} \\ge \\sqrt{k+1}. \\]\nMultiplying by \\( \\sqrt{k+1} > 0 \\), it is equivalent to \\( \\sqrt{k(k+1)} + 1 \\ge k + 1 \\), that is, \\( \\sqrt{k(k+1)} \\ge k \\). This holds because \\( k(k+1) \\ge k^{2} \\) and the square root is increasing. By induction the inequality holds for every \\( n \\ge 1 \\). \\( \\blacksquare \\)",
+   "why": "Each term \\( \\frac{1}{\\sqrt{i}} \\) is at least \\( \\frac{1}{\\sqrt{n}} \\) for \\( i \\le n \\), so the sum is at least \\( n \\cdot \\frac{1}{\\sqrt{n}} = \\sqrt{n} \\); the induction proof formalizes a bound that also has this direct proof."
+  },
+  {
+   "id": "p5",
+   "kp": "k5",
+   "type": "number",
+   "prompt": "The inequality \\( 2^{n} > n^{3} \\) holds for \\( n = 0 \\) and \\( n = 1 \\), fails for some later values, and then holds forever. Find the least integer \\( n_{0} \\) such that \\( 2^{n} > n^{3} \\) for every integer \\( n \\ge n_{0} \\).",
+   "answer": "10",
+   "why": "\\( 2^{9} = 512 < 729 = 9^{3} \\) but \\( 2^{10} = 1024 > 1000 = 10^{3} \\). For the inductive step with \\( k \\ge 10 \\): \\( 2^{k+1} > 2k^{3} \\ge (k+1)^{3} \\), since \\( \\left(1 + \\frac{1}{k}\\right)^{3} \\le 1.1^{3} = 1.331 \\le 2 \\). So \\( n_{0} = 10 \\)."
+  },
+  {
+   "id": "p6",
+   "kp": "k8",
+   "type": "written",
+   "prompt": "Find the error in the following \\\"proof\\\" that \\( 2^{n} = 1 \\) for every integer \\( n \\ge 0 \\). *Strong induction.* Base: \\( 2^{0} = 1 \\). Step: let \\( k \\ge 0 \\) and assume \\( 2^{j} = 1 \\) for all \\( 0 \\le j \\le k \\). Then \\( 2^{k+1} = \\frac{2^{k} \\cdot 2^{k}}{2^{k-1}} = \\frac{1 \\cdot 1}{1} = 1 \\).",
+   "rubric": [
+    "The algebraic identity 2^{k+1} = 2^k·2^k / 2^{k−1} is correct",
+    "The step uses the hypothesis at j = k − 1",
+    "At k = 0 this is j = −1, outside the range 0 ≤ j ≤ k, so P(1) is not established",
+    "Concludes the chain breaks at the first link (2¹ = 2), and a second base case would be needed but is false"
+   ],
+   "model": "The identity \\( 2^{k+1} = \\frac{2^{k} \\cdot 2^{k}}{2^{k-1}} \\) is correct, and for \\( k \\ge 1 \\) both \\( k \\) and \\( k - 1 \\) lie in the range \\( 0 \\le j \\le k \\), so the step \\( P(0), \\dots, P(k) \\Rightarrow P(k+1) \\) is valid for \\( k \\ge 1 \\). For \\( k = 0 \\), however, the step uses \\( 2^{k-1} = 2^{-1} = 1 \\), which is \\( P(-1) \\), not part of the hypothesis (and false: \\( 2^{-1} = \\frac{1}{2} \\)). So \\( P(1) \\) is never derived. Because the step reaches back two values, it needs two base cases, \\( P(0) \\) and \\( P(1) \\), and \\( P(1) \\), namely \\( 2 = 1 \\), is false. The chain breaks at its first link.",
+   "why": "A step that uses \\( P(k-1) \\) must be checked at the smallest \\( k \\); if it reaches below the base, another base case is required."
+  },
+  {
+   "id": "p7",
+   "kp": "k7",
+   "type": "written",
+   "prompt": "The Fibonacci numbers are defined by \\( F_{1} = F_{2} = 1 \\) and \\( F_{n} = F_{n-1} + F_{n-2} \\) for \\( n \\ge 3 \\). Prove by strong induction that \\( F_{n} < 2^{n} \\) for every \\( n \\ge 1 \\), and explain why two base cases are needed.",
+   "rubric": [
+    "Base cases F₁ = 1 < 2 and F₂ = 1 < 4",
+    "Step for k + 1 ≥ 3: F_{k+1} = F_k + F_{k−1} < 2^k + 2^{k−1}",
+    "Bounds 2^k + 2^{k−1} < 2^k + 2^k = 2^{k+1}",
+    "Explains two base cases: the step uses k − 1, so it is valid only for k ≥ 2, i.e. k + 1 ≥ 3"
+   ],
+   "model": "*Base cases.* \\( F_{1} = 1 < 2 \\) and \\( F_{2} = 1 < 4 \\).\n\n*Inductive step.* Let \\( k \\ge 2 \\) and assume \\( F_{j} < 2^{j} \\) for all \\( 1 \\le j \\le k \\). Then \\( k + 1 \\ge 3 \\), so the recurrence applies, and since \\( k - 1 \\ge 1 \\) the hypothesis applies to both \\( k \\) and \\( k - 1 \\):\n\\[ F_{k+1} = F_{k} + F_{k-1} < 2^{k} + 2^{k-1} < 2^{k} + 2^{k} = 2^{k+1}. \\]\nBy strong induction, \\( F_{n} < 2^{n} \\) for all \\( n \\ge 1 \\). \\( \\blacksquare \\)\n\nTwo base cases are needed because the step uses the two preceding values; it is valid only when \\( k - 1 \\ge 1 \\), so \\( F_{2} \\) cannot be obtained from the step (the recurrence does not even define it) and must be checked directly.",
+   "why": "The recurrence is defined from \\( n = 3 \\); correspondingly the step begins at \\( k + 1 = 3 \\), and \\( n = 1, 2 \\) are base cases."
+  },
+  {
+   "id": "p8",
+   "kp": "k7",
+   "type": "written",
+   "prompt": "Show that strong induction is a consequence of ordinary induction: given \\( P(a) \\) and, for every \\( k \\ge a \\), \\( [P(a) \\wedge \\cdots \\wedge P(k)] \\to P(k+1) \\), prove \\( P(n) \\) for all \\( n \\ge a \\) using only the ordinary principle.",
+   "rubric": [
+    "Defines Q(n): P(a), …, P(n) are all true",
+    "Base: Q(a) is P(a)",
+    "Step: Q(k) gives P(k + 1) by the strong hypothesis, hence Q(k + 1) = Q(k) ∧ P(k + 1)",
+    "Concludes Q(n), hence P(n), for all n ≥ a by ordinary induction"
+   ],
+   "model": "Let \\( Q(n) \\) be the statement \"\\( P(j) \\) holds for every integer \\( j \\) with \\( a \\le j \\le n \\)\".\n\n*Base case.* \\( Q(a) \\) is the statement \\( P(a) \\), which is given.\n\n*Inductive step.* Let \\( k \\ge a \\) and assume \\( Q(k) \\), that is, \\( P(a), \\dots, P(k) \\). By the given strong step, \\( P(k+1) \\) holds. Together with \\( Q(k) \\) this is \\( Q(k+1) \\).\n\nBy ordinary induction, \\( Q(n) \\) holds for every \\( n \\ge a \\). Since \\( Q(n) \\) includes \\( P(n) \\), \\( P(n) \\) holds for every \\( n \\ge a \\). \\( \\blacksquare \\)",
+   "why": "Strong induction is ordinary induction applied to the cumulative statement \\( Q(n) \\)."
+  },
+  {
+   "id": "p9",
+   "kp": "k9",
+   "type": "written",
+   "prompt": "Prove the well-ordering principle from strong induction: if \\( S \\) is a set of natural numbers with no least element, then \\( S \\) is empty. (Show by strong induction that \\( n \\notin S \\) for every \\( n \\ge 0 \\).)",
+   "rubric": [
+    "Let P(n): n ∉ S",
+    "Base: if 0 ∈ S then 0 would be least (no smaller natural numbers), so 0 ∉ S",
+    "Step: if 0, …, k ∉ S and k + 1 ∈ S, then k + 1 is least in S, a contradiction; so k + 1 ∉ S",
+    "Concludes S is empty, which is the contrapositive of well-ordering"
+   ],
+   "model": "Let \\( S \\) be a set of natural numbers with no least element, and let \\( P(n) \\) be \"\\( n \\notin S \\)\".\n\n*Base case.* If \\( 0 \\in S \\), then \\( 0 \\) would be the least element of \\( S \\), since no natural number is smaller. So \\( 0 \\notin S \\).\n\n*Inductive step.* Let \\( k \\ge 0 \\) and assume \\( 0, 1, \\dots, k \\notin S \\). If \\( k + 1 \\in S \\), then every element of \\( S \\) is at least \\( k + 1 \\), so \\( k + 1 \\) would be the least element of \\( S \\), a contradiction. So \\( k + 1 \\notin S \\).\n\nBy strong induction, no natural number belongs to \\( S \\): \\( S \\) is empty. Contrapositively, every nonempty set of natural numbers has a least element. \\( \\blacksquare \\)",
+   "why": "Together with the derivation of induction from well-ordering, this shows the principles are equivalent."
+  },
+  {
+   "id": "p10",
+   "kp": "k8",
+   "type": "mcq",
+   "prompt": "You want to prove \\( P(n) \\) for all integers \\( n \\ge 0 \\) by strong induction, and your inductive step derives \\( P(k+1) \\) from \\( P(k-2) \\) alone, an argument valid whenever \\( k - 2 \\ge 0 \\). What is the smallest set of base cases that makes the proof complete?",
+   "options": [
+    "\\( P(0), P(1), P(2) \\)",
+    "\\( P(0) \\) only",
+    "\\( P(0), P(1) \\)",
+    "\\( P(0), P(1), P(2), P(3) \\)"
+   ],
+   "answer": 0,
+   "why": "The step is valid for \\( k \\ge 2 \\), so it produces \\( P(3) \\) from \\( P(0) \\), \\( P(4) \\) from \\( P(1) \\), and so on. The values \\( P(0), P(1), P(2) \\) are never produced by the step and must be verified directly. With \\( P(0) \\) alone, the step reaches only \\( P(3), P(6), P(9), \\dots \\); with \\( P(0) \\) and \\( P(1) \\), the values \\( P(2), P(5), \\dots \\) are never reached. Checking \\( P(3) \\) as well is harmless but unnecessary, since the step yields it from \\( P(0) \\)."
+  },
+  {
+   "id": "p11",
+   "kp": "k1",
+   "type": "written",
+   "prompt": "Explain why each of the two hypotheses of the principle of induction is indispensable. For each, give a false statement \\( P(n) \\) (for \\( n \\ge 1 \\)) for which the other hypothesis holds, and verify that it does.",
+   "rubric": [
+    "Base case indispensable: example with valid step but false base, e.g. P(n): n > n + 1 or n² + n odd",
+    "Verifies the step for that example",
+    "Step indispensable: example with true base but false statement, e.g. P(n): n < 3 (true for n = 1, false for n = 3)",
+    "Explains that the conclusion requires both the start and the propagation"
+   ],
+   "model": "*The base case is indispensable.* Let \\( P(n) \\) be \"\\( n > n + 1 \\)\". The inductive step holds: if \\( k > k + 1 \\), adding 1 gives \\( k + 1 > k + 2 \\). But \\( P(1) \\), \"\\( 1 > 2 \\)\", is false, and in fact \\( P(n) \\) is false for every \\( n \\). A valid step only transmits truth; with nothing true to transmit, it proves nothing.\n\n*The inductive step is indispensable.* Let \\( P(n) \\) be \"\\( n < 3 \\)\". The base case \\( P(1) \\) is true (and so is \\( P(2) \\)), but \\( P(3) \\) is false. Here the conditional \\( P(k) \\to P(k+1) \\) fails at \\( k = 2 \\), so the step cannot be proved for all \\( k \\ge 1 \\). Checking finitely many cases never replaces the step.\n\nThe principle needs both: the base case starts the chain, and the step, valid for every \\( k \\ge a \\), carries it to every \\( n \\).",
+   "why": "Base case and inductive step play the roles of the first domino and of the spacing between dominoes; neither alone makes every domino fall."
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k3",
+   "type": "written",
+   "prompt": "Prove by induction that for every integer \\( n \\ge 1 \\), \\( \\sum_{i=1}^{n} (2i - 1)^{2} = \\frac{n(2n-1)(2n+1)}{3} \\).",
+   "rubric": [
+    "Base case n = 1: 1 = 1·1·3/3",
+    "Inductive hypothesis and goal (k + 1)(2k + 1)(2k + 3)/3 stated",
+    "Adds (2k + 1)² and factors (2k + 1)[k(2k − 1) + 3(2k + 1)]/3",
+    "Shows 2k² + 5k + 3 = (k + 1)(2k + 3) and concludes"
+   ],
+   "model": "*Base case.* \\( n = 1 \\): left side \\( 1^{2} = 1 \\); right side \\( \\frac{1 \\cdot 1 \\cdot 3}{3} = 1 \\).\n\n*Inductive step.* Let \\( k \\ge 1 \\) and assume \\( \\sum_{i=1}^{k} (2i-1)^{2} = \\frac{k(2k-1)(2k+1)}{3} \\). Goal: \\( \\sum_{i=1}^{k+1} (2i-1)^{2} = \\frac{(k+1)(2k+1)(2k+3)}{3} \\). The new term is \\( (2(k+1) - 1)^{2} = (2k+1)^{2} \\), so\n\\[ \\sum_{i=1}^{k+1} (2i-1)^{2} = \\frac{k(2k-1)(2k+1)}{3} + (2k+1)^{2} = \\frac{(2k+1)\\bigl[k(2k-1) + 3(2k+1)\\bigr]}{3} = \\frac{(2k+1)(2k^{2} + 5k + 3)}{3}. \\]\nSince \\( 2k^{2} + 5k + 3 = (k+1)(2k+3) \\), this is the goal. By induction the formula holds for all \\( n \\ge 1 \\). \\( \\blacksquare \\)",
+   "why": "The common factor \\( 2k + 1 \\) of the hypothesis and the new term is also a factor of the target; extracting it first keeps the algebra short."
+  },
+  {
+   "id": "e2",
+   "kp": "k4",
+   "type": "written",
+   "prompt": "Prove by induction that \\( 64 \\mid (9^{n} - 8n - 1) \\) for every integer \\( n \\ge 0 \\).",
+   "rubric": [
+    "Base case n = 0: 1 − 0 − 1 = 0",
+    "Assumes 9^k − 8k − 1 = 64m",
+    "Rewrites 9^{k+1} − 8(k + 1) − 1 = 9(9^k − 8k − 1) + 64k",
+    "Concludes 64(9m + k) and invokes induction"
+   ],
+   "model": "*Base case.* \\( n = 0 \\): \\( 9^{0} - 0 - 1 = 0 = 64 \\cdot 0 \\).\n\n*Inductive step.* Let \\( k \\ge 0 \\) and assume \\( 9^{k} - 8k - 1 = 64m \\) for an integer \\( m \\). Then\n\\[ 9^{k+1} - 8(k+1) - 1 = 9 \\cdot 9^{k} - 8k - 9 = 9\\bigl(9^{k} - 8k - 1\\bigr) + 72k + 9 - 8k - 9 = 9\\bigl(9^{k} - 8k - 1\\bigr) + 64k. \\]\nHence \\( 9^{k+1} - 8(k+1) - 1 = 64(9m + k) \\), and \\( 9m + k \\) is an integer. By induction, \\( 64 \\mid (9^{n} - 8n - 1) \\) for every \\( n \\ge 0 \\). \\( \\blacksquare \\)",
+   "why": "Multiplying the hypothesis by 9 produces \\( 9 \\cdot 9^{k} \\); the correction \\( 9(8k + 1) - (8k + 9) = 64k \\) is exactly a multiple of 64."
+  },
+  {
+   "id": "e3",
+   "kp": "k10",
+   "type": "written",
+   "prompt": "Let \\( a_{n} = \\frac{1}{2} \\cdot \\frac{3}{4} \\cdots \\frac{2n-1}{2n} \\). Prove that \\( a_{n} \\le \\frac{1}{\\sqrt{3n+1}} \\) for every \\( n \\ge 1 \\). Then explain why an induction proof of the weaker bound \\( a_{n} \\le \\frac{1}{\\sqrt{3n}} \\) does not go through directly, even though it follows from the stronger one.",
+   "rubric": [
+    "Base case n = 1: 1/2 ≤ 1/√4",
+    "Step reduces to ((2k + 1)/(2k + 2))² ≤ (3k + 1)/(3k + 4)",
+    "Verifies (2k + 1)²(3k + 4) = 12k³ + 28k² + 19k + 4 ≤ 12k³ + 28k² + 20k + 4 = (2k + 2)²(3k + 1)",
+    "Weaker bound: step would need ((2k + 1)/(2k + 2))² ≤ 3k/(3k + 3), which is false (after expansion it is equivalent to 3k + 3 ≤ 0); a stronger hypothesis is needed"
+   ],
+   "model": "*Base case.* \\( a_{1} = \\frac{1}{2} = \\frac{1}{\\sqrt{4}} \\).\n\n*Inductive step.* Let \\( k \\ge 1 \\) and assume \\( a_{k} \\le \\frac{1}{\\sqrt{3k+1}} \\). Then \\( a_{k+1} = a_{k} \\cdot \\frac{2k+1}{2k+2} \\le \\frac{1}{\\sqrt{3k+1}} \\cdot \\frac{2k+1}{2k+2} \\), so it suffices that\n\\[ \\frac{2k+1}{(2k+2)\\sqrt{3k+1}} \\le \\frac{1}{\\sqrt{3k+4}}, \\quad\\text{i.e.}\\quad (2k+1)^{2}(3k+4) \\le (2k+2)^{2}(3k+1), \\]\nafter squaring and clearing positive denominators. Expanding, the left side is \\( 12k^{3} + 28k^{2} + 19k + 4 \\) and the right side is \\( 12k^{3} + 28k^{2} + 20k + 4 \\); they differ by \\( k \\ge 0 \\). So \\( a_{k+1} \\le \\frac{1}{\\sqrt{3(k+1)+1}} \\), and by induction the bound holds for all \\( n \\ge 1 \\). \\( \\blacksquare \\)\n\n*The weaker bound.* With the hypothesis \\( a_{k} \\le \\frac{1}{\\sqrt{3k}} \\), the step would need \\( (2k+1)^{2}(3k+3) \\le (2k+2)^{2} \\cdot 3k \\). The left side is \\( 12k^{3} + 24k^{2} + 15k + 3 \\) and the right side is \\( 12k^{3} + 24k^{2} + 12k \\), so the needed inequality is \\( 3k + 3 \\le 0 \\), false for every \\( k \\ge 1 \\). The weaker hypothesis does not supply enough to reach the next case, although the weaker statement is true (it follows from the stronger one, since \\( \\sqrt{3n} < \\sqrt{3n+1} \\)). This is strengthening the inductive hypothesis.",
+   "why": "The \\\"+1\\\" in \\( 3n + 1 \\) builds in exactly the margin the inductive step consumes; the difference of the two sides of the key inequality is \\( k \\)."
+  },
+  {
+   "id": "e4",
+   "kp": "k8",
+   "type": "written",
+   "prompt": "Prove that every integer amount \\( n \\ge 24 \\) can be paid exactly with 5-cent and 7-cent stamps, using strong induction with the minimal number of base cases, and prove that 23 cannot be paid.",
+   "rubric": [
+    "Five base cases: 24 = 5·2 + 7·2, 25 = 5·5, 26 = 5·1 + 7·3, 27 = 5·4 + 7·1, 28 = 7·4",
+    "Step for k ≥ 28: k − 4 lies in [24, k], add a 5-cent stamp",
+    "Explains five base cases because the step reaches back 5",
+    "23 impossible: 23, 16, 9, 2 (subtracting 0 to 3 sevens) are not multiples of 5"
+   ],
+   "model": "*Base cases.* \\( 24 = 5 \\cdot 2 + 7 \\cdot 2 \\), \\( 25 = 5 \\cdot 5 \\), \\( 26 = 5 \\cdot 1 + 7 \\cdot 3 \\), \\( 27 = 5 \\cdot 4 + 7 \\cdot 1 \\), \\( 28 = 7 \\cdot 4 \\).\n\n*Inductive step.* Let \\( k \\ge 28 \\) and assume every amount from 24 to \\( k \\) can be paid. Then \\( 24 \\le k - 4 \\le k \\), so \\( k - 4 \\) can be paid, and one more 5-cent stamp pays \\( k + 1 \\). By strong induction every \\( n \\ge 24 \\) can be paid. \\( \\blacksquare \\)\n\nThe step obtains \\( P(k+1) \\) from \\( P(k-4) \\), five values back, so it is valid only for \\( k + 1 \\ge 29 \\); the five amounts 24 to 28 must be base cases.\n\n*23 cannot be paid.* A payment of 23 uses at most three 7-cent stamps. Using 0, 1, 2 or 3 of them leaves 23, 16, 9 or 2 to be paid in 5-cent stamps, and none of these is a multiple of 5.",
+   "why": "For coprime stamp values \\( p, q \\) the largest unpayable amount is \\( pq - p - q \\); here \\( 35 - 12 = 23 \\). The proof above does not need that general fact."
+  },
+  {
+   "id": "e5",
+   "kp": "k6",
+   "type": "written",
+   "prompt": "Claim: for every \\( n \\ge 1 \\), \\( 1 + 2 + \\cdots + n = \\frac{1}{2}\\left(n + \\frac{1}{2}\\right)^{2} \\). (a) Show that the inductive step \\\"if the claim holds for \\( k \\) then it holds for \\( k + 1 \\)\\\" is valid. (b) Determine for which \\( n \\) the claim is true, and explain what this shows about induction.",
+   "rubric": [
+    "(a) Adds k + 1 to (k + 1/2)²/2 and obtains (k² + 3k + 9/4)/2 = (k + 3/2)²/2",
+    "(b) The base case fails: at n = 1, (3/2)²/2 = 9/8 ≠ 1",
+    "Shows the claim is false for every n: (n + 1/2)²/2 = n(n + 1)/2 + 1/8",
+    "Concludes a valid step with no true instance proves nothing"
+   ],
+   "model": "(a) Suppose \\( \\sum_{i=1}^{k} i = \\frac{1}{2}\\left(k + \\frac{1}{2}\\right)^{2} \\). Then\n\\[ \\sum_{i=1}^{k+1} i = \\frac{1}{2}\\left(k^{2} + k + \\frac{1}{4}\\right) + k + 1 = \\frac{1}{2}\\left(k^{2} + 3k + \\frac{9}{4}\\right) = \\frac{1}{2}\\left(k + \\frac{3}{2}\\right)^{2} = \\frac{1}{2}\\left((k+1) + \\frac{1}{2}\\right)^{2}. \\]\nSo the step is valid for every \\( k \\ge 1 \\).\n\n(b) The claim is true for no \\( n \\). Indeed \\( \\frac{1}{2}\\left(n + \\frac{1}{2}\\right)^{2} = \\frac{n^{2} + n}{2} + \\frac{1}{8} = \\frac{n(n+1)}{2} + \\frac{1}{8} \\), which exceeds the true sum \\( \\frac{n(n+1)}{2} \\) by \\( \\frac{1}{8} \\) for every \\( n \\). In particular the base case fails: \\( \\frac{1}{2}\\left(\\frac{3}{2}\\right)^{2} = \\frac{9}{8} \\ne 1 \\). A valid inductive step only transmits truth from one case to the next; without a true base case there is nothing to transmit, and the conclusion can be false everywhere.",
+   "why": "Any two functions that differ by a constant have the same increments, so both satisfy the same inductive step; only the base case distinguishes the right formula."
+  },
+  {
+   "id": "e6",
+   "kp": "k9",
+   "type": "written",
+   "prompt": "Use the well-ordering principle to prove that there is no integer \\( c \\) with \\( 0 < c < 1 \\).",
+   "rubric": [
+    "Assumes for contradiction S = {c ∈ ℤ : 0 < c < 1} is nonempty",
+    "Notes S is a set of integers bounded below (by 0), so well-ordering gives a least element c",
+    "Shows c² is an integer with 0 < c² < c < 1",
+    "Contradiction with minimality; concludes S is empty"
+   ],
+   "model": "*Proof.* Suppose, for contradiction, that \\( S = \\{ c \\in \\mathbb{Z} : 0 < c < 1 \\} \\) is nonempty. Its elements are positive integers, so by the well-ordering principle \\( S \\) has a least element \\( c \\). Since \\( 0 < c < 1 \\), multiplying \\( c < 1 \\) by the positive number \\( c \\) gives \\( c^{2} < c \\), and \\( c^{2} > 0 \\). So \\( c^{2} \\) is an integer with \\( 0 < c^{2} < c < 1 \\), that is, \\( c^{2} \\in S \\) and \\( c^{2} < c \\). This contradicts the minimality of \\( c \\). Hence no integer lies strictly between 0 and 1. \\( \\blacksquare \\)",
+   "why": "The proof is a pure smallest-counterexample argument: from a least element it constructs a smaller one. Squaring works because \\( 0 < c < 1 \\)."
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "Ordinary induction",
+    "formula": "\\( P(a) \\) and \\( \\forall k \\ge a\\,(P(k) \\to P(k+1)) \\) give \\( \\forall n \\ge a\\ P(n) \\)",
+    "when": "The case \\( k + 1 \\) is naturally obtained from the case \\( k \\).",
+    "example": "\\( \\sum_{i=1}^{k+1} (2i-1) = k^{2} + (2k+1) = (k+1)^{2} \\).",
+    "watch": "Write out \\( P(k) \\) and the goal \\( P(k+1) \\) before computing; never assume \\( P(n) \\) for all \\( n \\)."
+   },
+   {
+    "name": "Sums: separate the last term",
+    "formula": "\\( \\sum_{i=1}^{k+1} a_{i} = \\sum_{i=1}^{k} a_{i} + a_{k+1} \\)",
+    "when": "Proving a closed form for a sum.",
+    "example": "\\( \\frac{k(k+1)(2k+1)}{6} + (k+1)^{2} = \\frac{(k+1)(k+2)(2k+3)}{6} \\).",
+    "watch": "The new term is \\( a_{k+1} \\), not \\( a_{k} \\); factor toward the target instead of expanding."
+   },
+   {
+    "name": "Divisibility: make f(k) appear",
+    "formula": "\\( f(k+1) = c\\,f(k) + (\\text{multiple of } d) \\)",
+    "when": "Proving \\( d \\mid f(n) \\).",
+    "example": "\\( 9^{k+1} - 2^{k+1} = 9(9^{k} - 2^{k}) + 7 \\cdot 2^{k} \\).",
+    "watch": "Unfold the hypothesis as \\( f(k) = dm \\) with a fresh integer \\( m \\), and exhibit the new integer."
+   },
+   {
+    "name": "Inequalities: chain plus auxiliary inequality",
+    "formula": "\\( \\text{LHS}(k+1) \\le (\\text{via hypothesis}) \\le \\text{RHS}(k+1) \\)",
+    "when": "Proving an inequality for all \\( n \\) beyond a starting value.",
+    "example": "\\( 2^{k+1} > 2k^{2} \\ge (k+1)^{2} \\) for \\( k \\ge 3 \\).",
+    "watch": "Choose the base where the statement starts to hold; check signs before multiplying."
+   },
+   {
+    "name": "Strengthen the hypothesis",
+    "formula": "Prove \\( Q(n) \\Rightarrow P(n) \\) with \\( Q \\) stronger",
+    "when": "The hypothesis leaves no room for the next term (e.g. a bound with no margin).",
+    "example": "\\( \\sum 1/i^{2} \\le 2 - 1/n \\) instead of \\( < 2 \\).",
+    "watch": "Find \\( Q \\) by asking what the inductive step needs."
+   },
+   {
+    "name": "Strong induction",
+    "formula": "\\( P(a) \\wedge \\cdots \\wedge P(k) \\to P(k+1) \\)",
+    "when": "\\( P(k+1) \\) depends on cases further back than \\( k \\) (factors, removing a stamp).",
+    "example": "\\( k + 1 = ab \\) with \\( 2 \\le a, b \\le k \\): both factors are products of primes.",
+    "watch": "If the step uses \\( P(k+1-j) \\), verify the \\( j \\) base cases \\( P(a), \\dots, P(a+j-1) \\)."
+   },
+   {
+    "name": "Smallest counterexample",
+    "formula": "Least \\( m \\) with \\( \\neg P(m) \\); then \\( P(n) \\) for \\( a \\le n < m \\)",
+    "when": "It is easier to refute a minimal failure than to build upward.",
+    "example": "The least \\( m \\ge 2 \\) with no prime divisor is composite, \\( m = ab \\) with \\( 1 < a < m \\), and \\( a \\) has a prime divisor.",
+    "watch": "Only for sets of integers bounded below; check the base so that \\( m > a \\)."
+   }
+  ],
+  "stuck": [
+   "Write P(k) and P(k+1) side by side and find the difference between them; the step must account for exactly that difference.",
+   "If P(k) seems unrelated to P(k+1), look for a smaller case that is related (a factor, n − 4, n − 2^j) and switch to strong induction.",
+   "If the hypothesis gives a bound with no room for the next term, strengthen the statement with a margin that shrinks as n grows.",
+   "Test the inductive step at the smallest k with concrete objects; many bogus steps collapse there.",
+   "Compute the first several cases to find where the statement starts to hold and how many base cases the step requires."
+  ]
+ }
+}
