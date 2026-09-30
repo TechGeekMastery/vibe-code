@@ -1,0 +1,973 @@
+{
+ "key": "mth-2-7",
+ "title": "Series convergence tests",
+ "v": 1,
+ "scope": "Infinite series as limits of partial sums: geometric and telescoping series, the divergence test, the integral test and p-series with remainder estimates, direct and limit comparison, the alternating series test and its error bound, absolute and conditional convergence, the ratio and root tests, and choosing a test; power series are left to the next topic.",
+ "sources": [
+  {
+   "title": "OpenStax, Calculus Volume 2, Section 5.2: Infinite Series",
+   "url": "https://openstax.org/books/calculus-volume-2/pages/5-2-infinite-series"
+  },
+  {
+   "title": "OpenStax, Calculus Volume 2, Section 5.3: The Divergence and Integral Tests",
+   "url": "https://openstax.org/books/calculus-volume-2/pages/5-3-the-divergence-and-integral-tests"
+  },
+  {
+   "title": "OpenStax, Calculus Volume 2, Section 5.4: Comparison Tests",
+   "url": "https://openstax.org/books/calculus-volume-2/pages/5-4-comparison-tests"
+  },
+  {
+   "title": "OpenStax, Calculus Volume 2, Section 5.5: Alternating Series",
+   "url": "https://openstax.org/books/calculus-volume-2/pages/5-5-alternating-series"
+  },
+  {
+   "title": "OpenStax, Calculus Volume 2, Section 5.6: Ratio and Root Tests",
+   "url": "https://openstax.org/books/calculus-volume-2/pages/5-6-ratio-and-root-tests"
+  },
+  {
+   "title": "Paul's Online Math Notes, Calculus II: Alternating Series Test",
+   "url": "https://tutorial.math.lamar.edu/Classes/CalcII/AlternatingSeries.aspx"
+  },
+  {
+   "title": "Paul's Online Math Notes, Calculus II: Ratio Test",
+   "url": "https://tutorial.math.lamar.edu/Classes/CalcII/RatioTest.aspx"
+  }
+ ],
+ "pre": [
+  "mth-2-6",
+  "mth-2-3",
+  "mth-1-10"
+ ],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Series as limits of partial sums",
+   "d": "Define partial sums and the sum of a series, and reason about an infinite series only through its partial sums.",
+   "type": "concept"
+  },
+  {
+   "id": "k2",
+   "t": "Geometric series",
+   "d": "Derive the partial-sum formula, state exactly when a geometric series converges, and sum it with any starting index.",
+   "type": "procedure"
+  },
+  {
+   "id": "k3",
+   "t": "Telescoping series",
+   "d": "Rewrite terms as differences b_n − b_{n+1} (often by partial fractions) and evaluate partial sums and the sum.",
+   "type": "procedure"
+  },
+  {
+   "id": "k4",
+   "t": "Divergence test and the harmonic series",
+   "d": "Prove divergence when the terms do not tend to 0, and explain with the harmonic series why terms tending to 0 prove nothing.",
+   "type": "concept"
+  },
+  {
+   "id": "k5",
+   "t": "Integral test",
+   "d": "State the integral test, verify continuity, positivity and decrease, and apply it.",
+   "type": "procedure"
+  },
+  {
+   "id": "k6",
+   "t": "p-series",
+   "d": "State and justify for which p the p-series and related logarithmic series converge.",
+   "type": "fact"
+  },
+  {
+   "id": "k7",
+   "t": "Integral remainder estimate",
+   "d": "Bound the remainder by integrals and find how many terms guarantee a given accuracy.",
+   "type": "skill"
+  },
+  {
+   "id": "k8",
+   "t": "Direct comparison test",
+   "d": "Apply direct comparison with nonnegative terms and the inequality in the correct direction.",
+   "type": "procedure"
+  },
+  {
+   "id": "k9",
+   "t": "Limit comparison test",
+   "d": "Choose b_n from the dominant parts, compute the limit, and apply the test, including the cases 0 and infinity.",
+   "type": "procedure"
+  },
+  {
+   "id": "k10",
+   "t": "Alternating series test and error bound",
+   "d": "Verify the hypotheses of the alternating series test and bound the error of a partial sum by the first omitted term.",
+   "type": "procedure"
+  },
+  {
+   "id": "k11",
+   "t": "Absolute versus conditional convergence",
+   "d": "Classify a series as absolutely convergent, conditionally convergent or divergent, prove absolute convergence implies convergence, and explain the effect of rearrangement.",
+   "type": "distinction"
+  },
+  {
+   "id": "k12",
+   "t": "Ratio test",
+   "d": "Apply the ratio test with absolute values, simplify factorials, and recognise when L = 1 leaves the question open.",
+   "type": "procedure"
+  },
+  {
+   "id": "k13",
+   "t": "Root test",
+   "d": "Apply the root test to series whose terms are nth powers.",
+   "type": "procedure"
+  },
+  {
+   "id": "k14",
+   "t": "Choosing a convergence test",
+   "d": "Select a test from the form of the terms and justify why it applies.",
+   "type": "skill"
+  }
+ ],
+ "intro": "The previous chapter asked whether a sequence of numbers settles toward a limit. An infinite series asks a different question about a sequence: what happens when its terms are added, one after another, without end? Such sums are everywhere in analysis. The decimal \\(0.333\\ldots\\) is the sum \\(\\frac{3}{10} + \\frac{3}{100} + \\cdots\\); the numbers \\(e\\), \\(\\ln 2\\) and \\(\\pi\\), and functions such as \\(\\sin x\\), are expressed as infinite sums; and many differential equations are solved by series.\n\nAddition is defined only for finitely many numbers, so an infinite sum needs a definition. The definition, the limit of the running totals, raises at once the central practical problem of this chapter: for most series no formula for the running totals exists, yet we must still decide whether the sum exists. The answer is a collection of convergence tests, each resting on a comparison with a series or an integral whose behaviour is already known, and each with hypotheses that must be verified before it may be used.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "Infinite series, partial sums, geometric and telescoping series",
+   "kps": [
+    "k1",
+    "k2",
+    "k3"
+   ],
+   "md": "This section defines what it means to add infinitely many numbers, and then computes the sum exactly for the two families of series whose partial sums have a closed form: geometric series and telescoping series.\n\n> **Definition.** Given a sequence \\(\\{a_n\\}\\), the expression \\(\\sum_{n=1}^{\\infty} a_n = a_1 + a_2 + a_3 + \\cdots\\) is called an **infinite series** (or simply a **series**), and \\(a_n\\) is its \\(n\\)th term. Its \\(n\\)th **partial sum** is the finite sum \\(s_n = \\sum_{k=1}^{n} a_k\\). If the sequence of partial sums \\(\\{s_n\\}\\) converges to a real number \\(S\\), the series **converges** and \\(S\\) is its **sum**, written \\(\\sum_{n=1}^{\\infty} a_n = S\\). If \\(\\{s_n\\}\\) diverges, the series **diverges**.\n\nEvery series therefore carries two sequences: the terms \\(\\{a_n\\}\\) and the partial sums \\(\\{s_n\\}\\). The series converges when the second one does; the terms matter only through their effect on the partial sums. The index may start at any integer, as in \\(\\sum_{n=0}^{\\infty}\\), and the definition adapts in the obvious way.\n\n**Geometric series.** A **geometric series** has the form \\(\\sum_{n=1}^{\\infty} a r^{n-1} = a + ar + ar^2 + \\cdots\\) with \\(a \\ne 0\\); the number \\(r\\) is the **common ratio**, because each term is \\(r\\) times the one before. Its partial sums have a closed form. Write \\(s_n = a + ar + \\cdots + ar^{n-1}\\), multiply by \\(r\\) to get \\(rs_n = ar + ar^2 + \\cdots + ar^n\\), and subtract: all but two terms cancel, leaving \\((1 - r)s_n = a(1 - r^n)\\). Hence, for \\(r \\ne 1\\),\n\\[ s_n = \\frac{a(1 - r^n)}{1 - r}. \\]\nThe previous chapter showed that \\(r^n \\to 0\\) when \\(|r| < 1\\), so then \\(s_n \\to \\frac{a}{1-r}\\). If \\(|r| > 1\\), \\(r^n\\) is unbounded and so is \\(s_n\\); if \\(r = 1\\), \\(s_n = na\\) is unbounded; if \\(r = -1\\), \\(s_n\\) alternates between \\(a\\) and 0.\n\n> **Theorem (geometric series).** If \\(a \\ne 0\\), the series \\(\\sum_{n=1}^{\\infty} ar^{n-1}\\) converges if and only if \\(|r| < 1\\), and then its sum is \\(\\dfrac{a}{1-r}\\): the first term divided by one minus the ratio.\n\n**Worked example.** Find \\(\\sum_{n=0}^{\\infty} \\frac{3^{n+1}}{4^n}\\). The first term (at \\(n = 0\\)) is 3, and the ratio of consecutive terms is \\(\\frac{3^{n+2}/4^{n+1}}{3^{n+1}/4^{n}} = \\frac34\\). Since \\(\\left|\\frac34\\right| < 1\\), the sum is \\(\\frac{3}{1 - 3/4} = 12\\). Similarly, the repeating decimal \\(0.363636\\ldots = \\frac{36}{100} + \\frac{36}{100^2} + \\cdots\\) has first term \\(\\frac{36}{100}\\) and ratio \\(\\frac{1}{100}\\), so it equals \\(\\frac{36/100}{99/100} = \\frac{36}{99} = \\frac{4}{11}\\).\n\nIn the graph the points are the partial sums \\(s_1, \\dots, s_{10}\\) of \\(1 + r + r^2 + \\cdots\\), and the horizontal line is the sum \\(\\frac{1}{1-r}\\). Drag \\(r\\): for positive \\(r\\) the partial sums climb steadily toward the line; for negative \\(r\\) they land alternately above and below it; as \\(r\\) approaches 1 the approach becomes very slow.\n\n```plot\nx: 0, 11\ny: -1, 7\nslider: r, -0.9, 0.85, 0.5 | r\nhline: 1/(1 - r) | 1/(1 − r)\npoint: 1, (1 - r^1)/(1 - r)\npoint: 2, (1 - r^2)/(1 - r)\npoint: 3, (1 - r^3)/(1 - r)\npoint: 4, (1 - r^4)/(1 - r)\npoint: 5, (1 - r^5)/(1 - r)\npoint: 6, (1 - r^6)/(1 - r)\npoint: 7, (1 - r^7)/(1 - r)\npoint: 8, (1 - r^8)/(1 - r)\npoint: 9, (1 - r^9)/(1 - r)\npoint: 10, (1 - r^10)/(1 - r)\n```\n\n**Telescoping series.** If the terms can be written as differences \\(a_n = b_n - b_{n+1}\\), the partial sums collapse:\n\\[ s_n = (b_1 - b_2) + (b_2 - b_3) + \\cdots + (b_n - b_{n+1}) = b_1 - b_{n+1}. \\]\nSuch a series is called **telescoping**. It converges exactly when \\(\\{b_n\\}\\) converges, and then its sum is \\(b_1 - \\lim_{n\\to\\infty} b_n\\). For example, partial fractions give \\(\\frac{1}{n(n+1)} = \\frac1n - \\frac{1}{n+1}\\), so \\(s_n = 1 - \\frac{1}{n+1} \\to 1\\), and \\(\\sum_{n=1}^{\\infty} \\frac{1}{n(n+1)} = 1\\).\n\n**Common mistakes.** First, applying \\(\\frac{a}{1-r}\\) with the wrong first term: \\(\\sum_{n=2}^{\\infty} \\left(\\frac12\\right)^n\\) begins with \\(\\frac14\\), so it equals \\(\\frac{1/4}{1/2} = \\frac12\\), not 2. Second, manipulating an infinite sum as if it were finite. Grouping \\(1 - 1 + 1 - 1 + \\cdots\\) as \\((1 - 1) + (1 - 1) + \\cdots\\) suggests the sum 0, and grouping it as \\(1 + (-1 + 1) + \\cdots\\) suggests 1. In fact the partial sums are \\(1, 0, 1, 0, \\dots\\), so the series diverges. Inserting parentheses is harmless only once convergence is known, and every argument about an infinite series must ultimately be an argument about its partial sums.",
+   "questions": [
+    {
+     "id": "s1q1",
+     "kp": "k2",
+     "type": "number",
+     "prompt": "Find the sum of \\(\\sum_{n=1}^{\\infty} \\frac{2^{n+1}}{3^n}\\), identifying the first term and the common ratio.",
+     "answer": "4",
+     "why": "The first term (\\(n = 1\\)) is \\(\\frac{4}{3}\\). The ratio of consecutive terms is \\(\\frac{2^{n+2}/3^{n+1}}{2^{n+1}/3^n} = \\frac23\\), and \\(\\left|\\frac23\\right| < 1\\). The sum is \\(\\frac{4/3}{1 - 2/3} = \\frac{4/3}{1/3} = 4\\)."
+    },
+    {
+     "id": "s1q2",
+     "kp": "k3",
+     "type": "number",
+     "prompt": "Use partial fractions to find a closed form for the partial sums of \\(\\sum_{n=1}^{\\infty} \\frac{2}{n(n+2)}\\), and give the sum of the series.",
+     "answer": "3/2",
+     "why": "\\(\\frac{2}{n(n+2)} = \\frac1n - \\frac{1}{n+2}\\). In \\(s_N = \\sum_{n=1}^{N}\\left(\\frac1n - \\frac1{n+2}\\right)\\) each negative term \\(-\\frac1{n+2}\\) cancels the positive term two places later, leaving \\(s_N = 1 + \\frac12 - \\frac{1}{N+1} - \\frac{1}{N+2}\\). As \\(N \\to \\infty\\), \\(s_N \\to \\frac32\\)."
+    },
+    {
+     "id": "s1q3",
+     "kp": "k1",
+     "type": "written",
+     "prompt": "A student argues that \\(1 - 1 + 1 - 1 + \\cdots = 0\\) by grouping the terms in pairs, \\((1 - 1) + (1 - 1) + \\cdots\\). Using the definition of convergence of a series, decide whether the series converges, and explain precisely what is wrong with the argument.",
+     "rubric": [
+      "Computes the partial sums \\(s_n\\): \\(1, 0, 1, 0, \\dots\\) (\\(s_n = 1\\) for odd \\(n\\), 0 for even \\(n\\)).",
+      "Concludes that \\(\\{s_n\\}\\) has no limit (two subsequences with different limits), so the series diverges by definition.",
+      "Explains that grouping produces a different series, whose partial sums are only the subsequence \\(s_2, s_4, \\dots\\), so its sum says nothing about the original series.",
+      "States that inserting parentheses is valid only for a series already known to converge."
+     ],
+     "model": "By definition the series converges only if its partial sums converge. Here \\(s_1 = 1\\), \\(s_2 = 0\\), \\(s_3 = 1\\), and in general \\(s_n = 1\\) for odd \\(n\\) and \\(s_n = 0\\) for even \\(n\\). The subsequence of odd-indexed partial sums tends to 1 and the even-indexed one tends to 0, so \\(\\{s_n\\}\\) diverges, and so does the series. The grouped series \\((1 - 1) + (1 - 1) + \\cdots\\) is a different series: its partial sums are \\(s_2, s_4, s_6, \\dots\\), a subsequence of the original partial sums. A subsequence can converge when the full sequence does not, so its limit 0 is not the sum of the original series. Grouping preserves the sum only when the original series is already known to converge, because then every subsequence of partial sums has the same limit.",
+     "why": "The argument treats an infinite sum like a finite one. Every claim about an infinite series has to be checked against its partial sums; here they oscillate."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "The divergence test and the harmonic series",
+   "kps": [
+    "k4"
+   ],
+   "md": "For most series there is no closed form for \\(s_n\\), so convergence must be decided indirectly. The simplest indirect information is the behaviour of the individual terms. This section shows that the terms of a convergent series must tend to zero, which gives a quick way to prove divergence, and uses the harmonic series to show that the converse is false.\n\n> **Theorem.** If \\(\\sum a_n\\) converges, then \\(\\lim_{n\\to\\infty} a_n = 0\\).\n\n*Proof.* Let \\(s_n \\to S\\). For \\(n \\ge 2\\), \\(a_n = s_n - s_{n-1}\\). The shifted sequence \\(\\{s_{n-1}\\}\\) also tends to \\(S\\), so \\(a_n \\to S - S = 0\\).\n\nThe theorem is used in its contrapositive form.\n\n> **Divergence test (\\(n\\)th-term test).** If \\(\\lim_{n\\to\\infty} a_n\\) does not exist, or exists and is not 0, then \\(\\sum a_n\\) diverges.\n\n**Worked examples.** (1) \\(\\sum_{n=1}^{\\infty}\\frac{n}{2n+1}\\): the terms tend to \\(\\frac12 \\ne 0\\), so the series diverges. (2) \\(\\sum_{n=1}^{\\infty}(-1)^n\\): the terms alternate between \\(-1\\) and 1 and have no limit, so the series diverges. (3) \\(\\sum_{n=1}^{\\infty}\\left(1 + \\frac1n\\right)^n\\): the terms tend to \\(e\\), so the series diverges.\n\n**The converse fails: the harmonic series.** The **harmonic series** \\(\\sum_{n=1}^{\\infty}\\frac1n\\) has terms tending to 0, yet it diverges. Group its terms in blocks whose lengths double:\n\\[ 1 + \\frac12 + \\left(\\frac13 + \\frac14\\right) + \\left(\\frac15 + \\cdots + \\frac18\\right) + \\left(\\frac19 + \\cdots + \\frac1{16}\\right) + \\cdots \\]\nThe block running from \\(\\frac{1}{2^{j-1}+1}\\) to \\(\\frac{1}{2^j}\\) contains \\(2^{j-1}\\) terms, each at least \\(\\frac{1}{2^j}\\), so the block is at least \\(2^{j-1}\\cdot\\frac{1}{2^j} = \\frac12\\). Hence \\(s_{2^k} \\ge 1 + \\frac k2\\) for every \\(k\\). The partial sums are increasing and unbounded, so \\(s_n \\to \\infty\\). This grouping is legitimate: it rearranges nothing and only estimates finitely many terms inside a partial sum.\n\nThe divergence is extremely slow. The graph shows the partial sums \\(s_1, \\dots, s_{20}\\) of the harmonic series with the curve \\(y = \\ln x\\). The next section proves \\(s_n > \\ln(n+1)\\), so the partial sums are pushed upward without bound, but only at a logarithmic rate: \\(s_{1000} \\approx 7.49\\), and more than \\(10^{43}\\) terms are needed before a partial sum exceeds 100.\n\n```plot\nx: 0, 21\ny: 0, 4\nf: log(x) | y = ln x\npoint: 1, 1.0000\npoint: 2, 1.5000\npoint: 3, 1.8333\npoint: 4, 2.0833\npoint: 5, 2.2833\npoint: 6, 2.4500\npoint: 7, 2.5929\npoint: 8, 2.7179\npoint: 9, 2.8290\npoint: 10, 2.9290\npoint: 11, 3.0199\npoint: 12, 3.1032\npoint: 13, 3.1801\npoint: 14, 3.2516\npoint: 15, 3.3182\npoint: 16, 3.3807\npoint: 17, 3.4396\npoint: 18, 3.4951\npoint: 19, 3.5477\npoint: 20, 3.5977\n```\n\n**Algebra of series and tails.** If \\(\\sum a_n = A\\) and \\(\\sum b_n = B\\), then \\(\\sum (a_n \\pm b_n) = A \\pm B\\) and \\(\\sum c\\,a_n = cA\\) for every constant \\(c\\); these follow from the limit laws applied to partial sums. Deleting or changing finitely many terms does not affect convergence, because it changes every later partial sum by the same constant. Thus \\(\\sum_{n=1}^{\\infty} a_n\\) and \\(\\sum_{n=N}^{\\infty} a_n\\) converge or diverge together; when they converge, their sums differ by \\(a_1 + \\cdots + a_{N-1}\\). This is why each test in the following sections needs its hypotheses only for all \\(n\\) beyond some index. Finally, if \\(\\sum a_n\\) converges and \\(\\sum b_n\\) diverges, then \\(\\sum(a_n + b_n)\\) diverges, since otherwise \\(\\sum b_n = \\sum(a_n + b_n) - \\sum a_n\\) would converge.\n\n**Common mistake.** Concluding that a series converges because its terms tend to 0. The divergence test can prove divergence and nothing else; when \\(a_n \\to 0\\) it is silent, and another test must be used. The harmonic series is the standing counterexample.",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k4",
+     "type": "mcq",
+     "prompt": "You have shown that \\(\\lim_{n\\to\\infty} a_n = 0\\). What may you conclude about \\(\\sum a_n\\) from this fact alone?",
+     "options": [
+      "The series converges, since its terms become negligible.",
+      "Nothing: the series may converge or diverge, and another test is needed.",
+      "The series diverges, by the divergence test.",
+      "The series converges and its sum is 0."
+     ],
+     "answer": 1,
+     "why": "The theorem says convergence implies \\(a_n \\to 0\\); the converse is false. The harmonic series has \\(\\frac1n \\to 0\\) and diverges, while \\(\\sum \\frac1{n^2}\\) has terms tending to 0 and converges. The divergence test applies only when the limit of the terms is nonzero or does not exist, and the sum of a series is the limit of its partial sums, not of its terms."
+    },
+    {
+     "id": "s2q2",
+     "kp": "k4",
+     "type": "written",
+     "prompt": "Prove that the harmonic series \\(\\sum_{n=1}^{\\infty} \\frac1n\\) diverges by showing that \\(s_{2^k} \\ge 1 + \\frac k2\\) for every \\(k \\ge 1\\). Then explain why this does not contradict the fact that \\(\\frac1n \\to 0\\).",
+     "rubric": [
+      "Groups the terms of \\(s_{2^k}\\) into \\(1\\), \\(\\frac12\\), and blocks from \\(\\frac{1}{2^{j-1}+1}\\) to \\(\\frac1{2^j}\\) for \\(j = 2, \\dots, k\\).",
+      "Shows each block has \\(2^{j-1}\\) terms each at least \\(\\frac1{2^j}\\), so each block is at least \\(\\frac12\\).",
+      "Concludes \\(s_{2^k} \\ge 1 + \\frac k2\\), so the nondecreasing partial sums are unbounded and the series diverges.",
+      "Explains that terms tending to 0 is necessary but not sufficient for convergence, so there is no contradiction."
+     ],
+     "model": "Write \\(s_{2^k} = 1 + \\frac12 + \\sum_{j=2}^{k} B_j\\), where \\(B_j = \\frac{1}{2^{j-1}+1} + \\cdots + \\frac{1}{2^j}\\). The block \\(B_j\\) has \\(2^j - 2^{j-1} = 2^{j-1}\\) terms, and each is at least the last one, \\(\\frac{1}{2^j}\\). Hence \\(B_j \\ge 2^{j-1}\\cdot\\frac1{2^j} = \\frac12\\), and \\(s_{2^k} \\ge 1 + \\frac12 + (k-1)\\cdot\\frac12 = 1 + \\frac k2\\). The partial sums are nondecreasing (the terms are positive) and the subsequence \\(s_{2^k}\\) is unbounded, so \\(s_n \\to \\infty\\) and the series diverges. This is consistent with \\(\\frac1n \\to 0\\): the theorem says that convergence forces the terms to tend to 0, not that terms tending to 0 force convergence. Here the terms shrink too slowly; each doubling of the number of terms adds at least \\(\\frac12\\).",
+     "why": "This argument (due to Oresme, fourteenth century) is the standard example showing that the divergence test is one-directional."
+    },
+    {
+     "id": "s2q3",
+     "kp": "k4",
+     "type": "written",
+     "prompt": "Determine whether \\(\\sum_{n=1}^{\\infty} n\\sin\\frac1n\\) converges. Name the test you use and compute the limit that it requires.",
+     "rubric": [
+      "Computes \\(\\lim_{n\\to\\infty} n\\sin\\frac1n = 1\\), e.g. via \\(u = \\frac1x \\to 0^+\\) and \\(\\frac{\\sin u}{u} \\to 1\\).",
+      "Observes that the limit is not 0.",
+      "Concludes by the divergence test that the series diverges."
+     ],
+     "model": "Let \\(f(x) = x\\sin\\frac1x = \\frac{\\sin(1/x)}{1/x}\\). With \\(u = \\frac1x\\), as \\(x \\to \\infty\\), \\(u \\to 0^+\\) and \\(\\frac{\\sin u}{u} \\to 1\\). So \\(a_n = n\\sin\\frac1n \\to 1 \\ne 0\\), and by the divergence test the series diverges.",
+     "why": "Always check the limit of the terms first. Here it is 1, so no further work is needed."
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "The integral test, p-series, and remainder estimates",
+   "kps": [
+    "k5",
+    "k6",
+    "k7"
+   ],
+   "md": "The harmonic series showed that deciding convergence can require more than looking at the terms. For series with nonnegative terms there is a clean criterion: the partial sums are nondecreasing, so by the monotone convergence theorem the series converges if and only if its partial sums are bounded above. The integral test finds such a bound, or rules one out, by comparing partial sums with areas under a curve, which reduces the question to an improper integral.\n\n> **Integral test.** Let \\(f\\) be continuous, positive and decreasing on \\([1, \\infty)\\), and let \\(a_n = f(n)\\). Then \\(\\sum_{n=1}^{\\infty} a_n\\) and \\(\\int_1^{\\infty} f(x)\\,dx\\) either both converge or both diverge. By the remark on tails, it suffices that the hypotheses hold on some interval \\([N, \\infty)\\), with the integral taken from \\(N\\).\n\n**Why it is true.** Because \\(f\\) is decreasing, its smallest value on \\([k-1, k]\\) is \\(f(k) = a_k\\), so the rectangle of height \\(a_k\\) over that interval lies under the curve: \\(a_k \\le \\int_{k-1}^{k} f(x)\\,dx\\). Adding these inequalities for \\(k = 2, \\dots, n\\),\n\\[ s_n - a_1 \\le \\int_1^{n} f(x)\\,dx. \\]\nSimilarly, the largest value of \\(f\\) on \\([k, k+1]\\) is \\(a_k\\), so \\(\\int_k^{k+1} f(x)\\,dx \\le a_k\\); adding for \\(k = 1, \\dots, n\\) gives \\(\\int_1^{n+1} f(x)\\,dx \\le s_n\\). If the integral converges, the first inequality bounds \\(s_n\\) by \\(a_1 + \\int_1^\\infty f(x)\\,dx\\), and the nondecreasing sequence \\(\\{s_n\\}\\) converges. If the integral diverges, it diverges to \\(\\infty\\) because \\(f > 0\\), and the second inequality forces \\(s_n \\to \\infty\\). For the harmonic series the second inequality reads \\(s_n \\ge \\ln(n+1)\\).\n\nIn the graph, the shaded rectangles have heights \\(a_2, \\dots, a_{10}\\) for \\(a_n = \\frac{1}{n^p}\\) and lie beneath \\(y = \\frac{1}{x^p}\\). Drag \\(p\\) and watch the tail of the curve: the shaded area never exceeds the area under the curve, and that area stays bounded as the right endpoint moves out exactly when \\(p > 1\\).\n\n```plot\nx: 0, 10\ny: 0, 1.1\nslider: p, 0.5, 3, 2 | p\nf: 1/x^p | y = 1/x^p\nshade: 1/ceil(x)^p, 1.001, 10 | rectangles of heights a₂, …, a₁₀\n```\n\n**The \\(p\\)-series.** For a real constant \\(p\\), the series \\(\\sum_{n=1}^{\\infty} \\frac{1}{n^p}\\) is called a **\\(p\\)-series**.\n\n> **Theorem.** The \\(p\\)-series converges if \\(p > 1\\) and diverges if \\(p \\le 1\\).\n\nIf \\(p \\le 0\\), the terms do not tend to 0 (they equal 1 or grow), so the divergence test applies. If \\(p > 0\\), then \\(f(x) = x^{-p}\\) is continuous, positive and decreasing on \\([1, \\infty)\\), and the chapter on improper integrals showed that \\(\\int_1^\\infty x^{-p}\\,dx\\) converges exactly when \\(p > 1\\). So \\(\\sum \\frac{1}{n^2}\\) and \\(\\sum \\frac{1}{n^{1.01}}\\) converge, while \\(\\sum \\frac{1}{\\sqrt n}\\) diverges.\n\n**Worked example.** Decide whether \\(\\sum_{n=2}^{\\infty} \\frac{1}{n(\\ln n)^2}\\) converges. Let \\(f(x) = \\frac{1}{x(\\ln x)^2}\\) on \\([2, \\infty)\\). It is continuous and positive there, and decreasing because its denominator is a product of positive increasing functions. With \\(u = \\ln x\\),\n\\[ \\int_2^{\\infty} \\frac{dx}{x(\\ln x)^2} = \\int_{\\ln 2}^{\\infty} \\frac{du}{u^2} = \\frac{1}{\\ln 2}, \\]\nso the series converges. The same substitution shows that \\(\\sum_{n=2}^\\infty \\frac{1}{n \\ln n}\\) diverges, since \\(\\int_2^b \\frac{dx}{x\\ln x} = \\ln(\\ln b) - \\ln(\\ln 2) \\to \\infty\\).\n\n**Estimating the sum.** The same rectangles bound the **remainder** \\(R_n = S - s_n = \\sum_{k=n+1}^{\\infty} a_k\\), the error made by stopping after \\(n\\) terms. Under the hypotheses of the integral test,\n\\[ \\int_{n+1}^{\\infty} f(x)\\,dx \\le R_n \\le \\int_{n}^{\\infty} f(x)\\,dx. \\]\nFor \\(\\sum \\frac{1}{n^3}\\) with \\(n = 10\\): \\(s_{10} \\approx 1.197532\\), \\(\\int_{10}^\\infty x^{-3}\\,dx = \\frac{1}{200} = 0.005\\) and \\(\\int_{11}^\\infty x^{-3}\\,dx = \\frac{1}{242} \\approx 0.004132\\). Therefore \\(1.201664 \\le S \\le 1.202532\\); the true value is \\(1.2020569\\ldots\\).\n\n**Common mistakes.** First, reading the value of the integral as the value of the series. The integral decides convergence only: \\(\\int_1^\\infty \\frac{dx}{x^2} = 1\\), but \\(\\sum_{n=1}^{\\infty} \\frac{1}{n^2} = \\frac{\\pi^2}{6} \\approx 1.645\\). Second, skipping the hypotheses. The rectangle inequalities used that \\(f\\) is decreasing, and without it the test can fail: \\(f(x) = \\sin^2(\\pi x) + \\frac{1}{x^2}\\) is positive and continuous, \\(\\sum f(n) = \\sum \\frac{1}{n^2}\\) converges, yet \\(\\int_1^\\infty f(x)\\,dx\\) diverges. Verify positivity, continuity and (eventual) decrease, usually through the sign of \\(f'\\).",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k5",
+     "type": "written",
+     "prompt": "Use the integral test to decide whether \\(\\sum_{n=1}^{\\infty} n e^{-n^2}\\) converges. Verify each hypothesis of the test explicitly.",
+     "rubric": [
+      "Takes \\(f(x) = xe^{-x^2}\\) and notes it is continuous and positive on \\([1, \\infty)\\).",
+      "Shows \\(f\\) is decreasing: \\(f'(x) = e^{-x^2}(1 - 2x^2) < 0\\) for \\(x \\ge 1\\).",
+      "Evaluates \\(\\int_1^\\infty xe^{-x^2}\\,dx = \\frac{1}{2e}\\) with the substitution \\(u = x^2\\) and a limit.",
+      "Concludes that the series converges, without claiming its sum equals \\(\\frac{1}{2e}\\)."
+     ],
+     "model": "Let \\(f(x) = xe^{-x^2}\\). It is continuous and positive on \\([1, \\infty)\\), and \\(f'(x) = e^{-x^2} - 2x^2e^{-x^2} = e^{-x^2}(1 - 2x^2) < 0\\) for \\(x \\ge 1\\), so \\(f\\) is decreasing there. With \\(u = x^2\\), \\(du = 2x\\,dx\\): \\(\\int_1^b xe^{-x^2}\\,dx = \\frac12\\left(e^{-1} - e^{-b^2}\\right) \\to \\frac{1}{2e}\\) as \\(b \\to \\infty\\). The integral converges, so by the integral test the series converges. (Its sum is not \\(\\frac1{2e}\\); the test only decides convergence.)",
+     "why": "The integral test has three hypotheses, and decrease is the one that needs work; the sign of \\(f'\\) settles it."
+    },
+    {
+     "id": "s3q2",
+     "kp": "k7",
+     "type": "number",
+     "prompt": "For \\(\\sum_{n=1}^{\\infty} \\frac{1}{n^3}\\), the integral bound gives \\(R_n \\le \\int_n^{\\infty} x^{-3}\\,dx\\). Find the smallest \\(n\\) for which this bound guarantees \\(R_n < 0.0005\\).",
+     "answer": "32",
+     "why": "\\(\\int_n^\\infty x^{-3}\\,dx = \\frac{1}{2n^2}\\). We need \\(\\frac{1}{2n^2} < 0.0005\\), i.e. \\(n^2 > 1000\\), i.e. \\(n > 31.62\\). For \\(n = 31\\) the bound is \\(\\frac{1}{1922} \\approx 0.00052\\), too large; for \\(n = 32\\) it is \\(\\frac{1}{2048} \\approx 0.00049\\). So \\(n = 32\\)."
+    },
+    {
+     "id": "s3q3",
+     "kp": "k6",
+     "type": "written",
+     "prompt": "For which \\(p > 0\\) does \\(\\sum_{n=2}^{\\infty} \\frac{1}{n(\\ln n)^p}\\) converge? Justify your answer with the integral test, including its hypotheses.",
+     "rubric": [
+      "Takes \\(f(x) = \\frac{1}{x(\\ln x)^p}\\) and verifies it is continuous, positive and decreasing on \\([2, \\infty)\\) for \\(p > 0\\).",
+      "Substitutes \\(u = \\ln x\\) to reduce the integral to \\(\\int_{\\ln 2}^\\infty u^{-p}\\,du\\).",
+      "Uses the \\(p\\)-integral result: converges exactly when \\(p > 1\\).",
+      "Concludes the series converges for \\(p > 1\\) and diverges for \\(0 < p \\le 1\\)."
+     ],
+     "model": "Let \\(f(x) = \\frac{1}{x(\\ln x)^p}\\) on \\([2, \\infty)\\). For \\(p > 0\\), \\(x\\) and \\((\\ln x)^p\\) are positive, continuous and increasing there, so \\(f\\) is continuous, positive and decreasing. With \\(u = \\ln x\\), \\(du = \\frac{dx}{x}\\), \\(\\int_2^\\infty \\frac{dx}{x(\\ln x)^p} = \\int_{\\ln 2}^\\infty u^{-p}\\,du\\), which converges if and only if \\(p > 1\\). By the integral test, the series converges for \\(p > 1\\) and diverges for \\(0 < p \\le 1\\).",
+     "why": "The logarithm slows the terms only slightly: the dividing line is still \\(p = 1\\), as for \\(p\\)-series. At \\(p = 1\\) the integral is \\(\\ln(\\ln b) - \\ln(\\ln 2)\\), which diverges extremely slowly."
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "The direct and limit comparison tests",
+   "kps": [
+    "k8",
+    "k9"
+   ],
+   "md": "The integral test needs a function that can be integrated. Most series, such as \\(\\sum \\frac{1}{n^2 + 1}\\) or \\(\\sum \\frac{1}{2^n - 1}\\), are instead close to a geometric series or a \\(p\\)-series whose behaviour is already known, and the comparison tests turn that closeness into a proof. Throughout this section the terms must be nonnegative.\n\n> **Direct comparison test.** Suppose \\(0 \\le a_n \\le b_n\\) for all \\(n \\ge N\\).\n> 1. If \\(\\sum b_n\\) converges, then \\(\\sum a_n\\) converges.\n> 2. If \\(\\sum a_n\\) diverges, then \\(\\sum b_n\\) diverges.\n\n*Proof of 1.* Discarding the first \\(N - 1\\) terms of each series does not affect convergence. The partial sums of \\(\\sum_{n \\ge N} a_n\\) are nondecreasing, because the terms are nonnegative, and bounded above by the finite number \\(\\sum_{n\\ge N} b_n\\). By the monotone convergence theorem they converge. Part 2 is the contrapositive of part 1.\n\nThe logic runs one way: smaller than a convergent series gives convergence, and larger than a divergent series gives divergence. Being smaller than a divergent series, or larger than a convergent one, gives no information.\n\n**Worked example 1.** \\(\\sum_{n=1}^\\infty \\frac{1}{n^2 + 1}\\): since \\(0 < \\frac{1}{n^2+1} < \\frac{1}{n^2}\\) and \\(\\sum \\frac{1}{n^2}\\) is a convergent \\(p\\)-series, the series converges.\n\n**Worked example 2.** \\(\\sum_{n=1}^\\infty \\frac{\\ln n}{n}\\): for \\(n \\ge 3\\), \\(\\ln n > 1\\), so \\(\\frac{\\ln n}{n} > \\frac1n > 0\\). The harmonic series diverges, hence so does this series.\n\n**When the inequality points the wrong way.** For \\(\\sum \\frac{1}{2^n - 1}\\) the natural comparison is \\(\\sum \\frac{1}{2^n}\\), which converges; but \\(\\frac{1}{2^n - 1} > \\frac{1}{2^n}\\), so direct comparison says nothing. What matters is that the two terms are nearly proportional for large \\(n\\).\n\n> **Limit comparison test.** Suppose \\(a_n > 0\\) and \\(b_n > 0\\) for all \\(n \\ge N\\), and \\(\\lim_{n\\to\\infty} \\frac{a_n}{b_n} = c\\) with \\(0 < c < \\infty\\). Then \\(\\sum a_n\\) and \\(\\sum b_n\\) either both converge or both diverge.\n\n*Why.* Since the ratio tends to \\(c > 0\\), for all large \\(n\\) it lies between \\(\\frac c2\\) and \\(\\frac{3c}{2}\\), so \\(\\frac c2\\, b_n < a_n < \\frac{3c}{2}\\, b_n\\). If \\(\\sum b_n\\) converges, the right inequality and direct comparison make \\(\\sum a_n\\) converge; if \\(\\sum b_n\\) diverges, the left inequality makes \\(\\sum a_n\\) diverge. If \\(c = 0\\), only the right inequality survives: when \\(\\sum b_n\\) converges, so does \\(\\sum a_n\\). If \\(c = \\infty\\), only the left survives: when \\(\\sum b_n\\) diverges, so does \\(\\sum a_n\\).\n\nFor \\(\\sum \\frac{1}{2^n - 1}\\), \\(\\frac{1/(2^n - 1)}{1/2^n} = \\frac{2^n}{2^n - 1} \\to 1\\), so the series converges.\n\n**Choosing \\(b_n\\).** Keep only the dominant part of the numerator and of the denominator. **Worked example 3.** For \\(\\sum_{n=1}^{\\infty} \\frac{2n + 3}{\\sqrt{n^5 + 1}}\\), the dominant parts give \\(\\frac{2n}{n^{5/2}} = \\frac{2}{n^{3/2}}\\), so take \\(b_n = \\frac{1}{n^{3/2}}\\). Dividing numerator and denominator by \\(n^{5/2}\\),\n\\[ \\frac{a_n}{b_n} = \\frac{(2n + 3)\\,n^{3/2}}{\\sqrt{n^5 + 1}} = \\frac{2 + 3/n}{\\sqrt{1 + 1/n^5}} \\to 2, \\]\nwhich is positive and finite. Since \\(\\sum \\frac{1}{n^{3/2}}\\) is a \\(p\\)-series with \\(p = \\frac32 > 1\\), the given series converges.\n\n**Common mistakes.** Comparing in the wrong direction, as above. Applying either test to series with negative terms: \\(-1 \\le \\frac{1}{n^2}\\) for every \\(n\\), yet \\(\\sum(-1)\\) diverges, so the hypothesis \\(0 \\le a_n\\) is essential. And, in the limit comparison test, drawing a conclusion when the limit is 0 or \\(\\infty\\) without checking which of the two surviving cases applies.",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k9",
+     "type": "written",
+     "prompt": "Determine whether \\(\\sum_{n=1}^{\\infty} \\frac{3n^2 - 1}{n^3 + 2n + 5}\\) converges. State the comparison series you choose, why you chose it, and compute the limit the test requires.",
+     "rubric": [
+      "Notes the terms are positive for \\(n \\ge 1\\).",
+      "Chooses \\(b_n = \\frac1n\\) from the dominant parts \\(\\frac{3n^2}{n^3}\\).",
+      "Computes \\(\\lim \\frac{a_n}{b_n} = \\lim \\frac{3n^3 - n}{n^3 + 2n + 5} = 3\\), which is positive and finite.",
+      "Concludes divergence by the limit comparison test with the divergent harmonic series."
+     ],
+     "model": "For \\(n \\ge 1\\), \\(3n^2 - 1 > 0\\) and \\(n^3 + 2n + 5 > 0\\), so the terms are positive. The dominant parts are \\(3n^2\\) and \\(n^3\\), suggesting \\(b_n = \\frac1n\\). Then \\(\\frac{a_n}{b_n} = \\frac{3n^3 - n}{n^3 + 2n + 5} = \\frac{3 - 1/n^2}{1 + 2/n^2 + 5/n^3} \\to 3\\), with \\(0 < 3 < \\infty\\). Since \\(\\sum \\frac1n\\) diverges, the series diverges by the limit comparison test.",
+     "why": "The terms behave like \\(\\frac3n\\) for large \\(n\\). Direct comparison with \\(\\frac1n\\) would need an inequality that is awkward to establish; the limit comparison test avoids it."
+    },
+    {
+     "id": "s4q2",
+     "kp": "k8",
+     "type": "written",
+     "prompt": "A student wants to show that \\(\\sum_{n=2}^{\\infty} \\frac{1}{n^2 - 1}\\) converges and writes: \\\"\\(\\frac{1}{n^2 - 1} > \\frac{1}{n^2}\\), and \\(\\sum \\frac1{n^2}\\) converges, so the series converges by the comparison test.\\\" Explain what is wrong, then give a correct proof.",
+     "rubric": [
+      "Identifies that the inequality points the wrong way: being larger than the terms of a convergent series gives no information.",
+      "Gives a valid proof: e.g. \\(n^2 - 1 \\ge \\frac{n^2}{2}\\) for \\(n \\ge 2\\), so \\(0 < \\frac1{n^2-1} \\le \\frac2{n^2}\\), and direct comparison; or limit comparison with \\(\\frac1{n^2}\\) (limit 1).",
+      "Cites the convergence of the \\(p\\)-series with \\(p = 2\\) and concludes convergence."
+     ],
+     "model": "Direct comparison with a convergent series requires \\(a_n \\le b_n\\). The student has \\(a_n > b_n\\), and a series whose terms exceed those of a convergent series may converge or diverge, so nothing follows. A correct proof: for \\(n \\ge 2\\), \\(n^2 \\ge 2\\), so \\(n^2 - 1 \\ge n^2 - \\frac{n^2}{2} = \\frac{n^2}{2}\\), hence \\(0 < \\frac1{n^2 - 1} \\le \\frac{2}{n^2}\\). Since \\(\\sum \\frac{2}{n^2}\\) converges (a multiple of a \\(p\\)-series with \\(p = 2\\)), the series converges by direct comparison. Alternatively, \\(\\frac{1/(n^2-1)}{1/n^2} = \\frac{n^2}{n^2 - 1} \\to 1\\), and the limit comparison test applies.",
+     "why": "In fact the series telescopes: \\(\\frac{1}{n^2 - 1} = \\frac12\\left(\\frac1{n-1} - \\frac1{n+1}\\right)\\), and its sum is \\(\\frac12\\left(1 + \\frac12\\right) = \\frac34\\)."
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "Alternating series and their error bound",
+   "kps": [
+    "k10"
+   ],
+   "md": "Every test so far requires nonnegative terms, and for such series convergence simply means bounded partial sums. When the terms change sign, cancellation between them can make a series converge even though the series of their sizes diverges. This section treats the most common case, in which the signs strictly alternate.\n\n> **Definition.** An **alternating series** is a series of the form \\(\\sum_{n=1}^\\infty (-1)^{n+1} b_n = b_1 - b_2 + b_3 - \\cdots\\) or \\(\\sum_{n=1}^\\infty (-1)^n b_n\\), where \\(b_n > 0\\) for all \\(n\\).\n\n> **Alternating series test (Leibniz).** If \\(b_n > 0\\), \\(b_{n+1} \\le b_n\\) for all \\(n\\), and \\(\\lim_{n\\to\\infty} b_n = 0\\), then \\(\\sum_{n=1}^\\infty (-1)^{n+1} b_n\\) converges. It suffices that the inequality \\(b_{n+1} \\le b_n\\) hold from some index on.\n\n**Why it is true.** Consider the even-indexed partial sums. Grouping in pairs,\n\\[ s_{2m} = (b_1 - b_2) + (b_3 - b_4) + \\cdots + (b_{2m-1} - b_{2m}), \\]\nand each bracket is nonnegative because the \\(b_n\\) do not increase, so \\(\\{s_{2m}\\}\\) is nondecreasing. Grouping differently,\n\\[ s_{2m} = b_1 - (b_2 - b_3) - \\cdots - (b_{2m-2} - b_{2m-1}) - b_{2m} \\le b_1, \\]\nso \\(\\{s_{2m}\\}\\) is bounded above. By the monotone convergence theorem, \\(s_{2m} \\to S\\) for some \\(S\\). The odd partial sums satisfy \\(s_{2m+1} = s_{2m} + b_{2m+1} \\to S + 0 = S\\). The even and odd subsequences have the same limit, so \\(s_n \\to S\\), as shown in the previous chapter. Both hypotheses were used: monotonicity to control the brackets, and \\(b_n \\to 0\\) to make the odd and even partial sums meet.\n\n**The alternating harmonic series.** The series \\(1 - \\frac12 + \\frac13 - \\frac14 + \\cdots\\) satisfies the hypotheses with \\(b_n = \\frac1n\\), so it converges, although the harmonic series itself diverges. Its sum is \\(\\ln 2\\), a fact proved with Taylor series later in the course. The graph shows its partial sums: they land alternately above and below \\(\\ln 2\\), each step shorter than the one before.\n\n```plot\nx: 0, 15\ny: 0.4, 1.05\nhline: log(2) | ln 2\npoint: 1, 1.0000\npoint: 2, 0.5000\npoint: 3, 0.8333\npoint: 4, 0.5833\npoint: 5, 0.7833\npoint: 6, 0.6167\npoint: 7, 0.7595\npoint: 8, 0.6345\npoint: 9, 0.7456\npoint: 10, 0.6456\npoint: 11, 0.7365\npoint: 12, 0.6532\npoint: 13, 0.7301\npoint: 14, 0.6587\n```\n\n**Error estimate.** The picture suggests that the sum always lies between two consecutive partial sums. That is true, and it yields an error bound.\n\n> **Alternating series estimation theorem.** Under the hypotheses of the alternating series test, the remainder \\(R_n = S - s_n\\) satisfies \\(|R_n| \\le b_{n+1}\\): the error made by stopping after \\(n\\) terms is at most the size of the first omitted term. Moreover, \\(R_n\\) has the same sign as that first omitted term.\n\n**Worked example.** Estimate \\(S = \\sum_{n=1}^{\\infty} \\frac{(-1)^{n+1}}{n^4}\\) with five terms. Here \\(b_n = \\frac{1}{n^4}\\) is positive, decreasing and tends to 0. Then \\(s_5 = 1 - \\frac1{16} + \\frac1{81} - \\frac1{256} + \\frac1{625} \\approx 0.947539\\), and \\(|S - s_5| \\le b_6 = \\frac{1}{1296} \\approx 0.000772\\). The first omitted term, \\(-\\frac{1}{1296}\\), is negative, so \\(s_5\\) overestimates, and \\(0.946768 \\le S \\le 0.947539\\). The exact value is \\(\\frac{7\\pi^4}{720} \\approx 0.947033\\).\n\n**Common mistakes.** First, omitting the monotonicity check. The series \\(1 - \\frac14 + \\frac13 - \\frac1{16} + \\frac15 - \\frac1{36} + \\cdots\\), whose odd-position terms are \\(\\frac1n\\) and even-position terms \\(\\frac1{n^2}\\), alternates and has terms tending to 0, but its terms do not decrease, and it diverges: \\(s_{2m} = \\sum_{k=1}^{m} \\frac{1}{2k-1} - \\sum_{k=1}^m \\frac{1}{4k^2}\\), where the first sum tends to \\(\\infty\\) and the second stays bounded. Second, concluding divergence because the test does not apply. The test gives a sufficient condition only. If \\(b_n \\not\\to 0\\), use the divergence test; if \\(\\{b_n\\}\\) is not eventually monotone, another argument is needed.",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k10",
+     "type": "written",
+     "prompt": "Show that \\(\\sum_{n=1}^{\\infty} (-1)^{n+1}\\frac{\\sqrt n}{n+1}\\) converges. Verify each hypothesis of the test you use; the decrease of the terms requires an argument.",
+     "rubric": [
+      "Identifies the series as alternating with \\(b_n = \\frac{\\sqrt n}{n+1} > 0\\).",
+      "Shows \\(b_n \\to 0\\), e.g. \\(b_n = \\frac{1/\\sqrt n}{1 + 1/n}\\).",
+      "Shows \\(\\{b_n\\}\\) is nonincreasing using \\(f'(x) = \\frac{1 - x}{2\\sqrt x(x+1)^2} \\le 0\\) for \\(x \\ge 1\\).",
+      "Concludes convergence by the alternating series test."
+     ],
+     "model": "The series is alternating with \\(b_n = \\frac{\\sqrt n}{n+1} > 0\\). Dividing numerator and denominator by \\(n\\), \\(b_n = \\frac{1/\\sqrt n}{1 + 1/n} \\to \\frac{0}{1} = 0\\). For monotonicity let \\(f(x) = \\frac{\\sqrt x}{x + 1}\\). By the quotient rule, \\(f'(x) = \\frac{\\frac{1}{2\\sqrt x}(x+1) - \\sqrt x}{(x+1)^2} = \\frac{1 - x}{2\\sqrt x\\,(x+1)^2}\\), which is \\(\\le 0\\) for \\(x \\ge 1\\). So \\(b_{n+1} \\le b_n\\) for all \\(n \\ge 1\\). By the alternating series test the series converges.",
+     "why": "Both the numerator and the denominator grow, so decrease is not obvious from inspection; the derivative settles it. (The series does not converge absolutely, since \\(b_n\\) behaves like \\(\\frac1{\\sqrt n}\\).)"
+    },
+    {
+     "id": "s5q2",
+     "kp": "k10",
+     "type": "number",
+     "prompt": "For \\(S = \\sum_{n=1}^{\\infty} \\frac{(-1)^{n+1}}{n^4}\\), find the smallest \\(n\\) for which the alternating series estimation theorem guarantees \\(|S - s_n| < 10^{-4}\\).",
+     "answer": "10",
+     "why": "The bound is \\(|S - s_n| \\le b_{n+1} = \\frac{1}{(n+1)^4}\\). We need \\(\\frac1{(n+1)^4} < 10^{-4}\\), i.e. \\((n+1)^4 > 10^4\\), i.e. \\(n + 1 > 10\\). For \\(n = 9\\) the bound is exactly \\(10^{-4}\\), which is not less than \\(10^{-4}\\); for \\(n = 10\\) it is \\(\\frac{1}{14641}\\). So \\(n = 10\\)."
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "title": "Absolute and conditional convergence",
+   "kps": [
+    "k11"
+   ],
+   "md": "The alternating series test covers only strictly alternating signs. For a series whose signs follow no pattern, such as \\(\\sum \\frac{\\sin n}{n^2}\\), the practical approach is to discard the signs and apply the tests for nonnegative series to \\(\\sum |a_n|\\). This section shows why that works, and why a series can behave differently from the series of its absolute values.\n\n> **Definitions.** A series \\(\\sum a_n\\) **converges absolutely** if \\(\\sum |a_n|\\) converges. It **converges conditionally** if \\(\\sum a_n\\) converges but \\(\\sum |a_n|\\) diverges.\n\n> **Theorem.** If \\(\\sum |a_n|\\) converges, then \\(\\sum a_n\\) converges.\n\n*Proof.* For every \\(n\\), \\(-|a_n| \\le a_n \\le |a_n|\\), hence \\(0 \\le a_n + |a_n| \\le 2|a_n|\\). Since \\(\\sum 2|a_n|\\) converges, the direct comparison test shows that \\(\\sum (a_n + |a_n|)\\) converges. Then \\(\\sum a_n = \\sum (a_n + |a_n|) - \\sum |a_n|\\) is a difference of convergent series, so it converges.\n\n**Examples.** The signs of \\(\\frac{\\sin n}{n^2}\\) follow no regular pattern, but \\(\\left|\\frac{\\sin n}{n^2}\\right| \\le \\frac{1}{n^2}\\), so \\(\\sum \\frac{\\sin n}{n^2}\\) converges absolutely and therefore converges. The series \\(\\sum \\frac{(-1)^{n+1}}{n^2}\\) converges absolutely. The alternating harmonic series converges conditionally: it converges by the alternating series test, but its series of absolute values is the harmonic series.\n\n**Classifying a series.** Every series is exactly one of absolutely convergent, conditionally convergent, or divergent. To decide which:\n1. Test \\(\\sum |a_n|\\) with the tests for nonnegative series. If it converges, \\(\\sum a_n\\) converges absolutely.\n2. Otherwise, test \\(\\sum a_n\\) itself, usually with the alternating series test or the divergence test. If it converges, it converges conditionally; if not, it diverges.\n\n**Worked example.** Classify \\(\\sum_{n=1}^\\infty \\frac{(-1)^n n}{n^2 + 1}\\). *Absolute values:* comparing \\(\\frac{n}{n^2+1}\\) with \\(\\frac1n\\) gives the ratio \\(\\frac{n^2}{n^2 + 1} \\to 1\\), so \\(\\sum \\frac{n}{n^2 + 1}\\) diverges by limit comparison with the harmonic series, and the series does not converge absolutely. *The series itself:* \\(b_n = \\frac{n}{n^2+1} \\to 0\\), and for \\(f(x) = \\frac{x}{x^2+1}\\), \\(f'(x) = \\frac{1 - x^2}{(x^2+1)^2} \\le 0\\) when \\(x \\ge 1\\), so \\(\\{b_n\\}\\) is nonincreasing. By the alternating series test the series converges. It therefore converges conditionally.\n\n**Why the distinction matters.** A finite sum can be added in any order. An absolutely convergent series keeps this property: every rearrangement of its terms converges to the same sum. A conditionally convergent series does not. The **Riemann rearrangement theorem** states that the terms of a conditionally convergent series can be rearranged to converge to any prescribed real number, or to diverge. For instance, take the terms of the alternating harmonic series in the order one positive, two negative:\n\\[ \\left(1 - \\frac12 - \\frac14\\right) + \\left(\\frac13 - \\frac16 - \\frac18\\right) + \\left(\\frac15 - \\frac1{10} - \\frac1{12}\\right) + \\cdots \\]\nThe \\(k\\)th group is \\(\\frac{1}{2k-1} - \\frac{1}{4k-2} - \\frac{1}{4k} = \\frac12\\left(\\frac{1}{2k-1} - \\frac{1}{2k}\\right)\\), so the partial sums at the ends of the groups are half the partial sums \\(s_{2k}\\) of the alternating harmonic series. Since the terms tend to 0, the rearranged series converges to \\(\\frac12 \\ln 2\\), half the original sum. Conditional convergence depends on the order in which positive and negative terms cancel; absolute convergence does not depend on cancellation at all.\n\n**Common mistakes.** Treating \"alternating\" and \"conditionally convergent\" as synonyms: \\(\\sum \\frac{(-1)^n}{n^2}\\) alternates and converges absolutely. And concluding that \\(\\sum a_n\\) diverges because \\(\\sum |a_n|\\) diverges: that only rules out absolute convergence.",
+   "questions": [
+    {
+     "id": "s6q1",
+     "kp": "k11",
+     "type": "written",
+     "prompt": "Classify \\(\\sum_{n=2}^{\\infty} \\frac{(-1)^n}{\\ln n}\\) as absolutely convergent, conditionally convergent, or divergent. Justify both parts of the classification.",
+     "rubric": [
+      "Shows \\(\\sum \\frac{1}{\\ln n}\\) diverges, e.g. \\(0 < \\ln n < n\\) gives \\(\\frac1{\\ln n} > \\frac1n\\) and direct comparison with the harmonic series.",
+      "Verifies \\(b_n = \\frac1{\\ln n}\\) is positive, decreasing (since \\(\\ln\\) is increasing) and tends to 0.",
+      "Concludes convergence by the alternating series test.",
+      "States the classification: conditionally convergent."
+     ],
+     "model": "*Absolute values.* For \\(n \\ge 2\\), \\(0 < \\ln n < n\\), so \\(\\frac1{\\ln n} > \\frac1n > 0\\). The harmonic series (from \\(n = 2\\)) diverges, so \\(\\sum \\frac1{\\ln n}\\) diverges by direct comparison, and the series is not absolutely convergent. *The series itself.* It alternates with \\(b_n = \\frac1{\\ln n} > 0\\). Since \\(\\ln\\) is increasing, \\(b_{n+1} < b_n\\), and since \\(\\ln n \\to \\infty\\), \\(b_n \\to 0\\). By the alternating series test the series converges. Therefore it converges conditionally.",
+     "why": "The two-step procedure: first absolute values with a positive-term test, then the alternating series test on the original series."
+    },
+    {
+     "id": "s6q2",
+     "kp": "k11",
+     "type": "mcq",
+     "prompt": "For which values of \\(p\\) does \\(\\sum_{n=1}^{\\infty} \\frac{(-1)^{n+1}}{n^p}\\) converge conditionally?",
+     "options": [
+      "\\(p > 1\\)",
+      "\\(0 < p \\le 1\\)",
+      "\\(p \\le 1\\)",
+      "all \\(p > 0\\)"
+     ],
+     "answer": 1,
+     "why": "The series of absolute values is the \\(p\\)-series, convergent exactly for \\(p > 1\\); those \\(p\\) give absolute convergence, not conditional. For \\(0 < p \\le 1\\), \\(\\frac{1}{n^p}\\) decreases to 0, so the alternating series test gives convergence while \\(\\sum \\frac1{n^p}\\) diverges: conditional convergence. For \\(p \\le 0\\) the terms do not tend to 0 and the series diverges. The option \\\"all \\(p > 0\\)\\\" confuses convergence with conditional convergence."
+    }
+   ]
+  },
+  {
+   "id": "s7",
+   "title": "The ratio and root tests, and choosing a test",
+   "kps": [
+    "k12",
+    "k13",
+    "k14"
+   ],
+   "md": "The comparison tests need a known series to compare with. For series built from factorials and exponentials, such as \\(\\sum \\frac{n^2}{2^n}\\) or \\(\\sum \\frac{n!}{10^n}\\), the right comparison is with a geometric series, made by measuring how fast the terms shrink. The ratio and root tests carry out that comparison automatically.\n\n> **Ratio test.** Let \\(\\sum a_n\\) have nonzero terms, and suppose \\(L = \\lim_{n\\to\\infty} \\left|\\frac{a_{n+1}}{a_n}\\right|\\) exists or is \\(\\infty\\).\n> 1. If \\(L < 1\\), the series converges absolutely.\n> 2. If \\(L > 1\\) or \\(L = \\infty\\), the series diverges.\n> 3. If \\(L = 1\\), the test is inconclusive.\n\n**Why it is true.** If \\(L < 1\\), choose \\(r\\) with \\(L < r < 1\\). For all \\(n\\) beyond some \\(N\\), \\(|a_{n+1}| \\le r|a_n|\\), hence \\(|a_{N+k}| \\le |a_N|\\, r^k\\). The tail of \\(\\sum |a_n|\\) is dominated by a convergent geometric series, so \\(\\sum a_n\\) converges absolutely. If \\(L > 1\\), then eventually \\(|a_{n+1}| > |a_n|\\), so the terms do not tend to 0 and the divergence test applies. If \\(L = 1\\), both behaviours occur: for \\(\\sum \\frac1n\\) and \\(\\sum \\frac{1}{n^2}\\) the ratios \\(\\frac{n}{n+1}\\) and \\(\\frac{n^2}{(n+1)^2}\\) both tend to 1, yet the first series diverges and the second converges.\n\n**Worked examples.** (1) \\(\\sum \\frac{n^2}{2^n}\\): \\(\\left|\\frac{a_{n+1}}{a_n}\\right| = \\frac{(n+1)^2}{2^{n+1}}\\cdot\\frac{2^n}{n^2} = \\frac12\\left(1 + \\frac1n\\right)^2 \\to \\frac12 < 1\\), so the series converges absolutely. (2) \\(\\sum \\frac{n!}{10^n}\\): the ratio is \\(\\frac{(n+1)!}{10^{n+1}}\\cdot\\frac{10^n}{n!} = \\frac{n+1}{10} \\to \\infty\\), so the series diverges. (3) \\(\\sum \\frac{n^n}{n!}\\): the ratio is \\(\\frac{(n+1)^{n+1}}{(n+1)!}\\cdot\\frac{n!}{n^n} = \\left(1 + \\frac1n\\right)^n \\to e > 1\\), so the series diverges. In each case, simplify \\(\\frac{(n+1)!}{n!} = n+1\\) before taking the limit.\n\n> **Root test.** Suppose \\(L = \\lim_{n\\to\\infty} \\sqrt[n]{|a_n|}\\) exists or is \\(\\infty\\). If \\(L < 1\\), the series converges absolutely; if \\(L > 1\\) or \\(L = \\infty\\), it diverges; if \\(L = 1\\), the test is inconclusive.\n\nThe reason is the same comparison: if \\(L < r < 1\\), then \\(|a_n| \\le r^n\\) for all large \\(n\\). The root test suits terms that are \\(n\\)th powers. **Worked example.** For \\(\\sum_{n=1}^{\\infty} \\left(\\frac{2n+1}{3n-1}\\right)^n\\), \\(\\sqrt[n]{|a_n|} = \\frac{2n+1}{3n-1} \\to \\frac23 < 1\\), so the series converges absolutely.\n\n**Choosing a test.** A workable order of questions:\n1. Do the terms tend to 0? If not, the divergence test settles the matter.\n2. Is it a geometric, \\(p\\)-, or telescoping series? Then the known results apply.\n3. Do the terms contain factorials or powers \\(c^n\\)? Try the ratio test; if the whole term is an \\(n\\)th power, the root test.\n4. Is the term a rational or algebraic expression in \\(n\\)? Use limit comparison with a \\(p\\)-series, taking \\(b_n\\) from the dominant parts.\n5. Do the signs change? Test \\(\\sum |a_n|\\) first; if that series diverges and the signs alternate, use the alternating series test.\n6. Is \\(a_n = f(n)\\) for a decreasing \\(f\\) that you can integrate, such as \\(\\frac{1}{n(\\ln n)^2}\\)? Use the integral test.\n\n**Common mistakes.** Applying the ratio test to rational expressions in \\(n\\): the limit is always 1, and nothing is learned. Checking that each ratio \\(\\left|\\frac{a_{n+1}}{a_n}\\right|\\) is less than 1 instead of computing the limit: for the harmonic series every ratio \\(\\frac{n}{n+1}\\) is less than 1, yet the series diverges. The test needs the limit to be less than 1, which keeps the ratios eventually below a fixed \\(r < 1\\). Finally, dropping the absolute value, which for alternating series produces a negative number that means nothing.",
+   "questions": [
+    {
+     "id": "s7q1",
+     "kp": "k12",
+     "type": "number",
+     "prompt": "For \\(\\sum_{n=1}^{\\infty} \\frac{n!}{n^n}\\), compute \\(L = \\lim_{n\\to\\infty} \\left|\\frac{a_{n+1}}{a_n}\\right|\\). Give the exact value.",
+     "answer": "e^(-1)",
+     "why": "\\(\\frac{a_{n+1}}{a_n} = \\frac{(n+1)!}{(n+1)^{n+1}}\\cdot\\frac{n^n}{n!} = \\frac{(n+1)\\,n^n}{(n+1)^{n+1}} = \\left(\\frac{n}{n+1}\\right)^n = \\frac{1}{(1 + 1/n)^n} \\to \\frac1e\\). Since \\(\\frac1e < 1\\), the series converges absolutely."
+    },
+    {
+     "id": "s7q2",
+     "kp": "k12",
+     "type": "written",
+     "prompt": "Determine whether \\(\\sum_{n=1}^{\\infty} \\frac{(2n)!}{(n!)^2\\,5^n}\\) converges. Show the simplification of the ratio of consecutive terms.",
+     "rubric": [
+      "Writes \\(\\frac{a_{n+1}}{a_n} = \\frac{(2n+2)!}{(2n)!}\\cdot\\frac{(n!)^2}{((n+1)!)^2}\\cdot\\frac{5^n}{5^{n+1}}\\).",
+      "Simplifies to \\(\\frac{(2n+2)(2n+1)}{5(n+1)^2}\\).",
+      "Computes the limit \\(\\frac45 < 1\\).",
+      "Concludes absolute convergence (hence convergence) by the ratio test."
+     ],
+     "model": "The terms are positive. \\(\\frac{a_{n+1}}{a_n} = \\frac{(2n+2)!}{(2n)!}\\cdot\\frac{(n!)^2}{((n+1)!)^2}\\cdot\\frac{5^n}{5^{n+1}} = \\frac{(2n+2)(2n+1)}{(n+1)^2}\\cdot\\frac15 = \\frac{2(2n+1)}{5(n+1)}\\). As \\(n\\to\\infty\\) this tends to \\(\\frac{4}{5} < 1\\). By the ratio test the series converges (absolutely).",
+     "why": "\\(\\frac{(2n+2)!}{(2n)!} = (2n+2)(2n+1)\\): two factors, not one, because the argument of the factorial increases by 2."
+    },
+    {
+     "id": "s7q3",
+     "kp": "k14",
+     "type": "written",
+     "prompt": "Explain why the ratio test cannot decide the convergence of \\(\\sum_{n=1}^{\\infty} \\frac{n+1}{n^3 + 2}\\), and then settle its convergence with an appropriate test.",
+     "rubric": [
+      "Computes (or argues) that the ratio of consecutive terms of a rational expression tends to 1, so the ratio test is inconclusive.",
+      "Chooses limit comparison with \\(\\frac1{n^2}\\) (dominant parts \\(\\frac{n}{n^3}\\)).",
+      "Computes \\(\\lim \\frac{n^3 + n^2}{n^3 + 2} = 1\\).",
+      "Concludes convergence since \\(\\sum\\frac1{n^2}\\) is a \\(p\\)-series with \\(p = 2 > 1\\)."
+     ],
+     "model": "\\(\\frac{a_{n+1}}{a_n} = \\frac{n+2}{n+1}\\cdot\\frac{n^3 + 2}{(n+1)^3 + 2}\\), and both factors tend to 1, so \\(L = 1\\) and the ratio test gives no information. This always happens for rational expressions in \\(n\\), which change by a factor close to 1 from one term to the next. Instead, the dominant parts give \\(\\frac{n}{n^3} = \\frac1{n^2}\\). With \\(b_n = \\frac1{n^2}\\), \\(\\frac{a_n}{b_n} = \\frac{n^3 + n^2}{n^3 + 2} \\to 1\\), positive and finite, and \\(\\sum \\frac1{n^2}\\) converges, so the series converges by the limit comparison test.",
+     "why": "Ratio and root tests detect geometric-type decay. Polynomial-type decay like \\(\\frac1{n^2}\\) is invisible to them and belongs to comparison with \\(p\\)-series."
+    }
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "t": "infinite series",
+   "d": "An expression \\(\\sum_{n=1}^\\infty a_n = a_1 + a_2 + \\cdots\\) formed from a sequence of terms; its value, if any, is the limit of its partial sums."
+  },
+  {
+   "t": "partial sum",
+   "d": "The finite sum \\(s_n = a_1 + \\cdots + a_n\\) of the first \\(n\\) terms of a series."
+  },
+  {
+   "t": "sum of a series",
+   "d": "The real number \\(S = \\lim_{n\\to\\infty} s_n\\), when this limit exists; the series is then said to converge."
+  },
+  {
+   "t": "convergent series",
+   "d": "A series whose sequence of partial sums converges to a real number; otherwise the series is divergent."
+  },
+  {
+   "t": "geometric series",
+   "d": "A series \\(\\sum_{n=1}^\\infty ar^{n-1}\\) with \\(a \\ne 0\\); it converges to \\(\\frac{a}{1-r}\\) if \\(|r| < 1\\) and diverges if \\(|r| \\ge 1\\)."
+  },
+  {
+   "t": "common ratio",
+   "d": "The constant \\(r\\) by which each term of a geometric series is multiplied to give the next term."
+  },
+  {
+   "t": "telescoping series",
+   "d": "A series whose terms are differences \\(b_n - b_{n+1}\\), so that its partial sums collapse to \\(b_1 - b_{n+1}\\)."
+  },
+  {
+   "t": "harmonic series",
+   "d": "The series \\(\\sum_{n=1}^\\infty \\frac1n\\); it diverges although its terms tend to 0.",
+   "ex": "The alternating harmonic series \\(\\sum \\frac{(-1)^{n+1}}{n}\\) converges (to \\(\\ln 2\\))."
+  },
+  {
+   "t": "divergence test",
+   "d": "If \\(\\lim a_n\\) does not exist or is not 0, then \\(\\sum a_n\\) diverges; also called the \\(n\\)th-term test. It never proves convergence."
+  },
+  {
+   "t": "p-series",
+   "d": "A series \\(\\sum_{n=1}^\\infty \\frac{1}{n^p}\\); it converges if and only if \\(p > 1\\)."
+  },
+  {
+   "t": "integral test",
+   "d": "If \\(f\\) is continuous, positive and decreasing on \\([1,\\infty)\\) and \\(a_n = f(n)\\), then \\(\\sum a_n\\) and \\(\\int_1^\\infty f(x)\\,dx\\) both converge or both diverge."
+  },
+  {
+   "t": "remainder",
+   "d": "The error \\(R_n = S - s_n = \\sum_{k=n+1}^\\infty a_k\\) made in approximating the sum of a convergent series by its \\(n\\)th partial sum."
+  },
+  {
+   "t": "direct comparison test",
+   "d": "If \\(0 \\le a_n \\le b_n\\) eventually, convergence of \\(\\sum b_n\\) implies convergence of \\(\\sum a_n\\), and divergence of \\(\\sum a_n\\) implies divergence of \\(\\sum b_n\\)."
+  },
+  {
+   "t": "limit comparison test",
+   "d": "If \\(a_n, b_n > 0\\) and \\(\\frac{a_n}{b_n} \\to c\\) with \\(0 < c < \\infty\\), then \\(\\sum a_n\\) and \\(\\sum b_n\\) both converge or both diverge."
+  },
+  {
+   "t": "alternating series",
+   "d": "A series of the form \\(\\sum (-1)^{n+1} b_n\\) or \\(\\sum(-1)^n b_n\\) with every \\(b_n > 0\\)."
+  },
+  {
+   "t": "alternating series test",
+   "d": "If \\(b_n > 0\\), \\(\\{b_n\\}\\) is (eventually) nonincreasing and \\(b_n \\to 0\\), then \\(\\sum(-1)^{n+1}b_n\\) converges, and \\(|R_n| \\le b_{n+1}\\)."
+  },
+  {
+   "t": "absolute convergence",
+   "d": "\\(\\sum a_n\\) converges absolutely if \\(\\sum|a_n|\\) converges; absolute convergence implies convergence."
+  },
+  {
+   "t": "conditional convergence",
+   "d": "\\(\\sum a_n\\) converges conditionally if it converges but \\(\\sum |a_n|\\) diverges."
+  },
+  {
+   "t": "rearrangement",
+   "d": "A series containing exactly the same terms as \\(\\sum a_n\\) in a different order. Absolutely convergent series keep their sum under rearrangement; conditionally convergent ones can be rearranged to any sum (Riemann rearrangement theorem)."
+  },
+  {
+   "t": "ratio test",
+   "d": "With \\(L = \\lim\\left|\\frac{a_{n+1}}{a_n}\\right|\\): \\(L < 1\\) gives absolute convergence, \\(L > 1\\) (or \\(\\infty\\)) divergence, \\(L = 1\\) no conclusion."
+  },
+  {
+   "t": "root test",
+   "d": "With \\(L = \\lim\\sqrt[n]{|a_n|}\\): \\(L < 1\\) gives absolute convergence, \\(L > 1\\) (or \\(\\infty\\)) divergence, \\(L = 1\\) no conclusion."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "term",
+   "front": "Define: the sum of the series \\(\\sum_{n=1}^\\infty a_n\\)",
+   "back": "The limit \\(S = \\lim_{n\\to\\infty} s_n\\) of the partial sums \\(s_n = a_1 + \\cdots + a_n\\), if it exists as a real number.",
+   "kp": "k1"
+  },
+  {
+   "id": "c2",
+   "type": "formula",
+   "front": "Sum of the geometric series \\(\\sum_{n=1}^\\infty ar^{n-1}\\), and when it converges",
+   "back": "\\(\\frac{a}{1-r}\\) for \\(|r| < 1\\); diverges for \\(|r| \\ge 1\\) (with \\(a \\ne 0\\)).",
+   "kp": "k2"
+  },
+  {
+   "id": "c3",
+   "type": "formula",
+   "front": "Partial sums of \\(\\sum (b_n - b_{n+1})\\)",
+   "back": "\\(s_n = b_1 - b_{n+1}\\); the sum is \\(b_1 - \\lim b_n\\) when that limit exists.",
+   "kp": "k3"
+  },
+  {
+   "id": "c4",
+   "type": "concept",
+   "front": "What does the divergence test conclude when \\(a_n \\to 0\\)?",
+   "back": "Nothing. It proves divergence only when \\(\\lim a_n \\ne 0\\) or does not exist; \\(\\sum\\frac1n\\) has \\(a_n \\to 0\\) and diverges.",
+   "kp": "k4"
+  },
+  {
+   "id": "c5",
+   "type": "concept",
+   "front": "Why does the harmonic series diverge? (one-line argument)",
+   "back": "The blocks \\(\\frac{1}{2^{j-1}+1} + \\cdots + \\frac1{2^j}\\) each exceed \\(\\frac12\\), so \\(s_{2^k} \\ge 1 + \\frac k2 \\to \\infty\\).",
+   "kp": "k4"
+  },
+  {
+   "id": "c6",
+   "type": "term",
+   "front": "Hypotheses of the integral test",
+   "back": "\\(f\\) continuous, positive and (eventually) decreasing on \\([N,\\infty)\\), with \\(a_n = f(n)\\). Then \\(\\sum a_n\\) and \\(\\int_N^\\infty f\\) converge or diverge together.",
+   "kp": "k5"
+  },
+  {
+   "id": "c7",
+   "type": "formula",
+   "front": "Convergence of the \\(p\\)-series \\(\\sum \\frac1{n^p}\\)",
+   "back": "Converges if \\(p > 1\\), diverges if \\(p \\le 1\\).",
+   "kp": "k6"
+  },
+  {
+   "id": "c8",
+   "type": "formula",
+   "front": "Integral bounds on the remainder \\(R_n\\)",
+   "back": "\\(\\int_{n+1}^\\infty f(x)\\,dx \\le R_n \\le \\int_n^\\infty f(x)\\,dx\\)",
+   "kp": "k7"
+  },
+  {
+   "id": "c9",
+   "type": "concept",
+   "front": "Does the integral test give the sum of the series?",
+   "back": "No, only convergence. \\(\\int_1^\\infty x^{-2}\\,dx = 1\\) but \\(\\sum\\frac1{n^2} = \\frac{\\pi^2}{6}\\).",
+   "kp": "k5"
+  },
+  {
+   "id": "c10",
+   "type": "term",
+   "front": "State the direct comparison test.",
+   "back": "If \\(0 \\le a_n \\le b_n\\) eventually: \\(\\sum b_n\\) converges \\(\\Rightarrow\\) \\(\\sum a_n\\) converges; \\(\\sum a_n\\) diverges \\(\\Rightarrow\\) \\(\\sum b_n\\) diverges.",
+   "kp": "k8"
+  },
+  {
+   "id": "c11",
+   "type": "term",
+   "front": "State the limit comparison test.",
+   "back": "If \\(a_n, b_n > 0\\) and \\(\\frac{a_n}{b_n} \\to c\\) with \\(0 < c < \\infty\\), then \\(\\sum a_n\\) and \\(\\sum b_n\\) both converge or both diverge.",
+   "kp": "k9"
+  },
+  {
+   "id": "c12",
+   "type": "concept",
+   "front": "How do you choose \\(b_n\\) for the limit comparison test?",
+   "back": "Keep the dominant part of numerator and denominator, e.g. \\(\\frac{2n+3}{\\sqrt{n^5+1}} \\to b_n = \\frac1{n^{3/2}}\\).",
+   "kp": "k9"
+  },
+  {
+   "id": "c13",
+   "type": "term",
+   "front": "State the alternating series test.",
+   "back": "If \\(b_n > 0\\), \\(b_{n+1} \\le b_n\\) (eventually) and \\(b_n \\to 0\\), then \\(\\sum(-1)^{n+1}b_n\\) converges.",
+   "kp": "k10"
+  },
+  {
+   "id": "c14",
+   "type": "formula",
+   "front": "Error bound for an alternating series satisfying the test",
+   "back": "\\(|S - s_n| \\le b_{n+1}\\), and \\(S - s_n\\) has the sign of the first omitted term.",
+   "kp": "k10"
+  },
+  {
+   "id": "c15",
+   "type": "term",
+   "front": "Define: absolute and conditional convergence",
+   "back": "Absolute: \\(\\sum|a_n|\\) converges. Conditional: \\(\\sum a_n\\) converges but \\(\\sum|a_n|\\) diverges.",
+   "kp": "k11"
+  },
+  {
+   "id": "c16",
+   "type": "concept",
+   "front": "Why does absolute convergence imply convergence?",
+   "back": "\\(0 \\le a_n + |a_n| \\le 2|a_n|\\), so \\(\\sum(a_n + |a_n|)\\) converges by comparison; subtract \\(\\sum |a_n|\\).",
+   "kp": "k11"
+  },
+  {
+   "id": "c17",
+   "type": "concept",
+   "front": "What does the Riemann rearrangement theorem say?",
+   "back": "A conditionally convergent series can be rearranged to converge to any real number or to diverge; absolutely convergent series keep their sum under every rearrangement.",
+   "kp": "k11"
+  },
+  {
+   "id": "c18",
+   "type": "formula",
+   "front": "The ratio test",
+   "back": "\\(L = \\lim\\left|\\frac{a_{n+1}}{a_n}\\right|\\): \\(L < 1\\) absolutely convergent; \\(L > 1\\) or \\(\\infty\\) divergent; \\(L = 1\\) inconclusive.",
+   "kp": "k12"
+  },
+  {
+   "id": "c19",
+   "type": "concept",
+   "front": "Why does the ratio test say nothing when \\(L = 1\\)?",
+   "back": "Both behaviours occur: \\(\\sum\\frac1n\\) diverges and \\(\\sum\\frac1{n^2}\\) converges, and both have \\(L = 1\\).",
+   "kp": "k12"
+  },
+  {
+   "id": "c20",
+   "type": "formula",
+   "front": "The root test",
+   "back": "\\(L = \\lim\\sqrt[n]{|a_n|}\\): \\(L < 1\\) absolutely convergent; \\(L > 1\\) or \\(\\infty\\) divergent; \\(L = 1\\) inconclusive.",
+   "kp": "k13"
+  },
+  {
+   "id": "c21",
+   "type": "concept",
+   "front": "Which test for terms with factorials? With rational expressions in \\(n\\)?",
+   "back": "Factorials or \\(c^n\\): ratio test. Rational or algebraic in \\(n\\): limit comparison with a \\(p\\)-series (ratio test gives \\(L = 1\\)).",
+   "kp": "k14"
+  },
+  {
+   "id": "c22",
+   "type": "problem",
+   "front": "\\(\\sum_{n=0}^\\infty \\left(\\frac23\\right)^n\\)",
+   "back": "3. Geometric with first term 1 and ratio \\(\\frac23\\): \\(\\frac{1}{1 - 2/3} = 3\\).",
+   "kp": "k2",
+   "answer": "3",
+   "check": "number"
+  },
+  {
+   "id": "c23",
+   "type": "problem",
+   "front": "\\(\\sum_{n=1}^\\infty \\frac{1}{n(n+1)}\\)",
+   "back": "1. Telescoping: \\(\\frac1n - \\frac1{n+1}\\), so \\(s_n = 1 - \\frac1{n+1} \\to 1\\).",
+   "kp": "k3",
+   "answer": "1",
+   "check": "number"
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k2",
+   "type": "number",
+   "prompt": "Find \\(\\sum_{n=2}^{\\infty} \\frac{(-1)^n\\, 2^n}{3^{n-1}}\\).",
+   "answer": "4/5",
+   "why": "The first term (\\(n = 2\\)) is \\(\\frac{4}{3}\\). The ratio of consecutive terms is \\(-\\frac23\\), and \\(\\left|-\\frac23\\right| < 1\\). The sum is \\(\\frac{4/3}{1 - (-2/3)} = \\frac{4/3}{5/3} = \\frac45\\)."
+  },
+  {
+   "id": "p2",
+   "kp": "k2",
+   "type": "number",
+   "prompt": "Write the repeating decimal \\(1.2454545\\ldots\\) (the block 45 repeating) as a fraction by expressing its repeating part as a geometric series.",
+   "answer": "137/110",
+   "why": "\\(1.2454545\\ldots = 1.2 + 0.045 + 0.00045 + \\cdots\\). The tail is geometric with first term \\(\\frac{45}{1000}\\) and ratio \\(\\frac{1}{100}\\), so it equals \\(\\frac{45/1000}{99/100} = \\frac{45}{990} = \\frac{1}{22}\\). Hence the number is \\(\\frac{6}{5} + \\frac1{22} = \\frac{132 + 5}{110} = \\frac{137}{110}\\)."
+  },
+  {
+   "id": "p3",
+   "kp": "k3",
+   "type": "number",
+   "prompt": "Find \\(\\sum_{n=1}^{\\infty} \\frac{1}{(2n-1)(2n+1)}\\).",
+   "answer": "1/2",
+   "why": "\\(\\frac{1}{(2n-1)(2n+1)} = \\frac12\\left(\\frac{1}{2n-1} - \\frac{1}{2n+1}\\right)\\). The partial sums telescope: \\(s_N = \\frac12\\left(1 - \\frac{1}{2N+1}\\right) \\to \\frac12\\)."
+  },
+  {
+   "id": "p4",
+   "kp": "k3",
+   "type": "written",
+   "prompt": "Show that \\(\\sum_{n=1}^{\\infty} \\ln\\frac{n}{n+1}\\) diverges even though its terms tend to 0. Find a closed form for its partial sums.",
+   "rubric": [
+    "Notes \\(\\ln\\frac{n}{n+1} \\to \\ln 1 = 0\\), so the divergence test is inconclusive.",
+    "Writes the term as \\(\\ln n - \\ln(n+1)\\), a telescoping difference.",
+    "Finds \\(s_N = \\ln 1 - \\ln(N+1) = -\\ln(N+1)\\).",
+    "Concludes \\(s_N \\to -\\infty\\), so the series diverges."
+   ],
+   "model": "By continuity of \\(\\ln\\), \\(\\ln\\frac{n}{n+1} \\to \\ln 1 = 0\\), so the divergence test says nothing. Since \\(\\ln\\frac{n}{n+1} = \\ln n - \\ln(n+1)\\), the series telescopes: \\(s_N = (\\ln 1 - \\ln 2) + (\\ln 2 - \\ln 3) + \\cdots + (\\ln N - \\ln(N+1)) = -\\ln(N+1)\\). As \\(N\\to\\infty\\), \\(s_N \\to -\\infty\\), so the series diverges.",
+   "why": "A telescoping series \\(\\sum (b_n - b_{n+1})\\) converges exactly when \\(b_n\\) converges; here \\(b_n = \\ln n \\to \\infty\\)."
+  },
+  {
+   "id": "p5",
+   "kp": "k5",
+   "type": "written",
+   "prompt": "Use the integral test to show that \\(\\sum_{n=2}^{\\infty} \\frac{1}{n\\ln n}\\) diverges, verifying the hypotheses.",
+   "rubric": [
+    "Takes \\(f(x) = \\frac{1}{x\\ln x}\\) and verifies it is continuous, positive and decreasing on \\([2, \\infty)\\).",
+    "Computes \\(\\int_2^b \\frac{dx}{x\\ln x} = \\ln(\\ln b) - \\ln(\\ln 2)\\) with \\(u = \\ln x\\).",
+    "Shows this tends to \\(\\infty\\) and concludes the series diverges."
+   ],
+   "model": "Let \\(f(x) = \\frac{1}{x\\ln x}\\) on \\([2, \\infty)\\). It is continuous and positive there, and decreasing because \\(x\\ln x\\) is a product of positive increasing functions. With \\(u = \\ln x\\), \\(\\int_2^b \\frac{dx}{x\\ln x} = \\int_{\\ln 2}^{\\ln b}\\frac{du}{u} = \\ln(\\ln b) - \\ln(\\ln 2)\\), which tends to \\(\\infty\\) as \\(b\\to\\infty\\). The integral diverges, so the series diverges by the integral test.",
+   "why": "This series lies between the harmonic series and the convergent \\(\\sum \\frac{1}{n(\\ln n)^2}\\); its partial sums grow like \\(\\ln(\\ln n)\\)."
+  },
+  {
+   "id": "p6",
+   "kp": "k9",
+   "type": "written",
+   "prompt": "Determine whether \\(\\sum_{n=1}^{\\infty} \\sin\\frac1n\\) converges. Justify that the hypotheses of your test hold.",
+   "rubric": [
+    "Notes that the terms are positive because \\(0 < \\frac1n \\le 1 < \\pi\\).",
+    "Chooses \\(b_n = \\frac1n\\) and computes \\(\\lim \\frac{\\sin(1/n)}{1/n} = 1\\).",
+    "Concludes divergence by limit comparison with the harmonic series."
+   ],
+   "model": "For \\(n \\ge 1\\), \\(0 < \\frac1n \\le 1 < \\pi\\), so \\(\\sin\\frac1n > 0\\). Take \\(b_n = \\frac1n > 0\\). With \\(u = \\frac1n \\to 0^+\\), \\(\\frac{\\sin(1/n)}{1/n} = \\frac{\\sin u}{u} \\to 1\\), which is positive and finite. The harmonic series diverges, so \\(\\sum \\sin\\frac1n\\) diverges by the limit comparison test.",
+   "why": "The divergence test is inconclusive here since \\(\\sin\\frac1n \\to 0\\). For small \\(u\\), \\(\\sin u \\approx u\\), so the series behaves like the harmonic series."
+  },
+  {
+   "id": "p7",
+   "kp": "k8",
+   "type": "written",
+   "prompt": "Determine whether \\(\\sum_{n=1}^{\\infty} \\frac{2 + \\cos n}{\\sqrt n}\\) converges, using the direct comparison test.",
+   "rubric": [
+    "Uses \\(\\cos n \\ge -1\\) to get \\(2 + \\cos n \\ge 1\\), so \\(\\frac{2 + \\cos n}{\\sqrt n} \\ge \\frac{1}{\\sqrt n} > 0\\).",
+    "Identifies \\(\\sum \\frac1{\\sqrt n}\\) as a divergent \\(p\\)-series (\\(p = \\frac12 \\le 1\\)).",
+    "Concludes divergence by direct comparison (larger than a divergent series)."
+   ],
+   "model": "Since \\(\\cos n \\ge -1\\), \\(2 + \\cos n \\ge 1\\), and so \\(\\frac{2 + \\cos n}{\\sqrt n} \\ge \\frac{1}{\\sqrt n} > 0\\) for all \\(n\\). The series \\(\\sum \\frac{1}{\\sqrt n}\\) is a \\(p\\)-series with \\(p = \\frac12 \\le 1\\), which diverges. A series whose nonnegative terms are at least those of a divergent series diverges, so the given series diverges.",
+   "why": "A bounded oscillating factor that stays away from 0 can be replaced by its lower bound; the direction of the inequality must match the conclusion sought."
+  },
+  {
+   "id": "p8",
+   "kp": "k13",
+   "type": "number",
+   "prompt": "Apply the root test to \\(\\sum_{n=1}^{\\infty} \\left(\\frac{3n+2}{5n-1}\\right)^n\\): compute \\(L = \\lim_{n\\to\\infty}\\sqrt[n]{|a_n|}\\).",
+   "answer": "3/5",
+   "why": "The terms are positive, and \\(\\sqrt[n]{a_n} = \\frac{3n+2}{5n-1} = \\frac{3 + 2/n}{5 - 1/n} \\to \\frac35\\). Since \\(\\frac35 < 1\\), the series converges absolutely."
+  },
+  {
+   "id": "p9",
+   "kp": "k12",
+   "type": "written",
+   "prompt": "For the harmonic series, every ratio \\(\\frac{a_{n+1}}{a_n} = \\frac{n}{n+1}\\) is less than 1, yet the series diverges. Explain precisely why this does not contradict the ratio test, referring to the step of its proof that fails.",
+   "rubric": [
+    "States that the ratio test's hypothesis concerns the limit \\(L\\) of the ratios, which here equals 1, so the test is inconclusive.",
+    "Explains that the proof needs a fixed \\(r < 1\\) with \\(|a_{n+1}| \\le r|a_n|\\) for all large \\(n\\), giving comparison with a geometric series.",
+    "Notes that ratios \\(\\frac{n}{n+1}\\) approach 1, so no fixed \\(r < 1\\) bounds them eventually, and no geometric comparison is available."
+   ],
+   "model": "The ratio test concludes convergence when \\(L = \\lim \\left|\\frac{a_{n+1}}{a_n}\\right| < 1\\). Here \\(L = \\lim\\frac{n}{n+1} = 1\\), so the test gives no conclusion. The proof shows why the limit matters: from \\(L < 1\\) it picks a fixed \\(r\\) with \\(L < r < 1\\) and gets \\(|a_{n+1}| \\le r|a_n|\\) for all large \\(n\\), so the tail is dominated by the convergent geometric series \\(\\sum |a_N| r^k\\). For the harmonic series each ratio is below 1, but the ratios approach 1, so for any fixed \\(r < 1\\) they eventually exceed \\(r\\). The terms shrink, but more slowly than any geometric sequence, and the comparison fails.",
+   "why": "Ratios below 1 guarantee only that the terms decrease, and decreasing terms are compatible with divergence."
+  },
+  {
+   "id": "p10",
+   "kp": "k11",
+   "type": "written",
+   "prompt": "Classify \\(\\sum_{n=1}^{\\infty} (-1)^n\\frac{\\sqrt n}{n+5}\\) as absolutely convergent, conditionally convergent, or divergent.",
+   "rubric": [
+    "Shows \\(\\sum \\frac{\\sqrt n}{n+5}\\) diverges by limit comparison with \\(\\frac1{\\sqrt n}\\) (limit 1).",
+    "Shows \\(b_n = \\frac{\\sqrt n}{n+5} \\to 0\\).",
+    "Shows \\(\\{b_n\\}\\) is eventually decreasing: \\(f'(x) = \\frac{5 - x}{2\\sqrt x(x+5)^2} < 0\\) for \\(x > 5\\).",
+    "Concludes conditional convergence by the alternating series test."
+   ],
+   "model": "*Absolute values.* \\(\\frac{\\sqrt n/(n+5)}{1/\\sqrt n} = \\frac{n}{n+5} \\to 1\\), and \\(\\sum \\frac{1}{\\sqrt n}\\) diverges (\\(p = \\frac12\\)), so \\(\\sum \\frac{\\sqrt n}{n+5}\\) diverges: no absolute convergence. *The series itself.* \\(b_n = \\frac{\\sqrt n}{n+5} = \\frac{1/\\sqrt n}{1 + 5/n} \\to 0\\). With \\(f(x) = \\frac{\\sqrt x}{x+5}\\), \\(f'(x) = \\frac{5 - x}{2\\sqrt x(x+5)^2} < 0\\) for \\(x > 5\\), so \\(b_n\\) decreases from \\(n = 5\\) on. The alternating series test (which needs decrease only eventually) gives convergence. The series converges conditionally.",
+   "why": "The terms rise for \\(n < 5\\) and fall afterwards; eventual monotonicity is enough, because the first few terms do not affect convergence."
+  },
+  {
+   "id": "p11",
+   "kp": "k7",
+   "type": "number",
+   "prompt": "For \\(\\sum_{n=1}^{\\infty}\\frac{1}{n^2}\\), find the smallest \\(n\\) for which the integral bound \\(R_n \\le \\int_n^\\infty x^{-2}\\,dx\\) guarantees \\(R_n < 0.01\\).",
+   "answer": "101",
+   "why": "\\(\\int_n^\\infty x^{-2}\\,dx = \\frac1n\\). We need \\(\\frac1n < 0.01\\), i.e. \\(n > 100\\), so \\(n = 101\\). (At \\(n = 100\\) the bound equals 0.01, which is not less than 0.01.) The slow convergence of \\(\\sum \\frac1{n^2}\\) is typical of \\(p\\)-series."
+  },
+  {
+   "id": "p12",
+   "kp": "k14",
+   "type": "written",
+   "prompt": "The series \\(\\sum_{n=1}^{\\infty}\\frac{n^{10}}{(1.1)^n}\\) has enormous early terms (\\(a_{10} \\approx 3.9 \\times 10^{9}\\)). Choose a test, justify the choice, and decide convergence. Explain why the size of the early terms is irrelevant.",
+   "rubric": [
+    "Chooses the ratio (or root) test because of the exponential \\((1.1)^n\\).",
+    "Computes \\(\\frac{a_{n+1}}{a_n} = \\left(\\frac{n+1}{n}\\right)^{10}\\frac{1}{1.1} \\to \\frac1{1.1} < 1\\).",
+    "Concludes convergence.",
+    "Explains that convergence depends only on the tail: finitely many terms change the sum but not convergence."
+   ],
+   "model": "The term contains an exponential, so the ratio test is natural. \\(\\frac{a_{n+1}}{a_n} = \\frac{(n+1)^{10}}{(1.1)^{n+1}}\\cdot\\frac{(1.1)^n}{n^{10}} = \\left(1 + \\frac1n\\right)^{10}\\cdot\\frac{1}{1.1} \\to \\frac{1}{1.1} < 1\\), so the series converges (absolutely). The early terms are huge because \\(n^{10}\\) outgrows \\((1.1)^n\\) for small \\(n\\), but for large \\(n\\) the exponential dominates. Convergence is a property of the tail: any finite number of terms, however large, only adds a finite constant to every later partial sum.",
+   "why": "The root test also works: \\(\\sqrt[n]{a_n} = \\frac{(n^{1/n})^{10}}{1.1} \\to \\frac{1}{1.1}\\), using \\(n^{1/n}\\to 1\\)."
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k11",
+   "type": "written",
+   "prompt": "Classify \\(\\sum_{n=1}^{\\infty} (-1)^n\\frac{n^2}{n^3 + 1}\\) as absolutely convergent, conditionally convergent, or divergent. Give complete justification for each test you use.",
+   "rubric": [
+    "Limit comparison of \\(\\frac{n^2}{n^3+1}\\) with \\(\\frac1n\\): limit 1, harmonic series diverges, so no absolute convergence.",
+    "Shows \\(b_n = \\frac{n^2}{n^3+1} \\to 0\\).",
+    "Shows \\(\\{b_n\\}\\) nonincreasing, e.g. \\(f'(x) = \\frac{x(2 - x^3)}{(x^3+1)^2} < 0\\) for \\(x \\ge 2\\) together with \\(b_1 = \\frac12 > b_2 = \\frac49\\).",
+    "Concludes conditional convergence by the alternating series test."
+   ],
+   "model": "*Absolute values.* With \\(b_n = \\frac{n^2}{n^3+1}\\), \\(\\frac{b_n}{1/n} = \\frac{n^3}{n^3+1} \\to 1\\); the harmonic series diverges, so \\(\\sum b_n\\) diverges by limit comparison, and the series does not converge absolutely. *Alternating series test.* \\(b_n > 0\\), and \\(b_n = \\frac{1/n}{1 + 1/n^3} \\to 0\\). For \\(f(x) = \\frac{x^2}{x^3+1}\\), \\(f'(x) = \\frac{2x(x^3+1) - 3x^4}{(x^3+1)^2} = \\frac{x(2 - x^3)}{(x^3+1)^2}\\), negative for \\(x > 2^{1/3} \\approx 1.26\\); so \\(b_2 > b_3 > \\cdots\\), and also \\(b_1 = \\frac12 > \\frac49 = b_2\\). Hence \\(\\{b_n\\}\\) is decreasing and tends to 0, and the series converges. It converges conditionally.",
+   "why": "The standard pattern: terms of size about \\(\\frac1n\\) with alternating signs give conditional convergence."
+  },
+  {
+   "id": "e2",
+   "kp": "k2",
+   "type": "number",
+   "prompt": "Find \\(\\sum_{n=1}^{\\infty} \\frac{3^n + 2^n}{6^n}\\).",
+   "answer": "3/2",
+   "why": "Split: \\(\\frac{3^n + 2^n}{6^n} = \\left(\\frac12\\right)^n + \\left(\\frac13\\right)^n\\). Both geometric series converge: \\(\\sum_{n\\ge1}\\left(\\frac12\\right)^n = \\frac{1/2}{1/2} = 1\\) and \\(\\sum_{n\\ge1}\\left(\\frac13\\right)^n = \\frac{1/3}{2/3} = \\frac12\\). By the sum rule for convergent series the total is \\(\\frac32\\)."
+  },
+  {
+   "id": "e3",
+   "kp": "k11",
+   "type": "written",
+   "prompt": "Prove that every absolutely convergent series converges. Then give an example showing that the converse is false, with justification.",
+   "rubric": [
+    "Establishes \\(0 \\le a_n + |a_n| \\le 2|a_n|\\).",
+    "Applies the direct comparison test to conclude \\(\\sum(a_n + |a_n|)\\) converges.",
+    "Writes \\(\\sum a_n = \\sum (a_n + |a_n|) - \\sum|a_n|\\) and concludes by the difference rule.",
+    "Gives a conditionally convergent example, e.g. the alternating harmonic series, justifying convergence (alternating series test) and divergence of the absolute series (harmonic)."
+   ],
+   "model": "Suppose \\(\\sum|a_n|\\) converges. Since \\(-|a_n| \\le a_n \\le |a_n|\\), adding \\(|a_n|\\) gives \\(0 \\le a_n + |a_n| \\le 2|a_n|\\). The series \\(\\sum 2|a_n|\\) converges, so by the direct comparison test \\(\\sum (a_n + |a_n|)\\) converges. Then \\(\\sum a_n = \\sum(a_n + |a_n|) - \\sum|a_n|\\) is the difference of two convergent series and converges. The converse fails: \\(\\sum \\frac{(-1)^{n+1}}{n}\\) converges by the alternating series test (\\(\\frac1n\\) is positive, decreasing, and tends to 0), but \\(\\sum\\left|\\frac{(-1)^{n+1}}{n}\\right| = \\sum\\frac1n\\) is the harmonic series, which diverges.",
+   "why": "The trick is to make a nonnegative series out of \\(a_n\\) so that a positive-term test applies; \\(a_n + |a_n|\\) is either 0 or \\(2a_n\\)."
+  },
+  {
+   "id": "e4",
+   "kp": "k10",
+   "type": "number",
+   "prompt": "The series \\(\\sum_{n=1}^{\\infty} \\frac{(-1)^{n+1}}{n\\,2^n}\\) satisfies the hypotheses of the alternating series test. Find the smallest \\(n\\) for which the alternating series estimation theorem guarantees \\(|S - s_n| < 0.001\\).",
+   "answer": "7",
+   "why": "The bound is \\(b_{n+1} = \\frac{1}{(n+1)2^{n+1}}\\), and we need \\((n+1)2^{n+1} > 1000\\). For \\(n + 1 = 7\\): \\(7\\cdot 128 = 896\\), not enough. For \\(n + 1 = 8\\): \\(8 \\cdot 256 = 2048\\). So \\(n = 7\\). (The sum is \\(\\ln\\frac32 \\approx 0.405465\\).)"
+  },
+  {
+   "id": "e5",
+   "kp": "k9",
+   "type": "written",
+   "prompt": "Determine whether \\(\\sum_{n=1}^{\\infty} \\frac{n + \\ln n}{n^3 + 1}\\) converges. Justify the choice of comparison series and every limit you use.",
+   "rubric": [
+    "Notes the terms are positive for \\(n \\ge 1\\).",
+    "Chooses \\(b_n = \\frac1{n^2}\\), justifying that \\(\\ln n\\) is negligible next to \\(n\\).",
+    "Computes \\(\\lim\\frac{n^3 + n^2\\ln n}{n^3 + 1} = 1\\), using \\(\\frac{\\ln n}{n} \\to 0\\).",
+    "Concludes convergence by limit comparison with the convergent \\(p\\)-series \\(p = 2\\)."
+   ],
+   "model": "For \\(n \\ge 1\\), \\(n + \\ln n > 0\\), so the terms are positive. Since \\(\\frac{\\ln n}{n}\\to 0\\) (L'Hôpital's rule on \\(\\frac{\\ln x}{x}\\)), the numerator is dominated by \\(n\\), and the terms behave like \\(\\frac{n}{n^3} = \\frac1{n^2}\\). With \\(b_n = \\frac1{n^2}\\): \\(\\frac{a_n}{b_n} = \\frac{n^3 + n^2\\ln n}{n^3 + 1} = \\frac{1 + \\frac{\\ln n}{n}}{1 + \\frac1{n^3}} \\to 1\\), positive and finite. Since \\(\\sum\\frac1{n^2}\\) converges, the series converges by the limit comparison test.",
+   "why": "Logarithms grow more slowly than any positive power, so they rarely change the comparison series; but the limit must still be computed."
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "Geometric series",
+    "formula": "\\(\\sum_{n=1}^\\infty ar^{n-1} = \\frac{a}{1-r}\\) for \\(|r| < 1\\)",
+    "when": "The ratio of consecutive terms is constant.",
+    "example": "\\(\\sum_{n=0}^\\infty \\frac{3^{n+1}}{4^n} = \\frac{3}{1 - 3/4} = 12\\)",
+    "watch": "Use the first term actually present; diverges for |r| ≥ 1."
+   },
+   {
+    "name": "Telescoping series",
+    "formula": "\\(\\sum_{n=1}^{N}(b_n - b_{n+1}) = b_1 - b_{N+1}\\)",
+    "when": "Partial fractions turn the term into a difference of shifted copies.",
+    "example": "\\(\\sum \\frac{1}{n(n+1)} = 1\\)",
+    "watch": "Write out the partial sum; cancellation may skip several places."
+   },
+   {
+    "name": "Divergence test",
+    "formula": "\\(\\lim a_n \\ne 0\\) or nonexistent \\(\\Rightarrow \\sum a_n\\) diverges",
+    "when": "Always first.",
+    "example": "\\(\\sum \\frac{n}{2n+1}\\) diverges: terms tend to \\(\\frac12\\).",
+    "watch": "Terms tending to 0 prove nothing."
+   },
+   {
+    "name": "Integral test",
+    "formula": "\\(\\sum f(n)\\) and \\(\\int_N^\\infty f(x)\\,dx\\) converge or diverge together",
+    "when": "f is continuous, positive, eventually decreasing, and has an antiderivative you can find.",
+    "example": "\\(\\sum\\frac{1}{n(\\ln n)^2}\\) converges: \\(\\int_2^\\infty = \\frac1{\\ln 2}\\).",
+    "watch": "The integral is not the sum; check decrease with f'."
+   },
+   {
+    "name": "p-series",
+    "formula": "\\(\\sum \\frac1{n^p}\\) converges \\(\\iff p > 1\\)",
+    "when": "The standard comparison series for algebraic terms.",
+    "example": "\\(\\sum \\frac{1}{n^{3/2}}\\) converges; \\(\\sum\\frac1{\\sqrt n}\\) diverges.",
+    "watch": "p = 1 (harmonic) diverges."
+   },
+   {
+    "name": "Integral remainder bound",
+    "formula": "\\(\\int_{n+1}^\\infty f \\le R_n \\le \\int_n^\\infty f\\)",
+    "when": "Estimating a positive series whose terms come from a decreasing integrable f.",
+    "example": "\\(\\sum\\frac1{n^3}\\): \\(R_{10} \\le \\frac1{200}\\).",
+    "watch": "Needs the integral test's hypotheses."
+   },
+   {
+    "name": "Direct comparison",
+    "formula": "\\(0 \\le a_n \\le b_n\\): \\(\\sum b_n\\) conv \\(\\Rightarrow \\sum a_n\\) conv; \\(\\sum a_n\\) div \\(\\Rightarrow \\sum b_n\\) div",
+    "when": "A clean inequality with a geometric or p-series is available.",
+    "example": "\\(\\frac{1}{n^2+1} < \\frac{1}{n^2}\\)",
+    "watch": "Direction of the inequality; terms must be nonnegative."
+   },
+   {
+    "name": "Limit comparison",
+    "formula": "\\(\\frac{a_n}{b_n} \\to c \\in (0,\\infty) \\Rightarrow\\) same behaviour",
+    "when": "Rational or algebraic terms; b_n from the dominant parts.",
+    "example": "\\(\\frac{2n+3}{\\sqrt{n^5+1}}\\) vs \\(\\frac1{n^{3/2}}\\): limit 2, converges.",
+    "watch": "Limit 0 or ∞ gives only one-sided conclusions."
+   },
+   {
+    "name": "Alternating series test and error",
+    "formula": "\\(b_n \\downarrow 0 \\Rightarrow \\sum(-1)^{n+1}b_n\\) converges, \\(|S - s_n| \\le b_{n+1}\\)",
+    "when": "Signs strictly alternate.",
+    "example": "\\(\\sum\\frac{(-1)^{n+1}}{n}\\) converges (to \\(\\ln 2\\)).",
+    "watch": "Check that b_n decreases; failure of the test does not prove divergence."
+   },
+   {
+    "name": "Absolute convergence",
+    "formula": "\\(\\sum|a_n|\\) converges \\(\\Rightarrow \\sum a_n\\) converges",
+    "when": "Signs are mixed or irregular.",
+    "example": "\\(\\left|\\frac{\\sin n}{n^2}\\right| \\le \\frac1{n^2}\\)",
+    "watch": "If the absolute series diverges, test the original series separately."
+   },
+   {
+    "name": "Ratio test",
+    "formula": "\\(L = \\lim\\left|\\frac{a_{n+1}}{a_n}\\right|\\); \\(L<1\\) abs. conv., \\(L>1\\) div.",
+    "when": "Factorials, exponentials, products.",
+    "example": "\\(\\sum\\frac{n^2}{2^n}\\): \\(L = \\frac12\\).",
+    "watch": "L = 1 says nothing; always 1 for rational terms."
+   },
+   {
+    "name": "Root test",
+    "formula": "\\(L = \\lim\\sqrt[n]{|a_n|}\\); \\(L<1\\) abs. conv., \\(L>1\\) div.",
+    "when": "The whole term is an nth power.",
+    "example": "\\(\\sum\\left(\\frac{2n+1}{3n-1}\\right)^n\\): \\(L = \\frac23\\).",
+    "watch": "L = 1 says nothing."
+   }
+  ],
+  "stuck": [
+   "Compute \\(\\lim a_n\\) first; if it is not 0, the series diverges and you are done.",
+   "Write out \\(s_1, s_2, s_3\\): a constant ratio or a telescoping cancellation often becomes visible.",
+   "For a comparison, keep the highest power in the numerator and in the denominator; their quotient is \\(b_n\\).",
+   "Factorials or \\(c^n\\) in the term: ratio test. The whole term raised to the power \\(n\\): root test.",
+   "Signs that change: test \\(\\sum|a_n|\\) first; only if it diverges, turn to the alternating series test or the divergence test.",
+   "If the ratio or root test gives \\(L = 1\\), abandon it and use a comparison, the integral test, or the alternating series test."
+  ]
+ }
+}

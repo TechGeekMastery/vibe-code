@@ -1,0 +1,792 @@
+{
+ "key": "mth-2-2",
+ "title": "Partial fractions",
+ "v": 1,
+ "scope": "Integration of rational functions by partial fraction decomposition: proper form by long division, factoring into linear and irreducible quadratic factors, the forms for distinct and repeated linear and quadratic factors, finding coefficients (substitution, equating coefficients, cover-up) and why these are valid, integrating each type of term, rationalizing substitutions, and definite integrals on intervals free of singularities; integrals across a zero of the denominator are left to improper integrals.",
+ "sources": [
+  {
+   "title": "OpenStax, Calculus Volume 2, Section 3.4: Partial Fractions",
+   "url": "https://openstax.org/books/calculus-volume-2/pages/3-4-partial-fractions"
+  },
+  {
+   "title": "Paul Dawkins, Paul's Online Math Notes, Calculus II: Partial Fractions",
+   "url": "https://tutorial.math.lamar.edu/Classes/CalcII/PartialFractions.aspx"
+  },
+  {
+   "title": "Arthur Mattuck, MIT 18.03 Notes and Exercises, H: Heaviside's Cover-up Method",
+   "url": "http://math.rwinters.com/1803/Notes/h.pdf"
+  },
+  {
+   "title": "MIT OpenCourseWare 18.01SC Single Variable Calculus, Session 75: Advanced Partial Fractions",
+   "url": "https://ocw.mit.edu/courses/18-01sc-single-variable-calculus-fall-2010/pages/unit-4-techniques-of-integration/part-b-partial-fractions-integration-by-parts-arc-length-and-surface-area/session-75-advanced-partial-fractions"
+  }
+ ],
+ "pre": [
+  "mth-2-1",
+  "mth-1-13",
+  "mth-0-2"
+ ],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Reduce to proper form by division",
+   "d": "Recognise an improper rational function and use polynomial long division to write it as a polynomial plus a proper rational function.",
+   "type": "procedure"
+  },
+  {
+   "id": "k2",
+   "t": "Factor into linear and irreducible quadratics",
+   "d": "Factor a denominator over the reals into linear factors and irreducible quadratic factors, using the discriminant to decide irreducibility.",
+   "type": "concept"
+  },
+  {
+   "id": "k3",
+   "t": "Distinct linear factors",
+   "d": "Decompose a proper rational function whose denominator is a product of distinct linear factors and integrate the result as a sum of logarithms.",
+   "type": "procedure"
+  },
+  {
+   "id": "k4",
+   "t": "Why the coefficient methods are valid",
+   "d": "Justify substituting roots of the denominator, equating coefficients and the cover-up rule by the identity principle for polynomials.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k5",
+   "t": "Repeated linear factors",
+   "d": "Include one term for each power of a repeated linear factor, solve for the coefficients, and integrate the higher powers as powers, not logarithms.",
+   "type": "procedure"
+  },
+  {
+   "id": "k6",
+   "t": "Irreducible quadratic factors",
+   "d": "Use a linear numerator over an irreducible quadratic and integrate it by splitting off a multiple of the derivative and completing the square.",
+   "type": "procedure"
+  },
+  {
+   "id": "k7",
+   "t": "The general decomposition",
+   "d": "Write the complete form of the decomposition for any factored denominator, including repeated quadratic factors, and check that the number of unknowns equals the degree of the denominator.",
+   "type": "skill"
+  },
+  {
+   "id": "k8",
+   "t": "Rationalizing substitutions",
+   "d": "Convert integrands containing roots of linear expressions, exponentials, or trigonometric functions with their derivative into rational functions by substitution.",
+   "type": "skill"
+  },
+  {
+   "id": "k9",
+   "t": "Definite integrals of rational functions",
+   "d": "Evaluate definite integrals after decomposition, combine the logarithms, and check that the interval contains no zero of the denominator.",
+   "type": "procedure"
+  }
+ ],
+ "intro": "The Fundamental Theorem of Calculus reduces a definite integral to finding an antiderivative, and each technique you have met so far handles integrands of a particular shape. **Rational functions**, quotients of polynomials, are among the most common integrands in practice, yet most of them match no basic formula. \\( \\int\\frac{dx}{x-3} \\) is a logarithm, but \\( \\int\\frac{x+7}{x^{2}-x-6}\\,dx \\) is not obviously anything.\n\nThe way forward is algebraic. Adding the simple fractions \\( \\frac{2}{x-3} \\) and \\( \\frac{-1}{x+2} \\) over a common denominator produces exactly \\( \\frac{x+7}{x^{2}-x-6} \\), and each simple fraction integrates to a logarithm. If this addition can be reversed in general, every rational function can be written as a polynomial plus a sum of simple fractions of a few standard types, each of which can be integrated. This chapter makes that precise: when such a decomposition exists, what form it takes, how to find its coefficients and why those methods are valid, and how to integrate each type of term. The result is a theorem: every rational function has an antiderivative built from rational functions, logarithms and arctangents.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "Rational functions, proper form, and factoring",
+   "kps": [
+    "k1",
+    "k2"
+   ],
+   "md": "This section prepares a rational function for decomposition. Two things must be done before any fractions are split: the function must be brought to proper form, and its denominator must be factored as far as the real numbers allow.\n\n> **Definition.** A **rational function** is a quotient \\( f(x) = \\frac{P(x)}{Q(x)} \\) of polynomials, with \\( Q \\) not the zero polynomial. It is **proper** if \\( \\deg P < \\deg Q \\), and **improper** if \\( \\deg P \\ge \\deg Q \\).\n\n(The word \"improper\" here has nothing to do with the improper integrals of the next chapter.)\n\n**Why proper form comes first.** The simple fractions we are aiming for, such as \\( \\frac{A}{x-a} \\) or \\( \\frac{Bx+C}{x^{2}+1} \\), are each proper, and a sum of proper rational functions is proper. An improper function therefore cannot equal such a sum; its polynomial part must be removed first. **Polynomial long division** does this. The division algorithm says that for polynomials \\( P \\) and \\( Q \\ne 0 \\) there are unique polynomials \\( S \\) (the quotient) and \\( R \\) (the remainder) with\n\\[ P(x) = S(x)Q(x) + R(x), \\qquad \\deg R < \\deg Q \\ \\text{(or } R = 0\\text{)}. \\]\nDividing by \\( Q \\),\n\\[ \\frac{P(x)}{Q(x)} = S(x) + \\frac{R(x)}{Q(x)}, \\]\na polynomial, which integrates term by term, plus a proper rational function.\n\n**Worked example.** Evaluate \\( \\int\\frac{x^{2}+3}{x+1}\\,dx \\). The degrees are \\( 2 \\ge 1 \\), so divide: \\( x^{2} \\div x = x \\), and \\( x(x+1) = x^{2} + x \\) leaves \\( -x + 3 \\); then \\( -x \\div x = -1 \\), and \\( -1\\cdot(x+1) = -x - 1 \\) leaves \\( 4 \\). Hence \\( x^{2} + 3 = (x-1)(x+1) + 4 \\), and\n\\[ \\int\\frac{x^{2}+3}{x+1}\\,dx = \\int\\Big(x - 1 + \\frac{4}{x+1}\\Big)dx = \\frac{x^{2}}{2} - x + 4\\ln|x+1| + C. \\]\nCheck the division by expanding: \\( (x-1)(x+1) + 4 = x^{2} - 1 + 4 = x^{2} + 3 \\).\n\n**Factoring the denominator.** A quadratic \\( ax^{2} + bx + c \\) with real coefficients is **irreducible** (over the real numbers) if it cannot be written as a product of two real linear factors. By the quadratic formula this happens exactly when it has no real zeros, that is, when its discriminant is negative:\n\\[ b^{2} - 4ac < 0. \\]\nIn the graph below, drag \\( c \\) and watch the parabola \\( y = x^{2} + 2x + c \\). Its discriminant is \\( 4 - 4c \\): for \\( c < 1 \\) the curve crosses the axis twice and the quadratic factors; at \\( c = 1 \\) it touches the axis, giving the repeated factor \\( (x+1)^{2} \\); for \\( c > 1 \\) it has no real zeros and is irreducible.\n\n```plot\nx: -5, 3\ny: -4, 8\nslider: c, -3, 4, 2 | c\nf: x^2 + 2*x + c | y = x² + 2x + c\n```\n\nThe theorem that makes partial fractions possible is algebraic: **every polynomial with real coefficients is a constant times a product of linear factors \\( x - a \\) and irreducible quadratic factors \\( x^{2} + bx + c \\).** It follows from the fundamental theorem of algebra, because the nonreal zeros of a real polynomial come in conjugate pairs \\( p \\pm qi \\), and each pair gives the real quadratic factor \\( (x-p)^{2} + q^{2} \\). We take the theorem as given. In particular, no polynomial of degree 3 or more is irreducible over the reals, even if it has no real zeros: \\( x^{4} + 4 = (x^{2} + 2x + 2)(x^{2} - 2x + 2) \\).\n\n**The common mistakes.** The first is to begin decomposing an improper function; the attempt produces an inconsistent system of equations, because no choice of constants can succeed. The second is to misjudge irreducibility: \\( x^{2} - 4 = (x-2)(x+2) \\) factors, while \\( x^{2} + 4 \\) does not, and \\( x^{2} + 4x + 3 = (x+1)(x+3) \\) factors even though it has no visible pattern. Compute the discriminant rather than guessing.",
+   "questions": [
+    {
+     "id": "s1q1",
+     "kp": "k1",
+     "type": "antiderivative",
+     "prompt": "Compute \\( \\int\\frac{x^{3} + 2x^{2} + 1}{x + 2}\\,dx \\), dividing first. Enter an antiderivative (use `abs` where an absolute value is needed).",
+     "why": "The function is improper (degree 3 over degree 1). Division: \\( x^{3} + 2x^{2} = x^{2}(x + 2) \\), so \\( x^{3} + 2x^{2} + 1 = x^{2}(x+2) + 1 \\) and \\[ \\frac{x^{3} + 2x^{2} + 1}{x + 2} = x^{2} + \\frac{1}{x+2}. \\] Hence the integral is \\( \\frac{x^{3}}{3} + \\ln|x+2| + C \\).",
+     "answer": "x^3/3 + log(abs(x + 2))",
+     "vars": "x"
+    },
+    {
+     "id": "s1q2",
+     "kp": "k2",
+     "type": "written",
+     "prompt": "(a) Decide, with justification, which of \\( x^{2} + 4x + 5 \\) and \\( x^{2} + 4x + 3 \\) is irreducible over the real numbers, and factor the other. (b) The polynomial \\( x^{4} + 1 \\) has no real zeros. Explain why it is nevertheless not an irreducible factor in the sense used for partial fractions, and verify that \\( x^{4} + 1 = (x^{2} + \\sqrt2\\,x + 1)(x^{2} - \\sqrt2\\,x + 1) \\).",
+     "why": "Irreducibility over the reals is a statement about factoring, and the factorization theorem says the only irreducible real polynomials have degree 1 or 2.",
+     "rubric": [
+      "Computes the discriminants \\( 16 - 20 = -4 < 0 \\) and \\( 16 - 12 = 4 > 0 \\) and concludes that \\( x^{2} + 4x + 5 \\) is irreducible.",
+      "Factors \\( x^{2} + 4x + 3 = (x+1)(x+3) \\).",
+      "States that every real polynomial is a product of linear and irreducible quadratic factors, so a degree-4 polynomial without real zeros splits into two real quadratics.",
+      "Verifies the product: \\( (x^{2}+1)^{2} - (\\sqrt2\\,x)^{2} = x^{4} + 2x^{2} + 1 - 2x^{2} = x^{4} + 1 \\)."
+     ],
+     "model": "(a) For \\( x^{2} + 4x + 5 \\) the discriminant is \\( 4^{2} - 4\\cdot5 = -4 < 0 \\), so it has no real zeros and cannot be a product of real linear factors: it is irreducible. For \\( x^{2} + 4x + 3 \\) the discriminant is \\( 16 - 12 = 4 > 0 \\); its zeros are \\( -1 \\) and \\( -3 \\), so \\( x^{2} + 4x + 3 = (x+1)(x+3) \\). (b) Having no real zeros only rules out linear factors. By the factorization theorem every real polynomial is a constant times a product of linear and irreducible quadratic factors, so a real polynomial of degree 4 with no real zeros must be a product of two irreducible quadratics; it is not itself irreducible. Indeed, writing the product as a difference of squares, \\( (x^{2} + 1 + \\sqrt2\\,x)(x^{2} + 1 - \\sqrt2\\,x) = (x^{2}+1)^{2} - 2x^{2} = x^{4} + 1 \\). Each factor has discriminant \\( 2 - 4 < 0 \\), so these two quadratics are the irreducible factors."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "Distinct linear factors and the cover-up method",
+   "kps": [
+    "k3",
+    "k4"
+   ],
+   "md": "This section treats the simplest case, a proper rational function whose denominator is a product of distinct linear factors. It also answers a question that most computations pass over: why the standard ways of finding the coefficients are valid.\n\n> **Distinct linear factors.** If \\( \\frac{P(x)}{Q(x)} \\) is proper and \\( Q(x) = (x - a_{1})(x - a_{2})\\cdots(x - a_{n}) \\) with the \\( a_{i} \\) distinct, then there are unique constants \\( A_{1}, \\dots, A_{n} \\) with \\[ \\frac{P(x)}{Q(x)} = \\frac{A_{1}}{x - a_{1}} + \\frac{A_{2}}{x - a_{2}} + \\cdots + \\frac{A_{n}}{x - a_{n}}. \\]\n\nEach term integrates to a logarithm, \\( \\int\\frac{A}{x-a}\\,dx = A\\ln|x-a| + C \\).\n\n**Worked example 1.** Evaluate \\( \\int\\frac{x+7}{x^{2}-x-6}\\,dx \\). The function is proper, and \\( x^{2} - x - 6 = (x-3)(x+2) \\). Write\n\\[ \\frac{x+7}{(x-3)(x+2)} = \\frac{A}{x-3} + \\frac{B}{x+2}, \\]\nand multiply by \\( (x-3)(x+2) \\) to **clear denominators**:\n\\[ x + 7 = A(x+2) + B(x-3). \\]\nPut \\( x = 3 \\): \\( 10 = 5A \\), so \\( A = 2 \\). Put \\( x = -2 \\): \\( 5 = -5B \\), so \\( B = -1 \\). Therefore\n\\[ \\int\\frac{x+7}{x^{2}-x-6}\\,dx = 2\\ln|x-3| - \\ln|x+2| + C. \\]\n\n**Why substituting the roots is legitimate.** The original equation holds only for \\( x \\ne 3, -2 \\), where both sides are defined, yet we substituted exactly those values. The justification is the **identity principle for polynomials**: a nonzero polynomial of degree \\( d \\) has at most \\( d \\) zeros, so two polynomials that agree at infinitely many points are identical. After clearing denominators, both sides are polynomials that agree at every \\( x \\ne 3, -2 \\), hence everywhere, including at \\( 3 \\) and \\( -2 \\). The same principle justifies the **method of equating coefficients**: identical polynomials have identical coefficients. Here \\( x + 7 = (A+B)x + (2A - 3B) \\), so \\( A + B = 1 \\) and \\( 2A - 3B = 7 \\), which again gives \\( A = 2 \\), \\( B = -1 \\). Equating coefficients always works; substituting well-chosen values of \\( x \\) is faster when the roots are simple.\n\n**The cover-up rule.** Multiply the decomposition by \\( x - a_{i} \\) and set \\( x = a_{i} \\): every other term vanishes, leaving\n\\[ A_{i} = \\left.\\frac{P(x)}{Q(x)/(x - a_{i})}\\right|_{x = a_{i}}. \\]\nIn words: cover the factor \\( x - a_{i} \\) in the denominator and evaluate what remains at \\( x = a_{i} \\). This is **Heaviside's cover-up method**. It also proves existence in this case: define each \\( A_{i} \\) by the rule; then \\( P(x) - \\sum_{i} A_{i}\\,Q(x)/(x - a_{i}) \\) has degree less than \\( n \\) and vanishes at the \\( n \\) points \\( a_{1}, \\dots, a_{n} \\), so it is the zero polynomial.\n\n**Worked example 2.** Decompose \\( \\frac{4x^{2} - 3x - 4}{x^{3} + x^{2} - 2x} \\). Factor: \\( x^{3} + x^{2} - 2x = x(x-1)(x+2) \\). By cover-up,\n\\[ A = \\frac{-4}{(-1)(2)} = 2, \\qquad B = \\frac{4 - 3 - 4}{(1)(3)} = -1, \\qquad C = \\frac{16 + 6 - 4}{(-2)(-3)} = 3, \\]\nso the integral is \\( 2\\ln|x| - \\ln|x-1| + 3\\ln|x+2| + C \\). A quick check: the coefficient of \\( x^{2} \\) after clearing denominators is \\( A + B + C = 4 \\), as it should be.\n\nThe graph shows why the decomposition is natural. Each partial fraction carries exactly one of the vertical asymptotes of the original function, and near \\( x = 3 \\) the function is dominated by \\( \\frac{2}{x-3} \\).\n\n```plot\nx: -6, 7\ny: -6, 6\nf: (x + 7)/((x - 3)*(x + 2)) | y = (x + 7)/((x − 3)(x + 2))\nf: 2/(x - 3) | 2/(x − 3)\nf: -1/(x + 2) | −1/(x + 2)\n```\n\n**The common mistakes.** Forgetting the absolute values in \\( \\ln|x - a| \\); reading the root of \\( x + 2 \\) as \\( 2 \\) instead of \\( -2 \\); and applying cover-up to a factor that is repeated or quadratic, where, as the next sections show, it gives only part of the answer.",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k3",
+     "type": "antiderivative",
+     "prompt": "Compute \\( \\int\\frac{5x + 1}{x^{2} + x - 2}\\,dx \\). Enter an antiderivative (use `abs` where an absolute value is needed).",
+     "why": "Factor: \\( x^{2} + x - 2 = (x-1)(x+2) \\). Cover-up: \\( A = \\frac{5 + 1}{1 + 2} = 2 \\) for \\( x - 1 \\), and \\( B = \\frac{-10 + 1}{-2 - 1} = 3 \\) for \\( x + 2 \\). So \\( \\frac{5x+1}{x^{2}+x-2} = \\frac{2}{x-1} + \\frac{3}{x+2} \\), and the integral is \\( 2\\ln|x-1| + 3\\ln|x+2| + C \\).",
+     "answer": "2*log(abs(x - 1)) + 3*log(abs(x + 2))",
+     "vars": "x"
+    },
+    {
+     "id": "s2q2",
+     "kp": "k4",
+     "type": "written",
+     "prompt": "In decomposing \\( \\frac{x+7}{(x-3)(x+2)} = \\frac{A}{x-3} + \\frac{B}{x+2} \\), one clears denominators to get \\( x + 7 = A(x+2) + B(x-3) \\) and then sets \\( x = 3 \\). But the original equation is meaningless at \\( x = 3 \\). Explain precisely why setting \\( x = 3 \\) is nevertheless valid, and explain why the method of equating coefficients is valid for the same reason.",
+     "why": "Both methods rest on one fact: a polynomial identity that holds at infinitely many points holds identically, coefficient by coefficient.",
+     "rubric": [
+      "Notes that the cleared equation was derived only for \\( x \\ne 3, -2 \\).",
+      "States that a nonzero polynomial of degree \\( d \\) has at most \\( d \\) zeros, so polynomials agreeing at infinitely many points are identical.",
+      "Concludes that the cleared identity holds for all \\( x \\), in particular at \\( x = 3 \\) and \\( x = -2 \\).",
+      "Explains that identical polynomials have equal coefficients, which is what equating coefficients uses."
+     ],
+     "model": "Multiplying by \\( (x-3)(x+2) \\) is valid only where that product is nonzero, so the equation \\( x + 7 = A(x+2) + B(x-3) \\) has so far been established for all \\( x \\ne 3, -2 \\). Both sides are polynomials. Their difference \\( D(x) = x + 7 - A(x+2) - B(x-3) \\) is a polynomial of degree at most 1 that is zero at infinitely many points. A nonzero polynomial of degree \\( d \\) has at most \\( d \\) zeros, so \\( D \\) must be the zero polynomial. Therefore the identity holds for every \\( x \\), including \\( x = 3 \\), where it gives \\( 10 = 5A \\). The same conclusion, \\( D = 0 \\) as a polynomial, means every coefficient of \\( D \\) is zero; that is exactly the statement that the coefficients of like powers on the two sides are equal, which is the method of equating coefficients."
+    },
+    {
+     "id": "s2q3",
+     "kp": "k3",
+     "type": "number",
+     "prompt": "Evaluate \\( \\int_{2}^{4}\\frac{dx}{x^{2} - 1} \\) exactly.",
+     "why": "By cover-up, \\( \\frac{1}{(x-1)(x+1)} = \\frac{1/2}{x-1} - \\frac{1/2}{x+1} \\). The interval \\( [2, 4] \\) avoids \\( \\pm1 \\). So \\[ \\int_{2}^{4}\\frac{dx}{x^{2}-1} = \\frac12\\Big[\\ln\\frac{x-1}{x+1}\\Big]_{2}^{4} = \\frac12\\Big(\\ln\\frac35 - \\ln\\frac13\\Big) = \\frac12\\ln\\frac95 \\approx 0.2939. \\]",
+     "answer": "log(9/5)/2"
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "Repeated linear factors",
+   "kps": [
+    "k5"
+   ],
+   "md": "This section handles a denominator containing a power \\( (x-a)^{k} \\) with \\( k \\ge 2 \\). The question is what terms the decomposition needs, and why a single term \\( \\frac{A}{(x-a)^{k}} \\) is not enough.\n\n> **Repeated linear factors.** If \\( (x-a)^{k} \\) is the exact power of \\( x - a \\) dividing \\( Q \\), the decomposition contains the \\( k \\) terms \\[ \\frac{A_{1}}{x-a} + \\frac{A_{2}}{(x-a)^{2}} + \\cdots + \\frac{A_{k}}{(x-a)^{k}}. \\]\n\n**Why every power is needed.** Consider the simplest case, a proper fraction \\( \\frac{P(x)}{(x-a)^{k}} \\) with \\( \\deg P < k \\). Put \\( u = x - a \\) and rewrite \\( P \\) as a polynomial in \\( u \\): \\( P = c_{0} + c_{1}u + \\cdots + c_{k-1}u^{k-1} \\). Dividing term by term,\n\\[ \\frac{P(x)}{(x-a)^{k}} = \\frac{c_{0}}{u^{k}} + \\frac{c_{1}}{u^{k-1}} + \\cdots + \\frac{c_{k-1}}{u}, \\]\nso every power from \\( 1 \\) to \\( k \\) can occur. For example, \\( \\frac{x}{(x-1)^{2}} = \\frac{(x-1) + 1}{(x-1)^{2}} = \\frac{1}{x-1} + \\frac{1}{(x-1)^{2}} \\), which cannot be written with the single term \\( \\frac{A}{(x-1)^{2}} \\). A second way to see it is to count: the factor \\( (x-a)^{k} \\) contributes \\( k \\) to the degree of \\( Q \\), and it must contribute \\( k \\) unknown constants.\n\n**Integrating the terms.** Only the first power gives a logarithm. For \\( k \\ge 2 \\), the power rule gives\n\\[ \\int\\frac{dx}{(x-a)^{k}} = \\frac{(x-a)^{1-k}}{1-k} + C = -\\frac{1}{(k-1)(x-a)^{k-1}} + C. \\]\n\n**Worked example.** Evaluate \\( \\int\\frac{x^{2} + 2x + 3}{x(x-1)^{2}}\\,dx \\). The function is proper (degree 2 over degree 3). Write\n\\[ \\frac{x^{2} + 2x + 3}{x(x-1)^{2}} = \\frac{A}{x} + \\frac{B}{x-1} + \\frac{C}{(x-1)^{2}}, \\]\nand clear denominators:\n\\[ x^{2} + 2x + 3 = A(x-1)^{2} + Bx(x-1) + Cx. \\]\nPut \\( x = 0 \\): \\( 3 = A \\). Put \\( x = 1 \\): \\( 6 = C \\). No value of \\( x \\) isolates \\( B \\), so compare the coefficients of \\( x^{2} \\): \\( 1 = A + B \\), hence \\( B = -2 \\). (Substituting any third value also works: \\( x = 2 \\) gives \\( 11 = A + 2B + 2C \\), again \\( B = -2 \\).) Therefore\n\\[ \\int\\frac{x^{2} + 2x + 3}{x(x-1)^{2}}\\,dx = \\int\\Big(\\frac{3}{x} - \\frac{2}{x-1} + \\frac{6}{(x-1)^{2}}\\Big)dx = 3\\ln|x| - 2\\ln|x-1| - \\frac{6}{x-1} + C. \\]\n\nThe cover-up rule still works for the highest power: covering \\( (x-1)^{2} \\) and setting \\( x = 1 \\) gives \\( C = \\frac{1 + 2 + 3}{1} = 6 \\). It does not give \\( B \\), because multiplying by \\( (x-1) \\) alone leaves the term \\( \\frac{C}{x-1} \\), which does not vanish at \\( x = 1 \\).\n\n**The common mistakes.** The most serious is to write only the highest power, \\( \\frac{A}{x} + \\frac{C}{(x-1)^{2}} \\). Clearing denominators gives \\( x^{2} + 2x + 3 = A(x-1)^{2} + Cx \\): three equations (one per power of \\( x \\)) in two unknowns, and they are inconsistent, since the constant term forces \\( A = 3 \\) while the \\( x^{2} \\) coefficient forces \\( A = 1 \\). An inconsistent system is always a signal that the form of the decomposition is wrong, not that the arithmetic is. The second is to integrate \\( \\frac{6}{(x-1)^{2}} \\) as a logarithm. The third is to \"cover up\" the lower power \\( (x-1) \\) as if it were a distinct factor.",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k5",
+     "type": "antiderivative",
+     "prompt": "Compute \\( \\int\\frac{3x^{2} + 5x + 4}{x(x+2)^{2}}\\,dx \\). Enter an antiderivative (use `abs` where an absolute value is needed).",
+     "why": "Form: \\( \\frac{A}{x} + \\frac{B}{x+2} + \\frac{C}{(x+2)^{2}} \\). Clearing: \\( 3x^{2} + 5x + 4 = A(x+2)^{2} + Bx(x+2) + Cx \\). \\( x = 0 \\): \\( 4 = 4A \\), \\( A = 1 \\). \\( x = -2 \\): \\( 12 - 10 + 4 = -2C \\), \\( C = -3 \\). Coefficient of \\( x^{2} \\): \\( 3 = A + B \\), \\( B = 2 \\). So the integrand is \\( \\frac1x + \\frac{2}{x+2} - \\frac{3}{(x+2)^{2}} \\), and \\[ \\int = \\ln|x| + 2\\ln|x+2| + \\frac{3}{x+2} + C. \\]",
+     "answer": "log(abs(x)) + 2*log(abs(x + 2)) + 3/(x + 2)",
+     "vars": "x"
+    },
+    {
+     "id": "s3q2",
+     "kp": "k5",
+     "type": "written",
+     "prompt": "A student writes \\( \\frac{x^{2}}{(x-2)^{2}(x+1)} = \\frac{A}{(x-2)^{2}} + \\frac{B}{x+1} \\). Show that no constants \\( A, B \\) make this true, by clearing denominators and deriving a contradiction. Then give the correct form and find its constants.",
+     "why": "The system is consistent exactly when the form is right; a contradiction diagnoses a missing term, here \\( \\frac{C}{x-2} \\). The correct decomposition is \\( \\frac{8/9}{x-2} + \\frac{4/3}{(x-2)^{2}} + \\frac{1/9}{x+1} \\).",
+     "rubric": [
+      "Clears denominators: \\( x^{2} = A(x+1) + B(x-2)^{2} \\).",
+      "Derives a contradiction, e.g. \\( x = -1 \\) gives \\( B = \\tfrac19 \\) while the \\( x^{2} \\) coefficient forces \\( B = 1 \\).",
+      "Explains that the form lacks the \\( \\frac{1}{x-2} \\) term (only 2 unknowns for a denominator of degree 3).",
+      "Correct form \\( \\frac{C}{x-2} + \\frac{A}{(x-2)^{2}} + \\frac{B}{x+1} \\) with \\( A = \\tfrac43 \\), \\( B = \\tfrac19 \\), \\( C = \\tfrac89 \\)."
+     ],
+     "model": "Clearing denominators gives \\( x^{2} = A(x+1) + B(x-2)^{2} \\), which would have to hold for all \\( x \\). At \\( x = -1 \\): \\( 1 = 9B \\), so \\( B = \\tfrac19 \\). At \\( x = 2 \\): \\( 4 = 3A \\), so \\( A = \\tfrac43 \\). But comparing coefficients of \\( x^{2} \\) gives \\( 1 = B \\), contradicting \\( B = \\tfrac19 \\). So no constants work. The reason is that the denominator has degree 3 but the form has only 2 unknowns: the repeated factor \\( (x-2)^{2} \\) needs both \\( \\frac{C}{x-2} \\) and \\( \\frac{A}{(x-2)^{2}} \\). With \\( x^{2} = C(x-2)(x+1) + A(x+1) + B(x-2)^{2} \\): \\( x = 2 \\) gives \\( A = \\tfrac43 \\); \\( x = -1 \\) gives \\( B = \\tfrac19 \\); the \\( x^{2} \\) coefficient gives \\( 1 = C + B \\), so \\( C = \\tfrac89 \\). Hence \\( \\frac{x^{2}}{(x-2)^{2}(x+1)} = \\frac{8/9}{x-2} + \\frac{4/3}{(x-2)^{2}} + \\frac{1/9}{x+1} \\)."
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "Irreducible quadratic factors",
+   "kps": [
+    "k6"
+   ],
+   "md": "Some denominators contain quadratic factors that do not split over the real numbers, such as \\( x^{2} + 9 \\) or \\( x^{2} + 2x + 5 \\). This section gives the partial fraction for such a factor and the method for integrating it.\n\n> **Irreducible quadratic factors.** If \\( x^{2} + bx + c \\) is irreducible (\\( b^{2} - 4c < 0 \\)) and divides \\( Q \\) exactly once, the decomposition contains a term \\[ \\frac{Bx + C}{x^{2} + bx + c}. \\]\n\nThe numerator must be allowed to be linear. A proper fraction over a quadratic can have a numerator of degree up to 1, and the factor contributes 2 to the degree of \\( Q \\), so it must contribute two unknowns. With a constant numerator alone the system is generally inconsistent.\n\n**Integrating the term.** Split the numerator into a multiple of the derivative of the denominator, \\( 2x + b \\), plus a constant:\n\\[ Bx + C = \\frac{B}{2}(2x + b) + \\Big(C - \\frac{Bb}{2}\\Big). \\]\nThe first part integrates by the substitution \\( w = x^{2} + bx + c \\):\n\\[ \\int\\frac{2x + b}{x^{2} + bx + c}\\,dx = \\ln(x^{2} + bx + c) + C_{1}, \\]\nwith no absolute value, because an irreducible quadratic with leading coefficient 1 is positive for all \\( x \\). For the constant part, complete the square, \\( x^{2} + bx + c = (x + \\tfrac{b}{2})^{2} + k^{2} \\) with \\( k^{2} = c - \\tfrac{b^{2}}{4} > 0 \\), and use the standard integral from the previous chapter,\n\\[ \\int\\frac{dx}{(x+h)^{2} + k^{2}} = \\frac{1}{k}\\arctan\\frac{x+h}{k} + C_{2}. \\]\n\n**Worked example.** Evaluate \\( \\int\\frac{3x^{2} + 6x + 7}{(x-1)(x^{2} + 2x + 5)}\\,dx \\). The quadratic has discriminant \\( 4 - 20 < 0 \\), so it is irreducible. Write\n\\[ \\frac{3x^{2} + 6x + 7}{(x-1)(x^{2} + 2x + 5)} = \\frac{A}{x-1} + \\frac{Bx + C}{x^{2} + 2x + 5}, \\]\nand clear denominators:\n\\[ 3x^{2} + 6x + 7 = A(x^{2} + 2x + 5) + (Bx + C)(x - 1). \\]\nPut \\( x = 1 \\): \\( 16 = 8A \\), so \\( A = 2 \\). Coefficient of \\( x^{2} \\): \\( 3 = A + B \\), so \\( B = 1 \\). Constant term: \\( 7 = 5A - C \\), so \\( C = 3 \\). The integrand is \\( \\frac{2}{x-1} + \\frac{x+3}{x^{2}+2x+5} \\). Now split \\( x + 3 = \\tfrac12(2x + 2) + 2 \\) and write \\( x^{2} + 2x + 5 = (x+1)^{2} + 4 \\):\n\\[ \\int\\frac{x + 3}{x^{2} + 2x + 5}\\,dx = \\frac12\\ln(x^{2} + 2x + 5) + 2\\cdot\\frac12\\arctan\\frac{x+1}{2}. \\]\nAltogether,\n\\[ \\int\\frac{3x^{2} + 6x + 7}{(x-1)(x^{2} + 2x + 5)}\\,dx = 2\\ln|x-1| + \\frac12\\ln(x^{2} + 2x + 5) + \\arctan\\frac{x+1}{2} + C. \\]\n\nA term over an irreducible quadratic thus produces a logarithm from the part of the numerator proportional to the derivative of the denominator and an arctangent from the rest. When \\( b = 0 \\) the split is immediate: \\( \\int\\frac{x + 3}{x^{2} + 9}\\,dx = \\frac12\\ln(x^{2} + 9) + \\arctan\\frac{x}{3} + C \\).\n\n**The common mistakes.** Using a constant numerator \\( \\frac{B}{x^{2} + 2x + 5} \\); treating a reducible quadratic as irreducible (factor \\( x^{2} + 2x - 3 = (x+3)(x-1) \\) instead); and the invalid shortcut \\( \\int\\frac{dx}{x^{2} + 4} = \\frac{\\ln(x^{2} + 4)}{2x} \\), which divides by the derivative of the denominator as if it were a constant. Differentiating that expression shows at once that it is wrong.",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k6",
+     "type": "antiderivative",
+     "prompt": "Compute \\( \\int\\frac{x + 5}{x^{2} + 2x + 5}\\,dx \\), splitting off a multiple of the derivative of the denominator. Enter an antiderivative.",
+     "why": "The denominator has derivative \\( 2x + 2 \\), and \\( x + 5 = \\tfrac12(2x + 2) + 4 \\). Also \\( x^{2} + 2x + 5 = (x+1)^{2} + 4 \\). So \\[ \\int\\frac{x+5}{x^{2}+2x+5}\\,dx = \\frac12\\ln(x^{2} + 2x + 5) + 4\\cdot\\frac12\\arctan\\frac{x+1}{2} = \\frac12\\ln(x^{2}+2x+5) + 2\\arctan\\frac{x+1}{2} + C. \\]",
+     "answer": "log(x^2 + 2*x + 5)/2 + 2*atan((x + 1)/2)",
+     "vars": "x"
+    },
+    {
+     "id": "s4q2",
+     "kp": "k6",
+     "type": "antiderivative",
+     "prompt": "Compute \\( \\int\\frac{3x^{2} + 3x + 18}{x^{3} + 9x}\\,dx \\). Enter an antiderivative (use `abs` where an absolute value is needed).",
+     "why": "\\( x^{3} + 9x = x(x^{2} + 9) \\), with \\( x^{2} + 9 \\) irreducible. Form \\( \\frac{A}{x} + \\frac{Bx + C}{x^{2} + 9} \\); clearing, \\( 3x^{2} + 3x + 18 = A(x^{2}+9) + (Bx + C)x \\). \\( x = 0 \\): \\( A = 2 \\). \\( x^{2} \\): \\( 3 = A + B \\), \\( B = 1 \\). \\( x \\): \\( 3 = C \\). So the integrand is \\( \\frac2x + \\frac{x}{x^{2}+9} + \\frac{3}{x^{2}+9} \\) and \\[ \\int = 2\\ln|x| + \\frac12\\ln(x^{2} + 9) + \\arctan\\frac{x}{3} + C. \\]",
+     "answer": "2*log(abs(x)) + log(x^2 + 9)/2 + atan(x/3)",
+     "vars": "x"
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "The general decomposition and repeated quadratic factors",
+   "kps": [
+    "k7"
+   ],
+   "md": "The previous sections treated each kind of factor separately. This section states the general result that combines them, adds the last case (a repeated irreducible quadratic), and draws the conclusion about which functions arise as antiderivatives of rational functions.\n\n> **Partial fraction decomposition theorem.** Let \\( \\frac{P}{Q} \\) be a proper rational function, and factor \\( Q \\) as a constant times powers \\( (x-a)^{m} \\) of distinct linear factors and powers \\( (x^{2} + bx + c)^{n} \\) of distinct irreducible quadratic factors. Then \\( \\frac{P}{Q} \\) is a sum containing, for each \\( (x-a)^{m} \\), the terms \\[ \\frac{A_{1}}{x-a} + \\cdots + \\frac{A_{m}}{(x-a)^{m}}, \\] and for each \\( (x^{2} + bx + c)^{n} \\), the terms \\[ \\frac{B_{1}x + C_{1}}{x^{2} + bx + c} + \\cdots + \\frac{B_{n}x + C_{n}}{(x^{2} + bx + c)^{n}}. \\] The constants are unique, and their number equals \\( \\deg Q \\).\n\nThe proof belongs to algebra and we accept it. The count of constants is the practical check on every set-up: each linear power contributes one unknown, each quadratic power contributes two, and the total must be \\( \\deg Q \\).\n\n**Setting up a form.** For \\( \\frac{x^{2} + 1}{(x-2)^{3}(x^{2} + x + 3)^{2}} \\), where \\( x^{2} + x + 3 \\) is irreducible (\\( 1 - 12 < 0 \\)), the form is\n\\[ \\frac{A}{x-2} + \\frac{B}{(x-2)^{2}} + \\frac{C}{(x-2)^{3}} + \\frac{Dx + E}{x^{2} + x + 3} + \\frac{Fx + G}{(x^{2} + x + 3)^{2}}, \\]\nwith 7 unknowns, matching \\( \\deg Q = 3 + 4 = 7 \\).\n\n**Integrating a repeated quadratic term.** For \\( \\frac{Bx + C}{(x^{2} + 1)^{2}} \\), the part \\( \\frac{x}{(x^{2}+1)^{2}} \\) yields to \\( w = x^{2} + 1 \\): \\( \\int\\frac{x\\,dx}{(x^{2}+1)^{2}} = -\\frac{1}{2(x^{2}+1)} \\). The part \\( \\frac{1}{(x^{2}+1)^{2}} \\) needs the substitution \\( x = \\tan\\theta \\) from the previous chapter: \\( dx = \\sec^{2}\\theta\\,d\\theta \\) and \\( x^{2} + 1 = \\sec^{2}\\theta \\), so\n\\[ \\int\\frac{dx}{(x^{2}+1)^{2}} = \\int\\cos^{2}\\theta\\,d\\theta = \\frac{\\theta + \\sin\\theta\\cos\\theta}{2} = \\frac12\\Big(\\arctan x + \\frac{x}{x^{2}+1}\\Big) + C, \\]\nusing \\( \\sin\\theta\\cos\\theta = \\frac{\\tan\\theta}{\\sec^{2}\\theta} = \\frac{x}{1 + x^{2}} \\).\n\n**Worked example.** Evaluate \\( \\int\\frac{x^{3} + 2}{(x^{2}+1)^{2}}\\,dx \\). The function is proper (3 < 4), and the form is \\( \\frac{Ax + B}{x^{2}+1} + \\frac{Cx + D}{(x^{2}+1)^{2}} \\). Clearing denominators,\n\\[ x^{3} + 2 = (Ax + B)(x^{2} + 1) + Cx + D = Ax^{3} + Bx^{2} + (A + C)x + (B + D). \\]\nEquating coefficients: \\( A = 1 \\), \\( B = 0 \\), \\( A + C = 0 \\), \\( B + D = 2 \\); so \\( C = -1 \\) and \\( D = 2 \\). The integrand is \\( \\frac{x}{x^{2}+1} + \\frac{2 - x}{(x^{2}+1)^{2}} \\), and\n\\[ \\int\\frac{x^{3} + 2}{(x^{2}+1)^{2}}\\,dx = \\frac12\\ln(x^{2} + 1) + \\frac{1}{2(x^{2}+1)} + \\arctan x + \\frac{x}{x^{2}+1} + C. \\]\nHere no root of the denominator is real, so substitution of convenient values is no help and equating coefficients is the natural method.\n\n**What the theorem implies.** Every term in the decomposition has an elementary antiderivative, and repeated quadratic powers can always be reduced (by \\( x + h = k\\tan\\theta \\) and the reduction formulas for \\( \\int\\cos^{2m}\\theta\\,d\\theta \\)). Hence the antiderivative of any rational function is a sum of a rational function, logarithms and arctangents. The theorem guarantees existence, not computability: it assumes \\( Q \\) has been factored, and for polynomials of degree 5 or more there is no general formula in radicals for the zeros, so in practice the factoring may have to be done numerically.\n\n**The common mistakes.** Writing only the highest power of a repeated quadratic factor; giving a quadratic power a constant numerator; and miscounting. If your form has fewer unknowns than \\( \\deg Q \\), it is wrong.",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k7",
+     "type": "written",
+     "prompt": "Write the form of the partial fraction decomposition of \\( \\frac{x^{4} - 3x + 7}{x^{3}(x+1)(x^{2} + x + 1)^{2}} \\) (do not solve for the constants). Justify each group of terms, and check the number of unknowns.",
+     "why": "The form follows the factor-by-factor rules: one term per power of each linear factor, a linear numerator for each power of each irreducible quadratic.",
+     "rubric": [
+      "Checks the function is proper: numerator degree 4, denominator degree \\( 3 + 1 + 4 = 8 \\).",
+      "Checks that \\( x^{2} + x + 1 \\) is irreducible (discriminant \\( -3 \\)).",
+      "Gives \\( \\frac{A}{x} + \\frac{B}{x^{2}} + \\frac{C}{x^{3}} + \\frac{D}{x+1} + \\frac{Ex + F}{x^{2}+x+1} + \\frac{Gx + H}{(x^{2}+x+1)^{2}} \\).",
+      "Counts 8 unknowns, equal to the degree of the denominator."
+     ],
+     "model": "The numerator has degree 4 and the denominator degree \\( 3 + 1 + 2\\cdot2 = 8 \\), so the function is proper and no division is needed. The quadratic \\( x^{2} + x + 1 \\) has discriminant \\( 1 - 4 = -3 < 0 \\), so it is irreducible. The factor \\( x^{3} = (x - 0)^{3} \\) is a repeated linear factor and contributes \\( \\frac{A}{x} + \\frac{B}{x^{2}} + \\frac{C}{x^{3}} \\); the single linear factor \\( x + 1 \\) contributes \\( \\frac{D}{x+1} \\); the repeated irreducible quadratic contributes \\( \\frac{Ex + F}{x^{2}+x+1} + \\frac{Gx + H}{(x^{2}+x+1)^{2}} \\), each with a linear numerator. The form is \\[ \\frac{A}{x} + \\frac{B}{x^{2}} + \\frac{C}{x^{3}} + \\frac{D}{x+1} + \\frac{Ex + F}{x^{2}+x+1} + \\frac{Gx + H}{(x^{2}+x+1)^{2}}, \\] with 8 unknowns \\( A, \\dots, H \\), which equals \\( \\deg Q = 8 \\)."
+    },
+    {
+     "id": "s5q2",
+     "kp": "k7",
+     "type": "antiderivative",
+     "prompt": "Compute \\( \\int\\frac{x^{2} + x}{(x^{2} + 1)^{2}}\\,dx \\). You may use \\( \\int\\frac{dx}{(x^{2}+1)^{2}} = \\frac12\\big(\\arctan x + \\frac{x}{x^{2}+1}\\big) + C \\). Enter an antiderivative.",
+     "why": "Write \\( x^{2} + x = (x^{2} + 1) + (x - 1) \\), so the integrand is \\( \\frac{1}{x^{2}+1} + \\frac{x - 1}{(x^{2}+1)^{2}} \\) (equivalently, equate coefficients in the form \\( \\frac{Ax+B}{x^{2}+1} + \\frac{Cx+D}{(x^{2}+1)^{2}} \\): \\( A = 0, B = 1, C = 1, D = -1 \\)). Then \\( \\int\\frac{dx}{x^{2}+1} = \\arctan x \\), \\( \\int\\frac{x\\,dx}{(x^{2}+1)^{2}} = -\\frac{1}{2(x^{2}+1)} \\), and \\( -\\int\\frac{dx}{(x^{2}+1)^{2}} = -\\frac12\\arctan x - \\frac{x}{2(x^{2}+1)} \\). Total: \\[ \\frac12\\arctan x - \\frac{x + 1}{2(x^{2}+1)} + C. \\]",
+     "answer": "atan(x)/2 - (x + 1)/(2*(x^2 + 1))",
+     "vars": "x"
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "title": "Rationalizing substitutions and definite integrals",
+   "kps": [
+    "k8",
+    "k9"
+   ],
+   "md": "Partial fractions also apply to integrands that are not rational at first sight, and to definite integrals. This section covers both: substitutions that make an integrand rational, and the evaluation of definite integrals after decomposition.\n\n**Rationalizing substitutions.** If an integrand contains \\( \\sqrt[n]{ax + b} \\), put \\( u = \\sqrt[n]{ax + b} \\). Then \\( x = \\frac{u^{n} - b}{a} \\) and \\( dx = \\frac{n}{a}u^{n-1}\\,du \\) are rational in \\( u \\), so the whole integrand becomes a rational function of \\( u \\). Similarly, an integrand that is a rational function of \\( e^{x} \\) becomes rational under \\( u = e^{x} \\), \\( dx = \\frac{du}{u} \\), and \\( R(\\sin x)\\cos x \\) becomes rational under \\( u = \\sin x \\). Such a substitution is called a **rationalizing substitution**.\n\n**Worked example 1.** Evaluate \\( \\int\\frac{dx}{x\\sqrt{x+1}} \\) for \\( x > 0 \\). Put \\( u = \\sqrt{x+1} \\), so \\( x = u^{2} - 1 \\) and \\( dx = 2u\\,du \\):\n\\[ \\int\\frac{2u\\,du}{(u^{2}-1)u} = \\int\\frac{2\\,du}{(u-1)(u+1)} = \\int\\Big(\\frac{1}{u-1} - \\frac{1}{u+1}\\Big)du = \\ln\\left|\\frac{u-1}{u+1}\\right| + C. \\]\nReturning to \\( x \\): \\( \\int\\frac{dx}{x\\sqrt{x+1}} = \\ln\\left|\\frac{\\sqrt{x+1} - 1}{\\sqrt{x+1} + 1}\\right| + C \\).\n\n**Worked example 2.** Evaluate \\( \\int\\frac{dx}{e^{x} + 1} \\). Put \\( u = e^{x} \\), \\( dx = \\frac{du}{u} \\):\n\\[ \\int\\frac{du}{u(u+1)} = \\int\\Big(\\frac1u - \\frac{1}{u+1}\\Big)du = \\ln|u| - \\ln|u+1| + C = x - \\ln(e^{x} + 1) + C. \\]\n\n**Definite integrals.** Once an antiderivative is found, the Fundamental Theorem of Calculus applies, provided the integrand is continuous on the whole interval. For a rational function this means **the interval of integration must contain no zero of the denominator**. The logarithms that result can usually be combined with \\( \\ln p - \\ln q = \\ln\\frac{p}{q} \\).\n\n**Worked example 3.** Evaluate \\( \\int_{0}^{1}\\frac{dx}{x^{2} + 3x + 2} \\). The zeros of the denominator are \\( -1 \\) and \\( -2 \\), both outside \\( [0, 1] \\). By cover-up, \\( \\frac{1}{(x+1)(x+2)} = \\frac{1}{x+1} - \\frac{1}{x+2} \\), so\n\\[ \\int_{0}^{1}\\frac{dx}{x^{2} + 3x + 2} = \\Big[\\ln|x+1| - \\ln|x+2|\\Big]_{0}^{1} = (\\ln 2 - \\ln 3) - (0 - \\ln 2) = \\ln\\frac{4}{3}. \\]\n\nIf a zero of the denominator lies in the interval, as in \\( \\int_{0}^{3}\\frac{dx}{(x-1)(x-2)} \\), the integrand is unbounded there and the integral is not an ordinary definite integral at all. Such integrals are **improper**, and the next chapter defines them by limits. Evaluating the logarithms at the endpoints anyway produces a number that means nothing.\n\n**A strategy for any rational integrand.**\n\n1. If \\( \\deg P \\ge \\deg Q \\), divide.\n2. Cancel any common factor of \\( P \\) and \\( Q \\), and factor \\( Q \\) into linear and irreducible quadratic factors.\n3. Write the form, with one unknown per unit of \\( \\deg Q \\).\n4. Solve for the constants: substitute the real roots, then equate coefficients for what remains.\n5. Integrate: logarithms for linear terms, powers for repeated linear terms, logarithm plus arctangent for quadratic terms.\n\nBefore starting, check whether a simpler method applies. \\( \\int\\frac{2x+3}{x^{2}+3x+2}\\,dx \\) is \\( \\ln|x^{2} + 3x + 2| + C \\) by the substitution \\( w = x^{2} + 3x + 2 \\), because the numerator is exactly the derivative of the denominator.\n\n**The common mistakes.** Forgetting to convert \\( dx \\) in a rationalizing substitution; not returning to the original variable (or, in a definite integral, not changing the limits); and integrating across a zero of the denominator.",
+   "questions": [
+    {
+     "id": "s6q1",
+     "kp": "k8",
+     "type": "antiderivative",
+     "prompt": "Compute \\( \\int\\frac{\\sqrt{x}}{x - 4}\\,dx \\) for \\( x > 0 \\), \\( x \\ne 4 \\), using \\( u = \\sqrt{x} \\). Give the answer in terms of \\( x \\). Enter an antiderivative (use `abs` where an absolute value is needed).",
+     "why": "With \\( u = \\sqrt x \\), \\( x = u^{2} \\), \\( dx = 2u\\,du \\): \\( \\int\\frac{2u^{2}}{u^{2} - 4}\\,du \\). Divide: \\( \\frac{2u^{2}}{u^{2}-4} = 2 + \\frac{8}{u^{2}-4} = 2 + \\frac{2}{u-2} - \\frac{2}{u+2} \\). Integrating, \\( 2u + 2\\ln|u - 2| - 2\\ln|u + 2| \\), so \\[ \\int\\frac{\\sqrt x}{x-4}\\,dx = 2\\sqrt x + 2\\ln\\left|\\frac{\\sqrt x - 2}{\\sqrt x + 2}\\right| + C. \\]",
+     "answer": "2*sqrt(x) + 2*log(abs((sqrt(x) - 2)/(sqrt(x) + 2)))",
+     "vars": "x"
+    },
+    {
+     "id": "s6q2",
+     "kp": "k8",
+     "type": "antiderivative",
+     "prompt": "Compute \\( \\int\\frac{e^{x}}{e^{2x} + 3e^{x} + 2}\\,dx \\). Enter an antiderivative in terms of \\( x \\).",
+     "why": "Put \\( u = e^{x} \\), \\( du = e^{x}dx \\): \\( \\int\\frac{du}{u^{2} + 3u + 2} = \\int\\Big(\\frac{1}{u+1} - \\frac{1}{u+2}\\Big)du = \\ln(u+1) - \\ln(u+2) \\) (no absolute values needed since \\( u > 0 \\)). So the integral is \\( \\ln(e^{x} + 1) - \\ln(e^{x} + 2) + C \\).",
+     "answer": "log(exp(x) + 1) - log(exp(x) + 2)",
+     "vars": "x"
+    },
+    {
+     "id": "s6q3",
+     "kp": "k9",
+     "type": "number",
+     "prompt": "Evaluate \\( \\int_{3}^{5}\\frac{dx}{x^{2} - 3x + 2} \\) exactly.",
+     "why": "\\( x^{2} - 3x + 2 = (x-1)(x-2) \\), with zeros \\( 1, 2 \\) outside \\( [3, 5] \\). Cover-up: \\( \\frac{1}{(x-1)(x-2)} = \\frac{1}{x-2} - \\frac{1}{x-1} \\). So \\[ \\int_{3}^{5} = \\Big[\\ln\\frac{x-2}{x-1}\\Big]_{3}^{5} = \\ln\\frac34 - \\ln\\frac12 = \\ln\\frac32 \\approx 0.4055. \\]",
+     "answer": "log(3/2)"
+    }
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "t": "rational function",
+   "d": "A quotient \\( P(x)/Q(x) \\) of polynomials with \\( Q \\) not the zero polynomial.",
+   "ex": "\\( \\frac{x+7}{x^{2}-x-6} \\)."
+  },
+  {
+   "t": "proper rational function",
+   "d": "A rational function \\( P/Q \\) with \\( \\deg P < \\deg Q \\); otherwise it is improper, and long division writes it as a polynomial plus a proper rational function.",
+   "ex": "\\( \\frac{x^{2}+3}{x+1} = x - 1 + \\frac{4}{x+1} \\)."
+  },
+  {
+   "t": "polynomial long division",
+   "d": "The algorithm producing, for polynomials \\( P \\) and \\( Q \\ne 0 \\), a quotient \\( S \\) and remainder \\( R \\) with \\( P = SQ + R \\) and \\( \\deg R < \\deg Q \\).",
+   "ex": "\\( x^{2} + 3 = (x-1)(x+1) + 4 \\)."
+  },
+  {
+   "t": "irreducible quadratic",
+   "d": "A real quadratic \\( ax^{2} + bx + c \\) that is not a product of real linear factors; equivalently \\( b^{2} - 4ac < 0 \\).",
+   "ex": "\\( x^{2} + 2x + 5 \\) (discriminant \\( -16 \\))."
+  },
+  {
+   "t": "partial fraction decomposition",
+   "d": "The unique expression of a proper rational function as a sum of terms \\( \\frac{A}{(x-a)^{j}} \\) and \\( \\frac{Bx+C}{(x^{2}+bx+c)^{j}} \\) determined by the factorization of its denominator.",
+   "ex": "\\( \\frac{x+7}{(x-3)(x+2)} = \\frac{2}{x-3} - \\frac{1}{x+2} \\)."
+  },
+  {
+   "t": "repeated factor",
+   "d": "A factor that divides the denominator more than once, such as \\( (x-a)^{k} \\) or \\( (x^{2}+bx+c)^{k} \\) with \\( k \\ge 2 \\); it contributes one term for each power from 1 to \\( k \\).",
+   "ex": "\\( (x-1)^{2} \\) contributes \\( \\frac{B}{x-1} + \\frac{C}{(x-1)^{2}} \\)."
+  },
+  {
+   "t": "method of equating coefficients",
+   "d": "Finding the unknown constants by expanding the cleared identity and setting the coefficients of equal powers of \\( x \\) on both sides equal; valid because identical polynomials have identical coefficients.",
+   "ex": "\\( x^{3} + 2 = Ax^{3} + Bx^{2} + (A+C)x + (B+D) \\)."
+  },
+  {
+   "t": "cover-up method",
+   "d": "Heaviside's rule for a nonrepeated linear factor \\( x - a \\) (or the highest power of a repeated one): the coefficient equals the rest of the function, with that factor removed, evaluated at \\( x = a \\).",
+   "ex": "For \\( \\frac{x+7}{(x-3)(x+2)} \\): \\( A = \\frac{3+7}{3+2} = 2 \\)."
+  },
+  {
+   "t": "identity principle for polynomials",
+   "d": "A nonzero polynomial of degree \\( d \\) has at most \\( d \\) zeros; hence two polynomials that agree at infinitely many points are identical.",
+   "ex": "It justifies substituting roots of the denominator after clearing denominators."
+  },
+  {
+   "t": "rationalizing substitution",
+   "d": "A substitution that turns a non-rational integrand into a rational function of the new variable, such as \\( u = \\sqrt[n]{ax+b} \\) or \\( u = e^{x} \\).",
+   "ex": "\\( u = \\sqrt{x+1} \\) in \\( \\int\\frac{dx}{x\\sqrt{x+1}} \\)."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "term",
+   "front": "Define: proper rational function",
+   "back": "\\( P(x)/Q(x) \\) with \\( \\deg P < \\deg Q \\).",
+   "kp": "k1"
+  },
+  {
+   "id": "c2",
+   "type": "concept",
+   "front": "What must you do first if \\( \\deg P \\ge \\deg Q \\)?",
+   "back": "Long division: \\( \\frac{P}{Q} = S + \\frac{R}{Q} \\) with \\( \\deg R < \\deg Q \\). Only the proper part is decomposed.",
+   "kp": "k1"
+  },
+  {
+   "id": "c3",
+   "type": "term",
+   "front": "Define: irreducible quadratic (over the reals)",
+   "back": "\\( ax^{2} + bx + c \\) with no real linear factorization; equivalently \\( b^{2} - 4ac < 0 \\).",
+   "kp": "k2"
+  },
+  {
+   "id": "c4",
+   "type": "concept",
+   "front": "Into what kinds of factors does every real polynomial factor?",
+   "back": "A constant times linear factors and irreducible quadratic factors (a consequence of the fundamental theorem of algebra).",
+   "kp": "k2"
+  },
+  {
+   "id": "c5",
+   "type": "formula",
+   "front": "Partial fraction terms for distinct linear factors \\( (x-a_{1})\\cdots(x-a_{n}) \\)",
+   "back": "\\( \\frac{A_{1}}{x-a_{1}} + \\cdots + \\frac{A_{n}}{x-a_{n}} \\)",
+   "kp": "k3"
+  },
+  {
+   "id": "c6",
+   "type": "formula",
+   "front": "Partial fraction terms for a repeated linear factor \\( (x-a)^{k} \\)",
+   "back": "\\( \\frac{A_{1}}{x-a} + \\frac{A_{2}}{(x-a)^{2}} + \\cdots + \\frac{A_{k}}{(x-a)^{k}} \\)",
+   "kp": "k5"
+  },
+  {
+   "id": "c7",
+   "type": "formula",
+   "front": "Partial fraction term for an irreducible quadratic factor \\( x^{2} + bx + c \\)",
+   "back": "\\( \\frac{Bx + C}{x^{2} + bx + c} \\) (linear numerator)",
+   "kp": "k6"
+  },
+  {
+   "id": "c8",
+   "type": "formula",
+   "front": "Partial fraction terms for \\( (x^{2} + bx + c)^{n} \\), irreducible",
+   "back": "\\( \\frac{B_{1}x + C_{1}}{x^{2}+bx+c} + \\cdots + \\frac{B_{n}x + C_{n}}{(x^{2}+bx+c)^{n}} \\)",
+   "kp": "k7"
+  },
+  {
+   "id": "c9",
+   "type": "concept",
+   "front": "How many unknown constants does a correct partial fraction form have?",
+   "back": "Exactly \\( \\deg Q \\): one per linear power, two per quadratic power.",
+   "kp": "k7"
+  },
+  {
+   "id": "c10",
+   "type": "concept",
+   "front": "Why may you substitute a root of the denominator after clearing denominators?",
+   "back": "Both sides are polynomials agreeing at infinitely many points, so they are identical and agree at the roots too.",
+   "kp": "k4"
+  },
+  {
+   "id": "c11",
+   "type": "concept",
+   "front": "Cover-up rule for the coefficient of \\( \\frac{1}{x-a} \\) (nonrepeated factor)",
+   "back": "Delete \\( x - a \\) from the denominator and evaluate the rest of the fraction at \\( x = a \\).",
+   "kp": "k4"
+  },
+  {
+   "id": "c12",
+   "type": "concept",
+   "front": "What does an inconsistent system for the partial fraction constants tell you?",
+   "back": "The form of the decomposition is wrong (typically a missing power or a constant numerator over a quadratic), or the function was improper.",
+   "kp": "k5"
+  },
+  {
+   "id": "c13",
+   "type": "formula",
+   "front": "\\( \\int\\frac{dx}{(x-a)^{k}} \\) for \\( k \\ge 2 \\)",
+   "back": "\\( -\\frac{1}{(k-1)(x-a)^{k-1}} + C \\) (a power, not a logarithm)",
+   "kp": "k5"
+  },
+  {
+   "id": "c14",
+   "type": "formula",
+   "front": "\\( \\int\\frac{dx}{(x+h)^{2} + k^{2}} \\)",
+   "back": "\\( \\frac1k\\arctan\\frac{x+h}{k} + C \\)",
+   "kp": "k6"
+  },
+  {
+   "id": "c15",
+   "type": "concept",
+   "front": "How do you integrate \\( \\frac{Bx + C}{x^{2} + bx + c} \\) (irreducible)?",
+   "back": "Write \\( Bx + C = \\frac{B}{2}(2x+b) + \\text{const} \\): the first part gives \\( \\frac{B}{2}\\ln(x^{2}+bx+c) \\); complete the square for the constant part to get an arctangent.",
+   "kp": "k6"
+  },
+  {
+   "id": "c16",
+   "type": "problem",
+   "front": "\\( \\int\\frac{dx}{x^{2} - 1} \\)",
+   "back": "\\( \\frac12\\ln\\left|\\frac{x-1}{x+1}\\right| + C \\), from \\( \\frac{1}{x^{2}-1} = \\frac{1/2}{x-1} - \\frac{1/2}{x+1} \\).",
+   "kp": "k3",
+   "answer": "log(abs((x - 1)/(x + 1)))/2",
+   "vars": "x",
+   "check": "antiderivative"
+  },
+  {
+   "id": "c17",
+   "type": "problem",
+   "front": "\\( \\int\\frac{dx}{x(x+1)} \\)",
+   "back": "\\( \\ln|x| - \\ln|x+1| + C \\), from \\( \\frac1x - \\frac{1}{x+1} \\).",
+   "kp": "k3",
+   "answer": "log(abs(x)) - log(abs(x + 1))",
+   "vars": "x",
+   "check": "antiderivative"
+  },
+  {
+   "id": "c18",
+   "type": "problem",
+   "front": "\\( \\int\\frac{x + 1}{x^{2} + 1}\\,dx \\)",
+   "back": "\\( \\frac12\\ln(x^{2} + 1) + \\arctan x + C \\)",
+   "kp": "k6",
+   "answer": "log(x^2 + 1)/2 + atan(x)",
+   "vars": "x",
+   "check": "antiderivative"
+  },
+  {
+   "id": "c19",
+   "type": "problem",
+   "front": "\\( \\int\\frac{dx}{(x-2)^{2}} \\)",
+   "back": "\\( -\\frac{1}{x-2} + C \\)",
+   "kp": "k5",
+   "answer": "-1/(x - 2)",
+   "vars": "x",
+   "check": "antiderivative"
+  },
+  {
+   "id": "c20",
+   "type": "concept",
+   "front": "Which substitution rationalizes an integrand containing \\( \\sqrt[n]{ax + b} \\)?",
+   "back": "\\( u = \\sqrt[n]{ax+b} \\), so \\( x = \\frac{u^{n}-b}{a} \\) and \\( dx = \\frac{n}{a}u^{n-1}du \\).",
+   "kp": "k8"
+  },
+  {
+   "id": "c21",
+   "type": "problem",
+   "front": "\\( \\int_{2}^{3}\\frac{dx}{x^{2} - 1} \\)",
+   "back": "\\( \\frac12\\Big[\\ln\\frac{x-1}{x+1}\\Big]_{2}^{3} = \\frac12\\ln\\frac32 \\)",
+   "kp": "k9",
+   "answer": "log(3/2)/2",
+   "check": "number"
+  },
+  {
+   "id": "c22",
+   "type": "concept",
+   "front": "When is it invalid to evaluate \\( \\int_{a}^{b}\\frac{P}{Q}\\,dx \\) by plugging the limits into the antiderivative?",
+   "back": "When \\( Q \\) has a zero in \\( [a, b] \\): the integrand is unbounded there and the integral is improper.",
+   "kp": "k9"
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k1",
+   "type": "antiderivative",
+   "prompt": "Compute \\( \\int\\frac{x^{3} - x + 3}{x^{2} + x - 2}\\,dx \\). Enter an antiderivative (use `abs` where an absolute value is needed).",
+   "why": "Divide: \\( x^{3} - x + 3 = (x - 1)(x^{2} + x - 2) + (2x + 1) \\). Then \\( \\frac{2x+1}{(x-1)(x+2)} \\): cover-up gives \\( \\frac{3}{3} = 1 \\) at \\( x = 1 \\) and \\( \\frac{-3}{-3} = 1 \\) at \\( x = -2 \\). So the integrand is \\( x - 1 + \\frac{1}{x-1} + \\frac{1}{x+2} \\) and \\[ \\int = \\frac{x^{2}}{2} - x + \\ln|x-1| + \\ln|x+2| + C. \\]",
+   "answer": "x^2/2 - x + log(abs(x - 1)) + log(abs(x + 2))",
+   "vars": "x"
+  },
+  {
+   "id": "p2",
+   "kp": "k9",
+   "type": "number",
+   "prompt": "Evaluate \\( \\int_{0}^{1}\\frac{x + 3}{x^{2} + 3x + 2}\\,dx \\) exactly.",
+   "why": "\\( \\frac{x+3}{(x+1)(x+2)} = \\frac{2}{x+1} - \\frac{1}{x+2} \\) (cover-up: \\( \\frac{2}{1} \\) at \\( -1 \\), \\( \\frac{1}{-1} \\) at \\( -2 \\)). So \\[ \\int_{0}^{1} = \\Big[2\\ln(x+1) - \\ln(x+2)\\Big]_{0}^{1} = (2\\ln2 - \\ln3) - (0 - \\ln 2) = 3\\ln 2 - \\ln 3 = \\ln\\frac83 \\approx 0.9808. \\]",
+   "answer": "log(8/3)"
+  },
+  {
+   "id": "p3",
+   "kp": "k5",
+   "type": "antiderivative",
+   "prompt": "Compute \\( \\int\\frac{x^{2} + 1}{(x-1)^{3}}\\,dx \\). (Rewriting the numerator in powers of \\( x - 1 \\) is the quickest route.) Enter an antiderivative (use `abs` where an absolute value is needed).",
+   "why": "With \\( u = x - 1 \\): \\( x^{2} + 1 = (u+1)^{2} + 1 = u^{2} + 2u + 2 \\), so \\( \\frac{x^{2}+1}{(x-1)^{3}} = \\frac{1}{x-1} + \\frac{2}{(x-1)^{2}} + \\frac{2}{(x-1)^{3}} \\). Integrating, \\[ \\ln|x-1| - \\frac{2}{x-1} - \\frac{1}{(x-1)^{2}} + C. \\]",
+   "answer": "log(abs(x - 1)) - 2/(x - 1) - 1/(x - 1)^2",
+   "vars": "x"
+  },
+  {
+   "id": "p4",
+   "kp": "k6",
+   "type": "antiderivative",
+   "prompt": "Compute \\( \\int\\frac{dx}{x^{3} + x} \\). Enter an antiderivative (use `abs` where an absolute value is needed).",
+   "why": "\\( x^{3} + x = x(x^{2} + 1) \\). Form \\( \\frac{A}{x} + \\frac{Bx + C}{x^{2}+1} \\): \\( 1 = A(x^{2}+1) + (Bx + C)x \\). \\( x = 0 \\): \\( A = 1 \\); \\( x^{2} \\): \\( 0 = A + B \\), \\( B = -1 \\); \\( x \\): \\( C = 0 \\). So \\( \\int\\Big(\\frac1x - \\frac{x}{x^{2}+1}\\Big)dx = \\ln|x| - \\frac12\\ln(x^{2} + 1) + C \\).",
+   "answer": "log(abs(x)) - log(x^2 + 1)/2",
+   "vars": "x"
+  },
+  {
+   "id": "p5",
+   "kp": "k2",
+   "type": "written",
+   "prompt": "Compute \\( \\int\\frac{dx}{x^{2} + 2x + 5} \\) and \\( \\int\\frac{dx}{x^{2} + 2x - 3} \\). Explain, in terms of the discriminant, why one answer is an arctangent and the other a combination of logarithms.",
+   "why": "The discriminant decides whether the quadratic splits into linear factors (logarithms) or must be treated by completing the square (arctangent).",
+   "rubric": [
+    "Discriminants: \\( 4 - 20 < 0 \\) (irreducible) and \\( 4 + 12 > 0 \\) (factors as \\( (x+3)(x-1) \\)).",
+    "First integral: \\( (x+1)^{2} + 4 \\) gives \\( \\frac12\\arctan\\frac{x+1}{2} + C \\).",
+    "Second integral: \\( \\frac{1}{(x-1)(x+3)} = \\frac14\\Big(\\frac{1}{x-1} - \\frac{1}{x+3}\\Big) \\), giving \\( \\frac14\\ln\\left|\\frac{x-1}{x+3}\\right| + C \\).",
+    "Explains that real zeros produce linear factors and hence logarithms, while no real zeros force completing the square and an arctangent."
+   ],
+   "model": "For \\( x^{2} + 2x + 5 \\) the discriminant is \\( 4 - 20 = -16 < 0 \\): no real zeros, so the quadratic is irreducible and cannot be split into linear factors. Completing the square, \\( x^{2} + 2x + 5 = (x+1)^{2} + 4 \\), so \\( \\int\\frac{dx}{(x+1)^{2} + 2^{2}} = \\frac12\\arctan\\frac{x+1}{2} + C \\). For \\( x^{2} + 2x - 3 \\) the discriminant is \\( 4 + 12 = 16 > 0 \\), with zeros \\( 1 \\) and \\( -3 \\), so it factors as \\( (x-1)(x+3) \\). Cover-up gives \\( \\frac{1}{(x-1)(x+3)} = \\frac{1/4}{x-1} - \\frac{1/4}{x+3} \\), and the integral is \\( \\frac14\\ln|x-1| - \\frac14\\ln|x+3| + C = \\frac14\\ln\\left|\\frac{x-1}{x+3}\\right| + C \\). Real zeros give linear factors, each of which integrates to a logarithm; without real zeros the only route is completing the square, which produces the arctangent."
+  },
+  {
+   "id": "p6",
+   "kp": "k7",
+   "type": "mcq",
+   "prompt": "Which is the correct form of the partial fraction decomposition of \\( \\frac{2x + 1}{(x^{2} + 4)^{2}(x - 3)} \\)?",
+   "why": "The denominator has degree 5, so the form needs 5 unknowns. \\( x^{2} + 4 \\) is irreducible (it is a sum of squares, not \\( x^{2} - 4 \\)), and its square contributes two terms, each with a linear numerator. Option A gives the quadratic powers constant numerators (only 3 unknowns). Option C omits the first power of the repeated quadratic (only 3 unknowns). Option D factors \\( x^{2} + 4 \\) as if it were \\( x^{2} - 4 \\).",
+   "options": [
+    "\\( \\frac{A}{x^{2}+4} + \\frac{B}{(x^{2}+4)^{2}} + \\frac{C}{x-3} \\)",
+    "\\( \\frac{Ax + B}{x^{2}+4} + \\frac{Cx + D}{(x^{2}+4)^{2}} + \\frac{E}{x-3} \\)",
+    "\\( \\frac{Ax + B}{(x^{2}+4)^{2}} + \\frac{C}{x-3} \\)",
+    "\\( \\frac{A}{x-2} + \\frac{B}{(x-2)^{2}} + \\frac{C}{x+2} + \\frac{D}{(x+2)^{2}} + \\frac{E}{x-3} \\)"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "p7",
+   "kp": "k3",
+   "type": "antiderivative",
+   "prompt": "Compute \\( \\int\\frac{x^{2} + 2x - 1}{x^{3} - x}\\,dx \\) using the cover-up method. Enter an antiderivative (use `abs` where an absolute value is needed).",
+   "why": "\\( x^{3} - x = x(x-1)(x+1) \\). Cover-up: at \\( 0 \\), \\( \\frac{-1}{(-1)(1)} = 1 \\); at \\( 1 \\), \\( \\frac{2}{(1)(2)} = 1 \\); at \\( -1 \\), \\( \\frac{-2}{(-1)(-2)} = -1 \\). So the integral is \\( \\ln|x| + \\ln|x-1| - \\ln|x+1| + C \\). Check: \\( 1 + 1 - 1 = 1 \\), the coefficient of \\( x^{2} \\).",
+   "answer": "log(abs(x)) + log(abs(x - 1)) - log(abs(x + 1))",
+   "vars": "x"
+  },
+  {
+   "id": "p8",
+   "kp": "k8",
+   "type": "antiderivative",
+   "prompt": "Compute \\( \\int\\frac{dx}{x + 2\\sqrt{x + 3}} \\) for \\( x > -3 \\) with the substitution \\( u = \\sqrt{x + 3} \\). Give the answer in terms of \\( x \\). Enter an antiderivative (use `abs` where an absolute value is needed).",
+   "why": "\\( x = u^{2} - 3 \\), \\( dx = 2u\\,du \\), and the denominator is \\( u^{2} + 2u - 3 = (u+3)(u-1) \\). So \\( \\int\\frac{2u\\,du}{(u+3)(u-1)} \\). Cover-up: at \\( u = 1 \\), \\( \\frac{2}{4} = \\frac12 \\); at \\( u = -3 \\), \\( \\frac{-6}{-4} = \\frac32 \\). Integrating, \\( \\frac12\\ln|u - 1| + \\frac32\\ln|u + 3| \\), so \\[ \\int = \\frac12\\ln\\left|\\sqrt{x+3} - 1\\right| + \\frac32\\ln\\left(\\sqrt{x+3} + 3\\right) + C. \\]",
+   "answer": "log(abs(sqrt(x + 3) - 1))/2 + 3*log(sqrt(x + 3) + 3)/2",
+   "vars": "x"
+  },
+  {
+   "id": "p9",
+   "kp": "k4",
+   "type": "written",
+   "prompt": "Let \\( R \\) be a polynomial with \\( R(a) \\ne 0 \\), and suppose \\( \\frac{P(x)}{(x-a)R(x)} = \\frac{A}{x-a} + \\frac{S(x)}{R(x)} \\), where \\( \\frac{S}{R} \\) collects all the other partial fractions. Prove that \\( A = \\frac{P(a)}{R(a)} \\) (the cover-up rule), and explain why the argument fails for the coefficient of \\( \\frac{1}{x-a} \\) when the factor is \\( (x-a)^{2} \\).",
+   "why": "Cover-up is multiplication by the factor followed by evaluation; it isolates a coefficient only when every other term vanishes at \\( x = a \\).",
+   "rubric": [
+    "Multiplies through by \\( (x-a)R(x) \\) to get the polynomial identity \\( P(x) = A\\,R(x) + (x-a)S(x) \\).",
+    "Justifies that the identity holds at \\( x = a \\) (identity principle).",
+    "Sets \\( x = a \\) to get \\( P(a) = A\\,R(a) \\) and divides by \\( R(a) \\ne 0 \\).",
+    "For \\( (x-a)^{2} \\): multiplying by \\( (x-a) \\) leaves \\( \\frac{C}{x-a} \\) from the squared term, which does not vanish at \\( a \\); only the top coefficient is isolated (by multiplying by \\( (x-a)^{2} \\))."
+   ],
+   "model": "Multiplying the decomposition by \\( (x-a)R(x) \\) gives \\( P(x) = A\\,R(x) + (x-a)S(x) \\) for every \\( x \\) at which the original expressions are defined, that is, for all but finitely many \\( x \\). Both sides are polynomials, so by the identity principle the equation holds for all \\( x \\). At \\( x = a \\) the second term vanishes, leaving \\( P(a) = A\\,R(a) \\); since \\( R(a) \\ne 0 \\), \\( A = P(a)/R(a) \\). This is the cover-up rule: remove the factor \\( x - a \\) and evaluate what remains at \\( a \\). If instead the factor is \\( (x-a)^{2} \\), the decomposition contains \\( \\frac{B}{x-a} + \\frac{C}{(x-a)^{2}} \\). Multiplying by \\( (x-a)^{2}R(x) \\) gives \\( P(x) = B(x-a)R(x) + C\\,R(x) + (x-a)^{2}S(x) \\), and \\( x = a \\) yields only \\( C = P(a)/R(a) \\). The term containing \\( B \\) is multiplied by \\( x - a \\), so it vanishes at \\( a \\) and \\( B \\) cannot be isolated this way; it must be found by equating coefficients or substituting another value of \\( x \\)."
+  },
+  {
+   "id": "p10",
+   "kp": "k1",
+   "type": "number",
+   "prompt": "Evaluate \\( \\int_{0}^{1}\\frac{x^{3}}{x^{2} + 1}\\,dx \\) exactly.",
+   "why": "Divide: \\( x^{3} = x(x^{2} + 1) - x \\), so \\( \\frac{x^{3}}{x^{2}+1} = x - \\frac{x}{x^{2}+1} \\). Then \\[ \\int_{0}^{1} = \\Big[\\frac{x^{2}}{2} - \\frac12\\ln(x^{2}+1)\\Big]_{0}^{1} = \\frac12 - \\frac12\\ln 2 \\approx 0.1534. \\]",
+   "answer": "1/2 - log(2)/2"
+  },
+  {
+   "id": "p11",
+   "kp": "k7",
+   "type": "antiderivative",
+   "prompt": "Compute \\( \\int\\frac{x^{3}}{(x^{2} + 1)^{2}}\\,dx \\). Enter an antiderivative.",
+   "why": "\\( x^{3} = x(x^{2} + 1) - x \\), so \\( \\frac{x^{3}}{(x^{2}+1)^{2}} = \\frac{x}{x^{2}+1} - \\frac{x}{(x^{2}+1)^{2}} \\). With \\( w = x^{2} + 1 \\): \\( \\int\\frac{x\\,dx}{x^{2}+1} = \\frac12\\ln(x^{2}+1) \\) and \\( \\int\\frac{x\\,dx}{(x^{2}+1)^{2}} = -\\frac{1}{2(x^{2}+1)} \\). So the integral is \\( \\frac12\\ln(x^{2} + 1) + \\frac{1}{2(x^{2}+1)} + C \\).",
+   "answer": "log(x^2 + 1)/2 + 1/(2*(x^2 + 1))",
+   "vars": "x"
+  },
+  {
+   "id": "p12",
+   "kp": "k1",
+   "type": "written",
+   "prompt": "A student tries to write \\( \\frac{x^{2}}{x^{2} - 1} = \\frac{A}{x-1} + \\frac{B}{x+1} \\). Show that this is impossible, explain why in terms of degrees, and then evaluate \\( \\int\\frac{x^{2}}{x^{2}-1}\\,dx \\) correctly.",
+   "why": "A sum of proper fractions is proper, so an improper function must first lose its polynomial part.",
+   "rubric": [
+    "Clears denominators: \\( x^{2} = A(x+1) + B(x-1) \\), and notes the right side has degree at most 1, so the \\( x^{2} \\) coefficients cannot match.",
+    "Explains that the right side of the proposed decomposition is proper while \\( \\frac{x^{2}}{x^{2}-1} \\) is improper (equal degrees).",
+    "Divides: \\( \\frac{x^{2}}{x^{2}-1} = 1 + \\frac{1}{x^{2}-1} = 1 + \\frac{1/2}{x-1} - \\frac{1/2}{x+1} \\).",
+    "Obtains \\( x + \\frac12\\ln\\left|\\frac{x-1}{x+1}\\right| + C \\)."
+   ],
+   "model": "Clearing denominators gives \\( x^{2} = A(x+1) + B(x-1) \\). The right side is a polynomial of degree at most 1, so its \\( x^{2} \\) coefficient is 0, while the left side has \\( x^{2} \\) coefficient 1: no constants work. In terms of degrees, \\( \\frac{A}{x-1} + \\frac{B}{x+1} = \\frac{(A+B)x + (A-B)}{x^{2}-1} \\) is proper, but \\( \\frac{x^{2}}{x^{2}-1} \\) is improper (degree 2 over degree 2), so it must first be divided. Since \\( x^{2} = 1\\cdot(x^{2}-1) + 1 \\), \\( \\frac{x^{2}}{x^{2}-1} = 1 + \\frac{1}{x^{2}-1} \\), and by cover-up \\( \\frac{1}{x^{2}-1} = \\frac{1/2}{x-1} - \\frac{1/2}{x+1} \\). Hence \\( \\int\\frac{x^{2}}{x^{2}-1}\\,dx = x + \\frac12\\ln|x-1| - \\frac12\\ln|x+1| + C = x + \\frac12\\ln\\left|\\frac{x-1}{x+1}\\right| + C \\)."
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k6",
+   "type": "antiderivative",
+   "prompt": "Compute \\( \\int\\frac{2x^{2} + 6x + 7}{(x+1)(x^{2} + 2x + 2)}\\,dx \\). Enter an antiderivative (use `abs` where an absolute value is needed).",
+   "why": "\\( x^{2} + 2x + 2 \\) has discriminant \\( -4 \\), so it is irreducible. Clearing denominators in \\( \\frac{A}{x+1} + \\frac{Bx + C}{x^{2}+2x+2} \\): \\( 2x^{2} + 6x + 7 = A(x^{2}+2x+2) + (Bx + C)(x+1) \\). \\( x = -1 \\): \\( 3 = A \\). \\( x^{2} \\): \\( 2 = A + B \\), \\( B = -1 \\). Constant: \\( 7 = 2A + C \\), \\( C = 1 \\). Then \\( \\frac{1 - x}{x^{2}+2x+2} = -\\frac12\\cdot\\frac{2x+2}{x^{2}+2x+2} + \\frac{2}{(x+1)^{2} + 1} \\). So \\[ \\int = 3\\ln|x+1| - \\frac12\\ln(x^{2} + 2x + 2) + 2\\arctan(x+1) + C. \\]",
+   "answer": "3*log(abs(x + 1)) - log(x^2 + 2*x + 2)/2 + 2*atan(x + 1)",
+   "vars": "x"
+  },
+  {
+   "id": "e2",
+   "kp": "k5",
+   "type": "number",
+   "prompt": "Evaluate \\( \\int_{1}^{2}\\frac{x + 2}{x^{2}(x + 1)}\\,dx \\) exactly.",
+   "why": "Form \\( \\frac{A}{x} + \\frac{B}{x^{2}} + \\frac{C}{x+1} \\): \\( x + 2 = Ax(x+1) + B(x+1) + Cx^{2} \\). \\( x = 0 \\): \\( B = 2 \\). \\( x = -1 \\): \\( C = 1 \\). \\( x^{2} \\): \\( 0 = A + C \\), \\( A = -1 \\). So \\[ \\int_{1}^{2}\\Big(-\\frac1x + \\frac{2}{x^{2}} + \\frac{1}{x+1}\\Big)dx = \\Big[-\\ln x - \\frac2x + \\ln(x+1)\\Big]_{1}^{2} = (-\\ln 2 - 1 + \\ln 3) - (-2 + \\ln 2) = 1 + \\ln\\frac34 \\approx 0.7123. \\]",
+   "answer": "1 + log(3/4)"
+  },
+  {
+   "id": "e3",
+   "kp": "k6",
+   "type": "antiderivative",
+   "prompt": "Compute \\( \\int\\frac{dx}{x^{3} + 1} \\). Enter an antiderivative (use `abs` where an absolute value is needed).",
+   "why": "\\( x^{3} + 1 = (x+1)(x^{2} - x + 1) \\), and \\( x^{2} - x + 1 \\) is irreducible (discriminant \\( -3 \\)). Cover-up at \\( x = -1 \\): \\( A = \\frac{1}{1 + 1 + 1} = \\frac13 \\). Then \\( 1 = \\tfrac13(x^{2} - x + 1) + (Bx + C)(x+1) \\): \\( x^{2} \\): \\( 0 = \\tfrac13 + B \\), \\( B = -\\tfrac13 \\); constant: \\( 1 = \\tfrac13 + C \\), \\( C = \\tfrac23 \\). Now \\( -\\tfrac13 x + \\tfrac23 = -\\tfrac16(2x - 1) + \\tfrac12 \\) and \\( x^{2} - x + 1 = (x - \\tfrac12)^{2} + \\tfrac34 \\). So \\[ \\int\\frac{dx}{x^{3}+1} = \\frac13\\ln|x+1| - \\frac16\\ln(x^{2} - x + 1) + \\frac{1}{\\sqrt3}\\arctan\\frac{2x - 1}{\\sqrt3} + C. \\]",
+   "answer": "log(abs(x + 1))/3 - log(x^2 - x + 1)/6 + atan((2*x - 1)/sqrt(3))/sqrt(3)",
+   "vars": "x"
+  },
+  {
+   "id": "e4",
+   "kp": "k7",
+   "type": "written",
+   "prompt": "(a) Explain why, in a partial fraction decomposition, the term for an irreducible quadratic factor must have a linear numerator \\( Bx + C \\) rather than a constant, and why the total number of unknown constants must equal the degree of the denominator. (b) Write the form (without solving) for \\( \\frac{3x^{2} - 1}{(x+2)^{2}(x^{2} + 2x + 3)} \\).",
+   "why": "The form is dictated by what a proper fraction over each factor can contain; counting unknowns against the degree of \\( Q \\) checks it.",
+   "rubric": [
+    "A proper fraction over a quadratic may have a numerator of degree up to 1, and a constant numerator is generally not enough (the resulting system is inconsistent).",
+    "Counting: after clearing denominators the right side is a polynomial of degree less than \\( \\deg Q \\), whose \\( \\deg Q \\) coefficients must match those of \\( P \\); this requires \\( \\deg Q \\) unknowns (and the theorem guarantees a unique solution).",
+    "Checks \\( x^{2} + 2x + 3 \\) is irreducible (discriminant \\( -8 \\)) and the function is proper (2 < 4).",
+    "Form: \\( \\frac{A}{x+2} + \\frac{B}{(x+2)^{2}} + \\frac{Cx + D}{x^{2}+2x+3} \\), 4 unknowns."
+   ],
+   "model": "(a) Each term of the decomposition is a proper fraction over a power of a factor of \\( Q \\). Over a quadratic, a proper fraction can have a numerator of degree 0 or 1, so the general term is \\( \\frac{Bx + C}{x^{2}+bx+c} \\); restricting to a constant numerator discards half of the possibilities, and then the equations for the constants are in general inconsistent. For the count: after multiplying by \\( Q \\), both sides are polynomials of degree less than \\( \\deg Q \\), so matching them means matching \\( \\deg Q \\) coefficients, which is a system of \\( \\deg Q \\) linear equations. The theorem says it has exactly one solution; that is possible only with \\( \\deg Q \\) unknowns, which is exactly what one unknown per linear power and two per quadratic power supply. (b) The numerator has degree 2 and the denominator degree 4, so the function is proper. \\( x^{2} + 2x + 3 \\) has discriminant \\( 4 - 12 = -8 < 0 \\), so it is irreducible. The form is \\[ \\frac{A}{x+2} + \\frac{B}{(x+2)^{2}} + \\frac{Cx + D}{x^{2}+2x+3}, \\] with 4 unknowns, equal to the degree of the denominator."
+  },
+  {
+   "id": "e5",
+   "kp": "k8",
+   "type": "antiderivative",
+   "prompt": "Compute \\( \\int\\frac{\\cos x}{\\sin^{2}x + \\sin x - 6}\\,dx \\). Enter an antiderivative in terms of \\( x \\) (use `abs` where needed).",
+   "why": "Put \\( u = \\sin x \\), \\( du = \\cos x\\,dx \\): \\( \\int\\frac{du}{u^{2} + u - 6} = \\int\\frac{du}{(u+3)(u-2)} \\). Cover-up: \\( \\frac15 \\) at \\( u = 2 \\), \\( -\\frac15 \\) at \\( u = -3 \\). So the integral is \\( \\frac15\\ln|u - 2| - \\frac15\\ln|u + 3| + C = \\frac15\\ln\\frac{2 - \\sin x}{\\sin x + 3} + C \\) (both quantities are positive because \\( |\\sin x| \\le 1 \\)).",
+   "answer": "(log(abs(sin(x) - 2)) - log(abs(sin(x) + 3)))/5",
+   "vars": "x"
+  },
+  {
+   "id": "e6",
+   "kp": "k9",
+   "type": "written",
+   "prompt": "A student writes \\( \\int_{0}^{3}\\frac{dx}{(x-1)(x-2)} = \\Big[\\ln\\left|\\frac{x-2}{x-1}\\right|\\Big]_{0}^{3} = \\ln\\frac12 - \\ln 2 = -2\\ln 2 \\). The antiderivative is correct. Identify precisely what is wrong with the evaluation, and state what the expression \\( \\int_{0}^{3}\\frac{dx}{(x-1)(x-2)} \\) would have to mean.",
+   "why": "The Fundamental Theorem of Calculus requires continuity of the integrand on the closed interval; a rational integrand fails this at every zero of its denominator.",
+   "rubric": [
+    "States that the evaluation uses the Fundamental Theorem of Calculus, which requires the integrand to be continuous on \\( [0, 3] \\).",
+    "Notes the integrand is undefined and unbounded at \\( x = 1 \\) and \\( x = 2 \\), both inside \\( [0, 3] \\), so the antiderivative is not valid across them (it is not even defined there).",
+    "Concludes the number \\( -2\\ln 2 \\) is meaningless as the value of the integral.",
+    "States that the expression must be interpreted as an improper integral, split at the singular points and defined by limits (and it diverges, since near each zero the integrand behaves like a multiple of \\( 1/(x-c) \\))."
+   ],
+   "model": "The step \\( \\int_{a}^{b} f = F(b) - F(a) \\) is the Fundamental Theorem of Calculus, which requires \\( f \\) to be continuous on \\( [a, b] \\) and \\( F \\) to be an antiderivative on the whole interval. Here the denominator vanishes at \\( x = 1 \\) and \\( x = 2 \\), both in \\( [0, 3] \\); the integrand is undefined and unbounded near those points, and \\( \\ln\\left|\\frac{x-2}{x-1}\\right| \\) is not defined at them, so it is not an antiderivative on \\( [0, 3] \\). The number \\( -2\\ln 2 \\) is therefore not the value of anything. The expression can only be given a meaning as an improper integral: split \\( [0, 3] \\) at \\( 1 \\) and \\( 2 \\) (and at an intermediate point between them) and define each piece as a limit. Near \\( x = 1 \\) the integrand behaves like \\( \\frac{-1}{x-1} \\), whose integral near 1 diverges, so the improper integral diverges."
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "Divide first",
+    "formula": "\\( \\frac{P}{Q} = S + \\frac{R}{Q} \\), \\( \\deg R < \\deg Q \\)",
+    "when": "\\( \\deg P \\ge \\deg Q \\).",
+    "example": "\\( \\frac{x^{2}+3}{x+1} = x - 1 + \\frac{4}{x+1} \\)",
+    "watch": "Decomposing an improper function gives an inconsistent system."
+   },
+   {
+    "name": "Irreducibility test",
+    "formula": "\\( ax^{2} + bx + c \\) irreducible \\( \\iff b^{2} - 4ac < 0 \\)",
+    "when": "Factoring the denominator.",
+    "example": "\\( x^{2} + 2x + 5 \\): \\( 4 - 20 < 0 \\)",
+    "watch": "\\( x^{2} - 4 \\) factors; \\( x^{4} + 4 \\) is a product of two quadratics."
+   },
+   {
+    "name": "Distinct linear factors",
+    "formula": "\\( \\frac{P}{(x-a_{1})\\cdots(x-a_{n})} = \\sum\\frac{A_{i}}{x-a_{i}} \\)",
+    "when": "Denominator splits into distinct linear factors.",
+    "example": "\\( \\frac{x+7}{(x-3)(x+2)} = \\frac{2}{x-3} - \\frac{1}{x+2} \\)",
+    "watch": "Keep the absolute values in \\( \\ln|x - a| \\)."
+   },
+   {
+    "name": "Cover-up",
+    "formula": "\\( A = \\left.\\frac{P(x)}{Q(x)/(x-a)}\\right|_{x=a} \\)",
+    "when": "Nonrepeated linear factor, or the highest power of a repeated one.",
+    "example": "\\( \\frac{4x^{2}-3x-4}{x(x-1)(x+2)} \\): \\( A = \\frac{-4}{(-1)(2)} = 2 \\)",
+    "watch": "Does not give the lower-power coefficients of a repeated factor."
+   },
+   {
+    "name": "Repeated linear factor",
+    "formula": "\\( (x-a)^{k} \\to \\frac{A_{1}}{x-a} + \\cdots + \\frac{A_{k}}{(x-a)^{k}} \\)",
+    "when": "A linear factor appears to a power.",
+    "example": "\\( \\frac{x^{2}+2x+3}{x(x-1)^{2}} = \\frac3x - \\frac{2}{x-1} + \\frac{6}{(x-1)^{2}} \\)",
+    "watch": "\\( \\int\\frac{dx}{(x-a)^{k}} \\) is a power for \\( k \\ge 2 \\), not a logarithm."
+   },
+   {
+    "name": "Irreducible quadratic factor",
+    "formula": "\\( \\frac{Bx + C}{x^{2}+bx+c} = \\frac{B}{2}\\cdot\\frac{2x+b}{x^{2}+bx+c} + \\frac{C - Bb/2}{(x+\\frac b2)^{2} + k^{2}} \\)",
+    "when": "The denominator has an irreducible quadratic factor.",
+    "example": "\\( \\int\\frac{x+3}{x^{2}+2x+5}dx = \\frac12\\ln(x^{2}+2x+5) + \\arctan\\frac{x+1}{2} + C \\)",
+    "watch": "The numerator must be linear; the logarithm needs no absolute value."
+   },
+   {
+    "name": "Count the unknowns",
+    "formula": "number of constants \\( = \\deg Q \\)",
+    "when": "Checking any set-up.",
+    "example": "\\( (x-2)^{3}(x^{2}+x+3)^{2} \\): 3 + 4 = 7 constants",
+    "watch": "Fewer unknowns means a missing term."
+   },
+   {
+    "name": "Repeated quadratic",
+    "formula": "\\( \\int\\frac{dx}{(x^{2}+1)^{2}} = \\frac12\\Big(\\arctan x + \\frac{x}{x^{2}+1}\\Big) + C \\)",
+    "when": "A squared irreducible quadratic remains after decomposing.",
+    "example": "Via \\( x = \\tan\\theta \\): \\( \\int\\cos^{2}\\theta\\,d\\theta \\)",
+    "watch": "Split \\( Bx + C \\) first; the \\( x \\) part is a plain substitution."
+   },
+   {
+    "name": "Rationalizing substitution",
+    "formula": "\\( u = \\sqrt[n]{ax+b} \\), \\( u = e^{x} \\), \\( u = \\sin x \\)",
+    "when": "The integrand is a rational function of a root, an exponential, or a sine times cosine.",
+    "example": "\\( \\int\\frac{dx}{e^{x}+1} = x - \\ln(e^{x}+1) + C \\)",
+    "watch": "Convert \\( dx \\) and return to \\( x \\) at the end."
+   },
+   {
+    "name": "Definite integrals",
+    "formula": "\\( \\int_{a}^{b}\\frac{P}{Q}dx = F(b) - F(a) \\) only if \\( Q \\ne 0 \\) on \\( [a, b] \\)",
+    "when": "Limits are given.",
+    "example": "\\( \\int_{0}^{1}\\frac{dx}{x^{2}+3x+2} = \\ln\\frac43 \\)",
+    "watch": "A zero of Q in the interval makes the integral improper."
+   }
+  ],
+  "stuck": [
+   "Check first whether the numerator is a multiple of the derivative of the denominator; then a plain substitution gives a logarithm.",
+   "Compare degrees. If the numerator's degree is not smaller, divide before anything else.",
+   "Factor the denominator completely, testing every quadratic with its discriminant; cancel any factor common to numerator and denominator.",
+   "Count the unknowns in your form. If they do not equal the degree of the denominator, a term is missing.",
+   "If the system for the constants is inconsistent, the form is wrong, not the arithmetic: look for a missing power or a constant numerator over a quadratic.",
+   "Recombine your decomposition over the common denominator, or differentiate your answer, to check it."
+  ]
+ }
+}

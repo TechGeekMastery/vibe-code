@@ -1,0 +1,834 @@
+{
+ "key": "phy-0-8",
+ "title": "Rotational kinematics and torque",
+ "v": 1,
+ "scope": "Fixed-axis rotation of a rigid body: angular position, velocity and acceleration (with vector direction), the constant-angular-acceleration equations, relations between angular and linear quantities, rotational kinetic energy and the moment of inertia (sums, integrals, parallel-axis theorem), torque as a cross product, the torque of gravity, and static equilibrium; the rotational second law \\( \\tau = I\\alpha \\), rotational work, rolling and angular momentum belong to Rotational dynamics and angular momentum.",
+ "sources": [
+  {
+   "title": "OpenStax University Physics Volume 1, 10.1 Rotational Variables",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/10-1-rotational-variables"
+  },
+  {
+   "title": "OpenStax University Physics Volume 1, 10.3 Relating Angular and Translational Quantities",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/10-3-relating-angular-and-translational-quantities"
+  },
+  {
+   "title": "OpenStax University Physics Volume 1, 10.5 Calculating Moments of Inertia",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/10-5-calculating-moments-of-inertia"
+  },
+  {
+   "title": "OpenStax University Physics Volume 1, 10.6 Torque",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/10-6-torque"
+  },
+  {
+   "title": "OpenStax University Physics Volume 1, 12.1 Conditions for Static Equilibrium",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/12-1-conditions-for-static-equilibrium"
+  },
+  {
+   "title": "MIT 8.01SC Classical Mechanics, Chapter 16: Two Dimensional Rotational Kinematics",
+   "url": "https://ocw.mit.edu/courses/8-01sc-classical-mechanics-fall-2016/mit8_01scs22_chapter16.pdf"
+  }
+ ],
+ "pre": [
+  "phy-0-0",
+  "phy-0-2",
+  "phy-0-4",
+  "phy-0-5",
+  "phy-0-7"
+ ],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Rigid body, fixed axis, radian measure",
+   "d": "Describe fixed-axis rotation of a rigid body by one angle in radians and use \\( s = r\\theta \\).",
+   "type": "concept"
+  },
+  {
+   "id": "k2",
+   "t": "Angular velocity and acceleration",
+   "d": "Compute \\( \\omega = d\\theta/dt \\) and \\( \\alpha = d\\omega/dt \\), give their direction by the right-hand rule, and decide whether a body speeds up or slows down.",
+   "type": "procedure"
+  },
+  {
+   "id": "k3",
+   "t": "Constant and variable angular acceleration",
+   "d": "Derive and apply the constant-\\( \\alpha \\) equations, and integrate when \\( \\alpha \\) varies.",
+   "type": "procedure"
+  },
+  {
+   "id": "k4",
+   "t": "Linking angular and linear quantities",
+   "d": "Use \\( v = r\\omega \\), \\( a_t = r\\alpha \\), \\( a_c = r\\omega^2 \\) for points of a rotating body, including belt and gear coupling.",
+   "type": "procedure"
+  },
+  {
+   "id": "k5",
+   "t": "Rotational kinetic energy and moment of inertia",
+   "d": "Derive \\( K = \\tfrac12 I\\omega^2 \\) with \\( I = \\sum m_ir_i^2 \\), and explain why \\( I \\) depends on the axis.",
+   "type": "concept"
+  },
+  {
+   "id": "k6",
+   "t": "Moment of inertia by integration",
+   "d": "Compute \\( I = \\int r_\\perp^2\\,dm \\) for rods, hoops, disks and non-uniform bodies by choosing suitable mass elements.",
+   "type": "procedure"
+  },
+  {
+   "id": "k7",
+   "t": "Parallel-axis theorem",
+   "d": "State, prove and apply \\( I = I_{\\text{cm}} + Md^2 \\), including its hypothesis that one axis passes through the center of mass.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k8",
+   "t": "Torque as a cross product",
+   "d": "Compute \\( \\vec\\tau = \\vec r\\times\\vec F \\), its magnitude by lever arm or perpendicular component, and its sign about a fixed axis.",
+   "type": "concept"
+  },
+  {
+   "id": "k9",
+   "t": "Torque of gravity on extended bodies",
+   "d": "Show that in a uniform field the weight acts, for torques, at the center of mass, and use this in torque sums.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k10",
+   "t": "Static equilibrium of a rigid body",
+   "d": "Justify the force and torque conditions, choose a convenient torque point, and solve beam, hinge and ladder problems.",
+   "type": "skill"
+  }
+ ],
+ "intro": "Up to now a body has been treated as a particle, whose motion is the motion of a single point. A wheel, a door or a turbine rotor does not fit that description. Different points of a spinning wheel have different velocities, and a wheel can spin rapidly while its center stays where it is, so the velocity of any one point says little about the motion as a whole. Rotation needs a description of its own.\n\nFor a rigid body turning about a fixed axis, a single angle specifies the configuration, and its derivatives play the roles that position, velocity and acceleration played in one-dimensional kinematics. This topic builds that description, connects it to the linear motion of individual points, and uses it to express the kinetic energy of a rotating body, which introduces the **moment of inertia**. It then asks what makes rotation start or stop. The answer is not force alone but **torque**, and the balance of torques, together with the balance of forces, decides when an extended body stays at rest.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "Angular position, velocity and acceleration",
+   "kps": [
+    "k1",
+    "k2"
+   ],
+   "md": "This section sets up the variables that describe the rotation of a rigid body about a fixed axis, in exact parallel with the position, velocity and acceleration of one-dimensional kinematics.\n\nA **rigid body** is an idealized body in which the distance between every pair of its points is fixed: it does not stretch, bend or compress. In **fixed-axis rotation** the body turns about a line, the **axis of rotation**, that does not move. Every point of the body then moves on a circle centered on the axis and lying in a plane perpendicular to it, and all points turn through the same angle in the same time. So one number describes the configuration: the angle \\( \\theta \\) between a reference line fixed in the body (perpendicular to the axis) and a reference direction fixed in space. With the \\( z \\)-axis along the rotation axis, the convention is that \\( \\theta \\) increases counterclockwise as seen looking down from the \\( +z \\) side.\n\n> **Definition.** The **angular position** \\( \\theta \\) is measured in **radians**: if a point at distance \\( r \\) from the axis travels along an arc of length \\( s \\), the angle it sweeps is \\( \\theta = s/r \\).\n\nThe radian is a ratio of two lengths and is therefore dimensionless; one revolution is \\( 2\\pi \\) rad. The relation \\( s = r\\theta \\) holds only when \\( \\theta \\) is in radians, and so does every rotational formula below that is derived from it.\n\n> **Definitions.** The **angular displacement** over an interval is \\( \\Delta\\theta = \\theta_f - \\theta_i \\). The **angular velocity** is \\( \\omega = \\dfrac{d\\theta}{dt} \\) (rad/s), and the **angular acceleration** is \\( \\alpha = \\dfrac{d\\omega}{dt} = \\dfrac{d^2\\theta}{dt^2} \\) (rad/s²).\n\nBecause every point of a rigid body turns through the same angle, \\( \\omega \\) and \\( \\alpha \\) belong to the body as a whole, not to any particular point. Engineering data are often quoted in revolutions per minute: \\( 1 \\text{ rpm} = 2\\pi/60 \\text{ rad/s} \\approx 0.105 \\text{ rad/s} \\).\n\n**Direction.** For a fixed axis a signed \\( \\omega \\) is enough, but it is the \\( z \\)-component of a vector. The **angular velocity vector** \\( \\vec\\omega \\) points along the axis, in the sense given by the **right-hand rule**: curl the fingers of the right hand in the sense of rotation, and the thumb points along \\( \\vec\\omega \\). Counterclockwise rotation seen from \\( +z \\) has \\( \\vec\\omega \\) along \\( +z \\), so \\( \\omega_z = d\\theta/dt > 0 \\). For a fixed axis, \\( \\vec\\alpha = d\\vec\\omega/dt \\) also lies along the axis. The body speeds up when \\( \\omega_z \\) and \\( \\alpha_z \\) have the same sign and slows down when they have opposite signs, exactly as with \\( v \\) and \\( a \\) in one dimension.\n\n*Worked example.* A flywheel's angular position is \\( \\theta(t) = (4.0\\ \\text{rad/s})\\,t - (0.50\\ \\text{rad/s}^3)\\,t^3 \\) for \\( t \\ge 0 \\). Differentiating,\n\\[ \\omega(t) = 4.0 - 1.5t^2 \\ \\text{rad/s}, \\qquad \\alpha(t) = -3.0t \\ \\text{rad/s}^2. \\]\nAt \\( t = 1.0 \\) s, \\( \\omega = 2.5 \\) rad/s and \\( \\alpha = -3.0 \\) rad/s²: opposite signs, so the flywheel is slowing down. It stops momentarily when \\( 1.5t^2 = 4.0 \\), at \\( t = 1.63 \\) s, having turned through \\( \\theta = 4.0(1.63) - 0.50(1.63)^3 = 4.35 \\) rad, about 0.69 revolution. For \\( t > 1.63 \\) s, \\( \\omega \\) and \\( \\alpha \\) are both negative, and the flywheel speeds up in the clockwise sense.\n\n```plot\nx: 0, 2.5\ny: -6, 6\nf: 4*x - 0.5*x^3 | θ(t) in rad\nf: 4 - 1.5*x^2 | ω(t) in rad/s\nhline: 0\n```\n\nThe slope of the \\( \\theta \\) curve at each instant is \\( \\omega \\), so the maximum of \\( \\theta \\) occurs exactly where the \\( \\omega \\) curve crosses zero.\n\n**Common mistakes.** Using degrees or revolutions in \\( s = r\\theta \\) or in any formula derived from it; reading a negative \\( \\alpha \\) as \"slowing down\" without comparing it with the sign of \\( \\omega \\); and speaking of different angular velocities for different points of one rigid body, when only their linear velocities differ.",
+   "questions": [
+    {
+     "id": "s1q1",
+     "kp": "k2",
+     "type": "number",
+     "prompt": "The angular position of a rotor is \\( \\theta(t) = (0.60\\ \\text{rad/s}^2)\\,t^2 + (0.10\\ \\text{rad/s}^3)\\,t^3 \\). Find its angular acceleration (in rad/s²) at \\( t = 2.0 \\) s.",
+     "answer": "2*0.6 + 6*0.1*2",
+     "tol": 0.01,
+     "why": "\\( \\omega = d\\theta/dt = 1.2t + 0.30t^2 \\) rad/s and \\( \\alpha = d\\omega/dt = 1.2 + 0.60t \\) rad/s². At \\( t = 2.0 \\) s, \\( \\alpha = 1.2 + 1.2 = 2.4 \\) rad/s². The angular acceleration is not constant, so it must be evaluated at the instant asked."
+    },
+    {
+     "id": "s1q2",
+     "kp": "k2",
+     "type": "mcq",
+     "prompt": "A wheel turns about the \\( z \\)-axis. At some instant \\( \\omega_z = -4.0 \\) rad/s and \\( \\alpha_z = +2.0 \\) rad/s². Which statement is correct?",
+     "options": [
+      "It is turning clockwise (seen from \\( +z \\)) and slowing down",
+      "It is turning clockwise and speeding up, because \\( \\alpha_z \\) is positive",
+      "It is turning counterclockwise and slowing down",
+      "It is turning counterclockwise and speeding up, because the sense of rotation follows the angular acceleration"
+     ],
+     "answer": 0,
+     "why": "The sign of \\( \\omega_z \\) gives the sense of rotation: negative means clockwise seen from \\( +z \\). Whether the wheel speeds up depends on the relative signs of \\( \\omega_z \\) and \\( \\alpha_z \\); here they are opposite, so \\( |\\omega| \\) is decreasing. In 1.0 s the wheel will have \\( \\omega_z = -2.0 \\) rad/s, and in 2.0 s it will be momentarily at rest. The sign of \\( \\alpha \\) alone says nothing about speeding up, and the sense of rotation is set by \\( \\omega \\), not by \\( \\alpha \\)."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "Rotation with constant angular acceleration",
+   "kps": [
+    "k3"
+   ],
+   "md": "Many rotating machines speed up or slow down at a nearly constant rate. This section obtains the equations of motion for that case and shows how to proceed when the angular acceleration varies.\n\nBecause \\( \\theta \\), \\( \\omega \\) and \\( \\alpha \\) are related by the same derivatives as \\( x \\), \\( v \\) and \\( a \\), every result of one-dimensional kinematics carries over under the substitution \\( x \\to \\theta \\), \\( v \\to \\omega \\), \\( a \\to \\alpha \\). It is worth seeing the derivation once rather than translating blindly. Suppose \\( \\alpha \\) is constant and that at \\( t = 0 \\) the body has \\( \\theta = \\theta_0 \\) and \\( \\omega = \\omega_0 \\). Integrating \\( d\\omega/dt = \\alpha \\) from 0 to \\( t \\),\n\\[ \\omega(t) = \\omega_0 + \\alpha t. \\]\nIntegrating \\( d\\theta/dt = \\omega_0 + \\alpha t \\),\n\\[ \\theta(t) = \\theta_0 + \\omega_0 t + \\tfrac12\\alpha t^2. \\]\nSolving the first equation for \\( t \\) and substituting into the second eliminates the time:\n\\[ \\omega^2 = \\omega_0^2 + 2\\alpha(\\theta - \\theta_0). \\]\nFinally, since \\( \\omega \\) is linear in \\( t \\), its average over the interval is the mean of its endpoint values, so\n\\[ \\theta - \\theta_0 = \\tfrac12(\\omega_0 + \\omega)\\,t. \\]\nEach equation omits one of the four quantities \\( t \\), \\( \\omega \\), \\( \\alpha \\), \\( \\theta - \\theta_0 \\) (the first omits \\( \\theta - \\theta_0 \\), the second \\( \\omega \\), the third \\( t \\), the fourth \\( \\alpha \\)), so the right choice is the equation lacking the quantity that is neither given nor wanted.\n\n*Worked example.* A grinding wheel turning at 1800 rpm is switched off and coasts uniformly to rest in 12.0 s. First convert: \\( \\omega_0 = 1800 \\times 2\\pi/60 = 188.5 \\) rad/s. Then\n\\[ \\alpha = \\frac{0 - 188.5}{12.0} = -15.7 \\text{ rad/s}^2, \\qquad \\Delta\\theta = \\tfrac12(188.5 + 0)(12.0) = 1131 \\text{ rad} = 180 \\text{ rev}. \\]\nA check that avoids radians: 1800 rpm is 30 rev/s, the average rate during a uniform slowdown is 15 rev/s, and \\( 15 \\times 12.0 = 180 \\) rev. The time-free equation agrees: \\( 188.5^2 + 2(-15.7)(1131) \\approx 0 \\) to rounding.\n\n**When \\( \\alpha \\) varies,** the equations above are false and you must integrate directly, as in linear kinematics:\n\\[ \\omega(t) = \\omega_0 + \\int_0^t \\alpha(t')\\,dt', \\qquad \\theta(t) = \\theta_0 + \\int_0^t \\omega(t')\\,dt'. \\]\nGraphically, \\( \\Delta\\omega \\) is the area under the \\( \\alpha(t) \\) curve and \\( \\Delta\\theta \\) is the area under the \\( \\omega(t) \\) curve.\n\n*Worked example.* A motor starting from rest at \\( \\theta = 0 \\) produces \\( \\alpha(t) = (6.0\\ \\text{rad/s}^3)\\,t \\). Integrating once, \\( \\omega = 3.0t^2 \\) rad/s; integrating again, \\( \\theta = 1.0t^3 \\) rad. At \\( t = 2.0 \\) s, \\( \\omega = 12 \\) rad/s and \\( \\theta = 8.0 \\) rad. Misusing \\( \\theta = \\tfrac12\\alpha t^2 \\) with the final value \\( \\alpha = 12 \\) rad/s² would give 24 rad, three times too large; even with the time-averaged value, 6.0 rad/s², it would give 12 rad instead of 8.0 rad. The error arises because \\( \\theta \\) depends on how \\( \\alpha \\) is distributed in time, not only on its average.\n\n**Common mistakes.** Substituting rpm or rev/s into equations whose other quantities are in radians; using the constant-\\( \\alpha \\) equations when \\( \\alpha \\) depends on time; and dropping signs in a slowdown, where \\( \\alpha \\) must be negative if \\( \\omega_0 > 0 \\).",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k3",
+     "type": "number",
+     "prompt": "A centrifuge accelerates uniformly from rest to 3000 rpm in 20.0 s. How many revolutions does it make in that time? (Answer as a number of revolutions.)",
+     "answer": "0.5*(3000/60)*20",
+     "tol": 0.01,
+     "why": "Constant \\( \\alpha \\), so the average rate is the mean of the initial and final rates: \\( \\tfrac12(0 + 50 \\text{ rev/s}) = 25 \\) rev/s, since 3000 rpm is 50 rev/s. Over 20.0 s: \\( 25 \\times 20.0 = 500 \\) rev. In radians: \\( \\Delta\\theta = \\tfrac12(0 + 314.2)(20.0) = 3142 \\) rad \\( = 500 \\) rev."
+    },
+    {
+     "id": "s2q2",
+     "kp": "k3",
+     "type": "expression",
+     "prompt": "A wheel starts from rest at \\( \\theta = 0 \\) at \\( t = 0 \\) and has angular acceleration \\( \\alpha(t) = bt \\), where \\( b \\) is a positive constant. Find \\( \\theta(t) \\). Enter it in terms of `b` and `t`.",
+     "answer": "b*t^3/6",
+     "vars": "b, t",
+     "why": "The constant-\\( \\alpha \\) equations do not apply. Integrate: \\( \\omega(t) = \\int_0^t bt'\\,dt' = \\tfrac12bt^2 \\), then \\( \\theta(t) = \\int_0^t \\tfrac12bt'^2\\,dt' = \\tfrac16bt^3 \\)."
+    },
+    {
+     "id": "s2q3",
+     "kp": "k3",
+     "type": "number",
+     "prompt": "A fan turning at 12.0 rad/s is switched off and slows with a constant angular acceleration of magnitude 2.0 rad/s². Through what angle (in rad) does it turn before stopping?",
+     "answer": "12^2/(2*2)",
+     "tol": 0.01,
+     "why": "Time is neither given nor wanted, so use \\( \\omega^2 = \\omega_0^2 + 2\\alpha\\Delta\\theta \\) with \\( \\alpha = -2.0 \\) rad/s²: \\( 0 = 144 - 4.0\\,\\Delta\\theta \\), so \\( \\Delta\\theta = 36 \\) rad, about 5.7 revolutions."
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "Angular and linear quantities for points of a rotating body",
+   "kps": [
+    "k4"
+   ],
+   "md": "The angular variables describe the body as a whole. For many purposes, from the speed of a belt to the stress in a rotor, you need the velocity and acceleration of a particular point. This section relates the two descriptions.\n\nTake a point of the body at perpendicular distance \\( r \\) from the axis. It moves on a circle of radius \\( r \\), and the arc length it has traveled from the reference position is \\( s = r\\theta \\) (radians). Since \\( r \\) is constant for a rigid body, differentiating gives the **tangential speed** and the **tangential acceleration**:\n\\[ v = \\frac{ds}{dt} = r\\omega, \\qquad a_t = \\frac{dv}{dt} = r\\alpha. \\]\nThese are signed components along the direction of increasing \\( \\theta \\); for the speed use \\( |\\omega| \\). The velocity is tangent to the circle. But the point also accelerates toward the axis, because its velocity keeps changing direction. From the analysis of circular motion, this **centripetal (radial) acceleration** has magnitude\n\\[ a_c = \\frac{v^2}{r} = r\\omega^2. \\]\nThe total acceleration is the vector sum of these two perpendicular components, so\n\\[ a = \\sqrt{a_t^2 + a_c^2} = r\\sqrt{\\alpha^2 + \\omega^4}. \\]\nThe two components have different origins. The tangential part exists only while the rotation rate changes; the centripetal part exists whenever the body turns, even at constant \\( \\omega \\). All points share \\( \\omega \\) and \\( \\alpha \\), but \\( v \\), \\( a_t \\) and \\( a_c \\) all grow in proportion to \\( r \\): the rim of a wheel moves faster than points near the hub.\n\nIn vector form, with the origin at the center of the point's circle, \\( \\vec v = \\vec\\omega\\times\\vec r \\). Since \\( \\vec\\omega \\) is perpendicular to \\( \\vec r \\), this has magnitude \\( \\omega r \\) and points along the tangent in the sense of rotation, in agreement with the scalar result.\n\n*Worked example.* A wheel of radius 0.30 m starts from rest with constant \\( \\alpha = 2.0 \\) rad/s². At \\( t = 3.0 \\) s, \\( \\omega = \\alpha t = 6.0 \\) rad/s. For a point on the rim,\n\\[ v = (0.30)(6.0) = 1.8 \\text{ m/s}, \\quad a_t = (0.30)(2.0) = 0.60 \\text{ m/s}^2, \\quad a_c = (0.30)(6.0)^2 = 10.8 \\text{ m/s}^2, \\]\nso \\( a = \\sqrt{0.60^2 + 10.8^2} = 10.8 \\) m/s², directed \\( \\arctan(0.60/10.8) = 3.2^\\circ \\) away from the inward radius, toward the direction of motion. After only 3 s the centripetal part dominates, because it grows as \\( \\omega^2 \\) while \\( a_t \\) stays fixed.\n\n*Coupled rotations.* When two wheels are joined by a belt or chain that does not slip, or mesh as gears, their rim points move with a common linear speed. Hence\n\\[ r_1\\omega_1 = r_2\\omega_2, \\]\nand the smaller wheel turns faster. A bicycle chain linking a chainring of radius 10.0 cm to a rear sprocket of radius 4.0 cm makes the rear wheel turn \\( 10.0/4.0 = 2.5 \\) times as fast as the pedals.\n\n**Common mistakes.** Forgetting the centripetal component (a point on a wheel turning at constant \\( \\omega \\) is accelerating); measuring \\( r \\) to some point instead of perpendicularly to the axis; and assuming that belt-coupled wheels share \\( \\omega \\) rather than rim speed.",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k4",
+     "type": "number",
+     "prompt": "A disk of radius 0.25 m has, at some instant, \\( \\omega = 4.0 \\) rad/s and \\( \\alpha = 12 \\) rad/s². What is the magnitude of the acceleration (in m/s²) of a point on its rim at that instant?",
+     "answer": "sqrt((0.25*12)^2 + (0.25*16)^2)",
+     "tol": 0.01,
+     "why": "\\( a_t = r\\alpha = (0.25)(12) = 3.0 \\) m/s² and \\( a_c = r\\omega^2 = (0.25)(16) = 4.0 \\) m/s². They are perpendicular, so \\( a = \\sqrt{3.0^2 + 4.0^2} = 5.0 \\) m/s²."
+    },
+    {
+     "id": "s3q2",
+     "kp": "k4",
+     "type": "number",
+     "prompt": "A motor pulley of radius 2.0 cm turns at 1500 rpm and drives, by a belt that does not slip, a pulley of radius 12.0 cm. What is the angular speed of the larger pulley, in rad/s?",
+     "answer": "1500*2*pi/60*2/12",
+     "tol": 0.01,
+     "why": "The belt gives both rims the same linear speed: \\( r_1\\omega_1 = r_2\\omega_2 \\). \\( \\omega_1 = 1500 \\times 2\\pi/60 = 157.1 \\) rad/s, so \\( \\omega_2 = (2.0/12.0)(157.1) = 26.2 \\) rad/s (250 rpm)."
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "Rotational kinetic energy and the moment of inertia",
+   "kps": [
+    "k5"
+   ],
+   "md": "A rotating body has kinetic energy even when its center of mass is at rest: every particle of a spinning flywheel is moving. This section expresses that energy through the angular velocity and, in doing so, identifies the quantity that plays the role of mass in rotation.\n\nTreat the body as a collection of particles of masses \\( m_i \\) at perpendicular distances \\( r_i \\) from the axis. Each moves with speed \\( v_i = r_i\\omega \\), with the same \\( \\omega \\) for all. The total kinetic energy is\n\\[ K = \\sum_i \\tfrac12 m_iv_i^2 = \\sum_i \\tfrac12 m_ir_i^2\\omega^2 = \\tfrac12\\Big(\\sum_i m_ir_i^2\\Big)\\omega^2. \\]\nThe sum in parentheses depends only on how the mass is arranged relative to the axis.\n\n> **Definition.** The **moment of inertia** (rotational inertia) of a system about a given axis is \\( I = \\sum_i m_ir_i^2 \\), where \\( r_i \\) is the perpendicular distance of particle \\( i \\) from the axis. Its SI unit is kg·m².\n\nWith this definition, the **rotational kinetic energy** of a body turning about a fixed axis is\n\\[ K = \\tfrac12 I\\omega^2, \\]\nthe analogue of \\( \\tfrac12Mv^2 \\), with \\( I \\) in place of the mass and \\( \\omega \\) (in rad/s) in place of the speed. It is not a new kind of energy: it is the ordinary kinetic energy of the particles, written in terms of the one variable they share. The next chapter shows that the same \\( I \\) measures a body's resistance to angular acceleration, which is why it is called an inertia.\n\nThree features of \\( I \\) matter in every problem.\n- **It depends on the axis.** Mass is a property of a body; moment of inertia is a property of a body together with an axis. The same body has different moments of inertia about different axes.\n- **Distance counts quadratically.** Mass twice as far from the axis contributes four times as much. For a given total mass, \\( I \\) is largest when the mass is concentrated far from the axis, which is why flywheels are built with heavy rims.\n- **Mass on the axis contributes nothing,** since its \\( r_i = 0 \\).\n\n*Worked example 1.* Two 2.0 kg spheres, small enough to treat as particles, are fixed to the ends of a light rod 1.0 m long. About a perpendicular axis through the midpoint, each sphere is 0.50 m from the axis:\n\\[ I_{\\text{mid}} = 2(2.0)(0.50)^2 = 1.0 \\text{ kg·m}^2. \\]\nAbout a parallel axis through one sphere, that sphere contributes nothing and the other is 1.0 m away: \\( I_{\\text{end}} = (2.0)(1.0)^2 = 2.0 \\) kg·m². Spinning at 3.0 rad/s, the system has \\( K = \\tfrac12(1.0)(3.0)^2 = 4.5 \\) J about the midpoint and \\( \\tfrac12(2.0)(3.0)^2 = 9.0 \\) J about the end. The same body at the same \\( \\omega \\) has twice the kinetic energy, because its particles now move faster on average. About the rod's own long axis both spheres lie on the axis, and \\( I \\) is zero in the particle idealization.\n\n*Worked example 2.* A flywheel with \\( I = 0.80 \\) kg·m² spins at 3000 rpm, that is \\( 314.2 \\) rad/s. Its kinetic energy is \\( \\tfrac12(0.80)(314.2)^2 = 3.95\\times10^4 \\) J. Slowing it to 1500 rpm releases three quarters of this energy, since \\( K \\propto \\omega^2 \\).\n\n**Common mistakes.** Measuring \\( r_i \\) from a point (the origin) instead of perpendicularly from the axis: for a particle at \\( (x, y, z) \\) and rotation about the \\( z \\)-axis, \\( r_i^2 = x^2 + y^2 \\), not \\( x^2 + y^2 + z^2 \\). Using rpm in \\( \\tfrac12I\\omega^2 \\). Quoting \"the\" moment of inertia of a body without naming the axis.",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k5",
+     "type": "number",
+     "prompt": "Three particles form a rigid system: 1.0 kg at \\( (0.20, 0, 0) \\) m, 2.0 kg at \\( (0, 0.30, 0.40) \\) m and 3.0 kg at \\( (0.10, 0.10, 0.50) \\) m. Find the moment of inertia (in kg·m²) about the \\( z \\)-axis.",
+     "answer": "1*0.2^2 + 2*0.3^2 + 3*(0.1^2 + 0.1^2)",
+     "tol": 0.01,
+     "why": "The perpendicular distance from the \\( z \\)-axis satisfies \\( r^2 = x^2 + y^2 \\); the \\( z \\)-coordinates are irrelevant. \\( I = (1.0)(0.040) + (2.0)(0.090) + (3.0)(0.010 + 0.010) = 0.040 + 0.180 + 0.060 = 0.280 \\) kg·m². Using \\( x^2 + y^2 + z^2 \\) would wrongly give 1.35 kg·m²."
+    },
+    {
+     "id": "s4q2",
+     "kp": "k5",
+     "type": "written",
+     "prompt": "A student says: \\\"The moment of inertia of a rigid body, like its mass, is a fixed property of the body.\\\" Starting from the kinetic energy of the particles of a rotating body, derive \\( K = \\tfrac12I\\omega^2 \\), and use the derivation to explain precisely why the student is wrong. Give a concrete example.",
+     "rubric": [
+      "Writes \\( K = \\sum\\tfrac12m_iv_i^2 \\) with \\( v_i = r_i\\omega \\), the same \\( \\omega \\) for every particle.",
+      "Factors out \\( \\omega^2 \\) to get \\( K = \\tfrac12(\\sum m_ir_i^2)\\omega^2 \\) and identifies \\( I = \\sum m_ir_i^2 \\).",
+      "Notes that \\( r_i \\) is the perpendicular distance to the chosen axis, so \\( I \\) depends on the axis (and the mass distribution about it), unlike mass.",
+      "Gives a correct example, e.g. a uniform rod: \\( \\tfrac1{12}ML^2 \\) about its center versus \\( \\tfrac13ML^2 \\) about an end, or a dumbbell about its midpoint versus an end."
+     ],
+     "model": "Each particle of mass \\( m_i \\) at perpendicular distance \\( r_i \\) from the axis moves on a circle with speed \\( v_i = r_i\\omega \\), where \\( \\omega \\) is common to the whole rigid body. The kinetic energy is \\( K = \\sum\\tfrac12m_iv_i^2 = \\tfrac12\\left(\\sum m_ir_i^2\\right)\\omega^2 = \\tfrac12I\\omega^2 \\). The quantity \\( I = \\sum m_ir_i^2 \\) is built from the distances \\( r_i \\) to a particular axis. Changing the axis changes those distances and therefore changes \\( I \\), while the total mass \\( \\sum m_i \\) stays the same. So \\( I \\) is a property of the body together with an axis, not of the body alone. Example: two 2.0 kg particles on a light 1.0 m rod have \\( I = 1.0 \\) kg·m² about the midpoint but \\( 2.0 \\) kg·m² about an axis through one particle.",
+     "why": "Mass answers \\\"how much matter\\\"; moment of inertia answers \\\"how much matter, and how far from this axis\\\"."
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "Moments of inertia by integration and the parallel-axis theorem",
+   "kps": [
+    "k6",
+    "k7"
+   ],
+   "md": "Real bodies are continuous, so the sum \\( \\sum m_ir_i^2 \\) becomes an integral. This section computes the standard moments of inertia and then proves a theorem that gives the moment of inertia about any axis once it is known about a parallel axis through the center of mass.\n\n> **Definition (continuous body).** \\( I = \\displaystyle\\int r_\\perp^2\\,dm \\), where \\( r_\\perp \\) is the perpendicular distance of the mass element \\( dm \\) from the axis.\n\nThe method is always the same: choose mass elements all of whose points are at the same distance from the axis, express \\( dm \\) through a density and a coordinate, and integrate over the body.\n\n*Thin uniform rod* of mass \\( M \\) and length \\( L \\), with linear mass density \\( \\lambda = M/L \\) and axis perpendicular to the rod. With \\( x \\) measured along the rod from the axis, \\( dm = \\lambda\\,dx \\). About the center,\n\\[ I_{\\text{cm}} = \\int_{-L/2}^{L/2} x^2\\lambda\\,dx = \\lambda\\frac{L^3}{12} = \\frac1{12}ML^2. \\]\nAbout one end, \\( I_{\\text{end}} = \\int_0^L x^2\\lambda\\,dx = \\lambda L^3/3 = \\tfrac13ML^2 \\), four times as large, because much more of the mass is now far from the axis.\n\n*Thin hoop* of radius \\( R \\) about its symmetry axis: every element is at distance \\( R \\), so \\( I = \\int R^2\\,dm = MR^2 \\).\n\n*Uniform disk* of radius \\( R \\) about its symmetry axis. The elements at a common distance are now thin rings. With **surface mass density** \\( \\sigma = M/(\\pi R^2) \\), the ring between radii \\( r \\) and \\( r + dr \\) has area \\( 2\\pi r\\,dr \\) and mass \\( dm = \\sigma\\,2\\pi r\\,dr \\):\n\\[ I = \\int_0^R r^2\\,\\sigma\\,2\\pi r\\,dr = 2\\pi\\sigma\\frac{R^4}{4} = \\frac12MR^2. \\]\nThe disk has half the hoop's value because much of its mass lies near the center. A solid cylinder about its axis is a stack of such disks and also has \\( \\tfrac12MR^2 \\), whatever its length. Similar integrations give \\( \\tfrac25MR^2 \\) for a uniform solid sphere about a diameter and \\( \\tfrac23MR^2 \\) for a thin spherical shell.\n\n**The parallel-axis theorem.**\n> If \\( I_{\\text{cm}} \\) is the moment of inertia of a body of mass \\( M \\) about an axis through its center of mass, then its moment of inertia about any parallel axis at distance \\( d \\) from the first is \\( I = I_{\\text{cm}} + Md^2 \\).\n\n*Proof.* Put the center of mass at the origin, with the first axis along \\( z \\) and the second through \\( (a, b) \\), parallel to \\( z \\), so that \\( a^2 + b^2 = d^2 \\). The squared distance of an element at \\( (x, y, z) \\) from the second axis is \\( (x - a)^2 + (y - b)^2 \\), so\n\\[ I = \\int\\big[(x - a)^2 + (y - b)^2\\big]dm = \\int(x^2 + y^2)\\,dm - 2a\\int x\\,dm - 2b\\int y\\,dm + (a^2 + b^2)\\int dm. \\]\nThe first integral is \\( I_{\\text{cm}} \\). The middle two vanish, because \\( \\int x\\,dm = Mx_{\\text{cm}} = 0 \\) and likewise for \\( y \\); this is exactly where the center of mass is needed. The last term is \\( Md^2 \\). \\( \\square \\)\n\nFor the rod, \\( \\tfrac1{12}ML^2 + M(L/2)^2 = \\tfrac13ML^2 \\), agreeing with the direct integral. Since \\( Md^2 \\ge 0 \\), among all axes with a given direction the one through the center of mass has the smallest moment of inertia. The plot shows \\( I/(ML^2) \\) for a uniform rod when the axis is a distance \\( xL \\) from the center; the marked point is the axis at the end, \\( x = 1/2 \\), where \\( I = ML^2/3 \\).\n\n```plot\nx: -1, 1\ny: 0, 1.2\nf: 1/12 + x^2 | I/(ML²) against axis offset x (in units of L)\npoint: 0.5, 1/3\n```\n\n**Common mistakes.** Applying \\( I = I_{\\text{cm}} + Md^2 \\) between two axes neither of which passes through the center of mass (the cross terms then do not vanish; go through the center of mass in two steps); using the theorem for axes that are not parallel; and choosing mass elements, such as straight strips across a disk, whose points lie at different distances from the axis.",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k6",
+     "type": "expression",
+     "prompt": "A thin rod on \\( 0 \\le x \\le L \\) has linear mass density \\( \\lambda(x) = \\lambda_0x/L \\). Find its moment of inertia about a perpendicular axis through \\( x = 0 \\), expressed in terms of its total mass \\( M \\) and length \\( L \\). Enter it using `M` and `L`.",
+     "answer": "M*L^2/2",
+     "vars": "M, L",
+     "why": "\\( M = \\int_0^L\\dfrac{\\lambda_0x}{L}\\,dx = \\dfrac{\\lambda_0L}{2} \\) and \\( I = \\int_0^Lx^2\\dfrac{\\lambda_0x}{L}\\,dx = \\dfrac{\\lambda_0L^3}{4} \\). Eliminating \\( \\lambda_0 = 2M/L \\): \\( I = \\dfrac{2M}{L}\\cdot\\dfrac{L^3}{4} = \\tfrac12ML^2 \\). This exceeds the uniform rod's \\( \\tfrac13ML^2 \\) because the mass is concentrated toward the far end."
+    },
+    {
+     "id": "s5q2",
+     "kp": "k7",
+     "type": "number",
+     "prompt": "A uniform disk of mass 2.0 kg and radius 0.10 m rotates about an axis perpendicular to its face through a point on its rim. Find its moment of inertia about that axis, in kg·m².",
+     "answer": "0.5*2*0.1^2 + 2*0.1^2",
+     "tol": 0.01,
+     "why": "The parallel axis through the center of mass is the symmetry axis, with \\( I_{\\text{cm}} = \\tfrac12MR^2 = 0.010 \\) kg·m². The rim axis is at \\( d = R \\): \\( I = \\tfrac12MR^2 + MR^2 = \\tfrac32MR^2 = 0.030 \\) kg·m²."
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "title": "Torque",
+   "kps": [
+    "k8",
+    "k9"
+   ],
+   "md": "A force on a body mounted on an axis may or may not set it turning. Pushing on a door at the handle, perpendicular to the door, turns it easily; pushing at the hinge, or along the door toward the hinge, does not turn it at all. The measure of the turning effect of a force must therefore depend on where the force is applied and in what direction, not only on its magnitude. This section defines it.\n\n> **Definition.** The **torque** about a point \\( O \\) of a force \\( \\vec F \\) applied at a point with position \\( \\vec r \\) relative to \\( O \\) is\n> \\[ \\vec\\tau = \\vec r\\times\\vec F. \\]\n> Its SI unit is the newton-metre (N·m).\n\nBy the definition of the cross product, the magnitude is\n\\[ \\tau = rF\\sin\\phi, \\]\nwhere \\( \\phi \\) is the angle between \\( \\vec r \\) and \\( \\vec F \\), and the direction is perpendicular to both, given by the right-hand rule. The magnitude can be grouped in two equivalent ways, each useful:\n- \\( \\tau = r_\\perp F \\), where \\( r_\\perp = r\\sin\\phi \\) is the **lever arm** (moment arm): the perpendicular distance from \\( O \\) to the **line of action** of the force, the line through the point of application along \\( \\vec F \\).\n- \\( \\tau = rF_\\perp \\), where \\( F_\\perp = F\\sin\\phi \\) is the component of \\( \\vec F \\) perpendicular to \\( \\vec r \\). Only this component tends to turn the body; the component along \\( \\vec r \\) pushes or pulls on the axis.\n\nEither reading shows that a force whose line of action passes through \\( O \\) exerts no torque about \\( O \\), and that sliding a force along its line of action does not change its torque, since the lever arm is unchanged.\n\n**Torque about a fixed axis.** For rotation about the \\( z \\)-axis only the \\( z \\)-component of \\( \\vec\\tau \\) affects the rotation. With \\( \\vec r \\) and \\( \\vec F \\) in the \\( xy \\)-plane,\n\\[ \\tau_z = xF_y - yF_x, \\]\npositive when the force tends to turn the body counterclockwise (seen from \\( +z \\)) and negative when clockwise. The **net torque** is the sum of the signed torques of all the forces, every one computed about the same point. Although a newton-metre equals a joule dimensionally, torque is not energy, and its unit is always written N·m.\n\n*Worked example 1.* A mechanic pulls on a wrench 0.25 m long with a force of 80 N directed at \\( 60^\\circ \\) to the handle. The torque about the bolt has magnitude \\( \\tau = (0.25)(80)\\sin60^\\circ = 17.3 \\) N·m; pulling perpendicular to the handle would give the maximum, 20 N·m.\n\n*Worked example 2.* A force \\( \\vec F = (3.0\\,\\hat\\imath - 4.0\\,\\hat\\jmath) \\) N acts at \\( \\vec r = (2.0\\,\\hat\\imath + 1.0\\,\\hat\\jmath) \\) m. Then \\( \\tau_z = (2.0)(-4.0) - (1.0)(3.0) = -11 \\) N·m, so \\( \\vec\\tau = -11\\,\\hat k \\) N·m: a clockwise torque of magnitude 11 N·m.\n\n**The torque of gravity.** An extended body in a uniform gravitational field has a weight \\( m_i\\vec g \\) acting on each of its particles. The total gravitational torque about \\( O \\) is\n\\[ \\vec\\tau_{\\text{grav}} = \\sum_i\\vec r_i\\times m_i\\vec g = \\Big(\\sum_i m_i\\vec r_i\\Big)\\times\\vec g = M\\vec r_{\\text{cm}}\\times\\vec g = \\vec r_{\\text{cm}}\\times M\\vec g, \\]\nwhere pulling \\( \\vec g \\) out of the sum uses the uniformity of the field. So for torques, as for forces, the whole weight may be treated as acting at the center of mass. The point at which the total weight effectively acts is the **center of gravity**; in a uniform field it coincides with the center of mass. In particular, gravity exerts no torque about the center of mass itself.\n\n**Common mistakes.** Using the distance along a body to the point of application when the force is not perpendicular to it (the lever arm is the perpendicular distance to the line of action); mixing clockwise and counterclockwise signs within one sum; and computing different torques in one equation about different points.",
+   "questions": [
+    {
+     "id": "s6q1",
+     "kp": "k8",
+     "type": "number",
+     "prompt": "A force of 150 N is applied to the end of a wrench 0.40 m long, at an angle of \\( 70^\\circ \\) to the handle. What is the magnitude of the torque about the bolt, in N·m?",
+     "answer": "0.40*150*sin(70 deg)",
+     "tol": 0.01,
+     "why": "\\( \\tau = rF\\sin\\phi = (0.40)(150)\\sin70^\\circ = 56.4 \\) N·m. Equivalently, the perpendicular component of the force is \\( 150\\sin70^\\circ = 141 \\) N, acting at 0.40 m."
+    },
+    {
+     "id": "s6q2",
+     "kp": "k8",
+     "type": "number",
+     "prompt": "A force \\( \\vec F = (-2.0\\,\\hat\\imath + 5.0\\,\\hat\\jmath) \\) N acts at the point \\( \\vec r = (3.0\\,\\hat\\imath + 1.5\\,\\hat\\jmath) \\) m. Find the \\( z \\)-component of the torque about the origin, in N·m (with its sign).",
+     "answer": "3*5 - 1.5*(-2)",
+     "tol": 0.01,
+     "why": "\\( \\tau_z = xF_y - yF_x = (3.0)(5.0) - (1.5)(-2.0) = 15 + 3.0 = 18 \\) N·m. The positive sign means the torque tends to turn the body counterclockwise, seen from \\( +z \\)."
+    }
+   ]
+  },
+  {
+   "id": "s7",
+   "title": "Static equilibrium",
+   "kps": [
+    "k10",
+    "k9"
+   ],
+   "md": "A bridge, a ladder leaning on a wall and a shelf bracket are extended bodies that must stay at rest. Balancing the forces is necessary but not sufficient: two forces of equal magnitude and opposite direction applied perpendicular to a rod at its two ends sum to zero, yet they spin it. Such a pair is called a **couple**. This section states the complete conditions for rest and the method for using them.\n\n> **Conditions for static equilibrium.** A rigid body at rest in an inertial frame remains at rest only if (1) the net external force is zero, \\( \\sum\\vec F_{\\text{ext}} = \\vec 0 \\), and (2) the net external torque about any point is zero, \\( \\sum\\vec\\tau_{\\text{ext}} = \\vec 0 \\).\n\n*Why the torque condition is necessary.* If the body is at rest, every particle is at rest, so the total force on each particle vanishes: \\( \\vec F_i^{\\text{ext}} + \\sum_j\\vec F_{ij} = \\vec 0 \\), where \\( \\vec F_{ij} \\) is the force on particle \\( i \\) from particle \\( j \\). Cross with \\( \\vec r_i \\) and sum over \\( i \\). The internal torques cancel in pairs: \\( \\vec F_{ji} = -\\vec F_{ij} \\) by the third law, and the internal forces are taken to be central, acting along the line joining the two particles (the strong form of the third law), so \\( \\vec r_i\\times\\vec F_{ij} + \\vec r_j\\times\\vec F_{ji} = (\\vec r_i - \\vec r_j)\\times\\vec F_{ij} = \\vec 0 \\). What remains is \\( \\sum_i\\vec r_i\\times\\vec F_i^{\\text{ext}} = \\vec 0 \\). The converse, that the two conditions keep a rigid body at rest, follows from the rotational form of Newton's second law, developed in the next chapter.\n\n*The choice of point is free.* If \\( \\sum\\vec F = \\vec 0 \\), the net torque is the same about every point. Moving the reference point from \\( O \\) to a point \\( O' \\) at position \\( \\vec a \\) replaces each \\( \\vec r_i \\) by \\( \\vec r_i - \\vec a \\), and\n\\[ \\sum_i(\\vec r_i - \\vec a)\\times\\vec F_i = \\sum_i\\vec r_i\\times\\vec F_i - \\vec a\\times\\sum_i\\vec F_i = \\sum_i\\vec r_i\\times\\vec F_i. \\]\nThis freedom is the main practical tool: take torques about a point through which unknown forces act, and those forces drop out of the torque equation.\n\n**Method.** (1) Draw a free-body diagram of the extended body, with each force at its point of application and each weight at the center of mass of the part it belongs to. (2) Choose axes and a sign convention for torques. (3) Choose the torque point to eliminate as many unknowns as possible. (4) Write the force equations by components and the torque equation, and solve. A planar problem supplies three independent scalar equations, so at most three unknowns can be determined.\n\n*Worked example.* A uniform plank 4.0 m long with mass 20 kg rests horizontally on supports at its two ends. A 60 kg person stands 1.0 m from the left end. Find the two support forces (\\( g = 9.80 \\) m/s²). Take torques about the left end, counterclockwise positive. The left support force has no lever arm; the plank's weight acts at the midpoint, 2.0 m away; the person is 1.0 m away; the right support force acts 4.0 m away:\n\\[ N_R(4.0) - (20)(9.80)(2.0) - (60)(9.80)(1.0) = 0 \\quad\\Rightarrow\\quad N_R = 245 \\text{ N}. \\]\nVertical forces then give \\( N_L = (80)(9.80) - 245 = 539 \\) N. The support nearer the person carries more, as expected. As a check, torques about the right end give \\( N_L(4.0) = (20)(9.80)(2.0) + (60)(9.80)(3.0) = 2156 \\) N·m, so \\( N_L = 539 \\) N.\n\n**Common mistakes.** Omitting the weight of the beam, or placing it anywhere other than its center of mass; writing one torque equation with some torques taken about one point and some about another; and assuming the direction of an unknown hinge force instead of assigning it components and letting a negative result correct the guess.",
+   "questions": [
+    {
+     "id": "s7q1",
+     "kp": "k10",
+     "type": "number",
+     "prompt": "A uniform beam 6.0 m long with mass 30 kg lies horizontally on two supports, one at its left end and one 1.0 m from its right end. A 50 kg crate sits at the right end. Find the force (in N) exerted by the support 1.0 m from the right end. Use \\( g = 9.80 \\) m/s².",
+     "answer": "(30*9.8*3 + 50*9.8*6)/5",
+     "tol": 0.01,
+     "why": "Torques about the left support eliminate its unknown force. The beam's weight acts at 3.0 m, the crate at 6.0 m, the second support at 5.0 m: \\( N_2(5.0) = (30)(9.80)(3.0) + (50)(9.80)(6.0) = 882 + 2940 = 3822 \\) N·m, so \\( N_2 = 764 \\) N. The left support then carries \\( (80)(9.80) - 764 = 19.6 \\) N; with a crate heavier than 60 kg it would have to pull down, and the beam would tip about the second support."
+    },
+    {
+     "id": "s7q2",
+     "kp": "k10",
+     "type": "written",
+     "prompt": "In a static equilibrium problem you may take torques about any point you like. Prove this, state the condition on which the proof depends, and explain how the freedom is used in practice and what it does not allow you to do.",
+     "rubric": [
+      "Shifting the reference point by \\( \\vec a \\) changes the net torque by \\( -\\vec a\\times\\sum\\vec F_i \\).",
+      "This vanishes because in equilibrium \\( \\sum\\vec F_i = \\vec 0 \\); the result depends on the force condition.",
+      "In practice: choose a point on the line of action of unknown forces so they drop out of the torque equation.",
+      "Restriction: all torques in one equation must be about the same point, and the force equations are still needed."
+     ],
+     "model": "Let the forces \\( \\vec F_i \\) act at \\( \\vec r_i \\) relative to \\( O \\). About a point \\( O' \\) at \\( \\vec a \\), the net torque is \\( \\sum(\\vec r_i - \\vec a)\\times\\vec F_i = \\sum\\vec r_i\\times\\vec F_i - \\vec a\\times\\sum\\vec F_i \\). In equilibrium \\( \\sum\\vec F_i = \\vec 0 \\), so the last term vanishes and the net torque about \\( O' \\) equals that about \\( O \\): if it is zero about one point it is zero about all. The proof depends on the net force being zero; for a body with nonzero net force the torque does depend on the point. In practice one takes torques about a point through which one or more unknown forces act, such as a hinge or a support, so that their lever arms vanish and they disappear from the torque equation. What the freedom does not allow is mixing points within one equation: every torque in a given sum must be computed about the same point. And the torque equation alone is not enough; the force equations are still required to find the remaining unknowns.",
+     "why": "For a couple, \\( \\sum\\vec F = \\vec 0 \\) and the torque is the same about every point; this is the special case that shows the torque condition is independent of the force condition."
+    }
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "t": "rigid body",
+   "d": "An idealized body in which the distance between every pair of points is fixed."
+  },
+  {
+   "t": "fixed-axis rotation",
+   "d": "Motion of a rigid body in which every point moves on a circle centered on a stationary line, the axis of rotation."
+  },
+  {
+   "t": "radian",
+   "d": "The angle subtended by an arc equal in length to the radius; \\( \\theta = s/r \\), dimensionless, with \\( 2\\pi \\) rad in one revolution."
+  },
+  {
+   "t": "angular position",
+   "d": "The angle \\( \\theta \\) of a reference line fixed in the body, measured from a fixed direction, counterclockwise positive about \\( +z \\)."
+  },
+  {
+   "t": "angular displacement",
+   "d": "The change \\( \\Delta\\theta = \\theta_f - \\theta_i \\) in angular position."
+  },
+  {
+   "t": "angular velocity",
+   "d": "\\( \\omega = d\\theta/dt \\), in rad/s; as a vector, along the axis by the right-hand rule."
+  },
+  {
+   "t": "angular acceleration",
+   "d": "\\( \\alpha = d\\omega/dt = d^2\\theta/dt^2 \\), in rad/s²."
+  },
+  {
+   "t": "right-hand rule",
+   "d": "Curl the fingers of the right hand in the sense of rotation; the thumb gives the direction of \\( \\vec\\omega \\) (and of a cross product \\( \\vec A\\times\\vec B \\) when the fingers turn from \\( \\vec A \\) toward \\( \\vec B \\))."
+  },
+  {
+   "t": "tangential acceleration",
+   "d": "The component \\( a_t = r\\alpha \\) of a point's acceleration along its circular path; it changes the speed."
+  },
+  {
+   "t": "centripetal acceleration",
+   "d": "The component \\( a_c = v^2/r = r\\omega^2 \\) of a point's acceleration directed toward the axis; it changes the direction of the velocity."
+  },
+  {
+   "t": "moment of inertia",
+   "d": "About a given axis, \\( I = \\sum m_ir_i^2 = \\int r_\\perp^2\\,dm \\), with \\( r_\\perp \\) the perpendicular distance from the axis; unit kg·m²."
+  },
+  {
+   "t": "rotational kinetic energy",
+   "d": "The kinetic energy of a body rotating about a fixed axis, \\( K = \\tfrac12I\\omega^2 \\)."
+  },
+  {
+   "t": "surface mass density",
+   "d": "Mass per unit area of a thin sheet, \\( \\sigma = dm/dA \\)."
+  },
+  {
+   "t": "parallel-axis theorem",
+   "d": "\\( I = I_{\\text{cm}} + Md^2 \\), relating the moment of inertia about any axis to that about the parallel axis through the center of mass at distance \\( d \\)."
+  },
+  {
+   "t": "torque",
+   "d": "The turning effect of a force about a point, \\( \\vec\\tau = \\vec r\\times\\vec F \\), of magnitude \\( rF\\sin\\phi \\); unit N·m."
+  },
+  {
+   "t": "line of action",
+   "d": "The line through the point of application of a force, along the direction of the force."
+  },
+  {
+   "t": "lever arm",
+   "d": "The perpendicular distance \\( r_\\perp = r\\sin\\phi \\) from the reference point to the line of action of a force; \\( \\tau = r_\\perp F \\)."
+  },
+  {
+   "t": "center of gravity",
+   "d": "The point at which the total weight of a body may be taken to act for the purpose of computing torques; it coincides with the center of mass in a uniform field."
+  },
+  {
+   "t": "couple",
+   "d": "A pair of forces of equal magnitude and opposite direction with different lines of action; its net force is zero and its torque is the same about every point."
+  },
+  {
+   "t": "static equilibrium",
+   "d": "The state of a rigid body at rest in an inertial frame; it requires \\( \\sum\\vec F_{\\text{ext}} = \\vec 0 \\) and \\( \\sum\\vec\\tau_{\\text{ext}} = \\vec 0 \\)."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "term",
+   "front": "Define: fixed-axis rotation of a rigid body",
+   "back": "Every point of a body whose inter-point distances are fixed moves on a circle centered on a stationary axis; one angle describes the configuration.",
+   "kp": "k1"
+  },
+  {
+   "id": "c2",
+   "type": "formula",
+   "front": "Arc length and angle (and the unit condition)",
+   "back": "\\( s = r\\theta \\), valid only with \\( \\theta \\) in radians",
+   "kp": "k1"
+  },
+  {
+   "id": "c3",
+   "type": "formula",
+   "front": "Angular velocity and angular acceleration",
+   "back": "\\( \\omega = d\\theta/dt \\), \\( \\alpha = d\\omega/dt = d^2\\theta/dt^2 \\)",
+   "kp": "k2"
+  },
+  {
+   "id": "c4",
+   "type": "concept",
+   "front": "How is the direction of \\( \\vec\\omega \\) defined?",
+   "back": "Along the axis, by the right-hand rule: fingers curl with the rotation, thumb gives \\( \\vec\\omega \\).",
+   "kp": "k2"
+  },
+  {
+   "id": "c5",
+   "type": "concept",
+   "front": "When is a rotating body slowing down?",
+   "back": "When \\( \\omega_z \\) and \\( \\alpha_z \\) have opposite signs.",
+   "kp": "k2"
+  },
+  {
+   "id": "c6",
+   "type": "formula",
+   "front": "Constant-\\( \\alpha \\) rotational kinematics",
+   "back": "\\( \\omega = \\omega_0 + \\alpha t \\); \\( \\theta = \\theta_0 + \\omega_0t + \\tfrac12\\alpha t^2 \\); \\( \\omega^2 = \\omega_0^2 + 2\\alpha\\Delta\\theta \\); \\( \\Delta\\theta = \\tfrac12(\\omega_0 + \\omega)t \\)",
+   "kp": "k3"
+  },
+  {
+   "id": "c7",
+   "type": "problem",
+   "front": "A wheel at 1800 rpm coasts uniformly to rest in 12.0 s. How many revolutions does it make?",
+   "back": "Average 15 rev/s for 12.0 s: 180 rev",
+   "kp": "k3",
+   "answer": "180",
+   "check": "number"
+  },
+  {
+   "id": "c8",
+   "type": "formula",
+   "front": "Speed and acceleration components of a point at distance r from the axis",
+   "back": "\\( v = r\\omega \\), \\( a_t = r\\alpha \\), \\( a_c = r\\omega^2 \\); \\( a = \\sqrt{a_t^2 + a_c^2} \\)",
+   "kp": "k4"
+  },
+  {
+   "id": "c9",
+   "type": "concept",
+   "front": "Two wheels joined by a non-slipping belt: what do they share?",
+   "back": "Rim speed: \\( r_1\\omega_1 = r_2\\omega_2 \\), not angular velocity.",
+   "kp": "k4"
+  },
+  {
+   "id": "c10",
+   "type": "formula",
+   "front": "Rotational kinetic energy and moment of inertia (particles)",
+   "back": "\\( K = \\tfrac12I\\omega^2 \\), \\( I = \\sum m_ir_i^2 \\) with \\( r_i \\) the perpendicular distance to the axis",
+   "kp": "k5"
+  },
+  {
+   "id": "c11",
+   "type": "concept",
+   "front": "Why does a body's moment of inertia depend on the axis, while its mass does not?",
+   "back": "\\( I \\) weights each mass by the square of its distance from the chosen axis; changing the axis changes those distances.",
+   "kp": "k5"
+  },
+  {
+   "id": "c12",
+   "type": "formula",
+   "front": "Moment of inertia of a continuous body",
+   "back": "\\( I = \\int r_\\perp^2\\,dm \\)",
+   "kp": "k6"
+  },
+  {
+   "id": "c13",
+   "type": "formula",
+   "front": "Thin uniform rod: I about its center and about an end (perpendicular axes)",
+   "back": "\\( \\tfrac1{12}ML^2 \\) and \\( \\tfrac13ML^2 \\)",
+   "kp": "k6"
+  },
+  {
+   "id": "c14",
+   "type": "formula",
+   "front": "Hoop, disk, solid sphere, thin spherical shell (symmetry axis or diameter)",
+   "back": "\\( MR^2 \\), \\( \\tfrac12MR^2 \\), \\( \\tfrac25MR^2 \\), \\( \\tfrac23MR^2 \\)",
+   "kp": "k6"
+  },
+  {
+   "id": "c15",
+   "type": "problem",
+   "front": "Uniform disk about its axis by rings: \\( \\int_0^R r^2\\,\\sigma\\,2\\pi r\\,dr \\) with \\( \\sigma = M/(\\pi R^2) \\)",
+   "back": "\\( 2\\pi\\sigma R^4/4 = \\tfrac12MR^2 \\)",
+   "kp": "k6",
+   "answer": "M*R^2/2",
+   "vars": "M, R",
+   "check": "expression"
+  },
+  {
+   "id": "c16",
+   "type": "formula",
+   "front": "Parallel-axis theorem",
+   "back": "\\( I = I_{\\text{cm}} + Md^2 \\), one axis through the center of mass, axes parallel, \\( d \\) their separation",
+   "kp": "k7"
+  },
+  {
+   "id": "c17",
+   "type": "concept",
+   "front": "Why must one axis in the parallel-axis theorem pass through the center of mass?",
+   "back": "The cross terms \\( -2a\\int x\\,dm - 2b\\int y\\,dm \\) vanish only when \\( x_{\\text{cm}} = y_{\\text{cm}} = 0 \\) on that axis.",
+   "kp": "k7"
+  },
+  {
+   "id": "c18",
+   "type": "formula",
+   "front": "Torque: definition and magnitude",
+   "back": "\\( \\vec\\tau = \\vec r\\times\\vec F \\); \\( \\tau = rF\\sin\\phi = r_\\perp F = rF_\\perp \\)",
+   "kp": "k8"
+  },
+  {
+   "id": "c19",
+   "type": "term",
+   "front": "Define: lever arm",
+   "back": "The perpendicular distance from the reference point to the line of action of the force.",
+   "kp": "k8"
+  },
+  {
+   "id": "c20",
+   "type": "formula",
+   "front": "z-component of torque for a force in the xy-plane",
+   "back": "\\( \\tau_z = xF_y - yF_x \\) (positive counterclockwise seen from \\( +z \\))",
+   "kp": "k8"
+  },
+  {
+   "id": "c21",
+   "type": "concept",
+   "front": "Where does gravity act for the purpose of computing torques?",
+   "back": "At the center of mass (in a uniform field): \\( \\sum\\vec r_i\\times m_i\\vec g = \\vec r_{\\text{cm}}\\times M\\vec g \\).",
+   "kp": "k9"
+  },
+  {
+   "id": "c22",
+   "type": "concept",
+   "front": "Conditions for static equilibrium of a rigid body",
+   "back": "\\( \\sum\\vec F_{\\text{ext}} = \\vec 0 \\) and \\( \\sum\\vec\\tau_{\\text{ext}} = \\vec 0 \\) about any point.",
+   "kp": "k10"
+  },
+  {
+   "id": "c23",
+   "type": "concept",
+   "front": "In a statics problem, where should you take torques?",
+   "back": "About a point on the line of action of one or more unknown forces, so they drop out; allowed because the net force is zero.",
+   "kp": "k10"
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k1",
+   "type": "number",
+   "prompt": "A point on the rim of a wheel of radius 0.32 m travels along an arc of length 5.0 m. Through what angle has the wheel turned? Answer in degrees.",
+   "answer": "5/0.32*180/pi",
+   "tol": 0.01,
+   "why": "\\( \\theta = s/r = 5.0/0.32 = 15.6 \\) rad; converting, \\( 15.6 \\times 180^\\circ/\\pi = 895^\\circ \\), about 2.5 revolutions. The formula \\( \\theta = s/r \\) gives radians; degrees come only by conversion afterward."
+  },
+  {
+   "id": "p2",
+   "kp": "k3",
+   "type": "number",
+   "prompt": "A fan slows uniformly from 900 rpm to 300 rpm while turning through 75.0 revolutions. Find its angular acceleration in rad/s² (with its sign, taking the rotation direction as positive).",
+   "answer": "-8*pi/3",
+   "tol": 0.01,
+   "why": "Convert: \\( \\omega_0 = 30\\pi = 94.2 \\) rad/s, \\( \\omega = 10\\pi = 31.4 \\) rad/s, \\( \\Delta\\theta = 150\\pi = 471 \\) rad. Time is not involved, so \\( \\alpha = \\dfrac{\\omega^2 - \\omega_0^2}{2\\Delta\\theta} = \\dfrac{100\\pi^2 - 900\\pi^2}{300\\pi} = -\\dfrac{8\\pi}{3} = -8.38 \\) rad/s²."
+  },
+  {
+   "id": "p3",
+   "kp": "k3",
+   "type": "number",
+   "prompt": "A rotor's angular velocity is \\( \\omega(t) = (3.0\\ \\text{rad/s}^3)\\,t^2 - (2.0\\ \\text{rad/s}^2)\\,t \\). Find its angular displacement (in rad) from \\( t = 0 \\) to \\( t = 2.0 \\) s.",
+   "answer": "4",
+   "tol": 0.01,
+   "why": "\\( \\Delta\\theta = \\int_0^{2.0}(3.0t^2 - 2.0t)\\,dt = \\left[t^3 - t^2\\right]_0^{2.0} = 8.0 - 4.0 = 4.0 \\) rad. Note that \\( \\omega < 0 \\) for \\( 0 < t < 2/3 \\) s, so the rotor first turns backward slightly; the integral gives the net displacement."
+  },
+  {
+   "id": "p4",
+   "kp": "k4",
+   "type": "number",
+   "prompt": "A hard-disk platter spins at 7200 rpm. What is the centripetal acceleration (in m/s²) of a point 4.75 cm from the axis?",
+   "answer": "0.0475*(7200*2*pi/60)^2",
+   "tol": 0.01,
+   "why": "\\( \\omega = 7200 \\times 2\\pi/60 = 754 \\) rad/s. \\( a_c = r\\omega^2 = (0.0475)(754)^2 = 2.70\\times10^4 \\) m/s², nearly 2800 times \\( g \\). The platter turns at constant rate, so \\( a_t = 0 \\) and this is the total acceleration."
+  },
+  {
+   "id": "p5",
+   "kp": "k4",
+   "type": "written",
+   "prompt": "A wheel turns at constant angular velocity. Explain why a point on its rim is nevertheless accelerating, giving the magnitude and direction of the acceleration. Then state what additional component of acceleration appears when the wheel speeds up, with its magnitude and direction, and explain why the two components are perpendicular.",
+   "rubric": [
+    "The velocity of the rim point changes direction continuously, so the point accelerates even at constant speed.",
+    "Centripetal acceleration of magnitude \\( r\\omega^2 \\) (equivalently \\( v^2/r \\)) directed toward the axis.",
+    "When the wheel speeds up, a tangential component \\( a_t = r\\alpha \\) appears, along the velocity.",
+    "The tangential component is along the path (changes speed) and the centripetal component is along the radius (changes direction); the tangent to a circle is perpendicular to the radius."
+   ],
+   "model": "Acceleration is the rate of change of the velocity vector, not of the speed. At constant \\( \\omega \\) the rim point's speed \\( v = r\\omega \\) is constant, but its velocity is always tangent to the circle and so turns with the wheel; the change is directed toward the center. Its magnitude is \\( a_c = v^2/r = r\\omega^2 \\). If the wheel speeds up with angular acceleration \\( \\alpha \\), the speed \\( v = r\\omega \\) also changes at the rate \\( a_t = dv/dt = r\\alpha \\), directed along the velocity (tangent to the circle). The tangential component changes the speed and the centripetal component changes the direction; since the tangent to a circle is perpendicular to the radius, the two are perpendicular and \\( a = \\sqrt{a_t^2 + a_c^2} \\).",
+   "why": "The centripetal component is present whenever \\( \\omega \\ne 0 \\); the tangential component only when \\( \\alpha \\ne 0 \\)."
+  },
+  {
+   "id": "p6",
+   "kp": "k7",
+   "type": "number",
+   "prompt": "A uniform rod of mass 1.2 kg and length 0.80 m is pivoted at one end, and a small 0.50 kg ball is fixed to its other end. Find the moment of inertia (in kg·m²) of the assembly about the pivot, for rotation perpendicular to the rod.",
+   "answer": "1.2*0.8^2/3 + 0.5*0.8^2",
+   "tol": 0.01,
+   "why": "Moments of inertia about the same axis add. Rod about an end: \\( \\tfrac13(1.2)(0.80)^2 = 0.256 \\) kg·m². Ball as a particle at 0.80 m: \\( (0.50)(0.80)^2 = 0.320 \\) kg·m². Total \\( 0.576 \\) kg·m²."
+  },
+  {
+   "id": "p7",
+   "kp": "k7",
+   "type": "mcq",
+   "prompt": "Two identical uniform rods rotate about perpendicular axes: rod A about an axis through its center, rod B about an axis through one end. What is the ratio of the moment of inertia of B to that of A?",
+   "options": [
+    "4",
+    "2, because the farthest mass of B is twice as far from its axis as the farthest mass of A",
+    "1, because the rods are identical and moment of inertia is a property of the rod",
+    "13, from \\( I = I_{\\text{cm}} + ML^2 \\)"
+   ],
+   "answer": 0,
+   "why": "\\( I_A = \\tfrac1{12}ML^2 \\) and, by the parallel-axis theorem with \\( d = L/2 \\) (the distance from the center to the end, not the full length), \\( I_B = \\tfrac1{12}ML^2 + \\tfrac14ML^2 = \\tfrac13ML^2 \\). The ratio is 4. Distances enter squared, so doubling a distance does not double \\( I \\); and moment of inertia depends on the axis."
+  },
+  {
+   "id": "p8",
+   "kp": "k5",
+   "type": "number",
+   "prompt": "A flywheel is a uniform solid disk of mass 50 kg and radius 0.40 m, turning about its symmetry axis at 600 rpm. What is its kinetic energy, in J?",
+   "answer": "0.5*(0.5*50*0.4^2)*(600*2*pi/60)^2",
+   "tol": 0.01,
+   "why": "\\( I = \\tfrac12MR^2 = \\tfrac12(50)(0.40)^2 = 4.0 \\) kg·m²; \\( \\omega = 600 \\times 2\\pi/60 = 62.8 \\) rad/s. \\( K = \\tfrac12(4.0)(62.8)^2 = 7.90\\times10^3 \\) J."
+  },
+  {
+   "id": "p9",
+   "kp": "k9",
+   "type": "written",
+   "prompt": "Prove that the total torque of gravity on an extended body in a uniform gravitational field, about any point, equals the torque of a single force equal to the total weight acting at the center of mass. State where the uniformity of the field is used, and deduce the torque of gravity about the center of mass.",
+   "rubric": [
+    "Writes the total torque as \\( \\sum\\vec r_i\\times m_i\\vec g \\).",
+    "Uses uniformity (same \\( \\vec g \\) for every particle) to factor: \\( (\\sum m_i\\vec r_i)\\times\\vec g \\).",
+    "Uses the definition of the center of mass: \\( \\sum m_i\\vec r_i = M\\vec r_{\\text{cm}} \\), giving \\( \\vec r_{\\text{cm}}\\times M\\vec g \\).",
+    "About the center of mass, \\( \\vec r_{\\text{cm}} = \\vec 0 \\), so the gravitational torque is zero."
+   ],
+   "model": "Particle \\( i \\), of mass \\( m_i \\) at \\( \\vec r_i \\) relative to the chosen point \\( O \\), has weight \\( m_i\\vec g \\) and experiences the torque \\( \\vec r_i\\times m_i\\vec g \\). The total is \\( \\vec\\tau = \\sum_i\\vec r_i\\times m_i\\vec g \\). Because the field is uniform, \\( \\vec g \\) is the same for every particle and can be taken outside the sum: \\( \\vec\\tau = \\left(\\sum_i m_i\\vec r_i\\right)\\times\\vec g \\). By the definition of the center of mass, \\( \\sum_i m_i\\vec r_i = M\\vec r_{\\text{cm}} \\), so \\( \\vec\\tau = M\\vec r_{\\text{cm}}\\times\\vec g = \\vec r_{\\text{cm}}\\times(M\\vec g) \\): the torque of the total weight applied at the center of mass. Taking \\( O \\) at the center of mass makes \\( \\vec r_{\\text{cm}} = \\vec 0 \\), so gravity exerts no torque about the center of mass. In a non-uniform field the factorization fails and the center of gravity need not coincide with the center of mass.",
+   "why": "This is what justifies drawing a single weight vector at the center of mass in every statics problem."
+  },
+  {
+   "id": "p10",
+   "kp": "k10",
+   "type": "number",
+   "prompt": "A uniform horizontal beam 3.0 m long with mass 40 kg is hinged to a wall at its left end and held horizontal by a cable attached to its right end; the cable makes \\( 30^\\circ \\) with the beam. A 25 kg sign hangs from the right end. Find the tension in the cable, in N. Use \\( g = 9.80 \\) m/s².",
+   "answer": "(40*9.8*1.5 + 25*9.8*3)/(3*sin(30 deg))",
+   "tol": 0.01,
+   "why": "Take torques about the hinge, which removes the unknown hinge force. The cable's lever arm is \\( (3.0)\\sin30^\\circ = 1.5 \\) m. \\( T(1.5) = (40)(9.80)(1.5) + (25)(9.80)(3.0) = 588 + 735 = 1323 \\) N·m, so \\( T = 882 \\) N. The hinge force then follows from the two force equations."
+  },
+  {
+   "id": "p11",
+   "kp": "k6",
+   "type": "expression",
+   "prompt": "A thin uniform rod of mass \\( M \\) and length \\( L \\) lies on \\( 0 \\le x \\le L \\). Find, by direct integration, its moment of inertia about a perpendicular axis through \\( x = a \\), where \\( 0 \\le a \\le L \\). Enter it using `M`, `L` and `a`.",
+   "answer": "M*(L^2/3 - a*L + a^2)",
+   "vars": "M, L, a",
+   "why": "\\( I = \\int_0^L(x - a)^2\\dfrac{M}{L}\\,dx = \\dfrac{M}{L}\\left[\\dfrac{(x - a)^3}{3}\\right]_0^L = \\dfrac{M}{3L}\\left[(L - a)^3 + a^3\\right] = M\\left(\\dfrac{L^2}{3} - aL + a^2\\right) \\). Checks: \\( a = 0 \\) gives \\( \\tfrac13ML^2 \\); \\( a = L/2 \\) gives \\( \\tfrac1{12}ML^2 \\), the minimum, as the parallel-axis theorem requires, since the result equals \\( \\tfrac1{12}ML^2 + M(a - L/2)^2 \\)."
+  },
+  {
+   "id": "p12",
+   "kp": "k9",
+   "type": "number",
+   "prompt": "A uniform 2.0 kg rod 1.0 m long is pivoted at one end and held at rest at \\( 30^\\circ \\) above the horizontal. What is the magnitude of the torque of gravity about the pivot, in N·m? Use \\( g = 9.80 \\) m/s².",
+   "answer": "2*9.8*0.5*cos(30 deg)",
+   "tol": 0.01,
+   "why": "The weight acts at the center of mass, 0.50 m along the rod. Its line of action is vertical, so the lever arm is the horizontal distance \\( 0.50\\cos30^\\circ = 0.433 \\) m. \\( \\tau = (2.0)(9.80)(0.433) = 8.49 \\) N·m."
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k7",
+   "type": "written",
+   "prompt": "State and prove the parallel-axis theorem. Identify the step at which the center of mass is essential, and explain why the formula cannot be used to go directly between two parallel axes neither of which passes through the center of mass.",
+   "rubric": [
+    "Statement: \\( I = I_{\\text{cm}} + Md^2 \\) for parallel axes, one through the center of mass, separated by \\( d \\).",
+    "Sets up coordinates with the center of mass at the origin and expands \\( \\int[(x - a)^2 + (y - b)^2]\\,dm \\).",
+    "Identifies the cross terms \\( -2a\\int x\\,dm - 2b\\int y\\,dm \\) and shows they vanish because \\( \\int x\\,dm = Mx_{\\text{cm}} = 0 \\).",
+    "Explains that for two axes not through the center of mass the cross terms do not vanish; one must go through \\( I_{\\text{cm}} \\) in two steps (\\( I_2 = I_1 - Md_1^2 + Md_2^2 \\))."
+   ],
+   "model": "Statement: if \\( I_{\\text{cm}} \\) is the moment of inertia of a body of mass \\( M \\) about an axis through its center of mass, the moment of inertia about a parallel axis a distance \\( d \\) away is \\( I = I_{\\text{cm}} + Md^2 \\). Proof: place the center of mass at the origin with the first axis along \\( z \\), and let the second axis pass through \\( (a, b) \\) parallel to \\( z \\), with \\( a^2 + b^2 = d^2 \\). An element \\( dm \\) at \\( (x, y, z) \\) is at squared distance \\( (x - a)^2 + (y - b)^2 \\) from the second axis. So \\( I = \\int(x^2 + y^2)\\,dm - 2a\\int x\\,dm - 2b\\int y\\,dm + (a^2 + b^2)\\int dm \\). The first term is \\( I_{\\text{cm}} \\) and the last is \\( Md^2 \\). The cross terms vanish because \\( \\int x\\,dm = Mx_{\\text{cm}} \\) and \\( \\int y\\,dm = My_{\\text{cm}} \\), and both coordinates of the center of mass are zero by the choice of origin; this is where the center of mass is essential. If neither axis passes through the center of mass, the origin cannot be placed on the first axis with \\( x_{\\text{cm}} = y_{\\text{cm}} = 0 \\), the cross terms survive, and \\( I_2 \\ne I_1 + Md^2 \\) in general. The correct route is through the center of mass: \\( I_{\\text{cm}} = I_1 - Md_1^2 \\), then \\( I_2 = I_{\\text{cm}} + Md_2^2 \\).",
+   "why": "Example of the trap: for a rod, going from one end to the other end by \\( + ML^2 \\) would give \\( \\tfrac43ML^2 \\); the correct answer is \\( \\tfrac13ML^2 \\), the same by symmetry."
+  },
+  {
+   "id": "e2",
+   "kp": "k6",
+   "type": "expression",
+   "prompt": "Derive the moment of inertia of a uniform solid sphere of mass \\( M \\) and radius \\( R \\) about a diameter by slicing it into thin disks perpendicular to that diameter, each of which contributes \\( dI = \\tfrac12(dm)\\,y^2 \\), where \\( y \\) is the disk's radius. Enter the result using `M` and `R`.",
+   "answer": "2*M*R^2/5",
+   "vars": "M, R",
+   "why": "Let the diameter be the \\( z \\)-axis and \\( \\rho = M/(\\tfrac43\\pi R^3) \\). The disk at height \\( z \\) has radius \\( y = \\sqrt{R^2 - z^2} \\), thickness \\( dz \\) and mass \\( dm = \\rho\\pi y^2\\,dz \\). So \\( I = \\int_{-R}^{R}\\tfrac12\\rho\\pi(R^2 - z^2)^2\\,dz = \\tfrac12\\rho\\pi\\cdot\\tfrac{16}{15}R^5 = \\tfrac{8}{15}\\pi\\rho R^5 \\). Substituting \\( \\rho \\): \\( I = \\tfrac{8}{15}\\pi R^5\\cdot\\dfrac{3M}{4\\pi R^3} = \\tfrac25MR^2 \\)."
+  },
+  {
+   "id": "e3",
+   "kp": "k10",
+   "type": "number",
+   "prompt": "A uniform ladder 5.0 m long with mass 12 kg leans against a frictionless vertical wall, its foot 3.0 m from the wall on a rough floor. A 70 kg person stands on the ladder 4.0 m from its foot, measured along the ladder. What is the minimum coefficient of static friction between the ladder and the floor that prevents slipping? Use \\( g = 9.80 \\) m/s².",
+   "answer": "(12*1.5 + 70*2.4)/4/82",
+   "tol": 0.01,
+   "why": "The top is 4.0 m above the floor. Forces: floor normal \\( N \\) and friction \\( f \\) at the foot, wall normal \\( N_w \\) (horizontal) at the top, weights at 1.5 m and 2.4 m horizontally from the foot (the person is \\( 4.0 \\times 3/5 = 2.4 \\) m out). Torques about the foot eliminate \\( N \\) and \\( f \\): \\( N_w(4.0) = (12)(9.80)(1.5) + (70)(9.80)(2.4) \\), so \\( N_w = 456 \\) N. Horizontal: \\( f = N_w = 456 \\) N. Vertical: \\( N = (82)(9.80) = 804 \\) N. Minimum \\( \\mu_s = f/N = 0.567 \\)."
+  },
+  {
+   "id": "e4",
+   "kp": "k4",
+   "type": "number",
+   "prompt": "A wheel starts from rest and turns with constant angular acceleration \\( \\alpha \\). Through what angle (in radians) has it turned at the instant when the acceleration of a point on its rim makes an angle of \\( 45^\\circ \\) with the radius? (The answer does not depend on \\( \\alpha \\) or on the radius.)",
+   "answer": "0.5",
+   "tol": 0.01,
+   "why": "The angle with the radius is \\( 45^\\circ \\) when \\( a_t = a_c \\), i.e. \\( r\\alpha = r\\omega^2 \\), so \\( \\omega^2 = \\alpha \\). From rest with constant \\( \\alpha \\), \\( \\omega^2 = 2\\alpha\\theta \\). Equating, \\( 2\\alpha\\theta = \\alpha \\), so \\( \\theta = \\tfrac12 \\) rad, about \\( 28.6^\\circ \\), whatever \\( \\alpha \\) and \\( r \\)."
+  },
+  {
+   "id": "e5",
+   "kp": "k8",
+   "type": "written",
+   "prompt": "Two forces of equal magnitude \\( F \\) and opposite direction act perpendicular to a rod of length \\( L \\), one at each end (a couple). Show that the net force is zero, compute the net torque about the center, about one end, and about an arbitrary point, and explain what this example shows about the conditions for static equilibrium.",
+   "rubric": [
+    "Net force: \\( \\vec F + (-\\vec F) = \\vec 0 \\).",
+    "Torque about the center: two torques \\( F(L/2) \\) in the same sense, total \\( FL \\); about one end: one force has zero lever arm, the other gives \\( FL \\).",
+    "Arbitrary point: \\( (\\vec r_1 - \\vec r_2)\\times\\vec F \\), independent of the reference point, magnitude \\( FL \\).",
+    "Conclusion: zero net force does not imply zero net torque, so the torque condition is an independent requirement for equilibrium."
+   ],
+   "model": "Let the rod lie along \\( x \\) from \\( 0 \\) to \\( L \\), with \\( +F\\hat\\jmath \\) at \\( x = L \\) and \\( -F\\hat\\jmath \\) at \\( x = 0 \\). The net force is \\( F\\hat\\jmath - F\\hat\\jmath = \\vec 0 \\). About the center, each force acts at lever arm \\( L/2 \\), and both tend to turn the rod counterclockwise: \\( \\tau_z = (L/2)F + (L/2)F = FL \\). About the end at \\( x = 0 \\), the force there has zero lever arm and the other gives \\( \\tau_z = LF \\). About an arbitrary point \\( \\vec a \\), the torque is \\( (\\vec r_1 - \\vec a)\\times\\vec F + (\\vec r_2 - \\vec a)\\times(-\\vec F) = (\\vec r_1 - \\vec r_2)\\times\\vec F \\), independent of \\( \\vec a \\), with magnitude \\( LF \\) since \\( \\vec r_1 - \\vec r_2 = L\\hat\\imath \\) is perpendicular to \\( \\vec F \\). So a body can have zero net force and a nonzero net torque; it will not remain at rest but will begin to rotate. The torque condition \\( \\sum\\vec\\tau = \\vec 0 \\) is therefore a separate requirement for static equilibrium, not a consequence of \\( \\sum\\vec F = \\vec 0 \\).",
+   "why": "A couple is the purest case of torque without net force; its torque is the same about every point because the net force vanishes."
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "Angular kinematic variables",
+    "formula": "\\( \\omega = d\\theta/dt \\), \\( \\alpha = d\\omega/dt \\); \\( s = r\\theta \\) (radians)",
+    "when": "Describing any fixed-axis rotation.",
+    "example": "\\( \\theta = 4t - 0.5t^3 \\): \\( \\omega = 4 - 1.5t^2 \\), \\( \\alpha = -3t \\).",
+    "watch": "Convert rpm: multiply by \\( 2\\pi/60 \\). Slowing down means \\( \\omega \\) and \\( \\alpha \\) of opposite sign."
+   },
+   {
+    "name": "Constant angular acceleration",
+    "formula": "\\( \\omega = \\omega_0 + \\alpha t \\); \\( \\Delta\\theta = \\omega_0t + \\tfrac12\\alpha t^2 \\); \\( \\omega^2 = \\omega_0^2 + 2\\alpha\\Delta\\theta \\); \\( \\Delta\\theta = \\tfrac12(\\omega_0 + \\omega)t \\)",
+    "when": "Only when \\( \\alpha \\) is constant.",
+    "example": "1800 rpm to rest in 12.0 s: 180 rev.",
+    "watch": "Variable \\( \\alpha \\): integrate instead."
+   },
+   {
+    "name": "Angular to linear",
+    "formula": "\\( v = r\\omega \\), \\( a_t = r\\alpha \\), \\( a_c = r\\omega^2 \\)",
+    "when": "Velocity or acceleration of a particular point; belts and gears.",
+    "example": "\\( r = 0.30 \\) m, \\( \\omega = 6.0 \\) rad/s, \\( \\alpha = 2.0 \\) rad/s²: \\( a_t = 0.60 \\), \\( a_c = 10.8 \\) m/s².",
+    "watch": "Belt-coupled wheels share rim speed: \\( r_1\\omega_1 = r_2\\omega_2 \\)."
+   },
+   {
+    "name": "Rotational kinetic energy",
+    "formula": "\\( K = \\tfrac12I\\omega^2 \\), \\( I = \\sum m_ir_i^2 \\)",
+    "when": "Energy of a body rotating about a fixed axis.",
+    "example": "Dumbbell (2 × 2.0 kg, 1.0 m): 1.0 kg·m² about midpoint, 2.0 kg·m² about an end.",
+    "watch": "\\( r_i \\) is the perpendicular distance to the axis; \\( \\omega \\) in rad/s."
+   },
+   {
+    "name": "Moment of inertia by integration",
+    "formula": "\\( I = \\int r_\\perp^2\\,dm \\), \\( dm = \\lambda\\,dx \\) or \\( \\sigma\\,dA \\)",
+    "when": "Continuous bodies.",
+    "example": "Disk by rings: \\( \\int_0^R r^2\\sigma\\,2\\pi r\\,dr = \\tfrac12MR^2 \\).",
+    "watch": "Choose elements whose points are all at the same distance from the axis."
+   },
+   {
+    "name": "Standard moments of inertia",
+    "formula": "Rod: \\( \\tfrac1{12}ML^2 \\) (center), \\( \\tfrac13ML^2 \\) (end); hoop \\( MR^2 \\); disk \\( \\tfrac12MR^2 \\); solid sphere \\( \\tfrac25MR^2 \\); shell \\( \\tfrac23MR^2 \\)",
+    "when": "Building composite bodies; moments about the same axis add.",
+    "example": "Rod pivoted at an end with a ball at the tip: \\( \\tfrac13ML^2 + mL^2 \\).",
+    "watch": "Each value refers to a specific axis."
+   },
+   {
+    "name": "Parallel-axis theorem",
+    "formula": "\\( I = I_{\\text{cm}} + Md^2 \\)",
+    "when": "Axis parallel to one through the center of mass.",
+    "example": "Disk about a rim point, perpendicular to the face: \\( \\tfrac32MR^2 \\).",
+    "watch": "One of the two axes must pass through the center of mass."
+   },
+   {
+    "name": "Torque",
+    "formula": "\\( \\vec\\tau = \\vec r\\times\\vec F \\); \\( \\tau = rF\\sin\\phi = r_\\perp F \\); \\( \\tau_z = xF_y - yF_x \\)",
+    "when": "Turning effect of a force about a point or axis.",
+    "example": "Wrench 0.25 m, 80 N at \\( 60^\\circ \\): 17.3 N·m.",
+    "watch": "Lever arm is the perpendicular distance to the line of action; keep one sign convention."
+   },
+   {
+    "name": "Static equilibrium",
+    "formula": "\\( \\sum\\vec F = \\vec 0 \\), \\( \\sum\\vec\\tau = \\vec 0 \\) (any point)",
+    "when": "Extended bodies at rest: beams, hinges, ladders.",
+    "example": "4.0 m plank, person 1.0 m from left: supports 539 N and 245 N.",
+    "watch": "Weight acts at the center of mass; take torques where unknown forces act."
+   }
+  ],
+  "stuck": [
+   "Convert every rotational quantity to radians and rad/s before substituting into a formula.",
+   "List which of \\( t \\), \\( \\omega \\), \\( \\alpha \\), \\( \\Delta\\theta \\) you know and want, and pick the constant-\\( \\alpha \\) equation that omits the remaining one; if \\( \\alpha \\) varies, integrate.",
+   "For a moment of inertia, sketch the axis, pick mass elements at a single distance from it, and write dm in terms of a density before integrating; then check the answer against a known limit.",
+   "In a statics problem, draw every force at its point of application, put each weight at its center of mass, and take torques about the point where the most unknown forces act.",
+   "For each torque, find the lever arm by dropping a perpendicular from the pivot to the line of action, then assign a sign by the sense of rotation it would produce."
+  ]
+ }
+}

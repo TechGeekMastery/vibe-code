@@ -1,0 +1,816 @@
+{
+ "key": "phy-0-2",
+ "title": "Newton’s laws and free-body diagrams",
+ "v": 1,
+ "scope": "Force as a vector and the net force, Newton's three laws, inertial frames, mass and weight, the normal force and tension, free-body diagrams, equilibrium in two dimensions, apparent weight, bodies connected by ideal ropes and pulleys, and motion under a time-dependent force; friction and inclined planes, circular motion, and the momentum form of the second law belong to later chapters.",
+ "sources": [
+  {
+   "title": "OpenStax University Physics Vol. 1, 5.2 Newton's First Law",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/5-2-newtons-first-law"
+  },
+  {
+   "title": "OpenStax University Physics Vol. 1, 5.3 Newton's Second Law",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/5-3-newtons-second-law"
+  },
+  {
+   "title": "OpenStax University Physics Vol. 1, 5.5 Newton's Third Law",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/5-5-newtons-third-law"
+  },
+  {
+   "title": "OpenStax University Physics Vol. 1, 5.6 Common Forces",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/5-6-common-forces"
+  },
+  {
+   "title": "OpenStax University Physics Vol. 1, 5.7 Drawing Free-Body Diagrams",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/5-7-drawing-free-body-diagrams"
+  },
+  {
+   "title": "OpenStax University Physics Vol. 1, 6.1 Solving Problems with Newton's Laws",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/6-1-solving-problems-with-newtons-laws"
+  },
+  {
+   "title": "MIT 8.01SC Classical Mechanics, Chapter 7: Newton's Laws of Motion",
+   "url": "https://ocw.mit.edu/courses/8-01sc-classical-mechanics-fall-2016/mit8_01scs22_chapter7.pdf"
+  },
+  {
+   "title": "Dourmashkin, Classical Mechanics (MIT), 8.3 Constraint Forces",
+   "url": "https://phys.libretexts.org/Bookshelves/Classical_Mechanics/Classical_Mechanics_(Dourmashkin)/08:_Applications_of_Newtons_Second_Law/8.03:_Constraint_Forces"
+  }
+ ],
+ "pre": [
+  "phy-0-0",
+  "phy-0-1"
+ ],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Force as a vector; net force",
+   "d": "Represent forces as vectors, add them by components to get the net force, and distinguish external from internal forces.",
+   "type": "concept"
+  },
+  {
+   "id": "k2",
+   "t": "First law and inertial frames",
+   "d": "State the first law, define an inertial reference frame, and explain why the law fails in an accelerating frame.",
+   "type": "concept"
+  },
+  {
+   "id": "k3",
+   "t": "Second law in component form",
+   "d": "Apply ΣF = ma one component at a time, with the newton as the derived unit.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k4",
+   "t": "Mass versus weight",
+   "d": "Distinguish mass (inertia, kg) from weight (gravitational force, N) and use w = mg.",
+   "type": "distinction"
+  },
+  {
+   "id": "k5",
+   "t": "Third-law interaction pairs",
+   "d": "Identify the partner of any force and distinguish third-law pairs from balanced forces on one body.",
+   "type": "distinction"
+  },
+  {
+   "id": "k6",
+   "t": "Normal force and tension",
+   "d": "Treat the normal force and tension as constraint forces found from Newton's laws; explain why an ideal rope has uniform tension.",
+   "type": "concept"
+  },
+  {
+   "id": "k7",
+   "t": "Drawing free-body diagrams",
+   "d": "Isolate a body, draw every external force on it and nothing else, choose axes and write the component equations.",
+   "type": "skill"
+  },
+  {
+   "id": "k8",
+   "t": "Equilibrium in two dimensions",
+   "d": "Solve for unknown forces from ΣFₓ = 0 and ΣFᵧ = 0, including cables meeting at a knot.",
+   "type": "procedure"
+  },
+  {
+   "id": "k9",
+   "t": "Apparent weight in an elevator",
+   "d": "Find the normal force or scale reading on a body whose support accelerates vertically.",
+   "type": "skill"
+  },
+  {
+   "id": "k10",
+   "t": "Connected bodies and constraints",
+   "d": "Solve systems joined by ideal ropes, pulleys or contact using one diagram per body and a constraint on the accelerations.",
+   "type": "skill"
+  },
+  {
+   "id": "k11",
+   "t": "Time-dependent forces",
+   "d": "Integrate a(t) = F(t)/m to find velocity and position when the force varies with time.",
+   "type": "procedure"
+  }
+ ],
+ "intro": "Kinematics, developed in the previous two chapters, describes motion completely once the acceleration is known, but it says nothing about what the acceleration will be. Why does a released stone speed up, a sliding book slow down, a rope pull harder on one crate than on another? Mechanics needed a rule connecting the acceleration of a body to its surroundings.\n\nNewton's three laws of motion supply that rule. The surroundings act on a body through **forces**; the net force fixes the acceleration through the second law; and every force is one half of an interaction between two bodies, which is the content of the third law. Applying the laws in practice depends on one disciplined habit: isolating a single body and accounting for every force exerted on it, which is what a free-body diagram does. This chapter builds the laws in order, then uses them on bodies at rest, in accelerating elevators, and joined by ropes and pulleys.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "Forces and the first law",
+   "kps": [
+    "k1",
+    "k2"
+   ],
+   "md": "Kinematics describes motion but does not explain it: given \\( x(t) \\) we can compute the acceleration, but nothing so far tells us what the acceleration will be. This section introduces the quantity that determines it, force, and the first of Newton's laws, which says what happens when the forces on a body balance.\n\n**Force and net force.** A **force** is a push or a pull exerted on a body by another body, either by contact (a hand, a rope, a floor) or at a distance (Earth's gravity). Forces are vectors: each has a magnitude, measured in newtons (N, defined in the next section), and a direction. Experiment shows that several forces acting on one body together have the same effect as a single force equal to their vector sum, the **net force**:\n\\[ \\vec F_{\\text{net}} = \\sum_i \\vec F_i, \\qquad F_{\\text{net},x} = \\sum_i F_{i,x}, \\quad F_{\\text{net},y} = \\sum_i F_{i,y}. \\]\nWhich forces count depends on what you call the body. Once a **system** is chosen, an **external force** is one exerted on it by something outside it, and an **internal force** is one exerted by one part of the system on another. Only external forces change the motion of the system as a whole; the reason, Newton's third law, is given in a later section.\n\n**The first law.**\n\n> **Newton's first law.** If the net external force on a body is zero, the body remains at rest if it is at rest, and keeps moving with constant velocity (constant speed in a straight line) if it is moving.\n\nIn symbols, \\( \\vec F_{\\text{net}} = \\vec 0 \\) implies that \\( \\vec v \\) is constant. A change of velocity, in magnitude or in direction, requires a nonzero net force. The tendency of a body to keep its velocity is called **inertia**. A book sliding across a table slows down not because motion runs out but because friction, a force, acts on it; on smoother surfaces it slides farther, and in the frictionless limit it would slide at constant velocity indefinitely.\n\nA body with zero acceleration is in **equilibrium**, and by the first law this happens exactly when \\( \\vec F_{\\text{net}} = \\vec 0 \\). A parked car and a car cruising at a steady 25 m/s along a straight road are both in equilibrium.\n\n**Inertial frames.** Velocity is measured relative to a reference frame, and the first law cannot hold in every frame. A passenger standing in a bus that brakes hard lurches forward, although nothing pushes her forward: relative to the bus she accelerates with no net force on her. The first law therefore also serves as a criterion: an **inertial reference frame** is one in which a body with zero net force moves with constant velocity. A frame moving with constant velocity relative to an inertial frame is also inertial; a frame that accelerates or rotates relative to one is not. The ground is not exactly inertial, since Earth rotates, but a point on the equator has a centripetal acceleration of only about 0.034 m/s², so in this course the ground frame is treated as inertial. The first and second laws hold only in inertial frames, and every analysis in this course is carried out in one.\n\n**Worked example.** Two horizontal forces act on a puck on frictionless ice: \\( \\vec F_1 \\) of 12.0 N along \\( +x \\), and \\( \\vec F_2 \\) of 8.0 N at \\( 120^\\circ \\) from the \\( +x \\)-axis. (The vertical forces, weight and the push of the ice, balance and are omitted.) Find the net force and the one additional force that would put the puck in equilibrium.\n\n1. Components: \\( \\vec F_2 = 8.0(\\cos 120^\\circ,\\ \\sin 120^\\circ) = (-4.0,\\ 6.93) \\) N.\n2. Sum: \\( \\vec F_{\\text{net}} = (12.0 - 4.0,\\ 0 + 6.93) = (8.0,\\ 6.93) \\) N.\n3. Magnitude \\( \\sqrt{8.0^2 + 6.93^2} = 10.6 \\) N, at \\( \\arctan(6.93/8.0) = 40.9^\\circ \\) above the \\( +x \\)-axis.\n4. Equilibrium needs a third force \\( \\vec F_3 = -\\vec F_{\\text{net}} = (-8.0,\\ -6.93) \\) N: 10.6 N at \\( 220.9^\\circ \\).\n\n**Common mistakes.** Believing that motion requires a force in the direction of motion: a force is needed to change the velocity, not to maintain it. Adding force magnitudes instead of vectors: 12.0 N and 8.0 N combine to 20.0 N only if they point the same way.",
+   "questions": [
+    {
+     "id": "s1q1",
+     "kp": "k1",
+     "type": "number",
+     "prompt": "Two horizontal forces act on a body: 6.0 N along \\( +x \\) and 10.0 N at \\( 150^\\circ \\) from the \\( +x \\)-axis. Find the magnitude of the net force, in newtons.",
+     "answer": "sqrt((6 + 10*cos(150*pi/180))^2 + (10*sin(150*pi/180))^2)",
+     "why": "Components of the second force: \\( 10.0(\\cos 150^\\circ, \\sin 150^\\circ) = (-8.66,\\ 5.00) \\) N. Net force: \\( (6.0 - 8.66,\\ 5.00) = (-2.66,\\ 5.00) \\) N. Magnitude \\( \\sqrt{2.66^2 + 5.00^2} = 5.66 \\) N (pointing at \\( 118^\\circ \\), into the second quadrant).",
+     "tol": 0.005
+    },
+    {
+     "id": "s1q2",
+     "kp": "k2",
+     "type": "written",
+     "prompt": "A passenger stands in a bus that brakes sharply, and she lurches toward the front. A friend says a forward force acted on her. Explain what actually happens using the first law, and use the example to explain what an inertial reference frame is and why the bus is not one while it brakes.",
+     "rubric": [
+      "In the ground frame the passenger tends to keep her forward velocity (inertia); no forward force acts on her",
+      "The bus decelerates because forces act on it; the floor acts on her only through her feet, so her upper body keeps moving forward relative to the bus",
+      "An inertial frame is one in which a body with zero net force has constant velocity (the first law holds)",
+      "The braking bus accelerates relative to the ground, so in the bus frame a body can accelerate with no net force: the first law fails, the frame is non-inertial"
+     ],
+     "model": "Relative to the ground, which we treat as inertial, the passenger was moving forward with the bus. When the bus brakes, forces from the road decelerate the bus; the only forces on the passenger are her weight, the floor's push and friction at her feet. Nothing pushes her forward: her upper body simply continues at its previous velocity, as the first law requires, while her feet are slowed by friction, so she pitches toward the front. An inertial reference frame is one in which a body with zero net force moves with constant velocity. The bus, while braking, accelerates relative to the ground; measured in the bus frame, the passenger accelerates forward although no force produces that acceleration, so the first law fails there and the bus frame is non-inertial. The apparent forward force is an artifact of using an accelerating frame.",
+     "why": "The first law picks out the frames in which Newton's laws are valid. Apparent forces that have no agent are the signature of a non-inertial frame."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "The second law, mass, and weight",
+   "kps": [
+    "k3",
+    "k4",
+    "k11"
+   ],
+   "md": "The first law says what happens when the net force is zero. The second law says what happens when it is not, and it is the equation from which nearly every problem in mechanics starts.\n\n> **Newton's second law.** In an inertial frame, the acceleration of a body is in the direction of the net external force on it, proportional to that force and inversely proportional to the body's mass:\n> \\[ \\vec F_{\\text{net}} = \\sum \\vec F = m\\vec a. \\]\n\nThis is a vector equation, so it holds for each component separately:\n\\[ \\sum F_x = m a_x, \\qquad \\sum F_y = m a_y, \\qquad \\sum F_z = m a_z. \\]\nThat is what makes it usable: choose axes, resolve every force, and each axis gives one scalar equation. The acceleration always points along the net force; the velocity need not. A projectile at the top of its path moves horizontally while the net force on it is vertical.\n\n**Mass and the newton.** The **mass** \\( m \\) of a body (SI unit: the kilogram) measures its inertia: the same net force gives twice the mass half the acceleration. The SI unit of force is fixed by the second law. One **newton** is the net force that gives a 1 kg mass an acceleration of 1 m/s²:\n\\[ 1\\ \\text{N} = 1\\ \\text{kg·m/s}^2. \\]\nThe second law is nevertheless not a mere definition of force. Forces can be identified and measured independently (with a calibrated spring, for instance), and the law asserts an experimentally verified relation among force, mass and acceleration that could have been otherwise. It applies to a particle, or to an extended body treated as one, whose parts all share a single acceleration.\n\n**Weight.** The gravitational force that Earth exerts on a body is its **weight** \\( \\vec w \\). In free fall this is the only force, and the body accelerates at \\( g \\) downward, so the second law gives\n\\[ w = mg, \\]\ndirected downward, with \\( g = 9.80 \\) m/s² near Earth's surface. Mass and weight are different quantities. Mass is a property of the body, in kilograms, the same everywhere; weight is a force, in newtons, and depends on where the body is. An 80.0 kg astronaut weighs 784 N on Earth and \\( 80.0 \\times 1.62 = 130 \\) N on the Moon, yet her mass is 80.0 kg in both places, and she is exactly as hard to set in horizontal motion on either.\n\n**Worked example (constant force).** A 1500 kg car is driven forward by a 4500 N force from the road and resisted by 1500 N of air drag; the vertical forces balance. Along the road, \\( \\sum F_x = 4500 - 1500 = 3000 \\) N, so \\( a_x = 3000/1500 = 2.00 \\) m/s².\n\n**Forces that vary with time.** When the net force depends on time, the second law gives the acceleration at each instant, \\( a_x(t) = F_x(t)/m \\), and velocity and position follow by integration, as in one-dimensional kinematics:\n\\[ v_x(t) = v_{0x} + \\frac{1}{m}\\int_0^t F_x(t')\\,dt', \\qquad x(t) = x_0 + \\int_0^t v_x(t')\\,dt'. \\]\nThe constant-acceleration equations do not apply.\n\n**Worked example (time-dependent force).** A 2.00 kg block starts from rest at \\( x = 0 \\) on a frictionless horizontal surface and is pulled by a horizontal force \\( F_x = (6.00\\ \\text{N/s})\\,t \\).\n\n1. \\( a_x = F_x/m = 3.00t \\) m/s².\n2. \\( v_x = \\int_0^t 3.00t'\\,dt' = 1.50t^2 \\) m/s.\n3. \\( x = \\int_0^t 1.50t'^2\\,dt' = 0.500t^3 \\) m.\n4. At \\( t = 2.00 \\) s: \\( v_x = 6.00 \\) m/s and \\( x = 4.00 \\) m. Using \\( x = \\tfrac12 a t^2 \\) with the final acceleration, 6.00 m/s², would give 12.0 m, three times too much.\n\nThe plot shows \\( a_x(t) = 3t \\) (in m/s², against \\( t \\) in s). The shaded area from 0 to 2 s is the velocity gained, 6.00 m/s.\n\n```plot\nx: 0, 3\ny: 0, 10\nxlabel: t (s)\nylabel: a (m/s²)\nf: 3*x | a(t) = 3t\nshade: 3*x, 0, 2 | area = v(2) = 6.00 m/s\n```\n\n**Common mistakes.** Treating \\( m\\vec a \\) as one of the forces: it is the result of the forces, the right-hand side of the equation, never an arrow on the diagram. Stating a weight in kilograms. Assuming a body moves in the direction of the net force; it accelerates in that direction.",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k11",
+     "type": "number",
+     "prompt": "A 3.00 kg block, initially at rest on a frictionless horizontal surface, is pulled by a horizontal force \\( F(t) = (12.0\\ \\text{N/s}^2)\\,t^2 \\). Find its speed at \\( t = 3.00 \\) s, in m/s.",
+     "answer": "4*3^3/3",
+     "why": "\\( a = F/m = 4.00t^2 \\) m/s². Integrating from rest: \\( v = \\int_0^t 4.00t'^2\\,dt' = \\tfrac{4.00}{3}t^3 \\). At \\( t = 3.00 \\) s: \\( v = \\tfrac{4.00}{3}(27.0) = 36.0 \\) m/s. The acceleration is not constant, so \\( v = at \\) with \\( a(3) = 36 \\) m/s² (which would give 108 m/s) is wrong.",
+     "tol": 0.005
+    },
+    {
+     "id": "s2q2",
+     "kp": "k4",
+     "type": "mcq",
+     "prompt": "An astronaut whose mass on Earth is 80.0 kg stands on the Moon, where \\( g = 1.62 \\) m/s². Which statement is correct?",
+     "options": [
+      "Her mass is 80.0 kg and her weight is 130 N.",
+      "Her mass is 13.2 kg and her weight is 130 N.",
+      "Her mass is 80.0 kg and her weight is 784 N.",
+      "Her mass is 80.0 kg and her weight is 80.0 kg."
+     ],
+     "answer": 0,
+     "why": "Mass is a property of the body and does not change: 80.0 kg. Weight is the local gravitational force, \\( mg = 80.0 \\times 1.62 = 130 \\) N. Option 2 scales the mass with \\( g \\) (treating mass as if it were weight); option 3 treats weight as intrinsic; option 4 uses the everyday habit of stating weight in kilograms, which confuses a force with a mass."
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "The third law and interaction pairs",
+   "kps": [
+    "k5"
+   ],
+   "md": "Forces arise from interactions between two bodies, and the third law says that every interaction acts both ways. This section states the law, shows how to find the partner of any force, and explains why partners never cancel in a second-law equation.\n\n> **Newton's third law.** If body B exerts a force \\( \\vec F_{AB} \\) on body A, then A exerts a force \\( \\vec F_{BA} \\) on B, and\n> \\[ \\vec F_{BA} = -\\vec F_{AB}. \\]\n\n(Read \\( \\vec F_{AB} \\) as \"the force on A by B\".) The two forces form an **interaction pair**, often called an action–reaction pair. The members of a pair:\n\n1. have equal magnitudes and opposite directions;\n2. act on different bodies, one on each;\n3. are of the same physical type (both gravitational, both normal forces, both friction);\n4. exist simultaneously; neither causes the other.\n\nTo find the partner of a force, describe it as \"the force of type X on A by B\" and swap the bodies: the partner is \"the force of type X on B by A\".\n\n**Why partners do not cancel.** The second law for body A sums the forces on A. The partner of any force on A acts on B, so it never appears in A's equation. Forces cancel in a sum only when both act on the same body. The same fact explains why internal forces drop out of the net force on a system: when both A and B belong to the system, both members of each pair appear in the sum, and they add to zero.\n\n**Pairs versus balanced forces.** A book rests on a table. Two forces act on it: its weight (Earth pulls it down) and the normal force (the table pushes it up). They are equal and opposite, but they are not a third-law pair. Both act on the same body, they are of different types, and their equality follows from the second law with \\( \\vec a = \\vec 0 \\); if the table were in an accelerating elevator they would differ. The partner of the book's weight is the book's gravitational pull on Earth, acting upward on Earth. The partner of the normal force is the book's downward push on the table.\n\n**Worked example.** Two blocks, \\( m_1 = 3.00 \\) kg and \\( m_2 = 2.00 \\) kg, sit side by side on a frictionless floor. A horizontal force \\( F = 20.0 \\) N pushes block 1, which pushes block 2. Find the acceleration and the contact force \\( P \\) between the blocks.\n\n1. The blocks move together, so they share one acceleration. Take both as the system: the contact forces are internal, and the only external horizontal force is \\( F \\). So \\( a = F/(m_1 + m_2) = 20.0/5.00 = 4.00 \\) m/s².\n2. Block 2 alone: the only horizontal force on it is the push of block 1, so \\( P = m_2 a = (2.00)(4.00) = 8.00 \\) N.\n3. Block 1 alone: \\( F \\) forward and, by the third law, block 2's push of 8.00 N backward. Check: \\( 20.0 - 8.00 = 12.0 \\) N \\( = m_1 a \\).\n\nThe contact force is smaller than \\( F \\): block 1 transmits only the force needed to accelerate block 2. If the same 20.0 N pushed block 2 instead, the contact force would be \\( m_1 a = 12.0 \\) N.\n\n**Common mistakes.** Calling weight and normal force a third-law pair. Arguing that a horse cannot pull a cart because the cart pulls back on the horse with an equal force. Those two forces act on different bodies. The cart accelerates if the horse's forward pull on it exceeds the resistance acting on the cart; the horse accelerates if the ground's forward push on its hooves exceeds the cart's backward pull on the horse. Nothing requires either net force to be zero.",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k5",
+     "type": "written",
+     "prompt": "A book rests on a table in a room at rest. (a) List the forces acting on the book. (b) For each, name its third-law partner, stating the body it acts on. (c) Explain why the two forces on the book are equal in magnitude, and why that equality is not an instance of the third law.",
+     "rubric": [
+      "(a) Weight (Earth on book, down) and normal force (table on book, up)",
+      "(b) Partner of the weight: book's gravitational pull on Earth, upward, acting on Earth; partner of the normal force: book's push on the table, downward, acting on the table",
+      "(c) Equality follows from the second law with a = 0 (net force on the book is zero)",
+      "They are not a pair: both act on the same body, they are of different types, and they would differ if the book accelerated vertically"
+     ],
+     "model": "(a) Two forces act on the book: its weight \\( mg \\), exerted downward by Earth, and the normal force \\( N \\), exerted upward by the table. (b) The partner of the weight is the gravitational force of the book on Earth, of magnitude \\( mg \\), directed upward and acting on Earth. The partner of the normal force is the contact force of the book on the table, of magnitude \\( N \\), directed downward and acting on the table. (c) The book is at rest, so \\( a = 0 \\) and the second law gives \\( N - mg = 0 \\). This equality comes from the book's state of motion, not from the third law: the two forces act on the same body and are of different types (gravitational and contact). If the table were in an elevator accelerating upward, \\( N \\) would exceed \\( mg \\), while each third-law pair would still consist of exactly equal and opposite forces.",
+     "why": "The test for a third-law pair is: two bodies, swapped roles, same type of force. Balanced forces on one body satisfy none of these."
+    },
+    {
+     "id": "s3q2",
+     "kp": "k5",
+     "type": "number",
+     "prompt": "A horizontal force of 30.0 N pushes a 4.00 kg block, which in turn pushes a 6.00 kg block ahead of it across a frictionless floor. Find the magnitude of the force the 6.00 kg block exerts on the 4.00 kg block, in newtons.",
+     "answer": "6*30/10",
+     "why": "System of both blocks: \\( a = 30.0/10.0 = 3.00 \\) m/s². The only horizontal force on the 6.00 kg block is the push of the 4.00 kg block: \\( P = (6.00)(3.00) = 18.0 \\) N. By the third law the 6.00 kg block pushes back on the 4.00 kg block with 18.0 N. Check on the 4.00 kg block: \\( 30.0 - 18.0 = 12.0 = (4.00)(3.00) \\).",
+     "tol": 0.005
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "Normal force, tension, and the free-body diagram",
+   "kps": [
+    "k6",
+    "k7"
+   ],
+   "md": "Weight is given by a formula. The contact forces are not: the push of a floor and the pull of a rope take whatever values the motion requires, and Newton's laws are how we find them. This section defines the two contact forces used in this chapter and the diagram that organizes every force problem. Surfaces here are frictionless; friction, the component of a contact force along the surface, is the subject of the next chapter.\n\n**Normal force.** When a body presses against a surface, the surface pushes back perpendicular (normal) to itself. This **normal force** \\( \\vec N \\) is a **constraint force**: it has no formula of its own, but takes whatever magnitude keeps the body from moving into the surface. A surface can push but not pull, so \\( N \\ge 0 \\); if the equations demand \\( N < 0 \\), the body has left the surface. The normal force equals \\( mg \\) only in a special case: a horizontal surface, no other vertical forces, and no vertical acceleration.\n\n**Tension.** A taut rope, string or cable pulls on a body attached to it, along the rope and away from the body. The magnitude of this pull is the **tension** \\( T \\). A rope can only pull, so \\( T \\ge 0 \\). Apply the second law to a straight piece of rope with tensions \\( T_1 \\) and \\( T_2 \\) at its two ends, pulling in opposite directions: \\( T_2 - T_1 = m_{\\text{rope}}\\,a \\). For an **ideal rope**, massless and inextensible, \\( m_{\\text{rope}} = 0 \\), so \\( T_1 = T_2 \\): the tension is the same all along the rope, whatever its acceleration. An **ideal pulley**, massless and frictionless, changes the direction of a rope without changing its tension.\n\n**The free-body diagram.** A **free-body diagram** shows one body, isolated from its surroundings, with an arrow for every external force acting on it. The procedure:\n\n1. Choose the body (or system) and draw it alone, as a dot or a simple outline.\n2. Draw its weight \\( m\\vec g \\), downward.\n3. Go around the body: wherever something touches it, draw the contact force there, a normal force for each surface and a tension for each rope.\n4. Draw any other identified force, such as an applied push, and label every arrow with the agent that exerts it.\n5. Choose axes, one of them along the acceleration if its direction is known, and resolve each force that is not along an axis.\n6. Write \\( \\sum F_x = ma_x \\) and \\( \\sum F_y = ma_y \\).\n\nEvery arrow must be a force on the chosen body by an identifiable agent. The diagram never contains forces the body exerts on other things, internal forces, the velocity, or \\( m\\vec a \\).\n\n**Worked example.** A 20.0 kg crate on a frictionless floor is pulled by a rope with tension 80.0 N directed \\( 30.0^\\circ \\) above the horizontal. Find the normal force and the acceleration.\n\n1. Diagram: weight \\( mg = 196 \\) N down; normal force \\( N \\) up; tension 80.0 N at \\( 30.0^\\circ \\) above \\( +x \\). Axes: \\( x \\) along the floor (the direction of the acceleration), \\( y \\) up.\n2. \\( y \\)-equation: the crate stays on the floor, so \\( a_y = 0 \\): \\( N + 80.0\\sin 30.0^\\circ - 196 = 0 \\), giving \\( N = 196 - 40.0 = 156 \\) N.\n3. \\( x \\)-equation: \\( 80.0\\cos 30.0^\\circ = (20.0)\\,a_x \\), giving \\( a_x = 69.3/20.0 = 3.46 \\) m/s².\n\nThe normal force is less than the weight because the rope's upward component supports part of the weight. The floor's push would fall to zero, and the crate would begin to lift, at \\( T\\sin 30.0^\\circ = 196 \\) N, that is \\( T = 392 \\) N.\n\n**Common mistakes.** Writing \\( N = mg \\) out of habit. Drawing a force \"of the throw\" or \"of motion\" on a body that is no longer touching the thrower. Drawing both members of a third-law pair on one diagram; only the one acting on the chosen body belongs there.",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k6",
+     "type": "number",
+     "prompt": "A 5.00 kg box on a frictionless horizontal floor is pushed with a force of 40.0 N directed \\( 25.0^\\circ \\) below the horizontal. Using \\( g = 9.80 \\) m/s², find the normal force of the floor on the box, in newtons.",
+     "answer": "5*9.8 + 40*sin(25*pi/180)",
+     "why": "Vertical forces: \\( N \\) up, \\( mg = 49.0 \\) N down, and the push's vertical component \\( 40.0\\sin 25.0^\\circ = 16.9 \\) N down. With \\( a_y = 0 \\): \\( N = 49.0 + 16.9 = 65.9 \\) N. Pushing downward at an angle presses the box into the floor, so \\( N > mg \\).",
+     "tol": 0.005
+    },
+    {
+     "id": "s4q2",
+     "kp": "k7",
+     "type": "written",
+     "prompt": "A hockey puck slides across frictionless ice after leaving the stick. A student's free-body diagram of the puck shows three forces: its weight, the normal force from the ice, and a horizontal 'force of the stick' in the direction of motion. Identify the error, explain it with Newton's laws, and describe the correct diagram and what it predicts.",
+     "rubric": [
+      "The stick is no longer in contact, so it exerts no force; every force needs an agent acting now",
+      "Motion does not require a force in its direction (first law)",
+      "Correct diagram: weight down and normal force up only",
+      "Net force zero, so the puck moves at constant velocity (N = mg here)"
+     ],
+     "model": "The 'force of the stick' does not exist once the puck has left the stick: a contact force acts only while there is contact, and every arrow on a free-body diagram must be a force exerted now by an identifiable agent. The student has drawn the velocity, or a remembered push, as a force. By the first law no force is needed to keep the puck moving; a force would be needed to change its velocity. The correct diagram has two arrows: the weight \\( mg \\) downward (Earth) and the normal force \\( N \\) upward (ice). With no vertical acceleration, \\( N = mg \\), the net force is zero, and the puck slides at constant velocity.",
+     "why": "The stick's push acted during contact and changed the puck's velocity then; afterwards it is part of the puck's history, not a present force."
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "Equilibrium in two dimensions",
+   "kps": [
+    "k8"
+   ],
+   "md": "Cables, supports and hanging loads are meant to stay at rest, and the practical question is how large the forces in them must be. For a body in equilibrium the second law with \\( \\vec a = \\vec 0 \\) answers it.\n\n**Conditions.** A body is in (translational) equilibrium if and only if \\( \\sum\\vec F = \\vec 0 \\), that is,\n\\[ \\sum F_x = 0, \\qquad \\sum F_y = 0. \\]\nIn a plane these are two independent scalar equations, so one body's diagram can determine at most two unknown force magnitudes. When there are more unknowns, draw a diagram for another body or for a point where several ropes meet. A knot joining ideal ropes is massless and therefore always has zero net force, so its diagram involves only the tensions.\n\n**Worked example.** A 15.0 kg traffic light hangs from a vertical cable attached to a knot. The knot is held by two cables making \\( 30.0^\\circ \\) (left) and \\( 45.0^\\circ \\) (right) with the horizontal. Find the three tensions.\n\n1. Light: \\( T_3 - mg = 0 \\), so \\( T_3 = (15.0)(9.80) = 147 \\) N.\n2. Knot: \\( T_1 \\) up and to the left at \\( 30.0^\\circ \\), \\( T_2 \\) up and to the right at \\( 45.0^\\circ \\), \\( T_3 = 147 \\) N down:\n\\[ x:\\ -T_1\\cos 30.0^\\circ + T_2\\cos 45.0^\\circ = 0, \\qquad y:\\ T_1\\sin 30.0^\\circ + T_2\\sin 45.0^\\circ - 147 = 0. \\]\n3. From \\( x \\): \\( T_2 = T_1\\cos 30.0^\\circ/\\cos 45.0^\\circ = 1.225\\,T_1 \\). Substituting in \\( y \\): \\( T_1(0.500 + 0.866) = 147 \\), so \\( T_1 = 108 \\) N and \\( T_2 = 132 \\) N.\n\nThe horizontal components must balance, so the steeper cable, which has the smaller cosine, carries the larger tension. Note also that \\( T_1 + T_2 = 240 \\) N exceeds the 147 N weight: the cables do not simply divide the weight between them, because part of each tension is spent pulling horizontally against the other cable.\n\n**General solution.** Solving the same two equations for cables at angles \\( \\theta_1 \\) and \\( \\theta_2 \\) above the horizontal, and using \\( \\sin\\theta_1\\cos\\theta_2 + \\cos\\theta_1\\sin\\theta_2 = \\sin(\\theta_1 + \\theta_2) \\),\n\\[ T_1 = \\frac{mg\\cos\\theta_2}{\\sin(\\theta_1 + \\theta_2)}, \\qquad T_2 = \\frac{mg\\cos\\theta_1}{\\sin(\\theta_1 + \\theta_2)}. \\]\n\n**The symmetric case.** With \\( \\theta_1 = \\theta_2 = \\theta \\), each tension is \\( T = mg/(2\\sin\\theta) \\). As the cables flatten, \\( \\theta \\to 0 \\) and \\( T \\to \\infty \\): no finite tension can support a weight on a perfectly straight horizontal cable, since a horizontal cable has no vertical component. This is why power lines and clotheslines always sag. The plot shows \\( T \\) (in N) against \\( \\theta \\) (in degrees) for the 147 N light, with the value \\( mg/2 \\) that holds only for vertical cables.\n\n```plot\nx: 0, 90\ny: 0, 600\nxlabel: θ (degrees)\nylabel: T (N)\nf: 147/(2*sin(x*pi/180)) | tension in each cable\nhline: 73.5 | mg/2\n```\n\n**Common mistakes.** Assuming that two cables share a weight equally, or have equal tensions when their angles differ. Using sine where cosine belongs when the angle is measured from the vertical rather than from the horizontal; decide from the diagram which component is adjacent to the given angle. Forgetting that the vertical cable's tension equals \\( mg \\) only because the light is at rest.",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k8",
+     "type": "number",
+     "prompt": "A 10.0 kg sign hangs from a knot held by two cables, one at \\( 40.0^\\circ \\) and one at \\( 60.0^\\circ \\) above the horizontal. Using \\( g = 9.80 \\) m/s², find the tension in the \\( 60.0^\\circ \\) cable, in newtons.",
+     "answer": "10*9.8*cos(40*pi/180)/sin(100*pi/180)",
+     "why": "Knot equations: \\( T_{40}\\cos 40.0^\\circ = T_{60}\\cos 60.0^\\circ \\) and \\( T_{40}\\sin 40.0^\\circ + T_{60}\\sin 60.0^\\circ = 98.0 \\) N. Solving, \\( T_{60} = \\dfrac{mg\\cos 40.0^\\circ}{\\sin 100.0^\\circ} = \\dfrac{98.0(0.766)}{0.985} = 76.2 \\) N (and \\( T_{40} = 49.8 \\) N). The steeper cable carries more.",
+     "tol": 0.005
+    },
+    {
+     "id": "s5q2",
+     "kp": "k8",
+     "type": "written",
+     "prompt": "A load of weight \\( mg \\) hangs from the midpoint of a cable whose two halves each make angle \\( \\theta \\) with the horizontal. Derive the tension in the cable, and use your result to explain why the cable can never be pulled perfectly straight while it supports the load.",
+     "rubric": [
+      "Knot/midpoint in equilibrium: horizontal components cancel by symmetry",
+      "Vertical: 2T sin θ = mg, so T = mg/(2 sin θ)",
+      "As θ → 0, sin θ → 0 and T → ∞",
+      "A horizontal cable has no vertical component, so it cannot balance the weight; any finite tension requires θ > 0 (a sag)"
+     ],
+     "model": "The midpoint is in equilibrium under the two cable tensions and the load. By symmetry the two tensions are equal, \\( T \\), and their horizontal components cancel. Vertically, each half contributes \\( T\\sin\\theta \\) upward, so \\( 2T\\sin\\theta = mg \\) and \\( T = \\dfrac{mg}{2\\sin\\theta} \\). As the cable is pulled straighter, \\( \\theta \\to 0 \\), \\( \\sin\\theta \\to 0 \\), and the required tension grows without bound. At \\( \\theta = 0 \\) both tensions are horizontal and have no vertical component at all, so \\( \\sum F_y = -mg \\ne 0 \\) whatever \\( T \\) is: equilibrium is impossible. A supported load therefore always produces a sag, however taut the cable.",
+     "why": "Large tensions at shallow angles are the reason cables and their anchors must be far stronger than the loads they carry."
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "title": "Accelerating systems: apparent weight and connected bodies",
+   "kps": [
+    "k9",
+    "k10"
+   ],
+   "md": "When the acceleration is not zero the procedure is the same, with \\( ma_x \\) and \\( ma_y \\) on the right-hand side. This section treats two standard situations: a body in an accelerating elevator, and several bodies joined by ropes.\n\n**Apparent weight.** A bathroom scale measures the force with which it pushes up on you, a normal force, not your weight. This reading is your **apparent weight**. In an elevator with vertical acceleration \\( a \\) (positive upward), the forces on you are \\( N \\) up and \\( mg \\) down, so\n\\[ N - mg = ma \\quad\\Longrightarrow\\quad N = m(g + a). \\]\nOnly the acceleration matters, not the velocity. The scale reads more than \\( mg \\) when the elevator speeds up going up or slows down going down (both have \\( a > 0 \\)); it reads less when the elevator speeds up going down or slows down going up; it reads exactly \\( mg \\) at constant velocity, moving or not. In free fall, \\( a = -g \\) and \\( N = 0 \\): the condition called weightlessness is zero apparent weight, not zero weight.\n\n*Worked example.* A 70.0 kg person stands on a scale in an elevator; her weight is 686 N. Moving up and speeding up at 1.50 m/s²: \\( N = 70.0(9.80 + 1.50) = 791 \\) N. Moving up and slowing down at 1.50 m/s², so \\( a = -1.50 \\) m/s²: \\( N = 70.0(8.30) = 581 \\) N.\n\n**Connected bodies.** Bodies joined by an ideal rope that stays taut move with equal speeds along the rope, so their accelerations have equal magnitudes. This **constraint** supplies the equation that the forces alone do not. Draw a separate free-body diagram for each body, choose each body's positive direction so that all move \"forward\" together, write the second law for each, and solve the equations simultaneously.\n\n*Worked example (Atwood machine).* Masses \\( m_1 = 2.00 \\) kg and \\( m_2 = 3.00 \\) kg hang on either side of an ideal pulley from an ideal rope and are released from rest. The heavier mass descends. Take up as positive for \\( m_1 \\) and down as positive for \\( m_2 \\); by the constraint both have the same acceleration \\( a \\):\n\\[ m_1:\\ T - m_1 g = m_1 a, \\qquad m_2:\\ m_2 g - T = m_2 a. \\]\nAdding the equations eliminates \\( T \\):\n\\[ a = \\frac{(m_2 - m_1)g}{m_1 + m_2} = \\frac{(1.00)(9.80)}{5.00} = 1.96\\ \\text{m/s}^2, \\qquad T = m_1(g + a) = \\frac{2m_1m_2\\,g}{m_1 + m_2} = 23.5\\ \\text{N}. \\]\nCheck the result against limiting cases, a habit worth forming. For \\( m_1 = m_2 \\): \\( a = 0 \\) and \\( T = mg \\), equilibrium. For \\( m_1 \\to 0 \\): \\( a \\to g \\) and \\( T \\to 0 \\), free fall. The tension, 23.5 N, lies between the two weights, 19.6 N and 29.4 N, as it must for one mass to accelerate upward and the other downward.\n\nIn the plot, the curve is the acceleration of \\( m_2 \\) (in m/s², downward positive) against \\( m_2 \\) (in kg). Drag the slider \\( k \\), the value of \\( m_1 \\) in kg. The acceleration is zero where \\( m_2 = m_1 \\) and approaches \\( g \\) (the horizontal line) as \\( m_2 \\) grows, without reaching it.\n\n```plot\nx: 0, 20\ny: -10, 11\nxlabel: m₂ (kg)\nylabel: a (m/s²)\nslider: k, 0.5, 5, 2 | m₁ (kg)\nf: 9.8*(x - k)/(x + k) | acceleration of m₂\nhline: 9.8 | g\n```\n\n**Common mistakes.** Setting \\( T = m_2 g \\) for the descending mass: if the tension equaled its weight, the net force on it would be zero and it could not accelerate. Using one set of axes for both bodies and then writing the same symbol \\( a \\) for both accelerations; with common axes the constraint reads \\( a_{1y} = -a_{2y} \\), and it must be written explicitly.",
+   "questions": [
+    {
+     "id": "s6q1",
+     "kp": "k9",
+     "type": "number",
+     "prompt": "A 60.0 kg person stands on a scale in an elevator that is moving downward and speeding up at 2.20 m/s². Using \\( g = 9.80 \\) m/s², what does the scale read, in newtons?",
+     "answer": "60*(9.8 - 2.2)",
+     "why": "Moving down and speeding up means the acceleration is downward: \\( a = -2.20 \\) m/s² with up positive. \\( N = m(g + a) = 60.0(9.80 - 2.20) = 456 \\) N, less than her weight of 588 N.",
+     "tol": 0.005
+    },
+    {
+     "id": "s6q2",
+     "kp": "k10",
+     "type": "expression",
+     "prompt": "A block of mass \\( m_1 \\) (type `m1`) on a frictionless horizontal table is tied by an ideal rope, running over an ideal pulley at the table's edge, to a block of mass \\( m_2 \\) (type `m2`) hanging vertically. Give the magnitude of the acceleration of the blocks in terms of \\( m_1 \\), \\( m_2 \\) and \\( g \\).",
+     "answer": "m2*g/(m1 + m2)",
+     "vars": "m1 m2 g",
+     "why": "Table block (toward the pulley positive): \\( T = m_1 a \\). Hanging block (down positive): \\( m_2 g - T = m_2 a \\). Adding: \\( m_2 g = (m_1 + m_2)a \\), so \\( a = \\dfrac{m_2 g}{m_1 + m_2} \\). Checks: \\( m_1 \\to 0 \\) gives free fall; \\( m_2 \\to 0 \\) gives \\( a \\to 0 \\)."
+    },
+    {
+     "id": "s6q3",
+     "kp": "k9",
+     "type": "written",
+     "prompt": "An elevator is moving downward. Can the scale reading of a passenger be greater than her weight? Justify with the second law, and describe the motion that produces each of the three cases (reading greater than, equal to, and less than her weight).",
+     "rubric": [
+      "Scale reads N, with N − mg = ma (up positive), so N = m(g + a)",
+      "The reading depends on the acceleration, not on the direction of the velocity",
+      "Yes: moving down while slowing down means a > 0, so N > mg",
+      "Equal at constant velocity (a = 0); less when moving down and speeding up (a < 0)"
+     ],
+     "model": "The scale reads the normal force \\( N \\) on the passenger. With up positive, \\( N - mg = ma \\), so \\( N = m(g + a) \\). The reading depends only on the acceleration. An elevator moving downward can have an upward acceleration: this is the case when it is slowing down (for example, arriving at a lower floor). Then \\( a > 0 \\) and \\( N > mg \\), so yes, the reading exceeds her weight. While it moves down at constant speed, \\( a = 0 \\) and \\( N = mg \\). While it moves down and speeds up (leaving an upper floor), \\( a < 0 \\) and \\( N < mg \\).",
+     "why": "Velocity and acceleration are independent: the second law involves only the latter."
+    }
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "t": "force",
+   "d": "A push or pull on a body by another body, by contact or at a distance; a vector measured in newtons."
+  },
+  {
+   "t": "net force",
+   "d": "The vector sum of all external forces on a body or system; it determines the acceleration through the second law."
+  },
+  {
+   "t": "external force",
+   "d": "A force on a chosen system exerted by something outside it; internal forces (between parts of the system) cancel in pairs."
+  },
+  {
+   "t": "inertia",
+   "d": "The tendency of a body to maintain its velocity; measured by its mass."
+  },
+  {
+   "t": "Newton's first law",
+   "d": "A body with zero net external force remains at rest or moves with constant velocity.",
+   "ex": "Also called the law of inertia."
+  },
+  {
+   "t": "inertial reference frame",
+   "d": "A frame in which a body with zero net force moves with constant velocity; frames moving uniformly relative to it are also inertial, accelerating frames are not."
+  },
+  {
+   "t": "equilibrium",
+   "d": "The state of zero acceleration; equivalent to zero net force."
+  },
+  {
+   "t": "Newton's second law",
+   "d": "In an inertial frame, ΣF = ma: the acceleration is along the net force, proportional to it and inversely proportional to the mass."
+  },
+  {
+   "t": "newton (N)",
+   "d": "The SI unit of force: 1 N = 1 kg·m/s², the net force that gives 1 kg an acceleration of 1 m/s²."
+  },
+  {
+   "t": "mass",
+   "d": "The measure of a body's inertia, in kilograms; independent of location."
+  },
+  {
+   "t": "weight",
+   "d": "The gravitational force of Earth on a body, w = mg, directed downward; in newtons, and dependent on location."
+  },
+  {
+   "t": "Newton's third law",
+   "d": "If B exerts force F_AB on A, then A exerts F_BA = −F_AB on B: equal, opposite, on different bodies, of the same type."
+  },
+  {
+   "t": "interaction pair",
+   "d": "The two forces of Newton's third law (action–reaction pair); they act on different bodies and never cancel each other."
+  },
+  {
+   "t": "normal force",
+   "d": "The component of a contact force perpendicular to the surface; a constraint force with N ≥ 0 and no formula of its own."
+  },
+  {
+   "t": "tension",
+   "d": "The magnitude of the pulling force a taut rope exerts along itself; uniform along an ideal (massless) rope."
+  },
+  {
+   "t": "constraint force",
+   "d": "A force such as the normal force or tension whose magnitude is fixed by the requirement that the motion obey a geometric constraint."
+  },
+  {
+   "t": "free-body diagram",
+   "d": "A drawing of one isolated body showing every external force acting on it, and nothing else."
+  },
+  {
+   "t": "apparent weight",
+   "d": "The reading of a scale, i.e. the normal force on a body; N = m(g + a) in a vertically accelerating elevator."
+  },
+  {
+   "t": "Atwood machine",
+   "d": "Two masses joined by a rope over a pulley; a = (m₂ − m₁)g/(m₁ + m₂), T = 2m₁m₂g/(m₁ + m₂) for ideal rope and pulley."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "term",
+   "front": "Define: net force",
+   "back": "The vector sum of all external forces on a body: \\( \\vec F_{\\text{net}} = \\sum_i \\vec F_i \\), added componentwise.",
+   "kp": "k1"
+  },
+  {
+   "id": "c2",
+   "type": "concept",
+   "front": "Why do internal forces not affect the motion of a system as a whole?",
+   "back": "They come in third-law pairs within the system, so they sum to zero in the net force.",
+   "kp": "k1"
+  },
+  {
+   "id": "c3",
+   "type": "term",
+   "front": "State Newton's first law",
+   "back": "If the net external force on a body is zero, it stays at rest or moves with constant velocity.",
+   "kp": "k2"
+  },
+  {
+   "id": "c4",
+   "type": "term",
+   "front": "Define: inertial reference frame",
+   "back": "A frame in which a body with zero net force moves with constant velocity; Newton's laws hold only in such frames.",
+   "kp": "k2"
+  },
+  {
+   "id": "c5",
+   "type": "formula",
+   "front": "Newton's second law in component form",
+   "back": "\\( \\sum F_x = ma_x,\\ \\sum F_y = ma_y,\\ \\sum F_z = ma_z \\)",
+   "kp": "k3"
+  },
+  {
+   "id": "c6",
+   "type": "formula",
+   "front": "The newton in base SI units",
+   "back": "\\( 1\\ \\text{N} = 1\\ \\text{kg·m/s}^2 \\)",
+   "kp": "k3"
+  },
+  {
+   "id": "c7",
+   "type": "concept",
+   "front": "Does a body always move in the direction of the net force on it?",
+   "back": "No. It accelerates in that direction; the velocity can point elsewhere (a projectile at its apex).",
+   "kp": "k3"
+  },
+  {
+   "id": "c8",
+   "type": "concept",
+   "front": "Mass versus weight",
+   "back": "Mass: inertia, in kg, the same everywhere. Weight: gravitational force \\( mg \\), in N, depends on location.",
+   "kp": "k4"
+  },
+  {
+   "id": "c9",
+   "type": "problem",
+   "front": "Weight of a 12.0 kg box on Earth (g = 9.80 m/s²), in N",
+   "back": "\\( w = mg = 118 \\) N",
+   "answer": "12*9.8",
+   "check": "number",
+   "kp": "k4"
+  },
+  {
+   "id": "c10",
+   "type": "concept",
+   "front": "Four properties of a third-law pair",
+   "back": "Equal magnitude, opposite direction, act on different bodies, same type of force.",
+   "kp": "k5"
+  },
+  {
+   "id": "c11",
+   "type": "concept",
+   "front": "Are the weight of a book and the table's normal force on it a third-law pair?",
+   "back": "No. Both act on the book; they are equal only because a = 0 (second law).",
+   "kp": "k5"
+  },
+  {
+   "id": "c12",
+   "type": "concept",
+   "front": "When does N = mg for a body on a surface?",
+   "back": "Only for a horizontal surface with no other vertical forces and no vertical acceleration.",
+   "kp": "k6"
+  },
+  {
+   "id": "c13",
+   "type": "concept",
+   "front": "Why is the tension the same at both ends of an ideal rope?",
+   "back": "For a rope segment, \\( T_2 - T_1 = m_{\\text{rope}}a \\); with \\( m_{\\text{rope}} = 0 \\), \\( T_1 = T_2 \\).",
+   "kp": "k6"
+  },
+  {
+   "id": "c14",
+   "type": "concept",
+   "front": "What never belongs on a free-body diagram?",
+   "back": "Forces the body exerts on others, internal forces, the velocity, and \\( m\\vec a \\).",
+   "kp": "k7"
+  },
+  {
+   "id": "c15",
+   "type": "formula",
+   "front": "Tensions in two cables at θ₁, θ₂ above horizontal holding weight mg",
+   "back": "\\( T_1 = \\dfrac{mg\\cos\\theta_2}{\\sin(\\theta_1+\\theta_2)},\\ T_2 = \\dfrac{mg\\cos\\theta_1}{\\sin(\\theta_1+\\theta_2)} \\)",
+   "kp": "k8"
+  },
+  {
+   "id": "c16",
+   "type": "problem",
+   "front": "Symmetric cable, each half at θ above horizontal, load mg: tension",
+   "back": "\\( T = mg/(2\\sin\\theta) \\), from \\( 2T\\sin\\theta = mg \\)",
+   "answer": "m*g/(2*sin(theta))",
+   "vars": "m g theta",
+   "check": "expression",
+   "kp": "k8"
+  },
+  {
+   "id": "c17",
+   "type": "formula",
+   "front": "Apparent weight in an elevator with acceleration a (up positive)",
+   "back": "\\( N = m(g + a) \\)",
+   "kp": "k9"
+  },
+  {
+   "id": "c18",
+   "type": "formula",
+   "front": "Atwood machine: acceleration and tension",
+   "back": "\\( a = \\dfrac{(m_2 - m_1)g}{m_1 + m_2},\\ T = \\dfrac{2m_1m_2 g}{m_1 + m_2} \\)",
+   "kp": "k10"
+  },
+  {
+   "id": "c19",
+   "type": "concept",
+   "front": "What extra equation does an ideal rope supply for connected bodies?",
+   "back": "The constraint: the bodies' accelerations along the rope have equal magnitude.",
+   "kp": "k10"
+  },
+  {
+   "id": "c20",
+   "type": "problem",
+   "front": "2.00 kg from rest, F = (6.00 N/s)t: speed at t = 2.00 s, in m/s",
+   "back": "\\( v = \\int_0^2 3t\\,dt = 6.00 \\) m/s",
+   "answer": "6",
+   "check": "number",
+   "kp": "k11"
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k3",
+   "type": "number",
+   "prompt": "Two forces act on a 3.00 kg object: \\( \\vec F_1 = (4.00\\,\\hat{\\imath} + 2.00\\,\\hat{\\jmath}) \\) N and \\( \\vec F_2 = (-1.00\\,\\hat{\\imath} + 5.00\\,\\hat{\\jmath}) \\) N. Find the magnitude of its acceleration, in m/s².",
+   "answer": "sqrt(3^2 + 7^2)/3",
+   "why": "\\( \\vec F_{\\text{net}} = (3.00\\,\\hat{\\imath} + 7.00\\,\\hat{\\jmath}) \\) N, magnitude \\( \\sqrt{58} = 7.62 \\) N. \\( a = 7.62/3.00 = 2.54 \\) m/s², along the net force.",
+   "tol": 0.005
+  },
+  {
+   "id": "p2",
+   "kp": "k5",
+   "type": "written",
+   "prompt": "'If the horse pulls the cart forward and, by the third law, the cart pulls the horse backward with an equal force, the forces cancel and nothing can move.' Explain precisely what is wrong with this argument, and state what determines whether the cart, and the horse, accelerate.",
+   "rubric": [
+    "The two forces act on different bodies (one on the cart, one on the horse), so they cannot cancel",
+    "The cart's acceleration depends only on forces on the cart: the horse's pull minus the resistance on the cart",
+    "The horse's acceleration depends on forces on the horse: the ground's forward push (friction on hooves) minus the cart's pull",
+    "The system accelerates when the ground's forward force on the horse exceeds the resistance on the cart"
+   ],
+   "model": "The argument adds forces that act on different bodies. The horse's pull acts on the cart; the cart's pull acts on the horse. The second law for the cart sums only forces on the cart: the horse's forward pull and the backward resistance of the road, so the cart accelerates forward whenever the pull exceeds the resistance. The second law for the horse sums forces on the horse: the ground's forward push on its hooves (static friction) and the cart's backward pull; the horse accelerates forward whenever the ground's push exceeds the cart's pull. For horse and cart as one system, the mutual pulls are internal and cancel, and the system accelerates when the ground's forward force on the horse exceeds the resistance on the cart.",
+   "why": "Third-law partners never appear in the same second-law equation, unless both bodies are in the system, in which case they cancel as internal forces."
+  },
+  {
+   "id": "p3",
+   "kp": "k9",
+   "type": "number",
+   "prompt": "A 65.0 kg person stands on a scale in an elevator, and the scale reads 720 N. Using \\( g = 9.80 \\) m/s², find the elevator's acceleration in m/s², taking upward as positive.",
+   "answer": "720/65 - 9.8",
+   "why": "\\( N - mg = ma \\Rightarrow a = N/m - g = 720/65.0 - 9.80 = 11.08 - 9.80 = 1.28 \\) m/s², upward. The elevator is either moving up and speeding up or moving down and slowing down; the scale cannot tell which.",
+   "tol": 0.005
+  },
+  {
+   "id": "p4",
+   "kp": "k10",
+   "type": "number",
+   "prompt": "An Atwood machine has masses 1.50 kg and 2.50 kg on an ideal rope over an ideal pulley. Using \\( g = 9.80 \\) m/s², find the tension in the rope, in newtons.",
+   "answer": "2*1.5*2.5*9.8/4",
+   "why": "\\( a = (2.50 - 1.50)(9.80)/4.00 = 2.45 \\) m/s². \\( T = m_1(g + a) = 1.50(12.25) = 18.4 \\) N; equivalently \\( 2m_1m_2g/(m_1 + m_2) = 2(1.50)(2.50)(9.80)/4.00 = 18.4 \\) N, between the two weights 14.7 N and 24.5 N.",
+   "tol": 0.005
+  },
+  {
+   "id": "p5",
+   "kp": "k11",
+   "type": "expression",
+   "prompt": "A particle of mass \\( m \\) starts from rest at \\( x = 0 \\) and is acted on by a net force \\( F = bt \\) along \\( x \\), where \\( b \\) is a positive constant. Give its position \\( x \\) as a function of \\( t \\), in terms of \\( b \\), \\( m \\) and \\( t \\).",
+   "answer": "b*t^3/(6*m)",
+   "vars": "b m t",
+   "why": "\\( a = bt/m \\). \\( v = \\int_0^t (b t'/m)\\,dt' = bt^2/(2m) \\). \\( x = \\int_0^t bt'^2/(2m)\\,dt' = bt^3/(6m) \\)."
+  },
+  {
+   "id": "p6",
+   "kp": "k5",
+   "type": "mcq",
+   "prompt": "A book rests on a table. Which of the following is a Newton's-third-law pair?",
+   "options": [
+    "The gravitational force of Earth on the book and the normal force of the table on the book",
+    "The normal force of the table on the book and the downward push of the book on the table",
+    "The gravitational force of Earth on the book and the downward push of the book on the table",
+    "The downward push of the book on the table and the upward push of the floor on the table's legs"
+   ],
+   "answer": 1,
+   "why": "A pair consists of two forces of the same type with the bodies swapped: table on book, book on table. Option 1 is two balanced forces on one body. Option 3 has two forces pointing the same way, of different types, on different bodies. Option 4 lists two forces on the same body (the table)."
+  },
+  {
+   "id": "p7",
+   "kp": "k10",
+   "type": "number",
+   "prompt": "Blocks of 2.00 kg and 3.00 kg on a frictionless floor are joined by an ideal horizontal rope. A horizontal force of 15.0 N pulls the 3.00 kg block, which pulls the 2.00 kg block by the rope. Find the tension in the rope, in newtons.",
+   "answer": "2*15/5",
+   "why": "Whole system: \\( a = 15.0/5.00 = 3.00 \\) m/s². The rope is the only horizontal force on the 2.00 kg block: \\( T = (2.00)(3.00) = 6.00 \\) N. Check on the 3.00 kg block: \\( 15.0 - 6.00 = 9.00 = (3.00)(3.00) \\).",
+   "tol": 0.005
+  },
+  {
+   "id": "p8",
+   "kp": "k7",
+   "type": "number",
+   "prompt": "A small mass hangs by a string from the ceiling of a car that accelerates horizontally at constant rate on a level road. The string makes a steady angle of \\( 10.0^\\circ \\) with the vertical. Using \\( g = 9.80 \\) m/s², find the car's acceleration, in m/s².",
+   "answer": "9.8*tan(10*pi/180)",
+   "why": "Free-body diagram of the mass (ground frame): weight \\( mg \\) down, tension \\( T \\) along the string. The mass shares the car's horizontal acceleration \\( a \\). \\( y \\): \\( T\\cos 10.0^\\circ = mg \\). \\( x \\): \\( T\\sin 10.0^\\circ = ma \\). Dividing, \\( a = g\\tan 10.0^\\circ = 1.73 \\) m/s², independent of the mass; the string leans toward the rear of the car.",
+   "tol": 0.005
+  },
+  {
+   "id": "p9",
+   "kp": "k2",
+   "type": "written",
+   "prompt": "For the mass hanging at a steady angle in the accelerating car of the previous problem, a passenger says: 'In my frame the mass is at rest, yet the string pulls it forward, so some backward force must act on it.' Explain why no such force appears in Newton's laws, and describe the situation correctly from the ground frame.",
+   "rubric": [
+    "The car is accelerating, so its frame is non-inertial and the first/second laws do not hold in it",
+    "The proposed backward force has no agent (no body exerts it), so it is not a force in Newton's sense",
+    "Ground frame: only weight and tension act; the tension's horizontal component produces the mass's acceleration ma",
+    "The mass is not in equilibrium; it accelerates with the car"
+   ],
+   "model": "The car accelerates relative to the ground, so its frame is not inertial and Newton's laws cannot be applied in it as they stand. In that frame the mass has zero acceleration although the net of the real forces is not zero, which is exactly the failure of the first law that marks a non-inertial frame. The 'backward force' has no agent: no body exerts it. In the inertial ground frame, the only forces on the mass are its weight and the string's tension. The mass is not in equilibrium: it accelerates forward with the car, and the horizontal component of the tension, \\( T\\sin\\theta \\), is the net force \\( ma \\) that produces this acceleration, while \\( T\\cos\\theta = mg \\).",
+   "why": "Every force in Newton's mechanics is exerted by an identifiable body; a 'force' without an agent signals an accelerating frame."
+  },
+  {
+   "id": "p10",
+   "kp": "k8",
+   "type": "number",
+   "prompt": "A 4.00 kg lamp hangs by a rope. A horizontal force pulls the lamp aside until the rope makes \\( 25.0^\\circ \\) with the vertical, and it is held at rest there. Using \\( g = 9.80 \\) m/s², find the magnitude of the horizontal force, in newtons.",
+   "answer": "4*9.8*tan(25*pi/180)",
+   "why": "Lamp in equilibrium: \\( y \\): \\( T\\cos 25.0^\\circ = mg = 39.2 \\) N. \\( x \\): \\( T\\sin 25.0^\\circ = F \\). Dividing, \\( F = mg\\tan 25.0^\\circ = 39.2(0.466) = 18.3 \\) N. The angle is from the vertical, so the vertical component uses the cosine.",
+   "tol": 0.005
+  },
+  {
+   "id": "p11",
+   "kp": "k6",
+   "type": "written",
+   "prompt": "(a) Show from Newton's second law that the tension is the same at both ends of a massless rope, even when the rope accelerates. (b) A uniform heavy rope of mass \\( M \\) and length \\( L \\) hangs at rest from a ceiling. Find the tension at a distance \\( y \\) above its lower end, and explain why it is not uniform.",
+   "rubric": [
+    "(a) Segment with tensions T₁, T₂ at its ends: T₂ − T₁ = m_rope a; with m_rope = 0, T₁ = T₂",
+    "(b) The part of the rope below the point, of mass My/L, is in equilibrium under the tension above it and its weight",
+    "T(y) = (M/L) g y, rising from 0 at the bottom to Mg at the top",
+    "Non-uniform because each part must also support the weight of the rope below it (the rope has mass)"
+   ],
+   "model": "(a) Take a straight rope segment, with tension \\( T_1 \\) pulling one end and \\( T_2 \\) pulling the other end in the opposite direction. The second law for the segment gives \\( T_2 - T_1 = m_{\\text{rope}}\\,a \\). If \\( m_{\\text{rope}} = 0 \\), then \\( T_1 = T_2 \\) whatever \\( a \\) is. (b) Take as the system the portion of the rope below the point at height \\( y \\) above the lower end; its mass is \\( My/L \\). It is at rest, pulled up by the tension \\( T(y) \\) and down by its weight: \\( T(y) = \\dfrac{M g}{L}\\,y \\). The tension grows linearly from zero at the free end to \\( Mg \\) at the ceiling. It is not uniform because the rope has mass: each piece must support the weight of all the rope beneath it, which is exactly what the massless idealization discards.",
+   "why": "The ideal-rope result is a limit: it is accurate when the rope's mass is small compared with the masses it connects."
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k10",
+   "type": "number",
+   "prompt": "A 4.00 kg block on a frictionless horizontal table is connected by an ideal rope over an ideal pulley at the table's edge to a 1.00 kg block hanging vertically. Using \\( g = 9.80 \\) m/s², find the tension in the rope, in newtons.",
+   "answer": "4*1*9.8/5",
+   "why": "Table block: \\( T = m_1 a \\). Hanging block (down positive): \\( m_2 g - T = m_2 a \\). So \\( a = m_2 g/(m_1 + m_2) = 9.80/5.00 = 1.96 \\) m/s² and \\( T = m_1 a = 4.00(1.96) = 7.84 \\) N, less than the hanging block's weight (9.80 N), as it must be for that block to accelerate downward.",
+   "tol": 0.005
+  },
+  {
+   "id": "e2",
+   "kp": "k7",
+   "type": "written",
+   "prompt": "A crate of mass \\( m \\) rests on a frictionless horizontal floor and is pulled by a rope with tension \\( T \\) at angle \\( \\theta \\) above the horizontal. (a) Describe the complete free-body diagram, naming the agent of each force. (b) Derive the normal force and the acceleration. (c) Find the tension at which the crate begins to leave the floor, and explain what happens to your equations for larger \\( T \\).",
+   "rubric": [
+    "(a) Three forces: weight mg down (Earth), normal force N up (floor), tension T at θ above horizontal (rope); no 'ma' or motion force",
+    "(b) y: N + T sin θ − mg = 0, so N = mg − T sin θ",
+    "(b) x: T cos θ = m a, so a = T cos θ / m",
+    "(c) N ≥ 0 requires T ≤ mg/sin θ; at T = mg/sin θ, N = 0; beyond that the equations would require N < 0, impossible, so the crate lifts off and a_y ≠ 0"
+   ],
+   "model": "(a) The crate is touched by the floor and the rope, and attracted by Earth: weight \\( mg \\) downward (Earth), normal force \\( N \\) upward (floor), tension \\( T \\) at \\( \\theta \\) above the horizontal (rope). Axes: \\( x \\) along the floor, \\( y \\) up. (b) While the crate stays on the floor, \\( a_y = 0 \\): \\( N + T\\sin\\theta - mg = 0 \\), so \\( N = mg - T\\sin\\theta \\). Horizontally, \\( T\\cos\\theta = ma_x \\), so \\( a_x = T\\cos\\theta/m \\). (c) A floor can only push, so \\( N \\ge 0 \\), which requires \\( T\\sin\\theta \\le mg \\). At \\( T = mg/\\sin\\theta \\) the normal force is zero. For larger \\( T \\) the formula would give \\( N < 0 \\), a pull by the floor, which is impossible; the assumption \\( a_y = 0 \\) fails, \\( N = 0 \\), and the crate accelerates upward with \\( a_y = (T\\sin\\theta - mg)/m \\).",
+   "why": "Constraint forces take whatever value the constraint requires, but only within their physical limits (\\( N \\ge 0 \\), \\( T \\ge 0 \\)); when a limit is reached, the constraint is released."
+  },
+  {
+   "id": "e3",
+   "kp": "k11",
+   "type": "number",
+   "prompt": "A 2.00 kg particle moves along the \\( x \\)-axis. At \\( t = 0 \\) it is at \\( x = 0 \\) moving at \\( +3.00 \\) m/s, and from then on the only force on it along \\( x \\) is \\( F = -(4.00\\ \\text{N/s})\\,t \\). Find its position, in meters, at the instant it momentarily comes to rest.",
+   "answer": "2*sqrt(3)",
+   "why": "\\( a = F/m = -2.00t \\). \\( v = 3.00 - t^2 \\) (m/s), which vanishes at \\( t = \\sqrt{3.00} = 1.73 \\) s. \\( x = \\int_0^t (3.00 - t'^2)\\,dt' = 3.00t - t^3/3 \\). At \\( t = \\sqrt3 \\): \\( x = 3\\sqrt3 - \\sqrt3 = 2\\sqrt3 = 3.46 \\) m.",
+   "tol": 0.005
+  },
+  {
+   "id": "e4",
+   "kp": "k5",
+   "type": "written",
+   "prompt": "A truck pushes a stalled car along a level road, and both speed up together. A student claims the truck must push on the car harder than the car pushes back on the truck, 'otherwise they could not accelerate'. Evaluate the claim, and explain what makes the car accelerate and what makes the truck accelerate.",
+   "rubric": [
+    "The claim is false: by the third law the truck-on-car and car-on-truck forces are equal in magnitude at every instant, accelerating or not",
+    "The car accelerates because the truck's push exceeds the resistive forces on the car (net force on the car forward)",
+    "The truck accelerates because the road's forward force on its drive wheels exceeds the car's backward push on the truck plus resistance",
+    "The two equal forces act on different bodies and appear in different second-law equations"
+   ],
+   "model": "The claim is false. The force of the truck on the car and the force of the car on the truck are a third-law pair, equal in magnitude and opposite in direction at every instant, whether the vehicles accelerate or not. They act on different bodies and therefore appear in different second-law equations. The car accelerates because the forces on the car, the truck's forward push and the backward resistance of road and air, have a forward sum. The truck accelerates because the forces on the truck, the road's forward friction force on its drive wheels and the car's backward push plus resistance, also have a forward sum. The driving agent of the whole system is the road's forward force on the truck's wheels.",
+   "why": "Acceleration requires an unbalanced force on each body, not unequal third-law partners."
+  },
+  {
+   "id": "e5",
+   "kp": "k8",
+   "type": "number",
+   "prompt": "A 12.0 kg traffic light hangs from a knot held by two cables making \\( 30.0^\\circ \\) and \\( 50.0^\\circ \\) with the horizontal. Using \\( g = 9.80 \\) m/s², find the tension in the \\( 50.0^\\circ \\) cable, in newtons.",
+   "answer": "12*9.8*cos(30*pi/180)/sin(80*pi/180)",
+   "why": "Knot: \\( T_{30}\\cos 30.0^\\circ = T_{50}\\cos 50.0^\\circ \\) and \\( T_{30}\\sin 30.0^\\circ + T_{50}\\sin 50.0^\\circ = 117.6 \\) N. Solving, \\( T_{50} = \\dfrac{mg\\cos 30.0^\\circ}{\\sin 80.0^\\circ} = \\dfrac{117.6(0.866)}{0.985} = 103 \\) N (and \\( T_{30} = 76.8 \\) N).",
+   "tol": 0.005
+  },
+  {
+   "id": "e6",
+   "kp": "k9",
+   "type": "number",
+   "prompt": "A 3.00 kg mass hangs from a spring scale attached to the ceiling of an elevator, and the scale reads 25.0 N. Using \\( g = 9.80 \\) m/s², find the elevator's acceleration in m/s², taking upward as positive (a negative answer means downward).",
+   "answer": "25/3 - 9.8",
+   "why": "Forces on the mass: scale's pull \\( T = 25.0 \\) N up, weight \\( 29.4 \\) N down. \\( T - mg = ma \\Rightarrow a = 25.0/3.00 - 9.80 = -1.47 \\) m/s²: the acceleration is 1.47 m/s² downward (moving down and speeding up, or moving up and slowing down).",
+   "tol": 0.005
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "Net force by components",
+    "formula": "\\( F_{\\text{net},x} = \\sum F_{i,x},\\ F_{\\text{net},y} = \\sum F_{i,y} \\)",
+    "when": "Several forces act on one body.",
+    "example": "12.0 N at 0° and 8.0 N at 120°: net 10.6 N at 40.9°",
+    "watch": "Add vectors, not magnitudes."
+   },
+   {
+    "name": "Second law",
+    "formula": "\\( \\sum F_x = ma_x,\\ \\sum F_y = ma_y \\)",
+    "when": "Any body in an inertial frame.",
+    "example": "crate, 80.0 N at 30°: \\( a_x = 3.46 \\) m/s²",
+    "watch": "\\( m\\vec a \\) is not a force on the diagram."
+   },
+   {
+    "name": "Weight",
+    "formula": "\\( w = mg \\), downward",
+    "when": "Every body near Earth's surface.",
+    "example": "80.0 kg: 784 N on Earth, 130 N on the Moon",
+    "watch": "Weight is in newtons; mass in kilograms."
+   },
+   {
+    "name": "Third law",
+    "formula": "\\( \\vec F_{BA} = -\\vec F_{AB} \\)",
+    "when": "Finding the partner of a force, or contact forces between bodies.",
+    "example": "pushed blocks 3.00 and 2.00 kg, 20.0 N: contact force 8.00 N",
+    "watch": "Partners act on different bodies and never cancel."
+   },
+   {
+    "name": "Normal force",
+    "formula": "from \\( \\sum F_\\perp = ma_\\perp \\), with \\( N \\ge 0 \\)",
+    "when": "A body touches a surface.",
+    "example": "pulled crate: \\( N = mg - T\\sin\\theta = 156 \\) N",
+    "watch": "\\( N = mg \\) only in the simplest case."
+   },
+   {
+    "name": "Equilibrium of a knot",
+    "formula": "\\( T_1 = \\dfrac{mg\\cos\\theta_2}{\\sin(\\theta_1+\\theta_2)} \\)",
+    "when": "Load hung from two cables.",
+    "example": "15.0 kg at 30° and 45°: 108 N and 132 N",
+    "watch": "Angles from the vertical swap sine and cosine."
+   },
+   {
+    "name": "Apparent weight",
+    "formula": "\\( N = m(g + a) \\), \\( a \\) up positive",
+    "when": "Scale readings in elevators.",
+    "example": "70.0 kg, \\( a = 1.50 \\) m/s² up: 791 N",
+    "watch": "Depends on acceleration, not velocity."
+   },
+   {
+    "name": "Atwood machine",
+    "formula": "\\( a = \\dfrac{(m_2 - m_1)g}{m_1+m_2},\\ T = \\dfrac{2m_1m_2g}{m_1+m_2} \\)",
+    "when": "Two masses over an ideal pulley.",
+    "example": "2.00 and 3.00 kg: 1.96 m/s², 23.5 N",
+    "watch": "T lies between the two weights."
+   },
+   {
+    "name": "Time-dependent force",
+    "formula": "\\( v = v_0 + \\frac1m\\int_0^t F(t')\\,dt' \\)",
+    "when": "The force is given as a function of time.",
+    "example": "\\( F = 6.00t \\) on 2.00 kg: \\( v(2) = 6.00 \\) m/s",
+    "watch": "Constant-acceleration formulas do not apply."
+   }
+  ],
+  "stuck": [
+   "Name the body, draw it alone, and list every force on it with its agent: weight, then one contact force for each thing touching it.",
+   "Put one axis along the acceleration (or along the expected motion) before resolving forces.",
+   "Count unknowns and equations; if you are short, draw another body's diagram or write the rope constraint.",
+   "Check limiting cases: equal masses, zero angle, zero mass; the result should reduce to something obvious.",
+   "If a normal force or tension comes out negative, the contact or the rope has gone slack; redo the problem without it."
+  ]
+ }
+}
