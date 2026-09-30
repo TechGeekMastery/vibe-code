@@ -315,6 +315,10 @@
    "d": "Internal energy associated with random microscopic motion; mechanical energy removed by kinetic friction appears as thermal energy of the surfaces."
   },
   {
+   "t": "conservation of energy",
+   "d": "The total energy of an isolated system, counting kinetic, potential, thermal and all other forms, is constant; mechanical energy alone is conserved only when \\( W_{nc} = 0 \\)."
+  },
+  {
    "t": "gradient",
    "d": "For a scalar function \\( U(x,y,z) \\), the vector \\( \\nabla U = (\\partial U/\\partial x, \\partial U/\\partial y, \\partial U/\\partial z) \\); a conservative force is \\( \\vec F = -\\nabla U \\)."
   },
@@ -634,9 +638,9 @@
     "(a) \\( U' = 4x^3 - 8x = 0 \\) at \\( x = 0, \\pm\\sqrt2 \\).",
     "Classification via \\( U'' = 12x^2 - 8 \\): \\( -8 \\) at 0 (unstable), \\( +16 \\) at \\( \\pm\\sqrt2 \\) (stable).",
     "(b) \\( k_{\\text{eff}} = U''(\\pm\\sqrt2) = 16 \\) N/m.",
-    "(c) \\( U(\\pm\\sqrt2) = -4 \\) J and \\( U(0) = 0 \\); the particle is confined to the right well for \\( -4 \\le E < 0 \\) J."
+    "(c) \\( U(\\pm\\sqrt2) = -4 \\) J and \\( U(0) = 0 \\); the particle is confined to the right well for \\( -4 \\le E < 0 \\) J (including \\( E = 0 \\) is also acceptable, since a particle with exactly the barrier energy only approaches \\( x = 0 \\) asymptotically)."
    ],
-   "model": "(a) \\( U'(x) = 4x^3 - 8x = 4x(x^2 - 2) \\), zero at \\( x = 0 \\) and \\( x = \\pm\\sqrt2 \\) m. \\( U''(x) = 12x^2 - 8 \\): at 0 it is \\( -8 < 0 \\), a maximum, unstable; at \\( \\pm\\sqrt2 \\) it is \\( 24 - 8 = 16 > 0 \\), minima, stable. (b) Near each minimum \\( U \\approx U(x_0) + \\tfrac12 U''(x_0)(x - x_0)^2 \\), so \\( k_{\\text{eff}} = 16 \\) N/m. (c) \\( U(\\sqrt2) = 4 - 8 = -4 \\) J and the barrier at the origin has \\( U(0) = 0 \\). The particle must have \\( E \\ge -4 \\) J to exist in the well at all (with \\( E = -4 \\) J it sits at rest at the bottom) and \\( E < 0 \\) to be unable to cross the barrier: \\( -4 \\le E < 0 \\) J.",
+   "model": "(a) \\( U'(x) = 4x^3 - 8x = 4x(x^2 - 2) \\), zero at \\( x = 0 \\) and \\( x = \\pm\\sqrt2 \\) m. \\( U''(x) = 12x^2 - 8 \\): at 0 it is \\( -8 < 0 \\), a maximum, unstable; at \\( \\pm\\sqrt2 \\) it is \\( 24 - 8 = 16 > 0 \\), minima, stable. (b) Near each minimum \\( U \\approx U(x_0) + \\tfrac12 U''(x_0)(x - x_0)^2 \\), so \\( k_{\\text{eff}} = 16 \\) N/m. (c) \\( U(\\sqrt2) = 4 - 8 = -4 \\) J and the barrier at the origin has \\( U(0) = 0 \\). The particle must have \\( E \\ge -4 \\) J to exist in the well at all (with \\( E = -4 \\) J it sits at rest at the bottom) and \\( E < 0 \\) to be unable to cross the barrier: \\( -4 \\le E < 0 \\) J. (At exactly \\( E = 0 \\) the particle approaches the barrier top only asymptotically and never crosses in finite time, so the endpoint \\( E = 0 \\) may also be counted.)",
    "why": "The barrier height is \\( U(0) - U(\\sqrt2) = 4 \\) J; any energy above the barrier top lets the particle reach both wells."
   },
   {
