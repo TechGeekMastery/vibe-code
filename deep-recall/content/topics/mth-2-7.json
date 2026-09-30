@@ -294,7 +294,7 @@
      "id": "s4q2",
      "kp": "k8",
      "type": "written",
-     "prompt": "A student wants to show that \\(\\sum_{n=2}^{\\infty} \\frac{1}{n^2 - 1}\\) converges and writes: \\\"\\(\\frac{1}{n^2 - 1} > \\frac{1}{n^2}\\), and \\(\\sum \\frac1{n^2}\\) converges, so the series converges by the comparison test.\\\" Explain what is wrong, then give a correct proof.",
+     "prompt": "A student wants to show that \\(\\sum_{n=2}^{\\infty} \\frac{1}{n^2 - 1}\\) converges and writes: “\\(\\frac{1}{n^2 - 1} > \\frac{1}{n^2}\\), and \\(\\sum \\frac1{n^2}\\) converges, so the series converges by the comparison test.” Explain what is wrong, then give a correct proof.",
      "rubric": [
       "Identifies that the inequality points the wrong way: being larger than the terms of a convergent series gives no information.",
       "Gives a valid proof: e.g. \\(n^2 - 1 \\ge \\frac{n^2}{2}\\) for \\(n \\ge 2\\), so \\(0 < \\frac1{n^2-1} \\le \\frac2{n^2}\\), and direct comparison; or limit comparison with \\(\\frac1{n^2}\\) (limit 1).",
@@ -371,7 +371,7 @@
       "all \\(p > 0\\)"
      ],
      "answer": 1,
-     "why": "The series of absolute values is the \\(p\\)-series, convergent exactly for \\(p > 1\\); those \\(p\\) give absolute convergence, not conditional. For \\(0 < p \\le 1\\), \\(\\frac{1}{n^p}\\) decreases to 0, so the alternating series test gives convergence while \\(\\sum \\frac1{n^p}\\) diverges: conditional convergence. For \\(p \\le 0\\) the terms do not tend to 0 and the series diverges. The option \\\"all \\(p > 0\\)\\\" confuses convergence with conditional convergence."
+     "why": "The series of absolute values is the \\(p\\)-series, convergent exactly for \\(p > 1\\); those \\(p\\) give absolute convergence, not conditional. For \\(0 < p \\le 1\\), \\(\\frac{1}{n^p}\\) decreases to 0, so the alternating series test gives convergence while \\(\\sum \\frac1{n^p}\\) diverges: conditional convergence. For \\(p \\le 0\\) the terms do not tend to 0 and the series diverges. The option “all \\(p > 0\\)” confuses convergence with conditional convergence."
     }
    ]
   },
@@ -849,7 +849,7 @@
     "Gives a conditionally convergent example, e.g. the alternating harmonic series, justifying convergence (alternating series test) and divergence of the absolute series (harmonic)."
    ],
    "model": "Suppose \\(\\sum|a_n|\\) converges. Since \\(-|a_n| \\le a_n \\le |a_n|\\), adding \\(|a_n|\\) gives \\(0 \\le a_n + |a_n| \\le 2|a_n|\\). The series \\(\\sum 2|a_n|\\) converges, so by the direct comparison test \\(\\sum (a_n + |a_n|)\\) converges. Then \\(\\sum a_n = \\sum(a_n + |a_n|) - \\sum|a_n|\\) is the difference of two convergent series and converges. The converse fails: \\(\\sum \\frac{(-1)^{n+1}}{n}\\) converges by the alternating series test (\\(\\frac1n\\) is positive, decreasing, and tends to 0), but \\(\\sum\\left|\\frac{(-1)^{n+1}}{n}\\right| = \\sum\\frac1n\\) is the harmonic series, which diverges.",
-   "why": "The trick is to make a nonnegative series out of \\(a_n\\) so that a positive-term test applies; \\(a_n + |a_n|\\) is either 0 or \\(2a_n\\)."
+   "why": "The key step is to build a nonnegative series out of \\(a_n\\) so that a positive-term test applies; \\(a_n + |a_n|\\) is either 0 or \\(2a_n\\)."
   },
   {
    "id": "e4",

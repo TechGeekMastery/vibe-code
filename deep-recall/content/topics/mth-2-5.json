@@ -310,6 +310,11 @@
    "ex": "A cone of radius \\( r \\), height \\( h \\): \\( \\ell = \\sqrt{r^{2} + h^{2}} \\)."
   },
   {
+   "t": "catenary",
+   "d": "The curve \\( y = a\\cosh\\frac{x}{a} \\) (here \\( a = 1 \\)), the shape of a uniform flexible cable hanging under gravity; the identity \\( 1 + \\sinh^{2}x = \\cosh^{2}x \\) makes its arc length elementary.",
+   "ex": "\\( y = \\cosh x \\), \\( 0 \\le x \\le a \\), has length \\( \\sinh a \\)."
+  },
+  {
    "t": "elliptic integral",
    "d": "An integral of a type that includes the arc length of an ellipse; in general its antiderivative is not an elementary function, so values are computed numerically.",
    "ex": "\\( \\int_{0}^{\\pi}\\sqrt{1 + \\cos^{2}x}\\,dx \\approx 3.820 \\)."

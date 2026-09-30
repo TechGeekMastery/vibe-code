@@ -329,9 +329,19 @@
    "ex": "Rotating a semicircle about its diameter gives a ball."
   },
   {
+   "t": "axis of revolution",
+   "d": "The line in the plane of a region (or curve) about which it is rotated to generate a solid (or surface) of revolution.",
+   "ex": "The line \\( y = -1 \\) in rotating the region between \\( y = \\sqrt x \\) and \\( y = x^{2} \\)."
+  },
+  {
    "t": "disk method",
    "d": "Volume of a solid of revolution with disk cross-sections: \\( V = \\pi\\int_{a}^{b}[R(x)]^{2}dx \\), where \\( R \\) is the distance from the axis to the boundary.",
    "ex": "Sphere: \\( \\pi\\int_{-r}^{r}(r^{2} - x^{2})dx = \\frac43\\pi r^{3} \\)."
+  },
+  {
+   "t": "outer radius and inner radius",
+   "d": "For a washer cross-section, the distances from the axis of revolution to the far and near boundaries of the region, respectively.",
+   "ex": "Between \\( y = \\sqrt x \\) and \\( y = x^{2} \\) about the \\( x \\)-axis: \\( R = \\sqrt x \\), \\( r = x^{2} \\)."
   },
   {
    "t": "washer method",

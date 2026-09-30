@@ -675,8 +675,7 @@
    "prompt": "Show that \\(\\ln\\frac{1+x}{1-x} = 2\\sum_{n=0}^{\\infty}\\frac{x^{2n+1}}{2n+1}\\) for \\(|x| < 1\\), starting from known power series and justifying each step. Then explain why this series is well suited to computing \\(\\ln 2\\).",
    "rubric": [
     "Uses \\(\\ln(1+x) = \\sum\\frac{(-1)^{n+1}x^n}{n}\\) and \\(\\ln(1-x) = -\\sum\\frac{x^n}{n}\\), both valid for \\(|x| < 1\\).",
-    "Subtracts (valid on the common interval) and shows even powers cancel and odd powers double.",
-    "Alternatively or additionally, integrates \\(\\frac{2}{1-x^2} = 2\\sum x^{2n}\\) with constant 0.",
+    "Subtracts the series (valid on the common interval \\((-1, 1)\\)) and shows even powers cancel and odd powers double; integrating \\(\\frac{2}{1-x^2} = 2\\sum x^{2n}\\) with constant 0 is an equally valid route.",
     "Notes \\(\\frac{1+x}{1-x} = 2\\) at \\(x = \\frac13\\), so \\(\\ln 2 = 2\\sum\\frac{1}{(2n+1)3^{2n+1}}\\), whose terms shrink by a factor of about 9 each step."
    ],
    "model": "For \\(|x| < 1\\), \\(\\ln(1+x) = x - \\frac{x^2}{2} + \\frac{x^3}{3} - \\frac{x^4}{4} + \\cdots\\) and \\(\\ln(1-x) = -x - \\frac{x^2}{2} - \\frac{x^3}{3} - \\frac{x^4}{4} - \\cdots\\). Both converge on \\((-1,1)\\), so their difference is the term-by-term difference: \\(\\ln\\frac{1+x}{1-x} = \\ln(1+x) - \\ln(1-x) = 2x + \\frac{2x^3}{3} + \\frac{2x^5}{5} + \\cdots = 2\\sum_{n=0}^\\infty\\frac{x^{2n+1}}{2n+1}\\); the even powers cancel and the odd ones double. For \\(\\ln 2\\), solve \\(\\frac{1+x}{1-x} = 2\\): \\(x = \\frac13\\), well inside the interval. Then \\(\\ln 2 = 2\\left(\\frac13 + \\frac{1}{3\\cdot 27} + \\frac{1}{5\\cdot 243} + \\cdots\\right)\\). Each term is less than \\(\\frac19\\) of the previous one, so a handful of terms gives many correct digits, in contrast to the alternating harmonic series.",

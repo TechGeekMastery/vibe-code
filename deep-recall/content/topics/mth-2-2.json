@@ -314,6 +314,11 @@
    "ex": "\\( x^{2} + 2x + 5 \\) (discriminant \\( -16 \\))."
   },
   {
+   "t": "clearing denominators",
+   "d": "Multiplying a proposed decomposition through by the denominator \\( Q \\) to obtain an identity between polynomials, from which the unknown constants are found.",
+   "ex": "\\( \\frac{x+7}{(x-3)(x+2)} = \\frac{A}{x-3} + \\frac{B}{x+2} \\) becomes \\( x + 7 = A(x+2) + B(x-3) \\)."
+  },
+  {
    "t": "partial fraction decomposition",
    "d": "The unique expression of a proper rational function as a sum of terms \\( \\frac{A}{(x-a)^{j}} \\) and \\( \\frac{Bx+C}{(x^{2}+bx+c)^{j}} \\) determined by the factorization of its denominator.",
    "ex": "\\( \\frac{x+7}{(x-3)(x+2)} = \\frac{2}{x-3} - \\frac{1}{x+2} \\)."
@@ -510,7 +515,7 @@
    "id": "c22",
    "type": "concept",
    "front": "When is it invalid to evaluate \\( \\int_{a}^{b}\\frac{P}{Q}\\,dx \\) by plugging the limits into the antiderivative?",
-   "back": "When \\( Q \\) has a zero in \\( [a, b] \\): the integrand is unbounded there and the integral is improper.",
+   "back": "When \\( Q \\) has a zero in \\( [a, b] \\) that is not cancelled by a common factor of \\( P \\): the integrand is unbounded there and the integral is improper.",
    "kp": "k9"
   }
  ],

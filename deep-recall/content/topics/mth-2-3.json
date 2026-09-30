@@ -354,6 +354,11 @@
    "t": "limit comparison theorem",
    "d": "If \\( f, g > 0 \\) and \\( f/g \\to L \\) with \\( 0 < L < \\infty \\) at the improper endpoint, then \\( \\int f \\) and \\( \\int g \\) both converge or both diverge.",
    "ex": "\\( \\frac{1}{x^{2}-x} \\) versus \\( \\frac{1}{x^{2}} \\): ratio \\( \\to 1 \\)."
+  },
+  {
+   "t": "dominant behaviour",
+   "d": "The simplest function to which the integrand is asymptotic at a problematic endpoint (the ratio tends to a finite nonzero limit), used to choose the comparison function in a limit comparison.",
+   "ex": "At infinity \\( \\frac{2x^{2}+1}{x^{5/2}+3} \\) behaves like \\( \\frac{2}{\\sqrt x} \\); near \\( 0 \\), \\( \\frac{1}{\\sqrt{\\sin x}} \\) behaves like \\( x^{-1/2} \\)."
   }
  ],
  "cards": [
