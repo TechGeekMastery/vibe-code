@@ -140,7 +140,7 @@
      "kp": "k3",
      "type": "antiderivative",
      "prompt": "Compute \\( \\int\\sin 3x\\sin x\\,dx \\) using a product-to-sum identity. Enter an antiderivative.",
-     "why": "\\( \\sin 3x\\sin x = \\tfrac12[\\cos 2x - \\cos 4x] \\). Integrating: \\( \\tfrac{\\sin 2x}{4} - \\tfrac{\\sin 4x}{8}\\cdot\\tfrac{1}{1} \\cdot \\tfrac{1}{1}\\) ... precisely \\( \\tfrac12\\big(\\tfrac{\\sin 2x}{2} - \\tfrac{\\sin 4x}{4}\\big) = \\tfrac{\\sin 2x}{4} - \\tfrac{\\sin 4x}{8} + C \\).",
+     "why": "\\( \\sin 3x\\sin x = \\tfrac12[\\cos 2x - \\cos 4x] \\). Integrating: \\( \\tfrac12\\big(\\tfrac{\\sin 2x}{2} - \\tfrac{\\sin 4x}{4}\\big) = \\tfrac{\\sin 2x}{4} - \\tfrac{\\sin 4x}{8} + C \\).",
      "answer": "sin(2*x)/4 - sin(4*x)/8",
      "vars": "x"
     },
@@ -602,7 +602,7 @@
   {
    "id": "c15",
    "type": "concept",
-   "front": "Why is θ restricted in a trigonometric substitution?",
+   "front": "Why is \\( \\theta \\) restricted in a trigonometric substitution?",
    "back": "So the substitution is one-to-one (and can be undone) and the simplified root has a definite sign, removing the absolute value.",
    "kp": "k6"
   },
@@ -610,7 +610,7 @@
    "id": "c16",
    "type": "concept",
    "front": "After a trigonometric substitution in a definite integral, what happens to the limits?",
-   "back": "Convert them to θ with the inverse function and do not return to x; the θ-interval also fixes the sign of the root.",
+   "back": "Convert them to \\( \\theta \\) with the inverse function and do not return to \\( x \\); the \\( \\theta \\)-interval also fixes the sign of the root.",
    "kp": "k9"
   },
   {
@@ -659,7 +659,7 @@
    {
     "name": "Product-to-sum",
     "formula": "\\( \\sin A\\cos B = \\tfrac12[\\sin(A-B) + \\sin(A+B)] \\) and companions",
-    "when": "Different frequencies, e.g. sin 5x cos 3x.",
+    "when": "Different frequencies, e.g. \\( \\sin 5x\\cos 3x \\).",
     "example": "\\( \\int\\sin 5x\\cos 3x\\,dx = -\\tfrac{\\cos 2x}{4} - \\tfrac{\\cos 8x}{16} + C \\)",
     "watch": "Sign in \\( \\sin A\\sin B = \\tfrac12[\\cos(A-B) - \\cos(A+B)] \\)."
    },
@@ -682,14 +682,14 @@
     "formula": "\\( x = a\\sin\\theta \\), \\( dx = a\\cos\\theta\\,d\\theta \\), \\( \\sqrt{a^{2}-x^{2}} = a\\cos\\theta \\)",
     "when": "\\( \\sqrt{a^{2}-x^{2}} \\)",
     "example": "\\( \\int\\sqrt{9-x^{2}}dx = \\tfrac92\\arcsin\\tfrac{x}{3} + \\tfrac{x\\sqrt{9-x^{2}}}{2} + C \\)",
-    "watch": "Convert dx; expand sin 2θ before using the triangle."
+    "watch": "Convert \\( dx \\); expand \\( \\sin 2\\theta \\) before using the triangle."
    },
    {
     "name": "Tangent substitution",
     "formula": "\\( x = a\\tan\\theta \\), \\( dx = a\\sec^{2}\\theta\\,d\\theta \\), \\( \\sqrt{a^{2}+x^{2}} = a\\sec\\theta \\)",
     "when": "\\( \\sqrt{a^{2}+x^{2}} \\) or powers of \\( a^{2}+x^{2} \\)",
     "example": "\\( \\int\\frac{dx}{(x^{2}+4)^{3/2}} = \\frac{x}{4\\sqrt{x^{2}+4}} + C \\)",
-    "watch": "Triangle: opposite x, adjacent a."
+    "watch": "Triangle: opposite \\( x \\), adjacent \\( a \\)."
    },
    {
     "name": "Secant substitution",
@@ -707,11 +707,11 @@
    }
   ],
   "stuck": [
-   "Look for an ordinary substitution first: is there a factor x next to a function of x² ± a²?",
+   "Look for an ordinary substitution first: is there a factor \\( x \\) next to a function of \\( x^{2} \\pm a^{2} \\)?",
    "Trigonometric product: find an odd power and save one factor; if none, use power reduction.",
    "A root of a quadratic: complete the square, then match the sign pattern to sin, tan or sec.",
-   "After substituting, if you get sec θ or sec³ θ, use the special antiderivatives rather than restarting.",
-   "Definite integral: convert limits to θ and check the sign of the simplified root on that interval."
+   "After substituting, if you get \\( \\sec\\theta \\) or \\( \\sec^{3}\\theta \\), use the special antiderivatives rather than restarting.",
+   "Definite integral: convert limits to \\( \\theta \\) and check the sign of the simplified root on that interval."
   ]
  }
 }
