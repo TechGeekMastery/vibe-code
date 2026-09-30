@@ -23,7 +23,7 @@ const MX = {
   },
   evalStr(s, scope) { try { return this.num(window.math.evaluate(this.norm(s), scope || {})); } catch (e) { return NaN; } },
   parses(s) { try { window.math.parse(this.norm(s)); return true; } catch (e) { return false; } },
-  equiv(a, b, vars, upToConst) {
+  equiv(a, b, vars, upToConst, pos) {
     let A, B;
     try { A = window.math.parse(this.norm(a)).compile(); } catch (e) { return 'parse'; }
     try { B = window.math.parse(this.norm(b)).compile(); } catch (e) { return null; }
@@ -31,7 +31,7 @@ const MX = {
     const diffs = []; let ok = 0;
     for (let t = 0; t < 60 && ok < 10; t++) {
       const scope = {};
-      vars.forEach(v => { scope[v] = t < 30 ? (Math.random() * 4 - 2) : (Math.random() * 3 + 0.15); });
+      vars.forEach(v => { scope[v] = t < 30 && !pos ? (Math.random() * 4 - 2) : (Math.random() * 3 + 0.15); });
       let x, y;
       try { x = this.num(A.evaluate(scope)); } catch (e) { x = NaN; }
       try { y = this.num(B.evaluate(scope)); } catch (e) { y = NaN; }
@@ -70,8 +70,8 @@ const MX = {
 function machineCheck(q, input) {
   if (q.ptype === 'choice') return String(input).trim().toUpperCase() === String(q.answer).trim().toUpperCase();
   if (q.ptype === 'proof' || q.claudeCheck || !MX.ok()) return null;
-  if (q.ptype === 'expression') return MX.equiv(input, q.answer, q.vars, false);
-  if (q.ptype === 'antiderivative') return MX.equiv(input, q.answer, q.vars, true);
+  if (q.ptype === 'expression') return MX.equiv(input, q.answer, q.vars, false, q.pos);
+  if (q.ptype === 'antiderivative') return MX.equiv(input, q.answer, q.vars, true, q.pos);
   if (q.ptype === 'number') {
     const x = MX.evalStr(input), y = MX.evalStr(q.answer);
     if (!isFinite(x)) return 'parse';

@@ -32,7 +32,8 @@ function packMigrate(key) {
   attachOutline(key, o);
 }
 const varsOf = q => (Array.isArray(q.vars) ? q.vars : str(q.vars).split(/[,\s]+/)).map(v => str(v).trim()).filter(v => /^[a-zA-Z]\w*$/.test(v));
-function packPtype(q) { return {ptype:q.type, answer:str(q.answer), answerText:str(q.answer), prompt:q.prompt, vars:varsOf(q), tol:+q.tol > 0 ? +q.tol : (q.type === 'number' || q.type === 'numbers' ? 0.001 : 1e-6)}; }
+/* physical quantities (masses, lengths, speeds) are positive: physics answers are compared on positive values only */
+function packPtype(q, key) { return {pos:!!(q.pos || String(key || '').startsWith('phy-')), ptype:q.type, answer:str(q.answer), answerText:str(q.answer), prompt:q.prompt, vars:varsOf(q), tol:+q.tol > 0 ? +q.tol : (q.type === 'number' || q.type === 'numbers' ? 0.001 : 1e-6)}; }
 const kpTitle = (P, id) => { const k = P && P.kps.find(x => x.id === id); return k ? k.t : 'Chapter question'; };
 function allPackQs(P) { return P.sections.flatMap(s => s.questions).concat(P.practice || [], P.exam || []); }
 /* a chapter question as a session problem: the session machinery grades, records, and schedules it */
@@ -44,8 +45,8 @@ function packProblem(q, key, P, difficulty) {
     const options = idx.map((i, j) => ({k:L[j], t:str(q.options[i])})), a = L[idx.indexOf(q.answer)];
     return Object.assign(base, {ptype:'choice', options, answer:a, answerText:a + ') ' + str(q.options[q.answer]), solution:str(q.why)});
   }
-  const t = packPtype(q);
-  return Object.assign(base, {ptype:q.type, answer:t.answer, answerText:t.answer, vars:t.vars, tol:t.tol, solution:str(q.why)});
+  const t = packPtype(q, key);
+  return Object.assign(base, {pos:t.pos, ptype:q.type, answer:t.answer, answerText:t.answer, vars:t.vars, tol:t.tol, solution:str(q.why)});
 }
 function pickPack(key, pool, count) {
   const n = ensureNode(key), recent = n.pqSeen || [], out = [];
@@ -214,7 +215,7 @@ async function bookCheck(qid) {
   const ans = str(S.text).trim();
   if (!ans) { S.msg = 'Write your answer first, or use “I don’t know yet”.'; S.msgKind = 'warn'; return bqRender(qid); }
   if (q.type === 'written') return bookGrade(B, q, S, ans);
-  const t = packPtype(q);
+  const t = packPtype(q, B.key);
   let res = machineCheck(t, ans);
   if (res === 'parse') { S.msg = 'Couldn’t read that answer. Use ^ for powers, * between factors where needed, and sqrt(), ln(), sin(). Check the preview.'; S.msgKind = 'warn'; return bqRender(qid); }
   if (res === null) {
@@ -508,7 +509,7 @@ function cardShow() {
   const it = C.queue[C.i]; if (!it) return;
   const c = it.c;
   if (c.type === 'problem' && c.answer && c.check && str(C.input).trim()) {
-    const r = machineCheck({ptype:c.check, answer:c.answer, vars:varsOf(c), tol:c.check === 'number' ? 0.001 : 1e-6}, C.input);
+    const r = machineCheck({ptype:c.check, answer:c.answer, vars:varsOf(c), pos:it.key.startsWith('phy-'), tol:c.check === 'number' ? 0.001 : 1e-6}, C.input);
     C.res = r === true ? 'ok' : r === 'parse' ? 'parse' : r === false ? 'no' : null;
   }
   C.shown = true; render();
