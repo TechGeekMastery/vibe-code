@@ -3,7 +3,7 @@ import fs from 'fs';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const math = require('/tmp/mj/package/lib/browser/math.js');
-const DIR = '/home/claude/deep-recall/content/topics/';
+const DIR = new URL('./topics/', import.meta.url).pathname;
 let keys = process.argv.slice(2);
 if (keys[0] === 'all') keys = fs.readdirSync(DIR).filter(f => f.endsWith('.json')).map(f => f.slice(0, -5));
 let bad = 0;

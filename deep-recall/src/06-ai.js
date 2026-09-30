@@ -31,6 +31,7 @@ function errCopy(e) {
     case 'image_rejected': return 'That image couldn’t be used. Try a JPEG or PNG photo under 20 MB.';
     case 'tools_unavailable': return 'This view can’t give Claude tools, so the tutor’s extras and web search are off here.';
     case 'cancelled': return 'Stopped.';
+    case 'pack': return 'This chapter couldn’t be loaded. Check your connection, then try again.';
     default: return 'The request was interrupted. Try again.';
   }
 }

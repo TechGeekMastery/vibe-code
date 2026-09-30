@@ -14,7 +14,7 @@ You are writing one chapter of a textbook that a single serious adult learner wi
 2. **Outline.** Break the topic into 6–14 knowledge points (`kps`): atomic, testable units in teaching order.
 3. **Write** the sections (see register rules below).
 4. **Verify.** Every numeric or symbolic answer must be computed, not recalled: use Python with sympy (`python3 -c ...`; sympy is installed). Check every definition and theorem statement against a source. Check that every worked example's arithmetic is right.
-5. **Validate**: `node /home/claude/deep-recall/content/validate.mjs <key>`. Fix everything it reports until it prints `OK`.
+5. **Validate**: `node /home/user/vibe-code/deep-recall/content/validate.mjs <key>`. Fix everything it reports until it prints `OK`.
 
 ## Register and pedagogy
 
@@ -67,7 +67,7 @@ The reference card he checks when stuck: `rules` (5–12: `name`, `formula` (LaT
 
 ## File format
 
-Write **one JSON file per topic** at `/home/claude/deep-recall/content/topics/<key>.json`. Generate it from a Python script with `json.dump(obj, f, ensure_ascii=False, indent=1)` so LaTeX backslashes are escaped correctly (write strings as Python raw strings `r"..."`). Schema:
+Write **one JSON file per topic** at `/home/user/vibe-code/deep-recall/content/topics/<key>.json`. Generate it from a Python script with `json.dump(obj, f, ensure_ascii=False, indent=1)` so LaTeX backslashes are escaped correctly (write strings as Python raw strings `r"..."`). Schema:
 
 ```json
 {

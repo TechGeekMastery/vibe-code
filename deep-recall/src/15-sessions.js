@@ -31,7 +31,7 @@ async function runSession(S, gen) {
 function addQs(S, qs) {
   if (!qs.length || SESSION !== S) return;
   S.questions.push(...qs);
-  qs.forEach(q => { if (q.type === 'problem') { applyFading(S, q); queueVerify(S, q); } });
+  qs.forEach(q => { if (q.type === 'problem' && !q.pack) { applyFading(S, q); queueVerify(S, q); } });
   if (S.phase === 'loading' && !S.intro && !S.holdStream) { S.phase = 'q'; render(); window.scrollTo(0, 0); }
   else if (S.phase === 'waiting') { S.phase = 'q'; render(); window.scrollTo(0, 0); }
   else updateSessHead();
@@ -123,7 +123,9 @@ function outlineFirst(S, key) {
 }
 function startPractice(key, opts) {
   opts = opts || {};
-  const info = nodeInfo(key); if (!info || !AI.ok()) return;
+  const info = nodeInfo(key); if (!info) return;
+  if (hasPack(key) && !info.lang) return startPackPractice(key, opts);
+  if (!AI.ok()) return;
   if (info.lang) return startLangSet(key, opts);
   if (info.program) return startProblemSet(key, opts);
   closeSheet();
@@ -149,7 +151,9 @@ function startPractice(key, opts) {
 }
 function startProblemSet(key, opts) {
   opts = opts || {};
-  const info = nodeInfo(key); if (!info || !AI.ok()) return;
+  const info = nodeInfo(key); if (!info) return;
+  if (hasPack(key) && !opts.generated) return startPackPractice(key, opts);
+  if (!AI.ok()) return;
   closeSheet();
   const lvl = opts.difficulty || levelFor(key), n = opts.count || 8;
   const S = SESSION = newSession({kind:'problems', title:info.title, back:opts.back || {name:'topic', key}, node:key, problemStream:true, expected:n, fadePlan:!opts.count && pst(Store.nodes[key]).a < 4 && !info.code,
@@ -194,8 +198,8 @@ function ownQuestion(n) {
 function startReview() {
   const due = dueNodes().slice(0, 6);
   if (!due.length || !AI.ok()) return;
-  const groups = {lang:[], prog:[], concept:[]};
-  due.forEach(n => { const i = nodeInfo(n.key); (i.lang ? groups.lang : i.program ? groups.prog : groups.concept).push(n); });
+  const groups = {lang:[], prog:[], concept:[], pack:[]};
+  due.forEach(n => { const i = nodeInfo(n.key); (i.lang ? groups.lang : hasPack(n.key) ? groups.pack : i.program ? groups.prog : groups.concept).push(n); });
   const S = SESSION = newSession({kind:'review', title:`${due.length} topic${due.length > 1 ? 's' : ''}`, back:{name:'review'}, problemStream:!groups.concept.length && !groups.lang.length, expected:due.length * 2,
     loadMsg:'Pulling up what you studied and writing fresh questions and problems from new angles, plus questions you wrote yourself.'});
   if (groups.concept.length || groups.lang.length) S.holdStream = true;
@@ -203,6 +207,7 @@ function startReview() {
   runSession(S, async S => {
     const jobs = [];
     const own = due.map(ownQuestion).filter(Boolean).slice(0, 2);
+    if (groups.pack.length) jobs.push(Promise.all(groups.pack.map(n => loadPack(n.key).then(P => P ? pickPack(n.key, (P.practice || []).concat(P.exam || []), 2).map(q => packProblem(q, n.key, P)) : []))).then(xs => { groups.pack.forEach(n => Store.saveNode(n.key)); addQs(S, shuffle([].concat(...xs))); }));
     if (groups.concept.length) {
       const items = groups.concept.map(n => ({info:nodeInfo(n.key), node:n}));
       jobs.push(AI.json(reviewPrompt(items), {modelTier:'default', cache:false, signal:S.ctl.signal}).then(r => {
@@ -287,18 +292,19 @@ async function checkRecall(idk) {
   }
   if (!S.conf && S.phase === 'q') return;
   const sid = sidOf(S);
-  if (S.phase === 'q' && !S.exam && selfGradeOn(sid) && S.selfScore == null) { S.phase = 'selfgrade'; render(); return; }
+  if (S.phase === 'q' && !S.exam && !S.strict && selfGradeOn(sid) && S.selfScore == null) { S.phase = 'selfgrade'; render(); return; }
   S.phase = 'grading'; render();
   try {
-    const g = await AI.json(gradePrompt(q, ans, nodeInfo(q.node)), {modelTier:'quick'});
+    const g = await AI.json(gradePrompt(q, ans, nodeInfo(q.node), !!(S.exam || S.strict)), {modelTier:'quick'});
     if (SESSION !== S) return;
-    const score = clamp01(g && g.score);
-    const verdict = g && ['correct', 'partial', 'incorrect'].includes(g.verdict) ? g.verdict : (score >= 0.8 ? 'correct' : score >= 0.4 ? 'partial' : 'incorrect');
+    let score = clamp01(g && g.score);
+    let verdict = g && ['correct', 'partial', 'incorrect'].includes(g.verdict) ? g.verdict : (score >= 0.8 ? 'correct' : score >= 0.4 ? 'partial' : 'incorrect');
+    if (S.exam || S.strict) { score = verdict === 'correct' || score >= 0.9 ? 1 : 0; verdict = score ? 'correct' : 'incorrect'; }
     let gaps = Array.isArray(g && g.gaps) ? g.gaps.filter(x => x && x.concept).slice(0, 2).map(x => ({concept:str(x.concept), detail:str(x.detail)})) : [];
     if (!gaps.length && score < 0.6) gaps = [{concept:q.gap, detail:str(g && g.misconception) || 'Incomplete answer to: ' + q.prompt.slice(0, 200)}];
     if (gaps.length && g && g.root_topic && nodeInfo(g.root_topic)) { gaps[0].root_topic = g.root_topic; gaps[0].root_reason = str(g.root_reason); }
     recordCal(sid, S.conf, score >= 0.6);
-    S.fb = {score, verdict, feedback:str(g && g.feedback), model:q.model, hits:Array.isArray(g && g.hits) ? g.hits : null, hyper:hyperNote(S, score >= 0.6),
+    S.fb = {score, verdict, feedback:corrText(g), model:q.model, hits:Array.isArray(g && g.hits) ? g.hits : null, hyper:hyperNote(S, score >= 0.6),
       misconception:g && g.misconception && g.misconception !== 'null' ? str(g.misconception) : null, gaps,
       root:gaps[0] && gaps[0].root_topic ? {key:gaps[0].root_topic, why:gaps[0].root_reason} : null};
     if (S.selfScore != null) { S.fb.self = S.selfScore; const agree = 1 - Math.abs(S.selfScore - score); S.fb.agree = agree; addMeta(sid, 'selfgrade', agree); }
@@ -366,7 +372,7 @@ function attemptResult(S, q, ok, input) {
   if (A.tries === 0) { S.firstOk = ok; if (q.vstate !== 'doubt') recordCal(sidOf(S), S.conf, ok); }
   if (ok) return finalizeProblem(S, q, true, {});
   A.wrong.push(q.ptype === 'code' ? '(code)' : input); A.tries++;
-  if (A.tries >= (S.exam ? 1 : q.ptype === 'code' ? 3 : 2)) return finalizeProblem(S, q, false, {});
+  if (A.tries >= (S.exam || S.strict ? 1 : q.ptype === 'code' ? 3 : 2)) return finalizeProblem(S, q, false, {});
   A.msg = q.ptype === 'code' ? 'Tests failed. Read the error, fix the code, and run again.' : 'Not quite. Check your work and try once more.' + (q.hint && !A.hint ? ' A hint is available.' : '');
   A.msgKind = 'bad'; A.disputed = false;
   if (q.ptype === 'choice') S.sel = null;
@@ -376,12 +382,14 @@ function attemptResult(S, q, ok, input) {
 async function gradeProof(S, q, input) {
   S.phase = 'checking'; S.checkMsg = 'Grading your argument…'; render();
   try {
-    const g = await AI.json(gradePrompt({prompt:q.prompt, rubric:q.rubric, model:q.solution}, input, nodeInfo(q.node)), {modelTier:'quick'});
+    const strict = !!(S.exam || S.strict);
+    const g = await AI.json(gradePrompt({prompt:q.prompt, rubric:q.rubric, model:q.solution}, input, nodeInfo(q.node), strict), {modelTier:q.pack ? tutorTier() : 'quick'});
     if (SESSION !== S) return;
-    const score = clamp01(g && g.score);
+    const raw = clamp01(g && g.score), right = strict ? (g && g.verdict === 'correct') || raw >= 0.9 : raw >= 0.7;
+    const score = strict ? (right ? 1 : 0) : raw;
     S.phase = 'q';
-    if (S.att.tries === 0) recordCal(sidOf(S), S.conf, score >= 0.7);
-    finalizeProblem(S, q, score >= 0.7, {score, hits:Array.isArray(g && g.hits) ? g.hits : null, feedback:str(g && g.feedback),
+    if (S.att.tries === 0) recordCal(sidOf(S), S.conf, right);
+    finalizeProblem(S, q, right, {score, hits:Array.isArray(g && g.hits) ? g.hits : null, feedback:corrText(g),
       proofGap:Array.isArray(g && g.gaps) && g.gaps[0] ? Object.assign({}, g.gaps[0], g.root_topic ? {root_topic:g.root_topic, root_reason:g.root_reason} : {}) : null});
   } catch (e) {
     if (SESSION !== S) return;
@@ -409,7 +417,7 @@ function finalizeProblem(S, q, solved, extra) {
   const A = S.att;
   const firstTry = solved && A.tries === 0 && !A.hint && !A.steps;
   let score = solved ? (A.tries === 0 ? (A.hint ? 0.8 : 1) : (A.hint ? 0.5 : 0.6)) : 0;
-  if (extra.score != null && q.ptype === 'proof') score = solved ? Math.max(0.7, extra.score) * (A.hint ? 0.85 : 1) : extra.score * 0.5;
+  if (extra.score != null && q.ptype === 'proof') score = S.exam || S.strict ? extra.score : solved ? Math.max(0.7, extra.score) * (A.hint ? 0.85 : 1) : extra.score * 0.5;
   if (q.fade && solved) score = Math.min(score, 0.8);
   if (A.steps && solved) score = Math.min(score, Math.max(0.3, 0.8 - 0.15 * A.steps));
   if (q.ptype === 'code' && solved && A.tries) score = A.tries === 1 ? 0.8 : 0.6;
@@ -574,6 +582,7 @@ function finishSession() {
   const recXP = rec.reduce((a, r) => a + (r.xp != null ? r.xp : r.firstTry ? 10 : r.solved ? 6 : 1), 0);
   S.summary = {changes, newGaps, resolved, xp:xp + recXP, avg:mean(R.map(r => r.score)), n:R.length, problems};
   if (S.kind === 'exam') recordExam(S);
+  if (S.kind === 'test') recordPackTest(S);
 }
 function quitSession() {
   const S = SESSION; if (!S) return go('home');

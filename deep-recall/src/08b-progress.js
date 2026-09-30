@@ -54,7 +54,16 @@ function topicFlow(info, forceSelf) {
   const repair = S('repair', 'Repair gaps', gaps ? `${gaps} open gap${gaps > 1 ? 's' : ''} on this topic` : 'No open gaps', 'repair', key, practiced && !gaps, {skip:!gaps});
   const review = S('review', 'Review', !n.due ? 'Scheduled after your first practice' : due ? 'Due now' : `Next review ${dueIn(n.due).toLowerCase()}`, 'practice', key, (n.interval || 0) >= 7, {lock:!due});
   let steps;
-  if (k === 'lang') {
+  if (hasPack(key) && k !== 'lang') {
+    /* a pre-written chapter: read it (answering in place), then cards, practice from its bank, and the strict chapter test */
+    const bk = (n.book && n.book.done) || {}, nd = Object.keys(bk).length, N = PACK_INDEX[key].s, cs = cardSummary(key), t = n.test;
+    steps = [self ? retrieve : null,
+      S('read', 'Read the chapter', nd ? `${Math.min(nd, N)} of ${N} sections worked` : `${N} sections; you answer each section’s questions as you go`, 'book', key, nd >= N),
+      S('cards', 'Flashcards', cs.unlocked ? `${cs.unlocked} of ${cs.total || cs.unlocked} unlocked${cs.due ? ` · ${cs.due} due` : ''}${cs.fresh ? ` · ${cs.fresh} new` : ''}` : 'Unlock as you finish sections: terms, formulas, small problems', 'cards', key, nd >= N && cs.unlocked && !cs.fresh && !cs.due, {lock:!cs.unlocked}),
+      S('practice', 'Practice', practiced ? `${m}% mastery${toGo}` : 'The chapter’s question bank, aimed at your weakest points', 'practice', key, prof),
+      S('test', 'Chapter test', t ? `${t.passed ? 'Passed' : 'Best so far'}: ${Math.round(t.best * 100)}%` : 'One attempt each, no hints, no partial credit; pass at 80%', 'packTest', key, t && t.passed),
+      repair, review].filter(Boolean);
+  } else if (k === 'lang') {
     steps = [S('learn', 'Learn', 'Grammar and vocabulary lesson with audio', 'lesson', key, n.hasLesson),
       S('practice', 'Exercises', p.a ? `${p.c}/${p.a} right · ${m}%${toGo}` : 'Translate, fill in, build, and listen', 'practice', key, prof),
       S('vocab', 'Vocabulary', `${deck(info.sid).filter(c => c.node === key).length} words from this topic in your deck`, 'vocab', info.sid + '|' + key, deck(info.sid).some(c => c.node === key && (c.box || 0) >= 3)),

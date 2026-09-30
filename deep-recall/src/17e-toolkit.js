@@ -59,8 +59,15 @@ function parseKit(txt) {
   return kit;
 }
 async function ensureKit(key) {
-  if (Store.kits[key] || (KIT[key] && KIT[key].status === 'loading')) return;
+  if ((Store.kits[key] && (Store.kits[key].pack || !hasPack(key))) || (KIT[key] && KIT[key].status === 'loading')) return;
   const info = nodeInfo(key); if (!info) return;
+  if (hasPack(key)) {
+    KIT[key] = {status:'loading'};
+    const P = await loadPack(key);
+    delete KIT[key];
+    if (P) { refreshKitViews(key); return; }
+    if (Store.kits[key]) return;
+  }
   if (!AI.ok()) { KIT[key] = {status:'error', err:'Making a toolkit needs Claude.'}; return; }
   KIT[key] = {status:'loading'};
   try {
@@ -85,13 +92,14 @@ function ruleCard(r, labels, open) {
 function kitBodyHtml(key, compact) {
   const info = nodeInfo(key), kit = Store.kits[key], st = KIT[key], L = kitLabels(info);
   if (!kit) {
+    if (st && st.status === 'loading' && hasPack(key)) return '<div class="thinking"><span class="pulse"></span>Opening the chapter’s toolkit…</div>';
     if (st && st.status === 'loading') return `<div class="thinking"><span class="pulse"></span>Writing the ${esc(L.rules.toLowerCase())}, ${esc(L.terms.toLowerCase())}, and stuck-moves for this topic…</div>`;
     return `${st && st.err ? `<div class="notice bad">${esc(st.err)}</div>` : ''}<section class="card empty-state"><b>No toolkit yet</b>${esc(L.rules)}, ${esc(L.terms.toLowerCase())}, and what to try when stuck, written once for this topic and kept.<div class="row" style="justify-content:center;margin-top:10px"><button class="btn primary sm" data-act="kitMake" data-arg="${key}" ${AI.ok() ? '' : 'disabled'}>Make the toolkit</button></div></section>`;
   }
   return `${kit.rules.length ? `<div class="section-h"><h2>${esc(L.rules)}</h2><span class="eyebrow">${kit.rules.length}</span></div><div class="rules">${kit.rules.map((r, i) => ruleCard(r, L, !compact && i < 2)).join('')}</div>` : ''}
     ${kit.stuck.length ? `<div class="section-h"><h2>${esc(L.stuck)}</h2></div><ol class="stuck">${kit.stuck.map(x => `<li>${fieldHtml(x)}</li>`).join('')}</ol>` : ''}
     ${kit.terms.length ? `<div class="section-h"><h2>${esc(L.terms)}</h2><span class="eyebrow">${kit.terms.length}</span></div><dl class="glossary">${kit.terms.map(t => `<div><dt>${fieldHtml(t.t)}</dt><dd>${fieldHtml(t.d)}${t.ex ? `<span class="eg">${fieldHtml(t.ex)}</span>` : ''}</dd></div>`).join('')}</dl>` : ''}
-    <div class="row" style="margin-top:14px"><button class="btn ghost sm" data-act="kitRedo" data-arg="${key}" ${AI.ok() ? '' : 'disabled'}>Rewrite toolkit</button></div>`;
+    ${kit.pack ? '<p class="small muted" style="margin-top:14px">From the textbook chapter.</p>' : `<div class="row" style="margin-top:14px"><button class="btn ghost sm" data-act="kitRedo" data-arg="${key}" ${AI.ok() ? '' : 'disabled'}>Rewrite toolkit</button></div>`}`;
 }
 function kitDrawerInner(key) {
   const info = nodeInfo(key);

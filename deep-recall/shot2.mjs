@@ -16,7 +16,7 @@ await page.addInitScript((probs) => {
   window.claude = { use: async (n) => n === 'sample' ? sample : null };
 }, probs);
 fs.writeFileSync('/tmp/claude-0/wrapped.html', `<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"></head><body>${html}</body></html>`);
-await page.goto('file:///tmp/claude-0/wrapped.html');
+await page.context().route('http://dr.test/**', r => { const u = new URL(r.request().url()); const f = u.pathname === '/' ? '/tmp/claude-0/wrapped.html' : process.cwd() + u.pathname; r.fulfill({ path: f, contentType: f.endsWith('.json') ? 'application/json' : 'text/html' }); }); await page.goto('http://dr.test/');
 await page.waitForTimeout(1200);
 await page.click('[data-arg="mth"]');
 await page.click('[data-act="course"][data-arg="1"]');

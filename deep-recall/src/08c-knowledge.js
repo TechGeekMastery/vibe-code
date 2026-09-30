@@ -182,6 +182,13 @@ function reconcileOutline(o, a, lock) {
   o.kps.splice(0, o.kps.length, ...list.slice(0, 30));
 }
 function ensureOutline(key, onStatus) {
+  const cur = Store.outlines[key];
+  if (cur && (cur.pack || !hasPack(key))) return Promise.resolve(cur);
+  /* a textbook chapter's own knowledge points take precedence over any generated outline */
+  if (hasPack(key)) return loadPack(key).then(P => { if (P && Store.outlines[key] && Store.outlines[key].pack) { packMigrate(key); return Store.outlines[key]; } return genOutline(key, onStatus); });
+  return genOutline(key, onStatus);
+}
+function genOutline(key, onStatus) {
   if (Store.outlines[key]) return Promise.resolve(Store.outlines[key]);
   if (OUTLINE_P[key]) return OUTLINE_P[key];
   const info = nodeInfo(key); if (!info) return Promise.resolve(null);
@@ -213,6 +220,7 @@ function attachOutline(key, o) {
 }
 /* the topic page prefetches its outline in the background, so it is ready by the time the learner starts */
 function prefetchOutline(key) {
+  if (hasPack(key) && !packNow(key)) { loadPack(key).then(P => { if (P && VIEW.name === 'topic' && VIEW.key === key) render(); }); return; }
   if (Store.outlines[key] || OUTLINE_P[key] || !AI.ok() || !nodeInfo(key)) return;
   ensureOutline(key).then(() => { if (VIEW.name === 'topic' && VIEW.key === key) render(); }).catch(() => {});
 }

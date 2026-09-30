@@ -9,7 +9,7 @@ function bitPrompt(info, o, i) {
 ${ENGAGE}
 Level: ${depthLine()}
 You are teaching ONE small bit of ${topicLine(info)}: knowledge point ${i + 1} of ${o.kps.length}, "${kp.t}": ${kp.d}
-${prev.length ? `Already taught in the previous bits: ${prev.map(k => '“' + k.t + '”').join(', ')}. Build on them, and where it fits, open from the question the previous bit left hanging.` : 'This is the first bit after the topic’s opener, so it must pay off the curiosity the opener raised.'}
+${prev.length ? `Already taught in the previous bits: ${prev.map(k => '“' + k.t + '”').join(', ')}. Build on them explicitly; do not re-teach them.` : 'This is the first bit after the topic’s opener: begin from the problem the opener stated.'}
 ${next.length ? `Coming in later bits (do NOT teach these yet): ${next.map(k => '“' + k.t + '”').join(', ')}.` : ''}
 ${gaps.length ? `Known gaps on this topic: ${gaps.map(g => g.concept + ' (' + g.detail + ')').join('; ')}. Address them if this bit touches them.\n` : ''}${teachRules()}
 Rules for a bit:
@@ -18,12 +18,12 @@ Rules for a bit:
 - Math: every expression, symbol, and exponent in \\( \\) or \\[ \\]. Never keyboard notation (x^2, sqrt(), *, <=, ->).
 ${info.program && !info.subject.code ? '- Make it hands-on where a picture helps: one explorable graph with a slider the learner drags, and one sentence on what to drag and what to watch for.\n' + PLOT_DOC + '\n' : ''}
 Format exactly:
-## <a title that makes the reader curious: a question or a tension, not a textbook label>
-<the hook: 2 to 4 sentences. A concrete case, anomaly, or question that this bit resolves. No definitions yet.>
+## <a plain, descriptive title naming this bit's content>
+<2 to 4 sentences: the specific problem or question this bit answers, stated plainly and concretely. No definitions yet, no teaser.>
 PREDICT: <one question the learner answers from intuition BEFORE the explanation; genuinely uncertain, and the explanation below must settle it>
 OPTIONS: <2 to 4 short options separated by " | ", or leave this line out for an open guess>
 ---
-<the explanation: resolve the hook, starting from what their guess would have predicted. Mechanism, evidence, one worked case followed through. End with the one-sentence takeaway in **bold**.>
+<the explanation: answer the question, starting from what their guess would have predicted. Precise definitions of any new term (bold on first use), the reasoning, one worked case with every step. End with the one-sentence takeaway in **bold**.>
 CHECK: <one micro-problem on exactly this bit that makes the learner produce something: a value, an expression, a one-line justification, or a classification with its reason. Solvable in 1 to 3 minutes. Not yes/no.>
 ANSWER: <the correct answer with its key reasoning, 1 to 4 lines>`;
 }
@@ -32,15 +32,15 @@ function introPrompt(info) {
   return `${HOUSE}
 ${ENGAGE}
 Level: ${depthLine()}
-Write the OPENER for ${topicLine(info)}: the first page the learner sees, before anything is taught. Its only job is to make them want to learn this topic, honestly: show them a real question it answers.
-${before.length ? `They just studied: ${before.map(t => '“' + t + '”').join(', ')}. If there is a genuine tension between that and this topic, use it.` : ''}${teachRules()}
+Write the OPENER for ${topicLine(info)}: the first page the learner sees, before anything is taught. Its job is to state, seriously and concretely, the problem this topic exists to solve and why the discipline needed these ideas.
+${before.length ? `They just studied: ${before.map(t => '“' + t + '”').join(', ')}. Where this topic extends or answers a limitation of that material, say so.` : ''}${teachRules()}
 Format exactly:
-## <a title that is a question or a tension, not the topic name>
-<120 to 200 words: one real case, anomaly, paradox, historical moment, or high-stakes situation, told concretely with specifics (names, numbers, places). End on the question this topic answers. No definitions, no lists, no summary of what is coming.>
+## <a plain, descriptive title: the topic's name or the problem it addresses>
+<120 to 200 words: the problem, stated plainly with one concrete instance (a specific integral, argument, physical situation, or historical question). End on the question this topic answers. No definitions dump, no lists, no teaser.>
 PREDICT: <a question about that case the learner can guess at right now>
 OPTIONS: <2 to 4 short options separated by " | ", or leave this line out>
 ---
-<2 to 4 sentences: don't give the answer away. Say what hangs on the answer and what the learner will be able to do by the end of the topic.>`;
+<2 to 4 sentences: without giving the answer away, say what the learner will be able to do by the end of the topic.>`;
 }
 function bitGradePrompt(info, kp, bit, answer) {
   return `You are checking a learner's answer to a micro-problem in a step-by-step lesson on ${topicLine(info)}.

@@ -1,0 +1,16 @@
+{
+  "root": true,
+  "env": { "browser": true, "es2022": true },
+  "parserOptions": { "ecmaVersion": 2022, "sourceType": "script" },
+  "extends": "eslint:recommended",
+  "globals": { "PACK_INDEX": "readonly" },
+  "rules": {
+    "no-unused-vars": ["warn", { "vars": "local", "args": "none" }],
+    "no-empty": "off",
+    "no-useless-escape": "off",
+    "no-control-regex": "off",
+    "no-prototype-builtins": "off",
+    "no-inner-declarations": "off",
+    "no-cond-assign": ["error", "except-parens"]
+  }
+}

@@ -31,7 +31,7 @@ function renderNav() {
   const show = NAV_VIEWS.includes(VIEW.name);
   const nav = $('#nav'); nav.hidden = !show; document.body.classList.toggle('has-nav', show);
   if (!show) return;
-  const due = dueNodes().length + SUBJECTS.filter(x => x.lang).reduce((a, x) => a + dueCards(x.id).length, 0), gaps = openGaps().length;
+  const due = dueNodes().length + SUBJECTS.filter(x => x.lang).reduce((a, x) => a + dueCards(x.id).length, 0) + cardsDueCount(), gaps = openGaps().length;
   const tab = ['subject', 'add', 'topic'].includes(VIEW.name) ? 'library' : VIEW.name === 'gaps' ? 'review' : ['me', 'settings', 'week'].includes(VIEW.name) ? 'progress' : VIEW.name === 'plan' ? (VIEW.from === 'progress' ? 'progress' : 'home') : VIEW.name;
   const b = (id, label, icon, badge, blue) => `<button class="nav-b ${tab === id ? 'on' : ''}" data-act="nav" data-arg="${id}" ${tab === id ? 'aria-current="page"' : ''}>${ic(icon, 20)}<span>${label}</span>${badge ? `<span class="badge ${blue ? 'blue' : ''}">${badge}</span>` : ''}</button>`;
   nav.innerHTML = `<div class="nav-in"><div class="nav-brand"><span class="brand-mark">DR</span><span>Deep Recall</span></div>${b('home', 'Today', 'bolt')}${b('study', 'Study', 'chat')}${b('library', 'Library', 'learn')}${b('review', 'Review', 'review', due + gaps, !!due)}${b('progress', 'Progress', 'chart')}</div>`;

@@ -1,6 +1,6 @@
 /* ------------------------------------------------------------------ topic page: internal structure, stage, and the method's study flow */
 function openSheet(k) { go('topic', {key:k}); }
-function closeSheet() { const el = $('#sheet'); if (el) el.innerHTML = ''; }
+function closeSheet() { const el = $('#sheet'); if (el) el.innerHTML = ''; document.body.classList.remove('teacher-open'); }
 const AI_ACTS = ['lesson', 'practice', 'repair', 'task', 'project', 'vocab', 'problems'];
 VIEWS.topic = () => {
   const info = nodeInfo(VIEW.key);
@@ -13,8 +13,9 @@ VIEWS.topic = () => {
   const idx = `${String(info.ui + 1).padStart(2, '0')}.${String(info.ni + 1).padStart(2, '0')}`;
   const fading = n && !assistCapped(n) && (n.mastery || 0) - m >= 8;
   const ttab = ['learn', 'kit', 'prog'].includes(VIEW.ttab) ? VIEW.ttab : 'learn';
-  if (ttab === 'kit' && !Store.kits[key] && !KIT[key] && AI.ok()) ensureKit(key);
-  const needsAI = step => AI_ACTS.includes(step.act) && !(step.act === 'lesson' && has) && !(step.act === 'vocab' && AI.fn) && !ai;
+  const pk = hasPack(key) && k !== 'lang', P = pk ? packNow(key) : null;
+  if (ttab === 'kit' && ((!Store.kits[key] && AI.ok()) || (pk && !(Store.kits[key] && Store.kits[key].pack))) && !KIT[key]) ensureKit(key);
+  const needsAI = step => AI_ACTS.includes(step.act) && !(step.act === 'lesson' && has) && !(step.act === 'vocab' && AI.fn) && !(pk && step.act === 'practice') && !ai;
 
   const K = (l, v) => `<div><span>${l}</span><b>${v}</b></div>`;
   let kv = '';
@@ -35,7 +36,7 @@ VIEWS.topic = () => {
   }).join('');
 
   const extras = [];
-  if (!F.steps.some(x => x.act === 'lesson')) extras.push(['lesson', key, has ? 'Full lesson (one page)' : 'Full lesson (one page)']);
+  if (!pk && !F.steps.some(x => x.act === 'lesson')) extras.push(['lesson', key, has ? 'Full lesson (one page)' : 'Full lesson (one page)']);
   if (!F.steps.some(x => x.id === 'retrieve') && k !== 'lang') extras.push(['task', 'dump|' + key, 'Brain dump']);
   if (!F.steps.some(x => x.id === 'source') && k !== 'lang') extras.push(['source', key, 'Study a source']);
   if (!F.steps.some(x => x.id === 'write') && k !== 'lang') extras.push(['task', 'qwrite|' + key, k === 'program' ? 'Write your own problems' : 'Write your own questions']);
@@ -82,6 +83,7 @@ VIEWS.topic = () => {
     ${assistCapped(n) ? `<section class="card solonote"><div class="spread"><div><b>Solo check</b><div class="muted small">You’ve worked this with the tutor. Prove it closed-book to reach Proficient.</div></div><button class="btn primary sm" data-act="practice" data-arg="${key}" ${ai ? '' : 'disabled'}>Try it solo</button></div></section>` : ''}
     <div style="margin-top:14px">${cta}</div>
     <p class="muted small" style="margin-top:8px">${esc(stageHint(n, info))}</p>
+    ${pk ? `<p class="small muted book-note">${ic('learn', 14)} Pre-written textbook chapter${P ? `, researched against ${P.sources.slice(0, 2).map(x => esc(x.title)).join(' and ')}${P.sources.length > 2 ? ' and others' : ''}` : ''}. Your questions go to the teacher panel inside the chapter.</p>` : ''}
     ${gaps.length ? `<section class="card gapnote"><div class="spread"><b>${gaps.length} open gap${gaps.length > 1 ? 's' : ''} on this topic</b><button class="btn warn sm" data-act="repair" data-arg="${key}" ${ai ? '' : 'disabled'}>Repair</button></div>
       <div class="stack" style="gap:6px;margin-top:8px">${gaps.slice(0, 4).map(g => `<div class="gap-line"><b style="font-weight:550">${esc(g.concept)}</b>${g.hits > 1 ? ` <span class="mono-t small" style="color:var(--warn)">×${g.hits}</span>` : ''}<div class="muted small">${fieldHtml(g.detail || '')}</div></div>`).join('')}</div></section>` : ''}
     ${wp.length && !(n && n.ready) ? `<div class="section-h"><h2>Prerequisites</h2></div><section class="card stack" style="gap:8px">${(n.pre || []).map(k => { const pi = nodeInfo(k); if (!pi) return ''; const pm = mastery(Store.nodes[k]); return `<button class="lib-row" data-act="topic" data-arg="${k}" style="padding:6px 0;border:0"><span class="mono" style="--c:${pi.subject.color}">${esc(pi.subject.mono)}</span><span class="t"><span class="ln">${esc(pi.title)}</span><span class="lm"><span>${pm}% mastery${pm < 60 ? ' · below 60%' : ''}</span></span></span><span class="lr"></span></button>`; }).join('')}<div class="row"><button class="btn sm" data-act="readiness" data-arg="${key}" ${ai ? '' : 'disabled'}>Take the readiness check</button><button class="btn ghost sm" data-act="readySkip" data-arg="${key}">I know these</button></div></section>` : ''}

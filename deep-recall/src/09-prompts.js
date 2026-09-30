@@ -8,14 +8,13 @@ Rules:
 - No filler, no motivational language, no moralizing, no stock phrases like "it's important to note".
 - Define each technical term on first use.
 - Math: every expression, symbol, number with an exponent or unit, and formula in LaTeX inside \\( \\) or \\[ \\] (in JSON, use the Unicode symbols instead). Never keyboard notation: no x^2, sqrt(), *, <=, ->, 3/4 for fractions in prose.`;
-/* rigor and pull are compatible: how the writing earns attention */
-const ENGAGE = `How to make it gripping without giving up any rigor:
-- Lead with a question the reader wants answered: a puzzle, an anomaly, a real case with stakes, a prediction that turns out wrong, the moment someone in history got stuck. Never open with a definition, a list of facts, or "X is...".
-- Make the reader think before you tell them: pose it, let them guess, then resolve it.
-- The explanation is the resolution: mechanism and evidence (how we know), carried by one concrete case followed all the way through, not a catalogue of facts.
-- Name things after the reader already grasps them: introduce a term when the story needs a word for it, and define it in plain words woven into the sentence. At most one parenthetical per sentence; don't define everyday words.
-- Vary rhythm; short sentences for the key moves. Address the reader as "you". The voice of a brilliant teacher who finds this genuinely interesting, not a textbook and not a hype piece: no exclamation marks, no "fascinating", no "amazing".
-- Every paragraph earns its place. If a fact doesn't serve the question, cut it.`;
+/* register and construction: the learner asked for a serious, logically built textbook voice, never entertainment */
+const ENGAGE = `Register and construction (the learner has asked for this explicitly):
+- Serious, precise, scholarly: the voice of an excellent university lecturer writing their own notes. No jokes, no humor, no "fun facts", no rhetorical teasers, no cute or clickbait titles, no exclamation marks, no "fascinating", "amazing", "let's dive in".
+- Build logically: start from the problem the idea exists to solve, stated plainly and concretely; then introduce each concept at the point it is needed, and never use anything before it is introduced.
+- Use the discipline's real nomenclature. Introduce each technical term with a precise definition (bold on first use).
+- Every "what" gets a "why": mechanism, reasoning, or proof sketch, then one fully worked case, then the common mistake and why it happens.
+- Headings are plain, descriptive labels of the content (e.g. "The ratio test", "Negating a quantified statement"), never questions or teasers.`;
 const depthLine = () => (DEPTHS[Store.profile.depth] || DEPTHS.rigorous).prompt;
 const topicLine = info => `"${info.title}" (${info.program ? 'course' : 'unit'} "${info.unit}" of the subject "${info.subject.name}")`;
 const gapLines = gaps => gaps.map((g, i) => `${i + 1}. ${g.concept}: ${g.detail}${(g.hits || 1) > 1 ? ` (missed ${g.hits} times)` : ''}`).join('\n');
@@ -24,7 +23,7 @@ const QSCHEMA = `Question schemas (JSON):
 {"type":"recall","prompt":"asks the learner to explain a mechanism or reason in their own words","rubric":["key idea 1","key idea 2","key idea 3"],"model":"model answer, 2-5 sentences","gap":"..."}
 {"type":"apply","prompt":"a NEW concrete scenario the learner must reason through using the concepts","rubric":["..."],"model":"...","gap":"..."}
 {"type":"order","prompt":"Put these in order: ...","items":["first","second","third","fourth"],"explanation":"...","gap":"..."}
-Every wrong mcq option must be something a specific misconception would produce, not an obviously silly answer. Vary the position of the correct option. ${NOTATION}`;
+Use mcq only when every option is a plausible answer that a specific misconception would produce; never trivial or joke options. Vary the position of the correct option. Prompts are specific and demanding ("State … precisely and explain why …", "Explain why the following argument fails …"), never "What is X?". ${NOTATION}`;
 
 function researchPrompt(info) {
   return `You are researching current sources for a lesson on ${topicLine(info)}. Today is ${new Date().toDateString()}.
@@ -42,11 +41,11 @@ ${gaps.length ? `The learner has shown these specific gaps on this topic. Repair
 Use exactly this Markdown format:
 
 # ${info.title}
-One or two sentences: a puzzle, paradox, or sharp question that this lesson resolves.
+One or two sentences stating plainly the problem this topic addresses and what the learner will be able to do by the end.
 
 ${o ? `This topic has a frozen syllabus of ${o.kps.length} knowledge points, anchored to ${o.ref}${o.obj ? ' and the official objective "' + o.obj + '"' : ''}. Teach EVERY one, in this order, at full depth:\n${o.kps.map(k => k.id + ': ' + k.t + ': ' + k.d).join('\n')}\n\nUse one section per 2 to 4 knowledge points (as many sections as that takes). End each section heading with the ids it covers in square brackets, e.g. "## Block cipher modes [k4,k5]".` : 'Then 3 to 5 sections.'} Each section:
 ## <section heading>
-<200-400 words. Open with the question or case this section resolves, then resolve it. Short paragraphs; lists only where they help; **bold** for key terms. Depth over breadth: the mechanism, a concrete case, and the exact point where people go wrong.>
+<200-400 words. Open by stating what the section is for (the question it answers or the task it enables), then develop it: precise definition or statement, the reasoning behind it, a worked case with every step. Short paragraphs; lists only where they help; **bold** for key terms. Depth over breadth: the mechanism, a concrete case, and the exact point where people go wrong.>
 CHECK: <a retrieval question on this section that requires recalling or reasoning, not yes/no>
 ANSWER: <model answer, 1-3 sentences>
 
@@ -75,7 +74,7 @@ ${kpBlock(info.key, n, 'json')}
 ${openGapsFor(info.key).length ? `Known gaps for this learner on this topic (include at least one question on them):\n${gapLines(openGapsFor(info.key).slice(0, 4))}` : ''}
 
 Write ${n} questions. Target understanding: mechanisms, "why" questions, predictions, applying concepts to new cases. Avoid trivia.
-Mix: 3 mcq, 2 recall, ${pretest ? '1 apply' : '1-2 apply, and at most one order question if the topic has a genuine sequence (process, causal chain, or chronology)'}. Order from easier to harder.
+The learner writes his own answers: most questions are open-response. Mix: at most 1 mcq, ${pretest ? '3 recall, 2 apply' : '3 recall, 2-3 apply, and at most one order question if the topic has a genuine sequence (process, causal chain, or chronology)'}. Recall prompts ask him to state a definition precisely, explain a mechanism, or justify a claim; apply prompts give a new case to reason through. Order from easier to harder.
 
 ${QSCHEMA}
 
@@ -86,7 +85,7 @@ function reviewPrompt(items) {
   return `${HOUSE}
 Level: ${depthLine()}
 
-Write a spaced-review session: 2 questions per topic below (${items.length * 2} total). These test long-term retention, so favor free recall and application over recognition: at most one third multiple choice. Ask from new angles rather than restating the key points.
+Write a spaced-review session: 2 questions per topic below (${items.length * 2} total). These test long-term retention, so they are open-response: free recall and application, at most one multiple-choice question in the whole set. Ask from new angles rather than restating the key points.
 Topics:
 ${blocks}
 
@@ -104,7 +103,7 @@ Write a 10-question diagnostic for the subject "${s.name}" to map what the learn
 Lessons (node ids):
 ${list}
 
-Mix about 5 mcq, 4 recall, 1 apply.
+Mix about 3 mcq, 5 recall, 2 apply.
 ${QSCHEMA}
 Every question must also include "node": the node id it tests.
 
@@ -125,10 +124,10 @@ Each question must also include "gapIndex": the 1-based number of the gap it tar
 
 Reply with only JSON: {"lesson":"Markdown, 200-500 words, one ### heading per gap, math in real notation (x², √, ≤, →), never keyboard forms","questions":[...]}`;
 }
-function gradePrompt(q, answer, info) {
-  return `You are grading a free-response answer in a rigorous study app. Topic: ${info ? topicLine(info) : 'general'}.
+function gradePrompt(q, answer, info, strict) {
+  return `You are grading a written answer in a rigorous study app. Topic: ${info ? topicLine(info) : 'general'}.
 Question: ${q.prompt}
-Rubric, the key ideas a complete answer contains:
+Rubric, the points a complete answer contains:
 ${q.rubric.map((r, i) => `${i + 1}. ${r}`).join('\n')}
 Model answer: ${q.model}
 
@@ -137,11 +136,16 @@ Learner's answer:
 ${String(answer).slice(0, 6000)}
 """
 
-Grade strictly but fairly. Credit correct paraphrases and valid reasoning the rubric didn't anticipate. Don't credit vague gestures toward an idea. If the answer contains a factual error or a wrong causal model, say so directly.
+First work the question yourself, independently, from scratch; then judge the answer against your own work and the rubric. Credit correct paraphrases and valid reasoning the rubric didn't anticipate. Don't credit vague gestures toward an idea, a right conclusion reached by invalid reasoning, or a misused term. If the answer contains a factual error or a wrong causal model, say so directly and give the correction.${strict ? '\nThis is a strict exam: the verdict is "correct" only if every rubric point is met with no error; there is no partial credit.' : ''}
 ${info ? rootSnippet(info.key) : ''}
 Reply with only JSON:
-{"hits":[true or false for each rubric item, in order],"score":<0.0 to 1.0>,"verdict":"correct" | "partial" | "incorrect","feedback":"2-4 sentences to the learner: what was right, what was missing or wrong, and the key correction","gaps":[{"concept":"short label, max 6 words","detail":"one sentence on what the learner doesn't yet understand"}],"misconception":"the specific wrong model the answer reveals, or null","root_topic":null,"root_reason":null}
-"gaps" is empty when the answer is complete. List at most 2 gaps. ${NOTATION}`;
+{"hits":[true or false for each rubric item, in order],"score":<0.0 to 1.0>,"verdict":"correct" | "partial" | "incorrect","feedback":"2-4 sentences in a serious, precise register: what was right, and what was missing or wrong, named exactly","errors":[{"wrong":"the learner's wrong or missing claim","fix":"the correct version, stated precisely"}],"gaps":[{"concept":"short label, max 6 words","detail":"one sentence on what the learner doesn't yet understand"}],"misconception":"the specific wrong model the answer reveals, or null","root_topic":null,"root_reason":null}
+"errors" and "gaps" are empty when the answer is complete. List at most 2 gaps. ${NOTATION}`;
+}
+/* grader feedback with its corrections appended as a list */
+function corrText(g) {
+  const errs = (Array.isArray(g && g.errors) ? g.errors : []).filter(e => e && e.fix).slice(0, 5);
+  return str(g && g.feedback) + (errs.length ? '\n\n**Corrections**\n' + errs.map(e => `- ${e.wrong ? str(e.wrong) + ' → ' : ''}${str(e.fix)}`).join('\n') : '');
 }
 function curriculumPrompt(topic) {
   return `Design a rigorous self-study course on: "${topic}".

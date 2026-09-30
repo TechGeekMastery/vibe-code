@@ -63,7 +63,7 @@ It is 0.25.
     if (s.includes('read the source below')) return {accuracy:0.8,completeness:0.6,score:0.7,captured:['x'],missed:[{point:'p',why_it_matters:'w',concept:'Key claim'}],distortions:[],feedback:'Good.'};
     if (s.includes('hands-on project')) return {title:'LED circuit',goal:'Light an LED',time:'30 min',parts:[{name:'LED',qty:'1'}],tools:['multimeter'],safety:['Low voltage only'],steps:[{title:'Measure battery',body:'Measure it.',why:'Know your source',check:{type:'measure',prompt:'Battery voltage',expect:{value:9,unit:'V',tolerance:0.1}}},{title:'Done',body:'Look',check:{type:'observe',prompt:'Does it light?'}}]};
     if (s.includes('practice set')) return {questions:[{type:'mcq',prompt:'Q?',options:['a','b','c','d'],answer:1,explanation:'e',traps:['t',null,'t','t'],gap:'g'},{type:'recall',prompt:'Explain',rubric:['r1'],model:'m',gap:'g2'}]};
-    if (s.includes('grading a free-response')) return {hits:[true],score:0.9,verdict:'correct',feedback:'ok',gaps:[]};
+    if (s.includes('grading a written answer')) return {hits:[true],score:0.9,verdict:'correct',feedback:'ok',gaps:[]};
     return {};
   };
   const T = (s) => {
@@ -115,7 +115,7 @@ const step = async (label, fn) => { try { await fn(); } catch (e) { errs.push('S
 const click = (sel) => page.click(sel, {timeout: 4000});
 const nav = (x) => page.evaluate((y) => document.querySelector(`#nav [data-arg="${y}"]`).click(), x);
 const txt = () => page.locator('#app').textContent();
-await page.goto('file:///tmp/claude-0/wrapped.html');
+await page.context().route('http://dr.test/**', r => { const u = new URL(r.request().url()); const f = u.pathname === '/' ? '/tmp/claude-0/wrapped.html' : process.cwd() + u.pathname; r.fulfill({ path: f, contentType: f.endsWith('.json') ? 'application/json' : 'text/html' }); }); await page.goto('http://dr.test/');
 await page.waitForTimeout(1500);
 await page.screenshot({ path: 'seed-home.png', fullPage: true });
 await step('freeze used', async () => { const st = await page.evaluate(() => JSON.parse(JSON.stringify(window.__DB['data/users/u1/profile'] || {}))); const t = await txt(); if (!/freeze/i.test(await page.locator('#toast').textContent().catch(() => ''))) {} ; const s = await page.locator('.topbar .stat.fire .num').textContent(); if (+s < 3) throw new Error('streak not preserved: ' + s + ' freezes ' + st.freezes); });

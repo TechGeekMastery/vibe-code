@@ -29,7 +29,7 @@ const step = async (label, fn) => { try { await fn(); } catch (e) { errs.push('S
 const click = (sel) => page.click(sel, {timeout: 4000});
 const nav = (x) => page.evaluate((y) => document.querySelector(`#nav [data-arg="${y}"]`).click(), x);
 const txt = () => page.locator('#app').textContent();
-await page.goto('file:///tmp/claude-0/wrapped.html');
+await page.context().route('http://dr.test/**', r => { const u = new URL(r.request().url()); const f = u.pathname === '/' ? '/tmp/claude-0/wrapped.html' : process.cwd() + u.pathname; r.fulfill({ path: f, contentType: f.endsWith('.json') ? 'application/json' : 'text/html' }); }); await page.goto('http://dr.test/');
 await page.waitForTimeout(1500);
 await page.screenshot({ path: 'seed-home.png', fullPage: true });
 await step('freeze used', async () => { const st = await page.evaluate(() => JSON.parse(JSON.stringify(window.__DB['data/users/u1/profile'] || {}))); const t = await txt(); if (!/freeze/i.test(await page.locator('#toast').textContent().catch(() => ''))) {} ; const s = await page.locator('.topbar .stat.fire .num').textContent(); if (+s < 3) throw new Error('streak not preserved: ' + s + ' freezes ' + st.freezes); });

@@ -108,5 +108,9 @@ function typeset(el) {
   if (!el) return;
   try { drawPlots(el); } catch (e) { console.warn(e); }
   const MJ = window.MathJax;
-  if (MJ && typeof MJ.typesetPromise === 'function') { try { MJ.typesetPromise([el]).catch(() => {}); } catch (e) {} }
+  if (MJ && typeof MJ.typesetPromise === 'function') { try { MJ.typesetPromise([el]).then(() => fitMath(el)).catch(() => {}); } catch (e) {} }
+}
+/* inline formulas can't line-break: one wider than its column scrolls sideways instead of running off the page */
+function fitMath(el) {
+  el.querySelectorAll('mjx-container:not([display="true"])').forEach(c => { const p = c.parentElement; if (p && c.getBoundingClientRect().width > p.clientWidth + 1) c.classList.add('mx-wide'); });
 }

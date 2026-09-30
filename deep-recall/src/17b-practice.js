@@ -31,6 +31,21 @@ function startExam(sid, ui) {
     loadMsg:`${n} ${k === 'concept' ? 'questions' : k === 'lang' ? 'items' : 'problems'} across the whole course, ${Math.round(mins)} minutes, one attempt each, no hints. Pass at ${EXAM_PASS * 100}% to complete the course. The clock starts with the first question.`});
   go('session');
   const intro = `This is a timed cumulative EXAM for the course "${s.units[ui].t}" in ${s.name}: one item per topic listed, exam-level difficulty, mixed order, prompts that don't name the topic or technique.`;
+  /* topics with a textbook chapter contribute one of the chapter's own exam questions; the rest are written on the spot */
+  const packed = k === 'lang' ? [] : pick.filter(hasPack);
+  if (packed.length) {
+    runSession(S, async S => {
+      const Ps = await Promise.all(packed.map(loadPack)), qs = [], rest = pick.filter(x => !hasPack(x));
+      packed.forEach((key, i) => { const q = Ps[i] && pickExamQ(key, Ps[i]); if (q) qs.push(packProblem(q, key, Ps[i], 3)); else rest.push(key); });
+      S.holdStream = rest.length > 0 && !qs.length;
+      addQs(S, shuffle(qs));
+      if (!rest.length) return;
+      const ri = rest.map(nodeInfo);
+      if (k === 'concept') { const r = await AI.json(examPrompt(s, ui, ri), {modelTier:'default', cache:false, signal:S.ctl.signal}); addQs(S, await verifyMcqs(validateQs(r && r.questions, rest, null), S.ctl.signal)); }
+      else await streamProblems(S, problemsPrompt({topics:ri, n:rest.length, difficultyText:'mostly 2 and 3', skills:s.skills, intro:intro + (s.code ? ' Use TYPE code for about half.' : '')}), rest, rest[0]);
+    });
+    return;
+  }
   if (k === 'lang') runSession(S, async S => { const r = await AI.json(langItemsPrompt({infos, n, intro:intro + ' Set "node" to the topic id.', distribution:'about 40% translate_to, 20% cloze, 15% translate_from, 15% build, 10% choice'}), {modelTier:'default', cache:false, signal:S.ctl.signal}); addQs(S, validateLangItems(r && r.items, pick, pick[0])); });
   else if (k === 'concept') runSession(S, async S => { const r = await AI.json(examPrompt(s, ui, infos), {modelTier:'default', cache:false, signal:S.ctl.signal}); addQs(S, await verifyMcqs(validateQs(r && r.questions, pick, null), S.ctl.signal)); });
   else runSession(S, S => streamProblems(S, problemsPrompt({topics:infos, n, difficultyText:'mostly 2 and 3', skills:s.skills, intro:intro + (s.code ? ' Use TYPE code for about half.' : '')}), pick, pick[0]));
@@ -41,7 +56,7 @@ Level: ${depthLine()}
 Write a timed cumulative exam for the course "${s.units[ui].t}" in ${s.name}: one question per topic below, at the difficulty of a real final exam, testing understanding and transfer rather than recall of phrasing. Mixed order.
 Topics (node ids):
 ${infos.map(i => `- "${i.key}": ${i.title}`).join('\n')}
-Mix about 40% mcq, 40% recall or apply, 20% apply with a novel scenario.
+Mix: at most 2 mcq in the whole exam; the rest are written answers (recall that asks for a mechanism, argument, or precise definition, and apply with a novel scenario).
 ${QSCHEMA}
 Every question must also include "node": the node id it tests.
 Reply with only JSON: {"questions":[...]}`;

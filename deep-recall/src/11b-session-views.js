@@ -3,7 +3,7 @@ function kitOk(S) { const q = S.questions && S.questions[S.i]; return !!(q && q.
 VIEWS.session = () => {
   const S = SESSION;
   if (!S) { setTimeout(() => go('home'), 0); return ''; }
-  const kindLabel = {practice:'Practice', pretest:'Pre-test', review:'Review', diagnostic:'Diagnostic', repair:'Gap repair', problems:'Problem set', placement:'Placement test', lang:'Exercises', vocab:'Vocabulary', mixed:'Mixed practice', exam:'Course exam', drill:'Drill', readiness:'Readiness check'}[S.kind] || 'Session';
+  const kindLabel = {practice:'Practice', pretest:'Pre-test', review:'Review', diagnostic:'Diagnostic', repair:'Gap repair', problems:'Problem set', placement:'Placement test', lang:'Exercises', vocab:'Vocabulary', mixed:'Mixed practice', exam:'Course exam', test:'Chapter test', drill:'Drill', readiness:'Readiness check'}[S.kind] || 'Session';
   const head = `<header class="sess-top">
       <button class="icon-btn" data-act="quitSession" aria-label="End session">${ic('close', 22)}</button>
       <div class="bar"><i id="sessBar" style="width:${sessPct(S)}%"></i></div>
@@ -113,7 +113,7 @@ const FMT_HINT = {
   numbers:'Separate values with commas, in any order: -2, 3'
 };
 function keyState(q) {
-  const m = {queued:['Key check queued', ''], checking:['Checking the answer key', ''], ok:['Answer key verified', 'ok'], fixed:['Answer key corrected', 'warn'], doubt:['Answer key disputed', 'bad'], unverified:['Key not verified', ''], skip:['', '']}[q.vstate || 'skip'] || ['', ''];
+  const m = {pack:['Textbook question', ''], queued:['Key check queued', ''], checking:['Checking the answer key', ''], ok:['Answer key verified', 'ok'], fixed:['Answer key corrected', 'warn'], doubt:['Answer key disputed', 'bad'], unverified:['Key not verified', ''], skip:['', '']}[q.vstate || 'skip'] || ['', ''];
   return m[0] ? `<span class="kstate ${m[1]}" title="Each answer key is re-solved independently before it grades you">${m[0]}</span>` : '';
 }
 function problemHtml(S, q) {
@@ -133,7 +133,7 @@ function problemHtml(S, q) {
       ${S.codeErr && S.phase !== 'feedback' ? `<pre class="code-out bad">${esc(S.codeErr)}</pre>` : ''}${S.codeOut && S.phase !== 'feedback' ? `<pre class="code-out">${esc(S.codeOut)}</pre>` : ''}
       ${!locked ? '<div class="hint">Runs in your browser against hidden tests. Tab indents; Ctrl/⌘ + Enter runs. Three attempts.</div>' : ''}`;
   } else if (q.ptype === 'proof') {
-    input = `<textarea id="answer" class="answer" data-inp="sessText" placeholder="Write your argument step by step…" aria-label="Your proof" ${locked ? 'readonly' : ''}>${esc(S.text)}</textarea>`;
+    input = `<textarea id="answer" class="answer" data-inp="sessText" placeholder="${q.written ? 'Write your answer in full: definitions, each step, and the reason for it…' : 'Write your argument step by step…'}" aria-label="${q.written ? 'Your answer' : 'Your proof'}" ${locked ? 'readonly' : ''}>${esc(S.text)}</textarea>`;
   } else {
     input = `<label class="vh" for="pans">Your answer</label>
       <input id="pans" class="pinput" data-inp="pans" value="${esc(S.text)}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Your answer" ${locked ? 'readonly' : ''}>
@@ -150,7 +150,8 @@ function problemHtml(S, q) {
   if (q.worked) return workedHtml(S, q, info);
   const steps = solSteps(q.solution), shownSteps = Math.max(q.fade || 0, A.steps || 0);
   const given = steps && shownSteps ? steps.slice(0, shownSteps) : null;
-  if (S.phase === 'q') actions = `<button class="btn ghost" data-act="giveUp">${S.exam ? 'Skip' : 'Show solution'}</button>${q.hint && !A.hint && !S.exam ? '<button class="btn" data-act="phint">Hint</button>' : ''}${steps && !S.exam && (A.hint || !q.hint) && shownSteps < steps.length - 1 ? '<button class="btn" data-act="pstep">Show next step</button>' : ''}<button class="btn primary" data-act="pcheck" id="pcheckBtn" ${A.tries === 0 && !S.conf ? 'disabled' : ''}>${q.ptype === 'code' ? 'Run tests' : 'Check'}</button>`;
+  const strict = S.exam || S.strict;
+  if (S.phase === 'q') actions = `<button class="btn ghost" data-act="giveUp">${strict ? 'Skip' : 'Show solution'}</button>${q.hint && !A.hint && !strict ? '<button class="btn" data-act="phint">Hint</button>' : ''}${steps && !strict && (A.hint || !q.hint) && shownSteps < steps.length - 1 ? '<button class="btn" data-act="pstep">Show next step</button>' : ''}<button class="btn primary" data-act="pcheck" id="pcheckBtn" ${A.tries === 0 && !S.conf ? 'disabled' : ''}>${q.ptype === 'code' ? 'Run tests' : 'Check'}</button>`;
   else if (S.phase === 'checking') actions = `<button class="btn primary" disabled>Checking…</button>`;
   else if (S.phase === 'feedback') actions = `${S.fb.verdict !== 'correct' ? `<button class="btn" data-act="askTutorProblem">Ask the tutor</button>` : ''}${nextBtn(S)}`;
   return `<div class="qwrap" style="--c:${info ? info.subject.color : 'var(--accent)'}">
@@ -225,7 +226,8 @@ function summaryHtml(S, kindLabel) {
   const examLine = X.exam ? `<div class="notice ${X.exam.passed ? 'good' : 'warn'}" style="margin-top:0"><b>${X.exam.passed ? 'Passed' : 'Not passed yet'}: ${Math.round(X.exam.score * 100)}%</b> (pass mark ${EXAM_PASS * 100}%${X.exam.unanswered ? `; ${X.exam.unanswered} unanswered count as zero` : ''}). ${X.exam.passed ? 'This course’s exam requirement is complete.' : 'Repair the gaps below, then retake it.'}</div>` : '';
   const readyLine = S.kind === 'readiness' ? `<div class="notice ${S.readyPassed ? 'good' : 'warn'}" style="margin-top:0">${S.readyPassed ? 'Ready. The topic is open.' : 'Not ready yet: the misses were logged as gaps on the prerequisite topics. Repair those first, or skip the check from the topic page.'}</div>` : '';
   const retLine = S.retainedNow && S.retainedNow.length ? `<div class="notice good" style="margin-top:0"><b>Retention confirmed</b> on ${S.retainedNow.map(k => esc(nodeInfo(k).title)).join(', ')}: recalled weeks after first study.</div>` : '';
-  return `<div class="summary">${examLine}${readyLine}${retLine}
+  const testLine = X.test ? `<div class="notice ${X.test.passed ? 'good' : 'warn'}" style="margin-top:0"><b>${X.test.passed ? 'Passed' : 'Not passed yet'}: ${X.test.got} of ${X.test.total} right (${Math.round(X.test.score * 100)}%)</b>. Pass mark ${TEST_PASS * 100}%; no partial credit. ${X.test.passed ? '' : 'Work through the missed points below, then retake it.'}</div>` : '';
+  return `<div class="summary">${examLine}${testLine}${readyLine}${retLine}
     <div><div class="eyebrow">${kindLabel} complete · ${esc(S.title)}</div><div class="pct">${probs ? probs.solved + '/' + probs.n : pc + '%'}</div><p class="muted" style="margin-top:6px">${probs ? `${probs.first} right on the first try. ` : ''}${line}</p></div>
     <div class="sum-stats">
       <div><span>XP earned</span><b>+${X.xp}</b></div>

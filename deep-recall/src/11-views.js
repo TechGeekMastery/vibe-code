@@ -221,7 +221,7 @@ VIEWS.lesson = () => {
 
 /* ---- Review and Gaps share a tab: what's due, and what's broken */
 function reviewTabs(cur) {
-  const due = dueNodes().length + SUBJECTS.filter(x => x.lang).reduce((a, x) => a + dueCards(x.id).length, 0), g = openGaps().length;
+  const due = dueNodes().length + SUBJECTS.filter(x => x.lang).reduce((a, x) => a + dueCards(x.id).length, 0) + cardsDueCount(), g = openGaps().length;
   return `<div class="seg compact rtabs" role="tablist">${[['review', 'Due', due], ['gaps', 'Gaps', g]].map(([id, l, n]) => `<button role="tab" class="${cur === id ? 'on' : ''}" aria-selected="${cur === id}" data-act="nav" data-arg="${id}"><b>${l}${n ? ` · ${n}` : ''}</b></button>`).join('')}</div>`;
 }
 /* ---- Review */
@@ -241,6 +241,7 @@ VIEWS.review = () => {
     <div><div class="eyebrow">Topics due now</div><span class="big">${due.length}</span></div>
     <button class="btn primary" data-act="startReview" ${due.length && AI.ok() ? '' : 'disabled'}>${due.length ? `Start review · ${n6} topic${n6 > 1 ? 's' : ''}` : 'Nothing due'}</button>
   </section>
+  ${flashRowHtml()}
   ${langs.length ? `<div class="section-h"><h2>Vocabulary</h2></div><div class="lib">${langs.map(s => { const d = dueCards(s.id).length; return `<button class="lib-row" data-act="vocab" data-arg="${s.id}" style="--c:${s.color}" ${AI.fn ? '' : 'disabled'}><span class="mono">${esc(s.mono)}</span><span class="t"><span class="ln">${esc(s.name)} words</span><span class="lm"><span>${d} due</span><span>${deck(s.id).length} in deck</span></span></span><span class="lr"><span class="pstage ${d ? 's3' : ''}">${d ? 'Review' : 'Up to date'}</span></span></button>`; }).join('')}</div>` : ''}
   ${due.length ? `<div class="section-h"><h2>Due topics</h2></div><div class="lib">${due.map(n => { const i = nodeInfo(n.key); return `<button class="lib-row" data-act="topic" data-arg="${n.key}" style="--c:${i.subject.color}"><span class="mono">${esc(i.subject.mono)}</span><span class="t"><span class="ln">${esc(i.title)}</span><span class="lm"><span>${mastery(n)}% now · was ${n.mastery || 0}%</span><span>last ${ago(n.last).toLowerCase()}</span></span></span><span class="lr"></span></button>`; }).join('')}</div>` : ''}
   ${workloadHtml()}
