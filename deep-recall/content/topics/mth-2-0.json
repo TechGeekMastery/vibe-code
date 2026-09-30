@@ -101,7 +101,7 @@
      "id": "s1q2",
      "kp": "k2",
      "type": "antiderivative",
-     "prompt": "Compute \\( \\int x\\sin(2x)\\,dx \\). State your \\( u \\) and \\( dv \\). Enter an antiderivative (the constant is not needed).",
+     "prompt": "Compute \\( \\int x\\sin(2x)\\,dx \\). Choose \\( u \\) and \\( dv \\) on paper, then enter an antiderivative (the constant is not needed).",
      "why": "Take \\( u = x \\), \\( dv = \\sin(2x)\\,dx \\), so \\( du = dx \\) and \\( v = -\\tfrac12\\cos(2x) \\). Then \\[ \\int x\\sin 2x\\,dx = -\\tfrac{x}{2}\\cos 2x + \\tfrac12\\int\\cos 2x\\,dx = -\\tfrac{x}{2}\\cos 2x + \\tfrac14\\sin 2x + C. \\] Check: the derivative is \\( -\\tfrac12\\cos 2x + x\\sin 2x + \\tfrac12\\cos 2x = x\\sin 2x \\).",
      "answer": "-x*cos(2*x)/2 + sin(2*x)/4",
      "vars": "x"

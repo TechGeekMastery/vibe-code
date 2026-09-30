@@ -102,7 +102,7 @@
      "id": "s1q1",
      "kp": "k1",
      "type": "antiderivative",
-     "prompt": "Compute \\( \\int\\sin^{3}x\\,dx \\). State which factor you save and which substitution you use. Enter an antiderivative.",
+     "prompt": "Compute \\( \\int\\sin^{3}x\\,dx \\). Decide on paper which factor you save and which substitution you use, then enter an antiderivative.",
      "why": "Save \\( \\sin x \\): \\( \\int(1-\\cos^{2}x)\\sin x\\,dx \\). With \\( u = \\cos x \\), \\( du = -\\sin x\\,dx \\): \\( -\\int(1-u^{2})du = -u + \\tfrac{u^{3}}{3} \\). So \\( \\int\\sin^{3}x\\,dx = -\\cos x + \\tfrac13\\cos^{3}x + C \\).",
      "answer": "-cos(x) + cos(x)^3/3",
      "vars": "x"
