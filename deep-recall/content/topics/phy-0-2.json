@@ -136,7 +136,7 @@
      "prompt": "A passenger stands in a bus that brakes sharply, and she lurches toward the front. A friend says a forward force acted on her. Explain what actually happens using the first law, and use the example to explain what an inertial reference frame is and why the bus is not one while it brakes.",
      "rubric": [
       "In the ground frame the passenger tends to keep her forward velocity (inertia); no forward force acts on her",
-      "The bus decelerates because forces act on it; the floor acts on her only through her feet, so her upper body keeps moving forward relative to the bus",
+      "The bus is slowed by forces acting on the bus; until some force acts on her (through her feet or a handhold), she keeps moving forward relative to the bus",
       "An inertial frame is one in which a body with zero net force has constant velocity (the first law holds)",
       "The braking bus accelerates relative to the ground, so in the bus frame a body can accelerate with no net force: the first law fails, the frame is non-inertial"
      ],
@@ -334,6 +334,10 @@
    "d": "The vector sum of all external forces on a body or system; it determines the acceleration through the second law."
   },
   {
+   "t": "system",
+   "d": "The body or collection of bodies chosen for analysis; the choice decides which forces are external."
+  },
+  {
    "t": "external force",
    "d": "A force on a chosen system exerted by something outside it; internal forces (between parts of the system) cancel in pairs."
   },
@@ -385,6 +389,14 @@
   {
    "t": "tension",
    "d": "The magnitude of the pulling force a taut rope exerts along itself; uniform along an ideal (massless) rope."
+  },
+  {
+   "t": "ideal rope",
+   "d": "A massless, inextensible rope; its tension is the same along its whole length and the bodies it joins have equal accelerations along it."
+  },
+  {
+   "t": "ideal pulley",
+   "d": "A massless, frictionless pulley; it changes the direction of an ideal rope without changing its tension."
   },
   {
    "t": "constraint force",

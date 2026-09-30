@@ -1,0 +1,812 @@
+{
+ "key": "mth-2-9",
+ "title": "Taylor and Maclaurin series",
+ "v": 1,
+ "scope": "Taylor and Maclaurin polynomials and series, uniqueness of coefficients, Taylor's theorem with the Lagrange remainder and Taylor's inequality, when a Taylor series converges to its function (including a counterexample), the standard Maclaurin series and series built from them, the binomial series, and applications to limits, integrals and approximations; parametric curves begin in the next topic.",
+ "sources": [
+  {
+   "title": "OpenStax, Calculus Volume 2, Section 6.3: Taylor and Maclaurin Series",
+   "url": "https://openstax.org/books/calculus-volume-2/pages/6-3-taylor-and-maclaurin-series"
+  },
+  {
+   "title": "OpenStax, Calculus Volume 2, Section 6.4: Working with Taylor Series",
+   "url": "https://openstax.org/books/calculus-volume-2/pages/6-4-working-with-taylor-series"
+  },
+  {
+   "title": "OpenStax, Calculus Volume 2, Chapter 6 Key Terms",
+   "url": "https://openstax.org/books/calculus-volume-2/pages/6-key-terms"
+  },
+  {
+   "title": "B. Lemesurier, Math 220 notes (College of Charleston), 6.3 Taylor and Maclaurin Series",
+   "url": "https://lemesurierb.people.charleston.edu/math220-notes-2022/chapter6-section3-taylor-and-maclaurin-series.html"
+  },
+  {
+   "title": "LibreTexts (Cosumnes River College), 4.4 The Binomial Theorem and Applications of Taylor Series",
+   "url": "https://math.libretexts.org/Courses/Cosumnes_River_College/Math_401%3A_Calculus_II_-_Integral_Calculus/04%3A_Power_Series/4.04%3A_The_Binomial_Theorem_and_Applications_of_Taylor_Series"
+  }
+ ],
+ "pre": [
+  "mth-2-8",
+  "mth-2-7",
+  "mth-1-10"
+ ],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Taylor polynomials",
+   "d": "Construct the nth Taylor polynomial of a function at a point by matching derivatives, and explain the factorial in the coefficients.",
+   "type": "procedure"
+  },
+  {
+   "id": "k2",
+   "t": "Taylor series and uniqueness",
+   "d": "Define Taylor and Maclaurin series, explain why any power series for f at a is its Taylor series, and use this to read off derivatives.",
+   "type": "concept"
+  },
+  {
+   "id": "k3",
+   "t": "Computing Taylor series from derivatives",
+   "d": "Find the Taylor series of basic functions at a given centre by identifying and justifying the derivative pattern, with the radius of convergence.",
+   "type": "procedure"
+  },
+  {
+   "id": "k4",
+   "t": "Taylor's theorem with remainder",
+   "d": "State the Lagrange form of the remainder with its hypotheses and use it to prove inequalities.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k5",
+   "t": "Error bounds and choosing the degree",
+   "d": "Apply Taylor's inequality to bound the error of an approximation and to find the degree needed for a given accuracy.",
+   "type": "skill"
+  },
+  {
+   "id": "k6",
+   "t": "Convergence of a Taylor series to f",
+   "d": "Prove that a Taylor series converges to f by showing the remainder tends to 0, for e^x, sin x, cos x and ln(1+x) at x = 1.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k7",
+   "t": "Functions not equal to their Taylor series",
+   "d": "Explain the example e^{-1/x^2} and the meaning of analytic.",
+   "type": "distinction"
+  },
+  {
+   "id": "k8",
+   "t": "Standard Maclaurin series",
+   "d": "Recall the Maclaurin series of 1/(1−x), e^x, sin x, cos x, ln(1+x), arctan x with their intervals, and recognise them in numerical sums.",
+   "type": "fact"
+  },
+  {
+   "id": "k9",
+   "t": "New series from known series",
+   "d": "Obtain Taylor series by substitution, identities, multiplication, differentiation and integration of known series.",
+   "type": "procedure"
+  },
+  {
+   "id": "k10",
+   "t": "Binomial series",
+   "d": "Compute generalized binomial coefficients and expand (1+x)^r for real r, with its radius.",
+   "type": "procedure"
+  },
+  {
+   "id": "k11",
+   "t": "Limits by series",
+   "d": "Evaluate indeterminate limits at 0 by expanding in Maclaurin series.",
+   "type": "skill"
+  },
+  {
+   "id": "k12",
+   "t": "Integrals and approximations by series",
+   "d": "Approximate nonelementary integrals and justify standard approximations with explicit error bounds.",
+   "type": "skill"
+  }
+ ],
+ "intro": "The previous chapter found power series for a handful of functions by manipulating the geometric series. That method cannot reach \\(e^x\\), \\(\\sin x\\) or \\(\\sqrt{1+x}\\), and it leaves a basic question unanswered: given a function, how do we find its power series, if it has one? The answer comes from a single observation. If \\(f(x) = \\sum c_n (x-a)^n\\), then differentiating term by term forces \\(c_n = \\frac{f^{(n)}(a)}{n!}\\), so the coefficients are determined by the derivatives of \\(f\\) at one point.\n\nThis chapter builds on that observation. It first constructs the polynomials that best imitate a function near a point, then asks how large the error of such an approximation can be, and finally asks when the approximations improve without limit to the function itself. The answers turn infinitely differentiable functions into objects that can be computed with arithmetic, and they explain approximations used constantly in science, such as \\(\\sin\\theta \\approx \\theta\\) for small angles.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "Taylor polynomials",
+   "kps": [
+    "k1"
+   ],
+   "md": "Functions such as \\(e^x\\), \\(\\sin x\\) and \\(\\ln x\\) cannot be evaluated with the four arithmetic operations; polynomials can. This section constructs, for a given function and a given point, the polynomial of each degree that imitates the function most closely near that point.\n\n**The idea.** The tangent line \\(L(x) = f(a) + f'(a)(x - a)\\) is the unique polynomial of degree at most 1 that agrees with \\(f\\) in value and slope at \\(a\\). A parabola can also match the concavity, and a polynomial of degree \\(n\\) can match \\(f\\) and its first \\(n\\) derivatives at \\(a\\). To find it, write the polynomial in powers of \\(x - a\\):\n\\[ p(x) = c_0 + c_1(x-a) + c_2(x-a)^2 + \\cdots + c_n(x-a)^n. \\]\nDifferentiating \\(k\\) times kills the terms of degree below \\(k\\), turns \\(c_k(x-a)^k\\) into the constant \\(k!\\,c_k\\), and leaves higher terms with a factor \\((x-a)\\) that vanishes at \\(x = a\\). So \\(p^{(k)}(a) = k!\\,c_k\\), and the requirement \\(p^{(k)}(a) = f^{(k)}(a)\\) forces \\(c_k = \\frac{f^{(k)}(a)}{k!}\\).\n\n> **Definition.** If \\(f\\) has \\(n\\) derivatives at \\(a\\), the **\\(n\\)th Taylor polynomial of \\(f\\) at \\(a\\)** is\n> \\[ T_n(x) = \\sum_{k=0}^{n} \\frac{f^{(k)}(a)}{k!}(x-a)^k = f(a) + f'(a)(x-a) + \\frac{f''(a)}{2!}(x-a)^2 + \\cdots + \\frac{f^{(n)}(a)}{n!}(x-a)^n. \\]\n> When \\(a = 0\\) it is also called the \\(n\\)th **Maclaurin polynomial**. Its degree is at most \\(n\\); it is less when \\(f^{(n)}(a) = 0\\).\n\n**Worked example 1.** For \\(f(x) = e^x\\) at \\(a = 0\\), every derivative is \\(e^x\\), which equals 1 at 0. Hence\n\\[ T_n(x) = 1 + x + \\frac{x^2}{2!} + \\cdots + \\frac{x^n}{n!}. \\]\nFor instance \\(T_3(0.5) = 1 + 0.5 + 0.125 + 0.0208\\overline{3} = 1.6458\\overline{3}\\), while \\(e^{0.5} = 1.64872\\ldots\\).\n\n**Worked example 2.** For \\(f(x) = \\ln x\\) at \\(a = 1\\): \\(f(1) = 0\\), \\(f'(x) = \\frac1x\\), \\(f''(x) = -\\frac{1}{x^2}\\), \\(f'''(x) = \\frac{2}{x^3}\\), so \\(f'(1) = 1\\), \\(f''(1) = -1\\), \\(f'''(1) = 2\\), and\n\\[ T_3(x) = (x-1) - \\frac{(x-1)^2}{2} + \\frac{(x-1)^3}{3}. \\]\n\n**Worked example 3.** For \\(f(x) = \\sin x\\) at \\(a = 0\\), the derivatives cycle through \\(\\sin x, \\cos x, -\\sin x, -\\cos x\\), whose values at 0 are \\(0, 1, 0, -1\\). The even-degree coefficients vanish, so \\(T_1 = T_2 = x\\), \\(T_3 = T_4 = x - \\frac{x^3}{3!}\\), and\n\\[ T_5(x) = x - \\frac{x^3}{3!} + \\frac{x^5}{5!}. \\]\n\nIn the graph, drag \\(m\\) to raise the degree of the Maclaurin polynomial of \\(\\sin x\\). Each increase extends the interval on which the polynomial is visually indistinguishable from the sine curve, and outside that interval the polynomial heads off to \\(\\pm\\infty\\), as every nonconstant polynomial must.\n\n```plot\nx: -7, 7\ny: -3, 3\nslider: m, 0, 8, 1, 1 | m\nf: sin(x) | y = sin x\nf: sum(map(0:m, g(k) = (-1)^k * x^(2*k+1) / factorial(2*k+1))) | Taylor polynomial of degree 2m + 1\n```\n\n**Common mistakes.** Omitting the factorials: the coefficient of \\((x - a)^k\\) is \\(\\frac{f^{(k)}(a)}{k!}\\), not \\(f^{(k)}(a)\\). Leaving \\(x\\) inside the coefficients: the derivatives are evaluated at the fixed point \\(a\\), so every coefficient is a number. And confusing the index \\(n\\) of \\(T_n\\) with the number of nonzero terms: \\(T_5\\) for \\(\\sin x\\) has three nonzero terms.",
+   "questions": [
+    {
+     "id": "s1q1",
+     "kp": "k1",
+     "type": "expression",
+     "prompt": "Find the third Taylor polynomial \\(T_3(x)\\) of \\(f(x) = \\sqrt{x}\\) at \\(a = 4\\). Enter it in powers of \\((x - 4)\\) or expanded; either form is accepted.",
+     "answer": "2 + (x - 4)/4 - (x - 4)^2/64 + (x - 4)^3/512",
+     "vars": "x",
+     "why": "\\(f(4) = 2\\); \\(f'(x) = \\frac12x^{-1/2}\\), \\(f'(4) = \\frac14\\); \\(f''(x) = -\\frac14x^{-3/2}\\), \\(f''(4) = -\\frac1{32}\\); \\(f'''(x) = \\frac38x^{-5/2}\\), \\(f'''(4) = \\frac{3}{256}\\). Dividing by \\(k!\\): \\(T_3(x) = 2 + \\frac{x-4}{4} - \\frac{(x-4)^2}{64} + \\frac{(x-4)^3}{512}\\), since \\(\\frac{1}{32\\cdot2} = \\frac1{64}\\) and \\(\\frac{3}{256\\cdot 6} = \\frac1{512}\\)."
+    },
+    {
+     "id": "s1q2",
+     "kp": "k1",
+     "type": "number",
+     "prompt": "Use the third Taylor polynomial of \\(\\ln x\\) at \\(a = 1\\) to approximate \\(\\ln 1.1\\). Give the exact value of \\(T_3(1.1)\\).",
+     "answer": "143/1500",
+     "why": "\\(T_3(x) = (x-1) - \\frac{(x-1)^2}{2} + \\frac{(x-1)^3}{3}\\). At \\(x = 1.1\\): \\(0.1 - 0.005 + 0.000\\overline{3} = \\frac{143}{1500} \\approx 0.095333\\). The true value is \\(\\ln 1.1 = 0.095310\\ldots\\)."
+    },
+    {
+     "id": "s1q3",
+     "kp": "k1",
+     "type": "written",
+     "prompt": "Explain why the coefficient of \\((x-a)^k\\) in the Taylor polynomial is \\(\\frac{f^{(k)}(a)}{k!}\\) and not simply \\(f^{(k)}(a)\\). Your explanation should compute \\(p^{(k)}(a)\\) for \\(p(x) = \\sum_{j=0}^{n} c_j (x-a)^j\\).",
+     "rubric": [
+      "States the goal: \\(p^{(k)}(a) = f^{(k)}(a)\\) for \\(k = 0, \\dots, n\\).",
+      "Shows terms with \\(j < k\\) vanish after \\(k\\) differentiations.",
+      "Shows the term \\(c_k(x-a)^k\\) becomes the constant \\(k!\\,c_k\\), and terms with \\(j > k\\) keep a factor \\((x-a)\\) that is 0 at \\(x = a\\).",
+      "Concludes \\(p^{(k)}(a) = k!\\,c_k\\), hence \\(c_k = \\frac{f^{(k)}(a)}{k!}\\)."
+     ],
+     "model": "The Taylor polynomial is defined by requiring \\(p^{(k)}(a) = f^{(k)}(a)\\) for \\(k = 0, 1, \\dots, n\\). Differentiate \\(p(x) = \\sum_{j=0}^n c_j(x-a)^j\\) \\(k\\) times. A term with \\(j < k\\) is a polynomial of degree less than \\(k\\), so it disappears. The term \\(c_k(x-a)^k\\) becomes \\(c_k\\cdot k(k-1)\\cdots 1 = k!\\,c_k\\). A term with \\(j > k\\) becomes \\(c_j\\frac{j!}{(j-k)!}(x-a)^{j-k}\\), which is 0 at \\(x = a\\). Hence \\(p^{(k)}(a) = k!\\,c_k\\), and matching \\(f^{(k)}(a)\\) requires \\(c_k = \\frac{f^{(k)}(a)}{k!}\\).",
+     "why": "The factorial is produced by differentiating \\((x-a)^k\\) \\(k\\) times; dividing by it undoes that."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "Taylor and Maclaurin series",
+   "kps": [
+    "k2",
+    "k3"
+   ],
+   "md": "Raising the degree of the Taylor polynomial without limit produces a power series. This section defines that series, explains why it is the only power series a function can have at a given centre, and computes the series of the basic functions.\n\n> **Definition.** If \\(f\\) has derivatives of all orders at \\(a\\), the **Taylor series of \\(f\\) at \\(a\\)** is\n> \\[ \\sum_{n=0}^{\\infty} \\frac{f^{(n)}(a)}{n!}(x-a)^n. \\]\n> The Taylor series at \\(a = 0\\) is the **Maclaurin series** of \\(f\\). The \\(n\\)th partial sum of the Taylor series is the Taylor polynomial \\(T_n\\).\n\n**Why these coefficients.** The previous chapter showed that if \\(f(x) = \\sum c_n (x-a)^n\\) on an open interval around \\(a\\), then term-by-term differentiation gives \\(c_n = \\frac{f^{(n)}(a)}{n!}\\). So if \\(f\\) has any power series representation centred at \\(a\\), that representation is its Taylor series. In particular, the series found there for \\(\\frac{1}{1-x}\\), \\(\\ln(1+x)\\) and \\(\\arctan x\\) are their Maclaurin series.\n\nTwo separate questions arise for every Taylor series. Where does it converge? That is answered, as for any power series, by the ratio test and endpoint checks. And where it converges, is its sum \\(f(x)\\)? That is a different question, taken up in the next two sections; the answer is usually yes, but not always.\n\n**Worked example 1: \\(e^x\\).** All derivatives at 0 equal 1, so the Maclaurin series is \\(\\sum_{n=0}^{\\infty}\\frac{x^n}{n!}\\). The previous chapter showed that it converges for every \\(x\\).\n\n**Worked example 2: \\(\\sin x\\) and \\(\\cos x\\).** The derivative values at 0 repeat in the cycle \\(0, 1, 0, -1\\) for sine and \\(1, 0, -1, 0\\) for cosine. Keeping only the nonzero terms,\n\\[ \\sin x = \\sum_{n=0}^{\\infty} \\frac{(-1)^n x^{2n+1}}{(2n+1)!}, \\qquad \\cos x = \\sum_{n=0}^{\\infty} \\frac{(-1)^n x^{2n}}{(2n)!}, \\]\nwhere the equality signs anticipate the next section. The ratio test gives, for sine, \\(\\frac{x^2}{(2n+2)(2n+3)} \\to 0\\), so both series converge for all \\(x\\). Note that the sine series has only odd powers, as an odd function must, and the cosine series only even powers.\n\n**Worked example 3: a centre other than 0.** For \\(e^x\\) at \\(a = 2\\), every derivative at 2 equals \\(e^2\\), so the Taylor series is \\(\\sum_{n=0}^{\\infty}\\frac{e^2}{n!}(x-2)^n\\). For \\(\\frac1x\\) at \\(a = 1\\), induction gives \\(f^{(n)}(x) = (-1)^n n!\\,x^{-n-1}\\), so \\(\\frac{f^{(n)}(1)}{n!} = (-1)^n\\), and the Taylor series is \\(\\sum_{n=0}^\\infty (-1)^n (x-1)^n\\), a geometric series with radius 1, as expected from the previous chapter.\n\n**Uniqueness as a computing tool.** Uniqueness also runs backwards: from a known series one can read off derivatives. Since \\(x^2e^x = \\sum_{n=0}^{\\infty}\\frac{x^{n+2}}{n!}\\), the coefficient of \\(x^{10}\\) is \\(\\frac{1}{8!}\\). It must equal \\(\\frac{f^{(10)}(0)}{10!}\\), so \\(f^{(10)}(0) = \\frac{10!}{8!} = 90\\), obtained without differentiating ten times.\n\n**Common mistakes.** Guessing a pattern from three or four derivatives without checking it; for patterns such as \\(f^{(n)}(x) = (-1)^n n!\\,x^{-n-1}\\), a one-line induction settles it. Keeping the zero terms in the sine and cosine series and then mis-indexing the remaining ones. And assuming that a convergent Taylor series automatically has sum \\(f(x)\\), which the next sections show requires proof.",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k3",
+     "type": "number",
+     "prompt": "Find the coefficient of \\(x^4\\) in the Maclaurin series of \\(e^{2x}\\).",
+     "answer": "2/3",
+     "why": "\\(f^{(n)}(x) = 2^n e^{2x}\\), so \\(f^{(4)}(0) = 16\\) and the coefficient is \\(\\frac{16}{4!} = \\frac{16}{24} = \\frac23\\). Equivalently, substitute \\(2x\\) into \\(\\sum\\frac{x^n}{n!}\\): the \\(x^4\\) term is \\(\\frac{(2x)^4}{4!}\\)."
+    },
+    {
+     "id": "s2q2",
+     "kp": "k3",
+     "type": "written",
+     "prompt": "Find the Taylor series of \\(\\cos x\\) centred at \\(a = \\frac{\\pi}{2}\\), in summation notation, justifying the pattern of the coefficients, and find its radius of convergence.",
+     "rubric": [
+      "Computes the derivative cycle at \\(\\frac\\pi2\\): \\(\\cos\\frac\\pi2 = 0\\), \\(-\\sin\\frac\\pi2 = -1\\), \\(-\\cos\\frac\\pi2 = 0\\), \\(\\sin\\frac\\pi2 = 1\\), repeating with period 4.",
+      "Keeps only odd powers: \\(-\\left(x - \\frac\\pi2\\right) + \\frac{(x-\\pi/2)^3}{3!} - \\frac{(x - \\pi/2)^5}{5!} + \\cdots\\).",
+      "Writes \\(\\sum_{n=0}^\\infty \\frac{(-1)^{n+1}}{(2n+1)!}\\left(x - \\frac\\pi2\\right)^{2n+1}\\).",
+      "Ratio test: \\(\\frac{|x - \\pi/2|^2}{(2n+2)(2n+3)} \\to 0\\), so \\(R = \\infty\\)."
+     ],
+     "model": "The derivatives of \\(\\cos x\\) are \\(\\cos x, -\\sin x, -\\cos x, \\sin x\\), repeating with period 4. At \\(\\frac\\pi2\\) their values are \\(0, -1, 0, 1\\), repeating. So the even-order coefficients vanish and the odd ones alternate starting with \\(-1\\): \\(f^{(2n+1)}(\\frac\\pi2) = (-1)^{n+1}\\). The Taylor series is \\(\\sum_{n=0}^\\infty \\frac{(-1)^{n+1}}{(2n+1)!}\\left(x - \\frac\\pi2\\right)^{2n+1} = -\\left(x - \\frac\\pi2\\right) + \\frac{1}{3!}\\left(x - \\frac\\pi2\\right)^3 - \\cdots\\). The ratio of consecutive terms has absolute value \\(\\frac{|x - \\pi/2|^2}{(2n+2)(2n+3)} \\to 0\\) for every \\(x\\), so \\(R = \\infty\\).",
+     "why": "This agrees with the identity \\(\\cos x = -\\sin\\left(x - \\frac\\pi2\\right)\\) and the sine series, as uniqueness requires."
+    },
+    {
+     "id": "s2q3",
+     "kp": "k2",
+     "type": "number",
+     "prompt": "Let \\(f(x) = x^2 e^x\\). Use the Maclaurin series of \\(f\\), not repeated differentiation, to find \\(f^{(10)}(0)\\).",
+     "answer": "90",
+     "why": "\\(x^2e^x = \\sum_{n=0}^\\infty\\frac{x^{n+2}}{n!}\\). The \\(x^{10}\\) term has \\(n = 8\\), coefficient \\(\\frac1{8!}\\). By uniqueness this equals \\(\\frac{f^{(10)}(0)}{10!}\\), so \\(f^{(10)}(0) = \\frac{10!}{8!} = 10\\cdot 9 = 90\\)."
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "Taylor's theorem and error bounds",
+   "kps": [
+    "k4",
+    "k5"
+   ],
+   "md": "A Taylor polynomial is useful only if we know how far it can be from the function. This section states the theorem that expresses the error exactly, in terms of a higher derivative at an unknown point, and turns it into a usable bound.\n\nThe **remainder** of order \\(n\\) is \\(R_n(x) = f(x) - T_n(x)\\), the error made by replacing \\(f(x)\\) with \\(T_n(x)\\).\n\n> **Taylor's theorem with remainder (Lagrange form).** Suppose \\(f\\) has \\(n + 1\\) derivatives on an open interval \\(I\\) containing \\(a\\). Then for each \\(x\\) in \\(I\\) there is a number \\(c\\) between \\(a\\) and \\(x\\) such that\n> \\[ R_n(x) = \\frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}. \\]\n\nThe remainder looks exactly like the next term of the Taylor series, except that the derivative is evaluated at an unknown point \\(c\\) instead of at \\(a\\). For \\(n = 0\\) the statement reads \\(f(x) - f(a) = f'(c)(x - a)\\), which is the mean value theorem; the general case is proved by applying Rolle's theorem to a suitably chosen auxiliary function, and the proof is omitted here. The point \\(c\\) depends on \\(x\\) and \\(n\\) and is not known; the theorem is used by bounding \\(f^{(n+1)}\\) on the whole interval between \\(a\\) and \\(x\\).\n\n> **Taylor's inequality.** If \\(|f^{(n+1)}(t)| \\le M\\) for all \\(t\\) between \\(a\\) and \\(x\\), then\n> \\[ |R_n(x)| \\le \\frac{M}{(n+1)!}\\,|x - a|^{n+1}. \\]\n\n**Worked example 1.** Approximate \\(e^{0.1}\\) by \\(T_2(0.1) = 1 + 0.1 + 0.005 = 1.105\\), and bound the error. Here \\(f'''(t) = e^t\\), which on \\([0, 0.1]\\) is at most \\(e^{0.1}\\). Since \\(1.2^{10} \\approx 6.19 > e\\), we have \\(e^{0.1} < 1.2\\), so take \\(M = 1.2\\):\n\\[ |R_2(0.1)| \\le \\frac{1.2}{3!}(0.1)^3 = 0.0002. \\]\nThe actual error is \\(e^{0.1} - 1.105 \\approx 0.000171\\).\n\n**Worked example 2 (use the vanishing term).** Approximate \\(\\sin 0.2\\) by \\(T_3(0.2) = 0.2 - \\frac{0.008}{6} \\approx 0.1986667\\). Because the \\(x^4\\) coefficient of the sine series is 0, \\(T_3 = T_4\\), so we may use the remainder \\(R_4\\), which involves the fifth derivative \\(\\cos t\\), bounded by \\(M = 1\\):\n\\[ |\\sin 0.2 - T_3(0.2)| = |R_4(0.2)| \\le \\frac{(0.2)^5}{5!} \\approx 2.7 \\times 10^{-6}. \\]\nUsing \\(R_3\\) would give the weaker bound \\(\\frac{(0.2)^4}{4!} \\approx 6.7\\times10^{-5}\\).\n\n**Worked example 3 (choosing the degree).** How large must \\(n\\) be for \\(T_n(1) = \\sum_{k=0}^n \\frac{1}{k!}\\) to approximate \\(e\\) with error less than \\(10^{-5}\\)? On \\([0, 1]\\), \\(|f^{(n+1)}(t)| = e^t \\le e < 3\\), so \\(|R_n(1)| \\le \\frac{3}{(n+1)!}\\). We need \\((n+1)! > 300\\,000\\). Since \\(8! = 40\\,320\\) and \\(9! = 362\\,880\\), the smallest choice is \\(n + 1 = 9\\), that is, \\(n = 8\\). Indeed \\(T_8(1) = 2.7182788\\) and \\(e = 2.7182818\\ldots\\).\n\n**Common mistakes.** Bounding the \\(n\\)th derivative instead of the \\((n+1)\\)st. Evaluating the derivative at \\(a\\) and calling the result the error: that gives the next term of the series, which is an estimate, not a bound. And taking \\(M\\) from the wrong interval: the bound on \\(f^{(n+1)}\\) must hold at every point between \\(a\\) and \\(x\\).",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k5",
+     "type": "number",
+     "prompt": "For \\(\\cos x\\), \\(T_4 = T_5\\) at \\(a = 0\\). Use Taylor's inequality for \\(R_5\\) with \\(M = 1\\) to bound \\(|\\cos 0.5 - T_4(0.5)|\\). Give the exact bound.",
+     "answer": "1/46080",
+     "why": "Since \\(T_4 = T_5\\), \\(\\cos 0.5 - T_4(0.5) = R_5(0.5)\\), and \\(|f^{(6)}| = |\\cos| \\le 1\\). Taylor's inequality gives \\(|R_5(0.5)| \\le \\frac{(0.5)^6}{6!} = \\frac{1/64}{720} = \\frac1{46080} \\approx 2.17\\times10^{-5}\\)."
+    },
+    {
+     "id": "s3q2",
+     "kp": "k5",
+     "type": "number",
+     "prompt": "Using the bound \\(|R_n(1)| \\le \\frac{3}{(n+1)!}\\) for \\(e^x\\) at \\(a = 0\\), find the smallest \\(n\\) that guarantees \\(|e - T_n(1)| < 10^{-6}\\).",
+     "answer": "9",
+     "why": "We need \\((n+1)! > 3\\times 10^6\\). Since \\(9! = 362\\,880\\) is too small and \\(10! = 3\\,628\\,800\\) is large enough, \\(n + 1 = 10\\), so \\(n = 9\\)."
+    },
+    {
+     "id": "s3q3",
+     "kp": "k4",
+     "type": "written",
+     "prompt": "Prove that \\(|\\sin x - x| \\le \\frac{|x|^3}{6}\\) for every real \\(x\\), using Taylor's theorem with remainder. Say which \\(n\\) you use and why.",
+     "rubric": [
+      "Notes that \\(T_1 = T_2 = x\\) for \\(\\sin x\\) at 0 because \\(f''(0) = 0\\).",
+      "Applies the Lagrange remainder with \\(n = 2\\): \\(\\sin x - x = R_2(x) = \\frac{f'''(c)}{3!}x^3\\).",
+      "Uses \\(f'''(c) = -\\cos c\\), so \\(|f'''(c)| \\le 1\\).",
+      "Concludes \\(|\\sin x - x| \\le \\frac{|x|^3}{6}\\) for all \\(x\\)."
+     ],
+     "model": "For \\(f(x) = \\sin x\\) at 0, \\(f(0) = 0\\), \\(f'(0) = 1\\), \\(f''(0) = -\\sin 0 = 0\\), so \\(T_2(x) = x\\). By Taylor's theorem with \\(n = 2\\) (sine has derivatives of all orders on \\(\\mathbb{R}\\)), for each \\(x\\) there is \\(c\\) between 0 and \\(x\\) with \\(\\sin x - x = R_2(x) = \\frac{f'''(c)}{3!}x^3 = \\frac{-\\cos c}{6}x^3\\). Since \\(|\\cos c| \\le 1\\), \\(|\\sin x - x| \\le \\frac{|x|^3}{6}\\). Using \\(n = 2\\) rather than \\(n = 1\\) exploits the vanishing \\(x^2\\) term and gives a cubic, not quadratic, bound.",
+     "why": "This is the error bound behind the small-angle approximation \\(\\sin\\theta \\approx \\theta\\)."
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "When a Taylor series equals its function",
+   "kps": [
+    "k6",
+    "k7"
+   ],
+   "md": "A Taylor series may converge at a point without its sum being the value of the function there. This section gives the criterion for equality, proves it for \\(e^x\\), \\(\\sin x\\) and \\(\\cos x\\) on the whole real line and for \\(\\ln(1+x)\\) at \\(x = 1\\), and exhibits a function that is not equal to its Taylor series.\n\n> **Theorem.** Suppose \\(f\\) has derivatives of all orders on an open interval \\(I\\) containing \\(a\\), and let \\(x \\in I\\). The Taylor series of \\(f\\) at \\(a\\) converges to \\(f(x)\\) if and only if \\(\\lim_{n\\to\\infty} R_n(x) = 0\\).\n\nThis is immediate from \\(T_n(x) = f(x) - R_n(x)\\): the partial sums \\(T_n(x)\\) tend to \\(f(x)\\) exactly when the remainders tend to 0. Taylor's inequality is the tool for proving that they do.\n\n**\\(e^x\\) for every real \\(x\\).** On the interval between 0 and \\(x\\), \\(|f^{(n+1)}(t)| = e^t \\le e^{|x|}\\), so\n\\[ |R_n(x)| \\le e^{|x|}\\,\\frac{|x|^{n+1}}{(n+1)!} \\to 0, \\]\nbecause \\(\\frac{|x|^{k}}{k!} \\to 0\\) for every fixed \\(x\\) (the previous chapter). Hence \\(e^x = \\sum_{n=0}^{\\infty}\\frac{x^n}{n!}\\) for all \\(x\\), and in particular \\(e = \\sum_{n=0}^\\infty \\frac{1}{n!}\\).\n\n**\\(\\sin x\\) and \\(\\cos x\\).** Every derivative is \\(\\pm\\sin\\) or \\(\\pm\\cos\\), so \\(M = 1\\) works for all \\(n\\), and \\(|R_n(x)| \\le \\frac{|x|^{n+1}}{(n+1)!} \\to 0\\). Both functions equal their Maclaurin series for every real \\(x\\).\n\n**\\(\\ln(1+x)\\) at \\(x = 1\\).** The previous chapters left one claim open: that the alternating harmonic series sums to \\(\\ln 2\\). For \\(f(x) = \\ln(1+x)\\), induction gives \\(f^{(n+1)}(t) = \\frac{(-1)^n n!}{(1+t)^{n+1}}\\). For \\(x = 1\\), the point \\(c\\) lies in \\((0, 1)\\), so \\((1 + c)^{n+1} > 1\\) and\n\\[ |R_n(1)| = \\frac{n!}{(1+c)^{n+1}(n+1)!} < \\frac{1}{n+1} \\to 0. \\]\nTherefore \\(1 - \\frac12 + \\frac13 - \\cdots = \\ln 2\\). For \\(x > 1\\), by contrast, the Maclaurin series of \\(\\ln(1+x)\\) diverges, since its radius is 1. In the graph, drag \\(n\\): on \\((-1, 1]\\) the Taylor polynomials close in on \\(\\ln(1 + x)\\); to the right of the line \\(x = 1\\) they oscillate ever more wildly, although \\(\\ln(1+x)\\) is perfectly well behaved there.\n\n```plot\nx: -1, 2.5\ny: -3, 2\nslider: n, 1, 25, 4, 1 | n\nf: log(1 + x) | y = ln(1 + x)\nf: sum(map(1:n, g(k) = (-1)^(k+1) * x^k / k)) | Taylor polynomial of degree n\nvline: 1\n```\n\n**A function that differs from its Taylor series.** Define \\(f(x) = e^{-1/x^2}\\) for \\(x \\ne 0\\) and \\(f(0) = 0\\). Using the definition of the derivative and L'Hôpital's rule repeatedly, one can show that \\(f\\) has derivatives of all orders at 0 and that every one of them equals 0. Its Maclaurin series is therefore \\(0 + 0x + 0x^2 + \\cdots\\), which converges for every \\(x\\), to 0. But \\(f(x) > 0\\) for every \\(x \\ne 0\\). The series converges everywhere and equals \\(f\\) only at the single point 0. The graph shows why no polynomial information at 0 can detect the function: it is flatter at the origin than any power of \\(x\\).\n\n```plot\nx: -3, 3\ny: -0.2, 1\nf: exp(-1/x^2) | y = exp(−1/x²)\npoint: 0, 0\n```\n\nA function that equals its Taylor series on some open interval around \\(a\\) is called **analytic** at \\(a\\). Polynomials, \\(e^x\\), \\(\\sin x\\) and \\(\\cos x\\) are analytic everywhere; \\(e^{-1/x^2}\\) (extended by 0) is infinitely differentiable but not analytic at 0.\n\n**Common mistakes.** Concluding \\(f(x) = \\sum \\frac{f^{(n)}(a)}{n!}(x-a)^n\\) from the convergence of the series alone. And confusing the radius of convergence with the set where the sum equals \\(f\\): for \\(\\ln(1+x)\\) the two coincide on \\((-1, 1]\\), but the example above shows that in general they need not.",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k6",
+     "type": "written",
+     "prompt": "Prove that \\(\\cos x = \\sum_{n=0}^{\\infty}\\frac{(-1)^n x^{2n}}{(2n)!}\\) for every real \\(x\\).",
+     "rubric": [
+      "States that the series equals \\(\\cos x\\) exactly when \\(R_n(x) \\to 0\\).",
+      "Bounds every derivative of \\(\\cos\\) by 1, giving \\(|R_n(x)| \\le \\frac{|x|^{n+1}}{(n+1)!}\\).",
+      "Shows \\(\\frac{|x|^{n+1}}{(n+1)!} \\to 0\\) for fixed \\(x\\) (e.g. terms of the convergent series for \\(e^{|x|}\\)).",
+      "Concludes equality for all real \\(x\\)."
+     ],
+     "model": "The partial sums of the Maclaurin series are the Taylor polynomials \\(T_n\\), and \\(T_n(x) = \\cos x - R_n(x)\\), so it suffices to show \\(R_n(x) \\to 0\\). Every derivative of \\(\\cos\\) is \\(\\pm\\sin\\) or \\(\\pm\\cos\\), hence bounded in absolute value by \\(M = 1\\) everywhere. Taylor's inequality gives \\(|R_n(x)| \\le \\frac{|x|^{n+1}}{(n+1)!}\\). For fixed \\(x\\), \\(\\frac{|x|^{k}}{k!}\\) are the terms of the convergent series \\(\\sum\\frac{|x|^k}{k!}\\), so they tend to 0. Hence \\(R_n(x) \\to 0\\), and the Maclaurin series converges to \\(\\cos x\\) for every real \\(x\\).",
+     "why": "Uniform bounds on all derivatives make the remainder argument work on the whole line; for \\(e^x\\) the bound \\(e^{|x|}\\) depends on \\(x\\) but not on \\(n\\), which is enough."
+    },
+    {
+     "id": "s4q2",
+     "kp": "k7",
+     "type": "mcq",
+     "prompt": "Let \\(f(x) = e^{-1/x^2}\\) for \\(x \\ne 0\\) and \\(f(0) = 0\\). Which statement is true?",
+     "options": [
+      "Its Maclaurin series diverges for every \\(x \\ne 0\\).",
+      "Its Maclaurin series converges for every \\(x\\), but its sum equals \\(f(x)\\) only at \\(x = 0\\).",
+      "\\(f\\) is not differentiable at 0, so it has no Maclaurin series.",
+      "Its Maclaurin series equals \\(f(x)\\) for \\(|x| < 1\\)."
+     ],
+     "answer": 1,
+     "why": "All derivatives of \\(f\\) at 0 exist and equal 0, so the Maclaurin series is identically 0: it converges everywhere, to 0. Since \\(f(x) > 0\\) for \\(x \\ne 0\\), the sum equals \\(f(x)\\) only at 0. The function is smooth at 0, so option 3 is false; the series does converge, so option 1 is false; option 4 would require \\(f = 0\\) near 0."
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "The table of basic series, new series from old, and the binomial series",
+   "kps": [
+    "k8",
+    "k9",
+    "k10"
+   ],
+   "md": "Computing \\(n\\)th derivatives is laborious; for \\(e^{-x^2}\\) it quickly becomes impractical. This section collects the basic Maclaurin series and shows how uniqueness lets us build new series from them by algebra and calculus, including the binomial series for powers \\((1+x)^r\\).\n\n**The basic series.**\n\n| Function | Maclaurin series | Valid for |\n|---|---|---|\n| \\(\\frac{1}{1-x}\\) | \\(\\sum_{n=0}^\\infty x^n = 1 + x + x^2 + \\cdots\\) | \\(-1 < x < 1\\) |\n| \\(e^x\\) | \\(\\sum_{n=0}^\\infty \\frac{x^n}{n!} = 1 + x + \\frac{x^2}{2!} + \\cdots\\) | all \\(x\\) |\n| \\(\\sin x\\) | \\(\\sum_{n=0}^\\infty \\frac{(-1)^n x^{2n+1}}{(2n+1)!} = x - \\frac{x^3}{3!} + \\cdots\\) | all \\(x\\) |\n| \\(\\cos x\\) | \\(\\sum_{n=0}^\\infty \\frac{(-1)^n x^{2n}}{(2n)!} = 1 - \\frac{x^2}{2!} + \\cdots\\) | all \\(x\\) |\n| \\(\\ln(1+x)\\) | \\(\\sum_{n=1}^\\infty \\frac{(-1)^{n+1}x^n}{n} = x - \\frac{x^2}{2} + \\cdots\\) | \\(-1 < x \\le 1\\) |\n| \\(\\arctan x\\) | \\(\\sum_{n=0}^\\infty \\frac{(-1)^n x^{2n+1}}{2n+1} = x - \\frac{x^3}{3} + \\cdots\\) | \\(-1 \\le x \\le 1\\) |\n\n**New series from old.** Because a function has only one power series at a given centre, any legitimate operation on known series (substitution, multiplication by a power of \\(x\\), addition, differentiation, integration, and multiplication of series) produces the Taylor series of the result.\n\n- *Substitution.* Replacing \\(x\\) by \\(-x^2\\) in the series for \\(e^x\\): \\(e^{-x^2} = \\sum_{n=0}^\\infty \\frac{(-1)^n x^{2n}}{n!} = 1 - x^2 + \\frac{x^4}{2} - \\frac{x^6}{6} + \\cdots\\) for all \\(x\\).\n- *Identities.* \\(\\sin^2 x = \\frac{1 - \\cos 2x}{2} = x^2 - \\frac{x^4}{3} + \\frac{2x^6}{45} - \\cdots\\), obtained from the cosine series with \\(2x\\) in place of \\(x\\).\n- *Products.* Multiplying the first terms like polynomials, \\(e^x \\sin x = \\left(1 + x + \\frac{x^2}{2} + \\frac{x^3}{6} + \\cdots\\right)\\left(x - \\frac{x^3}{6} + \\cdots\\right) = x + x^2 + \\frac{x^3}{3} + \\cdots\\); for the \\(x^3\\) term, collect \\(\\frac{x^2}{2}\\cdot x\\) and \\(1 \\cdot\\left(-\\frac{x^3}{6}\\right)\\).\n\n**The binomial series.** For a real number \\(r\\) and integer \\(n \\ge 0\\), define the **binomial coefficient** \\(\\binom{r}{n} = \\frac{r(r-1)(r-2)\\cdots(r-n+1)}{n!}\\), with \\(\\binom r0 = 1\\). For \\(f(x) = (1+x)^r\\), \\(f^{(n)}(x) = r(r-1)\\cdots(r-n+1)(1+x)^{r-n}\\), so the Maclaurin coefficients are exactly \\(\\binom rn\\).\n\n> **Binomial series.** For every real \\(r\\) and \\(|x| < 1\\),\n> \\[ (1+x)^r = \\sum_{n=0}^{\\infty}\\binom{r}{n}x^n = 1 + rx + \\frac{r(r-1)}{2!}x^2 + \\frac{r(r-1)(r-2)}{3!}x^3 + \\cdots. \\]\n\nIf \\(r\\) is a nonnegative integer, every coefficient with \\(n > r\\) contains the factor \\(r - r = 0\\), the series stops, and this is the binomial theorem of algebra. Otherwise the ratio test gives \\(\\left|\\frac{r-n}{n+1}\\right||x| \\to |x|\\), so the radius is 1. That the sum equals \\((1+x)^r\\) on \\((-1, 1)\\) is true for every \\(r\\), but the proof is omitted here; the behaviour at \\(x = \\pm1\\) depends on \\(r\\).\n\n**Worked example.** For \\(r = \\frac12\\): \\(\\binom{1/2}{2} = \\frac{\\frac12\\cdot(-\\frac12)}{2} = -\\frac18\\) and \\(\\binom{1/2}{3} = \\frac{\\frac12(-\\frac12)(-\\frac32)}{6} = \\frac{1}{16}\\), so\n\\[ \\sqrt{1+x} = 1 + \\frac x2 - \\frac{x^2}{8} + \\frac{x^3}{16} - \\cdots, \\qquad |x| < 1. \\]\nAt \\(x = 0.1\\) these four terms give \\(1.0488125\\); in fact \\(\\sqrt{1.1} = 1.0488088\\ldots\\).\n\n**Common mistakes.** Substituting into a series and forgetting to transform the interval: \\(e^{-x^2}\\) is valid for all \\(x\\) because \\(e^u\\) is, but \\(\\frac{1}{1-x^2}\\) needs \\(|x^2| < 1\\). Dropping cross terms when multiplying series. And computing \\(\\binom{r}{n}\\) with \\(r\\) replaced by \\(|r|\\) or with the wrong number of factors: the numerator has exactly \\(n\\) factors.",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k9",
+     "type": "expression",
+     "prompt": "Using the series for \\(e^x\\), write the first four nonzero terms of the Maclaurin series of \\(e^{-x^2}\\), and enter their sum.",
+     "answer": "1 - x^2 + x^4/2 - x^6/6",
+     "vars": "x",
+     "why": "Substitute \\(u = -x^2\\) in \\(e^u = 1 + u + \\frac{u^2}{2} + \\frac{u^3}{6} + \\cdots\\): \\(1 - x^2 + \\frac{x^4}{2} - \\frac{x^6}{6} + \\cdots\\), valid for all \\(x\\)."
+    },
+    {
+     "id": "s5q2",
+     "kp": "k10",
+     "type": "expression",
+     "prompt": "Use the binomial series to find the first four terms of the Maclaurin series of \\(\\frac{1}{\\sqrt{1+x}}\\), and enter their sum.",
+     "answer": "1 - x/2 + 3*x^2/8 - 5*x^3/16",
+     "vars": "x",
+     "why": "With \\(r = -\\frac12\\): \\(\\binom{-1/2}{1} = -\\frac12\\), \\(\\binom{-1/2}{2} = \\frac{(-\\frac12)(-\\frac32)}{2} = \\frac38\\), \\(\\binom{-1/2}{3} = \\frac{(-\\frac12)(-\\frac32)(-\\frac52)}{6} = -\\frac{5}{16}\\). So \\((1+x)^{-1/2} = 1 - \\frac x2 + \\frac{3x^2}{8} - \\frac{5x^3}{16} + \\cdots\\) for \\(|x| < 1\\)."
+    },
+    {
+     "id": "s5q3",
+     "kp": "k9",
+     "type": "number",
+     "prompt": "Find the coefficient of \\(x^3\\) in the Maclaurin series of \\(e^x\\sin x\\) by multiplying series.",
+     "answer": "1/3",
+     "why": "\\(\\left(1 + x + \\frac{x^2}{2} + \\cdots\\right)\\left(x - \\frac{x^3}{6} + \\cdots\\right)\\). The \\(x^3\\) terms come from \\(\\frac{x^2}{2}\\cdot x = \\frac{x^3}{2}\\) and \\(1\\cdot\\left(-\\frac{x^3}{6}\\right)\\), totalling \\(\\frac12 - \\frac16 = \\frac13\\)."
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "title": "Applications: limits, integrals and approximations",
+   "kps": [
+    "k11",
+    "k12"
+   ],
+   "md": "The series of the previous section turn several hard problems into routine algebra. This section uses them to evaluate limits, to integrate functions with no elementary antiderivative, and to justify the approximations used throughout science.\n\n**Limits.** An indeterminate form \\(\\frac00\\) at \\(x = 0\\) can often be settled by replacing each function with its Maclaurin series and cancelling the lowest power.\n\n*Example 1.* \\(\\lim_{x\\to0}\\frac{\\sin x - x}{x^3}\\). Since \\(\\sin x - x = -\\frac{x^3}{6} + \\frac{x^5}{120} - \\cdots\\),\n\\[ \\frac{\\sin x - x}{x^3} = -\\frac16 + \\frac{x^2}{120} - \\cdots \\to -\\frac16. \\]\nL'Hôpital's rule gives the same answer after three applications; the series shows at once which power dominates.\n\n*Example 2.* \\(\\lim_{x\\to0}\\frac{e^x - 1 - x}{x^2}\\): the numerator is \\(\\frac{x^2}{2} + \\frac{x^3}{6} + \\cdots\\), so the limit is \\(\\frac12\\).\n\n**Integrals.** The function \\(e^{-x^2}\\), central to probability, has no elementary antiderivative, so \\(\\int_0^1 e^{-x^2}\\,dx\\) cannot be found by the fundamental theorem in finitely many elementary steps. Its series can be integrated term by term:\n\\[ \\int_0^1 e^{-x^2}\\,dx = \\sum_{n=0}^{\\infty} \\frac{(-1)^n}{n!}\\int_0^1 x^{2n}\\,dx = \\sum_{n=0}^{\\infty}\\frac{(-1)^n}{n!\\,(2n+1)} = 1 - \\frac13 + \\frac1{10} - \\frac1{42} + \\frac1{216} - \\frac1{1320} + \\cdots. \\]\nThis is an alternating series whose terms decrease to 0. To guarantee an error below 0.001, stop before the first term smaller than 0.001: the term \\(\\frac{1}{1320} \\approx 0.00076\\) is the first such, so the sum of the five terms before it, \\(0.747487\\), is within \\(0.00076\\) of the integral. (The integral equals \\(0.746824\\ldots\\).) The graph shows the area and, for comparison, the Taylor polynomial \\(1 - x^2 + \\frac{x^4}{2}\\).\n\n```plot\nx: -0.5, 1.5\ny: -0.2, 1.2\nf: exp(-x^2) | y = exp(−x²)\nf: 1 - x^2 + x^4/2 | 1 − x² + x⁴/2\nshade: exp(-x^2), 0, 1 | area to approximate\n```\n\n**Numerical sums.** Recognising a known series evaluates it exactly: \\(\\sum_{n=0}^\\infty \\frac{1}{n!} = e\\), \\(\\sum_{n=0}^\\infty\\frac{(-1)^n}{(2n)!} = \\cos 1\\), and \\(\\sum_{n=1}^\\infty \\frac{2^n}{n!} = e^2 - 1\\), where the \\(-1\\) accounts for the missing \\(n = 0\\) term.\n\n**Approximations in science.** Many standard approximations are truncated Taylor series with a known error. The small-angle approximation \\(\\sin\\theta \\approx \\theta\\), used for the simple pendulum in physics, is \\(T_1 = T_2\\) for sine. Taylor's inequality with \\(n = 2\\) and \\(M = 1\\) gives \\(|\\sin\\theta - \\theta| \\le \\frac{|\\theta|^3}{6}\\), so for \\(0 < |\\theta| \\le 0.1\\) rad the relative error \\(\\frac{|\\sin\\theta - \\theta|}{|\\theta|}\\) is at most \\(\\frac{\\theta^2}{6} \\le \\frac{0.01}{6} \\approx 0.17\\%\\). Similarly \\((1+x)^r \\approx 1 + rx\\) for small \\(|x|\\) is the first-degree binomial approximation.\n\n**Common mistakes.** Truncating too early in a limit: in \\(\\frac{\\sin x - x}{x^3}\\), replacing \\(\\sin x\\) by \\(x\\) alone gives \\(\\frac{0}{x^3}\\) and loses the answer; keep terms up to the power in the denominator. Using the alternating series bound when the terms do not decrease. And claiming that a series gives an \"exact antiderivative in closed form\": it gives the value to any desired accuracy, which is a different and entirely sufficient achievement.",
+   "questions": [
+    {
+     "id": "s6q1",
+     "kp": "k11",
+     "type": "number",
+     "prompt": "Use Maclaurin series to compute \\(\\lim_{x\\to0}\\frac{x - \\arctan x}{x^3}\\).",
+     "answer": "1/3",
+     "why": "\\(\\arctan x = x - \\frac{x^3}{3} + \\frac{x^5}{5} - \\cdots\\), so \\(x - \\arctan x = \\frac{x^3}{3} - \\frac{x^5}{5} + \\cdots\\), and \\(\\frac{x - \\arctan x}{x^3} = \\frac13 - \\frac{x^2}{5} + \\cdots \\to \\frac13\\)."
+    },
+    {
+     "id": "s6q2",
+     "kp": "k12",
+     "type": "number",
+     "prompt": "Approximate \\(\\int_0^1 \\sin(x^2)\\,dx\\) with error less than \\(10^{-4}\\) by integrating the Maclaurin series of \\(\\sin(x^2)\\) term by term. Give the value to at least five decimal places.",
+     "answer": "0.31028",
+     "tol": 0.0001,
+     "why": "\\(\\sin(x^2) = x^2 - \\frac{x^6}{3!} + \\frac{x^{10}}{5!} - \\frac{x^{14}}{7!} + \\cdots\\), so \\(\\int_0^1 \\sin(x^2)\\,dx = \\frac13 - \\frac1{42} + \\frac1{1320} - \\frac1{75600} + \\cdots\\). The series alternates with decreasing terms; the fourth term, \\(\\frac{1}{75600} \\approx 1.3\\times10^{-5}\\), is below \\(10^{-4}\\), so the first three terms suffice: \\(\\frac13 - \\frac1{42} + \\frac1{1320} \\approx 0.310281\\). (The integral is \\(0.310268\\ldots\\).)"
+    },
+    {
+     "id": "s6q3",
+     "kp": "k12",
+     "type": "written",
+     "prompt": "The small-angle approximation \\(\\sin\\theta \\approx \\theta\\) is used for pendulums. Using the Maclaurin series of sine and an error bound, show that for \\(0 < |\\theta| \\le 0.1\\) rad the relative error \\(\\frac{|\\sin\\theta - \\theta|}{|\\theta|}\\) is less than 0.2%. Explain why the approximation is better than the size of the neglected \\(\\theta^2\\) term might suggest.",
+     "rubric": [
+      "Writes \\(\\sin\\theta = \\theta - \\frac{\\theta^3}{6} + \\cdots\\) and identifies \\(\\theta\\) as \\(T_1 = T_2\\).",
+      "Uses Taylor's inequality with \\(n = 2\\), \\(M = 1\\): \\(|\\sin\\theta - \\theta| \\le \\frac{|\\theta|^3}{6}\\) (or the alternating series bound).",
+      "Divides by \\(|\\theta|\\): relative error \\(\\le \\frac{\\theta^2}{6} \\le \\frac{0.01}{6} \\approx 0.0017 < 0.002\\).",
+      "Explains that the \\(\\theta^2\\) coefficient is 0, so the first neglected term is cubic."
+     ],
+     "model": "The Maclaurin series is \\(\\sin\\theta = \\theta - \\frac{\\theta^3}{6} + \\frac{\\theta^5}{120} - \\cdots\\), and since the \\(\\theta^2\\) coefficient is 0, \\(\\theta = T_1 = T_2\\). Taylor's inequality with \\(n = 2\\) and \\(M = 1\\) (every derivative of sine is bounded by 1) gives \\(|\\sin\\theta - \\theta| \\le \\frac{|\\theta|^3}{6}\\). Dividing by \\(|\\theta| > 0\\), the relative error is at most \\(\\frac{\\theta^2}{6} \\le \\frac{0.01}{6} \\approx 0.00167\\), that is, about 0.17%, which is less than 0.2%. The approximation is better than a first-degree approximation usually is because the second-degree term vanishes: the error is of order \\(\\theta^3\\), not \\(\\theta^2\\).",
+     "why": "For \\(\\theta = 0.1\\), \\(\\sin 0.1 = 0.0998334\\), a relative error of \\(0.166\\%\\), in line with the bound."
+    }
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "t": "Taylor polynomial",
+   "d": "The polynomial \\(T_n(x) = \\sum_{k=0}^n\\frac{f^{(k)}(a)}{k!}(x-a)^k\\), the unique polynomial of degree at most \\(n\\) matching \\(f\\) and its first \\(n\\) derivatives at \\(a\\)."
+  },
+  {
+   "t": "Maclaurin polynomial",
+   "d": "A Taylor polynomial centred at \\(a = 0\\)."
+  },
+  {
+   "t": "Taylor series",
+   "d": "The power series \\(\\sum_{n=0}^\\infty\\frac{f^{(n)}(a)}{n!}(x-a)^n\\) of a function with derivatives of all orders at \\(a\\)."
+  },
+  {
+   "t": "Maclaurin series",
+   "d": "The Taylor series at \\(a = 0\\): \\(\\sum_{n=0}^\\infty\\frac{f^{(n)}(0)}{n!}x^n\\)."
+  },
+  {
+   "t": "remainder (Taylor)",
+   "d": "\\(R_n(x) = f(x) - T_n(x)\\), the error of the \\(n\\)th Taylor polynomial."
+  },
+  {
+   "t": "Taylor's theorem with remainder",
+   "d": "If \\(f\\) has \\(n+1\\) derivatives on an open interval containing \\(a\\) and \\(x\\), then \\(R_n(x) = \\frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}\\) for some \\(c\\) between \\(a\\) and \\(x\\) (Lagrange form)."
+  },
+  {
+   "t": "Taylor's inequality",
+   "d": "If \\(|f^{(n+1)}| \\le M\\) between \\(a\\) and \\(x\\), then \\(|R_n(x)| \\le \\frac{M}{(n+1)!}|x-a|^{n+1}\\)."
+  },
+  {
+   "t": "analytic function",
+   "d": "A function that equals its Taylor series on some open interval around the centre \\(a\\).",
+   "ex": "\\(e^x\\), \\(\\sin x\\), \\(\\cos x\\) are analytic everywhere; \\(e^{-1/x^2}\\) extended by 0 is not analytic at 0."
+  },
+  {
+   "t": "binomial coefficient (general)",
+   "d": "\\(\\binom rn = \\frac{r(r-1)\\cdots(r-n+1)}{n!}\\) for real \\(r\\) and integer \\(n \\ge 0\\), with \\(\\binom r0 = 1\\)."
+  },
+  {
+   "t": "binomial series",
+   "d": "The Maclaurin series \\((1+x)^r = \\sum_{n=0}^\\infty\\binom rn x^n\\), valid for \\(|x| < 1\\) and every real \\(r\\); it terminates when \\(r\\) is a nonnegative integer."
+  },
+  {
+   "t": "nonelementary integral",
+   "d": "An integral whose integrand has no antiderivative expressible by elementary functions, such as \\(\\int e^{-x^2}\\,dx\\); its values can be computed with series."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "formula",
+   "front": "The \\(n\\)th Taylor polynomial of \\(f\\) at \\(a\\)",
+   "back": "\\(T_n(x) = \\sum_{k=0}^n \\frac{f^{(k)}(a)}{k!}(x-a)^k\\)",
+   "kp": "k1"
+  },
+  {
+   "id": "c2",
+   "type": "concept",
+   "front": "Why is the Taylor coefficient divided by \\(k!\\)?",
+   "back": "Differentiating \\((x-a)^k\\) \\(k\\) times gives \\(k!\\); dividing makes \\(T_n^{(k)}(a) = f^{(k)}(a)\\).",
+   "kp": "k1"
+  },
+  {
+   "id": "c3",
+   "type": "term",
+   "front": "Define: Taylor series and Maclaurin series",
+   "back": "\\(\\sum_{n=0}^\\infty \\frac{f^{(n)}(a)}{n!}(x-a)^n\\); the Maclaurin series is the case \\(a = 0\\).",
+   "kp": "k2"
+  },
+  {
+   "id": "c4",
+   "type": "concept",
+   "front": "If \\(f(x) = \\sum c_n(x-a)^n\\) near \\(a\\), what is \\(c_n\\)?",
+   "back": "\\(c_n = \\frac{f^{(n)}(a)}{n!}\\): any power series representation is the Taylor series (uniqueness).",
+   "kp": "k2"
+  },
+  {
+   "id": "c5",
+   "type": "formula",
+   "front": "Taylor's theorem with remainder (Lagrange form)",
+   "back": "\\(R_n(x) = \\frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}\\) for some \\(c\\) between \\(a\\) and \\(x\\).",
+   "kp": "k4"
+  },
+  {
+   "id": "c6",
+   "type": "formula",
+   "front": "Taylor's inequality",
+   "back": "\\(|f^{(n+1)}| \\le M\\) between \\(a\\) and \\(x\\) \\(\\Rightarrow |R_n(x)| \\le \\frac{M|x-a|^{n+1}}{(n+1)!}\\)",
+   "kp": "k5"
+  },
+  {
+   "id": "c7",
+   "type": "concept",
+   "front": "When does a Taylor series converge to \\(f(x)\\)?",
+   "back": "Exactly when \\(R_n(x) \\to 0\\) as \\(n \\to \\infty\\); convergence of the series alone is not enough.",
+   "kp": "k6"
+  },
+  {
+   "id": "c8",
+   "type": "concept",
+   "front": "A function whose Maclaurin series converges everywhere but not to the function",
+   "back": "\\(e^{-1/x^2}\\) (with value 0 at 0): all derivatives at 0 are 0, so the series is 0.",
+   "kp": "k7"
+  },
+  {
+   "id": "c9",
+   "type": "formula",
+   "front": "Maclaurin series of \\(e^x\\)",
+   "back": "\\(\\sum_{n=0}^\\infty \\frac{x^n}{n!}\\), all \\(x\\).",
+   "kp": "k8"
+  },
+  {
+   "id": "c10",
+   "type": "formula",
+   "front": "Maclaurin series of \\(\\sin x\\)",
+   "back": "\\(\\sum_{n=0}^\\infty \\frac{(-1)^n x^{2n+1}}{(2n+1)!} = x - \\frac{x^3}{6} + \\frac{x^5}{120} - \\cdots\\), all \\(x\\).",
+   "kp": "k8"
+  },
+  {
+   "id": "c11",
+   "type": "formula",
+   "front": "Maclaurin series of \\(\\cos x\\)",
+   "back": "\\(\\sum_{n=0}^\\infty \\frac{(-1)^n x^{2n}}{(2n)!} = 1 - \\frac{x^2}{2} + \\frac{x^4}{24} - \\cdots\\), all \\(x\\).",
+   "kp": "k8"
+  },
+  {
+   "id": "c12",
+   "type": "formula",
+   "front": "Maclaurin series of \\(\\ln(1+x)\\) and of \\(\\arctan x\\)",
+   "back": "\\(\\sum_{n\\ge1}\\frac{(-1)^{n+1}x^n}{n}\\) on \\((-1,1]\\); \\(\\sum_{n\\ge0}\\frac{(-1)^nx^{2n+1}}{2n+1}\\) on \\([-1,1]\\).",
+   "kp": "k8"
+  },
+  {
+   "id": "c13",
+   "type": "formula",
+   "front": "The binomial series",
+   "back": "\\((1+x)^r = \\sum_{n=0}^\\infty \\binom rn x^n\\), \\(\\binom rn = \\frac{r(r-1)\\cdots(r-n+1)}{n!}\\), \\(|x| < 1\\).",
+   "kp": "k10"
+  },
+  {
+   "id": "c14",
+   "type": "problem",
+   "front": "First three terms of \\(\\sqrt{1+x}\\)",
+   "back": "\\(1 + \\frac x2 - \\frac{x^2}{8}\\) (binomial series with \\(r = \\frac12\\)).",
+   "kp": "k10",
+   "answer": "1 + x/2 - x^2/8",
+   "vars": "x",
+   "check": "expression"
+  },
+  {
+   "id": "c15",
+   "type": "concept",
+   "front": "How do you get the Maclaurin series of \\(e^{-x^2}\\) or \\(\\cos(x^2)\\) quickly?",
+   "back": "Substitute into the known series of \\(e^u\\) or \\(\\cos u\\); uniqueness guarantees it is the Maclaurin series.",
+   "kp": "k9"
+  },
+  {
+   "id": "c16",
+   "type": "problem",
+   "front": "\\(\\lim_{x\\to0}\\frac{\\sin x - x}{x^3}\\)",
+   "back": "\\(-\\frac16\\): \\(\\sin x - x = -\\frac{x^3}{6} + \\cdots\\).",
+   "kp": "k11",
+   "answer": "-1/6",
+   "check": "number"
+  },
+  {
+   "id": "c17",
+   "type": "concept",
+   "front": "How is \\(\\int_0^1 e^{-x^2}\\,dx\\) computed?",
+   "back": "Integrate \\(\\sum\\frac{(-1)^nx^{2n}}{n!}\\) term by term: \\(\\sum\\frac{(-1)^n}{n!(2n+1)}\\), an alternating series with error below the first omitted term.",
+   "kp": "k12"
+  },
+  {
+   "id": "c18",
+   "type": "problem",
+   "front": "\\(f^{(10)}(0)\\) for \\(f(x) = x^2e^x\\)",
+   "back": "90: coefficient of \\(x^{10}\\) is \\(\\frac1{8!}\\), times \\(10!\\).",
+   "kp": "k2",
+   "answer": "90",
+   "check": "number"
+  },
+  {
+   "id": "c19",
+   "type": "concept",
+   "front": "Error bound in the small-angle approximation \\(\\sin\\theta \\approx \\theta\\)",
+   "back": "\\(|\\sin\\theta - \\theta| \\le \\frac{|\\theta|^3}{6}\\) (since \\(T_1 = T_2\\) and \\(|f'''| \\le 1\\)).",
+   "kp": "k5"
+  },
+  {
+   "id": "c20",
+   "type": "concept",
+   "front": "Why does the remainder of \\(e^x\\) tend to 0 for every \\(x\\)?",
+   "back": "\\(|R_n(x)| \\le e^{|x|}\\frac{|x|^{n+1}}{(n+1)!}\\), and \\(\\frac{|x|^k}{k!} \\to 0\\) for fixed \\(x\\).",
+   "kp": "k6"
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k1",
+   "type": "expression",
+   "prompt": "Find the third Maclaurin polynomial \\(T_3(x)\\) of \\(\\tan x\\).",
+   "answer": "x + x^3/3",
+   "vars": "x",
+   "why": "\\(f(0) = 0\\); \\(f' = \\sec^2 x\\), \\(f'(0) = 1\\); \\(f'' = 2\\sec^2x\\tan x\\), \\(f''(0) = 0\\); \\(f''' = 2\\sec^4 x + 4\\sec^2x\\tan^2x\\), \\(f'''(0) = 2\\). So \\(T_3 = x + \\frac{2}{3!}x^3 = x + \\frac{x^3}{3}\\)."
+  },
+  {
+   "id": "p2",
+   "kp": "k1",
+   "type": "expression",
+   "prompt": "Find the second Taylor polynomial of \\(f(x) = \\frac1x\\) at \\(a = 2\\).",
+   "answer": "1/2 - (x - 2)/4 + (x - 2)^2/8",
+   "vars": "x",
+   "why": "\\(f(2) = \\frac12\\), \\(f'(x) = -\\frac1{x^2}\\) so \\(f'(2) = -\\frac14\\), \\(f''(x) = \\frac{2}{x^3}\\) so \\(f''(2) = \\frac14\\) and \\(\\frac{f''(2)}{2!} = \\frac18\\). Hence \\(T_2 = \\frac12 - \\frac{x-2}{4} + \\frac{(x-2)^2}{8}\\)."
+  },
+  {
+   "id": "p3",
+   "kp": "k2",
+   "type": "number",
+   "prompt": "Let \\(f(x) = x^3\\cos x\\). Use its Maclaurin series to find \\(f^{(9)}(0)\\).",
+   "answer": "-504",
+   "why": "\\(x^3\\cos x = \\sum_{n=0}^\\infty\\frac{(-1)^n x^{2n+3}}{(2n)!}\\). The \\(x^9\\) term has \\(2n + 3 = 9\\), so \\(n = 3\\) and the coefficient is \\(\\frac{(-1)^3}{6!} = -\\frac1{720}\\). Then \\(f^{(9)}(0) = 9!\\cdot\\left(-\\frac1{720}\\right) = -\\frac{362880}{720} = -504\\)."
+  },
+  {
+   "id": "p4",
+   "kp": "k9",
+   "type": "written",
+   "prompt": "Find the Maclaurin series of \\(\\cosh x = \\frac{e^x + e^{-x}}{2}\\) in summation notation, and state where it equals \\(\\cosh x\\). Justify each step.",
+   "rubric": [
+    "Uses \\(e^x = \\sum\\frac{x^n}{n!}\\) and \\(e^{-x} = \\sum\\frac{(-1)^nx^n}{n!}\\), both valid for all \\(x\\).",
+    "Adds termwise: odd powers cancel, even powers double.",
+    "Obtains \\(\\cosh x = \\sum_{n=0}^\\infty\\frac{x^{2n}}{(2n)!}\\).",
+    "States validity for all real \\(x\\) (sum of two series convergent everywhere)."
+   ],
+   "model": "For all \\(x\\), \\(e^x = \\sum_{n=0}^\\infty\\frac{x^n}{n!}\\) and, substituting \\(-x\\), \\(e^{-x} = \\sum_{n=0}^\\infty\\frac{(-1)^nx^n}{n!}\\). Adding convergent series termwise, the coefficient of \\(x^n\\) in \\(e^x + e^{-x}\\) is \\(\\frac{1 + (-1)^n}{n!}\\), which is 0 for odd \\(n\\) and \\(\\frac{2}{n!}\\) for even \\(n\\). Dividing by 2, \\(\\cosh x = \\sum_{n=0}^\\infty\\frac{x^{2n}}{(2n)!} = 1 + \\frac{x^2}{2!} + \\frac{x^4}{4!} + \\cdots\\), valid for all real \\(x\\). By uniqueness this is the Maclaurin series.",
+   "why": "The result resembles the cosine series without the alternating signs."
+  },
+  {
+   "id": "p5",
+   "kp": "k5",
+   "type": "number",
+   "prompt": "Approximate \\(\\sqrt[3]{8.1}\\) by the first Taylor polynomial of \\(f(x) = x^{1/3}\\) at \\(a = 8\\). Using \\(M = \\max_{8 \\le t \\le 8.1}|f''(t)|\\), give the exact value of the Taylor-inequality bound \\(\\frac{M}{2!}(0.1)^2\\).",
+   "answer": "1/28800",
+   "why": "\\(T_1(x) = 2 + \\frac{x - 8}{12}\\), so \\(\\sqrt[3]{8.1} \\approx 2.008\\overline{3}\\). \\(f''(t) = -\\frac29t^{-5/3}\\), whose absolute value decreases in \\(t\\), so \\(M = \\frac29\\cdot8^{-5/3} = \\frac29\\cdot\\frac1{32} = \\frac1{144}\\). The bound is \\(\\frac{1}{144}\\cdot\\frac{0.01}{2} = \\frac{1}{28800} \\approx 3.5\\times10^{-5}\\)."
+  },
+  {
+   "id": "p6",
+   "kp": "k6",
+   "type": "written",
+   "prompt": "Prove that \\(e^x = \\sum_{n=0}^\\infty\\frac{x^n}{n!}\\) for every real \\(x\\).",
+   "rubric": [
+    "States the criterion: the Taylor series converges to \\(f(x)\\) iff \\(R_n(x) \\to 0\\).",
+    "Bounds \\(f^{(n+1)}(t) = e^t \\le e^{|x|}\\) for \\(t\\) between 0 and \\(x\\).",
+    "Obtains \\(|R_n(x)| \\le e^{|x|}\\frac{|x|^{n+1}}{(n+1)!}\\).",
+    "Shows \\(\\frac{|x|^{n+1}}{(n+1)!} \\to 0\\) and concludes."
+   ],
+   "model": "Fix \\(x\\). Since \\(T_n(x) = e^x - R_n(x)\\), the series converges to \\(e^x\\) iff \\(R_n(x) \\to 0\\). Every derivative of \\(e^t\\) is \\(e^t\\), and for \\(t\\) between 0 and \\(x\\), \\(e^t \\le e^{|x|}\\). Taylor's inequality gives \\(|R_n(x)| \\le e^{|x|}\\frac{|x|^{n+1}}{(n+1)!}\\). The factor \\(e^{|x|}\\) does not depend on \\(n\\), and \\(\\frac{|x|^{n+1}}{(n+1)!} \\to 0\\) because these are terms of the series \\(\\sum\\frac{|x|^k}{k!}\\), which converges by the ratio test. Therefore \\(R_n(x) \\to 0\\) and \\(e^x = \\sum\\frac{x^n}{n!}\\).",
+   "why": "The bound \\(M\\) may depend on \\(x\\); it must not grow with \\(n\\) faster than \\((n+1)!\\) shrinks the rest."
+  },
+  {
+   "id": "p7",
+   "kp": "k10",
+   "type": "expression",
+   "prompt": "Use the binomial series to find the first three terms of the Maclaurin series of \\(\\sqrt[3]{1+x}\\), and enter their sum.",
+   "answer": "1 + x/3 - x^2/9",
+   "vars": "x",
+   "why": "With \\(r = \\frac13\\): \\(\\binom{1/3}{1} = \\frac13\\) and \\(\\binom{1/3}{2} = \\frac{\\frac13\\left(-\\frac23\\right)}{2} = -\\frac19\\). So \\((1+x)^{1/3} = 1 + \\frac x3 - \\frac{x^2}{9} + \\cdots\\) for \\(|x| < 1\\)."
+  },
+  {
+   "id": "p8",
+   "kp": "k11",
+   "type": "number",
+   "prompt": "Use Maclaurin series to compute \\(\\lim_{x\\to0}\\frac{\\cos x - 1 + \\frac{x^2}{2}}{x^4}\\).",
+   "answer": "1/24",
+   "why": "\\(\\cos x = 1 - \\frac{x^2}{2} + \\frac{x^4}{24} - \\frac{x^6}{720} + \\cdots\\), so the numerator is \\(\\frac{x^4}{24} - \\frac{x^6}{720} + \\cdots\\), and the quotient tends to \\(\\frac1{24}\\)."
+  },
+  {
+   "id": "p9",
+   "kp": "k8",
+   "type": "number",
+   "prompt": "Find the exact value of \\(\\sum_{n=1}^{\\infty}\\frac{2^n}{n!}\\).",
+   "answer": "e^2 - 1",
+   "why": "\\(\\sum_{n=0}^\\infty\\frac{x^n}{n!} = e^x\\) for all \\(x\\); at \\(x = 2\\) the full sum is \\(e^2\\). The given series omits the \\(n = 0\\) term, which is 1, so its value is \\(e^2 - 1\\)."
+  },
+  {
+   "id": "p10",
+   "kp": "k6",
+   "type": "written",
+   "prompt": "A student tries to compute \\(\\ln 3\\) by putting \\(x = 2\\) into \\(\\ln(1+x) = x - \\frac{x^2}{2} + \\frac{x^3}{3} - \\cdots\\). Explain why this fails, and give a series (with the value of \\(x\\)) that does compute \\(\\ln 3\\), justifying that it is valid there.",
+   "rubric": [
+    "States that the series has radius 1 and represents \\(\\ln(1+x)\\) only for \\(-1 < x \\le 1\\).",
+    "Shows that at \\(x = 2\\) the terms \\(\\frac{2^n}{n}\\) do not tend to 0, so the series diverges.",
+    "Proposes a valid alternative, e.g. \\(\\ln\\frac{1+x}{1-x} = 2\\sum\\frac{x^{2n+1}}{2n+1}\\) with \\(x = \\frac12\\), or \\(\\ln 3 = -\\ln\\left(1 - \\frac23\\right) = \\sum\\frac{(2/3)^n}{n}\\).",
+    "Checks that the chosen \\(x\\) lies inside the interval of convergence."
+   ],
+   "model": "The Maclaurin series of \\(\\ln(1+x)\\) has radius 1 and equals \\(\\ln(1+x)\\) only on \\((-1, 1]\\). At \\(x = 2\\) its terms are \\(\\pm\\frac{2^n}{n}\\), which grow without bound, so the series diverges and gives no value at all, although \\(\\ln 3\\) exists. A valid alternative: \\(\\ln\\frac{1+x}{1-x} = 2\\sum_{n=0}^\\infty\\frac{x^{2n+1}}{2n+1}\\) for \\(|x| < 1\\), and \\(\\frac{1+x}{1-x} = 3\\) when \\(x = \\frac12\\), which is inside the interval. So \\(\\ln 3 = 2\\left(\\frac12 + \\frac{1}{3\\cdot8} + \\frac{1}{5\\cdot32} + \\cdots\\right)\\).",
+   "why": "A Taylor series represents a function only where the remainder tends to 0; outside the radius of convergence it cannot, since the series diverges."
+  },
+  {
+   "id": "p11",
+   "kp": "k4",
+   "type": "mcq",
+   "prompt": "Let \\(f\\) have four continuous derivatives near \\(a\\), and let \\(T_3\\) be its third Taylor polynomial at \\(a\\). According to Taylor's theorem, the error \\(f(x) - T_3(x)\\) equals which of the following?",
+   "options": [
+    "\\(\\frac{f^{(4)}(a)}{4!}(x-a)^4\\)",
+    "\\(\\frac{f^{(4)}(c)}{4!}(x-a)^4\\) for some \\(c\\) between \\(a\\) and \\(x\\)",
+    "\\(\\frac{f'''(c)}{3!}(x-a)^3\\) for some \\(c\\) between \\(a\\) and \\(x\\)",
+    "\\(\\frac{f^{(4)}(x)}{4!}(x-a)^4\\)"
+   ],
+   "answer": 1,
+   "why": "The Lagrange remainder uses the next derivative, \\(f^{(4)}\\), evaluated at an unknown point \\(c\\) between \\(a\\) and \\(x\\). Option 1 is the next term of the Taylor series, an estimate of the error but not equal to it in general. Option 3 uses the wrong derivative (that is the form of \\(R_2\\)). Option 4 evaluates at \\(x\\), which is not what the theorem asserts."
+  },
+  {
+   "id": "p12",
+   "kp": "k12",
+   "type": "number",
+   "prompt": "Approximate \\(\\int_0^1 \\frac{\\sin x}{x}\\,dx\\) (the integrand is taken to be 1 at \\(x = 0\\)) using the first three nonzero terms of the series obtained by integrating term by term. Give the value to at least five decimal places.",
+   "answer": "0.94611",
+   "tol": 0.0001,
+   "why": "\\(\\frac{\\sin x}{x} = 1 - \\frac{x^2}{3!} + \\frac{x^4}{5!} - \\cdots\\), so the integral is \\(1 - \\frac{1}{3\\cdot3!} + \\frac{1}{5\\cdot5!} - \\frac{1}{7\\cdot 7!} + \\cdots = 1 - \\frac1{18} + \\frac1{600} - \\cdots \\approx 0.946111\\). The next term, \\(\\frac{1}{35280} \\approx 2.8\\times10^{-5}\\), bounds the error; the integral is \\(0.946083\\ldots\\)."
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k6",
+   "type": "written",
+   "prompt": "Using Taylor's theorem with remainder for \\(f(x) = \\ln(1+x)\\) at \\(a = 0\\), prove that \\(\\sum_{n=1}^\\infty\\frac{(-1)^{n+1}}{n} = \\ln 2\\). Include the formula for \\(f^{(n+1)}\\).",
+   "rubric": [
+    "Gives \\(f^{(n+1)}(t) = \\frac{(-1)^n n!}{(1+t)^{n+1}}\\) (by induction or pattern with justification).",
+    "Writes \\(R_n(1) = \\frac{f^{(n+1)}(c)}{(n+1)!}\\) with \\(0 < c < 1\\).",
+    "Bounds \\(|R_n(1)| = \\frac{1}{(n+1)(1+c)^{n+1}} < \\frac{1}{n+1}\\).",
+    "Concludes \\(R_n(1) \\to 0\\), so the Maclaurin series at \\(x = 1\\), the alternating harmonic series, converges to \\(\\ln 2\\)."
+   ],
+   "model": "For \\(f(x) = \\ln(1+x)\\): \\(f'(x) = (1+x)^{-1}\\), and by induction \\(f^{(k)}(x) = (-1)^{k-1}(k-1)!\\,(1+x)^{-k}\\) for \\(k \\ge 1\\) (differentiating raises the factorial and flips the sign), so \\(f^{(n+1)}(t) = \\frac{(-1)^n n!}{(1+t)^{n+1}}\\). The Maclaurin coefficients are \\(\\frac{f^{(k)}(0)}{k!} = \\frac{(-1)^{k-1}}{k}\\), so \\(T_n(1) = \\sum_{k=1}^n \\frac{(-1)^{k+1}}{k}\\). By Taylor's theorem, \\(\\ln 2 - T_n(1) = R_n(1) = \\frac{f^{(n+1)}(c)}{(n+1)!}\\cdot 1^{n+1}\\) for some \\(c \\in (0, 1)\\). Hence \\(|R_n(1)| = \\frac{n!}{(n+1)!\\,(1+c)^{n+1}} = \\frac{1}{(n+1)(1+c)^{n+1}} < \\frac{1}{n+1}\\), which tends to 0. So \\(T_n(1) \\to \\ln 2\\), which says exactly that \\(1 - \\frac12 + \\frac13 - \\cdots = \\ln 2\\).",
+   "why": "The alternating series test proved convergence of this series; the remainder estimate identifies its sum."
+  },
+  {
+   "id": "e2",
+   "kp": "k9",
+   "type": "expression",
+   "prompt": "Find the fourth Maclaurin polynomial of \\(e^x\\cos x\\) by multiplying series. Enter it expanded.",
+   "answer": "1 + x - x^3/3 - x^4/6",
+   "vars": "x",
+   "why": "\\(\\left(1 + x + \\frac{x^2}{2} + \\frac{x^3}{6} + \\frac{x^4}{24}\\right)\\left(1 - \\frac{x^2}{2} + \\frac{x^4}{24}\\right)\\) up to \\(x^4\\): constant 1; \\(x\\): 1; \\(x^2\\): \\(\\frac12 - \\frac12 = 0\\); \\(x^3\\): \\(\\frac16 - \\frac12 = -\\frac13\\); \\(x^4\\): \\(\\frac1{24} - \\frac14 + \\frac1{24} = -\\frac16\\). So \\(T_4 = 1 + x - \\frac{x^3}{3} - \\frac{x^4}{6}\\)."
+  },
+  {
+   "id": "e3",
+   "kp": "k11",
+   "type": "number",
+   "prompt": "Compute \\(\\lim_{x\\to0}\\frac{\\sin x - x + \\frac{x^3}{6}}{x^5}\\).",
+   "answer": "1/120",
+   "why": "\\(\\sin x - x + \\frac{x^3}{6} = \\frac{x^5}{120} - \\frac{x^7}{5040} + \\cdots\\), so the quotient tends to \\(\\frac{1}{120}\\)."
+  },
+  {
+   "id": "e4",
+   "kp": "k12",
+   "type": "number",
+   "prompt": "Approximate \\(\\int_0^1 e^{-x^2}\\,dx\\) with error less than 0.001 using its Maclaurin series. Give your approximation to four decimal places.",
+   "answer": "0.7468",
+   "tol": 0.0014,
+   "why": "\\(\\int_0^1 e^{-x^2}dx = \\sum\\frac{(-1)^n}{n!(2n+1)} = 1 - \\frac13 + \\frac1{10} - \\frac1{42} + \\frac1{216} - \\frac1{1320} + \\cdots\\). The series alternates with decreasing terms; \\(\\frac{1}{1320} \\approx 0.00076 < 0.001\\), so the first five terms suffice: \\(\\approx 0.7475\\). The true value is \\(0.74682\\ldots\\); any answer within 0.001 of it is correct."
+  },
+  {
+   "id": "e5",
+   "kp": "k10",
+   "type": "written",
+   "prompt": "Use the binomial series to find the Maclaurin series of \\(\\frac{1}{\\sqrt{1-x^2}}\\) through the \\(x^4\\) term, then integrate to obtain the Maclaurin series of \\(\\arcsin x\\) through the \\(x^5\\) term. State the radius of convergence and justify the constant of integration.",
+   "rubric": [
+    "Uses \\((1+u)^{-1/2} = 1 - \\frac u2 + \\frac{3u^2}{8} - \\cdots\\) with \\(u = -x^2\\).",
+    "Obtains \\(\\frac1{\\sqrt{1-x^2}} = 1 + \\frac{x^2}{2} + \\frac{3x^4}{8} + \\cdots\\) for \\(|x| < 1\\).",
+    "Integrates from 0 to \\(x\\), using \\(\\arcsin 0 = 0\\), to get \\(\\arcsin x = x + \\frac{x^3}{6} + \\frac{3x^5}{40} + \\cdots\\).",
+    "States radius 1 (from \\(|x^2| < 1\\), unchanged by integration)."
+   ],
+   "model": "With \\(r = -\\frac12\\), \\(\\binom{-1/2}{1} = -\\frac12\\) and \\(\\binom{-1/2}{2} = \\frac38\\), so \\((1+u)^{-1/2} = 1 - \\frac u2 + \\frac{3u^2}{8} - \\cdots\\) for \\(|u| < 1\\). Put \\(u = -x^2\\): \\(\\frac{1}{\\sqrt{1-x^2}} = 1 + \\frac{x^2}{2} + \\frac{3x^4}{8} + \\cdots\\), valid for \\(x^2 < 1\\), i.e. \\(|x| < 1\\). Since \\(\\frac{d}{dx}\\arcsin x = \\frac{1}{\\sqrt{1-x^2}}\\) and \\(\\arcsin 0 = 0\\), integrate from 0 to \\(x\\) term by term: \\(\\arcsin x = x + \\frac{x^3}{6} + \\frac{3x^5}{40} + \\cdots\\). Term-by-term integration keeps the radius, so \\(R = 1\\).",
+   "why": "The same pattern (differentiate, expand, integrate back) produced the series for \\(\\ln(1+x)\\) and \\(\\arctan x\\)."
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "Taylor coefficients",
+    "formula": "\\(c_n = \\frac{f^{(n)}(a)}{n!}\\)",
+    "when": "Building a Taylor polynomial or series from derivatives.",
+    "example": "\\(\\ln x\\) at 1: \\(T_3 = (x-1) - \\frac{(x-1)^2}{2} + \\frac{(x-1)^3}{3}\\)",
+    "watch": "Evaluate derivatives at \\(a\\); divide by \\(n!\\)."
+   },
+   {
+    "name": "Uniqueness",
+    "formula": "Any power series for \\(f\\) at \\(a\\) is its Taylor series",
+    "when": "A known series can be manipulated instead of differentiating.",
+    "example": "\\(x^2e^x = \\sum\\frac{x^{n+2}}{n!}\\) gives \\(f^{(10)}(0) = 90\\).",
+    "watch": "The manipulation must be valid on an open interval around the centre."
+   },
+   {
+    "name": "Lagrange remainder",
+    "formula": "\\(R_n(x) = \\frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}\\)",
+    "when": "Exact error statements and proofs of convergence to f.",
+    "example": "\\(\\sin x - x = -\\frac{\\cos c}{6}x^3\\)",
+    "watch": "\\(c\\) is unknown; bound over the whole interval between \\(a\\) and \\(x\\)."
+   },
+   {
+    "name": "Taylor's inequality",
+    "formula": "\\(|R_n(x)| \\le \\frac{M}{(n+1)!}|x-a|^{n+1}\\)",
+    "when": "Guaranteeing accuracy or choosing the degree.",
+    "example": "\\(e\\): \\(\\frac{3}{(n+1)!} < 10^{-5}\\) needs \\(n = 8\\).",
+    "watch": "Use \\(f^{(n+1)}\\), not \\(f^{(n)}\\); exploit vanishing terms (\\(T_3 = T_4\\) for sine)."
+   },
+   {
+    "name": "Convergence to f",
+    "formula": "\\(T_n(x) \\to f(x) \\iff R_n(x) \\to 0\\)",
+    "when": "Proving a function equals its series.",
+    "example": "\\(e^x\\), \\(\\sin x\\), \\(\\cos x\\) on all of \\(\\mathbb{R}\\); \\(\\ln(1+x)\\) at \\(x = 1\\).",
+    "watch": "A convergent Taylor series need not converge to \\(f\\) (\\(e^{-1/x^2}\\))."
+   },
+   {
+    "name": "Basic Maclaurin series",
+    "formula": "\\(e^x,\\ \\sin x,\\ \\cos x,\\ \\frac1{1-x},\\ \\ln(1+x),\\ \\arctan x\\)",
+    "when": "Starting point for almost every series computation.",
+    "example": "\\(\\cos x = 1 - \\frac{x^2}{2} + \\frac{x^4}{24} - \\cdots\\)",
+    "watch": "Remember each interval of validity."
+   },
+   {
+    "name": "Substitution and products",
+    "formula": "Replace \\(x\\) by \\(u(x)\\); multiply truncated series",
+    "when": "Composite or product functions such as \\(e^{-x^2}\\), \\(e^x\\sin x\\).",
+    "example": "\\(e^{-x^2} = 1 - x^2 + \\frac{x^4}{2} - \\cdots\\)",
+    "watch": "Transform the interval; collect all cross terms of each degree."
+   },
+   {
+    "name": "Binomial series",
+    "formula": "\\((1+x)^r = \\sum\\binom rn x^n\\), \\(|x| < 1\\)",
+    "when": "Roots and negative or fractional powers.",
+    "example": "\\(\\sqrt{1+x} = 1 + \\frac x2 - \\frac{x^2}{8} + \\cdots\\)",
+    "watch": "\\(\\binom rn\\) has exactly \\(n\\) factors in the numerator."
+   },
+   {
+    "name": "Limits by series",
+    "formula": "Expand, cancel the lowest power",
+    "when": "\\(\\frac00\\) forms at 0 involving several transcendental functions.",
+    "example": "\\(\\frac{\\sin x - x}{x^3} \\to -\\frac16\\)",
+    "watch": "Keep terms up to the power in the denominator."
+   },
+   {
+    "name": "Integrals by series",
+    "formula": "\\(\\int_0^b\\sum c_nx^n\\,dx = \\sum\\frac{c_nb^{n+1}}{n+1}\\)",
+    "when": "Nonelementary integrals.",
+    "example": "\\(\\int_0^1 e^{-x^2}dx \\approx 0.7475\\) (error < 0.001)",
+    "watch": "Bound the error, usually by the first omitted alternating term."
+   }
+  ],
+  "stuck": [
+   "Before differentiating many times, ask whether the function is a substitution into, product of, or derivative or integral of a series in the table.",
+   "For a derivative pattern, compute four derivatives, guess the formula, and confirm it by induction.",
+   "For an error bound, identify \\(n\\), then bound \\(|f^{(n+1)}|\\) on the whole interval between \\(a\\) and \\(x\\).",
+   "If the \\(x^{n+1}\\) coefficient is 0, use \\(R_{n+1}\\) instead of \\(R_n\\) for a sharper bound.",
+   "For a limit at 0, expand every function to one degree beyond the power in the denominator.",
+   "To show a series equals its function, prove \\(R_n(x) \\to 0\\); convergence of the series alone proves nothing."
+  ]
+ }
+}

@@ -1,0 +1,808 @@
+{
+ "key": "phy-0-9",
+ "title": "Rotational dynamics and angular momentum",
+ "v": 1,
+ "scope": "The rotational second law \\( \\sum\\tau = I\\alpha \\) for fixed-axis rotation and its use with connected translating bodies, rotational work, power and the work–energy theorem, energy conservation including rotation, rolling without slipping, angular momentum of particles and rigid bodies, \\( \\vec\\tau_{\\text{ext}} = d\\vec L/dt \\), angular impulse, conservation of angular momentum, and gyroscopic precession at an introductory level; moments of inertia and torque come from Rotational kinematics and torque, and orbital applications belong to Gravitation and orbits.",
+ "sources": [
+  {
+   "title": "OpenStax University Physics Volume 1, 10.7 Newton's Second Law for Rotation",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/10-7-newtons-second-law-for-rotation"
+  },
+  {
+   "title": "OpenStax University Physics Volume 1, 11.1 Rolling Motion",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/11-1-rolling-motion"
+  },
+  {
+   "title": "OpenStax University Physics Volume 1, 11.3 Conservation of Angular Momentum",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/11-3-conservation-of-angular-momentum"
+  },
+  {
+   "title": "OpenStax University Physics Volume 1, 11.4 Precession of a Gyroscope",
+   "url": "https://opentextbc.ca/universityphysicsv1openstax/chapter/11-3-precession-of-a-gyroscope/"
+  },
+  {
+   "title": "MIT 8.01SC Classical Mechanics, Chapter 19: Angular Momentum",
+   "url": "https://ocw.mit.edu/courses/8-01sc-classical-mechanics-fall-2016/mit8_01scs22_chapter19.pdf"
+  }
+ ],
+ "pre": [
+  "phy-0-8",
+  "phy-0-3",
+  "phy-0-6",
+  "phy-0-7"
+ ],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Rotational second law",
+   "d": "Derive \\( \\sum\\tau_{\\text{ext}} = I\\alpha \\) for a rigid body on a fixed axis from Newton's second law, and apply it.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k2",
+   "t": "Rotation coupled to translation",
+   "d": "Solve pulley and string systems by combining \\( F = ma \\), \\( \\tau = I\\alpha \\) and the constraint \\( a = R\\alpha \\).",
+   "type": "procedure"
+  },
+  {
+   "id": "k3",
+   "t": "Rotational work and power",
+   "d": "Compute \\( W = \\int\\tau\\,d\\theta \\) and \\( P = \\tau\\omega \\), and use the rotational work–energy theorem.",
+   "type": "procedure"
+  },
+  {
+   "id": "k4",
+   "t": "Energy conservation with rotation",
+   "d": "Include \\( \\tfrac12I\\omega^2 \\) in mechanical energy and solve for speeds of rotating and connected bodies.",
+   "type": "procedure"
+  },
+  {
+   "id": "k5",
+   "t": "Rolling without slipping: kinematics and energy",
+   "d": "Use \\( v_{\\text{cm}} = R\\omega \\), the instantaneously stationary contact point, and \\( K = \\tfrac12Mv_{\\text{cm}}^2 + \\tfrac12I_{\\text{cm}}\\omega^2 \\).",
+   "type": "concept"
+  },
+  {
+   "id": "k6",
+   "t": "Rolling down an incline",
+   "d": "Find the acceleration, speed and friction for rolling bodies, and explain why static friction does no work.",
+   "type": "skill"
+  },
+  {
+   "id": "k7",
+   "t": "Angular momentum",
+   "d": "Compute \\( \\vec L = \\vec r\\times\\vec p \\) for particles and \\( L_z = I\\omega \\) for a rigid body, noting dependence on the reference point.",
+   "type": "concept"
+  },
+  {
+   "id": "k8",
+   "t": "Torque as rate of change of L",
+   "d": "Derive \\( \\vec\\tau_{\\text{ext}} = d\\vec L/dt \\) and use angular impulse \\( \\int\\tau\\,dt = \\Delta L \\).",
+   "type": "mechanism"
+  },
+  {
+   "id": "k9",
+   "t": "Conservation of angular momentum",
+   "d": "Apply conservation when the external torque about an axis vanishes, including changing moments of inertia and rotational collisions.",
+   "type": "procedure"
+  },
+  {
+   "id": "k10",
+   "t": "Gyroscopic precession",
+   "d": "Explain precession from the vector equation \\( \\vec\\tau = d\\vec L/dt \\) and compute \\( \\Omega = Mgr/(I\\omega) \\).",
+   "type": "concept"
+  }
+ ],
+ "intro": "The previous chapter described rotation and defined the torque of a force, but it left open the question that matters for prediction: given the torques on a body, how does its rotation change? For translation the answer is Newton's second law. This chapter shows that the same law, applied to every particle of a rigid body, yields a rotational version in which torque plays the role of force and the moment of inertia the role of mass.\n\nFrom that law come the rotational forms of work, power and kinetic energy, and the analysis of rolling, in which a body translates and rotates at once. The chapter then introduces **angular momentum**, the rotational counterpart of linear momentum, and proves that external torque is its rate of change. When no external torque acts, angular momentum is conserved. This single principle explains why a skater spins faster when she pulls in her arms, why a spinning gyroscope does not fall over, and, in the next chapter, why planets sweep out equal areas in equal times.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "Newton's second law for rotation",
+   "kps": [
+    "k1"
+   ],
+   "md": "This section derives the law that connects the torques on a rigid body with its angular acceleration. It uses nothing new: only Newton's second law for each particle, together with the definitions of torque and moment of inertia from the previous chapter.\n\n**Derivation.** Let a rigid body rotate about the fixed \\( z \\)-axis with angular acceleration \\( \\alpha \\). Particle \\( i \\), of mass \\( m_i \\) at perpendicular distance \\( r_i \\) from the axis, moves on a circle, and its tangential acceleration is \\( r_i\\alpha \\). The tangential component of Newton's second law for this particle reads\n\\[ F_{i,t} = m_ir_i\\alpha, \\]\nwhere \\( F_{i,t} \\) is the tangential component of the total force on it, external and internal. Multiply by \\( r_i \\). The left side, \\( r_iF_{i,t} \\), is exactly the \\( z \\)-component of the torque of that force about the axis: the radial component of the force passes through the axis and the component parallel to the axis has no \\( z \\)-torque. So \\( \\tau_{i,z} = m_ir_i^2\\alpha \\). Summing over all particles,\n\\[ \\sum_i\\tau_{i,z} = \\Big(\\sum_i m_ir_i^2\\Big)\\alpha = I\\alpha. \\]\nThe sum on the left contains the torques of internal forces, which cancel in pairs for the same reason as in static equilibrium: third-law pairs of central forces have equal and opposite torques about any point. What remains is the external torque.\n\n> **Rotational second law.** For a rigid body rotating about a fixed axis, \\( \\sum\\tau_{\\text{ext}} = I\\alpha \\), where the torques and the moment of inertia are taken about that axis.\n\nThe analogy with \\( \\sum F = ma \\) is exact in form: torque causes angular acceleration, and the moment of inertia measures resistance to it, which justifies calling \\( I \\) an inertia. It can also be shown that the same equation holds about an axis through the center of mass even when the center of mass accelerates, provided the axis keeps a fixed direction; this is used for rolling bodies below. Static equilibrium is the special case \\( \\alpha = 0 \\) of a body at rest.\n\n*Worked example 1.* A string wrapped around a uniform disk of mass 2.0 kg and radius 0.20 m, free to turn on a frictionless axle, is pulled with a constant tangential force of 5.0 N. Then \\( I = \\tfrac12MR^2 = 0.040 \\) kg·m² and \\( \\tau = FR = 1.0 \\) N·m, so \\( \\alpha = \\tau/I = 25 \\) rad/s². After 2.0 s from rest, \\( \\omega = 50 \\) rad/s, and the disk has turned through \\( \\tfrac12\\alpha t^2 = 50 \\) rad, unwinding \\( (50)(0.20) = 10 \\) m of string.\n\n*Worked example 2.* A uniform rod of length \\( L \\) pivoted without friction at one end is released from rest in a horizontal position. Gravity acts at the center of mass with lever arm \\( L/2 \\), so\n\\[ \\alpha = \\frac{Mg(L/2)}{\\tfrac13ML^2} = \\frac{3g}{2L}. \\]\nThe free end then has tangential acceleration \\( L\\alpha = \\tfrac32g \\), greater than \\( g \\). A coin resting on the far end of the rod is left behind as the rod drops away beneath it, because the coin can fall only at \\( g \\).\n\n**Common mistakes.** Taking torques about one axis and the moment of inertia about another; including internal forces in the torque sum; and applying \\( \\tau = I\\alpha \\) to a body whose moment of inertia is changing, where the correct statement, developed later in this chapter, is \\( \\tau = dL/dt \\).",
+   "questions": [
+    {
+     "id": "s1q1",
+     "kp": "k1",
+     "type": "number",
+     "prompt": "A uniform rod 1.2 m long is pivoted without friction at one end and released from rest in a horizontal position. What is its angular acceleration (in rad/s²) at the instant of release? Use \\( g = 9.80 \\) m/s².",
+     "answer": "3*9.8/(2*1.2)",
+     "tol": 0.01,
+     "why": "\\( \\tau = Mg(L/2) \\) and \\( I = \\tfrac13ML^2 \\) about the pivot, so \\( \\alpha = \\dfrac{3g}{2L} = \\dfrac{3(9.80)}{2(1.2)} = 12.3 \\) rad/s². The mass cancels."
+    },
+    {
+     "id": "s1q2",
+     "kp": "k1",
+     "type": "number",
+     "prompt": "A grinding wheel, a uniform disk of mass 3.0 kg and radius 0.10 m, spins freely at 120 rad/s. A tool is pressed radially against its rim with a normal force of 20 N; the coefficient of kinetic friction is 0.40. How long (in s) does the wheel take to stop, if friction at the rim is the only torque?",
+     "answer": "120/((0.4*20*0.1)/(0.5*3*0.1^2))",
+     "tol": 0.01,
+     "why": "Friction at the rim: \\( f = \\mu_kN = 8.0 \\) N, torque \\( fR = 0.80 \\) N·m. \\( I = \\tfrac12MR^2 = 0.015 \\) kg·m², so \\( |\\alpha| = 0.80/0.015 = 53.3 \\) rad/s². Time to stop: \\( 120/53.3 = 2.25 \\) s. The normal force is radial and exerts no torque about the axle."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "Rotating bodies connected to translating bodies",
+   "kps": [
+    "k2"
+   ],
+   "md": "Pulleys with mass, winches and drums couple a rotating body to bodies that move in straight lines. Such systems require the translational and rotational second laws together, linked by a kinematic constraint. This section sets out the method.\n\n**Method.** (1) Draw a separate free-body diagram for each body: forces on the translating bodies, forces with their points of application on the rotating one. (2) Choose positive directions consistently, so that positive linear motion of each block corresponds to positive rotation of the pulley. (3) Write \\( \\sum F = ma \\) for each block and \\( \\sum\\tau = I\\alpha \\) for the pulley. (4) Add the constraint: if the string does not stretch and does not slip on the pulley, the string's speed equals the rim speed, so \\( a = R\\alpha \\). (5) Solve the linear system.\n\nThe key physical point is that **the tensions on the two sides of a pulley with mass are different**. A net torque is needed to give the pulley angular acceleration, and that torque is supplied by the difference in tensions. The tensions are equal only when the pulley's moment of inertia is negligible, when the system is not accelerating, or when the string slides over a fixed frictionless peg instead of turning a pulley.\n\n*Worked example 1.* A block of mass \\( m = 2.0 \\) kg hangs from a light string wound around a pulley that is a uniform disk of mass \\( M = 4.0 \\) kg and radius \\( R = 0.20 \\) m, on a frictionless axle. Take down as positive for the block and the corresponding sense of rotation as positive for the pulley:\n\\[ mg - T = ma, \\qquad TR = \\tfrac12MR^2\\alpha, \\qquad a = R\\alpha. \\]\nThe second and third give \\( T = \\tfrac12Ma \\). Substituting into the first,\n\\[ a = \\frac{mg}{m + \\tfrac12M} = \\frac{(2.0)(9.80)}{2.0 + 2.0} = 4.90 \\text{ m/s}^2, \\qquad T = \\tfrac12(4.0)(4.90) = 9.80 \\text{ N}. \\]\nThe pulley enters the denominator as an extra mass \\( I/R^2 = \\tfrac12M \\): its rotational inertia, referred to the rim, adds to the inertia of the system. Note that \\( T < mg \\): the block accelerates downward.\n\n*Worked example 2 (Atwood machine with a massive pulley).* Masses \\( m_1 = 3.0 \\) kg and \\( m_2 = 5.0 \\) kg hang on either side of a pulley with \\( I/R^2 = 1.0 \\) kg. With \\( m_2 \\) moving down,\n\\[ T_1 - m_1g = m_1a, \\qquad m_2g - T_2 = m_2a, \\qquad (T_2 - T_1)R = I\\alpha = \\frac{I}{R}a. \\]\nAdding all three (after dividing the last by \\( R \\)) eliminates the tensions:\n\\[ a = \\frac{(m_2 - m_1)g}{m_1 + m_2 + I/R^2} = \\frac{(2.0)(9.80)}{9.0} = 2.18 \\text{ m/s}^2. \\]\nThen \\( T_1 = m_1(g + a) = 35.9 \\) N and \\( T_2 = m_2(g - a) = 38.1 \\) N. Their difference, 2.2 N, equals \\( (I/R^2)a \\), exactly the net force needed at the rim to spin up the pulley.\n\n**Common mistakes.** Setting the two tensions equal on a massive pulley; choosing sign conventions for the blocks and the pulley independently, so that the constraint \\( a = R\\alpha \\) acquires a hidden sign error; and using the mass of the pulley instead of \\( I/R^2 \\) as its contribution to the inertia.",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k2",
+     "type": "number",
+     "prompt": "A 1.0 kg block hangs from a light string wrapped around a pulley that is a uniform disk of mass 3.0 kg, turning on a frictionless axle. The block is released from rest. What is its acceleration, in m/s²? Use \\( g = 9.80 \\) m/s².",
+     "answer": "1.0*9.8/(1.0 + 1.5)",
+     "tol": 0.01,
+     "why": "\\( mg - T = ma \\), \\( TR = \\tfrac12MR^2(a/R) \\Rightarrow T = \\tfrac12Ma \\). So \\( a = \\dfrac{mg}{m + M/2} = \\dfrac{9.80}{1.0 + 1.5} = 3.92 \\) m/s². The radius cancels."
+    },
+    {
+     "id": "s2q2",
+     "kp": "k2",
+     "type": "number",
+     "prompt": "An Atwood machine has masses of 2.0 kg and 3.0 kg on a pulley whose moment of inertia is \\( I = (1.0\\ \\text{kg})R^2 \\), with no friction at the axle. Find the tension (in N) in the string attached to the 2.0 kg mass. Use \\( g = 9.80 \\) m/s².",
+     "answer": "2*(9.8 + 9.8/6)",
+     "tol": 0.01,
+     "why": "\\( a = \\dfrac{(m_2 - m_1)g}{m_1 + m_2 + I/R^2} = \\dfrac{9.80}{6.0} = 1.63 \\) m/s². For the 2.0 kg mass (accelerating upward): \\( T_1 = m_1(g + a) = 2.0(11.43) = 22.9 \\) N. The other tension is \\( 3.0(9.80 - 1.63) = 24.5 \\) N; the difference \\( 1.6 \\) N turns the pulley."
+    },
+    {
+     "id": "s2q3",
+     "kp": "k2",
+     "type": "written",
+     "prompt": "Explain why the tensions on the two sides of a pulley with nonzero moment of inertia must differ when the system accelerates, show what their difference equals, and explain what happens to the difference as the pulley's mass tends to zero.",
+     "rubric": [
+      "The pulley has angular acceleration \\( \\alpha \\ne 0 \\), so by \\( \\sum\\tau = I\\alpha \\) it needs a net torque.",
+      "The only torques about the frictionless axle come from the tensions: \\( (T_2 - T_1)R = I\\alpha \\).",
+      "With \\( \\alpha = a/R \\): \\( T_2 - T_1 = (I/R^2)a \\).",
+      "As the pulley's mass (and so I) tends to zero, the difference tends to zero: a massless pulley transmits equal tensions."
+     ],
+     "model": "When the blocks accelerate, the string moves faster and faster over the pulley, and since it does not slip, the pulley's angular velocity changes: \\( \\alpha = a/R \\ne 0 \\). By the rotational second law a net external torque \\( I\\alpha \\) must act on it. The axle force passes through the axis and (without friction) exerts no torque, and gravity on the pulley acts at its center, also on the axis. The only torques are those of the two tensions, which act at the rim with lever arm \\( R \\) and opposite senses. Hence \\( (T_2 - T_1)R = I\\alpha = Ia/R \\), so \\( T_2 - T_1 = (I/R^2)a \\). As the pulley's mass tends to zero, \\( I \\to 0 \\) and the tensions become equal, which is the massless-pulley idealization used in earlier chapters.",
+     "why": "The tension difference is the net rim force that spins the pulley up; it vanishes only if the pulley has no rotational inertia or the system does not accelerate."
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "Work, power and energy in rotation",
+   "kps": [
+    "k3",
+    "k4"
+   ],
+   "md": "The rotational second law gives accelerations. As with translation, it is often simpler to relate speeds to positions through energy. This section defines the work done by a torque, derives the rotational work–energy theorem, and adds rotational kinetic energy to energy conservation.\n\n**Work done by a torque.** A force acting on a rigid body at perpendicular distance \\( r \\) from a fixed axis moves its point of application along a circle. When the body turns through \\( d\\theta \\), that point moves \\( ds = r\\,d\\theta \\), and only the tangential component of the force does work: \\( dW = F_t\\,r\\,d\\theta = \\tau\\,d\\theta \\). So\n\\[ W = \\int_{\\theta_i}^{\\theta_f}\\tau\\,d\\theta, \\qquad P = \\frac{dW}{dt} = \\tau\\omega. \\]\nThese are the analogues of \\( W = \\int F\\,dx \\) and \\( P = Fv \\).\n\n**Rotational work–energy theorem.** Start from \\( \\sum\\tau = I\\alpha \\) and use the chain rule, \\( \\alpha = \\dfrac{d\\omega}{dt} = \\dfrac{d\\omega}{d\\theta}\\dfrac{d\\theta}{dt} = \\omega\\dfrac{d\\omega}{d\\theta} \\):\n\\[ \\sum\\tau\\,d\\theta = I\\omega\\,d\\omega \\quad\\Longrightarrow\\quad W_{\\text{net}} = \\int_{\\theta_i}^{\\theta_f}\\sum\\tau\\,d\\theta = \\tfrac12I\\omega_f^2 - \\tfrac12I\\omega_i^2. \\]\nThe net work done by the torques on a rigid body equals its change in rotational kinetic energy.\n\n*Worked example 1.* A wheel with \\( I = 0.50 \\) kg·m², initially at rest, is driven by a torque that weakens as it turns, \\( \\tau(\\theta) = 8.0 - 2.0\\theta \\) (N·m, \\( \\theta \\) in rad), from \\( \\theta = 0 \\) to \\( 4.0 \\) rad. The work is \\( \\int_0^{4.0}(8.0 - 2.0\\theta)\\,d\\theta = 32 - 16 = 16 \\) J, so \\( \\tfrac12(0.50)\\omega^2 = 16 \\) J and \\( \\omega = 8.0 \\) rad/s. Because \\( \\tau \\) varies, \\( \\alpha \\) varies, and the constant-acceleration equations could not have been used.\n\n*Worked example 2.* An engine delivering a torque of 50 N·m at 3000 rpm has power \\( P = \\tau\\omega = (50)(314.2) = 1.57\\times10^4 \\) W, about 15.7 kW. The same power at half the speed requires twice the torque, which is what a gearbox trades.\n\n**Energy conservation with rotation.** When only conservative forces do work, the mechanical energy now includes rotational kinetic energy:\n\\[ K_{\\text{trans}} + K_{\\text{rot}} + U = \\text{constant}. \\]\n*Worked example 3.* The block and disk pulley of the previous section (\\( m = 2.0 \\) kg, \\( M = 4.0 \\) kg) are released from rest. After the block has fallen \\( h \\), with \\( \\omega = v/R \\),\n\\[ mgh = \\tfrac12mv^2 + \\tfrac12\\big(\\tfrac12MR^2\\big)\\frac{v^2}{R^2} = \\tfrac12\\big(m + \\tfrac12M\\big)v^2 \\quad\\Rightarrow\\quad v = \\sqrt{\\frac{2mgh}{m + \\tfrac12M}}. \\]\nThis agrees with \\( v^2 = 2ah \\) using the acceleration found earlier, \\( a = mg/(m + \\tfrac12M) \\).\n\n*Worked example 4.* The rod of the first section, pivoted at one end and released from horizontal, reaches the vertical with its center of mass \\( L/2 \\) lower. Then \\( Mg\\dfrac L2 = \\tfrac12\\cdot\\tfrac13ML^2\\omega^2 \\), so \\( \\omega = \\sqrt{3g/L} \\), and the free end moves at \\( \\sqrt{3gL} \\), faster than the \\( \\sqrt{2gL} \\) of a stone dropped through the same height \\( L \\).\n\n**Common mistakes.** Leaving out \\( \\tfrac12I\\omega^2 \\) when a pulley or wheel has mass; writing \\( W = \\tau\\theta \\) for a torque that varies; and using rpm in \\( P = \\tau\\omega \\).",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k4",
+     "type": "number",
+     "prompt": "A uniform rod 1.5 m long, pivoted without friction at one end, is released from rest in a horizontal position. What is its angular speed (in rad/s) when it hangs vertically? Use \\( g = 9.80 \\) m/s².",
+     "answer": "sqrt(3*9.8/1.5)",
+     "tol": 0.01,
+     "why": "The center of mass falls \\( L/2 \\): \\( Mg\\dfrac L2 = \\tfrac12\\left(\\tfrac13ML^2\\right)\\omega^2 \\Rightarrow \\omega = \\sqrt{3g/L} = \\sqrt{3(9.80)/1.5} = 4.43 \\) rad/s."
+    },
+    {
+     "id": "s3q2",
+     "kp": "k3",
+     "type": "number",
+     "prompt": "A wheel with moment of inertia 0.50 kg·m², initially at rest, is acted on by a torque \\( \\tau(\\theta) = (8.0\\ \\text{N·m}) - (2.0\\ \\text{N·m/rad})\\,\\theta \\) as it turns from \\( \\theta = 0 \\) to \\( \\theta = 4.0 \\) rad. Find its final angular speed, in rad/s.",
+     "answer": "sqrt(2*(8*4 - 4^2)/0.5)",
+     "tol": 0.01,
+     "why": "\\( W = \\int_0^{4.0}(8.0 - 2.0\\theta)\\,d\\theta = \\left[8.0\\theta - \\theta^2\\right]_0^{4.0} = 16 \\) J. By the work–energy theorem, \\( \\tfrac12(0.50)\\omega^2 = 16 \\), so \\( \\omega = 8.0 \\) rad/s."
+    },
+    {
+     "id": "s3q3",
+     "kp": "k3",
+     "type": "number",
+     "prompt": "An electric motor delivers a torque of 12 N·m while turning at 1800 rpm. What power (in W) does it deliver?",
+     "answer": "12*1800*2*pi/60",
+     "tol": 0.01,
+     "why": "\\( \\omega = 1800\\times2\\pi/60 = 188.5 \\) rad/s. \\( P = \\tau\\omega = (12)(188.5) = 2.26\\times10^3 \\) W."
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "Rolling without slipping",
+   "kps": [
+    "k5",
+    "k6"
+   ],
+   "md": "A wheel on a road neither rotates about a fixed axis nor merely translates: it does both at once. This section describes the kinematics of rolling, its kinetic energy, and the motion of rolling bodies on an incline, where friction plays an unexpected role.\n\n**Kinematics.** A round body of radius \\( R \\) **rolls without slipping** when its contact point does not slide on the surface. Then the distance the center moves equals the arc length of rim that has touched the ground: \\( x_{\\text{cm}} = R\\theta \\), and differentiating,\n\\[ v_{\\text{cm}} = R\\omega, \\qquad a_{\\text{cm}} = R\\alpha. \\]\nThe velocity of any point is the velocity of the center plus its velocity of rotation about the center. At the contact point the rotation contributes \\( R\\omega \\) backward, cancelling \\( v_{\\text{cm}} \\): **the contact point is instantaneously at rest**. The top of the wheel moves at \\( v_{\\text{cm}} + R\\omega = 2v_{\\text{cm}} \\).\n\n**Kinetic energy.** At each instant the body is turning about the stationary contact point \\( P \\), so \\( K = \\tfrac12I_P\\omega^2 \\). By the parallel-axis theorem \\( I_P = I_{\\text{cm}} + MR^2 \\), hence\n\\[ K = \\tfrac12I_{\\text{cm}}\\omega^2 + \\tfrac12MR^2\\omega^2 = \\tfrac12Mv_{\\text{cm}}^2 + \\tfrac12I_{\\text{cm}}\\omega^2: \\]\ntranslational kinetic energy of the center of mass plus rotational kinetic energy about it. Writing \\( I_{\\text{cm}} = cMR^2 \\) (\\( c = 1 \\) hoop, \\( \\tfrac12 \\) disk or solid cylinder, \\( \\tfrac25 \\) solid sphere, \\( \\tfrac23 \\) thin shell), \\( K = \\tfrac12(1 + c)Mv_{\\text{cm}}^2 \\).\n\n**Rolling down an incline.** A body rolls from rest down a slope, descending a height \\( h \\). Static friction acts at the contact point, but that point is momentarily at rest, so friction does no work and dissipates no energy. Energy is therefore conserved:\n\\[ Mgh = \\tfrac12(1 + c)Mv^2 \\quad\\Rightarrow\\quad v = \\sqrt{\\frac{2gh}{1 + c}}. \\]\nThe dynamics give the acceleration and the friction. Along the slope (angle \\( \\theta \\)), \\( Mg\\sin\\theta - f = Ma \\); about the center of mass, \\( fR = I_{\\text{cm}}\\alpha = cMR^2(a/R) \\), so \\( f = cMa \\). Adding,\n\\[ a = \\frac{g\\sin\\theta}{1 + c}, \\qquad f = \\frac{c}{1 + c}Mg\\sin\\theta. \\]\nFriction points up the slope; it is what produces the torque that spins the body up. Rolling requires \\( f \\le \\mu_sN = \\mu_sMg\\cos\\theta \\), that is \\( \\mu_s \\ge \\dfrac{c}{1 + c}\\tan\\theta \\); on a slope too steep for this, the body slides as it rolls.\n\nSince \\( a \\) and \\( v \\) depend only on \\( c \\), not on \\( M \\) or \\( R \\), every solid sphere beats every disk, which beats every hoop, in a race down the same slope. The plot shows the speed at the bottom against the height of descent for three rolling shapes and a block sliding without friction.\n\n```plot\nx: 0, 2\ny: 0, 7\nf: sqrt(2*9.8*x) | frictionless sliding block\nf: sqrt(2*9.8*x/1.4) | solid sphere\nf: sqrt(2*9.8*x/1.5) | disk\nf: sqrt(2*9.8*x/2) | hoop\n```\n\n*Worked example.* A solid sphere rolls from rest down a \\( 30^\\circ \\) incline, descending 1.0 m. Then \\( v = \\sqrt{2(9.80)(1.0)/1.4} = 3.74 \\) m/s and \\( a = (9.80)(0.50)/1.4 = 3.50 \\) m/s². A sliding frictionless block would reach 4.43 m/s: the rolling sphere puts \\( c/(1 + c) = 2/7 \\) of its kinetic energy into rotation.\n\n**Common mistakes.** Claiming that friction does negative work on a rolling body (static friction at a stationary contact point does none); using \\( v_{\\text{cm}} = R\\omega \\) when the body slips; forgetting the rotational term; and supposing that a heavier or larger ball rolls faster.",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k6",
+     "type": "number",
+     "prompt": "A uniform solid cylinder rolls without slipping from rest down a ramp, descending a vertical height of 1.2 m. What is its speed (in m/s) at the bottom? Use \\( g = 9.80 \\) m/s².",
+     "answer": "sqrt(4*9.8*1.2/3)",
+     "tol": 0.01,
+     "why": "\\( c = \\tfrac12 \\): \\( Mgh = \\tfrac12(1 + \\tfrac12)Mv^2 = \\tfrac34Mv^2 \\Rightarrow v = \\sqrt{4gh/3} = \\sqrt{4(9.80)(1.2)/3} = 3.96 \\) m/s."
+    },
+    {
+     "id": "s4q2",
+     "kp": "k6",
+     "type": "expression",
+     "prompt": "A thin spherical shell (\\( I_{\\text{cm}} = \\tfrac23MR^2 \\)) rolls without slipping down an incline of angle \\( \\theta \\). Find the acceleration of its center. Enter it using `g` and `theta`.",
+     "answer": "3*g*sin(theta)/5",
+     "vars": "g, theta",
+     "why": "\\( a = \\dfrac{g\\sin\\theta}{1 + c} \\) with \\( c = \\tfrac23 \\): \\( a = \\tfrac35g\\sin\\theta \\). From the equations: \\( Mg\\sin\\theta - f = Ma \\) and \\( fR = \\tfrac23MR^2(a/R) \\Rightarrow f = \\tfrac23Ma \\), so \\( Mg\\sin\\theta = \\tfrac53Ma \\)."
+    },
+    {
+     "id": "s4q3",
+     "kp": "k6",
+     "type": "written",
+     "prompt": "A ball rolls without slipping down an incline. Explain why static friction is necessary for rolling, which direction it points, and why it does no work on the ball even though it acts throughout the motion.",
+     "rubric": [
+      "Gravity and the normal force act through (or along lines through) the center and exert no torque about it; only friction can supply the torque that increases the ball's angular velocity.",
+      "Friction points up the incline, giving a torque in the sense of the rolling rotation.",
+      "The contact point is instantaneously at rest in rolling without slipping, so the friction force's point of application has zero velocity and friction does no work (zero power at every instant).",
+      "Consequently mechanical energy is conserved; friction transfers energy between translational and rotational forms rather than dissipating it."
+     ],
+     "model": "About the center of the ball, gravity (acting at the center) and the normal force (directed through the center) have zero lever arm. Without friction, nothing could change the ball's angular velocity, and it would slide down without rotating faster. For rolling, \\( \\omega = v/R \\) must increase with \\( v \\), which requires a torque about the center, and only friction at the contact point can provide one. It points up the slope: that direction gives a torque in the sense of the rolling motion and, as a force, also reduces the linear acceleration below \\( g\\sin\\theta \\). Because the ball does not slip, its contact point is instantaneously at rest, so the power delivered by friction, \\( \\vec f\\cdot\\vec v_{\\text{contact}} \\), is zero at every instant and friction does no work. Mechanical energy is therefore conserved; the role of friction is to divert part of the gravitational energy into rotation, not to dissipate it.",
+     "why": "Kinetic friction in a slipping body does dissipate energy; static friction at a stationary contact point cannot."
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "Angular momentum and torque",
+   "kps": [
+    "k7",
+    "k8"
+   ],
+   "md": "The rotational second law \\( \\sum\\tau = I\\alpha \\) requires a rigid body with fixed \\( I \\). A skater pulling in her arms, a collapsing star or a planet on an elliptical orbit need a more general law. This section introduces the quantity whose rate of change is the torque, in the way that force is the rate of change of linear momentum.\n\n> **Definition.** The **angular momentum** of a particle about a point \\( O \\) is \\( \\vec L = \\vec r\\times\\vec p = m\\,\\vec r\\times\\vec v \\), where \\( \\vec r \\) is its position relative to \\( O \\). Its SI unit is kg·m²/s.\n\nIts magnitude is \\( L = rp\\sin\\phi = r_\\perp p \\), where \\( r_\\perp \\) is the perpendicular distance from \\( O \\) to the line along which the particle moves. Angular momentum depends on the choice of \\( O \\). A particle moving in a straight line has angular momentum \\( mvr_\\perp \\) about any point not on that line, and, with no force acting, that angular momentum is constant, since \\( v \\) and \\( r_\\perp \\) are.\n\n**Torque is its rate of change.** Differentiate, with \\( O \\) fixed in an inertial frame:\n\\[ \\frac{d\\vec L}{dt} = \\frac{d\\vec r}{dt}\\times\\vec p + \\vec r\\times\\frac{d\\vec p}{dt} = \\vec v\\times m\\vec v + \\vec r\\times\\vec F_{\\text{net}} = \\vec\\tau_{\\text{net}}, \\]\nbecause the cross product of a vector with itself is zero. For a system of particles, add these equations. The torques of internal forces cancel in pairs, for central third-law forces, exactly as in statics. Hence\n\\[ \\vec\\tau_{\\text{ext}} = \\frac{d\\vec L}{dt}, \\qquad \\vec L = \\sum_i\\vec r_i\\times\\vec p_i, \\]\nwith all torques and angular momenta about the same fixed point. This is the rotational counterpart of \\( \\vec F_{\\text{ext}} = d\\vec P/dt \\). (It also holds about the center of mass, even when that point accelerates.)\n\n**Rigid body on a fixed axis.** Each particle moves on a circle of radius \\( r_i \\) with speed \\( r_i\\omega \\), so its angular momentum about the axis is \\( m_ir_i(r_i\\omega) \\). Summing,\n\\[ L_z = \\Big(\\sum_i m_ir_i^2\\Big)\\omega = I\\omega. \\]\nWhen \\( I \\) is constant, \\( \\tau_z = dL_z/dt = I\\,d\\omega/dt = I\\alpha \\), recovering the rotational second law. The angular-momentum form is more general: it applies when \\( I \\) changes.\n\n**Angular impulse.** Integrating over time, \\( \\int_{t_i}^{t_f}\\vec\\tau_{\\text{ext}}\\,dt = \\Delta\\vec L \\): the **angular impulse** of the external torque equals the change in angular momentum, as linear impulse equals the change in momentum.\n\n*Worked example 1.* A 2.0 kg particle at \\( \\vec r = (3.0, 4.0, 0) \\) m moves with \\( \\vec v = (5.0, 0, 0) \\) m/s. Then \\( L_z = m(xv_y - yv_x) = 2.0\\big[(3.0)(0) - (4.0)(5.0)\\big] = -40 \\) kg·m²/s. Geometrically, the particle moves in the \\( +x \\) direction along the line \\( y = 4.0 \\) m, so \\( r_\\perp = 4.0 \\) m and \\( |L| = (2.0)(5.0)(4.0) = 40 \\) kg·m²/s; the negative sign records that it circulates clockwise about the origin as seen from \\( +z \\).\n\n*Worked example 2.* A torque \\( \\tau(t) = (4.0\\ \\text{N·m/s})\\,t \\) acts on a wheel of moment of inertia 2.0 kg·m², initially at rest, for 3.0 s. The angular impulse is \\( \\int_0^{3.0}4.0t\\,dt = 18 \\) N·m·s, so \\( L = 18 \\) kg·m²/s and \\( \\omega = L/I = 9.0 \\) rad/s.\n\n**Common mistakes.** Forgetting that \\( \\vec L \\) depends on the reference point; claiming that a body moving in a straight line has no angular momentum; and writing \\( L = I\\omega \\) with \\( I \\) taken about a different axis from the one about which \\( L \\) is wanted.",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k7",
+     "type": "number",
+     "prompt": "A 0.50 kg particle is at \\( \\vec r = (2.0, -1.0, 0) \\) m with velocity \\( \\vec v = (3.0, 4.0, 0) \\) m/s. Find the \\( z \\)-component of its angular momentum about the origin, in kg·m²/s (with its sign).",
+     "answer": "0.5*(2*4 - (-1)*3)",
+     "tol": 0.01,
+     "why": "\\( L_z = m(xv_y - yv_x) = 0.50\\big[(2.0)(4.0) - (-1.0)(3.0)\\big] = 0.50(11) = 5.5 \\) kg·m²/s. Positive: counterclockwise about the origin, seen from \\( +z \\)."
+    },
+    {
+     "id": "s5q2",
+     "kp": "k8",
+     "type": "written",
+     "prompt": "Starting from \\( \\vec L = \\vec r\\times\\vec p \\), prove that \\( d\\vec L/dt = \\vec\\tau_{\\text{net}} \\) for a single particle. State where you use the fact that the reference point is fixed in an inertial frame, and explain what additional assumption is needed to conclude \\( d\\vec L/dt = \\vec\\tau_{\\text{ext}} \\) for a system of particles.",
+     "rubric": [
+      "Differentiates with the product rule: \\( \\dot{\\vec r}\\times\\vec p + \\vec r\\times\\dot{\\vec p} \\).",
+      "Uses \\( \\dot{\\vec r} = \\vec v \\) (the reference point is fixed) so the first term is \\( \\vec v\\times m\\vec v = \\vec 0 \\).",
+      "Uses \\( \\dot{\\vec p} = \\vec F_{\\text{net}} \\) (Newton's second law, valid in an inertial frame) to get \\( \\vec r\\times\\vec F_{\\text{net}} = \\vec\\tau_{\\text{net}} \\).",
+      "For a system: internal forces come in third-law pairs along the line joining the particles (central), so their torques cancel, leaving only external torques."
+     ],
+     "model": "Differentiating \\( \\vec L = \\vec r\\times\\vec p \\) by the product rule, \\( \\dfrac{d\\vec L}{dt} = \\dfrac{d\\vec r}{dt}\\times\\vec p + \\vec r\\times\\dfrac{d\\vec p}{dt} \\). Because the reference point \\( O \\) is fixed, \\( d\\vec r/dt \\) is the particle's velocity \\( \\vec v \\), and \\( \\vec v\\times m\\vec v = \\vec 0 \\). (If \\( O \\) moved, \\( d\\vec r/dt \\) would be the velocity relative to \\( O \\), not parallel to \\( \\vec p \\) in general, and the term would not vanish.) Because the frame is inertial, Newton's second law gives \\( d\\vec p/dt = \\vec F_{\\text{net}} \\). Hence \\( d\\vec L/dt = \\vec r\\times\\vec F_{\\text{net}} = \\vec\\tau_{\\text{net}} \\). For a system, sum over particles: \\( d\\vec L/dt = \\sum\\vec r_i\\times(\\vec F_i^{\\text{ext}} + \\sum_j\\vec F_{ij}) \\). The internal terms pair up as \\( (\\vec r_i - \\vec r_j)\\times\\vec F_{ij} \\), which vanishes if \\( \\vec F_{ij} \\) lies along \\( \\vec r_i - \\vec r_j \\), that is, if internal forces obey the strong form of the third law (equal, opposite and central). Then \\( d\\vec L/dt = \\vec\\tau_{\\text{ext}} \\).",
+     "why": "The derivation parallels the one for linear momentum; the extra requirement is that internal forces be central, not merely equal and opposite."
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "title": "Conservation of angular momentum",
+   "kps": [
+    "k9"
+   ],
+   "md": "The law \\( \\vec\\tau_{\\text{ext}} = d\\vec L/dt \\) has an immediate consequence that, like momentum conservation, lets you predict outcomes without knowing the internal forces. This section states it and applies it to bodies that change shape and to rotational collisions.\n\n> **Conservation of angular momentum.** If the net external torque on a system about a fixed point (or about the center of mass) is zero, the system's angular momentum about that point is constant. If only one component of the external torque vanishes, say \\( \\tau_z = 0 \\), then \\( L_z \\) is constant.\n\nThe condition is on torque, not force. A system can have a nonzero external force and still conserve angular momentum about a point, if every external force passes through that point or is parallel to the axis in question. The axle of a turntable exerts large forces during a collision, but they act on the axis and exert no torque about it.\n\n**Changing moment of inertia.** For a body rotating about a fixed axis with no external torque about it, \\( I_i\\omega_i = I_f\\omega_f \\). A skater spinning at 1.5 rev/s with \\( I = 4.0 \\) kg·m² pulls in her arms to \\( I = 1.6 \\) kg·m²:\n\\[ \\omega_f = \\frac{I_i}{I_f}\\omega_i = \\frac{4.0}{1.6}(1.5) = 3.75 \\text{ rev/s}. \\]\nHer kinetic energy is not conserved: \\( K = L^2/(2I) \\), so \\( K_f/K_i = I_i/I_f = 2.5 \\). The extra energy is work done by her muscles, which pull her hands inward against their tendency to move in a straight line. Angular momentum is conserved because those forces are internal.\n\n**Rotational collisions.** When a body strikes a rotating object mounted on a fixed axle, linear momentum is generally not conserved, because the axle exerts an external impulse. But the axle force acts through the axis, so angular momentum about the axis is conserved during the brief collision.\n\n*Worked example.* A merry-go-round, a disk with \\( I = 400 \\) kg·m² and radius 2.0 m, is at rest. A 40 kg child runs at 4.0 m/s along a line tangent to its rim and jumps on at the rim. About the axle, the child's angular momentum is \\( mvR = (40)(4.0)(2.0) = 320 \\) kg·m²/s. Afterward the child is a particle at \\( R \\), so\n\\[ 320 = \\big(400 + (40)(2.0)^2\\big)\\omega \\quad\\Rightarrow\\quad \\omega = \\frac{320}{560} = 0.571 \\text{ rad/s}. \\]\nKinetic energy falls from \\( \\tfrac12(40)(4.0)^2 = 320 \\) J to \\( \\tfrac12(560)(0.571)^2 = 91 \\) J: this is a perfectly inelastic rotational collision, and, as in linear collisions, kinetic energy is lost while the conserved quantity is fixed by the external-torque condition.\n\n**Staged problems.** A collision followed by a swing, such as a lump of clay striking a hanging rod, is treated as in the ballistic pendulum: angular momentum about the pivot is conserved during the brief impact, and mechanical energy during the subsequent swing, but neither across both stages.\n\n**Common mistakes.** Conserving kinetic energy instead of angular momentum when a body changes shape; conserving linear momentum when an axle or pivot supplies an impulse; and computing angular momentum about different points before and after.",
+   "questions": [
+    {
+     "id": "s6q1",
+     "kp": "k9",
+     "type": "number",
+     "prompt": "A 20 kg uniform door 1.0 m wide hangs on frictionless hinges and is at rest. A 10 g bullet moving at 400 m/s perpendicular to the door strikes it at the edge farthest from the hinges and embeds itself. Find the door's angular speed just afterward, in rad/s. (Treat the door as a rod rotating about one end.)",
+     "answer": "0.010*400*1.0/(20*1.0^2/3 + 0.010*1.0^2)",
+     "tol": 0.01,
+     "why": "The hinge forces exert no torque about the hinge axis, so \\( L \\) about it is conserved: \\( mvd = \\left(\\tfrac13ML^2 + md^2\\right)\\omega \\) with \\( d = L = 1.0 \\) m. \\( (0.010)(400)(1.0) = 4.0 \\) kg·m²/s; \\( I = 6.667 + 0.010 = 6.677 \\) kg·m². So \\( \\omega = 0.599 \\) rad/s. Linear momentum is not conserved: the hinges push on the door."
+    },
+    {
+     "id": "s6q2",
+     "kp": "k9",
+     "type": "mcq",
+     "prompt": "A skater spinning with no external torque pulls in her arms, halving her moment of inertia about the spin axis. What happens to her rotational kinetic energy?",
+     "options": [
+      "It doubles",
+      "It stays the same, because no external work is done",
+      "It halves, because the moment of inertia halves",
+      "It quadruples, because the angular velocity doubles and kinetic energy goes as its square"
+     ],
+     "answer": 0,
+     "why": "\\( L = I\\omega \\) is conserved, so \\( \\omega \\) doubles. \\( K = \\tfrac12I\\omega^2 = L^2/(2I) \\) doubles when \\( I \\) halves. The quadrupling answer forgets that \\( I \\) also changed; the unchanged answer forgets the internal work done by her muscles pulling her arms in."
+    }
+   ]
+  },
+  {
+   "id": "s7",
+   "title": "The vector character of angular momentum: precession",
+   "kps": [
+    "k10"
+   ],
+   "md": "So far torques have been parallel to the angular momentum, changing only its magnitude. The law \\( \\vec\\tau = d\\vec L/dt \\) is a vector equation, and when the torque is perpendicular to \\( \\vec L \\) it changes the direction of \\( \\vec L \\) instead. This section explains the resulting motion, precession, which accounts for the behavior of gyroscopes and tops.\n\n**Setting.** A gyroscope is a wheel spinning rapidly about its axle, with spin angular momentum \\( \\vec L = I\\omega \\) along the axle. Support one end of the horizontal axle on a pivot, with the center of mass a distance \\( r \\) from it, and release it. A non-spinning wheel would simply fall. A spinning one stays nearly horizontal and its axle turns slowly in the horizontal plane. This motion of the axle is **precession**.\n\n**Explanation.** About the pivot, gravity exerts a torque of magnitude \\( \\tau = Mgr \\). The pivot force acts at the pivot and exerts none. The weight is vertical and the lever vector is along the horizontal axle, so \\( \\vec\\tau \\) is horizontal and perpendicular to the axle, and hence perpendicular to \\( \\vec L \\). In a time \\( dt \\), the angular momentum changes by \\( d\\vec L = \\vec\\tau\\,dt \\), a small horizontal vector perpendicular to \\( \\vec L \\). Adding a perpendicular vector to \\( \\vec L \\) rotates it in the horizontal plane without changing its length, through the angle\n\\[ d\\phi = \\frac{|d\\vec L|}{L} = \\frac{Mgr\\,dt}{L}. \\]\nThe **precession angular velocity** is therefore\n\\[ \\Omega = \\frac{d\\phi}{dt} = \\frac{Mgr}{L} = \\frac{Mgr}{I\\omega}. \\]\nThe torque keeps turning perpendicular to the axle as the axle turns, so the precession continues at this rate. The gyroscope does not fall because gravity's torque is entirely used in turning \\( \\vec L \\) sideways; the vertical support force balances the weight.\n\n**The approximation.** The analysis takes \\( \\vec L \\) to be the spin angular momentum alone. The precession itself adds a small angular momentum about the vertical, and when the gyroscope is released there is a slight initial dip and a wobble called **nutation**. These are negligible when the spin is fast, \\( \\Omega \\ll \\omega \\). The formula shows the characteristic inverse dependence: the faster the spin, the slower the precession.\n\n*Worked example.* A gyroscope wheel is a uniform disk of mass 0.20 kg and radius 5.0 cm spinning at 200 rad/s, with its center 5.0 cm from the pivot. Then \\( I = \\tfrac12(0.20)(0.050)^2 = 2.5\\times10^{-4} \\) kg·m², \\( L = 0.050 \\) kg·m²/s, and\n\\[ \\Omega = \\frac{(0.20)(9.80)(0.050)}{0.050} = 1.96 \\text{ rad/s}, \\]\none precession circuit every 3.2 s, while the wheel spins about 100 times. Earth behaves in the same way on a vast scale: the Sun and Moon exert a torque on its equatorial bulge, and its spin axis precesses with a period of about 26 000 years.\n\n**Common mistakes.** Expecting the torque to tip \\( \\vec L \\) in the direction of the force (it changes \\( \\vec L \\) in the direction of the torque, perpendicular to both the lever arm and the weight); and applying \\( \\Omega = Mgr/(I\\omega) \\) when the spin is slow, where the approximation fails and the gyroscope falls.",
+   "questions": [
+    {
+     "id": "s7q1",
+     "kp": "k10",
+     "type": "number",
+     "prompt": "A toy gyroscope's wheel is a uniform disk of mass 0.15 kg and radius 4.0 cm spinning at 3000 rpm. Its axle is horizontal and supported at one end, 6.0 cm from the wheel's center. What is the precession angular velocity, in rad/s? Use \\( g = 9.80 \\) m/s².",
+     "answer": "0.15*9.8*0.06/(0.5*0.15*0.04^2*(3000*2*pi/60))",
+     "tol": 0.01,
+     "why": "\\( I = \\tfrac12(0.15)(0.040)^2 = 1.2\\times10^{-4} \\) kg·m², \\( \\omega = 314.2 \\) rad/s, \\( L = 0.0377 \\) kg·m²/s. \\( \\Omega = Mgr/L = (0.15)(9.80)(0.060)/0.0377 = 2.34 \\) rad/s, a precession period of about 2.7 s."
+    },
+    {
+     "id": "s7q2",
+     "kp": "k10",
+     "type": "written",
+     "prompt": "A spinning gyroscope supported at one end of its horizontal axle does not fall but precesses. Explain this using the vector equation relating torque and angular momentum. Say in which direction the torque points, why the magnitude of the angular momentum does not change, and why a faster spin gives slower precession.",
+     "rubric": [
+      "Torque of gravity about the pivot has magnitude \\( Mgr \\) and is horizontal, perpendicular to the axle (and so to \\( \\vec L \\)).",
+      "\\( d\\vec L = \\vec\\tau\\,dt \\) is perpendicular to \\( \\vec L \\), so it changes the direction of \\( \\vec L \\), not its magnitude: the axle swings horizontally.",
+      "Rate: \\( \\Omega = \\tau/L = Mgr/(I\\omega) \\); larger \\( \\omega \\) means larger \\( L \\), so the same torque turns it more slowly.",
+      "Notes the approximation: L is taken as the spin angular momentum; valid when the spin is fast."
+     ],
+     "model": "About the pivot, the weight \\( Mg \\) acting at the center of mass, a distance \\( r \\) along the horizontal axle, has torque \\( \\vec\\tau = \\vec r\\times M\\vec g \\). With \\( \\vec r \\) horizontal and \\( \\vec g \\) vertical, \\( \\vec\\tau \\) is horizontal and perpendicular to the axle. The spin angular momentum \\( \\vec L = I\\vec\\omega \\) lies along the axle, so \\( \\vec\\tau\\perp\\vec L \\). By \\( d\\vec L/dt = \\vec\\tau \\), in time \\( dt \\) the angular momentum gains a small horizontal piece \\( \\vec\\tau\\,dt \\) at right angles to itself. To first order this rotates \\( \\vec L \\) in the horizontal plane and leaves its magnitude unchanged, so the axle swings around horizontally instead of dropping. The angle turned in \\( dt \\) is \\( \\tau\\,dt/L \\), so the precession rate is \\( \\Omega = Mgr/(I\\omega) \\). A faster spin means a larger \\( L \\), and the same torque then produces a smaller change of direction per unit time. This treatment neglects the small angular momentum of the precession itself and is accurate when \\( \\Omega \\ll \\omega \\).",
+     "why": "Torque changes angular momentum in the direction of the torque; when that direction is perpendicular to L, only the direction of L changes."
+    }
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "t": "rotational second law",
+   "d": "For a rigid body on a fixed axis, \\( \\sum\\tau_{\\text{ext}} = I\\alpha \\), with torques and moment of inertia about that axis."
+  },
+  {
+   "t": "rotational work",
+   "d": "The work done by a torque as a body turns, \\( W = \\int\\tau\\,d\\theta \\)."
+  },
+  {
+   "t": "rotational power",
+   "d": "The rate at which a torque does work, \\( P = \\tau\\omega \\)."
+  },
+  {
+   "t": "rotational work–energy theorem",
+   "d": "The net work done by torques on a rigid body equals its change in rotational kinetic energy, \\( W_{\\text{net}} = \\Delta(\\tfrac12I\\omega^2) \\)."
+  },
+  {
+   "t": "rolling without slipping",
+   "d": "Rolling in which the contact point does not slide, so that \\( v_{\\text{cm}} = R\\omega \\) and the contact point is instantaneously at rest."
+  },
+  {
+   "t": "angular momentum",
+   "d": "For a particle about a point \\( O \\), \\( \\vec L = \\vec r\\times\\vec p \\); for a rigid body about a fixed axis, \\( L_z = I\\omega \\). Unit kg·m²/s."
+  },
+  {
+   "t": "angular impulse",
+   "d": "The time integral of torque, \\( \\int\\vec\\tau\\,dt \\), equal to the change in angular momentum."
+  },
+  {
+   "t": "conservation of angular momentum",
+   "d": "If the net external torque about a fixed point (or the center of mass) is zero, the total angular momentum about that point is constant; componentwise for a single axis."
+  },
+  {
+   "t": "precession",
+   "d": "The slow rotation of the spin axis of a spinning body under a torque perpendicular to its angular momentum; for a gyroscope \\( \\Omega = Mgr/(I\\omega) \\)."
+  },
+  {
+   "t": "nutation",
+   "d": "A small wobble of the spin axis superimposed on precession, negligible when the spin is fast."
+  },
+  {
+   "t": "gyroscope",
+   "d": "A rapidly spinning wheel whose large spin angular momentum makes it respond to torques by precessing rather than tipping."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "formula",
+   "front": "Rotational second law (fixed axis)",
+   "back": "\\( \\sum\\tau_{\\text{ext}} = I\\alpha \\), torques and \\( I \\) about the same axis",
+   "kp": "k1"
+  },
+  {
+   "id": "c2",
+   "type": "concept",
+   "front": "Why do internal forces drop out of \\( \\sum\\tau = I\\alpha \\)?",
+   "back": "Third-law pairs of central forces have equal and opposite torques about any point.",
+   "kp": "k1"
+  },
+  {
+   "id": "c3",
+   "type": "problem",
+   "front": "Uniform rod pivoted at one end, released horizontal: initial angular acceleration?",
+   "back": "\\( \\alpha = \\dfrac{Mg(L/2)}{ML^2/3} = \\dfrac{3g}{2L} \\); the tip accelerates at \\( 1.5g \\)",
+   "kp": "k1",
+   "answer": "3*g/(2*L)",
+   "vars": "g, L",
+   "check": "expression"
+  },
+  {
+   "id": "c4",
+   "type": "concept",
+   "front": "String unwinding without slipping from a pulley of radius R: constraint?",
+   "back": "\\( a = R\\alpha \\) (and \\( v = R\\omega \\)), with consistent sign conventions.",
+   "kp": "k2"
+  },
+  {
+   "id": "c5",
+   "type": "formula",
+   "front": "Block of mass m hanging from a pulley of moment of inertia I: acceleration",
+   "back": "\\( a = \\dfrac{mg}{m + I/R^2} \\)",
+   "kp": "k2"
+  },
+  {
+   "id": "c6",
+   "type": "concept",
+   "front": "Why do the tensions differ on the two sides of a massive pulley?",
+   "back": "A net torque \\( (T_2 - T_1)R = I\\alpha \\) is needed to give it angular acceleration.",
+   "kp": "k2"
+  },
+  {
+   "id": "c7",
+   "type": "formula",
+   "front": "Work and power of a torque",
+   "back": "\\( W = \\int\\tau\\,d\\theta \\), \\( P = \\tau\\omega \\)",
+   "kp": "k3"
+  },
+  {
+   "id": "c8",
+   "type": "formula",
+   "front": "Rotational work–energy theorem",
+   "back": "\\( W_{\\text{net}} = \\tfrac12I\\omega_f^2 - \\tfrac12I\\omega_i^2 \\)",
+   "kp": "k3"
+  },
+  {
+   "id": "c9",
+   "type": "problem",
+   "front": "Rod pivoted at an end falls from horizontal to vertical: angular speed at the bottom?",
+   "back": "\\( Mg\\frac L2 = \\tfrac12\\cdot\\tfrac13ML^2\\omega^2 \\Rightarrow \\omega = \\sqrt{3g/L} \\)",
+   "kp": "k4",
+   "answer": "sqrt(3*g/L)",
+   "vars": "g, L",
+   "check": "expression"
+  },
+  {
+   "id": "c10",
+   "type": "formula",
+   "front": "Rolling without slipping: kinematic condition",
+   "back": "\\( v_{\\text{cm}} = R\\omega \\), \\( a_{\\text{cm}} = R\\alpha \\); contact point at rest, top at \\( 2v_{\\text{cm}} \\)",
+   "kp": "k5"
+  },
+  {
+   "id": "c11",
+   "type": "formula",
+   "front": "Kinetic energy of a rolling body",
+   "back": "\\( K = \\tfrac12Mv_{\\text{cm}}^2 + \\tfrac12I_{\\text{cm}}\\omega^2 = \\tfrac12(1 + c)Mv_{\\text{cm}}^2 \\), \\( c = I_{\\text{cm}}/(MR^2) \\)",
+   "kp": "k5"
+  },
+  {
+   "id": "c12",
+   "type": "formula",
+   "front": "Rolling down an incline from rest: speed after descent h, and acceleration",
+   "back": "\\( v = \\sqrt{2gh/(1 + c)} \\), \\( a = g\\sin\\theta/(1 + c) \\)",
+   "kp": "k6"
+  },
+  {
+   "id": "c13",
+   "type": "concept",
+   "front": "Why does static friction do no work on a body rolling without slipping?",
+   "back": "Its point of application, the contact point, is instantaneously at rest.",
+   "kp": "k6"
+  },
+  {
+   "id": "c14",
+   "type": "concept",
+   "front": "Which wins a rolling race: solid sphere, disk or hoop? Does mass matter?",
+   "back": "Sphere (\\( c = 2/5 \\)), then disk (\\( 1/2 \\)), then hoop (\\( 1 \\)); mass and radius do not matter.",
+   "kp": "k6"
+  },
+  {
+   "id": "c15",
+   "type": "formula",
+   "front": "Angular momentum of a particle; of a rigid body about a fixed axis",
+   "back": "\\( \\vec L = \\vec r\\times\\vec p \\), \\( L = r_\\perp p \\); \\( L_z = I\\omega \\)",
+   "kp": "k7"
+  },
+  {
+   "id": "c16",
+   "type": "concept",
+   "front": "Does a particle moving in a straight line have angular momentum?",
+   "back": "Yes, \\( mvr_\\perp \\) about any point off its line; constant if no force acts.",
+   "kp": "k7"
+  },
+  {
+   "id": "c17",
+   "type": "formula",
+   "front": "Torque and angular momentum; angular impulse",
+   "back": "\\( \\vec\\tau_{\\text{ext}} = d\\vec L/dt \\); \\( \\int\\vec\\tau\\,dt = \\Delta\\vec L \\)",
+   "kp": "k8"
+  },
+  {
+   "id": "c18",
+   "type": "concept",
+   "front": "When is angular momentum about an axis conserved?",
+   "back": "When the net external torque about that axis is zero, even if external forces act (e.g. through the axle).",
+   "kp": "k9"
+  },
+  {
+   "id": "c19",
+   "type": "concept",
+   "front": "Skater halves I: what happens to ω and to K?",
+   "back": "\\( \\omega \\) doubles; \\( K = L^2/(2I) \\) doubles, supplied by her muscles' work.",
+   "kp": "k9"
+  },
+  {
+   "id": "c20",
+   "type": "concept",
+   "front": "Object strikes a body on a fixed axle: which quantity is conserved during the impact?",
+   "back": "Angular momentum about the axle; linear momentum is not, because the axle exerts an impulse.",
+   "kp": "k9"
+  },
+  {
+   "id": "c21",
+   "type": "formula",
+   "front": "Precession angular velocity of a gyroscope",
+   "back": "\\( \\Omega = \\dfrac{Mgr}{I\\omega} \\), valid for fast spin",
+   "kp": "k10"
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k1",
+   "type": "number",
+   "prompt": "A uniform disk of mass 5.0 kg and radius 0.30 m is to be brought from rest to 600 rpm in 4.0 s with constant angular acceleration. What constant net torque (in N·m) is required?",
+   "answer": "0.5*5*0.3^2*(600*2*pi/60)/4",
+   "tol": 0.01,
+   "why": "\\( I = \\tfrac12(5.0)(0.30)^2 = 0.225 \\) kg·m²; \\( \\alpha = (62.83\\text{ rad/s})/(4.0\\text{ s}) = 15.7 \\) rad/s². \\( \\tau = I\\alpha = 3.53 \\) N·m."
+  },
+  {
+   "id": "p2",
+   "kp": "k2",
+   "type": "number",
+   "prompt": "A 2.0 kg block on a frictionless horizontal table is tied to a string that passes over a pulley (a uniform disk of mass 1.0 kg) at the table's edge and supports a hanging 1.0 kg block. Find the acceleration of the blocks, in m/s². Use \\( g = 9.80 \\) m/s².",
+   "answer": "1.0*9.8/(2.0 + 1.0 + 0.5)",
+   "tol": 0.01,
+   "why": "Table block: \\( T_1 = m_1a \\). Hanging block: \\( m_2g - T_2 = m_2a \\). Pulley: \\( (T_2 - T_1)R = \\tfrac12MR^2(a/R) \\Rightarrow T_2 - T_1 = \\tfrac12Ma \\). Adding: \\( m_2g = (m_1 + m_2 + \\tfrac12M)a \\), so \\( a = 9.80/3.5 = 2.80 \\) m/s²."
+  },
+  {
+   "id": "p3",
+   "kp": "k4",
+   "type": "number",
+   "prompt": "A yo-yo, modeled as a uniform solid cylinder with the string wound around its outer radius, is released from rest while the top of the string is held fixed. What is its speed (in m/s) after it has descended 0.80 m? Use \\( g = 9.80 \\) m/s².",
+   "answer": "sqrt(4*9.8*0.8/3)",
+   "tol": 0.01,
+   "why": "The string unwinds without slipping, so \\( v = R\\omega \\), and the tension acts at a point momentarily at rest, doing no work. Energy: \\( mgh = \\tfrac12mv^2 + \\tfrac12\\left(\\tfrac12mR^2\\right)(v/R)^2 = \\tfrac34mv^2 \\), so \\( v = \\sqrt{4gh/3} = \\sqrt{4(9.80)(0.80)/3} = 3.23 \\) m/s."
+  },
+  {
+   "id": "p4",
+   "kp": "k3",
+   "type": "number",
+   "prompt": "A car engine produces a torque of 250 N·m at 4000 rpm. What is its power output, in kW?",
+   "answer": "250*4000*2*pi/60/1000",
+   "tol": 0.01,
+   "why": "\\( \\omega = 4000\\times2\\pi/60 = 418.9 \\) rad/s. \\( P = \\tau\\omega = (250)(418.9) = 1.05\\times10^5 \\) W \\( = 105 \\) kW."
+  },
+  {
+   "id": "p5",
+   "kp": "k6",
+   "type": "written",
+   "prompt": "A solid sphere, a uniform disk and a thin hoop are released together from rest at the top of the same incline and roll without slipping. Predict the order of arrival at the bottom, and prove that the result does not depend on their masses or radii.",
+   "rubric": [
+    "Writes \\( I_{\\text{cm}} = cMR^2 \\) with \\( c = 2/5, 1/2, 1 \\).",
+    "Energy (friction does no work): \\( Mgh = \\tfrac12(1 + c)Mv^2 \\), or dynamics: \\( a = g\\sin\\theta/(1 + c) \\).",
+    "\\( M \\) and \\( R \\) cancel; smaller \\( c \\) gives larger acceleration at every instant.",
+    "Order: sphere first, then disk, then hoop."
+   ],
+   "model": "Write each moment of inertia as \\( I_{\\text{cm}} = cMR^2 \\): \\( c = \\tfrac25 \\) (solid sphere), \\( \\tfrac12 \\) (disk), \\( 1 \\) (hoop). For rolling without slipping, \\( \\omega = v/R \\), so \\( K = \\tfrac12Mv^2 + \\tfrac12cMR^2(v/R)^2 = \\tfrac12(1 + c)Mv^2 \\). Along the incline (angle \\( \\theta \\)), Newton's law \\( Mg\\sin\\theta - f = Ma \\) and the torque equation about the center \\( fR = cMR^2(a/R) \\) give \\( a = g\\sin\\theta/(1 + c) \\). The mass and radius cancel, so each body has a constant acceleration depending only on its shape factor \\( c \\). The smaller \\( c \\), the larger \\( a \\): the sphere arrives first, then the disk, then the hoop. Physically, a body with more of its mass far from its center must put a larger share of its energy into rotation, leaving less for translation.",
+   "why": "The shape factor \\( c = I_{\\text{cm}}/(MR^2) \\) is dimensionless; any two bodies with the same shape reach the bottom together."
+  },
+  {
+   "id": "p6",
+   "kp": "k6",
+   "type": "number",
+   "prompt": "What is the minimum coefficient of static friction for a uniform solid cylinder to roll without slipping down a \\( 40^\\circ \\) incline?",
+   "answer": "tan(40 deg)/3",
+   "tol": 0.01,
+   "why": "\\( f = \\dfrac{c}{1 + c}Mg\\sin\\theta \\) with \\( c = \\tfrac12 \\): \\( f = \\tfrac13Mg\\sin\\theta \\). Rolling requires \\( f \\le \\mu_sMg\\cos\\theta \\), so \\( \\mu_s \\ge \\tfrac13\\tan40^\\circ = 0.280 \\)."
+  },
+  {
+   "id": "p7",
+   "kp": "k7",
+   "type": "number",
+   "prompt": "A 1500 kg car moves at 20 m/s along a straight road. What is the magnitude of its angular momentum (in kg·m²/s) about a point 50 m from the road, treating the car as a particle?",
+   "answer": "1500*20*50",
+   "tol": 0.01,
+   "why": "\\( L = mvr_\\perp = (1500)(20)(50) = 1.5\\times10^6 \\) kg·m²/s. It is the same at every point of the straight path, because \\( r_\\perp \\) is the distance from the point to the line of motion, not to the car."
+  },
+  {
+   "id": "p8",
+   "kp": "k9",
+   "type": "mcq",
+   "prompt": "A merry-go-round turns freely on a frictionless axle. A child standing on its rim walks toward the center. What happens to the angular velocity of the merry-go-round?",
+   "options": [
+    "It increases, because the system's moment of inertia decreases while its angular momentum stays constant",
+    "It stays the same, because no external torque acts",
+    "It decreases, because the child does negative work on the merry-go-round",
+    "It stays the same, because kinetic energy is conserved"
+   ],
+   "answer": 0,
+   "why": "About the axle, external torque is zero, so \\( L = I\\omega \\) is constant. Moving the child's mass inward decreases \\( I \\), so \\( \\omega \\) increases. Zero external torque means constant \\( L \\), not constant \\( \\omega \\); and kinetic energy increases, supplied by the child's muscles."
+  },
+  {
+   "id": "p9",
+   "kp": "k9",
+   "type": "number",
+   "prompt": "A disk with moment of inertia 0.60 kg·m² spins at 40 rad/s on a frictionless shaft. A second disk, 0.20 kg·m², initially not rotating, is dropped onto it along the same shaft, and friction between them brings them to a common angular velocity. Find that angular velocity, in rad/s.",
+   "answer": "0.6*40/(0.6 + 0.2)",
+   "tol": 0.01,
+   "why": "The friction between the disks is internal; about the shaft there is no external torque. \\( (0.60)(40) = (0.80)\\omega \\Rightarrow \\omega = 30 \\) rad/s. Kinetic energy falls from 480 J to 360 J: a quarter is dissipated by the friction between them, as in a perfectly inelastic collision."
+  },
+  {
+   "id": "p10",
+   "kp": "k9",
+   "type": "written",
+   "prompt": "A bullet strikes and embeds itself in a door mounted on hinges. Explain why the linear momentum of the bullet–door system is not conserved during the impact, while its angular momentum about the hinge axis is. State the general principle that decides which quantity to conserve.",
+   "rubric": [
+    "The hinges exert a large external force on the door during the impact, so the external force is not zero and linear momentum changes.",
+    "The hinge forces act at the axis, so their torque about the axis is zero; gravity is parallel to the axis (or negligible during the brief impact).",
+    "Hence angular momentum about the hinge axis is conserved during the collision.",
+    "Principle: momentum is conserved when the external force (impulse) is negligible; angular momentum about an axis is conserved when the external torque about that axis is negligible."
+   ],
+   "model": "During the impact the door is forced to rotate about its hinges, and to hold it on that axis the hinges push on it with a large, brief force. That force is external to the bullet–door system, so the total linear momentum is not conserved; in general the door's center of mass does not acquire the bullet's momentum. But the hinge forces act on the axis, so their lever arm about the axis is zero and they exert no torque about it. Gravity is vertical, parallel to the hinge axis of an ordinary door, so it has no torque component along that axis, and in any case its angular impulse over the brief collision is negligible. So the external torque about the hinge axis vanishes and the angular momentum about that axis is conserved: \\( mvd = I_{\\text{final}}\\omega \\). The general rule: conserve linear momentum when the external impulse is negligible, and conserve angular momentum about an axis when the external angular impulse about that axis is negligible; choosing the axis through the point where unknown external forces act is what makes the second rule useful.",
+   "why": "Choosing the reference point at a pivot eliminates the pivot's unknown force from the torque, exactly as in statics."
+  },
+  {
+   "id": "p11",
+   "kp": "k5",
+   "type": "number",
+   "prompt": "A 2.0 kg uniform solid cylinder rolls without slipping across a floor with its center moving at 3.0 m/s. What is its total kinetic energy, in J?",
+   "answer": "0.5*(1 + 0.5)*2*3^2",
+   "tol": 0.01,
+   "why": "\\( K = \\tfrac12Mv^2 + \\tfrac12\\left(\\tfrac12MR^2\\right)(v/R)^2 = \\tfrac34Mv^2 = \\tfrac34(2.0)(9.0) = 13.5 \\) J: 9.0 J translational and 4.5 J rotational."
+  },
+  {
+   "id": "p12",
+   "kp": "k8",
+   "type": "number",
+   "prompt": "A torque \\( \\tau(t) = (4.0\\ \\text{N·m/s})\\,t \\) acts for 3.0 s on a wheel with moment of inertia 2.0 kg·m², initially at rest. What is the final angular speed, in rad/s?",
+   "answer": "(4*3^2/2)/2",
+   "tol": 0.01,
+   "why": "Angular impulse: \\( \\int_0^{3.0}4.0t\\,dt = 2.0(3.0)^2 = 18 \\) N·m·s \\( = \\Delta L \\). So \\( \\omega = L/I = 18/2.0 = 9.0 \\) rad/s."
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k1",
+   "type": "written",
+   "prompt": "Derive the rotational second law \\( \\sum\\tau_{\\text{ext}} = I\\alpha \\) for a rigid body rotating about a fixed axis, starting from Newton's second law for its particles. State every assumption used and where it enters.",
+   "rubric": [
+    "Tangential component of Newton's law for particle \\( i \\): \\( F_{i,t} = m_ia_{i,t} = m_ir_i\\alpha \\), using rigidity (all particles share \\( \\alpha \\), \\( r_i \\) constant) and the fixed axis.",
+    "Multiplies by \\( r_i \\) and identifies \\( r_iF_{i,t} \\) as the torque about the axis (radial and axial components contribute no torque about the axis).",
+    "Sums over particles to obtain \\( \\sum\\tau_i = (\\sum m_ir_i^2)\\alpha = I\\alpha \\).",
+    "Internal torques cancel because internal forces are equal, opposite and central (strong third law).",
+    "Newton's second law requires an inertial frame; the axis is fixed in it."
+   ],
+   "model": "Assume a rigid body turning about an axis fixed in an inertial frame. Rigidity means each particle \\( i \\) stays at a fixed perpendicular distance \\( r_i \\) from the axis and all particles share the same \\( \\omega \\) and \\( \\alpha \\); so particle \\( i \\) moves on a circle with tangential acceleration \\( r_i\\alpha \\). The tangential component of Newton's second law (valid in the inertial frame) is \\( F_{i,t} = m_ir_i\\alpha \\), where \\( F_{i,t} \\) is the tangential component of the total force (external plus internal) on the particle. Multiplying by \\( r_i \\): \\( r_iF_{i,t} = m_ir_i^2\\alpha \\). The left side is the torque of that force about the axis: of the three components of the force, the radial one points through the axis and the axial one is parallel to it, and neither has a torque about the axis. Summing over all particles, \\( \\sum_i\\tau_i = \\left(\\sum_im_ir_i^2\\right)\\alpha = I\\alpha \\). The internal forces occur in third-law pairs; if they are central (along the line joining the two particles), each pair has zero total torque about any point, so only external torques survive: \\( \\sum\\tau_{\\text{ext}} = I\\alpha \\).",
+   "why": "The same steps with the vector cross product give the general law \\( d\\vec L/dt = \\vec\\tau_{\\text{ext}} \\); the fixed-axis version is its \\( z \\)-component for constant \\( I \\)."
+  },
+  {
+   "id": "e2",
+   "kp": "k4",
+   "type": "number",
+   "prompt": "An Atwood machine has masses of 2.0 kg and 3.0 kg on a pulley that is a uniform disk of mass 2.0 kg, with a frictionless axle and a string that does not slip. The system is released from rest. Using energy conservation, find the speed of the masses (in m/s) after the 3.0 kg mass has descended 1.0 m. Use \\( g = 9.80 \\) m/s².",
+   "answer": "sqrt(2*(3 - 2)*9.8*1.0/(2 + 3 + 1))",
+   "tol": 0.01,
+   "why": "The 3.0 kg mass loses \\( (3.0)(9.80)(1.0) \\) J of potential energy and the 2.0 kg mass gains \\( (2.0)(9.80)(1.0) \\) J; net loss \\( 9.80 \\) J. Kinetic energy: \\( \\tfrac12(m_1 + m_2)v^2 + \\tfrac12\\left(\\tfrac12MR^2\\right)(v/R)^2 = \\tfrac12(2.0 + 3.0 + 1.0)v^2 = 3.0v^2 \\). So \\( v^2 = 9.80/3.0 \\) and \\( v = 1.81 \\) m/s. (Check: \\( a = 9.80/6.0 = 1.63 \\) m/s², \\( v^2 = 2a(1.0) = 3.27 \\) m²/s².)"
+  },
+  {
+   "id": "e3",
+   "kp": "k9",
+   "type": "number",
+   "prompt": "A uniform rod of mass 3.0 kg and length 1.0 m hangs vertically from a frictionless pivot at its top end. A 0.20 kg lump of clay moving horizontally at 6.0 m/s strikes the bottom end and sticks. Through what maximum angle from the vertical (in degrees) does the rod swing? Use \\( g = 9.80 \\) m/s².",
+   "answer": "acos(1 - 0.6/(0.2*9.8*1.0 + 3.0*9.8*0.5))*180/pi",
+   "tol": 0.01,
+   "why": "Stage 1 (impact): angular momentum about the pivot is conserved (pivot force has no torque; the impact is brief). \\( mvL = (0.20)(6.0)(1.0) = 1.20 \\) kg·m²/s; \\( I = \\tfrac13(3.0)(1.0)^2 + (0.20)(1.0)^2 = 1.20 \\) kg·m², so \\( \\omega = 1.00 \\) rad/s and \\( K = \\tfrac12I\\omega^2 = 0.600 \\) J. Stage 2 (swing): mechanical energy is conserved. The clay rises \\( L(1 - \\cos\\theta) \\) and the rod's center \\( \\tfrac L2(1 - \\cos\\theta) \\): \\( 0.600 = \\left[(0.20)(9.80)(1.0) + (3.0)(9.80)(0.50)\\right](1 - \\cos\\theta) = 16.66(1 - \\cos\\theta) \\). So \\( \\cos\\theta = 0.964 \\) and \\( \\theta = 15.4^\\circ \\)."
+  },
+  {
+   "id": "e4",
+   "kp": "k6",
+   "type": "expression",
+   "prompt": "A uniform solid sphere of mass \\( M \\) rolls without slipping down an incline of angle \\( \\theta \\). Find the magnitude of the static friction force on it. Enter it using `M`, `g` and `theta`.",
+   "answer": "2*M*g*sin(theta)/7",
+   "vars": "M, g, theta",
+   "why": "About the center: \\( fR = \\tfrac25MR^2(a/R) \\Rightarrow f = \\tfrac25Ma \\). Along the slope: \\( Mg\\sin\\theta - \\tfrac25Ma = Ma \\Rightarrow a = \\tfrac57g\\sin\\theta \\). Hence \\( f = \\tfrac25M\\cdot\\tfrac57g\\sin\\theta = \\tfrac27Mg\\sin\\theta \\), directed up the slope."
+  },
+  {
+   "id": "e5",
+   "kp": "k9",
+   "type": "written",
+   "prompt": "A skater spins with arms extended, then pulls them in, reducing her moment of inertia from \\( I_1 \\) to \\( I_2 \\). Show that her angular velocity increases by the factor \\( I_1/I_2 \\) and her kinetic energy by the same factor. Explain why angular momentum is conserved but kinetic energy is not, and identify the source of the extra energy.",
+   "rubric": [
+    "External torque about the vertical spin axis is negligible (ice friction small; gravity and normal force vertical, parallel to the axis), so \\( L = I\\omega \\) is conserved: \\( \\omega_2 = (I_1/I_2)\\omega_1 \\).",
+    "\\( K = L^2/(2I) \\), so \\( K_2/K_1 = I_1/I_2 \\) (or computed directly).",
+    "The forces pulling the arms in are internal: they cannot change L but can do work.",
+    "The extra kinetic energy comes from work done by her muscles (chemical energy), pulling her hands inward along a path with a component along the force."
+   ],
+   "model": "The external forces are gravity and the normal force from the ice, both vertical and so parallel to the spin axis, plus a small friction force at the skate. None exerts an appreciable torque about the vertical axis, so her angular momentum about it is conserved: \\( I_1\\omega_1 = I_2\\omega_2 \\), giving \\( \\omega_2 = (I_1/I_2)\\omega_1 \\), an increase since \\( I_2 < I_1 \\). Her kinetic energy is \\( K = \\tfrac12I\\omega^2 = L^2/(2I) \\); with \\( L \\) fixed, \\( K_2/K_1 = I_1/I_2 \\), the same factor. Angular momentum is conserved because the forces she uses to pull her arms in are internal: they come in third-law pairs with zero net torque. But internal forces can do net work when the parts of a system move relative to one another. Her hands move inward, in the direction of the inward force her arms exert on them, so her muscles do positive work, converting chemical energy into kinetic energy. That work is exactly the increase \\( K_2 - K_1 \\).",
+   "why": "Conservation of angular momentum constrains ω; kinetic energy then follows, and its change is accounted for by internal work."
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "Rotational second law",
+    "formula": "\\( \\sum\\tau_{\\text{ext}} = I\\alpha \\)",
+    "when": "Rigid body, fixed axis (or axis through the center of mass keeping its direction).",
+    "example": "Rod pivoted at an end, released horizontal: \\( \\alpha = 3g/(2L) \\).",
+    "watch": "Torques and I about the same axis; internal forces excluded."
+   },
+   {
+    "name": "Pulley constraint",
+    "formula": "\\( a = R\\alpha \\), \\( v = R\\omega \\); \\( T_2 - T_1 = (I/R^2)a \\)",
+    "when": "Strings on pulleys with mass.",
+    "example": "Block on a disk pulley: \\( a = mg/(m + M/2) \\).",
+    "watch": "Tensions differ across a massive pulley; keep sign conventions consistent."
+   },
+   {
+    "name": "Rotational work and power",
+    "formula": "\\( W = \\int\\tau\\,d\\theta \\), \\( P = \\tau\\omega \\)",
+    "when": "Torque known as a function of angle; engines and motors.",
+    "example": "50 N·m at 3000 rpm: 15.7 kW.",
+    "watch": "\\( \\theta \\) in radians, \\( \\omega \\) in rad/s."
+   },
+   {
+    "name": "Energy with rotation",
+    "formula": "\\( K_{\\text{trans}} + K_{\\text{rot}} + U = \\) const (conservative forces)",
+    "when": "Speeds after a change in height, for wheels, pulleys, rods.",
+    "example": "Rod falls from horizontal: \\( \\omega = \\sqrt{3g/L} \\) at the bottom.",
+    "watch": "Include \\( \\tfrac12I\\omega^2 \\) for every body that rotates."
+   },
+   {
+    "name": "Rolling without slipping",
+    "formula": "\\( v_{\\text{cm}} = R\\omega \\); \\( K = \\tfrac12(1 + c)Mv_{\\text{cm}}^2 \\); \\( a = g\\sin\\theta/(1 + c) \\)",
+    "when": "Wheels, balls and cylinders on surfaces with enough friction.",
+    "example": "Solid sphere down 1.0 m: \\( v = \\sqrt{2gh/1.4} = 3.74 \\) m/s.",
+    "watch": "Static friction does no work; the friction required is \\( \\frac{c}{1 + c}Mg\\sin\\theta \\)."
+   },
+   {
+    "name": "Angular momentum",
+    "formula": "\\( \\vec L = \\vec r\\times\\vec p \\); \\( L_z = I\\omega \\)",
+    "when": "Particles about a point; rigid bodies about an axis.",
+    "example": "Car 1500 kg at 20 m/s, 50 m from point: \\( 1.5\\times10^6 \\) kg·m²/s.",
+    "watch": "Depends on the reference point."
+   },
+   {
+    "name": "Torque–angular momentum",
+    "formula": "\\( \\vec\\tau_{\\text{ext}} = d\\vec L/dt \\); \\( \\int\\tau\\,dt = \\Delta L \\)",
+    "when": "Changing I, variable torques, precession.",
+    "example": "\\( \\tau = 4.0t \\) for 3.0 s on 2.0 kg·m²: \\( \\omega = 9.0 \\) rad/s.",
+    "watch": "Fixed point in an inertial frame, or the center of mass."
+   },
+   {
+    "name": "Conservation of angular momentum",
+    "formula": "\\( \\tau_{\\text{ext}} = 0 \\Rightarrow I_i\\omega_i = I_f\\omega_f \\) (or total L constant)",
+    "when": "Skaters, collisions with pivoted bodies, clutches.",
+    "example": "Child 40 kg at 4.0 m/s onto rim of \\( I = 400 \\) disk, R = 2.0 m: 0.571 rad/s.",
+    "watch": "Kinetic energy generally not conserved; linear momentum not conserved if a pivot acts."
+   },
+   {
+    "name": "Gyroscopic precession",
+    "formula": "\\( \\Omega = Mgr/(I\\omega) \\)",
+    "when": "Torque perpendicular to a large spin angular momentum.",
+    "example": "0.20 kg disk, 5.0 cm, 200 rad/s, r = 5.0 cm: 1.96 rad/s.",
+    "watch": "Valid for fast spin, \\( \\Omega \\ll \\omega \\)."
+   }
+  ],
+  "stuck": [
+   "Draw a separate free-body diagram for each body, rotating ones with forces at their points of application, and write F = ma or τ = Iα for each.",
+   "Write the constraint linking linear and angular motion (a = Rα for strings and rolling) with signs chosen so both are positive together.",
+   "If the question asks for a speed after a displacement, try energy first, including every rotational kinetic energy term.",
+   "For an impact with a pivoted body, conserve angular momentum about the pivot during the impact, then switch to energy for the motion afterward.",
+   "If I changes, do not use τ = Iα; use L = Iω and τ = dL/dt (or L constant)."
+  ]
+ }
+}

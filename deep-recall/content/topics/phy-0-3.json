@@ -1,0 +1,763 @@
+{
+ "key": "phy-0-3",
+ "title": "Friction and inclined planes",
+ "v": 1,
+ "scope": "The static and kinetic friction model, deciding whether a body slides, forces applied at an angle and the optimal pulling angle, inclined planes with and without friction, the critical angle, connected and stacked bodies with friction, and speed-dependent fluid drag with terminal speed; the energy dissipated by friction is left to the energy chapters, and rolling resistance is mentioned only qualitatively.",
+ "sources": [
+  {
+   "title": "OpenStax University Physics Vol. 1, 6.2 Friction",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/6-2-friction"
+  },
+  {
+   "title": "OpenStax University Physics Vol. 1, 6.4 Drag Force and Terminal Speed",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/6-4-drag-force-and-terminal-speed"
+  },
+  {
+   "title": "OpenStax University Physics Vol. 1, 6.1 Solving Problems with Newton's Laws",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/6-1-solving-problems-with-newtons-laws"
+  },
+  {
+   "title": "Young and Freedman, University Physics, Ch. 5 Applying Newton's Laws (lecture slides, NJIT)",
+   "url": "https://web.njit.edu/~tyson/P111_chapter5.pdf"
+  }
+ ],
+ "pre": [
+  "phy-0-2"
+ ],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Static friction as a constraint force",
+   "d": "Use fₛ ≤ μₛN, find the static friction a situation requires from Newton's laws, and give its direction.",
+   "type": "concept"
+  },
+  {
+   "id": "k2",
+   "t": "Kinetic friction and the model's limits",
+   "d": "Use fₖ = μₖN opposite the relative velocity, and state the empirical status and approximate character of the friction laws.",
+   "type": "fact"
+  },
+  {
+   "id": "k3",
+   "t": "Deciding whether a body slides",
+   "d": "Compute the static friction needed for no slipping, compare it with μₛN, and switch to kinetic friction if it is exceeded.",
+   "type": "procedure"
+  },
+  {
+   "id": "k4",
+   "t": "Angled forces and the optimal pulling angle",
+   "d": "Find N when an applied force has a component perpendicular to the surface, and minimize the force needed to start sliding (tan φ = μₛ).",
+   "type": "skill"
+  },
+  {
+   "id": "k5",
+   "t": "Resolving the weight on an incline",
+   "d": "Choose axes along and perpendicular to an incline and resolve the weight into mg sin θ and mg cos θ, checking limits.",
+   "type": "procedure"
+  },
+  {
+   "id": "k6",
+   "t": "Frictionless incline",
+   "d": "Derive a = g sin θ and N = mg cos θ and combine them with constant-acceleration kinematics.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k7",
+   "t": "Critical angle and measuring coefficients",
+   "d": "Derive tan θc = μₛ for impending slipping and tan θ = μₖ for constant-velocity sliding.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k8",
+   "t": "Sliding up versus down an incline",
+   "d": "Reverse the friction with the velocity and compute the different accelerations for motion up and down a rough incline.",
+   "type": "skill"
+  },
+  {
+   "id": "k9",
+   "t": "Connected and stacked bodies with friction",
+   "d": "Find the direction of impending motion, test for rest, and solve rope-and-pulley or stacked systems with friction.",
+   "type": "skill"
+  },
+  {
+   "id": "k10",
+   "t": "Fluid drag and terminal speed",
+   "d": "Solve m dv/dt = mg − bv, interpret the time constant, and find terminal speeds for linear and quadratic drag.",
+   "type": "procedure"
+  }
+ ],
+ "intro": "In the previous chapter every surface was frictionless, so the smallest push would set a crate in motion. Real crates behave differently: they stay put until the push passes a threshold, then slide against a steady resistance, and a block on a ramp may rest at one angle yet slide at a slightly steeper one. The force responsible is **friction**, the component of a contact force that lies along the surfaces in contact.\n\nNo simple fundamental law gives friction, but an empirical model does very well: a static friction force that can grow up to a maximum proportional to the normal force, and a kinetic friction force, also proportional to the normal force, once sliding begins. Combined with free-body diagrams, the model decides whether a body moves, how it accelerates on an inclined plane, and how connected bodies behave. The chapter closes with the resistance of air and water, which depends on speed and leads to a differential equation whose solution approaches a terminal speed.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "Static and kinetic friction",
+   "kps": [
+    "k1",
+    "k2"
+   ],
+   "md": "This section states the model of friction used throughout introductory mechanics and explains what kind of force each part of it describes.\n\n**The contact force, resolved.** When two surfaces touch, each exerts a contact force on the other. Its component perpendicular to the surfaces is the normal force of the previous chapter; its component along the surfaces is **friction**. Two regimes behave differently: surfaces that do not slide relative to each other, and surfaces that do.\n\n**Static friction.** While there is no relative sliding, the friction force is **static friction** \\( \\vec f_s \\). Experiment, going back to Amontons (1699) and Coulomb (1781), shows that it can take any magnitude up to a maximum proportional to the normal force:\n\\[ f_s \\le \\mu_s N. \\]\nThe dimensionless constant \\( \\mu_s \\) is the **coefficient of static friction** of the pair of surfaces. Static friction is a constraint force, like the normal force: within its limit it takes exactly the value that prevents sliding, and that value comes from Newton's second law. Its direction opposes the sliding that would occur without it. The equality \\( f_s = \\mu_s N \\) holds only at the threshold of slipping, a condition called **impending motion**.\n\n**Kinetic friction.** Once the surfaces slide, the friction force is **kinetic friction** \\( \\vec f_k \\), of magnitude\n\\[ f_k = \\mu_k N, \\]\ndirected opposite to the velocity of the body relative to the surface it slides on. The **coefficient of kinetic friction** \\( \\mu_k \\) is usually smaller than \\( \\mu_s \\), which is why a heavy piece of furniture is easier to keep moving than to start. Unlike static friction, kinetic friction is given by a formula and does not adjust to the other forces.\n\n**Status of the model.** These are approximate empirical rules, not fundamental laws. Within their range of validity the friction force is roughly independent of the apparent area of contact, and kinetic friction is roughly independent of the sliding speed. A common explanation is that surfaces touch only at microscopic high points whose true total contact area grows in proportion to the load; this is a model, and the microscopic origin of friction is still an active field of research. Coefficients depend on the materials and on the condition of the surfaces (dry, wet, lubricated, polished), so tabulated values are rough: about 1.0 (static) and 0.7 (kinetic) for rubber on dry concrete, 0.5 and 0.3 for wood on wood, about 0.04 for Teflon on steel. A rolling wheel that does not skid is held by static friction, since its contact point is momentarily at rest on the road; the small resistance to rolling is a separate effect not treated here.\n\n**Worked example.** A 20.0 kg crate rests on a level floor with \\( \\mu_s = 0.500 \\) and \\( \\mu_k = 0.400 \\). You push horizontally with a slowly increasing force \\( F \\). The normal force is \\( N = mg = 196 \\) N, so the maximum static friction is \\( \\mu_s N = 98.0 \\) N.\n\n1. \\( F = 30.0 \\) N: the crate stays at rest, so the second law requires \\( f_s = 30.0 \\) N, opposite the push, within the limit.\n2. \\( F = 90.0 \\) N: still at rest, with \\( f_s = 90.0 \\) N.\n3. \\( F \\) just above 98.0 N: static friction cannot grow further, and the crate starts to slide.\n4. Sliding with \\( F = 120 \\) N: \\( f_k = \\mu_k N = 78.4 \\) N, so \\( a = (120 - 78.4)/20.0 = 2.08 \\) m/s².\n\nThe plot shows the friction force (N) against the applied push (N) for this crate: friction equals the push up to 98.0 N, then drops to the constant kinetic value 78.4 N.\n\n```plot\nx: 0, 150\ny: 0, 110\nxlabel: applied force F (N)\nylabel: friction f (N)\nf: x <= 98 ? x : 78.4 | friction on the crate\nhline: 98 | maximum static friction\n```\n\n**Common mistakes.** Writing \\( f_s = \\mu_s N \\) for a body at rest; that is only the maximum. Assuming that friction always opposes a body's motion: it opposes relative sliding between the surfaces, and a box on the floor of an accelerating truck is carried forward by static friction.",
+   "questions": [
+    {
+     "id": "s1q1",
+     "kp": "k1",
+     "type": "number",
+     "prompt": "A 12.0 kg box rests on a level floor with \\( \\mu_s = 0.600 \\) and \\( \\mu_k = 0.450 \\). You push it horizontally with 50.0 N. Using \\( g = 9.80 \\) m/s², what is the magnitude of the friction force on the box, in newtons?",
+     "answer": "50",
+     "why": "Maximum static friction: \\( \\mu_s mg = 0.600(12.0)(9.80) = 70.6 \\) N. The push, 50.0 N, is below this, so the box stays at rest and the second law gives \\( f_s = 50.0 \\) N. Answering 70.6 N treats the maximum as the actual value; answering \\( \\mu_k mg = 52.9 \\) N uses kinetic friction for a body that is not sliding.",
+     "tol": 0.005
+    },
+    {
+     "id": "s1q2",
+     "kp": "k1",
+     "type": "written",
+     "prompt": "Explain why static friction is described by an inequality, \\( f_s \\le \\mu_s N \\), while kinetic friction is described by an equation, \\( f_k = \\mu_k N \\). In your answer say how the actual value and direction of static friction are determined.",
+     "rubric": [
+      "Static friction is a constraint force: it takes whatever value prevents relative sliding",
+      "Its value is found from Newton's second law (e.g. equals the applied force for a body at rest); μₛN is only its maximum, reached at impending motion",
+      "Its direction opposes the sliding that would occur without it",
+      "Kinetic friction does not adjust: once sliding, its magnitude is fixed by μₖN and its direction is opposite the relative velocity"
+     ],
+     "model": "Static friction acts only when the surfaces are not sliding, and its role is to keep them from sliding. Like the normal force, it is a constraint force: it takes whatever magnitude the second law requires to maintain the no-slip condition, up to a maximum \\( \\mu_s N \\) that depends on the surfaces. A crate at rest pushed with 30 N has 30 N of static friction; pushed with 60 N, it has 60 N. So the model can only bound it, hence the inequality, with equality only at impending motion. Its direction opposes the relative sliding that would occur without it. Kinetic friction acts when the surfaces already slide; there is no constraint to maintain, and experimentally its magnitude is approximately \\( \\mu_k N \\) regardless of the other forces, directed opposite the relative velocity. Hence an equation.",
+     "why": "Keeping 'maximum static friction' and 'actual static friction' distinct is the key to every friction problem."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "Does it slide? Forces at an angle",
+   "kps": [
+    "k3",
+    "k4"
+   ],
+   "md": "Because the value of static friction is not known in advance, a friction problem begins with a question: does the body slide? This section gives the procedure and applies it to forces applied at an angle, where friction and the normal force are coupled.\n\n**Procedure.**\n\n1. Assume no sliding. Draw the free-body diagram with an unknown static friction \\( f_s \\) along the surface and solve the second law, using the acceleration that the no-slip assumption implies, for the required \\( f_s \\) and for \\( N \\).\n2. If \\( |f_s| \\le \\mu_s N \\), the assumption is consistent and the problem is solved.\n3. If \\( |f_s| > \\mu_s N \\), the assumption is false and the surfaces slide. Solve again with \\( f_k = \\mu_k N \\) opposite the relative velocity.\n\nThe comparison uses the actual normal force, which is why \\( N \\) must come from the diagram rather than being assumed equal to \\( mg \\).\n\n**Worked example.** The 20.0 kg crate of the previous section (\\( \\mu_s = 0.500 \\), \\( \\mu_k = 0.400 \\)) is now pulled by a rope with tension 95.0 N at \\( 30.0^\\circ \\) above the horizontal. A horizontal push of 95.0 N would not move it (the limit was 98.0 N). Does the angled pull?\n\n1. Assume rest. Vertical: \\( N = mg - T\\sin 30.0^\\circ = 196 - 47.5 = 148.5 \\) N. Horizontal: required \\( f_s = T\\cos 30.0^\\circ = 82.3 \\) N.\n2. Limit: \\( \\mu_s N = 0.500(148.5) = 74.3 \\) N, which is less than 82.3 N. The crate slides.\n3. Sliding: \\( f_k = 0.400(148.5) = 59.4 \\) N, so \\( a = (82.3 - 59.4)/20.0 = 1.14 \\) m/s².\n\nThe rope's upward component lightens the load on the floor and so lowers the friction limit by more than the tilt reduces the horizontal pull.\n\n**The best pulling angle.** For a pull \\( F \\) at angle \\( \\phi \\) above the horizontal, sliding starts when \\( F\\cos\\phi = \\mu_s(mg - F\\sin\\phi) \\), that is, when\n\\[ F(\\phi) = \\frac{\\mu_s mg}{\\cos\\phi + \\mu_s\\sin\\phi}. \\]\nTilting the rope has two competing effects: it reduces the horizontal component, and it reduces \\( N \\) and hence the friction limit. To minimize \\( F \\), maximize the denominator \\( h(\\phi) = \\cos\\phi + \\mu_s\\sin\\phi \\). Setting \\( h'(\\phi) = -\\sin\\phi + \\mu_s\\cos\\phi = 0 \\) gives\n\\[ \\tan\\phi^* = \\mu_s, \\]\nand \\( h'' = -h < 0 \\) there, so this is a maximum of \\( h \\). With \\( \\cos\\phi^* = 1/\\sqrt{1+\\mu_s^2} \\) and \\( \\sin\\phi^* = \\mu_s/\\sqrt{1+\\mu_s^2} \\), \\( h(\\phi^*) = \\sqrt{1 + \\mu_s^2} \\) and\n\\[ F_{\\min} = \\frac{\\mu_s mg}{\\sqrt{1 + \\mu_s^2}}. \\]\nFor the crate, \\( \\phi^* = \\arctan 0.500 = 26.6^\\circ \\) and \\( F_{\\min} = 98.0/\\sqrt{1.25} = 87.7 \\) N, about 11% less than a horizontal pull. (The formula assumes the crate stays on the floor; here \\( F\\sin\\phi^* = 39.2 \\) N is well below \\( mg \\).)\n\nIn the plot, the curve is the force (N) needed to start the 196 N crate sliding, against the pulling angle \\( \\phi \\) in degrees. Drag the slider \\( k \\), the value of \\( \\mu_s \\), and watch the minimum move to the right, since it sits at \\( \\arctan\\mu_s \\).\n\n```plot\nx: 0, 80\ny: 0, 250\nxlabel: φ (degrees)\nylabel: F (N)\nslider: k, 0.1, 1, 0.5 | μs\nf: k*196/(cos(x*pi/180) + k*sin(x*pi/180)) | force needed to start sliding\n```\n\n**Common mistakes.** Using \\( N = mg \\) when the applied force has a vertical component. Forgetting that a push directed below the horizontal increases \\( N \\): then \\( F = \\mu_s mg/(\\cos\\phi - \\mu_s\\sin\\phi) \\), which grows without bound as \\( \\tan\\phi \\to 1/\\mu_s \\). Beyond that angle no push, however large, can start the crate.",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k3",
+     "type": "number",
+     "prompt": "A 30.0 kg crate on a level floor has \\( \\mu_s = 0.400 \\) and \\( \\mu_k = 0.300 \\). It is pushed horizontally with 150 N. Using \\( g = 9.80 \\) m/s², find the magnitude of its acceleration, in m/s² (enter 0 if it does not move).",
+     "answer": "(150 - 0.3*30*9.8)/30",
+     "why": "Test for rest: required \\( f_s = 150 \\) N, limit \\( \\mu_s mg = 0.400(294) = 117.6 \\) N. The limit is exceeded, so the crate slides. \\( f_k = 0.300(294) = 88.2 \\) N and \\( a = (150 - 88.2)/30.0 = 2.06 \\) m/s².",
+     "tol": 0.005
+    },
+    {
+     "id": "s2q2",
+     "kp": "k4",
+     "type": "expression",
+     "prompt": "A crate of mass \\( m \\) on a level floor with static coefficient \\( \\mu \\) (type `mu`) is pulled by a rope at the angle above the horizontal that minimizes the force needed to start it sliding. Give that minimum force in terms of \\( \\mu \\), \\( m \\) and \\( g \\).",
+     "answer": "mu*m*g/sqrt(1 + mu^2)",
+     "vars": "mu m g",
+     "why": "At angle \\( \\phi \\): \\( F = \\mu mg/(\\cos\\phi + \\mu\\sin\\phi) \\). The denominator is maximal where \\( -\\sin\\phi + \\mu\\cos\\phi = 0 \\), i.e. \\( \\tan\\phi = \\mu \\), where it equals \\( \\sqrt{1+\\mu^2} \\). So \\( F_{\\min} = \\mu mg/\\sqrt{1+\\mu^2} \\)."
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "The inclined plane",
+   "kps": [
+    "k5",
+    "k6"
+   ],
+   "md": "An inclined plane is the simplest surface that is not horizontal, and it is where the choice of axes first matters. This section resolves the weight on an incline and solves the frictionless case.\n\n**Choice of axes.** On an **inclined plane** at angle \\( \\theta \\) above the horizontal, a body sliding on the surface accelerates along the surface. Take \\( x \\) along the incline (down the slope positive, unless the motion suggests otherwise) and \\( y \\) perpendicular to it. Then \\( a_y = 0 \\), the normal force lies along \\( y \\), friction (next section) lies along \\( x \\), and only the weight has to be resolved.\n\n**Resolving the weight.** The perpendicular to the incline makes the angle \\( \\theta \\) with the vertical: tilting the surface by \\( \\theta \\) from the horizontal tilts its perpendicular by the same \\( \\theta \\) from the vertical. So the weight has components\n\\[ w_x = mg\\sin\\theta \\ \\ (\\text{down the slope}), \\qquad w_y = -mg\\cos\\theta \\ \\ (\\text{into the surface}). \\]\nCheck the limits: at \\( \\theta = 0 \\) the weight is entirely perpendicular to the surface (\\( w_x = 0 \\)); at \\( \\theta = 90^\\circ \\) it lies entirely along the now vertical surface (\\( w_x = mg \\)). Checking these two limits is the quickest way to catch a swapped sine and cosine.\n\n**The frictionless incline.** With only the weight and the normal force acting,\n\\[ y:\\ N - mg\\cos\\theta = 0 \\ \\Rightarrow\\ N = mg\\cos\\theta, \\qquad x:\\ mg\\sin\\theta = ma \\ \\Rightarrow\\ a = g\\sin\\theta. \\]\nThe acceleration is independent of the mass and constant, so the constant-acceleration equations of one-dimensional kinematics apply along the incline. The normal force is less than the weight because the incline supports only the perpendicular component. Galileo exploited exactly this: on a gentle slope \\( g\\sin\\theta \\) is small, so the motion is slow enough to time, while its character (uniform acceleration) is the same as in free fall.\n\n**Worked example.** A block is released from rest on a frictionless incline of \\( 25.0^\\circ \\) and slides 3.00 m along it.\n\n1. \\( a = 9.80\\sin 25.0^\\circ = 4.14 \\) m/s² down the slope.\n2. Speed after 3.00 m: \\( v = \\sqrt{2ad} = \\sqrt{2(4.14)(3.00)} = 4.98 \\) m/s.\n3. Time: \\( t = \\sqrt{2d/a} = \\sqrt{6.00/4.14} = 1.20 \\) s.\n\nThe block descends \\( 3.00\\sin 25.0^\\circ = 1.27 \\) m vertically, and \\( \\sqrt{2g(1.27)} \\) is also 4.98 m/s: the speed is the same as after a free fall through the same height, though the time is longer. The energy chapters explain why.\n\n**A body going up.** A block launched up a frictionless incline with speed \\( v_0 \\) has acceleration \\( g\\sin\\theta \\) directed down the slope throughout, so it travels \\( d = v_0^2/(2g\\sin\\theta) \\) along the incline before stopping, then slides back.\n\n**Common mistakes.** Swapping sine and cosine; test with \\( \\theta \\to 0 \\). Resolving the normal force instead of the weight (with tilted axes the normal force is already along \\( y \\)). Writing \\( N = mg\\cos\\theta \\) when another force has a component perpendicular to the incline: a horizontal push \\( F \\) against a block on the incline gives \\( N = mg\\cos\\theta + F\\sin\\theta \\).",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k6",
+     "type": "number",
+     "prompt": "A block is launched at 4.00 m/s up a frictionless incline of \\( 20.0^\\circ \\). Using \\( g = 9.80 \\) m/s², how far along the incline does it travel before momentarily stopping, in meters?",
+     "answer": "4^2/(2*9.8*sin(20*pi/180))",
+     "why": "Along the incline the acceleration is \\( g\\sin 20.0^\\circ = 3.35 \\) m/s², directed down the slope. \\( 0 = v_0^2 - 2ad \\Rightarrow d = 16.0/(2 \\times 3.35) = 2.39 \\) m.",
+     "tol": 0.005
+    },
+    {
+     "id": "s3q2",
+     "kp": "k5",
+     "type": "written",
+     "prompt": "Justify geometrically that on an incline of angle \\( \\theta \\) the weight has components \\( mg\\sin\\theta \\) along the slope and \\( mg\\cos\\theta \\) perpendicular to it. Then explain how the limiting cases \\( \\theta = 0 \\) and \\( \\theta = 90^\\circ \\) confirm which function goes with which component.",
+     "rubric": [
+      "The perpendicular (normal direction) to the incline makes angle θ with the vertical, since rotating a line by θ rotates its perpendicular by θ",
+      "The weight is vertical, so its component along the normal direction is mg cos θ and along the slope mg sin θ",
+      "θ = 0: component along the slope must vanish (sin 0 = 0), perpendicular component is the full weight (cos 0 = 1)",
+      "θ = 90°: surface vertical, the whole weight lies along it (sin 90° = 1), none perpendicular"
+     ],
+     "model": "The incline makes angle \\( \\theta \\) with the horizontal. Rotating a line by \\( \\theta \\) rotates its perpendicular by the same angle, so the perpendicular to the incline makes angle \\( \\theta \\) with the vertical, which is the direction of the weight. The weight's component along the perpendicular is therefore \\( mg\\cos\\theta \\) (adjacent side) and its component along the slope, perpendicular to that, is \\( mg\\sin\\theta \\) (opposite side). Limits: on a horizontal surface (\\( \\theta = 0 \\)) there is no tendency to slide, and indeed \\( mg\\sin 0 = 0 \\) while the perpendicular component is the full \\( mg \\). On a vertical surface (\\( \\theta = 90^\\circ \\)) the body falls freely along the surface: \\( mg\\sin 90^\\circ = mg \\) and \\( mg\\cos 90^\\circ = 0 \\).",
+     "why": "The limit check takes seconds and catches the most common error in incline problems."
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "Inclines with friction",
+   "kps": [
+    "k7",
+    "k8"
+   ],
+   "md": "Adding friction to the incline answers two practical questions: at what angle does a resting body begin to slide, and how does friction change motion up and down the slope?\n\n**A body at rest.** Use the axes of the previous section, with \\( x \\) down the slope and static friction \\( f_s \\) acting up the slope. With \\( \\vec a = \\vec 0 \\):\n\\[ y:\\ N = mg\\cos\\theta, \\qquad x:\\ mg\\sin\\theta - f_s = 0 \\ \\Rightarrow\\ f_s = mg\\sin\\theta. \\]\nThe static friction is \\( mg\\sin\\theta \\), not \\( \\mu_s N \\). The body stays at rest if this does not exceed the limit: \\( mg\\sin\\theta \\le \\mu_s mg\\cos\\theta \\), that is,\n\\[ \\tan\\theta \\le \\mu_s. \\]\nThe **critical angle** \\( \\theta_c \\), at which slipping is impending, satisfies \\( \\tan\\theta_c = \\mu_s \\). The mass cancels: both the driving component \\( mg\\sin\\theta \\) and the friction limit \\( \\mu_s mg\\cos\\theta \\) are proportional to \\( m \\), so a heavier block of the same material starts to slide at the same angle. This gives a method of measuring \\( \\mu_s \\): tilt a board slowly until a block on it begins to slip, and \\( \\mu_s = \\tan\\theta_c \\). Likewise, if a block, once started, slides at constant velocity at angle \\( \\theta \\), then \\( mg\\sin\\theta = \\mu_k mg\\cos\\theta \\) and \\( \\mu_k = \\tan\\theta \\).\n\n**Sliding down.** Kinetic friction acts up the slope, opposite the velocity:\n\\[ ma = mg\\sin\\theta - \\mu_k mg\\cos\\theta \\ \\Rightarrow\\ a = g(\\sin\\theta - \\mu_k\\cos\\theta) \\ \\ (\\text{down the slope}). \\]\n\n**Sliding up.** A block moving up the slope, after being launched, has kinetic friction directed down the slope, the same way as the weight component:\n\\[ a = g(\\sin\\theta + \\mu_k\\cos\\theta) \\ \\ (\\text{directed down the slope, so the block slows}). \\]\nFriction reverses when the velocity reverses, so the two legs of a round trip have different accelerations. When the block stops at the top, it stays there if \\( \\tan\\theta \\le \\mu_s \\) and slides back otherwise.\n\n**Worked example.** A block is launched at 6.00 m/s up a \\( 30.0^\\circ \\) incline with \\( \\mu_k = 0.200 \\) and \\( \\mu_s = 0.300 \\).\n\n1. Going up: \\( a = 9.80(\\sin 30.0^\\circ + 0.200\\cos 30.0^\\circ) = 9.80(0.500 + 0.173) = 6.60 \\) m/s², down the slope. Distance \\( d = 6.00^2/(2 \\times 6.60) = 2.73 \\) m; time \\( 6.00/6.60 = 0.909 \\) s.\n2. At the top: \\( \\tan 30.0^\\circ = 0.577 > 0.300 \\), so static friction cannot hold the block; it slides back.\n3. Coming down: \\( a = 9.80(0.500 - 0.173) = 3.20 \\) m/s². Return speed \\( \\sqrt{2(3.20)(2.73)} = 4.18 \\) m/s; time \\( \\sqrt{2(2.73)/3.20} = 1.31 \\) s.\n\nThe block returns more slowly than it left and takes longer to come down than to go up, because friction opposes the motion on both legs.\n\n**Common mistakes.** Using \\( f_s = \\mu_s N \\) for a block at rest on an incline. Keeping the friction direction fixed when the velocity reverses. Applying \\( a = g(\\sin\\theta - \\mu_k\\cos\\theta) \\) to a block that is not sliding: if \\( \\tan\\theta \\le \\mu_s \\) a block at rest stays at rest, and the formula (which may even give a negative number) does not describe it.",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k7",
+     "type": "number",
+     "prompt": "A block rests on a board whose angle is slowly increased. The coefficient of static friction is 0.350. At what angle, in degrees, does the block begin to slide?",
+     "answer": "atan(0.35)*180/pi",
+     "why": "Impending motion: \\( mg\\sin\\theta_c = \\mu_s mg\\cos\\theta_c \\), so \\( \\tan\\theta_c = 0.350 \\) and \\( \\theta_c = 19.3^\\circ \\), independent of the block's mass.",
+     "tol": 0.005
+    },
+    {
+     "id": "s4q2",
+     "kp": "k8",
+     "type": "number",
+     "prompt": "A block slides down a \\( 35.0^\\circ \\) incline with \\( \\mu_k = 0.250 \\). Using \\( g = 9.80 \\) m/s², find the magnitude of its acceleration, in m/s².",
+     "answer": "9.8*(sin(35*pi/180) - 0.25*cos(35*pi/180))",
+     "why": "Friction acts up the slope: \\( a = g(\\sin 35.0^\\circ - \\mu_k\\cos 35.0^\\circ) = 9.80(0.574 - 0.205) = 3.61 \\) m/s² down the slope.",
+     "tol": 0.005
+    },
+    {
+     "id": "s4q3",
+     "kp": "k7",
+     "type": "mcq",
+     "prompt": "A block of mass \\( m \\) rests on an incline of angle \\( \\theta \\), with static coefficient \\( \\mu_s \\), and does not slip. What is the magnitude of the static friction force on it?",
+     "options": [
+      "\\( \\mu_s mg\\cos\\theta \\)",
+      "\\( mg\\sin\\theta \\)",
+      "\\( \\mu_s mg \\)",
+      "\\( mg\\cos\\theta \\)"
+     ],
+     "answer": 1,
+     "why": "At rest, the forces along the slope balance: \\( f_s = mg\\sin\\theta \\). Option 1 is the maximum static friction, reached only at impending motion. Option 3 also uses \\( N = mg \\), which is wrong on an incline. Option 4 is the normal force, confusing the perpendicular and parallel components."
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "Connected and stacked bodies with friction",
+   "kps": [
+    "k9"
+   ],
+   "md": "When a body on a rough surface is tied to another body, or rests on one, the direction of static friction depends on which way the system would move, and that has to be decided before any equation is written with a definite sign.\n\n**Procedure.**\n\n1. Ignore friction and find the direction in which the system tends to move, by comparing the forces that drive it along the rope.\n2. Compare the net driving force with the largest static friction the surfaces can supply. If it is not larger, the system stays at rest and static friction balances it.\n3. If it is larger, the system moves in the direction found in step 1, kinetic friction opposes that motion, and the second law for each body, with the rope constraint (equal magnitudes of acceleration), determines the motion.\n\n**Worked example.** A 5.00 kg block sits on a \\( 30.0^\\circ \\) incline with \\( \\mu_s = 0.400 \\) and \\( \\mu_k = 0.300 \\). A rope parallel to the incline runs from the block up over an ideal pulley at the top to a hanging mass \\( m_2 \\). Along the rope, the hanging mass pulls the block up the slope with \\( m_2 g \\) (when at rest), and the weight component \\( m_1 g\\sin\\theta = 24.5 \\) N pulls it down. The largest static friction is \\( \\mu_s m_1 g\\cos\\theta = 0.400(5.00)(9.80)(0.866) = 17.0 \\) N.\n\n(a) \\( m_2 = 4.00 \\) kg, released from rest: \\( m_2 g = 39.2 \\) N, so the tendency is for the block to move up the slope, with net driving force \\( 39.2 - 24.5 = 14.7 \\) N. Since \\( 14.7 < 17.0 \\), the system stays at rest, with 14.7 N of static friction directed down the slope and tension 39.2 N.\n\n(b) \\( m_2 = 5.00 \\) kg: \\( m_2 g = 49.0 \\) N, net driving force \\( 24.5 \\) N \\( > 17.0 \\) N, so the block moves up the slope. Kinetic friction, \\( \\mu_k m_1 g\\cos\\theta = 12.7 \\) N, points down the slope. With the block's positive direction up the slope and the hanging mass's positive direction down:\n\\[ T - m_1 g\\sin\\theta - f_k = m_1 a, \\qquad m_2 g - T = m_2 a. \\]\nAdding, \\( a = (49.0 - 24.5 - 12.7)/10.0 = 1.18 \\) m/s², and \\( T = m_2(g - a) = 5.00(9.80 - 1.18) = 43.1 \\) N.\n\nMore generally, the system stays at rest for every \\( m_2 \\) between \\( m_1(\\sin\\theta - \\mu_s\\cos\\theta) = 0.768 \\) kg and \\( m_1(\\sin\\theta + \\mu_s\\cos\\theta) = 4.23 \\) kg; below that range the block slides down, above it up.\n\n**Stacked bodies.** Friction also couples bodies resting on one another. A block of mass \\( m \\) sits on a block of mass \\( M \\), which lies on a frictionless floor, and a horizontal force \\( F \\) pulls the lower block. The only horizontal force on the upper block is static friction from the lower one, so here friction points forward, in the direction of motion. If the two move together, their common acceleration is \\( a = F/(m + M) \\), and the upper block needs \\( f_s = ma \\le \\mu_s mg \\), that is, \\( a \\le \\mu_s g \\). The largest force for which they move together is therefore\n\\[ F_{\\max} = \\mu_s(m + M)g. \\]\nFor a larger force the upper block slides backward relative to the lower one, and kinetic friction then acts on both.\n\n**Common mistakes.** Fixing the friction direction before finding the tendency. Using kinetic friction for a system that is actually at rest. Taking \\( N = m_1 g \\) for the block on the incline instead of \\( m_1 g\\cos\\theta \\).",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k9",
+     "type": "number",
+     "prompt": "A 3.00 kg block on a horizontal table (\\( \\mu_k = 0.200 \\)) is tied by an ideal rope over an ideal pulley to a hanging 2.00 kg block, and the system is moving. Using \\( g = 9.80 \\) m/s², find the magnitude of the acceleration, in m/s².",
+     "answer": "(2*9.8 - 0.2*3*9.8)/5",
+     "why": "Table block: \\( T - \\mu_k m_1 g = m_1 a \\). Hanging block: \\( m_2 g - T = m_2 a \\). Adding: \\( a = (m_2 g - \\mu_k m_1 g)/(m_1 + m_2) = (19.6 - 5.88)/5.00 = 2.74 \\) m/s².",
+     "tol": 0.005
+    },
+    {
+     "id": "s5q2",
+     "kp": "k9",
+     "type": "written",
+     "prompt": "A block on a rough incline is connected over a pulley at the top to a hanging mass. Explain, as a step-by-step procedure, how to decide whether the system moves and in which direction, and why the direction of friction cannot be chosen at the outset.",
+     "rubric": [
+      "Compare the driving forces along the rope without friction (m₂g versus m₁g sin θ) to find the tendency",
+      "Compute the maximum static friction μₛ m₁ g cos θ and compare it with the net driving force",
+      "If the net driving force does not exceed it: at rest, static friction equals the net driving force and opposes the tendency",
+      "Otherwise it moves in the tendency direction with kinetic friction opposing the motion; friction's direction depends on the (tendency of) motion, which is unknown until step 1"
+     ],
+     "model": "Friction opposes relative sliding (or the tendency to slide), so its direction depends on which way the block would move, which is not known at the start. Step 1: ignore friction and compare the driving forces along the rope: the hanging weight \\( m_2 g \\) pulls the block up the slope, the component \\( m_1 g\\sin\\theta \\) pulls it down; the larger decides the tendency, and the difference is the net driving force. Step 2: find the largest available static friction, \\( \\mu_s m_1 g\\cos\\theta \\). Step 3: if the net driving force does not exceed this, the system stays at rest and static friction equals the net driving force, pointing against the tendency; the tension is then \\( m_2 g \\). Step 4: otherwise the system accelerates in the tendency direction, kinetic friction \\( \\mu_k m_1 g\\cos\\theta \\) points against the motion, and the two second-law equations with a common acceleration give \\( a \\) and \\( T \\).",
+     "why": "The friction direction is an output of step 1, not an assumption."
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "title": "Fluid resistance and terminal speed",
+   "kps": [
+    "k10"
+   ],
+   "md": "A body moving through air or water experiences a resistive force, **drag**, that differs from kinetic friction in one essential way: it depends on the speed. This section sets up the equation of motion for a body falling with drag, solves it, and obtains the terminal speed.\n\n**Drag models.** Drag points opposite to the body's velocity relative to the fluid, and its magnitude grows with speed. Two approximations cover most cases:\n\n- **Linear drag**, \\( f = bv \\), for small, slow bodies in viscous fluids (fine dust in air, a bead sinking in oil). For a sphere of radius \\( r \\) in a fluid of viscosity \\( \\eta \\), Stokes's law gives \\( b = 6\\pi\\eta r \\).\n- **Quadratic drag**, \\( f = Dv^2 \\), for bodies of everyday size at everyday speeds in air, with \\( D = \\tfrac12 C\\rho A \\): \\( \\rho \\) is the fluid density, \\( A \\) the cross-sectional area, and \\( C \\) a dimensionless drag coefficient set by the body's shape.\n\nWhich model applies depends on the size and speed of the body and on the fluid; both are approximations.\n\n**Terminal speed.** A body dropped from rest has no drag at first and accelerates at \\( g \\). As its speed grows, the drag grows, the net force shrinks, and the acceleration falls toward zero. The speed approaches the **terminal speed** \\( v_t \\) at which drag balances the weight:\n\\[ \\text{linear: } bv_t = mg \\Rightarrow v_t = \\frac{mg}{b}, \\qquad \\text{quadratic: } Dv_t^2 = mg \\Rightarrow v_t = \\sqrt{\\frac{mg}{D}}. \\]\n\n**Solving the linear case.** Take down as positive. The second law is the differential equation\n\\[ m\\frac{dv}{dt} = mg - bv, \\]\nwith \\( v(0) = 0 \\). Separating variables,\n\\[ \\int_0^v \\frac{dv'}{mg - bv'} = \\int_0^t \\frac{dt'}{m} \\quad\\Rightarrow\\quad -\\frac1b\\ln\\frac{mg - bv}{mg} = \\frac{t}{m}, \\]\nand solving for \\( v \\),\n\\[ v(t) = v_t\\left(1 - e^{-t/\\tau}\\right), \\qquad \\tau = \\frac{m}{b}. \\]\nThe **time constant** \\( \\tau \\) sets the scale: after \\( \\tau \\) the speed is \\( (1 - e^{-1})v_t = 0.632\\,v_t \\), after \\( 3\\tau \\) it is 95.0% of \\( v_t \\), and \\( v_t \\) is approached but never reached. Differentiating, \\( a = g\\,e^{-t/\\tau} \\): the acceleration starts at \\( g \\) and decays exponentially. Note also \\( v_t = g\\tau \\). The quadratic equation \\( m\\,dv/dt = mg - Dv^2 \\) is separable too; its solution from rest is \\( v = v_t\\tanh(gt/v_t) \\).\n\n**Worked example (linear drag).** A 0.200 kg object is dropped from rest, and the drag on it is modeled as linear with \\( b = 0.0800 \\) kg/s. Then \\( \\tau = 0.200/0.0800 = 2.50 \\) s and \\( v_t = mg/b = 24.5 \\) m/s. At \\( t = 2.50 \\) s, \\( v = 24.5(0.632) = 15.5 \\) m/s, whereas without drag it would already be moving at 24.5 m/s. It reaches 90% of \\( v_t \\) when \\( e^{-t/\\tau} = 0.1 \\), at \\( t = \\tau\\ln 10 = 5.76 \\) s.\n\n**Worked example (quadratic drag).** A 75.0 kg skydiver falling belly-down has \\( D \\approx 0.250 \\) kg/m. Then \\( v_t = \\sqrt{(75.0)(9.80)/0.250} = 54.2 \\) m/s, about 195 km/h. Diving head-first reduces \\( A \\), hence \\( D \\), and raises \\( v_t \\).\n\nIn the plot, the rising curve is \\( v(t) \\) with linear drag (m/s, against \\( t \\) in s), the straight line is free fall without drag (its initial tangent), and the horizontal line is \\( v_t = g\\tau \\). Drag the slider \\( k \\), the time constant \\( \\tau \\) in seconds.\n\n```plot\nx: 0, 15\ny: 0, 50\nxlabel: t (s)\nylabel: v (m/s)\nslider: k, 0.5, 5, 2.5 | τ (s)\nf: 9.8*k*(1 - exp(-x/k)) | with linear drag\nf: 9.8*x | no drag\nhline: 9.8*k | terminal speed gτ\n```\n\n**Common mistakes.** Treating drag as a constant force and using constant-acceleration formulas. Carrying the vacuum result that all bodies fall alike into problems with drag: at equal shape and size, a heavier body has a larger terminal speed, since \\( v_t = mg/b \\) or \\( \\sqrt{mg/D} \\).",
+   "questions": [
+    {
+     "id": "s6q1",
+     "kp": "k10",
+     "type": "expression",
+     "prompt": "A body of mass \\( m \\) is dropped from rest and experiences linear drag \\( bv \\). Give its speed as a function of time \\( t \\), in terms of \\( m \\), \\( g \\), \\( b \\) and \\( t \\).",
+     "answer": "(m*g/b)*(1 - exp(-b*t/m))",
+     "vars": "m g b t",
+     "why": "Separate \\( m\\,dv/dt = mg - bv \\): \\( \\int_0^v dv'/(mg - bv') = t/m \\), so \\( -\\frac1b\\ln\\big(1 - bv/(mg)\\big) = t/m \\) and \\( v = \\dfrac{mg}{b}\\big(1 - e^{-bt/m}\\big) \\)."
+    },
+    {
+     "id": "s6q2",
+     "kp": "k10",
+     "type": "number",
+     "prompt": "An 80.0 kg skydiver has quadratic drag coefficient \\( D = 0.270 \\) kg/m. Using \\( g = 9.80 \\) m/s², find the terminal speed, in m/s.",
+     "answer": "sqrt(80*9.8/0.27)",
+     "why": "At terminal speed \\( Dv_t^2 = mg \\): \\( v_t = \\sqrt{784/0.270} = \\sqrt{2904} = 53.9 \\) m/s.",
+     "tol": 0.005
+    }
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "t": "friction",
+   "d": "The component of a contact force parallel to the surfaces in contact; it opposes relative sliding or its tendency."
+  },
+  {
+   "t": "static friction",
+   "d": "Friction between surfaces not sliding relative to each other; a constraint force with fₛ ≤ μₛN."
+  },
+  {
+   "t": "kinetic friction",
+   "d": "Friction between sliding surfaces, fₖ = μₖN, opposite the relative velocity."
+  },
+  {
+   "t": "coefficient of static friction",
+   "d": "The dimensionless μₛ with fₛ,max = μₛN, depending on the pair of surfaces and their condition."
+  },
+  {
+   "t": "coefficient of kinetic friction",
+   "d": "The dimensionless μₖ with fₖ = μₖN; usually μₖ < μₛ."
+  },
+  {
+   "t": "impending motion",
+   "d": "The threshold of slipping, at which static friction reaches its maximum μₛN."
+  },
+  {
+   "t": "inclined plane",
+   "d": "A flat surface at angle θ to the horizontal; with axes along and perpendicular to it, the weight has components mg sin θ and mg cos θ."
+  },
+  {
+   "t": "critical angle",
+   "d": "The incline angle at which a resting body begins to slide, tan θc = μₛ; independent of mass.",
+   "ex": "Also called the angle of repose for granular materials."
+  },
+  {
+   "t": "drag",
+   "d": "The resistive force of a fluid on a moving body, opposite the velocity relative to the fluid, growing with speed."
+  },
+  {
+   "t": "linear drag",
+   "d": "Drag of magnitude bv, appropriate for small slow bodies in viscous fluids; for a sphere b = 6πηr (Stokes's law)."
+  },
+  {
+   "t": "quadratic drag",
+   "d": "Drag of magnitude Dv², with D = ½CρA, appropriate for everyday bodies moving through air."
+  },
+  {
+   "t": "terminal speed",
+   "d": "The limiting speed of a falling body, at which drag balances weight: mg/b (linear) or √(mg/D) (quadratic)."
+  },
+  {
+   "t": "time constant",
+   "d": "For linear drag, τ = m/b; the speed from rest is v_t(1 − e^(−t/τ)), reaching 63.2% of v_t at t = τ."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "formula",
+   "front": "Static friction law",
+   "back": "\\( f_s \\le \\mu_s N \\), with equality only at impending motion",
+   "kp": "k1"
+  },
+  {
+   "id": "c2",
+   "type": "formula",
+   "front": "Kinetic friction law",
+   "back": "\\( f_k = \\mu_k N \\), opposite the relative velocity",
+   "kp": "k2"
+  },
+  {
+   "id": "c3",
+   "type": "concept",
+   "front": "How is the actual static friction on a body at rest found?",
+   "back": "From Newton's second law (it takes the value that prevents sliding), then checked against μₛN.",
+   "kp": "k1"
+  },
+  {
+   "id": "c4",
+   "type": "concept",
+   "front": "Is friction always opposite to the body's motion?",
+   "back": "No. It opposes relative sliding; static friction accelerates a box forward on the floor of an accelerating truck.",
+   "kp": "k1"
+  },
+  {
+   "id": "c5",
+   "type": "concept",
+   "front": "Two approximate properties of the friction model",
+   "back": "Roughly independent of apparent contact area; kinetic friction roughly independent of speed. Usually μₖ < μₛ.",
+   "kp": "k2"
+  },
+  {
+   "id": "c6",
+   "type": "concept",
+   "front": "Three-step test for sliding",
+   "back": "Assume rest and solve for fₛ and N; if |fₛ| ≤ μₛN it holds; otherwise use fₖ = μₖN.",
+   "kp": "k3"
+  },
+  {
+   "id": "c7",
+   "type": "formula",
+   "front": "Normal force for a pull F at angle φ above horizontal on a level floor",
+   "back": "\\( N = mg - F\\sin\\phi \\)",
+   "kp": "k4"
+  },
+  {
+   "id": "c8",
+   "type": "formula",
+   "front": "Optimal pulling angle and minimum force to start sliding",
+   "back": "\\( \\tan\\phi^* = \\mu_s,\\ F_{\\min} = \\dfrac{\\mu_s mg}{\\sqrt{1+\\mu_s^2}} \\)",
+   "kp": "k4"
+  },
+  {
+   "id": "c9",
+   "type": "formula",
+   "front": "Weight components on an incline of angle θ",
+   "back": "\\( mg\\sin\\theta \\) along the slope, \\( mg\\cos\\theta \\) perpendicular",
+   "kp": "k5"
+  },
+  {
+   "id": "c10",
+   "type": "concept",
+   "front": "Quick check that sine and cosine are not swapped on an incline",
+   "back": "At θ = 0 the along-slope component must vanish; at 90° it must equal mg.",
+   "kp": "k5"
+  },
+  {
+   "id": "c11",
+   "type": "formula",
+   "front": "Frictionless incline: acceleration and normal force",
+   "back": "\\( a = g\\sin\\theta,\\ N = mg\\cos\\theta \\)",
+   "kp": "k6"
+  },
+  {
+   "id": "c12",
+   "type": "problem",
+   "front": "Acceleration on a frictionless 30.0° incline (g = 9.80 m/s²), in m/s²",
+   "back": "\\( a = 9.80\\sin 30.0^\\circ = 4.90 \\) m/s²",
+   "kp": "k6",
+   "answer": "9.8*sin(30*pi/180)",
+   "check": "number"
+  },
+  {
+   "id": "c13",
+   "type": "formula",
+   "front": "Critical angle for a block on an incline",
+   "back": "\\( \\tan\\theta_c = \\mu_s \\) (mass cancels)",
+   "kp": "k7"
+  },
+  {
+   "id": "c14",
+   "type": "concept",
+   "front": "How can μₖ be measured with a tilting board?",
+   "back": "Find the angle at which the block, once started, slides at constant velocity: μₖ = tan θ.",
+   "kp": "k7"
+  },
+  {
+   "id": "c15",
+   "type": "formula",
+   "front": "Acceleration sliding down a rough incline",
+   "back": "\\( a = g(\\sin\\theta - \\mu_k\\cos\\theta) \\)",
+   "kp": "k8"
+  },
+  {
+   "id": "c16",
+   "type": "formula",
+   "front": "Deceleration sliding up a rough incline",
+   "back": "\\( a = g(\\sin\\theta + \\mu_k\\cos\\theta) \\), directed down the slope",
+   "kp": "k8"
+  },
+  {
+   "id": "c17",
+   "type": "concept",
+   "front": "Incline–pulley system with friction: what do you determine first?",
+   "back": "The direction of the tendency to move (ignoring friction); only then the direction of friction.",
+   "kp": "k9"
+  },
+  {
+   "id": "c18",
+   "type": "formula",
+   "front": "Largest force on the lower block of a stack (frictionless floor) with no slipping",
+   "back": "\\( F_{\\max} = \\mu_s(m + M)g \\)",
+   "kp": "k9"
+  },
+  {
+   "id": "c19",
+   "type": "formula",
+   "front": "Terminal speed, linear and quadratic drag",
+   "back": "\\( v_t = mg/b,\\ \\ v_t = \\sqrt{mg/D} \\)",
+   "kp": "k10"
+  },
+  {
+   "id": "c20",
+   "type": "problem",
+   "front": "Speed from rest with linear drag, in terms of v_t, t, τ",
+   "back": "\\( v = v_t(1 - e^{-t/\\tau}),\\ \\tau = m/b \\)",
+   "kp": "k10",
+   "answer": "vt*(1 - exp(-t/tau))",
+   "vars": "vt t tau",
+   "check": "expression"
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k4",
+   "type": "number",
+   "prompt": "A 25.0 kg crate on a level floor (\\( \\mu_s = 0.450 \\)) is pushed with a force directed \\( 30.0^\\circ \\) below the horizontal. Using \\( g = 9.80 \\) m/s², what is the smallest such push, in newtons, that starts it sliding?",
+   "answer": "0.45*25*9.8/(cos(30*pi/180) - 0.45*sin(30*pi/180))",
+   "why": "Vertical: \\( N = mg + F\\sin 30.0^\\circ \\). Impending motion: \\( F\\cos 30.0^\\circ = \\mu_s(mg + F\\sin 30.0^\\circ) \\), so \\( F = \\dfrac{\\mu_s mg}{\\cos 30.0^\\circ - \\mu_s\\sin 30.0^\\circ} = \\dfrac{110.3}{0.866 - 0.225} = 172 \\) N, far more than the 110 N a horizontal push would need.",
+   "tol": 0.005
+  },
+  {
+   "id": "p2",
+   "kp": "k6",
+   "type": "number",
+   "prompt": "A block is released from rest at the top of a frictionless incline 3.00 m long, inclined at \\( 40.0^\\circ \\). Using \\( g = 9.80 \\) m/s², how long does it take to reach the bottom, in seconds?",
+   "answer": "sqrt(2*3/(9.8*sin(40*pi/180)))",
+   "why": "\\( a = 9.80\\sin 40.0^\\circ = 6.30 \\) m/s². \\( d = \\tfrac12 at^2 \\Rightarrow t = \\sqrt{2(3.00)/6.30} = 0.976 \\) s.",
+   "tol": 0.005
+  },
+  {
+   "id": "p3",
+   "kp": "k7",
+   "type": "number",
+   "prompt": "Once started, a book slides down a tilted board at constant velocity when the board is at \\( 22.0^\\circ \\) to the horizontal. Find the coefficient of kinetic friction.",
+   "answer": "tan(22*pi/180)",
+   "why": "Constant velocity means zero net force: \\( mg\\sin 22.0^\\circ = \\mu_k mg\\cos 22.0^\\circ \\), so \\( \\mu_k = \\tan 22.0^\\circ = 0.404 \\).",
+   "tol": 0.005
+  },
+  {
+   "id": "p4",
+   "kp": "k8",
+   "type": "number",
+   "prompt": "A block is launched at 8.00 m/s up a \\( 25.0^\\circ \\) incline with \\( \\mu_k = 0.300 \\). Using \\( g = 9.80 \\) m/s², how far along the incline does it travel before stopping, in meters?",
+   "answer": "8^2/(2*9.8*(sin(25*pi/180) + 0.3*cos(25*pi/180)))",
+   "why": "Going up, friction and the weight component both act down the slope: \\( a = 9.80(\\sin 25.0^\\circ + 0.300\\cos 25.0^\\circ) = 9.80(0.423 + 0.272) = 6.81 \\) m/s². \\( d = 64.0/(2 \\times 6.81) = 4.70 \\) m.",
+   "tol": 0.005
+  },
+  {
+   "id": "p5",
+   "kp": "k7",
+   "type": "written",
+   "prompt": "Prove that the angle at which a block on a tilting board begins to slide does not depend on the block's mass, and explain how this result is used to measure \\( \\mu_s \\). What assumption about the friction model does the proof rely on?",
+   "rubric": [
+    "At rest: N = mg cos θ and required fₛ = mg sin θ",
+    "Slipping begins when mg sin θ = μₛ mg cos θ, so tan θc = μₛ; m cancels",
+    "Measurement: tilt slowly, record θc, μₛ = tan θc",
+    "Relies on fₛ,max being proportional to N with μₛ independent of load (the empirical friction model)"
+   ],
+   "model": "For a block at rest on a board at angle \\( \\theta \\): perpendicular to the board, \\( N = mg\\cos\\theta \\); along it, the required static friction is \\( f_s = mg\\sin\\theta \\). The block stays at rest while \\( mg\\sin\\theta \\le \\mu_s mg\\cos\\theta \\), i.e. \\( \\tan\\theta \\le \\mu_s \\), and begins to slide at \\( \\theta_c \\) with \\( \\tan\\theta_c = \\mu_s \\). The mass cancels because both the driving component and the maximum friction are proportional to \\( m \\). To measure \\( \\mu_s \\), place the block on the board, raise the board slowly, record the angle at which slipping starts, and compute \\( \\tan\\theta_c \\). The proof relies on the empirical rule that the maximum static friction is proportional to the normal force with a coefficient independent of the load (and of contact area); if \\( \\mu_s \\) varied with load, the critical angle would depend on mass.",
+   "why": "The same cancellation makes \\( a = g(\\sin\\theta - \\mu_k\\cos\\theta) \\) independent of mass."
+  },
+  {
+   "id": "p6",
+   "kp": "k9",
+   "type": "number",
+   "prompt": "A 2.00 kg block rests on top of a 5.00 kg block on a frictionless floor; \\( \\mu_s = 0.400 \\) between the blocks. A horizontal force pulls the lower block. Using \\( g = 9.80 \\) m/s², what is the largest force, in newtons, for which the blocks move together?",
+   "answer": "0.4*9.8*7",
+   "why": "The upper block is accelerated only by static friction: \\( ma \\le \\mu_s mg \\Rightarrow a \\le \\mu_s g = 3.92 \\) m/s². Moving together, \\( F = (m + M)a \\le (7.00)(3.92) = 27.4 \\) N.",
+   "tol": 0.005
+  },
+  {
+   "id": "p7",
+   "kp": "k2",
+   "type": "mcq",
+   "prompt": "A crate slides across a floor on its largest face. It is turned onto a face with half the area (same mass, same materials) and slides at the same speed. According to the standard friction model, the kinetic friction force",
+   "options": [
+    "doubles, because the pressure on the smaller face is twice as large",
+    "halves, because the contact area is halved",
+    "stays the same, because it depends only on \\( \\mu_k \\) and \\( N \\)",
+    "depends on the sliding speed, so it cannot be determined"
+   ],
+   "answer": 2,
+   "why": "\\( f_k = \\mu_k N \\), and \\( N = mg \\) is unchanged, so the friction is the same: to a good approximation friction does not depend on the apparent contact area. Options 1 and 2 reason from pressure or area, which the model says do not matter (the true microscopic contact area tracks the load, not the face size). Option 4 contradicts the approximate speed-independence of kinetic friction, and the speed is the same anyway."
+  },
+  {
+   "id": "p8",
+   "kp": "k10",
+   "type": "number",
+   "prompt": "A small object falls from rest with linear drag and time constant \\( \\tau = 0.0200 \\) s. How long, in seconds, does it take to reach 90.0% of its terminal speed?",
+   "answer": "0.02*log(10)",
+   "why": "\\( v/v_t = 1 - e^{-t/\\tau} = 0.900 \\Rightarrow e^{-t/\\tau} = 0.100 \\Rightarrow t = \\tau\\ln 10 = 0.0200(2.303) = 0.0461 \\) s.",
+   "tol": 0.005
+  },
+  {
+   "id": "p9",
+   "kp": "k2",
+   "type": "written",
+   "prompt": "Anti-lock brakes prevent a car's wheels from locking. Using the friction model, explain why a car with anti-lock brakes can stop in a shorter distance than one whose wheels lock, and derive the stopping distance from speed \\( v_0 \\) on a level road in each case.",
+   "rubric": [
+    "A rolling (non-skidding) tire is held by static friction at the contact patch; a locked, skidding tire by kinetic friction",
+    "Maximum braking force μₛmg exceeds μₖmg because μₛ > μₖ",
+    "Deceleration μg, so distance d = v₀²/(2μg): d = v₀²/(2μₛg) versus v₀²/(2μₖg)",
+    "The shorter distance is achieved at the verge of skidding (maximum static friction); the mass cancels"
+   ],
+   "model": "A tire that rolls without skidding has its contact patch momentarily at rest on the road, so the road acts on it through static friction, whose maximum is \\( \\mu_s N \\). A locked wheel skids, and the road acts through kinetic friction \\( \\mu_k N \\). On a level road \\( N = mg \\) (for the car as a whole), so the largest decelerations are \\( \\mu_s g \\) and \\( \\mu_k g \\). From \\( 0 = v_0^2 - 2ad \\), the stopping distances are \\( d_s = v_0^2/(2\\mu_s g) \\) with the wheels kept at the verge of skidding, and \\( d_k = v_0^2/(2\\mu_k g) \\) with the wheels locked. Since \\( \\mu_s > \\mu_k \\) (about 1.0 versus 0.7 for rubber on dry concrete), \\( d_s < d_k \\). Anti-lock systems release and reapply the brakes rapidly to keep the tires near the static limit. (A further benefit, steering control, also comes from not skidding.)",
+   "why": "The mass cancels in both distances; only the coefficients and \\( v_0 \\) matter."
+  },
+  {
+   "id": "p10",
+   "kp": "k5",
+   "type": "number",
+   "prompt": "A 2.00 kg block is held at rest on a frictionless \\( 30.0^\\circ \\) incline by a horizontal force. Using \\( g = 9.80 \\) m/s², find the magnitude of that force, in newtons.",
+   "answer": "2*9.8*tan(30*pi/180)",
+   "why": "Along the slope, the horizontal force's component \\( F\\cos 30.0^\\circ \\) (up the slope) balances \\( mg\\sin 30.0^\\circ \\) (down): \\( F = mg\\tan 30.0^\\circ = 19.6(0.577) = 11.3 \\) N. Perpendicular: \\( N = mg\\cos 30.0^\\circ + F\\sin 30.0^\\circ = 22.6 \\) N, larger than \\( mg\\cos\\theta \\).",
+   "tol": 0.005
+  },
+  {
+   "id": "p11",
+   "kp": "k8",
+   "type": "expression",
+   "prompt": "A block slides up a rough incline of angle \\( \\theta \\) (type `theta`) with kinetic coefficient \\( \\mu \\) (type `mu`). Give the magnitude of its acceleration in terms of \\( g \\), \\( \\theta \\) and \\( \\mu \\).",
+   "answer": "g*(sin(theta) + mu*cos(theta))",
+   "vars": "g theta mu",
+   "why": "Moving up the slope, both the weight component \\( mg\\sin\\theta \\) and friction \\( \\mu mg\\cos\\theta \\) point down the slope: \\( a = g(\\sin\\theta + \\mu\\cos\\theta) \\)."
+  },
+  {
+   "id": "p12",
+   "kp": "k10",
+   "type": "written",
+   "prompt": "(a) Verify by differentiation that \\( v(t) = v_t\\tanh(gt/v_t) \\), with \\( v_t = \\sqrt{mg/D} \\), solves \\( m\\,dv/dt = mg - Dv^2 \\) with \\( v(0) = 0 \\). (b) Explain qualitatively why the speed approaches \\( v_t \\) but never exceeds it for a body dropped from rest.",
+   "rubric": [
+    "Uses d/dx tanh x = 1 − tanh² x (sech² x)",
+    "dv/dt = g(1 − tanh²(gt/vₜ)) = g(1 − v²/vₜ²)",
+    "Multiplying by m and using D = mg/vₜ² gives mg − Dv²; v(0) = vₜ tanh 0 = 0",
+    "(b) While v < vₜ the net force mg − Dv² is positive but shrinks to 0 as v → vₜ; since tanh < 1, v stays below vₜ (at v = vₜ the net force vanishes)"
+   ],
+   "model": "(a) With \\( u = gt/v_t \\), \\( \\dfrac{dv}{dt} = v_t\\,\\mathrm{sech}^2(u)\\,\\dfrac{g}{v_t} = g\\big(1 - \\tanh^2 u\\big) = g\\Big(1 - \\dfrac{v^2}{v_t^2}\\Big) \\). Multiplying by \\( m \\) and using \\( m g/v_t^2 = D \\): \\( m\\,\\dfrac{dv}{dt} = mg - Dv^2 \\). Also \\( v(0) = v_t\\tanh 0 = 0 \\). (b) For \\( 0 \\le v < v_t \\) the net force \\( mg - Dv^2 \\) is positive, so the body keeps speeding up, but the net force, and hence the acceleration, shrinks to zero as \\( v \\to v_t \\). The speed can therefore approach \\( v_t \\) but not pass it: at \\( v = v_t \\) the net force is zero, and the solution \\( \\tanh u < 1 \\) for every finite \\( u \\) confirms that \\( v_t \\) is only approached asymptotically.",
+   "why": "Both drag laws give the same qualitative picture; they differ in how fast \\( v_t \\) is approached."
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k9",
+   "type": "number",
+   "prompt": "A 4.00 kg block on a \\( 35.0^\\circ \\) incline (\\( \\mu_s = 0.300 \\), \\( \\mu_k = 0.200 \\)) is tied by a rope parallel to the incline, over an ideal pulley at the top, to a hanging 1.00 kg mass. The system is released from rest. Using \\( g = 9.80 \\) m/s², find the magnitude of the acceleration, in m/s² (enter 0 if the system stays at rest).",
+   "answer": "(4*9.8*sin(35*pi/180) - 9.8 - 0.2*4*9.8*cos(35*pi/180))/5",
+   "why": "Tendency: \\( m_1 g\\sin 35.0^\\circ = 22.5 \\) N down the slope versus \\( m_2 g = 9.80 \\) N, so the block tends to slide down, with net driving force 12.7 N. Maximum static friction: \\( 0.300(4.00)(9.80)\\cos 35.0^\\circ = 9.63 \\) N \\( < 12.7 \\) N, so it slides. Kinetic friction \\( 0.200(4.00)(9.80)(0.819) = 6.42 \\) N acts up the slope. \\( a = (22.5 - 9.80 - 6.42)/5.00 = 1.25 \\) m/s²; the block moves down, the hanging mass up.",
+   "tol": 0.005
+  },
+  {
+   "id": "e2",
+   "kp": "k8",
+   "type": "written",
+   "prompt": "A block of mass \\( m \\) is on an incline of angle \\( \\theta \\) with coefficients \\( \\mu_s \\) and \\( \\mu_k \\). (a) Derive the condition for it to remain at rest. (b) Derive its acceleration when sliding down and when sliding up. (c) A block launched up the incline stops at its highest point. State precisely what happens next, in terms of \\( \\theta \\) and \\( \\mu_s \\).",
+   "rubric": [
+    "(a) N = mg cos θ, required fₛ = mg sin θ ≤ μₛ mg cos θ, i.e. tan θ ≤ μₛ",
+    "(b) Down: a = g(sin θ − μₖ cos θ) down the slope; up: a = g(sin θ + μₖ cos θ) down the slope (decelerating)",
+    "Friction reverses with the velocity, so the two accelerations differ",
+    "(c) It stays at rest if tan θ ≤ μₛ; otherwise it slides back down with a = g(sin θ − μₖ cos θ)"
+   ],
+   "model": "(a) Axes along (down-slope positive) and perpendicular to the incline. Perpendicular: \\( N = mg\\cos\\theta \\). At rest the required static friction is \\( f_s = mg\\sin\\theta \\), up the slope. Rest is possible iff \\( mg\\sin\\theta \\le \\mu_s mg\\cos\\theta \\), i.e. \\( \\tan\\theta \\le \\mu_s \\). (b) Sliding down, kinetic friction points up the slope: \\( ma = mg\\sin\\theta - \\mu_k mg\\cos\\theta \\), so \\( a = g(\\sin\\theta - \\mu_k\\cos\\theta) \\) down the slope. Sliding up, friction points down the slope, adding to the weight component: \\( a = g(\\sin\\theta + \\mu_k\\cos\\theta) \\) directed down the slope, a deceleration. (c) At the highest point the velocity is momentarily zero and friction becomes static. If \\( \\tan\\theta \\le \\mu_s \\) the required static friction \\( mg\\sin\\theta \\) is available and the block remains at rest. If \\( \\tan\\theta > \\mu_s \\), it slides back down with the smaller acceleration \\( g(\\sin\\theta - \\mu_k\\cos\\theta) \\).",
+   "why": "The mass cancels in every result, a consequence of friction and weight components both being proportional to \\( m \\)."
+  },
+  {
+   "id": "e3",
+   "kp": "k4",
+   "type": "number",
+   "prompt": "A 40.0 kg crate rests on a level floor with \\( \\mu_s = 0.600 \\). It is pulled with a rope at the angle above the horizontal that minimizes the force needed to start it moving. Using \\( g = 9.80 \\) m/s², find that minimum force, in newtons.",
+   "answer": "0.6*40*9.8/sqrt(1 + 0.6^2)",
+   "why": "The optimal angle satisfies \\( \\tan\\phi^* = \\mu_s = 0.600 \\) (\\( \\phi^* = 31.0^\\circ \\)). \\( F_{\\min} = \\mu_s mg/\\sqrt{1 + \\mu_s^2} = 235.2/1.166 = 202 \\) N, compared with 235 N for a horizontal pull.",
+   "tol": 0.005
+  },
+  {
+   "id": "e4",
+   "kp": "k10",
+   "type": "number",
+   "prompt": "A 0.500 kg object is dropped from rest and experiences linear drag with \\( b = 0.250 \\) kg/s. Using \\( g = 9.80 \\) m/s², find its speed 2.00 s after release, in m/s.",
+   "answer": "(0.5*9.8/0.25)*(1 - exp(-0.25*2/0.5))",
+   "why": "\\( v_t = mg/b = 19.6 \\) m/s and \\( \\tau = m/b = 2.00 \\) s. \\( v(2.00) = 19.6(1 - e^{-1}) = 19.6(0.632) = 12.4 \\) m/s. Without drag it would be 19.6 m/s.",
+   "tol": 0.005
+  },
+  {
+   "id": "e5",
+   "kp": "k1",
+   "type": "written",
+   "prompt": "A crate sits on the flat bed of a truck, with coefficient of static friction \\( \\mu_s \\) between crate and bed. The truck accelerates forward from rest. (a) What horizontal force accelerates the crate, and in which direction does it point? (b) Derive the largest acceleration the truck can have without the crate slipping. (c) If the truck exceeds it, describe the crate's motion relative to the ground and relative to the truck.",
+   "rubric": [
+    "(a) Static friction from the bed, pointing forward (in the direction of the truck's acceleration)",
+    "Friction opposes the relative sliding that would occur (the crate would slide backward relative to the bed)",
+    "(b) f_s = m a ≤ μₛ m g, so a_max = μₛ g, independent of the crate's mass",
+    "(c) The crate slides backward relative to the truck, while kinetic friction still accelerates it forward relative to the ground at μₖ g"
+   ],
+   "model": "(a) The only horizontal force on the crate is friction from the truck bed. If the crate moves with the truck, it accelerates forward, so this friction is static and points forward. It opposes the relative sliding that would occur without it: on a frictionless bed the crate would stay behind, sliding backward relative to the bed. (b) Vertically \\( N = mg \\). Moving together requires \\( f_s = ma \\le \\mu_s mg \\), so \\( a_{\\max} = \\mu_s g \\), independent of the crate's mass. (c) If the truck accelerates faster, the crate slips. Relative to the truck it slides backward. Relative to the ground it still moves forward, accelerated by kinetic friction at \\( \\mu_k g \\), which is less than the truck's acceleration, so it lags behind until it reaches the tailgate or the truck stops accelerating.",
+   "why": "Friction opposes relative motion between the surfaces, not motion relative to the ground."
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "Static friction",
+    "formula": "\\( f_s \\le \\mu_s N \\)",
+    "when": "Surfaces not sliding.",
+    "example": "crate at rest pushed with 30.0 N: \\( f_s = 30.0 \\) N",
+    "watch": "\\( \\mu_s N \\) is the maximum, not the value."
+   },
+   {
+    "name": "Kinetic friction",
+    "formula": "\\( f_k = \\mu_k N \\)",
+    "when": "Surfaces sliding.",
+    "example": "20.0 kg, \\( \\mu_k = 0.400 \\): 78.4 N",
+    "watch": "Direction opposite the relative velocity."
+   },
+   {
+    "name": "Test for sliding",
+    "formula": "required \\( |f_s| \\) vs \\( \\mu_s N \\)",
+    "when": "Any problem where motion is not given.",
+    "example": "pull 95.0 N at 30°: needs 82.3 N, limit 74.3 N, slides",
+    "watch": "Use the actual N from the diagram."
+   },
+   {
+    "name": "Optimal pulling angle",
+    "formula": "\\( \\tan\\phi^* = \\mu_s,\\ F_{\\min} = \\mu_s mg/\\sqrt{1+\\mu_s^2} \\)",
+    "when": "Least force to start a crate sliding.",
+    "example": "\\( \\mu_s = 0.500 \\), 196 N: 26.6°, 87.7 N",
+    "watch": "A push below the horizontal increases N."
+   },
+   {
+    "name": "Incline components",
+    "formula": "\\( mg\\sin\\theta \\) along, \\( mg\\cos\\theta \\) perpendicular",
+    "when": "Any body on an incline.",
+    "example": "25.0°, frictionless: \\( a = 4.14 \\) m/s²",
+    "watch": "Check θ = 0 and 90°."
+   },
+   {
+    "name": "Critical angle",
+    "formula": "\\( \\tan\\theta_c = \\mu_s \\); constant velocity: \\( \\tan\\theta = \\mu_k \\)",
+    "when": "Will a block on an incline slip?",
+    "example": "\\( \\mu_s = 0.350 \\): \\( 19.3^\\circ \\)",
+    "watch": "Independent of mass."
+   },
+   {
+    "name": "Rough incline",
+    "formula": "down: \\( g(\\sin\\theta - \\mu_k\\cos\\theta) \\); up: \\( g(\\sin\\theta + \\mu_k\\cos\\theta) \\)",
+    "when": "Block sliding on a rough incline.",
+    "example": "6.00 m/s up 30°, \\( \\mu_k = 0.200 \\): 2.73 m, returns at 4.18 m/s",
+    "watch": "Friction reverses with the velocity."
+   },
+   {
+    "name": "Stacked blocks",
+    "formula": "\\( F_{\\max} = \\mu_s(m+M)g \\)",
+    "when": "Force on the lower block, frictionless floor.",
+    "example": "2.00 on 5.00 kg, \\( \\mu_s = 0.400 \\): 27.4 N",
+    "watch": "Friction on the top block points forward."
+   },
+   {
+    "name": "Linear drag",
+    "formula": "\\( v = v_t(1 - e^{-t/\\tau}),\\ v_t = mg/b,\\ \\tau = m/b \\)",
+    "when": "Small slow bodies in a fluid.",
+    "example": "0.200 kg, \\( b = 0.0800 \\) kg/s: \\( v_t = 24.5 \\) m/s, \\( \\tau = 2.50 \\) s",
+    "watch": "Not constant acceleration."
+   },
+   {
+    "name": "Quadratic drag",
+    "formula": "\\( v_t = \\sqrt{mg/D} \\)",
+    "when": "Everyday bodies in air.",
+    "example": "75.0 kg, \\( D = 0.250 \\) kg/m: 54.2 m/s",
+    "watch": "D depends on shape and area."
+   }
+  ],
+  "stuck": [
+   "Before writing friction as μN, ask: are the surfaces sliding? If not known, assume not and test.",
+   "Find N from the perpendicular equation first; it is rarely just mg.",
+   "On an incline, tilt the axes so that the acceleration lies along x.",
+   "For connected bodies, find the direction of the tendency to move with friction ignored, then add friction against it.",
+   "If a speed-dependent force appears, write m dv/dt = F(v) and separate variables; constant-acceleration formulas are invalid."
+  ]
+ }
+}

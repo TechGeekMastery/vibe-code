@@ -1,0 +1,782 @@
+{
+ "key": "mth-2-3",
+ "title": "Improper integrals",
+ "v": 1,
+ "scope": "Improper integrals over infinite intervals and of unbounded integrands (at endpoints and interior points), convergence and divergence, the whole-line definition versus the principal value, the p-integrals and exponential benchmarks, and the direct and limit comparison theorems; series and the integral test belong to later topics.",
+ "sources": [
+  {
+   "title": "OpenStax, Calculus Volume 2, Section 3.7: Improper Integrals",
+   "url": "https://openstax.org/books/calculus-volume-2/pages/3-7-improper-integrals"
+  },
+  {
+   "title": "Paul Dawkins, Paul's Online Math Notes, Calculus II: Improper Integrals",
+   "url": "https://tutorial.math.lamar.edu/Classes/CalcII/ImproperIntegrals.aspx"
+  },
+  {
+   "title": "Paul Dawkins, Paul's Online Math Notes, Calculus II: Comparison Test for Improper Integrals",
+   "url": "https://tutorial.math.lamar.edu/Classes/CalcII/ImproperIntegralsCompTest.aspx"
+  },
+  {
+   "title": "OpenStax, Calculus Volume 2, Chapter 3 Key Concepts",
+   "url": "https://openstax.org/books/calculus-volume-2/pages/3-key-concepts"
+  }
+ ],
+ "pre": [
+  "mth-2-0",
+  "mth-2-2",
+  "mth-1-10",
+  "mth-1-12"
+ ],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Define integrals over infinite intervals",
+   "d": "State the limit definition of an integral over [a, ∞) or (−∞, b] and of convergence and divergence.",
+   "type": "concept"
+  },
+  {
+   "id": "k2",
+   "t": "Evaluate integrals over infinite intervals",
+   "d": "Compute the integral on [a, t], take the limit as t → ∞ (using L'Hôpital's rule where needed), and decide convergence.",
+   "type": "procedure"
+  },
+  {
+   "id": "k3",
+   "t": "Integrals over the whole line",
+   "d": "Split an integral over (−∞, ∞) at a point, require both halves to converge, and distinguish it from the symmetric (principal value) limit.",
+   "type": "distinction"
+  },
+  {
+   "id": "k4",
+   "t": "Integrands unbounded at an endpoint",
+   "d": "Define and evaluate an integral whose integrand is unbounded near an endpoint by a one-sided limit.",
+   "type": "procedure"
+  },
+  {
+   "id": "k5",
+   "t": "Singularities inside the interval",
+   "d": "Detect a point inside the interval where the integrand is unbounded, split there, and recognise that a naive use of the Fundamental Theorem gives a false value.",
+   "type": "skill"
+  },
+  {
+   "id": "k6",
+   "t": "The p-integrals",
+   "d": "State and prove when the integrals of 1/x^p over [1, ∞) and over (0, 1] converge, and give their values.",
+   "type": "fact"
+  },
+  {
+   "id": "k7",
+   "t": "The direct comparison theorem",
+   "d": "State the comparison theorem for nonnegative integrands, prove it from monotonicity of the accumulation function, and apply it in the correct direction.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k8",
+   "t": "The limit comparison theorem",
+   "d": "Apply limit comparison with 0 < L < ∞ at an infinite endpoint or at a singular endpoint.",
+   "type": "procedure"
+  },
+  {
+   "id": "k9",
+   "t": "Choosing a comparison function",
+   "d": "Identify the dominant behaviour of an integrand at each problematic endpoint and choose a p-integral or exponential to compare with, splitting the interval when both ends are problematic.",
+   "type": "skill"
+  }
+ ],
+ "intro": "The definite integral of Calculus I is defined for a bounded function on a closed, bounded interval, through Riemann sums with finitely many pieces of finite width and height. Many natural questions do not fit that frame. The work needed to move a mass infinitely far from the Earth, the total probability of a waiting time that can be arbitrarily long, and the area under \\( y = 1/\\sqrt{x} \\) between \\( 0 \\) and \\( 1 \\), where the graph has a vertical asymptote, all involve either an unbounded interval or an unbounded integrand. Integrals of this kind are called **improper**.\n\nThe remedy is to integrate over a region where the ordinary integral makes sense and then take a limit. The central question is when that limit exists. Some unbounded regions have finite area and some do not, and the difference is decided by how fast the integrand decays or how mildly it blows up. This chapter defines both kinds of improper integral, establishes the benchmark \\( p \\)-integrals, and develops comparison theorems that decide convergence without computing an antiderivative.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "Integrals over infinite intervals",
+   "kps": [
+    "k1",
+    "k2"
+   ],
+   "md": "This section defines the integral of a function over an unbounded interval such as \\( [a, \\infty) \\) and shows how to evaluate it.\n\nA Riemann sum over \\( [a, \\infty) \\) would need infinitely many subintervals, so the definition of Calculus I does not apply. But for every finite \\( t > a \\) the ordinary integral \\( \\int_{a}^{t} f(x)\\,dx \\) makes sense, and we can ask what happens to it as \\( t \\) grows.\n\n> **Definition.** Let \\( f \\) be continuous on \\( [a, \\infty) \\). The **improper integral** of \\( f \\) over \\( [a, \\infty) \\) is \\[ \\int_{a}^{\\infty} f(x)\\,dx = \\lim_{t\\to\\infty}\\int_{a}^{t} f(x)\\,dx. \\] If this limit exists as a finite number, the improper integral **converges** and its value is the limit; otherwise it **diverges**. Similarly, for \\( f \\) continuous on \\( (-\\infty, b] \\), \\( \\int_{-\\infty}^{b} f(x)\\,dx = \\lim_{t\\to-\\infty}\\int_{t}^{b} f(x)\\,dx \\).\n\nContinuity guarantees that each \\( \\int_{a}^{t} f \\) exists; all the difficulty is in the limit. Some texts call these integrals of **type 1**.\n\n**Worked example 1.** For \\( \\int_{1}^{\\infty}\\frac{dx}{x^{2}} \\): \\( \\int_{1}^{t}\\frac{dx}{x^{2}} = \\Big[-\\frac1x\\Big]_{1}^{t} = 1 - \\frac1t \\), and \\( 1 - \\frac1t \\to 1 \\) as \\( t \\to \\infty \\). The integral converges to \\( 1 \\): the unbounded region under \\( y = 1/x^{2} \\) to the right of \\( x = 1 \\) has area \\( 1 \\).\n\n**Worked example 2.** For \\( \\int_{1}^{\\infty}\\frac{dx}{x} \\): \\( \\int_{1}^{t}\\frac{dx}{x} = \\ln t \\to \\infty \\). The integral diverges.\n\nIn the graph, drag \\( b \\). The shaded area under \\( 1/x^{2} \\) from \\( 1 \\) to \\( b \\) is \\( 1 - 1/b \\), which increases but never exceeds \\( 1 \\). The corresponding area under \\( 1/x \\) is \\( \\ln b \\), which grows without bound, although slowly.\n\n```plot\nx: 0, 10\ny: 0, 1.5\nslider: b, 1, 10, 3 | b\nf: 1/x^2 | y = 1/x²\nf: 1/x | y = 1/x\nshade: 1/x^2, 1, b | area under 1/x² from 1 to b\nvline: b\n```\n\nBoth integrands tend to \\( 0 \\); what differs is how fast. That \\( f(x) \\to 0 \\) is therefore not sufficient for convergence. (It is not strictly necessary either: a continuous function with ever narrower spikes can have a convergent integral without tending to \\( 0 \\).)\n\n**Worked example 3.** Evaluate \\( \\int_{0}^{\\infty}xe^{-x}\\,dx \\). By parts with \\( u = x \\), \\( dv = e^{-x}dx \\),\n\\[ \\int_{0}^{t}xe^{-x}\\,dx = \\Big[-xe^{-x} - e^{-x}\\Big]_{0}^{t} = 1 - te^{-t} - e^{-t}. \\]\nThe term \\( te^{-t} = \\frac{t}{e^{t}} \\) is of the form \\( \\frac{\\infty}{\\infty} \\); by L'Hôpital's rule \\( \\lim_{t\\to\\infty}\\frac{t}{e^{t}} = \\lim_{t\\to\\infty}\\frac{1}{e^{t}} = 0 \\). Hence the integral converges to \\( 1 \\).\n\nA common shorthand writes \\( \\Big[F(x)\\Big]_{a}^{\\infty} \\) for \\( \\lim_{t\\to\\infty}F(t) - F(a) \\). It is acceptable once the limit is understood, but the limit must actually be computed.\n\n**The common mistakes.** Substituting \\( \\infty \\) into an expression as if it were a number, which hides indeterminate forms such as \\( \\infty\\cdot 0 \\) in \\( te^{-t} \\); concluding convergence from \\( f(x) \\to 0 \\); and assigning a value to a divergent integral. \"Diverges\" is the complete answer when the limit does not exist.",
+   "questions": [
+    {
+     "id": "s1q1",
+     "kp": "k2",
+     "type": "number",
+     "prompt": "Evaluate \\( \\int_{1}^{\\infty}\\frac{\\ln x}{x^{2}}\\,dx \\).",
+     "why": "By parts with \\( u = \\ln x \\), \\( dv = x^{-2}dx \\): \\( v = -\\frac1x \\), so \\( \\int_{1}^{t}\\frac{\\ln x}{x^{2}}dx = \\Big[-\\frac{\\ln x}{x}\\Big]_{1}^{t} + \\int_{1}^{t}\\frac{dx}{x^{2}} = -\\frac{\\ln t}{t} + 1 - \\frac1t \\). By L'Hôpital, \\( \\frac{\\ln t}{t} \\to \\lim\\frac{1/t}{1} = 0 \\). The integral converges to \\( 1 \\).",
+     "answer": "1"
+    },
+    {
+     "id": "s1q2",
+     "kp": "k1",
+     "type": "written",
+     "prompt": "A student argues: “\\( \\frac{1}{x} \\to 0 \\) as \\( x \\to \\infty \\), so the area under \\( y = 1/x \\) on \\( [1, \\infty) \\) must be finite.” State the definition of \\( \\int_{1}^{\\infty} f(x)\\,dx \\), use it to show that the argument's conclusion is false, and contrast with \\( \\int_{1}^{\\infty}\\frac{dx}{x^{2}} \\).",
+     "why": "Convergence is a statement about the limit of the accumulated area, not about the limit of the integrand; the rate of decay is what matters.",
+     "rubric": [
+      "States \\( \\int_{1}^{\\infty} f = \\lim_{t\\to\\infty}\\int_{1}^{t} f \\), convergent when the limit is finite.",
+      "Computes \\( \\int_{1}^{t}\\frac{dx}{x} = \\ln t \\to \\infty \\): divergent.",
+      "Computes \\( \\int_{1}^{t}\\frac{dx}{x^{2}} = 1 - \\frac1t \\to 1 \\): convergent.",
+      "Concludes that \\( f(x) \\to 0 \\) is not sufficient; what matters is how fast \\( f \\) decays."
+     ],
+     "model": "By definition \\( \\int_{1}^{\\infty} f(x)\\,dx = \\lim_{t\\to\\infty}\\int_{1}^{t} f(x)\\,dx \\), and the integral converges when this limit is a finite number. For \\( f(x) = \\frac1x \\), \\( \\int_{1}^{t}\\frac{dx}{x} = \\ln t \\), which tends to \\( \\infty \\); so the integral diverges even though \\( \\frac1x \\to 0 \\). For \\( f(x) = \\frac{1}{x^{2}} \\), \\( \\int_{1}^{t}\\frac{dx}{x^{2}} = 1 - \\frac1t \\to 1 \\), so that integral converges. Both integrands tend to \\( 0 \\); the difference is the rate. The student's inference treats \\( f(x) \\to 0 \\) as sufficient for convergence, and the example \\( \\frac1x \\) shows it is not."
+    },
+    {
+     "id": "s1q3",
+     "kp": "k2",
+     "type": "number",
+     "prompt": "Evaluate \\( \\int_{2}^{\\infty}\\frac{dx}{x^{2} - 1} \\) exactly (partial fractions will help).",
+     "why": "\\( \\frac{1}{x^{2}-1} = \\frac12\\Big(\\frac{1}{x-1} - \\frac{1}{x+1}\\Big) \\), so \\( \\int_{2}^{t}\\frac{dx}{x^{2}-1} = \\frac12\\ln\\frac{t-1}{t+1} - \\frac12\\ln\\frac13 \\). As \\( t \\to \\infty \\), \\( \\frac{t-1}{t+1} \\to 1 \\) and its logarithm tends to \\( 0 \\). The integral converges to \\( \\frac12\\ln 3 \\approx 0.549 \\).",
+     "answer": "log(3)/2"
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "Integrals over the whole real line",
+   "kps": [
+    "k3"
+   ],
+   "md": "This section extends the definition to the whole real line and explains why the two infinite ends must be handled separately.\n\n> **Definition.** Let \\( f \\) be continuous on \\( (-\\infty, \\infty) \\). Choose any number \\( c \\) and define \\[ \\int_{-\\infty}^{\\infty} f(x)\\,dx = \\int_{-\\infty}^{c} f(x)\\,dx + \\int_{c}^{\\infty} f(x)\\,dx. \\] The integral converges if and only if **both** improper integrals on the right converge; otherwise it diverges.\n\nThe choice of \\( c \\) does not matter. Replacing \\( c \\) by \\( c' \\) adds \\( \\int_{c}^{c'} f \\), a finite number, to one piece and subtracts it from the other, so neither piece changes from convergent to divergent and the sum is unchanged.\n\n**Worked example.** Evaluate \\( \\int_{-\\infty}^{\\infty}\\frac{dx}{1 + x^{2}} \\). Take \\( c = 0 \\):\n\\[ \\int_{0}^{\\infty}\\frac{dx}{1+x^{2}} = \\lim_{t\\to\\infty}\\arctan t = \\frac{\\pi}{2}, \\qquad \\int_{-\\infty}^{0}\\frac{dx}{1+x^{2}} = \\lim_{t\\to-\\infty}\\big(0 - \\arctan t\\big) = \\frac{\\pi}{2}. \\]\nBoth converge, so \\( \\int_{-\\infty}^{\\infty}\\frac{dx}{1+x^{2}} = \\pi \\).\n\n**Why not one symmetric limit?** It is tempting to define \\( \\int_{-\\infty}^{\\infty} f \\) as \\( \\lim_{t\\to\\infty}\\int_{-t}^{t} f \\). Consider \\( f(x) = x \\). For every \\( t \\), \\( \\int_{-t}^{t}x\\,dx = 0 \\), so the symmetric limit is \\( 0 \\). But \\( \\int_{0}^{\\infty}x\\,dx = \\lim_{t\\to\\infty}\\frac{t^{2}}{2} = \\infty \\), so by the definition the integral diverges. The symmetric limit lets an infinite positive area cancel an infinite negative area, which is exactly the cancellation \"\\( \\infty - \\infty \\)\" that has no meaning. The symmetric limit has a name, the **Cauchy principal value**, and it is a different notion. If the improper integral converges, its value equals the principal value; the converse fails, as \\( f(x) = x \\) shows. Equivalently, the definition requires the two ends to go to infinity independently: \\( \\int_{-\\infty}^{\\infty} f = \\lim_{s\\to-\\infty,\\ t\\to\\infty}\\int_{s}^{t} f \\), with no relation between \\( s \\) and \\( t \\).\n\n**Symmetry, used correctly.** For \\( \\int_{-\\infty}^{\\infty}xe^{-x^{2}}\\,dx \\), first check each half: with \\( w = x^{2} \\),\n\\[ \\int_{0}^{\\infty}xe^{-x^{2}}\\,dx = \\lim_{t\\to\\infty}\\Big[-\\tfrac12e^{-x^{2}}\\Big]_{0}^{t} = \\frac12, \\]\nand by the same computation \\( \\int_{-\\infty}^{0}xe^{-x^{2}}\\,dx = -\\frac12 \\). Both converge, so the integral converges and equals \\( 0 \\). The conclusion \"odd integrand, so the integral is \\( 0 \\)\" is valid only after convergence of each half has been established; for \\( x \\), \\( x^{3} \\) or \\( \\sin x \\) it is false, because those integrals diverge.\n\n**The common mistakes.** Evaluating \\( \\lim_{t\\to\\infty}\\int_{-t}^{t} f \\) and reporting it as the integral; declaring the integral of an odd function over \\( (-\\infty, \\infty) \\) to be zero without checking convergence; and stopping after one half converges when the other half diverges.",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k3",
+     "type": "number",
+     "prompt": "Evaluate \\( \\int_{-\\infty}^{\\infty}\\frac{dx}{x^{2} + 4x + 5} \\).",
+     "why": "Complete the square: \\( x^{2} + 4x + 5 = (x+2)^{2} + 1 \\), so an antiderivative is \\( \\arctan(x+2) \\). Split at \\( c = -2 \\): \\( \\int_{-2}^{\\infty} = \\lim_{t\\to\\infty}\\arctan(t+2) - 0 = \\frac{\\pi}{2} \\) and \\( \\int_{-\\infty}^{-2} = 0 - \\lim_{t\\to-\\infty}\\arctan(t+2) = \\frac{\\pi}{2} \\). Both converge; the integral is \\( \\pi \\).",
+     "answer": "pi"
+    },
+    {
+     "id": "s2q2",
+     "kp": "k3",
+     "type": "written",
+     "prompt": "Show that \\( \\lim_{t\\to\\infty}\\int_{-t}^{t}\\frac{x}{1 + x^{2}}\\,dx = 0 \\), and prove that nevertheless \\( \\int_{-\\infty}^{\\infty}\\frac{x}{1 + x^{2}}\\,dx \\) diverges. Explain why the definition is framed so that the first computation does not decide the second.",
+     "why": "The definition requires each infinite end to be handled on its own; the symmetric limit (the Cauchy principal value) allows infinite areas of opposite sign to cancel.",
+     "rubric": [
+      "Computes \\( \\int_{-t}^{t}\\frac{x}{1+x^{2}}dx = \\frac12\\ln(1+t^{2}) - \\frac12\\ln(1+t^{2}) = 0 \\) (odd integrand).",
+      "States the definition: split at a point, e.g. \\( 0 \\), and require both halves to converge.",
+      "Shows \\( \\int_{0}^{\\infty}\\frac{x}{1+x^{2}}dx = \\lim\\frac12\\ln(1+t^{2}) = \\infty \\), so the integral diverges.",
+      "Explains that the symmetric limit lets \\( +\\infty \\) and \\( -\\infty \\) cancel; the definition requires the ends to go to infinity independently, and the symmetric limit is the principal value, a different notion."
+     ],
+     "model": "An antiderivative is \\( \\frac12\\ln(1+x^{2}) \\), which is even, so \\( \\int_{-t}^{t}\\frac{x}{1+x^{2}}dx = \\frac12\\ln(1+t^{2}) - \\frac12\\ln(1+t^{2}) = 0 \\) for every \\( t \\), and the symmetric limit is \\( 0 \\). By definition, however, \\( \\int_{-\\infty}^{\\infty} f = \\int_{-\\infty}^{0} f + \\int_{0}^{\\infty} f \\), and it converges only if both pieces do. Here \\( \\int_{0}^{\\infty}\\frac{x}{1+x^{2}}dx = \\lim_{t\\to\\infty}\\frac12\\ln(1+t^{2}) = \\infty \\), so that piece diverges and the integral diverges. The definition is framed this way because the symmetric computation balances an infinite positive area on the right against an infinite negative area on the left, an instance of \\( \\infty - \\infty \\), which has no value; if the two ends were allowed to recede at different rates, say \\( \\int_{-t}^{2t} \\), the limit would be \\( \\frac12\\ln 4 = \\ln 2 \\) instead of \\( 0 \\). Requiring the ends to go to infinity independently removes this dependence. The symmetric limit is called the Cauchy principal value; it can exist when the improper integral does not."
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "Unbounded integrands",
+   "kps": [
+    "k4",
+    "k5"
+   ],
+   "md": "The second way an integral can be improper is that the integrand is unbounded near a point of the interval, typically at a vertical asymptote. This section defines such integrals, including the case of a singular point inside the interval, which is easy to overlook.\n\n> **Definition.** Let \\( f \\) be continuous on \\( [a, b) \\) and unbounded near \\( b \\). Then \\[ \\int_{a}^{b} f(x)\\,dx = \\lim_{t\\to b^{-}}\\int_{a}^{t} f(x)\\,dx. \\] If \\( f \\) is continuous on \\( (a, b] \\) and unbounded near \\( a \\), then \\( \\int_{a}^{b} f(x)\\,dx = \\lim_{t\\to a^{+}}\\int_{t}^{b} f(x)\\,dx \\). The integral converges if the limit exists as a finite number and diverges otherwise.\n\nIf \\( f \\) is unbounded near an interior point \\( c \\in (a, b) \\) and continuous elsewhere on \\( [a, b] \\), define\n\\[ \\int_{a}^{b} f(x)\\,dx = \\int_{a}^{c} f(x)\\,dx + \\int_{c}^{b} f(x)\\,dx, \\]\nwhich converges only if both pieces converge. Some texts call these integrals of **type 2**.\n\n**Worked example 1.** \\( \\int_{0}^{1}\\frac{dx}{\\sqrt{x}} = \\lim_{a\\to0^{+}}\\Big[2\\sqrt{x}\\Big]_{a}^{1} = \\lim_{a\\to0^{+}}(2 - 2\\sqrt{a}) = 2. \\) Drag \\( a \\) toward \\( 0 \\) in the graph: the curve rises without bound, but the shaded area \\( 2 - 2\\sqrt{a} \\) increases only to \\( 2 \\).\n\n```plot\nx: 0, 1.5\ny: 0, 8\nslider: a, 0.005, 1, 0.3 | a\nf: 1/sqrt(x) | y = 1/√x\nshade: 1/sqrt(x), a, 1 | area from a to 1\n```\n\n**Worked example 2.** Evaluate \\( \\int_{0}^{1}\\ln x\\,dx \\). The integrand tends to \\( -\\infty \\) as \\( x \\to 0^{+} \\). With the antiderivative \\( x\\ln x - x \\),\n\\[ \\int_{t}^{1}\\ln x\\,dx = (0 - 1) - (t\\ln t - t). \\]\nBy L'Hôpital's rule, \\( \\lim_{t\\to0^{+}}t\\ln t = \\lim_{t\\to0^{+}}\\frac{\\ln t}{1/t} = \\lim_{t\\to0^{+}}\\frac{1/t}{-1/t^{2}} = \\lim_{t\\to0^{+}}(-t) = 0 \\). So the integral converges to \\( -1 \\), negative because the region lies below the axis.\n\n**Worked example 3 (interior singularity).** Evaluate \\( \\int_{0}^{3}\\frac{dx}{\\sqrt[3]{(x-1)^{2}}} \\). The integrand is unbounded at \\( x = 1 \\), so split there. An antiderivative is \\( 3\\sqrt[3]{x-1} \\), which is continuous. Then\n\\[ \\int_{0}^{1} = \\lim_{t\\to1^{-}}3\\sqrt[3]{t-1} - 3\\sqrt[3]{-1} = 0 + 3 = 3, \\qquad \\int_{1}^{3} = 3\\sqrt[3]{2} - \\lim_{t\\to1^{+}}3\\sqrt[3]{t-1} = 3\\sqrt[3]{2}. \\]\nBoth converge, so the integral equals \\( 3 + 3\\sqrt[3]{2} \\approx 6.78 \\).\n\n**A singularity that is easy to miss.** Consider \\( \\int_{-1}^{1}\\frac{dx}{x^{2}} \\). Applying the Fundamental Theorem of Calculus blindly gives \\( \\Big[-\\frac1x\\Big]_{-1}^{1} = -1 - 1 = -2 \\), a negative value for the integral of a positive function, which is absurd. The theorem does not apply, because \\( \\frac{1}{x^{2}} \\) is not continuous on \\( [-1, 1] \\). Correctly, split at \\( 0 \\): \\( \\int_{0}^{1}\\frac{dx}{x^{2}} = \\lim_{t\\to0^{+}}\\Big(\\frac1t - 1\\Big) = \\infty \\), so that piece diverges and so does the whole integral. Before evaluating any definite integral, check the integrand on the entire closed interval.\n\n**The common mistakes.** Not noticing an interior zero of a denominator (or a point where a logarithm or a negative power blows up); accepting the integral because one of the two pieces converges; and using a two-sided limit at an interior point, which is the principal-value error of the previous section in a new place.",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k4",
+     "type": "number",
+     "prompt": "Evaluate \\( \\int_{0}^{4}\\frac{dx}{\\sqrt{4 - x}} \\).",
+     "why": "The integrand is unbounded as \\( x \\to 4^{-} \\). An antiderivative is \\( -2\\sqrt{4-x} \\). So \\( \\int_{0}^{t}\\frac{dx}{\\sqrt{4-x}} = -2\\sqrt{4-t} + 4 \\to 4 \\) as \\( t \\to 4^{-} \\). The integral converges to \\( 4 \\).",
+     "answer": "4"
+    },
+    {
+     "id": "s3q2",
+     "kp": "k5",
+     "type": "written",
+     "prompt": "A student computes \\( \\int_{-1}^{2}\\frac{dx}{x^{2}} = \\Big[-\\frac1x\\Big]_{-1}^{2} = -\\frac12 - 1 = -\\frac32 \\). Explain why this cannot be right without locating the error, then locate the error precisely and determine the correct status of the integral.",
+     "why": "The Fundamental Theorem of Calculus requires continuity on the whole closed interval; a singular point inside the interval makes the integral improper and it must be split there.",
+     "rubric": [
+      "Observes the integrand is positive, so a negative value is impossible.",
+      "Identifies that \\( \\frac{1}{x^{2}} \\) is unbounded at \\( x = 0 \\in [-1, 2] \\), so the Fundamental Theorem of Calculus does not apply.",
+      "Splits at \\( 0 \\) and computes \\( \\int_{0}^{2}\\frac{dx}{x^{2}} = \\lim_{t\\to0^{+}}\\big(\\frac1t - \\frac12\\big) = \\infty \\) (or the left piece similarly).",
+      "Concludes the integral diverges."
+     ],
+     "model": "The integrand \\( \\frac{1}{x^{2}} \\) is positive wherever it is defined, so any value of its integral over an interval must be positive; \\( -\\frac32 \\) is impossible. The error is applying the Fundamental Theorem of Calculus on \\( [-1, 2] \\): the theorem requires the integrand to be continuous on the closed interval, but \\( \\frac{1}{x^{2}} \\) is unbounded at \\( x = 0 \\), which lies inside. The integral is improper and must be split: \\( \\int_{-1}^{2} = \\int_{-1}^{0} + \\int_{0}^{2} \\). Now \\( \\int_{t}^{2}\\frac{dx}{x^{2}} = \\frac1t - \\frac12 \\to \\infty \\) as \\( t \\to 0^{+} \\), so \\( \\int_{0}^{2} \\) diverges (so does \\( \\int_{-1}^{0} \\)). Hence \\( \\int_{-1}^{2}\\frac{dx}{x^{2}} \\) diverges."
+    },
+    {
+     "id": "s3q3",
+     "kp": "k4",
+     "type": "number",
+     "prompt": "Evaluate \\( \\int_{0}^{1}x\\ln x\\,dx \\).",
+     "why": "The integrand is undefined at \\( 0 \\) (though it tends to \\( 0 \\) there), so treat it as a limit. By parts, \\( \\int x\\ln x\\,dx = \\frac{x^{2}}{2}\\ln x - \\frac{x^{2}}{4} \\). At \\( 1 \\): \\( -\\frac14 \\). At \\( t \\to 0^{+} \\): \\( \\frac{t^{2}}{2}\\ln t \\to 0 \\) (L'Hôpital on \\( \\frac{\\ln t}{t^{-2}} \\) gives \\( \\frac{1/t}{-2t^{-3}} = -\\frac{t^{2}}{2} \\to 0 \\)). The value is \\( -\\frac14 \\).",
+     "answer": "-1/4"
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "The p-integrals",
+   "kps": [
+    "k6"
+   ],
+   "md": "To decide convergence of complicated integrals we will compare them with simple ones whose behaviour is known exactly. This section establishes the most important benchmarks, the integrals of \\( x^{-p} \\).\n\n> **Theorem (\\( p \\)-integrals).** \\[ \\int_{1}^{\\infty}\\frac{dx}{x^{p}} \\text{ converges if and only if } p > 1, \\text{ and then equals } \\frac{1}{p-1}; \\] \\[ \\int_{0}^{1}\\frac{dx}{x^{p}} \\text{ converges if and only if } p < 1, \\text{ and then equals } \\frac{1}{1-p}. \\]\n\n(For \\( p \\le 0 \\) the second integral is not improper, and the formula still holds.)\n\n**Proof.** For \\( p \\ne 1 \\) and \\( t > 1 \\),\n\\[ \\int_{1}^{t}x^{-p}\\,dx = \\frac{t^{1-p} - 1}{1-p}. \\]\nIf \\( p > 1 \\), the exponent \\( 1 - p \\) is negative, so \\( t^{1-p} \\to 0 \\) and the integral tends to \\( \\frac{-1}{1-p} = \\frac{1}{p-1} \\). If \\( p < 1 \\), the exponent is positive, \\( t^{1-p} \\to \\infty \\), and the integral diverges. If \\( p = 1 \\), \\( \\int_{1}^{t}\\frac{dx}{x} = \\ln t \\to \\infty \\). For the second statement, with \\( 0 < s < 1 \\),\n\\[ \\int_{s}^{1}x^{-p}\\,dx = \\frac{1 - s^{1-p}}{1-p} \\quad (p \\ne 1), \\qquad \\int_{s}^{1}\\frac{dx}{x} = -\\ln s. \\]\nAs \\( s \\to 0^{+} \\), \\( s^{1-p} \\to 0 \\) exactly when \\( 1 - p > 0 \\), giving \\( \\frac{1}{1-p} \\); if \\( p > 1 \\), \\( s^{1-p} \\to \\infty \\); and \\( -\\ln s \\to \\infty \\).\n\n**What the theorem says.** At infinity, \\( x^{-p} \\) must decay faster than \\( 1/x \\) for the area to be finite. Near \\( 0 \\), it must blow up more mildly than \\( 1/x \\). The function \\( 1/x \\) is the borderline in both places and fails in both. Consequently \\( \\int_{0}^{\\infty}\\frac{dx}{x^{p}} \\) diverges for every \\( p \\): splitting at \\( 1 \\), one of the two pieces always diverges. In the graph, drag \\( p \\) across \\( 1 \\) and compare \\( y = x^{-p} \\) with \\( y = 1/x \\): for \\( p > 1 \\) the curve lies below \\( 1/x \\) to the right of \\( 1 \\) (good at infinity) but above it to the left of \\( 1 \\) (bad near \\( 0 \\)); for \\( p < 1 \\) the situation reverses.\n\n```plot\nx: 0, 5\ny: 0, 4\nslider: p, 0.3, 2.5, 1.5 | p\nf: x^(-p) | y = x^(−p)\nf: 1/x | y = 1/x\nvline: 1\n```\n\n**Examples.** \\( \\int_{1}^{\\infty}x^{-3/2}\\,dx = \\frac{1}{1/2} = 2 \\); \\( \\int_{0}^{1}x^{-1/2}\\,dx = \\frac{1}{1/2} = 2 \\); \\( \\int_{1}^{\\infty}x^{-1/2}\\,dx \\) and \\( \\int_{0}^{1}x^{-2}\\,dx \\) diverge. By the substitution \\( u = x - c \\) (or \\( u = c - x \\)), the same thresholds hold for \\( \\frac{1}{|x - c|^{p}} \\) near a finite point \\( c \\): such a singularity is integrable exactly when \\( p < 1 \\).\n\nA second family of benchmarks is exponential. For \\( k > 0 \\),\n\\[ \\int_{0}^{\\infty}e^{-kx}\\,dx = \\lim_{t\\to\\infty}\\frac{1 - e^{-kt}}{k} = \\frac{1}{k}, \\]\nwhile for \\( k \\le 0 \\) the integral diverges. An exponential decay \\( e^{-kx} \\) is faster than any power \\( x^{-p} \\), a fact the next sections exploit.\n\n**The common mistakes.** Reversing the two conditions (at infinity the requirement is \\( p > 1 \\); near \\( 0 \\) it is \\( p < 1 \\)); forgetting that \\( p = 1 \\) diverges in both cases; and applying the \\( [1, \\infty) \\) criterion to \\( [0, \\infty) \\), where the point \\( 0 \\) introduces a second improper end.",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k6",
+     "type": "written",
+     "prompt": "Prove that \\( \\int_{0}^{1}\\frac{dx}{x^{p}} \\) converges if and only if \\( p < 1 \\), and find its value when it converges. Treat the case \\( p = 1 \\) separately.",
+     "why": "The proof is a direct computation of \\( \\int_{s}^{1} \\) followed by the limit \\( s \\to 0^{+} \\); the sign of the exponent \\( 1 - p \\) decides everything.",
+     "rubric": [
+      "For \\( p \\ne 1 \\): \\( \\int_{s}^{1}x^{-p}dx = \\frac{1 - s^{1-p}}{1-p} \\).",
+      "If \\( p < 1 \\): \\( s^{1-p} \\to 0 \\), value \\( \\frac{1}{1-p} \\).",
+      "If \\( p > 1 \\): \\( s^{1-p} = 1/s^{p-1} \\to \\infty \\), divergence.",
+      "If \\( p = 1 \\): \\( \\int_{s}^{1}\\frac{dx}{x} = -\\ln s \\to \\infty \\), divergence."
+     ],
+     "model": "For \\( 0 < s < 1 \\) and \\( p \\ne 1 \\), \\( \\int_{s}^{1}x^{-p}\\,dx = \\Big[\\frac{x^{1-p}}{1-p}\\Big]_{s}^{1} = \\frac{1 - s^{1-p}}{1-p} \\). If \\( p < 1 \\), the exponent \\( 1 - p \\) is positive, so \\( s^{1-p} \\to 0 \\) as \\( s \\to 0^{+} \\) and the integral converges to \\( \\frac{1}{1-p} \\). If \\( p > 1 \\), \\( s^{1-p} = \\frac{1}{s^{p-1}} \\to \\infty \\), and since \\( 1 - p < 0 \\) the expression \\( \\frac{1 - s^{1-p}}{1-p} \\to +\\infty \\): divergence. If \\( p = 1 \\), \\( \\int_{s}^{1}\\frac{dx}{x} = -\\ln s \\to \\infty \\): divergence. So the integral converges exactly when \\( p < 1 \\), with value \\( \\frac{1}{1-p} \\)."
+    },
+    {
+     "id": "s4q2",
+     "kp": "k6",
+     "type": "number",
+     "prompt": "Evaluate \\( \\int_{0}^{8}\\frac{dx}{\\sqrt[3]{x}} \\).",
+     "why": "Here \\( p = \\tfrac13 < 1 \\), so the singularity at \\( 0 \\) is integrable. \\( \\int_{s}^{8}x^{-1/3}dx = \\Big[\\tfrac32x^{2/3}\\Big]_{s}^{8} = \\tfrac32\\cdot4 - \\tfrac32s^{2/3} \\to 6 \\).",
+     "answer": "6"
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "The comparison theorem",
+   "kps": [
+    "k7"
+   ],
+   "md": "Most integrands have no elementary antiderivative; \\( e^{-x^{2}} \\) is the standard example. Yet it is often enough to know whether an improper integral converges, and then to estimate it. This section proves the tool that answers the first question without evaluating anything.\n\n**The key observation.** If \\( f(x) \\ge 0 \\) on \\( [a, \\infty) \\), the function \\( F(t) = \\int_{a}^{t} f(x)\\,dx \\) is nondecreasing in \\( t \\), since increasing \\( t \\) adds area that is not negative. A nondecreasing function has a finite limit as \\( t \\to \\infty \\) if and only if it is bounded above; this is a consequence of the completeness of the real numbers (the least upper bound of the values of \\( F \\) is the limit). So for a nonnegative integrand there are only two possibilities: the integral converges, or \\( F(t) \\to \\infty \\). It cannot oscillate.\n\n> **Comparison theorem.** Let \\( f \\) and \\( g \\) be continuous on \\( [a, \\infty) \\) with \\( 0 \\le g(x) \\le f(x) \\) for all \\( x \\ge a \\). \\[ \\text{(i) If } \\int_{a}^{\\infty} f(x)\\,dx \\text{ converges, then } \\int_{a}^{\\infty} g(x)\\,dx \\text{ converges, and } \\int_{a}^{\\infty} g \\le \\int_{a}^{\\infty} f. \\] \\[ \\text{(ii) If } \\int_{a}^{\\infty} g(x)\\,dx \\text{ diverges, then } \\int_{a}^{\\infty} f(x)\\,dx \\text{ diverges.} \\]\n\n**Proof.** Let \\( G(t) = \\int_{a}^{t} g \\) and \\( F(t) = \\int_{a}^{t} f \\). For every \\( t \\ge a \\), \\( G(t) \\le F(t) \\), because \\( g \\le f \\); and \\( F(t) \\le \\int_{a}^{\\infty} f \\), because \\( F \\) is nondecreasing with that limit. So \\( G \\) is nondecreasing and bounded above by \\( \\int_{a}^{\\infty} f \\), hence converges, and its limit is at most \\( \\int_{a}^{\\infty} f \\). Part (ii) is the contrapositive of part (i).\n\nIn words: below a convergent integral is convergent; above a divergent integral is divergent. The other two directions give no information: being smaller than something divergent, or larger than something convergent, says nothing.\n\n**Worked example 1.** Show that \\( \\int_{1}^{\\infty}e^{-x^{2}}\\,dx \\) converges. For \\( x \\ge 1 \\), \\( x^{2} \\ge x \\), so \\( e^{-x^{2}} \\le e^{-x} \\), and both are positive. Since \\( \\int_{1}^{\\infty}e^{-x}\\,dx = e^{-1} \\) converges, part (i) gives convergence, with \\( \\int_{1}^{\\infty}e^{-x^{2}}\\,dx \\le e^{-1} \\approx 0.368 \\). (The true value is about \\( 0.139 \\).) Then \\( \\int_{0}^{\\infty}e^{-x^{2}}\\,dx = \\int_{0}^{1} + \\int_{1}^{\\infty} \\) converges too, since the first piece is an ordinary integral. Its value, \\( \\frac{\\sqrt{\\pi}}{2} \\), is found in multivariable calculus by a double integral; comparison alone gives convergence, not the value.\n\n**Worked example 2.** Show that \\( \\int_{1}^{\\infty}\\frac{1 + \\sin^{2}x}{\\sqrt{x}}\\,dx \\) diverges. For \\( x \\ge 1 \\), \\( \\frac{1 + \\sin^{2}x}{\\sqrt{x}} \\ge \\frac{1}{\\sqrt{x}} \\ge 0 \\), and \\( \\int_{1}^{\\infty}x^{-1/2}\\,dx \\) diverges (\\( p = \\tfrac12 \\le 1 \\)). By part (ii), the integral diverges.\n\nThe theorem holds, with the same proof, for integrals that are improper because of a singular endpoint, and it suffices that the inequality hold on a tail \\( [N, \\infty) \\), since \\( \\int_{a}^{N} \\) is an ordinary integral.\n\n**The common mistakes.** Comparing in the useless direction, for instance observing \\( \\frac{1}{x + e^{x}} \\le \\frac{1}{x} \\) and concluding nothing useful from the divergence of \\( \\int\\frac{dx}{x} \\); stating an inequality that holds only on part of the interval; and applying the theorem to an integrand that takes negative values, where \\( F(t) \\) need not be monotone and the proof fails.",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k7",
+     "type": "written",
+     "prompt": "Use the comparison theorem to show that \\( \\int_{1}^{\\infty}\\frac{dx}{\\sqrt{x^{3} + 1}} \\) converges, and give an upper bound for its value. State the inequality you use and why it holds on the whole interval.",
+     "why": "Dropping a positive term from under the root makes the denominator smaller and the fraction larger, giving a convergent \\( p \\)-integral above the integrand.",
+     "rubric": [
+      "States \\( 0 < \\frac{1}{\\sqrt{x^{3}+1}} \\le \\frac{1}{x^{3/2}} \\) for \\( x \\ge 1 \\), because \\( x^{3} + 1 > x^{3} \\).",
+      "Notes \\( \\int_{1}^{\\infty}x^{-3/2}dx \\) converges (\\( p = \\tfrac32 > 1 \\)) with value \\( 2 \\).",
+      "Applies part (i) of the comparison theorem in the correct direction (smaller than convergent).",
+      "Concludes convergence with value at most \\( 2 \\)."
+     ],
+     "model": "For \\( x \\ge 1 \\), \\( x^{3} + 1 > x^{3} > 0 \\), so \\( \\sqrt{x^{3}+1} > x^{3/2} \\) and \\( 0 < \\frac{1}{\\sqrt{x^{3}+1}} < \\frac{1}{x^{3/2}} \\). Both functions are continuous on \\( [1, \\infty) \\). The integral \\( \\int_{1}^{\\infty}x^{-3/2}\\,dx \\) is a \\( p \\)-integral with \\( p = \\tfrac32 > 1 \\), so it converges, to \\( \\frac{1}{p-1} = 2 \\). By the comparison theorem (a nonnegative function below one with a convergent integral), \\( \\int_{1}^{\\infty}\\frac{dx}{\\sqrt{x^{3}+1}} \\) converges, and its value is less than \\( 2 \\)."
+    },
+    {
+     "id": "s5q2",
+     "kp": "k7",
+     "type": "mcq",
+     "prompt": "Which argument correctly settles \\( \\int_{1}^{\\infty}\\frac{dx}{x + e^{x}} \\)?",
+     "why": "For \\( x \\ge 1 \\), \\( x + e^{x} > e^{x} \\), so \\( 0 < \\frac{1}{x + e^{x}} < e^{-x} \\), and \\( \\int_{1}^{\\infty}e^{-x}dx = e^{-1} \\) converges; by comparison the integral converges. Option A compares in the useless direction: being smaller than a divergent integral says nothing. Option C uses \\( f \\to 0 \\), which is not sufficient. Option D is false: comparison exists precisely to decide convergence without an antiderivative.",
+     "options": [
+      "It diverges, because \\( \\frac{1}{x + e^{x}} \\le \\frac{1}{x} \\) and \\( \\int_{1}^{\\infty}\\frac{dx}{x} \\) diverges.",
+      "It converges, because \\( \\frac{1}{x + e^{x}} \\le e^{-x} \\) and \\( \\int_{1}^{\\infty}e^{-x}dx \\) converges.",
+      "It converges, because \\( \\frac{1}{x + e^{x}} \\to 0 \\) as \\( x \\to \\infty \\).",
+      "Nothing can be decided, because \\( \\frac{1}{x + e^{x}} \\) has no elementary antiderivative."
+     ],
+     "answer": 1
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "title": "Limit comparison and dominant behaviour",
+   "kps": [
+    "k8",
+    "k9"
+   ],
+   "md": "Finding an explicit inequality can be awkward even when the behaviour of the integrand is clear. This section gives a version of comparison that needs only the ratio of the two integrands in the limit, and a method for choosing what to compare with.\n\n> **Limit comparison theorem.** Let \\( f \\) and \\( g \\) be positive and continuous on \\( [a, \\infty) \\), and suppose \\[ \\lim_{x\\to\\infty}\\frac{f(x)}{g(x)} = L, \\qquad 0 < L < \\infty. \\] Then \\( \\int_{a}^{\\infty} f \\) and \\( \\int_{a}^{\\infty} g \\) either both converge or both diverge.\n\n**Proof.** Because the ratio tends to \\( L > 0 \\), there is an \\( N \\ge a \\) with \\( \\frac{L}{2} \\le \\frac{f(x)}{g(x)} \\le 2L \\) for all \\( x \\ge N \\), that is, \\( \\frac{L}{2}g(x) \\le f(x) \\le 2L\\,g(x) \\). If \\( \\int g \\) converges, so does \\( \\int 2Lg \\), and the right inequality with the comparison theorem gives convergence of \\( \\int_{N}^{\\infty} f \\). If \\( \\int g \\) diverges, the left inequality gives divergence of \\( \\int_{N}^{\\infty} f \\). The piece \\( \\int_{a}^{N} \\) is an ordinary integral and does not affect convergence.\n\nThe same theorem holds at a singular endpoint, with the limit taken as \\( x \\to b^{-} \\) (or \\( a^{+} \\)).\n\n**Choosing \\( g \\).** The comparison succeeds when \\( g \\) captures the **dominant behaviour** of \\( f \\) at the problematic endpoint. At infinity, keep the highest powers of numerator and denominator (and remember that an exponential decay beats every power). Near a singular point, keep the lowest powers, or use a standard approximation such as \\( \\sin x \\approx x \\) or \\( e^{x} - 1 \\approx x \\) near \\( 0 \\).\n\n**Worked example 1.** Decide whether \\( \\int_{2}^{\\infty}\\frac{dx}{x^{2} - x} \\) converges. Direct comparison with \\( \\frac{1}{x^{2}} \\) points the wrong way, since \\( \\frac{1}{x^{2}-x} > \\frac{1}{x^{2}} \\). The ratio, however, is \\( \\frac{x^{2}}{x^{2}-x} \\to 1 \\), and \\( \\int_{2}^{\\infty}\\frac{dx}{x^{2}} \\) converges, so the integral converges. (Partial fractions confirm it: the value is \\( \\ln 2 \\).)\n\n**Worked example 2.** Decide whether \\( \\int_{1}^{\\infty}\\frac{2x^{2} + 1}{x^{5/2} + 3}\\,dx \\) converges. The dominant terms give \\( \\frac{2x^{2}}{x^{5/2}} = \\frac{2}{\\sqrt{x}} \\). With \\( g(x) = x^{-1/2} \\), \\( \\frac{f(x)}{g(x)} = \\frac{2x^{5/2} + x^{1/2}}{x^{5/2} + 3} \\to 2 \\). Since \\( \\int_{1}^{\\infty}x^{-1/2}\\,dx \\) diverges, so does the given integral.\n\n**Worked example 3 (singular endpoint).** Decide whether \\( \\int_{0}^{\\pi/2}\\frac{dx}{\\sqrt{\\sin x}} \\) converges. The only problem is at \\( 0 \\), where \\( \\sin x \\approx x \\). With \\( g(x) = x^{-1/2} \\), \\( \\frac{f(x)}{g(x)} = \\sqrt{\\frac{x}{\\sin x}} \\to 1 \\) as \\( x \\to 0^{+} \\). Since \\( \\int_{0}^{\\pi/2}x^{-1/2}\\,dx \\) converges (\\( p = \\tfrac12 < 1 \\)), so does the integral.\n\n**When both ends are problematic,** split. For \\( \\int_{0}^{\\infty}\\frac{dx}{\\sqrt{x} + x^{2}} \\), examine \\( \\int_{0}^{1} \\) (near \\( 0 \\) the integrand behaves like \\( x^{-1/2} \\)) and \\( \\int_{1}^{\\infty} \\) (at infinity like \\( x^{-2} \\)) separately; the whole converges only if both do.\n\n**Limits \\( 0 \\) and \\( \\infty \\).** If \\( L = 0 \\), then \\( f \\) is eventually smaller than \\( g \\), so only \"\\( \\int g \\) converges implies \\( \\int f \\) converges\" survives; if \\( L = \\infty \\), only \"\\( \\int g \\) diverges implies \\( \\int f \\) diverges\" survives. For instance, \\( \\frac{x^{10}e^{-x}}{x^{-2}} = \\frac{x^{12}}{e^{x}} \\to 0 \\), so \\( \\int_{1}^{\\infty}x^{10}e^{-x}\\,dx \\) converges by comparison with \\( \\int_{1}^{\\infty}x^{-2}\\,dx \\).\n\n**The common mistakes.** Treating \\( L = 0 \\) or \\( L = \\infty \\) as conclusive in both directions; using the dominant behaviour at the wrong end (for \\( \\frac{1}{\\sqrt{x} + x^{2}} \\), \\( x^{-2} \\) describes infinity, not \\( 0 \\)); and forgetting that a limit comparison needs positive integrands.",
+   "questions": [
+    {
+     "id": "s6q1",
+     "kp": "k8",
+     "type": "written",
+     "prompt": "Use the limit comparison theorem to decide whether \\( \\int_{1}^{\\infty}\\frac{3x + 1}{x^{5/2} + 4}\\,dx \\) converges. Name your comparison function, compute the limit, and state the conclusion with its justification.",
+     "why": "The dominant terms give \\( \\frac{3x}{x^{5/2}} = 3x^{-3/2} \\), so compare with the convergent \\( p \\)-integral with \\( p = \\tfrac32 \\).",
+     "rubric": [
+      "Chooses \\( g(x) = x^{-3/2} \\) from the dominant terms.",
+      "Computes \\( \\lim\\frac{f}{g} = \\lim\\frac{3x^{5/2} + x^{3/2}}{x^{5/2} + 4} = 3 \\), with \\( 0 < 3 < \\infty \\).",
+      "Notes \\( \\int_{1}^{\\infty}x^{-3/2}dx \\) converges (\\( p > 1 \\)) and both functions are positive and continuous.",
+      "Concludes the integral converges."
+     ],
+     "model": "Both \\( f(x) = \\frac{3x+1}{x^{5/2}+4} \\) and \\( g(x) = x^{-3/2} \\) are positive and continuous on \\( [1, \\infty) \\). The dominant terms suggest \\( g \\): \\( \\frac{3x}{x^{5/2}} = 3x^{-3/2} \\). The ratio is \\( \\frac{f(x)}{g(x)} = \\frac{(3x+1)x^{3/2}}{x^{5/2}+4} = \\frac{3x^{5/2} + x^{3/2}}{x^{5/2} + 4} \\to 3 \\) as \\( x \\to \\infty \\) (divide numerator and denominator by \\( x^{5/2} \\)). Since \\( 0 < 3 < \\infty \\), the two integrals behave alike, and \\( \\int_{1}^{\\infty}x^{-3/2}\\,dx \\) converges because \\( p = \\tfrac32 > 1 \\). Therefore \\( \\int_{1}^{\\infty}\\frac{3x+1}{x^{5/2}+4}\\,dx \\) converges."
+    },
+    {
+     "id": "s6q2",
+     "kp": "k9",
+     "type": "written",
+     "prompt": "Decide whether \\( \\int_{0}^{1}\\frac{dx}{e^{x} - 1} \\) converges. Identify where the integral is improper, choose a comparison function from the behaviour of the integrand there, and justify the limit you use.",
+     "why": "Near \\( 0 \\), \\( e^{x} - 1 \\approx x \\), so the integrand behaves like \\( \\frac1x \\), the borderline case that diverges.",
+     "rubric": [
+      "Identifies the only problem at \\( x = 0 \\), where \\( e^{x} - 1 \\to 0 \\) and the integrand is unbounded.",
+      "Chooses \\( g(x) = \\frac1x \\) because \\( e^{x} - 1 \\approx x \\) near \\( 0 \\).",
+      "Computes \\( \\lim_{x\\to0^{+}}\\frac{f}{g} = \\lim\\frac{x}{e^{x}-1} = 1 \\) (L'Hôpital).",
+      "Notes \\( \\int_{0}^{1}\\frac{dx}{x} \\) diverges (\\( p = 1 \\)) and concludes divergence."
+     ],
+     "model": "The integrand is positive and continuous on \\( (0, 1] \\), and unbounded as \\( x \\to 0^{+} \\) because \\( e^{x} - 1 \\to 0 \\); that is the only improper point. Near \\( 0 \\), \\( e^{x} - 1 \\approx x \\), so compare with \\( g(x) = \\frac1x \\). Then \\( \\frac{f(x)}{g(x)} = \\frac{x}{e^{x} - 1} \\), which is of the form \\( \\frac00 \\); by L'Hôpital's rule its limit as \\( x \\to 0^{+} \\) is \\( \\frac{1}{e^{0}} = 1 \\), with \\( 0 < 1 < \\infty \\). By the limit comparison theorem at the singular endpoint, the two integrals behave alike, and \\( \\int_{0}^{1}\\frac{dx}{x} \\) diverges (\\( p = 1 \\)). Therefore \\( \\int_{0}^{1}\\frac{dx}{e^{x}-1} \\) diverges."
+    }
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "t": "improper integral",
+   "d": "An integral over an unbounded interval, or of a function unbounded near a point of the interval, defined as a limit of ordinary definite integrals.",
+   "ex": "\\( \\int_{1}^{\\infty}\\frac{dx}{x^{2}} = \\lim_{t\\to\\infty}\\int_{1}^{t}\\frac{dx}{x^{2}} = 1 \\)."
+  },
+  {
+   "t": "convergent (improper integral)",
+   "d": "An improper integral whose defining limit exists as a finite number; that number is its value.",
+   "ex": "\\( \\int_{0}^{1}\\frac{dx}{\\sqrt x} \\) converges to 2."
+  },
+  {
+   "t": "divergent (improper integral)",
+   "d": "An improper integral whose defining limit does not exist as a finite number (it is infinite or does not exist at all).",
+   "ex": "\\( \\int_{1}^{\\infty}\\frac{dx}{x} \\) diverges."
+  },
+  {
+   "t": "improper integral of type 1",
+   "d": "An improper integral over an unbounded interval \\( [a, \\infty) \\), \\( (-\\infty, b] \\) or \\( (-\\infty, \\infty) \\) (terminology of some texts).",
+   "ex": "\\( \\int_{0}^{\\infty}e^{-x}dx \\)."
+  },
+  {
+   "t": "improper integral of type 2",
+   "d": "An improper integral whose integrand is unbounded near an endpoint or an interior point of a bounded interval (terminology of some texts).",
+   "ex": "\\( \\int_{0}^{1}\\ln x\\,dx = -1 \\)."
+  },
+  {
+   "t": "p-integral",
+   "d": "An integral of \\( x^{-p} \\) over \\( [1, \\infty) \\) or \\( (0, 1] \\); the first converges exactly when \\( p > 1 \\), the second exactly when \\( p < 1 \\).",
+   "ex": "\\( \\int_{1}^{\\infty}x^{-3/2}dx = 2 \\)."
+  },
+  {
+   "t": "Cauchy principal value",
+   "d": "The symmetric limit \\( \\lim_{t\\to\\infty}\\int_{-t}^{t} f \\) (or the analogous symmetric limit around an interior singularity). It may exist when the improper integral diverges, so it is a different notion.",
+   "ex": "For \\( f(x) = x \\) the principal value is 0, but \\( \\int_{-\\infty}^{\\infty}x\\,dx \\) diverges."
+  },
+  {
+   "t": "comparison theorem",
+   "d": "If \\( 0 \\le g \\le f \\) on the interval, convergence of \\( \\int f \\) implies convergence of \\( \\int g \\), and divergence of \\( \\int g \\) implies divergence of \\( \\int f \\).",
+   "ex": "\\( e^{-x^{2}} \\le e^{-x} \\) on \\( [1, \\infty) \\) gives convergence of \\( \\int_{1}^{\\infty}e^{-x^{2}}dx \\)."
+  },
+  {
+   "t": "limit comparison theorem",
+   "d": "If \\( f, g > 0 \\) and \\( f/g \\to L \\) with \\( 0 < L < \\infty \\) at the improper endpoint, then \\( \\int f \\) and \\( \\int g \\) both converge or both diverge.",
+   "ex": "\\( \\frac{1}{x^{2}-x} \\) versus \\( \\frac{1}{x^{2}} \\): ratio \\( \\to 1 \\)."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "formula",
+   "front": "Definition of \\( \\int_{a}^{\\infty} f(x)\\,dx \\)",
+   "back": "\\( \\lim_{t\\to\\infty}\\int_{a}^{t} f(x)\\,dx \\); convergent if this limit is finite, divergent otherwise.",
+   "kp": "k1"
+  },
+  {
+   "id": "c2",
+   "type": "formula",
+   "front": "Definition of \\( \\int_{-\\infty}^{\\infty} f(x)\\,dx \\)",
+   "back": "\\( \\int_{-\\infty}^{c} f + \\int_{c}^{\\infty} f \\) for any \\( c \\); converges only if both pieces converge.",
+   "kp": "k3"
+  },
+  {
+   "id": "c3",
+   "type": "concept",
+   "front": "Why is \\( \\int_{-\\infty}^{\\infty} f \\) not defined as \\( \\lim_{t\\to\\infty}\\int_{-t}^{t} f \\)?",
+   "back": "The symmetric limit lets infinite areas of opposite sign cancel: for \\( f(x) = x \\) it gives 0 although \\( \\int_{0}^{\\infty}x\\,dx \\) diverges.",
+   "kp": "k3"
+  },
+  {
+   "id": "c4",
+   "type": "term",
+   "front": "Define: Cauchy principal value",
+   "back": "The symmetric limit \\( \\lim_{t\\to\\infty}\\int_{-t}^{t} f \\); it can exist when the improper integral diverges.",
+   "kp": "k3"
+  },
+  {
+   "id": "c5",
+   "type": "formula",
+   "front": "Definition of \\( \\int_{a}^{b} f \\) when \\( f \\) is unbounded near \\( b \\)",
+   "back": "\\( \\lim_{t\\to b^{-}}\\int_{a}^{t} f(x)\\,dx \\)",
+   "kp": "k4"
+  },
+  {
+   "id": "c6",
+   "type": "concept",
+   "front": "What must you do if the integrand is unbounded at an interior point c?",
+   "back": "Split at \\( c \\); the integral converges only if both \\( \\int_{a}^{c} \\) and \\( \\int_{c}^{b} \\) converge.",
+   "kp": "k5"
+  },
+  {
+   "id": "c7",
+   "type": "concept",
+   "front": "Why is \\( \\int_{-1}^{1}\\frac{dx}{x^{2}} = -2 \\) wrong?",
+   "back": "\\( 1/x^{2} \\) is unbounded at 0, so the Fundamental Theorem does not apply; the integral is improper and diverges.",
+   "kp": "k5"
+  },
+  {
+   "id": "c8",
+   "type": "formula",
+   "front": "\\( \\int_{1}^{\\infty}\\frac{dx}{x^{p}} \\)",
+   "back": "Converges iff \\( p > 1 \\), to \\( \\frac{1}{p-1} \\).",
+   "kp": "k6"
+  },
+  {
+   "id": "c9",
+   "type": "formula",
+   "front": "\\( \\int_{0}^{1}\\frac{dx}{x^{p}} \\)",
+   "back": "Converges iff \\( p < 1 \\), to \\( \\frac{1}{1-p} \\).",
+   "kp": "k6"
+  },
+  {
+   "id": "c10",
+   "type": "concept",
+   "front": "Why does \\( \\int_{0}^{\\infty}\\frac{dx}{x^{p}} \\) diverge for every \\( p \\)?",
+   "back": "Split at 1: \\( \\int_{1}^{\\infty} \\) needs \\( p > 1 \\), \\( \\int_{0}^{1} \\) needs \\( p < 1 \\); no \\( p \\) satisfies both.",
+   "kp": "k6"
+  },
+  {
+   "id": "c11",
+   "type": "formula",
+   "front": "\\( \\int_{0}^{\\infty}e^{-kx}\\,dx \\), \\( k > 0 \\)",
+   "back": "\\( \\frac1k \\)",
+   "kp": "k2"
+  },
+  {
+   "id": "c12",
+   "type": "formula",
+   "front": "Comparison theorem for improper integrals",
+   "back": "If \\( 0 \\le g \\le f \\): \\( \\int f \\) converges \\( \\Rightarrow \\) \\( \\int g \\) converges; \\( \\int g \\) diverges \\( \\Rightarrow \\) \\( \\int f \\) diverges.",
+   "kp": "k7"
+  },
+  {
+   "id": "c13",
+   "type": "concept",
+   "front": "Why can the improper integral of a nonnegative function only converge or diverge to infinity?",
+   "back": "\\( F(t) = \\int_{a}^{t} f \\) is nondecreasing, and a nondecreasing function either is bounded (and converges) or tends to \\( \\infty \\).",
+   "kp": "k7"
+  },
+  {
+   "id": "c14",
+   "type": "concept",
+   "front": "If \\( 0 \\le g \\le f \\) and \\( \\int f \\) diverges, what follows about \\( \\int g \\)?",
+   "back": "Nothing. Only 'below convergent' and 'above divergent' are conclusive.",
+   "kp": "k7"
+  },
+  {
+   "id": "c15",
+   "type": "formula",
+   "front": "Limit comparison theorem",
+   "back": "\\( f, g > 0 \\), \\( \\frac{f}{g} \\to L \\) with \\( 0 < L < \\infty \\) at the improper endpoint: both integrals converge or both diverge.",
+   "kp": "k8"
+  },
+  {
+   "id": "c16",
+   "type": "concept",
+   "front": "How do you choose g for a limit comparison at infinity? Near a singular point?",
+   "back": "At infinity: highest powers of numerator and denominator. Near a singular point: lowest powers, or approximations like \\( \\sin x \\approx x \\).",
+   "kp": "k9"
+  },
+  {
+   "id": "c17",
+   "type": "problem",
+   "front": "\\( \\int_{1}^{\\infty}\\frac{dx}{x^{3}} \\)",
+   "back": "\\( \\frac{1}{3-1} = \\frac12 \\)",
+   "kp": "k6",
+   "answer": "1/2",
+   "check": "number"
+  },
+  {
+   "id": "c18",
+   "type": "problem",
+   "front": "\\( \\int_{0}^{1}\\frac{dx}{\\sqrt[3]{x}} \\)",
+   "back": "\\( \\frac{1}{1 - 1/3} = \\frac32 \\)",
+   "kp": "k6",
+   "answer": "3/2",
+   "check": "number"
+  },
+  {
+   "id": "c19",
+   "type": "problem",
+   "front": "\\( \\int_{-\\infty}^{\\infty}\\frac{dx}{1 + x^{2}} \\)",
+   "back": "\\( \\frac{\\pi}{2} + \\frac{\\pi}{2} = \\pi \\)",
+   "kp": "k3",
+   "answer": "pi",
+   "check": "number"
+  },
+  {
+   "id": "c20",
+   "type": "problem",
+   "front": "\\( \\int_{0}^{1}\\ln x\\,dx \\)",
+   "back": "\\( -1 \\), using \\( x\\ln x - x \\) and \\( t\\ln t \\to 0 \\) as \\( t \\to 0^{+} \\).",
+   "kp": "k4",
+   "answer": "-1",
+   "check": "number"
+  },
+  {
+   "id": "c21",
+   "type": "problem",
+   "front": "\\( \\int_{0}^{\\infty}xe^{-x}\\,dx \\)",
+   "back": "\\( 1 \\) (parts, then \\( te^{-t} \\to 0 \\) by L'Hôpital).",
+   "kp": "k2",
+   "answer": "1",
+   "check": "number"
+  },
+  {
+   "id": "c22",
+   "type": "concept",
+   "front": "Comparison function showing \\( \\int_{1}^{\\infty}e^{-x^{2}}dx \\) converges",
+   "back": "\\( e^{-x^{2}} \\le e^{-x} \\) for \\( x \\ge 1 \\), and \\( \\int_{1}^{\\infty}e^{-x}dx = e^{-1} \\).",
+   "kp": "k9"
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k2",
+   "type": "number",
+   "prompt": "Evaluate \\( \\int_{0}^{\\infty}x^{2}e^{-x}\\,dx \\).",
+   "why": "Tabular parts: \\( \\int x^{2}e^{-x}dx = -e^{-x}(x^{2} + 2x + 2) \\). So \\( \\int_{0}^{t} = 2 - e^{-t}(t^{2} + 2t + 2) \\). Each of \\( t^{2}e^{-t} \\), \\( te^{-t} \\), \\( e^{-t} \\) tends to \\( 0 \\) (repeated L'Hôpital). The value is \\( 2 \\).",
+   "answer": "2"
+  },
+  {
+   "id": "p2",
+   "kp": "k2",
+   "type": "number",
+   "prompt": "Evaluate \\( \\int_{-\\infty}^{0}e^{3x}\\,dx \\).",
+   "why": "\\( \\int_{t}^{0}e^{3x}dx = \\frac13(1 - e^{3t}) \\to \\frac13 \\) as \\( t \\to -\\infty \\).",
+   "answer": "1/3"
+  },
+  {
+   "id": "p3",
+   "kp": "k4",
+   "type": "number",
+   "prompt": "Evaluate \\( \\int_{0}^{1}\\frac{dx}{\\sqrt{1 - x^{2}}} \\).",
+   "why": "The integrand is unbounded as \\( x \\to 1^{-} \\). \\( \\int_{0}^{t}\\frac{dx}{\\sqrt{1-x^{2}}} = \\arcsin t \\to \\arcsin 1 = \\frac{\\pi}{2} \\).",
+   "answer": "pi/2"
+  },
+  {
+   "id": "p4",
+   "kp": "k2",
+   "type": "number",
+   "prompt": "Evaluate \\( \\int_{e}^{\\infty}\\frac{dx}{x(\\ln x)^{2}} \\).",
+   "why": "With \\( w = \\ln x \\), \\( dw = dx/x \\): \\( \\int\\frac{dx}{x(\\ln x)^{2}} = -\\frac{1}{\\ln x} \\). So \\( \\int_{e}^{t} = 1 - \\frac{1}{\\ln t} \\to 1 \\).",
+   "answer": "1"
+  },
+  {
+   "id": "p5",
+   "kp": "k2",
+   "type": "written",
+   "prompt": "Prove that \\( \\int_{e}^{\\infty}\\frac{dx}{x\\ln x} \\) diverges, although \\( \\int_{e}^{\\infty}\\frac{dx}{x(\\ln x)^{2}} \\) converges. What does the pair show about integrands that decay slightly faster than \\( \\frac1x \\)?",
+   "why": "The substitution \\( w = \\ln x \\) turns both into \\( p \\)-integrals in \\( w \\), with \\( p = 1 \\) and \\( p = 2 \\).",
+   "rubric": [
+    "Uses \\( w = \\ln x \\): \\( \\int_{e}^{t}\\frac{dx}{x\\ln x} = \\ln(\\ln t) \\).",
+    "Concludes \\( \\ln(\\ln t) \\to \\infty \\), so the integral diverges.",
+    "Notes the second becomes \\( \\int_{1}^{\\infty}w^{-2}dw = 1 \\) (converges).",
+    "Draws the conclusion: \\( \\frac{1}{x\\ln x} \\) decays faster than \\( \\frac1x \\) yet its integral still diverges; beating \\( \\frac1x \\) by any factor is not enough, the margin must be sufficient."
+   ],
+   "model": "With \\( w = \\ln x \\), \\( dw = \\frac{dx}{x} \\), and \\( x = e \\) corresponds to \\( w = 1 \\). Then \\( \\int_{e}^{t}\\frac{dx}{x\\ln x} = \\int_{1}^{\\ln t}\\frac{dw}{w} = \\ln(\\ln t) \\), which tends to \\( \\infty \\) as \\( t \\to \\infty \\) (slowly, but without bound), so the integral diverges. The same substitution turns \\( \\int_{e}^{\\infty}\\frac{dx}{x(\\ln x)^{2}} \\) into \\( \\int_{1}^{\\infty}\\frac{dw}{w^{2}} = 1 \\), which converges. In \\( w \\) these are the \\( p \\)-integrals with \\( p = 1 \\) and \\( p = 2 \\). The function \\( \\frac{1}{x\\ln x} \\) decays faster than \\( \\frac1x \\), since its ratio to \\( \\frac1x \\) tends to \\( 0 \\), yet its integral still diverges. So decaying faster than \\( \\frac1x \\) is not by itself sufficient; the margin matters, and a factor \\( x^{-\\varepsilon} \\) with \\( \\varepsilon > 0 \\), or \\( (\\ln x)^{-2} \\), provides enough while \\( (\\ln x)^{-1} \\) does not."
+  },
+  {
+   "id": "p6",
+   "kp": "k2",
+   "type": "number",
+   "prompt": "The gravitational force on a mass \\( m \\) at distance \\( r \\) from the Earth's centre is \\( F(r) = \\frac{GMm}{r^{2}} \\). The work needed to move \\( m \\) from the surface \\( r = R \\) to infinitely far away is \\( W = \\int_{R}^{\\infty}\\frac{GMm}{r^{2}}\\,dr \\). Evaluate this for \\( m = 1.00\\ \\text{kg} \\), using \\( G = 6.674\\times10^{-11}\\ \\text{N·m}^{2}/\\text{kg}^{2} \\), \\( M = 5.972\\times10^{24}\\ \\text{kg} \\), \\( R = 6.371\\times10^{6}\\ \\text{m} \\). Answer in joules.",
+   "why": "\\( \\int_{R}^{t}\\frac{GMm}{r^{2}}dr = GMm\\Big(\\frac1R - \\frac1t\\Big) \\to \\frac{GMm}{R} \\). Numerically \\( \\frac{(6.674\\times10^{-11})(5.972\\times10^{24})(1.00)}{6.371\\times10^{6}} \\approx 6.26\\times10^{7}\\ \\text{J} \\). The integral converges because the force decays like \\( r^{-2} \\) (a \\( p \\)-integral with \\( p = 2 \\)).",
+   "answer": "6.674e-11*5.972e24/6.371e6",
+   "tol": 0.01
+  },
+  {
+   "id": "p7",
+   "kp": "k7",
+   "type": "written",
+   "prompt": "Decide whether \\( \\int_{1}^{\\infty}\\frac{2 + \\sin x}{x}\\,dx \\) converges, using the comparison theorem. State the inequality and why it points in a useful direction.",
+   "why": "Since \\( \\sin x \\ge -1 \\), the numerator is at least 1, so the integrand lies above \\( \\frac1x \\), whose integral diverges.",
+   "rubric": [
+    "States \\( \\frac{2 + \\sin x}{x} \\ge \\frac{1}{x} > 0 \\) for \\( x \\ge 1 \\), since \\( 2 + \\sin x \\ge 1 \\).",
+    "Notes \\( \\int_{1}^{\\infty}\\frac{dx}{x} \\) diverges (\\( p = 1 \\)).",
+    "Explains that 'above a divergent integral' is the conclusive direction (part (ii)).",
+    "Concludes divergence."
+   ],
+   "model": "For all \\( x \\), \\( -1 \\le \\sin x \\le 1 \\), so \\( 1 \\le 2 + \\sin x \\le 3 \\). Hence for \\( x \\ge 1 \\), \\( \\frac{2 + \\sin x}{x} \\ge \\frac1x > 0 \\). The integral \\( \\int_{1}^{\\infty}\\frac{dx}{x} \\) diverges (\\( p = 1 \\)). Since the integrand lies above a nonnegative function whose integral diverges, part (ii) of the comparison theorem shows \\( \\int_{1}^{\\infty}\\frac{2 + \\sin x}{x}\\,dx \\) diverges. The upper bound \\( \\frac3x \\) would be useless, since lying below a divergent integral gives no information."
+  },
+  {
+   "id": "p8",
+   "kp": "k6",
+   "type": "mcq",
+   "prompt": "Which of these improper integrals converges?",
+   "why": "\\( \\int_{0}^{1}x^{-0.9}dx \\) has \\( p = 0.9 < 1 \\) at a singularity at \\( 0 \\), so it converges (to \\( 10 \\)). Option A has \\( p = 1.5 > 1 \\) near \\( 0 \\), which diverges: the condition at \\( 0 \\) is \\( p < 1 \\), the reverse of the condition at infinity. Option B has \\( p = 0.9 \\le 1 \\) at infinity, which diverges. Option D is improper at both ends; the piece \\( \\int_{0}^{1}x^{-2}dx \\) diverges, so the whole integral diverges.",
+   "options": [
+    "\\( \\int_{0}^{1}\\frac{dx}{x^{1.5}} \\)",
+    "\\( \\int_{1}^{\\infty}\\frac{dx}{x^{0.9}} \\)",
+    "\\( \\int_{0}^{1}\\frac{dx}{x^{0.9}} \\)",
+    "\\( \\int_{0}^{\\infty}\\frac{dx}{x^{2}} \\)"
+   ],
+   "answer": 2
+  },
+  {
+   "id": "p9",
+   "kp": "k8",
+   "type": "written",
+   "prompt": "Use limit comparison to decide whether \\( \\int_{1}^{\\infty}\\frac{\\sqrt{x}}{x^{2} + 1}\\,dx \\) converges.",
+   "why": "Dominant terms: \\( \\frac{\\sqrt x}{x^{2}} = x^{-3/2} \\).",
+   "rubric": [
+    "Chooses \\( g(x) = x^{-3/2} \\).",
+    "Computes \\( \\frac{f}{g} = \\frac{x^{2}}{x^{2}+1} \\to 1 \\).",
+    "Notes \\( \\int_{1}^{\\infty}x^{-3/2}dx \\) converges.",
+    "Concludes convergence, noting positivity and continuity."
+   ],
+   "model": "Both \\( f(x) = \\frac{\\sqrt x}{x^{2}+1} \\) and \\( g(x) = x^{-3/2} \\) are positive and continuous on \\( [1, \\infty) \\). Then \\( \\frac{f(x)}{g(x)} = \\frac{\\sqrt{x}\\,x^{3/2}}{x^{2}+1} = \\frac{x^{2}}{x^{2}+1} \\to 1 \\), and \\( 0 < 1 < \\infty \\). Since \\( \\int_{1}^{\\infty}x^{-3/2}\\,dx \\) converges (\\( p = \\tfrac32 > 1 \\)), the limit comparison theorem shows \\( \\int_{1}^{\\infty}\\frac{\\sqrt x}{x^{2}+1}\\,dx \\) converges. (Here direct comparison also works, since \\( \\frac{\\sqrt x}{x^{2}+1} < \\frac{\\sqrt x}{x^{2}} \\).)"
+  },
+  {
+   "id": "p10",
+   "kp": "k5",
+   "type": "number",
+   "prompt": "Evaluate \\( \\int_{0}^{2}\\frac{dx}{\\sqrt[3]{x - 1}} \\), or show that it diverges (if it converges, enter its value).",
+   "why": "The integrand is unbounded at the interior point \\( 1 \\); split there. An antiderivative is \\( \\tfrac32\\sqrt[3]{(x-1)^{2}} \\), continuous everywhere. \\( \\int_{0}^{1} = \\lim_{t\\to1^{-}}\\tfrac32\\sqrt[3]{(t-1)^{2}} - \\tfrac32 = -\\tfrac32 \\) and \\( \\int_{1}^{2} = \\tfrac32 - 0 = \\tfrac32 \\). Both converge (each is a singularity of order \\( p = \\tfrac13 < 1 \\)), so the integral converges to \\( 0 \\). Here the odd symmetry about \\( x = 1 \\) is legitimate only because both halves converge.",
+   "answer": "0"
+  },
+  {
+   "id": "p11",
+   "kp": "k2",
+   "type": "number",
+   "prompt": "Evaluate \\( \\int_{0}^{\\infty}e^{-x}\\sin x\\,dx \\).",
+   "why": "By parts twice (recurring integral), \\( \\int e^{-x}\\sin x\\,dx = -\\tfrac12e^{-x}(\\sin x + \\cos x) \\). At \\( t \\): \\( -\\tfrac12e^{-t}(\\sin t + \\cos t) \\to 0 \\), since \\( |\\sin t + \\cos t| \\le 2 \\) and \\( e^{-t} \\to 0 \\). At \\( 0 \\): \\( -\\tfrac12 \\). The value is \\( 0 - (-\\tfrac12) = \\tfrac12 \\).",
+   "answer": "1/2"
+  },
+  {
+   "id": "p12",
+   "kp": "k6",
+   "type": "written",
+   "prompt": "Prove that \\( \\int_{0}^{\\infty}\\frac{dx}{x^{p}} \\) diverges for every real \\( p \\).",
+   "why": "The integral is improper at both ends (at \\( 0 \\) when \\( p > 0 \\)), so split at \\( 1 \\) and use the two \\( p \\)-integral results.",
+   "rubric": [
+    "Splits at 1: \\( \\int_{0}^{1} + \\int_{1}^{\\infty} \\); convergence requires both.",
+    "\\( \\int_{1}^{\\infty} \\) converges only for \\( p > 1 \\).",
+    "\\( \\int_{0}^{1} \\) converges only for \\( p < 1 \\) (for \\( p \\le 0 \\) it is an ordinary integral, and then \\( p \\le 1 \\) makes the other piece diverge).",
+    "No \\( p \\) satisfies both, so for every \\( p \\) at least one piece diverges."
+   ],
+   "model": "Write \\( \\int_{0}^{\\infty}x^{-p}dx = \\int_{0}^{1}x^{-p}dx + \\int_{1}^{\\infty}x^{-p}dx \\); the integral converges only if both pieces converge. By the \\( p \\)-integral theorem, \\( \\int_{1}^{\\infty}x^{-p}dx \\) converges if and only if \\( p > 1 \\), and \\( \\int_{0}^{1}x^{-p}dx \\) converges if and only if \\( p < 1 \\) (for \\( p \\le 0 \\) it is an ordinary integral of a continuous function). If \\( p > 1 \\), the piece on \\( (0, 1] \\) diverges; if \\( p \\le 1 \\), the piece on \\( [1, \\infty) \\) diverges. So for every \\( p \\) at least one piece diverges, and \\( \\int_{0}^{\\infty}\\frac{dx}{x^{p}} \\) diverges."
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k2",
+   "type": "number",
+   "prompt": "Evaluate \\( \\int_{1}^{\\infty}\\frac{dx}{x(x+1)} \\) exactly.",
+   "why": "\\( \\frac{1}{x(x+1)} = \\frac1x - \\frac{1}{x+1} \\). So \\( \\int_{1}^{t} = \\ln\\frac{t}{t+1} - \\ln\\frac12 \\). As \\( t \\to \\infty \\), \\( \\frac{t}{t+1} \\to 1 \\), so the value is \\( \\ln 2 \\approx 0.693 \\). (Integrating \\( \\frac1x \\) and \\( \\frac{1}{x+1} \\) separately to infinity would give \\( \\infty - \\infty \\); combine the logarithms before taking the limit.)",
+   "answer": "log(2)"
+  },
+  {
+   "id": "e2",
+   "kp": "k4",
+   "type": "number",
+   "prompt": "Evaluate \\( \\int_{0}^{1}\\frac{\\ln x}{\\sqrt{x}}\\,dx \\).",
+   "why": "By parts with \\( u = \\ln x \\), \\( dv = x^{-1/2}dx \\): \\( v = 2\\sqrt x \\), so \\( \\int\\frac{\\ln x}{\\sqrt x}dx = 2\\sqrt x\\ln x - \\int\\frac{2}{\\sqrt x}dx = 2\\sqrt x\\ln x - 4\\sqrt x \\). At \\( 1 \\): \\( -4 \\). As \\( t \\to 0^{+} \\): \\( 2\\sqrt t\\ln t \\to 0 \\) (L'Hôpital on \\( \\frac{\\ln t}{t^{-1/2}} \\) gives \\( \\frac{1/t}{-\\frac12t^{-3/2}} = -2\\sqrt t \\to 0 \\)) and \\( 4\\sqrt t \\to 0 \\). The value is \\( -4 \\).",
+   "answer": "-4"
+  },
+  {
+   "id": "e3",
+   "kp": "k9",
+   "type": "written",
+   "prompt": "Determine whether \\( \\int_{0}^{\\infty}\\frac{dx}{x + x^{3}} \\) converges. Your answer must identify every point at which the integral is improper and justify the behaviour at each.",
+   "why": "The integral is improper at both ends. At infinity the integrand behaves like \\( x^{-3} \\), which is harmless; near \\( 0 \\) it behaves like \\( \\frac1x \\), the borderline case that diverges. One divergent piece is enough.",
+   "rubric": [
+    "Identifies two improper points, \\( x \\to 0^{+} \\) (integrand unbounded) and \\( x \\to \\infty \\), and splits, e.g. at 1.",
+    "At infinity: compares with \\( x^{-3} \\) (ratio \\( \\frac{x^{3}}{x + x^{3}} \\to 1 \\), or \\( f \\le x^{-3} \\)); \\( \\int_{1}^{\\infty}x^{-3}dx \\) converges.",
+    "Near 0: compares with \\( \\frac1x \\) (ratio \\( \\frac{x}{x + x^{3}} = \\frac{1}{1+x^{2}} \\to 1 \\)); \\( \\int_{0}^{1}\\frac{dx}{x} \\) diverges, so \\( \\int_{0}^{1} f \\) diverges.",
+    "Concludes that the whole integral diverges, because one piece diverges even though the other converges."
+   ],
+   "model": "The integrand \\( f(x) = \\frac{1}{x + x^{3}} \\) is positive and continuous on \\( (0, \\infty) \\). The integral is improper at \\( 0 \\), where \\( f(x) \\to \\infty \\), and at \\( \\infty \\). Split at \\( 1 \\). On \\( [1, \\infty) \\): \\( \\frac{f(x)}{x^{-3}} = \\frac{x^{3}}{x + x^{3}} \\to 1 \\), and \\( \\int_{1}^{\\infty}x^{-3}dx \\) converges (\\( p = 3 > 1 \\)), so \\( \\int_{1}^{\\infty} f \\) converges. On \\( (0, 1] \\): \\( \\frac{f(x)}{x^{-1}} = \\frac{x}{x + x^{3}} = \\frac{1}{1 + x^{2}} \\to 1 \\) as \\( x \\to 0^{+} \\), and \\( \\int_{0}^{1}\\frac{dx}{x} \\) diverges (\\( p = 1 \\)), so by limit comparison \\( \\int_{0}^{1} f \\) diverges. Since one piece diverges, \\( \\int_{0}^{\\infty}\\frac{dx}{x + x^{3}} \\) diverges. (Partial fractions confirm this: \\( \\int_{t}^{1}\\frac{dx}{x(1+x^{2})} = \\Big[\\ln x - \\tfrac12\\ln(1+x^{2})\\Big]_{t}^{1} = -\\tfrac12\\ln 2 - \\ln t + \\tfrac12\\ln(1+t^{2}) \\to \\infty \\) as \\( t \\to 0^{+} \\).)"
+  },
+  {
+   "id": "e4",
+   "kp": "k7",
+   "type": "written",
+   "prompt": "State and prove the comparison theorem for \\( \\int_{a}^{\\infty} \\): if \\( f, g \\) are continuous with \\( 0 \\le g(x) \\le f(x) \\) for \\( x \\ge a \\) and \\( \\int_{a}^{\\infty} f \\) converges, then \\( \\int_{a}^{\\infty} g \\) converges. Identify the property of the real numbers the proof uses, and explain why the hypothesis \\( g \\ge 0 \\) is needed.",
+   "why": "The proof rests on monotonicity of the accumulation function and on the completeness of the reals (a bounded nondecreasing function has a limit).",
+   "rubric": [
+    "Defines \\( G(t) = \\int_{a}^{t} g \\) and shows it is nondecreasing because \\( g \\ge 0 \\).",
+    "Bounds \\( G(t) \\le \\int_{a}^{t} f \\le \\int_{a}^{\\infty} f \\), using \\( f \\ge 0 \\) so that \\( \\int_{a}^{t} f \\) increases to its limit.",
+    "Invokes completeness: a bounded nondecreasing function has a finite limit (the supremum of its values).",
+    "Explains that without \\( g \\ge 0 \\), \\( G \\) need not be nondecreasing and the conclusion can fail (e.g. \\( g = -1 \\le e^{-x} = f \\) on \\( [0, \\infty) \\): \\( \\int f \\) converges, \\( \\int g \\) diverges)."
+   ],
+   "model": "Let \\( F(t) = \\int_{a}^{t} f \\) and \\( G(t) = \\int_{a}^{t} g \\) for \\( t \\ge a \\). Because \\( f \\ge 0 \\), \\( F \\) is nondecreasing, so \\( F(t) \\le \\lim_{s\\to\\infty}F(s) = \\int_{a}^{\\infty} f \\) for every \\( t \\). Because \\( g \\le f \\), \\( G(t) \\le F(t) \\). Hence \\( G(t) \\le \\int_{a}^{\\infty} f \\) for all \\( t \\): \\( G \\) is bounded above. Because \\( g \\ge 0 \\), \\( G \\) is nondecreasing. By the completeness of the real numbers, the set of values \\( \\{G(t)\\} \\) has a least upper bound \\( S \\), and a nondecreasing function converges to the least upper bound of its values: for any \\( \\varepsilon > 0 \\) some \\( G(t_{0}) > S - \\varepsilon \\), and then \\( S - \\varepsilon < G(t) \\le S \\) for all \\( t \\ge t_{0} \\). So \\( \\int_{a}^{\\infty} g = S \\) exists, and \\( S \\le \\int_{a}^{\\infty} f \\). The hypothesis \\( g \\ge 0 \\) is what makes \\( G \\) monotone, and without it the conclusion is false: on \\( [0, \\infty) \\), \\( g(x) = -1 \\le e^{-x} = f(x) \\) and \\( \\int_{0}^{\\infty}e^{-x}dx = 1 \\) converges, but \\( \\int_{0}^{t}(-1)\\,dx = -t \\to -\\infty \\). A function that is bounded above but not nondecreasing need not converge; it may decrease without bound, as here, or oscillate, like \\( \\sin t = \\int_{0}^{t}\\cos x\\,dx \\)."
+  },
+  {
+   "id": "e5",
+   "kp": "k5",
+   "type": "number",
+   "prompt": "Evaluate \\( \\int_{-1}^{8}\\frac{dx}{\\sqrt[3]{x^{2}}} \\), or show that it diverges (if it converges, enter its value).",
+   "why": "The integrand \\( x^{-2/3} \\) is unbounded at the interior point \\( 0 \\); split there. An antiderivative is \\( 3\\sqrt[3]{x} \\), continuous everywhere. \\( \\int_{-1}^{0} = \\lim_{t\\to0^{-}}3\\sqrt[3]{t} - 3\\sqrt[3]{-1} = 0 + 3 = 3 \\); \\( \\int_{0}^{8} = 3\\cdot2 - \\lim_{t\\to0^{+}}3\\sqrt[3]{t} = 6 \\). Both converge (\\( p = \\tfrac23 < 1 \\)), so the integral equals \\( 9 \\).",
+   "answer": "9"
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "Infinite interval",
+    "formula": "\\( \\int_{a}^{\\infty} f = \\lim_{t\\to\\infty}\\int_{a}^{t} f \\)",
+    "when": "An endpoint is infinite.",
+    "example": "\\( \\int_{1}^{\\infty}\\frac{dx}{x^{2}} = \\lim(1 - \\frac1t) = 1 \\)",
+    "watch": "Compute the limit; do not substitute infinity as a number."
+   },
+   {
+    "name": "Whole line",
+    "formula": "\\( \\int_{-\\infty}^{\\infty} f = \\int_{-\\infty}^{c} f + \\int_{c}^{\\infty} f \\), both must converge",
+    "when": "Both endpoints are infinite.",
+    "example": "\\( \\int_{-\\infty}^{\\infty}\\frac{dx}{1+x^{2}} = \\pi \\)",
+    "watch": "Never use \\( \\lim\\int_{-t}^{t} \\) (principal value)."
+   },
+   {
+    "name": "Unbounded integrand",
+    "formula": "\\( \\int_{a}^{b} f = \\lim_{t\\to b^{-}}\\int_{a}^{t} f \\)",
+    "when": "The integrand blows up at an endpoint.",
+    "example": "\\( \\int_{0}^{1}\\frac{dx}{\\sqrt x} = 2 \\)",
+    "watch": "Use the one-sided limit from inside the interval."
+   },
+   {
+    "name": "Interior singularity",
+    "formula": "\\( \\int_{a}^{b} = \\int_{a}^{c} + \\int_{c}^{b} \\), both must converge",
+    "when": "The integrand blows up at c inside (a, b).",
+    "example": "\\( \\int_{-1}^{8}x^{-2/3}dx = 3 + 6 = 9 \\)",
+    "watch": "Check every zero of a denominator; \\( \\int_{-1}^{1}\\frac{dx}{x^{2}} \\) diverges."
+   },
+   {
+    "name": "p-integral at infinity",
+    "formula": "\\( \\int_{1}^{\\infty}x^{-p}dx = \\frac{1}{p-1} \\) iff \\( p > 1 \\)",
+    "when": "Benchmark for decay at infinity.",
+    "example": "\\( \\int_{1}^{\\infty}x^{-3/2}dx = 2 \\)",
+    "watch": "\\( p = 1 \\) diverges."
+   },
+   {
+    "name": "p-integral at 0",
+    "formula": "\\( \\int_{0}^{1}x^{-p}dx = \\frac{1}{1-p} \\) iff \\( p < 1 \\)",
+    "when": "Benchmark for a singularity.",
+    "example": "\\( \\int_{0}^{1}x^{-1/3}dx = \\frac32 \\)",
+    "watch": "The inequality is reversed from the case at infinity."
+   },
+   {
+    "name": "Exponential benchmark",
+    "formula": "\\( \\int_{0}^{\\infty}e^{-kx}dx = \\frac1k \\), \\( k > 0 \\)",
+    "when": "Exponential decay; it beats every power.",
+    "example": "\\( \\int_{1}^{\\infty}e^{-x}dx = e^{-1} \\)",
+    "watch": "Products like \\( x^{n}e^{-x} \\) need L'Hôpital at the limit."
+   },
+   {
+    "name": "Direct comparison",
+    "formula": "\\( 0 \\le g \\le f \\): \\( \\int f \\) conv. \\( \\Rightarrow \\int g \\) conv.; \\( \\int g \\) div. \\( \\Rightarrow \\int f \\) div.",
+    "when": "No antiderivative, but a simple bound is visible.",
+    "example": "\\( e^{-x^{2}} \\le e^{-x} \\) on \\( [1, \\infty) \\)",
+    "watch": "Below divergent or above convergent tells nothing."
+   },
+   {
+    "name": "Limit comparison",
+    "formula": "\\( f, g > 0 \\), \\( f/g \\to L \\in (0, \\infty) \\): same behaviour",
+    "when": "The dominant behaviour is clear but an inequality is awkward.",
+    "example": "\\( \\frac{1}{x^{2}-x} \\) vs \\( \\frac{1}{x^{2}} \\): \\( L = 1 \\), converges",
+    "watch": "\\( L = 0 \\) or \\( \\infty \\) is conclusive in one direction only."
+   }
+  ],
+  "stuck": [
+   "List every point where the integral is improper: infinite endpoints, and every point of the closed interval where the integrand is unbounded. Split so that each piece has exactly one.",
+   "If an antiderivative is available, integrate to \\( t \\) and take the limit; use L'Hôpital's rule for forms like \\( te^{-t} \\) or \\( t\\ln t \\).",
+   "If not, find the dominant behaviour at the problematic endpoint and compare with a p-integral or an exponential.",
+   "If a direct inequality points the useless way, switch to limit comparison.",
+   "Before quoting a value for a definite integral, check that the integrand is continuous on the whole closed interval; a negative value for a positive integrand signals a missed singularity."
+  ]
+ }
+}

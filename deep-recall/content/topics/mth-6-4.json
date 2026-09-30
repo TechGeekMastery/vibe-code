@@ -1,0 +1,851 @@
+{
+ "key": "mth-6-4",
+ "title": "Counting: permutations and combinations",
+ "v": 1,
+ "scope": "The sum, product, complement and division rules; permutations, k-permutations and circular arrangements; combinations; permutations of multisets and lattice paths; stars and bars with lower bounds; the binomial theorem, Pascal's identity and combinatorial proof. Pigeonhole, inclusion–exclusion (including upper-bounded solutions and surjections) and recurrences are left to later topics.",
+ "sources": [
+  {
+   "title": "R. Hammack, Book of Proof, 3rd ed., Chapter 3 (Counting)",
+   "url": "https://richardhammack.github.io/BookOfProof/"
+  },
+  {
+   "title": "O. Levin, Discrete Mathematics: An Open Introduction, Chapter 1 (Counting), §1.4 Combinatorial Proofs (LibreTexts)",
+   "url": "https://math.libretexts.org/Bookshelves/Combinatorics_and_Discrete_Mathematics/Discrete_Mathematics_(Levin)/1%3A_Counting/1.4%3A_Combinatorial_Proofs"
+  },
+  {
+   "title": "R. P. Stanley, Bijective Proof Problems (MIT)",
+   "url": "https://math.mit.edu/~rstan/bij.pdf"
+  }
+ ],
+ "pre": [
+  "mth-6-2",
+  "mth-6-3"
+ ],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Sum and product rules",
+   "d": "Apply the sum rule to disjoint cases and the product rule to a sequence of choices whose number of options does not depend on earlier choices.",
+   "type": "procedure"
+  },
+  {
+   "id": "k2",
+   "t": "Complement counting",
+   "d": "Count objects with a property as the total minus those without it, especially for 'at least one' conditions.",
+   "type": "procedure"
+  },
+  {
+   "id": "k3",
+   "t": "Permutations",
+   "d": "Count arrangements with n!, k-permutations with P(n, k) = n!/(n − k)!, and strings with repetition with n^k.",
+   "type": "procedure"
+  },
+  {
+   "id": "k4",
+   "t": "Division rule",
+   "d": "Count by a uniform overcount followed by division, as in circular arrangements.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k5",
+   "t": "Combinations",
+   "d": "Derive C(n, k) = n!/(k!(n − k)!) from P(n, k) and use it for unordered selections without repetition.",
+   "type": "procedure"
+  },
+  {
+   "id": "k6",
+   "t": "Choosing the counting model",
+   "d": "Decide whether order matters and whether repetition is allowed, and detect overcounting in a proposed method.",
+   "type": "distinction"
+  },
+  {
+   "id": "k7",
+   "t": "Permutations of a multiset",
+   "d": "Count arrangements with repeated types by n!/(n₁!⋯nₖ!), including lattice paths and labelled groups.",
+   "type": "procedure"
+  },
+  {
+   "id": "k8",
+   "t": "Stars and bars",
+   "d": "Count multisets and nonnegative integer solutions of x₁ + ⋯ + xₖ = n by C(n + k − 1, k − 1), handling lower bounds by substitution.",
+   "type": "skill"
+  },
+  {
+   "id": "k9",
+   "t": "Binomial theorem",
+   "d": "State and prove the binomial theorem and use it to extract coefficients and evaluate sums.",
+   "type": "fact"
+  },
+  {
+   "id": "k10",
+   "t": "Pascal's identity and binomial identities",
+   "d": "Prove Pascal's identity, symmetry and the alternating row sum, and read them in Pascal's triangle.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k11",
+   "t": "Combinatorial proof",
+   "d": "Prove an identity by counting one set in two ways or by exhibiting a bijection.",
+   "type": "skill"
+  }
+ ],
+ "intro": "How many licence plates can a format produce, how many five-card hands contain a full house, how many ways can twenty identical candies be shared among four children? Each question asks for the size of a finite set that is far too large to list. Counting is the discipline of determining such sizes exactly without listing, and it underlies discrete probability, the analysis of algorithms, and a large part of combinatorics.\n\nEverything in this topic rests on two elementary rules, the sum rule and the product rule. The standard formulas (permutations, combinations, arrangements with repeated objects, selections with repetition) are those rules applied to recurring situations. The real difficulty is modelling: deciding whether order matters and whether repetition is allowed, and making sure that every object is counted exactly once. The binomial coefficients that emerge have an algebraic life of their own, in the binomial theorem and in identities that are best proved by counting the same set in two ways.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "The sum and product rules",
+   "kps": [
+    "k1",
+    "k2"
+   ],
+   "md": "Every count in this topic is built from two rules. This section states them precisely, including the hypotheses that are most often violated, and adds the complement rule, which converts \"at least one\" conditions into subtraction.\n\n> **Sum rule.** If \\( A_{1}, \\dots, A_{m} \\) are pairwise disjoint finite sets, then \\( |A_{1} \\cup \\cdots \\cup A_{m}| = |A_{1}| + \\cdots + |A_{m}| \\). In words: if a task can be done in one of \\( m \\) mutually exclusive ways, and the \\( i \\)-th way has \\( n_{i} \\) outcomes, the total is \\( n_{1} + \\cdots + n_{m} \\).\n\n> **Product rule.** If a procedure consists of a sequence of \\( m \\) steps, and step \\( i \\) can be carried out in \\( n_{i} \\) ways *no matter how the earlier steps were carried out*, then the procedure can be carried out in \\( n_{1} n_{2} \\cdots n_{m} \\) ways, provided different sequences of choices produce different outcomes. The basic case is \\( |A_{1} \\times \\cdots \\times A_{m}| = |A_{1}| \\cdots |A_{m}| \\).\n\nThe sum rule requires disjointness; overlapping cases are the subject of inclusion–exclusion in a later topic. The product rule requires that the *number* of options at each step be fixed, although the options themselves may depend on earlier choices.\n\n> **Complement rule.** If \\( A \\subseteq U \\) with \\( U \\) finite, then \\( |A| = |U| - |U \\setminus A| \\).\n\n**Worked example 1.** A licence plate consists of three letters followed by three digits. By the product rule there are \\( 26^{3} \\cdot 10^{3} = 17{,}576{,}000 \\) plates.\n\n**Worked example 2 (all three rules).** A password has length 6, 7 or 8, uses lowercase letters and digits (36 symbols), and must contain at least one digit. For a fixed length \\( L \\), there are \\( 36^{L} \\) strings in all and \\( 26^{L} \\) with no digit, so \\( 36^{L} - 26^{L} \\) valid passwords (complement rule). The three lengths are disjoint cases, so the total is\n\\[ (36^{6} - 26^{6}) + (36^{7} - 26^{7}) + (36^{8} - 26^{8}) = 2{,}684{,}483{,}063{,}360. \\]\nCounting \"at least one digit\" directly would require splitting by the number and positions of digits; the complement has a single clean description.\n\n**Worked example 3 (when the number of options depends on earlier choices).** Count the three-digit numbers (100 to 999) with distinct digits. Choose the hundreds digit (9 ways, not 0), then the tens digit (9 ways: any digit except the one used), then the units digit (8 ways): \\( 9 \\cdot 9 \\cdot 8 = 648 \\). The *set* of options changes with earlier choices, but its *size* does not, so the product rule applies.\n\nNow count the *even* three-digit numbers with distinct digits. If we choose the hundreds digit first, the number of even digits left for the units place depends on whether the hundreds digit was even, so the product rule does not apply directly. Split instead by the units digit (sum rule). *Units digit 0:* hundreds digit 9 ways, tens digit 8 ways: \\( 72 \\). *Units digit 2, 4, 6 or 8:* 4 ways; hundreds digit 8 ways (not 0, not the units digit); tens digit 8 ways: \\( 4 \\cdot 8 \\cdot 8 = 256 \\). Total \\( 72 + 256 = 328 \\).\n\nThe general advice is to make the most constrained choice first, and to split into cases when a constraint interacts with another.\n\n**The common mistakes.** Adding counts that should be multiplied (independent successive choices) or multiplying counts that should be added (alternative cases); applying the product rule when the number of options at a step depends on earlier choices; and adding overlapping cases, which counts some objects twice.",
+   "questions": [
+    {
+     "id": "s1q1",
+     "kp": "k2",
+     "type": "number",
+     "prompt": "A PIN is a string of 4 digits (0000 to 9999). How many PINs contain at least one repeated digit?",
+     "answer": "4960",
+     "why": "Complement: there are \\( 10^{4} = 10000 \\) PINs and \\( 10 \\cdot 9 \\cdot 8 \\cdot 7 = 5040 \\) with all digits distinct, so \\( 10000 - 5040 = 4960 \\) have a repeat."
+    },
+    {
+     "id": "s1q2",
+     "kp": "k1",
+     "type": "written",
+     "prompt": "Count the odd integers from 1000 to 9999 whose four digits are all distinct. Explain the order in which you make the choices, and why choosing the thousands digit first causes difficulty.",
+     "rubric": [
+      "Chooses the units digit first: 5 odd digits",
+      "Then the thousands digit: 8 ways (not 0, not the units digit)",
+      "Then hundreds and tens: 8 and 7 ways; total 5·8·8·7 = 2240",
+      "Explains that choosing the thousands digit first makes the number of odd units digits depend on whether the thousands digit was odd, violating the product rule's hypothesis"
+     ],
+     "model": "Choose the digits in the order units, thousands, hundreds, tens.\n\n- Units: must be odd, 5 ways (1, 3, 5, 7, 9).\n- Thousands: nonzero and different from the units digit: \\( 9 - 1 = 8 \\) ways.\n- Hundreds: any of the 8 digits not yet used.\n- Tens: any of the 7 remaining digits.\n\nBy the product rule the count is \\( 5 \\cdot 8 \\cdot 8 \\cdot 7 = 2240 \\).\n\nIf the thousands digit were chosen first (9 ways), the number of odd digits remaining for the units place would be 4 if the thousands digit was odd and 5 if it was even. The number of options at that step would depend on an earlier choice, so the product rule would not apply without splitting into cases. Choosing the most constrained positions first avoids this.",
+     "why": "The two constrained positions (units odd, thousands nonzero) interact only through the requirement that they differ, which is handled by choosing one and then the other."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "Permutations and the division rule",
+   "kps": [
+    "k3",
+    "k4"
+   ],
+   "md": "The most frequent application of the product rule is to arrangements in which order matters and nothing may be used twice. This section counts such arrangements and introduces the division rule, which handles arrangements that are regarded as the same under some symmetry.\n\n> A **permutation** of \\( n \\) distinct objects is an ordered arrangement of all of them; there are \\( n! = n(n-1)\\cdots 2 \\cdot 1 \\). A **\\( k \\)-permutation** is an ordered arrangement of \\( k \\) of the \\( n \\) objects; their number is\n\\[ P(n, k) = n(n-1)\\cdots(n-k+1) = \\frac{n!}{(n-k)!}, \\qquad 0 \\le k \\le n. \\]\n\nBoth counts come from the product rule: the first position has \\( n \\) options, the second \\( n - 1 \\) whatever the first was, and so on. The convention \\( 0! = 1 \\) makes \\( P(n, n) = n!/0! = n! \\) correct and matches the fact that there is exactly one arrangement of no objects. If repetition is allowed, the number of strings of length \\( k \\) over an \\( n \\)-symbol alphabet is \\( n^{k} \\).\n\n**Worked example 1.** A club of 10 members elects a president, a vice-president and a secretary, all different people. The offices are distinguishable, so order matters: \\( P(10, 3) = 10 \\cdot 9 \\cdot 8 = 720 \\).\n\n**Worked example 2 (adjacency).** In how many ways can 7 people stand in a row if two particular people, \\( A \\) and \\( B \\), must stand next to each other? Glue \\( A \\) and \\( B \\) into a single block. There are then 6 units to arrange, in \\( 6! \\) ways, and the block can be ordered \\( AB \\) or \\( BA \\): \\( 2 \\cdot 6! = 1440 \\). By the complement rule, the number of arrangements in which they are *not* adjacent is \\( 7! - 1440 = 5040 - 1440 = 3600 \\).\n\n**The division rule.** Sometimes the natural procedure produces every object of interest the same number of times.\n\n> **Division rule.** If a procedure produces each object of interest exactly \\( d \\) times, then the number of objects is (number of outcomes of the procedure)\\( / d \\). Formally: if \\( f : A \\to B \\) is surjective and every \\( b \\in B \\) has exactly \\( d \\) preimages, then \\( |B| = |A|/d \\).\n\nThe formal version follows from the sum rule: \\( A \\) is the disjoint union of the \\( |B| \\) preimage sets \\( f^{-1}(\\{b\\}) \\), each of size \\( d \\).\n\n**Worked example 3 (circular arrangements).** Six people sit at a round table, and two seatings are considered the same if one is a rotation of the other. Map each of the \\( 6! \\) linear orders to the circular seating obtained by placing the people clockwise in that order. Each circular seating arises from exactly 6 linear orders, one for each choice of who is listed first. So there are \\( 6!/6 = 5! = 120 \\) seatings; in general \\( n \\) people can be seated in \\( (n-1)! \\) ways. Equivalently, fix one person's seat to remove the rotational symmetry and arrange the other \\( n - 1 \\) people in the remaining seats.\n\nThe division rule is valid only when the overcount is *uniform*. If some objects are produced more often than others, dividing by a single number gives a wrong, often non-integer, answer. The next section uses the division rule to derive the count of combinations.\n\n**The common mistakes.** Using \\( n^{k} \\) when repetition is not allowed, or \\( P(n, k) \\) when it is; forgetting that the positions of a glued block contribute an extra factor for its internal order; and applying the division rule to an overcount that is not the same for every object.",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k3",
+     "type": "number",
+     "prompt": "In how many ways can 8 people stand in a row if two particular people must *not* stand next to each other?",
+     "answer": "30240",
+     "why": "Total \\( 8! = 40320 \\). Adjacent: glue the two into a block, \\( 2 \\cdot 7! = 10080 \\). Not adjacent: \\( 40320 - 10080 = 30240 \\)."
+    },
+    {
+     "id": "s2q2",
+     "kp": "k4",
+     "type": "written",
+     "prompt": "Five couples sit at a round table, and seatings that differ by a rotation are considered the same. In how many ways can they sit if each couple sits together? Justify each factor, including how the rotations are accounted for.",
+     "rubric": [
+      "Treats each couple as a block: 5 blocks around the table",
+      "Circular arrangements of 5 blocks: (5 − 1)! = 24, by the division rule (each circular arrangement comes from 5 linear orders)",
+      "Each couple can sit in 2 orders: 2⁵ = 32",
+      "Total 24 · 32 = 768"
+     ],
+     "model": "Treat each couple as a single block. Arranging 5 blocks around a round table, up to rotation, can be done in \\( 5!/5 = 4! = 24 \\) ways: each circular arrangement arises from exactly 5 of the \\( 5! \\) linear orders (one for each block that could be listed first), so the division rule applies. Within each block the two partners can sit in 2 orders, independently, giving \\( 2^{5} = 32 \\). By the product rule the total is \\( 24 \\cdot 32 = 768 \\).\n\n(The rotations have been removed once, at the level of blocks; rotating the whole table also moves blocks, so no further division is needed.)",
+     "why": "Glue the constrained objects into blocks, count circular arrangements of the blocks by \\( (m - 1)! \\), then multiply by the internal orders."
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "Combinations",
+   "kps": [
+    "k5",
+    "k6"
+   ],
+   "md": "Many selections disregard order: a committee, a hand of cards, a set of pizza toppings. This section counts unordered selections without repetition, derives the formula from the previous section, and sets out the decision that precedes every count: does order matter, and is repetition allowed?\n\n> A **\\( k \\)-combination** of an \\( n \\)-element set is a \\( k \\)-element subset. Their number is the **binomial coefficient** \\( \\binom{n}{k} \\), read \"\\( n \\) choose \\( k \\)\" (also written \\( C(n, k) \\)):\n\\[ \\binom{n}{k} = \\frac{n!}{k!\\,(n-k)!}, \\qquad 0 \\le k \\le n. \\]\n\n*Derivation.* Count the \\( k \\)-permutations in two stages: first choose which \\( k \\) elements to use (\\( \\binom{n}{k} \\) ways), then order them (\\( k! \\) ways). By the product rule, \\( P(n, k) = \\binom{n}{k} \\cdot k! \\), so \\( \\binom{n}{k} = \\frac{P(n, k)}{k!} = \\frac{n!}{k!\\,(n-k)!} \\). In the language of the division rule, each \\( k \\)-subset is produced exactly \\( k! \\) times by the \\( k \\)-permutations.\n\nChoosing which \\( k \\) elements to take is the same as choosing which \\( n - k \\) to leave, so \\( \\binom{n}{k} = \\binom{n}{n-k} \\) (the map \\( S \\mapsto \\overline{S} \\) is a bijection between \\( k \\)-subsets and \\( (n-k) \\)-subsets).\n\n**Worked example 1.** The number of five-card hands from a 52-card deck is \\( \\binom{52}{5} = 2{,}598{,}960 \\).\n\n**Worked example 2.** A committee of 5 is chosen from 8 women and 6 men.\n- *Exactly 3 women:* choose the women and then the men: \\( \\binom{8}{3}\\binom{6}{2} = 56 \\cdot 15 = 840 \\).\n- *At least one man:* complement of \"all women\": \\( \\binom{14}{5} - \\binom{8}{5} = 2002 - 56 = 1946 \\).\n\n**A tempting overcount.** For \"at least one man\", one might reason: choose one man to guarantee the condition (6 ways), then choose the other 4 members from the remaining 13 people (\\( \\binom{13}{4} = 715 \\) ways), for \\( 6 \\cdot 715 = 4290 \\). This exceeds the correct 1946 because a committee with two men, say \\( m_{1} \\) and \\( m_{2} \\), is produced twice: once with \\( m_{1} \\) as the \"guaranteed\" man and once with \\( m_{2} \\). Different sequences of choices produce the same outcome, which violates the product rule's proviso. Designating a special member creates an order that the committee does not have.\n\n**Choosing the model.** For selecting \\( k \\) objects from \\( n \\) types or objects, the four basic situations are:\n\n| | repetition not allowed | repetition allowed |\n|---|---|---|\n| order matters | \\( P(n, k) = \\frac{n!}{(n-k)!} \\) | \\( n^{k} \\) |\n| order does not matter | \\( \\binom{n}{k} \\) | stars and bars (a later section) |\n\nDecide order by asking whether rearranging the selection gives a different outcome (a ranking, a string, an assignment of offices) or the same one (a committee, a hand, a set). Decide repetition by asking whether the same object or type may be used more than once.\n\n**The common mistakes.** Using \\( P(n, k) \\) for unordered selections or \\( \\binom{n}{k} \\) for ordered ones; the \"guaranteed element\" overcount above; and multiplying counts for different categories when the categories overlap.",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k5",
+     "type": "number",
+     "prompt": "A committee of 5 is chosen from 8 women and 6 men. How many committees contain at least 2 women?",
+     "answer": "1876",
+     "why": "Complement: total \\( \\binom{14}{5} = 2002 \\); no women \\( \\binom{6}{5} = 6 \\); exactly one woman \\( \\binom{8}{1}\\binom{6}{4} = 120 \\). So \\( 2002 - 6 - 120 = 1876 \\)."
+    },
+    {
+     "id": "s3q2",
+     "kp": "k6",
+     "type": "mcq",
+     "prompt": "A committee of 5 is to be chosen from 8 women and 6 men so that it contains at least one man. Which expression gives the number of such committees?",
+     "options": [
+      "\\( 6\\binom{13}{4} \\): choose one man to guarantee the condition, then any 4 of the remaining 13 people",
+      "\\( \\binom{14}{5} - \\binom{8}{5} \\)",
+      "\\( 6\\binom{8}{4} \\)",
+      "\\( P(14, 5) - P(8, 5) \\)"
+     ],
+     "answer": 1,
+     "why": "The complement of \\\"at least one man\\\" is \\\"all women\\\", so the count is \\( \\binom{14}{5} - \\binom{8}{5} = 1946 \\). The first option counts a committee with \\( j \\) men \\( j \\) times (once for each choice of the \\\"guaranteed\\\" man), giving 4290. The third counts committees with exactly one man. The fourth counts ordered selections, although a committee is unordered."
+    },
+    {
+     "id": "s3q3",
+     "kp": "k6",
+     "type": "written",
+     "prompt": "A full house is a five-card hand with three cards of one rank and two cards of another rank. Count the full houses in a standard 52-card deck (13 ranks, 4 suits), and explain why the ranks are chosen with \\( 13 \\cdot 12 \\) rather than \\( \\binom{13}{2} \\).",
+     "rubric": [
+      "Rank for the triple: 13; rank for the pair: 12",
+      "Suits: C(4, 3) = 4 for the triple, C(4, 2) = 6 for the pair",
+      "Total 13 · 4 · 12 · 6 = 3744",
+      "Explains that the two ranks play different roles (triple versus pair), so the choice is ordered; C(13, 2) would undercount by a factor of 2"
+     ],
+     "model": "Choose the rank of the triple (13 ways), its three suits (\\( \\binom{4}{3} = 4 \\) ways), the rank of the pair (12 ways, different from the first), and its two suits (\\( \\binom{4}{2} = 6 \\) ways). By the product rule there are \\( 13 \\cdot 4 \\cdot 12 \\cdot 6 = 3744 \\) full houses.\n\nThe two ranks play different roles: kings over sevens (three kings, two sevens) is a different hand from sevens over kings. So the pair of ranks is an ordered choice, \\( P(13, 2) = 13 \\cdot 12 \\). Using \\( \\binom{13}{2} \\) would count only which two ranks appear, and would miss the factor 2 that records which rank is the triple.",
+     "why": "Ask whether exchanging the two chosen items changes the outcome; here it does, so the selection is ordered."
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "Arrangements with repeated objects",
+   "kps": [
+    "k7"
+   ],
+   "md": "A permutation of \\( n \\) distinct objects has \\( n! \\) arrangements, but when some objects are indistinguishable, as the letters of a word with repeated letters are, many of those arrangements coincide. This section counts arrangements of a **multiset** (a collection in which elements may repeat) and applies the result to lattice paths and to dividing people into groups.\n\n> **Theorem.** The number of distinct arrangements of \\( n \\) objects, of which \\( n_{1} \\) are of type 1, \\( n_{2} \\) of type 2, …, \\( n_{k} \\) of type \\( k \\) (with \\( n_{1} + \\cdots + n_{k} = n \\), objects of the same type indistinguishable), is\n\\[ \\binom{n}{n_{1}, n_{2}, \\dots, n_{k}} = \\frac{n!}{n_{1}!\\, n_{2}! \\cdots n_{k}!}. \\]\n\nThis number is called a **multinomial coefficient**. Two proofs illuminate it.\n\n*By positions.* Choose the \\( n_{1} \\) positions for type 1 (\\( \\binom{n}{n_{1}} \\) ways), then \\( n_{2} \\) of the remaining positions for type 2 (\\( \\binom{n - n_{1}}{n_{2}} \\) ways), and so on. The product telescopes:\n\\[ \\frac{n!}{n_{1}!\\,(n - n_{1})!} \\cdot \\frac{(n - n_{1})!}{n_{2}!\\,(n - n_{1} - n_{2})!} \\cdots = \\frac{n!}{n_{1}! \\cdots n_{k}!}. \\]\n\n*By division.* Temporarily label the copies of each type so that all \\( n \\) objects are distinct; there are \\( n! \\) arrangements. Erasing the labels maps each labelled arrangement to a word, and each word arises exactly \\( n_{1}! \\cdots n_{k}! \\) times (the labelled copies of each type can be permuted among their positions). By the division rule, the number of words is \\( n!/(n_{1}! \\cdots n_{k}!) \\).\n\n**Worked example 1.** The word MISSISSIPPI has 11 letters: M once, I four times, S four times, P twice. Its distinct arrangements number\n\\[ \\frac{11!}{1!\\,4!\\,4!\\,2!} = 34{,}650. \\]\n\n**Worked example 2 (lattice paths).** A lattice path from \\( (0, 0) \\) to \\( (5, 3) \\) uses unit steps right (R) or up (U). Every such path has exactly 5 R's and 3 U's, and conversely every word with 5 R's and 3 U's describes a path. This is a bijection, so the number of paths is \\( \\frac{8!}{5!\\,3!} = \\binom{8}{3} = 56 \\). Paths through a given point are counted by the product rule: from \\( (0,0) \\) to \\( (2,1) \\) and then from \\( (2,1) \\) to \\( (5,3) \\) gives \\( \\binom{3}{1}\\binom{5}{2} = 3 \\cdot 10 = 30 \\).\n\n**Worked example 3 (labelled and unlabelled groups).** Twelve students are split into three groups of 4, assigned to rooms A, B and C. Assigning each student a room letter is a word with four A's, four B's and four C's: \\( \\frac{12!}{4!\\,4!\\,4!} = 34{,}650 \\) ways. If the groups are *not* labelled (only the grouping matters), each grouping corresponds to \\( 3! = 6 \\) room assignments, all distinct because the groups are disjoint and nonempty, so there are \\( 34{,}650/6 = 5775 \\) groupings.\n\n**The common mistakes.** Using \\( n! \\) when objects repeat; forgetting the factor for a type that appears once (it is \\( 1! = 1 \\), harmless, but types appearing more often must all be included); and dividing by the number of orderings of the groups when the groups are labelled, or failing to divide when they are not.",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k7",
+     "type": "number",
+     "prompt": "How many distinct arrangements of the letters of STATISTICS are there?",
+     "answer": "50400",
+     "why": "STATISTICS has 10 letters: S three times, T three times, I twice, A once, C once. So \\( \\frac{10!}{3!\\,3!\\,2!\\,1!\\,1!} = \\frac{3628800}{72} = 50400 \\)."
+    },
+    {
+     "id": "s4q2",
+     "kp": "k7",
+     "type": "written",
+     "prompt": "Lattice paths go from \\( (0, 0) \\) to \\( (6, 4) \\) with unit steps right or up. (a) Explain, via a bijection, why there are \\( \\binom{10}{4} \\) such paths. (b) How many pass through \\( (2, 2) \\)? (c) How many avoid \\( (2, 2) \\)?",
+     "rubric": [
+      "(a) Bijection between paths and words with 6 R's and 4 U's; choosing the positions of the U's gives C(10, 4) = 210",
+      "(b) Product rule: C(4, 2) paths to (2, 2) times C(6, 2) paths from (2, 2) to (6, 4): 6 · 15 = 90",
+      "(c) Complement: 210 − 90 = 120",
+      "Justifies that paths through (2, 2) split uniquely into two segments"
+     ],
+     "model": "(a) A path is determined by its sequence of steps, a word of length 10 containing exactly 6 R's and 4 U's (the path must move 6 right and 4 up in total). Conversely, every such word traces a path from \\( (0,0) \\) to \\( (6,4) \\). This is a bijection, and the words are counted by choosing the 4 positions of the U's: \\( \\binom{10}{4} = 210 \\).\n\n(b) A path through \\( (2, 2) \\) splits uniquely into a path from \\( (0, 0) \\) to \\( (2, 2) \\) (\\( \\binom{4}{2} = 6 \\) ways) followed by a path from \\( (2, 2) \\) to \\( (6, 4) \\), which has 4 R's and 2 U's (\\( \\binom{6}{2} = 15 \\) ways). By the product rule, \\( 6 \\cdot 15 = 90 \\).\n\n(c) By the complement rule, \\( 210 - 90 = 120 \\) paths avoid \\( (2, 2) \\).",
+     "why": "Lattice paths are words with two letters; the multinomial count becomes a binomial coefficient."
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "Selections with repetition: stars and bars",
+   "kps": [
+    "k8"
+   ],
+   "md": "The fourth cell of the table in the section on combinations, unordered selection with repetition allowed, does not follow from the earlier formulas directly. Choosing 12 donuts from 5 kinds is such a selection: only the number of each kind matters. This section counts these selections by a bijection with arrangements of two symbols, a method known as **stars and bars**.\n\nA selection of \\( n \\) items from \\( k \\) types, with repetition allowed and order irrelevant, is determined by how many items of each type are chosen: nonnegative integers \\( x_{1}, \\dots, x_{k} \\) with \\( x_{1} + \\cdots + x_{k} = n \\). So the two problems below are the same problem.\n\n> **Theorem (stars and bars).** The number of solutions of \\( x_{1} + x_{2} + \\cdots + x_{k} = n \\) in nonnegative integers, equivalently the number of multisets of size \\( n \\) drawn from \\( k \\) types, is\n\\[ \\binom{n + k - 1}{k - 1} = \\binom{n + k - 1}{n}. \\]\n\n*Proof.* Encode a solution as a string of \\( n \\) stars and \\( k - 1 \\) bars: \\( x_{1} \\) stars, a bar, \\( x_{2} \\) stars, a bar, …, a bar, \\( x_{k} \\) stars. For example, with \\( k = 4 \\) and \\( n = 6 \\), the solution \\( (2, 0, 3, 1) \\) becomes\n\\[ \\star\\star \\mid\\ \\mid \\star\\star\\star \\mid \\star \\]\n(the empty space between the first two bars is \\( x_{2} = 0 \\)). Conversely, any string of \\( n \\) stars and \\( k - 1 \\) bars determines a solution: \\( x_{i} \\) is the number of stars between the \\( (i-1) \\)-st and \\( i \\)-th bars. This is a bijection. The strings have length \\( n + k - 1 \\) and are determined by the positions of the \\( k - 1 \\) bars, giving \\( \\binom{n + k - 1}{k - 1} \\). \\( \\blacksquare \\)\n\n**Worked example 1.** Choosing 12 donuts from 5 kinds: \\( n = 12 \\), \\( k = 5 \\), so \\( \\binom{16}{4} = 1820 \\) selections.\n\n**Lower bounds by substitution.** If \\( x_{i} \\ge a_{i} \\), set \\( y_{i} = x_{i} - a_{i} \\ge 0 \\). The equation becomes \\( y_{1} + \\cdots + y_{k} = n - (a_{1} + \\cdots + a_{k}) \\), and the substitution is a bijection between the two solution sets.\n\n**Worked example 2.** The number of solutions of \\( x_{1} + x_{2} + x_{3} = 10 \\) in *positive* integers: with \\( y_{i} = x_{i} - 1 \\), \\( y_{1} + y_{2} + y_{3} = 7 \\), so \\( \\binom{9}{2} = 36 \\). In general, positive solutions of \\( x_{1} + \\cdots + x_{k} = n \\) number \\( \\binom{n - 1}{k - 1} \\).\n\n**Worked example 3.** Solutions of \\( x_{1} + x_{2} + x_{3} + x_{4} = 20 \\) in nonnegative integers with \\( x_{1} \\ge 3 \\) and \\( x_{2} \\ge 1 \\): subtracting, \\( y_{1} + y_{2} + x_{3} + x_{4} = 16 \\), so \\( \\binom{19}{3} = 969 \\).\n\n**Inequalities by a slack variable.** The nonnegative solutions of \\( x_{1} + x_{2} + x_{3} \\le 10 \\) correspond bijectively to the nonnegative solutions of \\( x_{1} + x_{2} + x_{3} + s = 10 \\), where \\( s = 10 - (x_{1} + x_{2} + x_{3}) \\ge 0 \\): there are \\( \\binom{13}{3} = 286 \\).\n\nUpper bounds (\\( x_{i} \\le b_{i} \\)) cannot be removed by substitution; they are handled by inclusion–exclusion in the topic on pigeonhole and inclusion–exclusion.\n\n**The common mistakes.** Confusing \\( \\binom{n + k - 1}{k - 1} \\) with \\( \\binom{n + k - 1}{k} \\) (check a tiny case: \\( x_{1} + x_{2} = 1 \\) has 2 solutions, and \\( \\binom{2}{1} = 2 \\)); applying stars and bars to *distinct* objects, which are assigned to \\( k \\) boxes in \\( k^{n} \\) ways by the product rule; and forgetting to reduce the total when substituting for lower bounds.",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k8",
+     "type": "number",
+     "prompt": "How many solutions in integers does \\( x_{1} + x_{2} + x_{3} + x_{4} = 15 \\) have with \\( x_{1} \\ge 2 \\), \\( x_{2} \\ge 0 \\), \\( x_{3} \\ge 1 \\), \\( x_{4} \\ge 0 \\)?",
+     "answer": "455",
+     "why": "Substitute \\( y_{1} = x_{1} - 2 \\), \\( y_{3} = x_{3} - 1 \\): the new equation \\( y_{1} + x_{2} + y_{3} + x_{4} = 12 \\) in nonnegative integers has \\( \\binom{12 + 3}{3} = \\binom{15}{3} = 455 \\) solutions."
+    },
+    {
+     "id": "s5q2",
+     "kp": "k8",
+     "type": "written",
+     "prompt": "Show, by describing an explicit bijection, that the number of solutions of \\( x_{1} + x_{2} + x_{3} = 7 \\) in positive integers equals \\( \\binom{6}{2} = 15 \\). (Place 7 stars in a row and consider the gaps between them.) Then explain why the formula for nonnegative solutions would give a different answer.",
+     "rubric": [
+      "7 stars have 6 interior gaps; choosing 2 distinct gaps for bars splits the stars into three nonempty groups",
+      "The group sizes (x₁, x₂, x₃) are positive and sum to 7; conversely each positive solution gives a unique choice of 2 gaps",
+      "Concludes C(6, 2) = 15",
+      "Nonnegative solutions allow empty groups (bars together or at the ends): C(9, 2) = 36 counts those"
+     ],
+     "model": "Write 7 stars in a row. There are 6 gaps between consecutive stars. Choose 2 of these gaps and place a bar in each: the stars are split into three groups, each nonempty because the bars are in distinct interior gaps. Let \\( x_{1}, x_{2}, x_{3} \\) be the group sizes; they are positive and sum to 7. Conversely, a positive solution determines the bars' positions: after the \\( x_{1} \\)-th star and after the \\( (x_{1} + x_{2}) \\)-th star, both interior gaps and distinct. The two maps are inverse to each other, so the count is \\( \\binom{6}{2} = 15 \\).\n\nFor nonnegative solutions, groups may be empty, which corresponds to bars being adjacent or at the ends; the bars are then placed among \\( 7 + 2 = 9 \\) symbols, giving \\( \\binom{9}{2} = 36 \\), a different count.",
+     "why": "The positive-solution formula \\( \\binom{n - 1}{k - 1} \\) also follows from the nonnegative one by the substitution \\( y_{i} = x_{i} - 1 \\)."
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "title": "The binomial theorem and Pascal's identity",
+   "kps": [
+    "k9",
+    "k10"
+   ],
+   "md": "The numbers \\( \\binom{n}{k} \\) arose as counts of subsets, but they are also the coefficients in the expansion of \\( (x + y)^{n} \\), which is where the name \"binomial coefficient\" comes from. This section proves that fact by counting and derives the basic identities satisfied by these numbers.\n\n> **Binomial theorem.** For every integer \\( n \\ge 0 \\) and all numbers \\( x, y \\),\n\\[ (x + y)^{n} = \\sum_{k=0}^{n} \\binom{n}{k} x^{n-k} y^{k}. \\]\n\n*Proof.* Write \\( (x + y)^{n} \\) as a product of \\( n \\) factors \\( (x + y) \\). Expanding by the distributive law gives a sum of \\( 2^{n} \\) terms, one for each way of choosing either \\( x \\) or \\( y \\) from each factor. A choice that takes \\( y \\) from exactly \\( k \\) factors (and \\( x \\) from the other \\( n - k \\)) contributes \\( x^{n-k} y^{k} \\), and there are \\( \\binom{n}{k} \\) such choices, one for each \\( k \\)-subset of the factors. Collecting like terms gives the formula. \\( \\blacksquare \\)\n\nAn induction proof, using the identity below, is an exam exercise.\n\n**Worked example 1.** The coefficient of \\( x^{3}y^{5} \\) in \\( (2x - y)^{8} \\): the term with \\( k = 5 \\) is \\( \\binom{8}{5}(2x)^{3}(-y)^{5} = 56 \\cdot 8 \\cdot (-1)\\, x^{3}y^{5} \\), so the coefficient is \\( -448 \\). The constants inside each term must be raised to the same power as the variable.\n\n**Worked example 2.** Substituting values evaluates sums. With \\( x = y = 1 \\): \\( \\sum_{k=0}^{n} \\binom{n}{k} = 2^{n} \\), the total number of subsets of an \\( n \\)-set. With \\( x = 1 \\), \\( y = -1 \\) and \\( n \\ge 1 \\): \\( \\sum_{k=0}^{n} (-1)^{k}\\binom{n}{k} = (1 - 1)^{n} = 0 \\), so an \\( n \\)-set with \\( n \\ge 1 \\) has as many subsets of even size as of odd size. (This identity is the key step in the proof of inclusion–exclusion.)\n\n> **Pascal's identity.** For integers \\( 1 \\le k \\le n \\),\n\\[ \\binom{n+1}{k} = \\binom{n}{k-1} + \\binom{n}{k}. \\]\n\n*Combinatorial proof.* Count the \\( k \\)-subsets of \\( \\{1, 2, \\dots, n + 1\\} \\). Those that contain the element \\( n + 1 \\) are obtained by adding \\( n + 1 \\) to a \\( (k-1) \\)-subset of \\( \\{1, \\dots, n\\} \\): \\( \\binom{n}{k-1} \\) of them. Those that do not contain \\( n + 1 \\) are the \\( k \\)-subsets of \\( \\{1, \\dots, n\\} \\): \\( \\binom{n}{k} \\) of them. The two cases are disjoint and exhaustive, so the sum rule gives the identity. \\( \\blacksquare \\)\n\n*Algebraic check.* \\( \\frac{n!}{(k-1)!\\,(n-k+1)!} + \\frac{n!}{k!\\,(n-k)!} = \\frac{n!\\,\\bigl[k + (n - k + 1)\\bigr]}{k!\\,(n-k+1)!} = \\frac{(n+1)!}{k!\\,(n+1-k)!} \\).\n\nArranging \\( \\binom{n}{k} \\) in rows \\( n = 0, 1, 2, \\dots \\) gives **Pascal's triangle**, in which each interior entry is the sum of the two above it:\n\\[ \\begin{array}{c} 1 \\\\ 1 \\quad 1 \\\\ 1 \\quad 2 \\quad 1 \\\\ 1 \\quad 3 \\quad 3 \\quad 1 \\\\ 1 \\quad 4 \\quad 6 \\quad 4 \\quad 1 \\\\ 1 \\quad 5 \\quad 10 \\quad 10 \\quad 5 \\quad 1 \\\\ 1 \\quad 6 \\quad 15 \\quad 20 \\quad 15 \\quad 6 \\quad 1 \\end{array} \\]\nThe symmetry \\( \\binom{n}{k} = \\binom{n}{n-k} \\) is the left–right symmetry of each row, and the row sums are \\( 2^{n} \\).\n\n**The common mistakes.** Forgetting to raise the coefficient inside a term to its power (\\( (2x)^{3} = 8x^{3} \\)); losing the sign of \\( (-y)^{k} \\); and pairing \\( \\binom{n}{k} \\) with \\( x^{k}y^{k} \\) or another wrong pair of exponents (the exponents in each term sum to \\( n \\)).",
+   "questions": [
+    {
+     "id": "s6q1",
+     "kp": "k9",
+     "type": "number",
+     "prompt": "Find the coefficient of \\( x^{4} \\) in the expansion of \\( \\left(x^{2} + \\frac{2}{x}\\right)^{8} \\).",
+     "answer": "1120",
+     "why": "The general term is \\( \\binom{8}{k}(x^{2})^{8-k}\\left(\\frac{2}{x}\\right)^{k} = \\binom{8}{k}2^{k}x^{16 - 3k} \\). The exponent is 4 when \\( k = 4 \\), giving \\( \\binom{8}{4} \\cdot 2^{4} = 70 \\cdot 16 = 1120 \\)."
+    },
+    {
+     "id": "s6q2",
+     "kp": "k9",
+     "type": "written",
+     "prompt": "Use the binomial theorem to prove that \\( \\sum_{k=0}^{n} \\binom{n}{k} 2^{k} = 3^{n} \\) for every \\( n \\ge 0 \\). Then give a counting interpretation of both sides using strings of length \\( n \\) over the alphabet \\( \\{a, b, c\\} \\).",
+     "rubric": [
+      "Applies the binomial theorem with x = 1, y = 2: (1 + 2)ⁿ = Σ C(n, k) 1^{n−k} 2^k",
+      "Right side: 3ⁿ strings of length n over {a, b, c} by the product rule",
+      "Left side: classify strings by the number k of positions not equal to a; choose those positions (C(n, k)) and fill each with b or c (2^k)",
+      "Notes the cases k = 0, …, n are disjoint and exhaustive (sum rule)"
+     ],
+     "model": "*Algebraic proof.* By the binomial theorem with \\( x = 1 \\), \\( y = 2 \\):\n\\[ 3^{n} = (1 + 2)^{n} = \\sum_{k=0}^{n} \\binom{n}{k} 1^{n-k} 2^{k} = \\sum_{k=0}^{n} \\binom{n}{k} 2^{k}. \\]\n\n*Counting interpretation.* By the product rule there are \\( 3^{n} \\) strings of length \\( n \\) over \\( \\{a, b, c\\} \\). Classify them by the number \\( k \\) of positions that are not \\( a \\). For a fixed \\( k \\), choose those positions in \\( \\binom{n}{k} \\) ways and fill each with \\( b \\) or \\( c \\) in \\( 2^{k} \\) ways; the other positions are \\( a \\). The cases \\( k = 0, 1, \\dots, n \\) are disjoint and exhaustive, so the sum rule gives \\( \\sum_{k} \\binom{n}{k} 2^{k} \\) strings, which must equal \\( 3^{n} \\).",
+     "why": "The second argument is a combinatorial proof: the same set counted in two ways."
+    }
+   ]
+  },
+  {
+   "id": "s7",
+   "title": "Combinatorial proof",
+   "kps": [
+    "k11"
+   ],
+   "md": "An identity among binomial coefficients can usually be verified by algebra, but algebra rarely explains why it is true. A **combinatorial proof** establishes an identity by showing that both sides count the same set, which also reveals what the identity means. This section describes the two forms of the method and applies them.\n\n> **Double counting.** To prove \\( A = B \\), exhibit a finite set \\( S \\) and show by one correct counting argument that \\( |S| = A \\) and by another that \\( |S| = B \\).\n>\n> **Bijective proof.** To prove \\( A = B \\), exhibit sets \\( S \\) and \\( T \\) with \\( |S| = A \\), \\( |T| = B \\), and a bijection \\( S \\to T \\).\n\nEach counting argument must count every element of the set exactly once; a proof is only as good as the justification of its two counts.\n\n**Worked example 1.** \\( \\sum_{k=0}^{n} \\binom{n}{k} = 2^{n} \\).\n\n*Proof.* Let \\( S \\) be the set of all subsets of \\( \\{1, \\dots, n\\} \\). Deciding for each element whether it is in the subset gives \\( |S| = 2^{n} \\) by the product rule. Alternatively, classify subsets by their size \\( k \\): there are \\( \\binom{n}{k} \\) of size \\( k \\), and the sizes \\( 0, \\dots, n \\) are disjoint and exhaustive cases, so \\( |S| = \\sum_{k} \\binom{n}{k} \\). \\( \\blacksquare \\)\n\n**Worked example 2 (committee with a chair).** For \\( 1 \\le k \\le n \\), \\( k\\binom{n}{k} = n\\binom{n-1}{k-1} \\).\n\n*Proof.* Count the ways to choose, from \\( n \\) people, a committee of \\( k \\) people with one of them designated as chair. Choosing the committee first (\\( \\binom{n}{k} \\) ways) and then its chair (\\( k \\) ways) gives the left side. Choosing the chair first (\\( n \\) ways) and then the other \\( k - 1 \\) members from the remaining \\( n - 1 \\) people (\\( \\binom{n-1}{k-1} \\) ways) gives the right side. Both procedures produce each chaired committee exactly once. \\( \\blacksquare \\)\n\n**Worked example 3 (Vandermonde's identity).** For nonnegative integers \\( m, n, r \\),\n\\[ \\binom{m + n}{r} = \\sum_{k=0}^{r} \\binom{m}{k}\\binom{n}{r - k}, \\]\nwhere \\( \\binom{a}{b} = 0 \\) if \\( b > a \\).\n\n*Proof.* A group consists of \\( m \\) women and \\( n \\) men; count the committees of \\( r \\) people. Directly, there are \\( \\binom{m + n}{r} \\). Alternatively, classify by the number \\( k \\) of women: choose them in \\( \\binom{m}{k} \\) ways and the \\( r - k \\) men in \\( \\binom{n}{r - k} \\) ways. The cases \\( k = 0, \\dots, r \\) are disjoint and exhaustive, which gives the sum. \\( \\blacksquare \\)\n\nTaking \\( m = n = r \\) and using \\( \\binom{n}{n-k} = \\binom{n}{k} \\) gives \\( \\sum_{k=0}^{n} \\binom{n}{k}^{2} = \\binom{2n}{n} \\).\n\n**How to find a combinatorial proof.** Read each side as a counting procedure. A product suggests successive choices; a sum over \\( k \\) suggests a classification by some parameter \\( k \\); a power \\( 2^{m} \\) suggests choosing an arbitrary subset of \\( m \\) things; a factor \\( k \\) multiplying \\( \\binom{n}{k} \\) suggests designating one of the \\( k \\) chosen elements. Then look for a single set that both procedures count.\n\n**Worked example 4 (a bijection).** The number of subsets of \\( \\{1, \\dots, n\\} \\) of even size equals the number of odd size, for \\( n \\ge 1 \\). The map that toggles the element 1 (adds it if absent, removes it if present) changes the size by exactly one, so it sends even-size subsets to odd-size subsets, and applying it twice returns the original subset; so it is a bijection between the two families.\n\n**The common mistakes.** Letting the two sides count different sets; a counting procedure that produces some objects more than once (as in the \"guaranteed member\" error); and treating a sum over \\( k \\) as a classification without checking that the cases are disjoint and cover everything.",
+   "questions": [
+    {
+     "id": "s7q1",
+     "kp": "k11",
+     "type": "written",
+     "prompt": "Give a combinatorial proof of the **hockey-stick identity**: for integers \\( 0 \\le k \\le n \\), \\( \\sum_{i=k}^{n} \\binom{i}{k} = \\binom{n+1}{k+1} \\). (Classify the \\( (k+1) \\)-element subsets of \\( \\{1, 2, \\dots, n + 1\\} \\) by their largest element.)",
+     "rubric": [
+      "Right side counts (k + 1)-subsets of {1, …, n + 1}",
+      "The largest element is some j + 1 with k ≤ j ≤ n (at least k + 1 elements needed)",
+      "Given largest element i + 1, the other k elements are any k-subset of {1, …, i}: C(i, k) ways",
+      "The cases are disjoint and exhaustive, so the total is Σ_{i=k}^{n} C(i, k)"
+     ],
+     "model": "*Proof.* Let \\( S \\) be the set of \\( (k+1) \\)-element subsets of \\( \\{1, 2, \\dots, n + 1\\} \\); \\( |S| = \\binom{n+1}{k+1} \\).\n\nClassify each subset by its largest element, which we write as \\( i + 1 \\). Since the subset has \\( k + 1 \\) elements, all at most \\( i + 1 \\), we need \\( i + 1 \\ge k + 1 \\), so \\( k \\le i \\le n \\). Given that the largest element is \\( i + 1 \\), the remaining \\( k \\) elements form an arbitrary \\( k \\)-subset of \\( \\{1, \\dots, i\\} \\), so there are \\( \\binom{i}{k} \\) such subsets. Every subset has exactly one largest element, so the cases \\( i = k, \\dots, n \\) are disjoint and exhaustive, and by the sum rule \\( |S| = \\sum_{i=k}^{n} \\binom{i}{k} \\). \\( \\blacksquare \\)",
+     "why": "Classifying by the largest (or smallest) element is a standard way to turn a single binomial coefficient into a sum."
+    },
+    {
+     "id": "s7q2",
+     "kp": "k11",
+     "type": "written",
+     "prompt": "Give a combinatorial proof that \\( \\sum_{k=1}^{n} k\\binom{n}{k} = n\\,2^{n-1} \\) for \\( n \\ge 1 \\).",
+     "rubric": [
+      "Set: pairs (committee, chair) with the committee a nonempty subset of n people and the chair a member of it",
+      "Left side: choose a committee of size k (C(n, k)), then a chair (k); sum over k = 1, …, n",
+      "Right side: choose the chair (n), then any subset of the other n − 1 people to complete the committee (2^{n−1})",
+      "Both procedures produce each pair exactly once"
+     ],
+     "model": "*Proof.* Count the pairs \\( (C, p) \\), where \\( C \\) is a nonempty committee chosen from \\( n \\) people and \\( p \\in C \\) is its chair.\n\n*First count.* Classify by the size \\( k \\) of \\( C \\), \\( 1 \\le k \\le n \\): choose \\( C \\) in \\( \\binom{n}{k} \\) ways and then \\( p \\) in \\( k \\) ways. Summing over the disjoint cases gives \\( \\sum_{k=1}^{n} k\\binom{n}{k} \\).\n\n*Second count.* Choose the chair \\( p \\) first (\\( n \\) ways), then choose which of the other \\( n - 1 \\) people join the committee: any subset, \\( 2^{n-1} \\) ways. This gives \\( n\\,2^{n-1} \\).\n\nEach procedure produces every pair exactly once, so the two counts are equal. \\( \\blacksquare \\)",
+     "why": "This is worked example 2 summed over all committee sizes."
+    }
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "t": "sum rule",
+   "d": "If \\( A_{1}, \\dots, A_{m} \\) are pairwise disjoint finite sets, \\( |A_{1} \\cup \\cdots \\cup A_{m}| = \\sum |A_{i}| \\)."
+  },
+  {
+   "t": "product rule",
+   "d": "If a procedure has \\( m \\) steps and step \\( i \\) has \\( n_{i} \\) options regardless of earlier choices (with distinct choice sequences giving distinct outcomes), there are \\( n_{1} \\cdots n_{m} \\) outcomes."
+  },
+  {
+   "t": "complement rule",
+   "d": "\\( |A| = |U| - |U \\setminus A| \\) for \\( A \\subseteq U \\), \\( U \\) finite."
+  },
+  {
+   "t": "division rule",
+   "d": "If a procedure produces each object exactly \\( d \\) times, the number of objects is the number of outcomes divided by \\( d \\)."
+  },
+  {
+   "t": "permutation",
+   "d": "An ordered arrangement of all of \\( n \\) distinct objects; there are \\( n! \\)."
+  },
+  {
+   "t": "k-permutation",
+   "d": "An ordered arrangement of \\( k \\) of \\( n \\) distinct objects; there are \\( P(n, k) = n!/(n-k)! \\)."
+  },
+  {
+   "t": "factorial",
+   "d": "\\( n! = n(n-1)\\cdots 1 \\) for \\( n \\ge 1 \\), and \\( 0! = 1 \\)."
+  },
+  {
+   "t": "k-combination",
+   "d": "A \\( k \\)-element subset of an \\( n \\)-element set."
+  },
+  {
+   "t": "binomial coefficient",
+   "d": "\\( \\binom{n}{k} = \\frac{n!}{k!\\,(n-k)!} \\), the number of \\( k \\)-subsets of an \\( n \\)-set; the coefficient of \\( x^{n-k}y^{k} \\) in \\( (x+y)^{n} \\)."
+  },
+  {
+   "t": "multiset",
+   "d": "A collection of elements in which repetition is allowed and order is irrelevant."
+  },
+  {
+   "t": "multinomial coefficient",
+   "d": "\\( \\frac{n!}{n_{1}! \\cdots n_{k}!} \\), the number of arrangements of \\( n \\) objects with \\( n_{i} \\) indistinguishable objects of type \\( i \\)."
+  },
+  {
+   "t": "lattice path",
+   "d": "A path in the plane from one lattice point to another using unit steps right or up; from \\( (0,0) \\) to \\( (m,n) \\) there are \\( \\binom{m+n}{n} \\)."
+  },
+  {
+   "t": "stars and bars",
+   "d": "The bijection between solutions of \\( x_{1} + \\cdots + x_{k} = n \\) in nonnegative integers and strings of \\( n \\) stars and \\( k - 1 \\) bars; the count is \\( \\binom{n+k-1}{k-1} \\)."
+  },
+  {
+   "t": "binomial theorem",
+   "d": "\\( (x+y)^{n} = \\sum_{k=0}^{n} \\binom{n}{k} x^{n-k}y^{k} \\) for integers \\( n \\ge 0 \\)."
+  },
+  {
+   "t": "Pascal's identity",
+   "d": "\\( \\binom{n+1}{k} = \\binom{n}{k-1} + \\binom{n}{k} \\) for \\( 1 \\le k \\le n \\)."
+  },
+  {
+   "t": "combinatorial proof",
+   "d": "A proof of an identity by counting one set in two ways (double counting) or by a bijection between sets counted by the two sides."
+  },
+  {
+   "t": "Vandermonde's identity",
+   "d": "\\( \\binom{m+n}{r} = \\sum_{k} \\binom{m}{k}\\binom{n}{r-k} \\)."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "concept",
+   "front": "Hypothesis of the sum rule",
+   "back": "The cases (sets) must be pairwise disjoint.",
+   "kp": "k1"
+  },
+  {
+   "id": "c2",
+   "type": "concept",
+   "front": "Hypothesis of the product rule",
+   "back": "The number of options at each step must not depend on earlier choices, and different choice sequences must give different outcomes.",
+   "kp": "k1"
+  },
+  {
+   "id": "c3",
+   "type": "concept",
+   "front": "Standard way to count 'at least one'",
+   "back": "Complement: total minus the number with none.",
+   "kp": "k2"
+  },
+  {
+   "id": "c4",
+   "type": "formula",
+   "front": "Number of k-permutations of n objects",
+   "back": "\\( P(n, k) = \\frac{n!}{(n-k)!} = n(n-1)\\cdots(n-k+1) \\)",
+   "kp": "k3"
+  },
+  {
+   "id": "c5",
+   "type": "formula",
+   "front": "Number of seatings of n people at a round table (rotations identified)",
+   "back": "\\( (n-1)! \\)",
+   "kp": "k4"
+  },
+  {
+   "id": "c6",
+   "type": "formula",
+   "front": "\\( \\binom{n}{k} \\)",
+   "back": "\\( \\frac{n!}{k!\\,(n-k)!} \\)",
+   "kp": "k5"
+  },
+  {
+   "id": "c7",
+   "type": "concept",
+   "front": "Why is \\( \\binom{n}{k} = P(n,k)/k! \\)?",
+   "back": "Each \\( k \\)-subset is produced by exactly \\( k! \\) of the \\( k \\)-permutations (division rule).",
+   "kp": "k5"
+  },
+  {
+   "id": "c8",
+   "type": "concept",
+   "front": "Why does 'choose one man, then any 4 of the rest' overcount committees with at least one man?",
+   "back": "A committee with j men is produced j times, once for each choice of the 'guaranteed' man.",
+   "kp": "k6"
+  },
+  {
+   "id": "c9",
+   "type": "concept",
+   "front": "Ordered or unordered, repetition or not: selecting k from n",
+   "back": "Ordered with repetition \\( n^{k} \\); ordered without \\( P(n,k) \\); unordered without \\( \\binom{n}{k} \\); unordered with repetition \\( \\binom{n+k-1}{k} \\).",
+   "kp": "k6"
+  },
+  {
+   "id": "c10",
+   "type": "formula",
+   "front": "Arrangements of \\( n \\) objects with \\( n_{1}, \\dots, n_{k} \\) identical objects of each type",
+   "back": "\\( \\frac{n!}{n_{1}!\\cdots n_{k}!} \\)",
+   "kp": "k7"
+  },
+  {
+   "id": "c11",
+   "type": "problem",
+   "front": "Distinct arrangements of MISSISSIPPI",
+   "back": "\\( \\frac{11!}{1!\\,4!\\,4!\\,2!} = 34650 \\)",
+   "kp": "k7",
+   "answer": "34650",
+   "check": "number"
+  },
+  {
+   "id": "c12",
+   "type": "formula",
+   "front": "Nonnegative integer solutions of \\( x_{1} + \\cdots + x_{k} = n \\)",
+   "back": "\\( \\binom{n+k-1}{k-1} \\)",
+   "kp": "k8"
+  },
+  {
+   "id": "c13",
+   "type": "formula",
+   "front": "Positive integer solutions of \\( x_{1} + \\cdots + x_{k} = n \\)",
+   "back": "\\( \\binom{n-1}{k-1} \\)",
+   "kp": "k8"
+  },
+  {
+   "id": "c14",
+   "type": "problem",
+   "front": "Ways to choose 12 donuts from 5 kinds",
+   "back": "\\( \\binom{16}{4} = 1820 \\)",
+   "kp": "k8",
+   "answer": "1820",
+   "check": "number"
+  },
+  {
+   "id": "c15",
+   "type": "concept",
+   "front": "How is an upper bound \\( x_{i} \\le b \\) handled in stars and bars?",
+   "back": "Not by substitution; by inclusion–exclusion over the violated bounds (later topic).",
+   "kp": "k8"
+  },
+  {
+   "id": "c16",
+   "type": "formula",
+   "front": "Binomial theorem",
+   "back": "\\( (x+y)^{n} = \\sum_{k=0}^{n} \\binom{n}{k} x^{n-k} y^{k} \\)",
+   "kp": "k9"
+  },
+  {
+   "id": "c17",
+   "type": "problem",
+   "front": "Coefficient of \\( x^{3}y^{5} \\) in \\( (2x - y)^{8} \\)",
+   "back": "\\( \\binom{8}{5} 2^{3}(-1)^{5} = -448 \\)",
+   "kp": "k9",
+   "answer": "-448",
+   "check": "number"
+  },
+  {
+   "id": "c18",
+   "type": "formula",
+   "front": "Pascal's identity",
+   "back": "\\( \\binom{n+1}{k} = \\binom{n}{k-1} + \\binom{n}{k} \\)",
+   "kp": "k10"
+  },
+  {
+   "id": "c19",
+   "type": "concept",
+   "front": "Combinatorial reason for Pascal's identity",
+   "back": "Split the \\( k \\)-subsets of \\( \\{1, \\dots, n+1\\} \\) by whether they contain \\( n + 1 \\).",
+   "kp": "k10"
+  },
+  {
+   "id": "c20",
+   "type": "formula",
+   "front": "\\( \\sum_{k=0}^{n} (-1)^{k}\\binom{n}{k} \\) for \\( n \\ge 1 \\)",
+   "back": "\\( 0 \\) (set \\( x = 1, y = -1 \\)).",
+   "kp": "k10"
+  },
+  {
+   "id": "c21",
+   "type": "concept",
+   "front": "Two forms of combinatorial proof",
+   "back": "Double counting (one set counted two ways) and bijective proof (a bijection between sets counted by the two sides).",
+   "kp": "k11"
+  },
+  {
+   "id": "c22",
+   "type": "concept",
+   "front": "Combinatorial meaning of \\( k\\binom{n}{k} = n\\binom{n-1}{k-1} \\)",
+   "back": "Committee of k with a chair: committee then chair, or chair then the rest.",
+   "kp": "k11"
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k1",
+   "type": "number",
+   "prompt": "A licence plate consists of three letters with no letter repeated, followed by four digits (repetition allowed). How many plates are possible?",
+   "answer": "156000000",
+   "why": "Product rule: \\( 26 \\cdot 25 \\cdot 24 \\cdot 10^{4} = 15600 \\cdot 10000 = 156{,}000{,}000 \\)."
+  },
+  {
+   "id": "p2",
+   "kp": "k2",
+   "type": "number",
+   "prompt": "How many bit strings of length 10 contain at least two 1s?",
+   "answer": "1013",
+   "why": "Complement: \\( 2^{10} = 1024 \\) strings; those with no 1 (1 string) or exactly one 1 (10 strings) are excluded: \\( 1024 - 1 - 10 = 1013 \\)."
+  },
+  {
+   "id": "p3",
+   "kp": "k3",
+   "type": "written",
+   "prompt": "Derive the formula \\( P(n, k) = \\frac{n!}{(n-k)!} \\) from the product rule, and explain why the convention \\( 0! = 1 \\) is the right one (consider \\( P(n, n) \\) and \\( \\binom{n}{0} \\)).",
+   "rubric": [
+    "Positions filled in order: n, n − 1, …, n − k + 1 options, independent of which objects were used",
+    "Product n(n − 1)⋯(n − k + 1) = n!/(n − k)! by cancelling (n − k)!",
+    "0! = 1 makes P(n, n) = n!/0! = n!, the number of full arrangements",
+    "Also makes C(n, 0) = C(n, n) = 1, the single empty subset / whole set; and there is exactly one arrangement of no objects"
+   ],
+   "model": "Fill the \\( k \\) positions in order. The first can hold any of the \\( n \\) objects; whichever is chosen, the second can hold any of the remaining \\( n - 1 \\); in general the \\( i \\)-th position has \\( n - i + 1 \\) options, a number that does not depend on which objects were used earlier. By the product rule,\n\\[ P(n, k) = n(n-1)\\cdots(n-k+1) = \\frac{n(n-1)\\cdots 1}{(n-k)(n-k-1)\\cdots 1} = \\frac{n!}{(n-k)!}, \\]\nvalid as written for \\( k < n \\). For \\( k = n \\) the product is \\( n! \\), and the formula gives \\( n!/0! \\), which agrees exactly when \\( 0! = 1 \\). The same convention makes \\( \\binom{n}{0} = \\frac{n!}{0!\\,n!} = 1 \\) and \\( \\binom{n}{n} = 1 \\), matching the single empty subset and the single full subset, and it agrees with the fact that there is exactly one arrangement (the empty one) of zero objects.",
+   "why": "Conventions such as \\( 0! = 1 \\) are chosen so that formulas remain correct at the boundary cases."
+  },
+  {
+   "id": "p4",
+   "kp": "k4",
+   "type": "number",
+   "prompt": "Eight people sit at a round table (rotations are considered the same). In how many seatings are two particular people not next to each other?",
+   "answer": "3600",
+   "why": "All seatings: \\( 7! = 5040 \\). Seatings with the two adjacent: glue them into a block, giving 7 units around the table, \\( 6! = 720 \\) circular arrangements, times 2 orders within the block: 1440. So \\( 5040 - 1440 = 3600 \\)."
+  },
+  {
+   "id": "p5",
+   "kp": "k5",
+   "type": "number",
+   "prompt": "A five-card poker hand is *two pair* if it contains two cards of one rank, two cards of a second rank, and one card of a third rank. How many two-pair hands are there in a 52-card deck?",
+   "answer": "123552",
+   "why": "The two pair ranks play the same role, so choose them as a set: \\( \\binom{13}{2} = 78 \\). Suits for each pair: \\( \\binom{4}{2}^{2} = 36 \\). The fifth card: one of the 11 other ranks, any of 4 suits: 44. Total \\( 78 \\cdot 36 \\cdot 44 = 123552 \\). (Contrast the full house, where the two ranks play different roles.)"
+  },
+  {
+   "id": "p6",
+   "kp": "k6",
+   "type": "written",
+   "prompt": "For each situation, decide whether order matters and whether repetition is allowed, and give the count: (a) 4-digit PINs; (b) gold, silver and bronze among 10 runners; (c) 3 different toppings from 10; (d) a cup of 3 scoops from 10 flavours, where flavours may repeat and the order of scoops is irrelevant.",
+   "rubric": [
+    "(a) ordered, repetition: 10⁴ = 10000",
+    "(b) ordered, no repetition: P(10, 3) = 720",
+    "(c) unordered, no repetition: C(10, 3) = 120",
+    "(d) unordered, repetition: stars and bars C(12, 3) = 220 (or C(12, 9))"
+   ],
+   "model": "(a) Order matters (1234 differs from 4321) and digits may repeat: \\( 10^{4} = 10000 \\).\n\n(b) Order matters (the medals differ) and no runner wins two medals: \\( P(10, 3) = 720 \\).\n\n(c) Order does not matter and toppings are distinct: \\( \\binom{10}{3} = 120 \\).\n\n(d) Order does not matter and flavours may repeat: a multiset of size 3 from 10 types, i.e. nonnegative solutions of \\( x_{1} + \\cdots + x_{10} = 3 \\): \\( \\binom{3 + 10 - 1}{10 - 1} = \\binom{12}{9} = \\binom{12}{3} = 220 \\).",
+   "why": "Two questions fix the model: would rearranging the selection change it, and may an item be chosen more than once?"
+  },
+  {
+   "id": "p7",
+   "kp": "k7",
+   "type": "number",
+   "prompt": "In how many ways can 9 people be divided into three unlabelled groups of 3?",
+   "answer": "280",
+   "why": "Labelled groups: \\( \\frac{9!}{3!\\,3!\\,3!} = 1680 \\). Each unlabelled grouping corresponds to \\( 3! = 6 \\) labellings, so \\( 1680/6 = 280 \\)."
+  },
+  {
+   "id": "p8",
+   "kp": "k8",
+   "type": "number",
+   "prompt": "How many solutions in nonnegative integers does the inequality \\( x_{1} + x_{2} + x_{3} \\le 10 \\) have?",
+   "answer": "286",
+   "why": "Introduce a slack variable \\( s = 10 - (x_{1} + x_{2} + x_{3}) \\ge 0 \\). Solutions correspond bijectively to nonnegative solutions of \\( x_{1} + x_{2} + x_{3} + s = 10 \\): \\( \\binom{13}{3} = 286 \\)."
+  },
+  {
+   "id": "p9",
+   "kp": "k9",
+   "type": "number",
+   "prompt": "Find the coefficient of \\( x^{5} \\) in \\( (1 + x)^{10}(1 - x) \\).",
+   "answer": "42",
+   "why": "\\( (1 + x)^{10}(1 - x) = (1 + x)^{10} - x(1 + x)^{10} \\). The coefficient of \\( x^{5} \\) is \\( \\binom{10}{5} - \\binom{10}{4} = 252 - 210 = 42 \\)."
+  },
+  {
+   "id": "p10",
+   "kp": "k10",
+   "type": "written",
+   "prompt": "Prove that \\( \\sum_{k=0}^{n} (-1)^{k}\\binom{n}{k} = 0 \\) for every \\( n \\ge 1 \\) in two ways: (a) from the binomial theorem; (b) by exhibiting a bijection between the subsets of \\( \\{1, \\dots, n\\} \\) of even size and those of odd size. Why is \\( n \\ge 1 \\) needed?",
+   "rubric": [
+    "(a) x = 1, y = −1 gives (1 − 1)ⁿ = 0 for n ≥ 1",
+    "(b) The identity says #even-size subsets = #odd-size subsets",
+    "Toggle map S ↦ S △ {1} changes the size by one, is its own inverse, hence a bijection between the two families",
+    "n ≥ 1 needed: for n = 0 the sum is 1 (0⁰ = 1; element 1 does not exist)"
+   ],
+   "model": "(a) By the binomial theorem with \\( x = 1 \\), \\( y = -1 \\): \\( \\sum_{k=0}^{n} \\binom{n}{k}(-1)^{k} = (1 - 1)^{n} = 0^{n} = 0 \\) for \\( n \\ge 1 \\).\n\n(b) Moving the negative terms to the other side, the identity says that the number of subsets of even size equals the number of odd size. Define \\( t(S) = S \\setminus \\{1\\} \\) if \\( 1 \\in S \\), and \\( t(S) = S \\cup \\{1\\} \\) if \\( 1 \\notin S \\). Then \\( |t(S)| = |S| \\pm 1 \\), so \\( t \\) sends even-size subsets to odd-size subsets and vice versa, and \\( t(t(S)) = S \\). Hence \\( t \\) restricted to the even-size subsets is a bijection onto the odd-size subsets, and the two families have equal size.\n\nFor \\( n = 0 \\) the sum is \\( \\binom{0}{0} = 1 \\), not 0: \\( 0^{0} = 1 \\) in the binomial theorem, and in (b) there is no element 1 to toggle (the only subset, \\( \\varnothing \\), has even size).",
+   "why": "This identity is what makes the alternating signs of inclusion–exclusion count each element exactly once."
+  },
+  {
+   "id": "p11",
+   "kp": "k11",
+   "type": "written",
+   "prompt": "Give a combinatorial proof that \\( \\sum_{k=0}^{n} \\binom{n}{k}^{2} = \\binom{2n}{n} \\).",
+   "rubric": [
+    "Right side: choose n people from a group of n women and n men",
+    "Classify by the number k of women chosen: C(n, k) ways for the women, C(n, n − k) for the men",
+    "Uses symmetry C(n, n − k) = C(n, k) to get C(n, k)²",
+    "Cases k = 0, …, n disjoint and exhaustive; sum rule"
+   ],
+   "model": "*Proof.* Consider a group of \\( n \\) women and \\( n \\) men, and count the ways to choose \\( n \\) of the \\( 2n \\) people. Directly this is \\( \\binom{2n}{n} \\).\n\nAlternatively, classify the selections by the number \\( k \\) of women chosen, \\( 0 \\le k \\le n \\). The women can be chosen in \\( \\binom{n}{k} \\) ways and the remaining \\( n - k \\) people must be men, chosen in \\( \\binom{n}{n-k} = \\binom{n}{k} \\) ways. So there are \\( \\binom{n}{k}^{2} \\) selections with exactly \\( k \\) women. The cases are disjoint and exhaustive, so the total is \\( \\sum_{k=0}^{n} \\binom{n}{k}^{2} \\). \\( \\blacksquare \\)",
+   "why": "This is Vandermonde's identity with \\( m = n = r \\), combined with the symmetry of binomial coefficients."
+  },
+  {
+   "id": "p12",
+   "kp": "k6",
+   "type": "mcq",
+   "prompt": "In how many ways can 10 *distinct* books be given to 4 students, with no restriction on how many books a student receives?",
+   "options": [
+    "\\( 10^{4} \\)",
+    "\\( \\binom{13}{3} \\)",
+    "\\( 4^{10} \\)",
+    "\\( P(10, 4) \\)"
+   ],
+   "answer": 2,
+   "why": "Each of the 10 distinct books independently goes to one of 4 students: \\( 4^{10} = 1{,}048{,}576 \\) by the product rule. \\( 10^{4} \\) reverses the roles (each student choosing a book). \\( \\binom{13}{3} \\) is stars and bars, which counts distributions of *identical* books. \\( P(10, 4) \\) counts giving one book to each student in order."
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k2",
+   "type": "written",
+   "prompt": "Consider strings of length 5 over the 26-letter alphabet, with the vowels A, E, I, O, U. (a) How many contain at least one vowel? (b) How many contain exactly two vowels (repetition allowed)? Justify each step by naming the rule used.",
+   "rubric": [
+    "(a) Complement: 26⁵ − 21⁵ = 11881376 − 4084101 = 7797275",
+    "(b) Choose the 2 vowel positions: C(5, 2) = 10",
+    "Fill them with vowels (5² = 25) and the other 3 positions with consonants (21³ = 9261)",
+    "Product rule: 10 · 25 · 9261 = 2315250"
+   ],
+   "model": "(a) By the product rule there are \\( 26^{5} = 11{,}881{,}376 \\) strings and \\( 21^{5} = 4{,}084{,}101 \\) strings with no vowel (21 consonants). By the complement rule, \\( 26^{5} - 21^{5} = 7{,}797{,}275 \\) strings contain at least one vowel.\n\n(b) Choose which 2 of the 5 positions hold vowels: \\( \\binom{5}{2} = 10 \\) ways. Fill those positions with vowels, \\( 5^{2} = 25 \\) ways, and the other 3 with consonants, \\( 21^{3} = 9261 \\) ways. By the product rule, \\( 10 \\cdot 25 \\cdot 9261 = 2{,}315{,}250 \\).",
+   "why": "\\\"At least one\\\" is handled by the complement; \\\"exactly \\( j \\)\\\" by choosing the positions first and then filling them."
+  },
+  {
+   "id": "e2",
+   "kp": "k8",
+   "type": "written",
+   "prompt": "Twenty identical candies are distributed among four children so that the first child receives at least 5 candies and each of the others receives at least 2. How many distributions are there? Explain why your substitution is a bijection.",
+   "rubric": [
+    "Models as x₁ + x₂ + x₃ + x₄ = 20 with x₁ ≥ 5, x₂, x₃, x₄ ≥ 2 (candies identical, children distinct)",
+    "Substitutes y₁ = x₁ − 5, y_i = x_i − 2: y₁ + y₂ + y₃ + y₄ = 9 with y_i ≥ 0",
+    "Explains the bijection: the inverse adds the bounds back, and nonnegativity of y matches the lower bounds",
+    "Stars and bars: C(12, 3) = 220"
+   ],
+   "model": "Since the candies are identical and the children distinct, a distribution is a solution of \\( x_{1} + x_{2} + x_{3} + x_{4} = 20 \\) with \\( x_{1} \\ge 5 \\) and \\( x_{2}, x_{3}, x_{4} \\ge 2 \\).\n\nSet \\( y_{1} = x_{1} - 5 \\) and \\( y_{i} = x_{i} - 2 \\) for \\( i = 2, 3, 4 \\). Then \\( y_{1} + y_{2} + y_{3} + y_{4} = 20 - 11 = 9 \\), and the conditions become \\( y_{i} \\ge 0 \\). This map is a bijection: its inverse \\( x_{1} = y_{1} + 5 \\), \\( x_{i} = y_{i} + 2 \\) sends each nonnegative solution of the new equation to a solution of the original satisfying the bounds, and the two maps undo each other.\n\nBy stars and bars the new equation has \\( \\binom{9 + 4 - 1}{4 - 1} = \\binom{12}{3} = 220 \\) nonnegative solutions, so there are 220 distributions. (Equivalently: first give the required 11 candies, then distribute the remaining 9 freely.)",
+   "why": "Lower bounds are removed by pre-allocating the required amounts; the remainder is distributed without restriction."
+  },
+  {
+   "id": "e3",
+   "kp": "k9",
+   "type": "written",
+   "prompt": "Prove the binomial theorem \\( (x + y)^{n} = \\sum_{k=0}^{n} \\binom{n}{k} x^{n-k}y^{k} \\) by induction on \\( n \\ge 0 \\), using Pascal's identity. Treat the terms \\( k = 0 \\) and \\( k = n + 1 \\) carefully.",
+   "rubric": [
+    "Base case n = 0: both sides equal 1",
+    "Step: (x + y)^{n+1} = (x + y)·Σ C(n, k) x^{n−k} y^k, split into x·Σ and y·Σ",
+    "Reindexes the y-part (k → k − 1) and combines coefficients of x^{n+1−k} y^k as C(n, k) + C(n, k − 1) = C(n + 1, k) for 1 ≤ k ≤ n",
+    "Handles k = 0 and k = n + 1 separately (coefficients 1 = C(n + 1, 0) = C(n + 1, n + 1)) and concludes"
+   ],
+   "model": "*Base case.* \\( n = 0 \\): \\( (x + y)^{0} = 1 = \\binom{0}{0}x^{0}y^{0} \\).\n\n*Inductive step.* Let \\( n \\ge 0 \\) and assume \\( (x + y)^{n} = \\sum_{k=0}^{n} \\binom{n}{k}x^{n-k}y^{k} \\). Then\n\\[ (x + y)^{n+1} = (x + y)\\sum_{k=0}^{n} \\binom{n}{k}x^{n-k}y^{k} = \\sum_{k=0}^{n} \\binom{n}{k}x^{n+1-k}y^{k} + \\sum_{k=0}^{n} \\binom{n}{k}x^{n-k}y^{k+1}. \\]\nIn the second sum replace \\( k \\) by \\( k - 1 \\): it becomes \\( \\sum_{k=1}^{n+1} \\binom{n}{k-1}x^{n+1-k}y^{k} \\). Now collect the coefficient of \\( x^{n+1-k}y^{k} \\):\n- \\( k = 0 \\): only the first sum contributes, \\( \\binom{n}{0} = 1 = \\binom{n+1}{0} \\);\n- \\( 1 \\le k \\le n \\): \\( \\binom{n}{k} + \\binom{n}{k-1} = \\binom{n+1}{k} \\) by Pascal's identity;\n- \\( k = n + 1 \\): only the second sum contributes, \\( \\binom{n}{n} = 1 = \\binom{n+1}{n+1} \\).\n\nHence \\( (x + y)^{n+1} = \\sum_{k=0}^{n+1} \\binom{n+1}{k}x^{n+1-k}y^{k} \\), and by induction the theorem holds for all \\( n \\ge 0 \\). \\( \\blacksquare \\)",
+   "why": "Pascal's identity is exactly the rule by which multiplying by \\( (x + y) \\) combines adjacent coefficients; the end terms are outside its range and are checked directly."
+  },
+  {
+   "id": "e4",
+   "kp": "k11",
+   "type": "written",
+   "prompt": "Give a combinatorial proof that for integers \\( 0 \\le m \\le n \\), \\( \\sum_{k=m}^{n} \\binom{n}{k}\\binom{k}{m} = \\binom{n}{m}2^{n-m} \\). (Count pairs \\( (A, B) \\) of subsets of \\( \\{1, \\dots, n\\} \\) with \\( B \\subseteq A \\) and \\( |B| = m \\).)",
+   "rubric": [
+    "Defines the set of pairs (A, B) with B ⊆ A ⊆ {1, …, n}, |B| = m",
+    "First count: classify by k = |A| (m ≤ k ≤ n): C(n, k) choices of A, then C(k, m) of B inside A",
+    "Second count: choose B first (C(n, m)), then A = B ∪ T for an arbitrary T ⊆ complement of B (2^{n−m})",
+    "Argues each pair is produced exactly once by each procedure"
+   ],
+   "model": "*Proof.* Let \\( S \\) be the set of pairs \\( (A, B) \\) with \\( B \\subseteq A \\subseteq \\{1, \\dots, n\\} \\) and \\( |B| = m \\).\n\n*First count.* Classify by \\( k = |A| \\); since \\( B \\subseteq A \\), \\( m \\le k \\le n \\). Choose \\( A \\) in \\( \\binom{n}{k} \\) ways and then \\( B \\) as an \\( m \\)-subset of \\( A \\) in \\( \\binom{k}{m} \\) ways. The cases are disjoint and exhaustive, so \\( |S| = \\sum_{k=m}^{n} \\binom{n}{k}\\binom{k}{m} \\).\n\n*Second count.* Choose \\( B \\) first, in \\( \\binom{n}{m} \\) ways. A set \\( A \\) with \\( B \\subseteq A \\) is determined by \\( A \\setminus B \\), which is an arbitrary subset of the \\( n - m \\) elements outside \\( B \\): \\( 2^{n-m} \\) ways. So \\( |S| = \\binom{n}{m}2^{n-m} \\).\n\nEach procedure produces every pair exactly once, so the two expressions are equal. \\( \\blacksquare \\)",
+   "why": "Choosing the smaller set first frees the larger one to be any superset, which the factor \\( 2^{n-m} \\) records."
+  },
+  {
+   "id": "e5",
+   "kp": "k7",
+   "type": "number",
+   "prompt": "How many distinct arrangements of the letters of MISSISSIPPI have no two S's adjacent?",
+   "answer": "7350",
+   "why": "Arrange the 7 non-S letters (M, four I's, two P's) first: \\( \\frac{7!}{1!\\,4!\\,2!} = 105 \\) ways. They create 8 gaps (before, between, after), and the four S's must go into 4 distinct gaps: \\( \\binom{8}{4} = 70 \\). Total \\( 105 \\cdot 70 = 7350 \\) (confirmed by exhaustive enumeration)."
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "Sum rule",
+    "formula": "\\( |A_{1} \\cup \\cdots \\cup A_{m}| = \\sum |A_{i}| \\) for disjoint \\( A_{i} \\)",
+    "when": "The objects split into mutually exclusive cases.",
+    "example": "Even 3-digit numbers with distinct digits: units 0 (72) + units 2, 4, 6, 8 (256) = 328.",
+    "watch": "Cases must not overlap."
+   },
+   {
+    "name": "Product rule",
+    "formula": "\\( n_{1} n_{2} \\cdots n_{m} \\)",
+    "when": "A sequence of choices whose number of options is fixed at each step.",
+    "example": "Plates: \\( 26^{3} \\cdot 10^{3} \\).",
+    "watch": "Make the most constrained choice first; split into cases if a count depends on earlier choices."
+   },
+   {
+    "name": "Complement",
+    "formula": "\\( |A| = |U| - |U \\setminus A| \\)",
+    "when": "'At least one' conditions.",
+    "example": "PINs with a repeated digit: \\( 10^{4} - 10 \\cdot 9 \\cdot 8 \\cdot 7 = 4960 \\).",
+    "watch": "Describe the complement exactly (the negation of 'at least one' is 'none')."
+   },
+   {
+    "name": "Permutations",
+    "formula": "\\( n! \\), \\( P(n,k) = \\frac{n!}{(n-k)!} \\), \\( n^{k} \\) with repetition",
+    "when": "Order matters.",
+    "example": "Three distinct offices from 10 people: \\( P(10, 3) = 720 \\).",
+    "watch": "Glued blocks have internal orders; \\( 0! = 1 \\)."
+   },
+   {
+    "name": "Division rule",
+    "formula": "objects = outcomes \\( / \\, d \\) when each object arises exactly \\( d \\) times",
+    "when": "Symmetries identify outcomes (rotations, unlabelled groups).",
+    "example": "Round table: \\( n!/n = (n-1)! \\).",
+    "watch": "The overcount must be uniform."
+   },
+   {
+    "name": "Combinations",
+    "formula": "\\( \\binom{n}{k} = \\frac{n!}{k!\\,(n-k)!} \\)",
+    "when": "Unordered selection without repetition.",
+    "example": "Committees with at least one man: \\( \\binom{14}{5} - \\binom{8}{5} = 1946 \\).",
+    "watch": "Designating a 'guaranteed' member overcounts."
+   },
+   {
+    "name": "Multiset permutations",
+    "formula": "\\( \\frac{n!}{n_{1}! \\cdots n_{k}!} \\)",
+    "when": "Arrangements with repeated types; lattice paths; labelled groups.",
+    "example": "MISSISSIPPI: \\( \\frac{11!}{4!\\,4!\\,2!} = 34650 \\).",
+    "watch": "Divide by the number of orderings of groups only if the groups are unlabelled."
+   },
+   {
+    "name": "Stars and bars",
+    "formula": "\\( \\#\\{x_{1} + \\cdots + x_{k} = n,\\ x_{i} \\ge 0\\} = \\binom{n+k-1}{k-1} \\)",
+    "when": "Identical objects into distinct boxes; multisets.",
+    "example": "12 donuts, 5 kinds: \\( \\binom{16}{4} = 1820 \\).",
+    "watch": "Lower bounds: substitute \\( y_{i} = x_{i} - a_{i} \\); upper bounds need inclusion–exclusion."
+   },
+   {
+    "name": "Binomial theorem",
+    "formula": "\\( (x+y)^{n} = \\sum_{k} \\binom{n}{k}x^{n-k}y^{k} \\)",
+    "when": "Expanding powers; evaluating binomial sums.",
+    "example": "Coefficient of \\( x^{3}y^{5} \\) in \\( (2x - y)^{8} \\): \\( -448 \\).",
+    "watch": "Raise constants and signs inside each term to the same power."
+   },
+   {
+    "name": "Combinatorial proof",
+    "formula": "Count one set in two ways, or exhibit a bijection",
+    "when": "Identities with binomial coefficients, sums over k, powers of 2.",
+    "example": "\\( k\\binom{n}{k} = n\\binom{n-1}{k-1} \\): committee with a chair.",
+    "watch": "Each procedure must count every object exactly once."
+   }
+  ],
+  "stuck": [
+   "Ask two questions before any formula: does order matter, and is repetition allowed?",
+   "Try a tiny case (n = 2 or 3) by listing, and check your formula against it.",
+   "If a condition says 'at least one', count the complement.",
+   "If the number of options at a step depends on earlier choices, reorder the steps (most constrained first) or split into cases.",
+   "If a method designates a special element or orders something unordered, check whether each object is produced more than once, and divide or recount.",
+   "For an identity, read each side as a counting procedure and look for one set that both count."
+  ]
+ }
+}

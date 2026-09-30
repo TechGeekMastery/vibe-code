@@ -1,0 +1,798 @@
+{
+ "key": "phy-0-5",
+ "title": "Work and kinetic energy",
+ "v": 1,
+ "scope": "Work done by constant forces (scalar product), total work and forces that do no work, kinetic energy and the work–energy theorem with its derivation, work done by variable forces as an integral, Hooke's law and the work done by springs, work along curved paths as a line integral, and power; potential energy, conservative forces and conservation of mechanical energy belong to the next chapter.",
+ "sources": [
+  {
+   "title": "OpenStax University Physics Vol. 1, 7.1 Work",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/7-1-work"
+  },
+  {
+   "title": "OpenStax University Physics Vol. 1 (LibreTexts edition), 7.4 Work-Energy Theorem",
+   "url": "https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/Book%3A_University_Physics_I_-_Mechanics_Sound_Oscillations_and_Waves_(OpenStax)/07%3A_Work_and_Kinetic_Energy/7.04%3A_Work-Energy_Theorem"
+  },
+  {
+   "title": "OpenStax University Physics Vol. 1, 7.4 Power",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/7-4-power"
+  },
+  {
+   "title": "MIT 8.01SC Classical Mechanics, Chapter 13: Energy, Kinetic Energy, and Work",
+   "url": "https://ocw.mit.edu/courses/8-01sc-classical-mechanics-fall-2016/mit8_01scs22_chapter13.pdf"
+  },
+  {
+   "title": "Dourmashkin, Classical Mechanics (MIT), 13.11 Work-Kinetic Energy Theorem in Three Dimensions",
+   "url": "https://phys.libretexts.org/Bookshelves/Classical_Mechanics/Classical_Mechanics_(Dourmashkin)/13:_Energy_Kinetic_Energy_and_Work/13.11:_Work-Kinetic_Energy_Theorem_in_Three_Dimensions"
+  }
+ ],
+ "pre": [
+  "phy-0-2",
+  "phy-0-3",
+  "phy-0-4"
+ ],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Work by a constant force",
+   "d": "Compute W = F·d = Fd cos φ for a constant force and interpret its sign.",
+   "type": "concept"
+  },
+  {
+   "id": "k2",
+   "t": "Scalar product in components",
+   "d": "Evaluate work as Fₓdₓ + Fᵧdᵧ + F_zd_z and find angles from the scalar product.",
+   "type": "procedure"
+  },
+  {
+   "id": "k3",
+   "t": "Total work; forces doing no work",
+   "d": "Add the works of all forces, show W_tot = F_net·d for a particle, and identify forces perpendicular to the motion.",
+   "type": "concept"
+  },
+  {
+   "id": "k4",
+   "t": "Kinetic energy and the work–energy theorem",
+   "d": "Define K = ½mv² and derive W_tot = ΔK from Newton's second law.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k5",
+   "t": "Applying the work–energy theorem",
+   "d": "Find speeds, distances and friction coefficients from W_tot = ΔK without solving for the time.",
+   "type": "skill"
+  },
+  {
+   "id": "k6",
+   "t": "Work by a variable force",
+   "d": "Compute W = ∫F_x dx by integration or as the signed area under an F–x graph.",
+   "type": "procedure"
+  },
+  {
+   "id": "k7",
+   "t": "Hooke's law and spring work",
+   "d": "Use F = −kx and compute the work done by and on a spring, W_s = ½kx_i² − ½kx_f².",
+   "type": "skill"
+  },
+  {
+   "id": "k8",
+   "t": "Work along a curved path",
+   "d": "Evaluate W = ∫_C F·dr by parametrizing the path, and extend the work–energy theorem to curved paths.",
+   "type": "procedure"
+  },
+  {
+   "id": "k9",
+   "t": "Power",
+   "d": "Compute average and instantaneous power, use P = F·v, and distinguish power units from energy units.",
+   "type": "concept"
+  }
+ ],
+ "intro": "Newton's second law determines motion instant by instant, but many practical questions are not about instants. How fast is a sled moving at the bottom of a slope? How far does a car skid before it stops? How far must a spring be compressed to launch a ball at a given speed? These ask how speed depends on position, and answering them by integrating \\( \\vec F = m\\vec a \\) through time is laborious.\n\nThis chapter introduces two quantities that answer such questions directly. **Work** measures how much a force, acting through a displacement, contributes to changing a body's speed; **kinetic energy** measures the speed in the form that work changes. The work–energy theorem, derived from the second law, states that the total work done on a particle equals its change in kinetic energy. Since work is an integral of force over displacement, the chapter treats constant forces, forces varying along a line (springs in particular), and curved paths in turn, and ends with power, the rate of doing work.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "Work done by a constant force",
+   "kps": [
+    "k1",
+    "k2"
+   ],
+   "md": "This section defines work in the simplest case, a constant force acting on a body that moves along a straight line, and introduces the scalar product, which makes the definition work for any directions of force and displacement.\n\n**Definition.** A constant force \\( \\vec F \\) acts on a body while the body undergoes a straight-line displacement \\( \\vec d \\). The **work** done by the force on the body is\n\\[ W = \\vec F\\cdot\\vec d = Fd\\cos\\phi, \\]\nwhere \\( \\phi \\) is the angle between \\( \\vec F \\) and \\( \\vec d \\). Work is a scalar. Its SI unit is the **joule**: \\( 1\\ \\text{J} = 1\\ \\text{N·m} = 1\\ \\text{kg·m}^2/\\text{s}^2 \\).\n\nOnly the component of the force along the displacement, \\( F\\cos\\phi \\), does work, and the sign of the work carries meaning:\n\n- \\( 0^\\circ \\le \\phi < 90^\\circ \\): \\( W > 0 \\); the force has a component along the motion.\n- \\( \\phi = 90^\\circ \\): \\( W = 0 \\); the force is perpendicular to the motion.\n- \\( 90^\\circ < \\phi \\le 180^\\circ \\): \\( W < 0 \\); the force has a component against the motion.\n\nWork is always done *by* a particular force *on* a particular body, and a statement of \"the work done\" must say which force. A force does work only if the body moves: holding a heavy box motionless does no work on the box, although your muscles consume chemical energy to maintain the force.\n\n**The scalar product in components.** The **scalar product** (dot product) of two vectors is \\( \\vec A\\cdot\\vec B = AB\\cos\\phi \\). Because \\( \\hat\\imath\\cdot\\hat\\imath = \\hat\\jmath\\cdot\\hat\\jmath = \\hat k\\cdot\\hat k = 1 \\), the products of different unit vectors vanish, and the scalar product distributes over sums,\n\\[ \\vec A\\cdot\\vec B = A_xB_x + A_yB_y + A_zB_z. \\]\nSo the work can be computed without finding any angle:\n\\[ W = F_x d_x + F_y d_y + F_z d_z. \\]\nConversely, comparing the two forms gives the angle between two vectors: \\( \\cos\\phi = \\vec A\\cdot\\vec B/(AB) \\).\n\n**Worked example 1.** A sled is pulled 12.0 m along level snow by a rope under 80.0 N of tension, the rope making \\( 35.0^\\circ \\) with the horizontal. The work done by the tension is \\( W_T = (80.0)(12.0)\\cos 35.0^\\circ = 786 \\) J. Only the horizontal component of the tension, 65.5 N, does work; the vertical component is perpendicular to the displacement.\n\n**Worked example 2.** A constant force \\( \\vec F = (4.0\\,\\hat\\imath - 3.0\\,\\hat\\jmath) \\) N acts on a particle that moves in a straight line from \\( (1.0, 2.0) \\) m to \\( (6.0, -1.0) \\) m.\n\n1. Displacement: \\( \\vec d = (5.0\\,\\hat\\imath - 3.0\\,\\hat\\jmath) \\) m.\n2. Work: \\( W = (4.0)(5.0) + (-3.0)(-3.0) = 20 + 9.0 = 29 \\) J.\n3. Angle: \\( F = 5.0 \\) N and \\( d = \\sqrt{34} = 5.83 \\) m, so \\( \\cos\\phi = 29/(5.0 \\times 5.83) = 0.995 \\) and \\( \\phi = 5.9^\\circ \\).\n\n**Common mistakes.** Multiplying the full magnitudes \\( Fd \\) when the force is not along the displacement. Treating work as a vector. Deciding the sign of the work from the direction of the force alone: the sign depends on the angle between force and displacement, so a downward force does positive work on a falling body and negative work on a rising one.",
+   "questions": [
+    {
+     "id": "s1q1",
+     "kp": "k1",
+     "type": "number",
+     "prompt": "A cart is pushed 8.00 m along level ground by a constant force of 60.0 N directed \\( 25.0^\\circ \\) below the horizontal. How much work does the push do on the cart, in joules?",
+     "answer": "60*8*cos(25*pi/180)",
+     "why": "The angle between the force and the (horizontal) displacement is \\( 25.0^\\circ \\): \\( W = (60.0)(8.00)\\cos 25.0^\\circ = 435 \\) J. The downward component of the push does no work.",
+     "tol": 0.005
+    },
+    {
+     "id": "s1q2",
+     "kp": "k2",
+     "type": "number",
+     "prompt": "A constant force \\( \\vec F = (3.0\\,\\hat\\imath + 4.0\\,\\hat\\jmath - 2.0\\,\\hat k) \\) N acts on a particle during a displacement \\( \\vec d = (2.0\\,\\hat\\imath - 1.0\\,\\hat\\jmath + 5.0\\,\\hat k) \\) m. Find the work done by the force, in joules.",
+     "answer": "3*2 + 4*(-1) + (-2)*5",
+     "why": "\\( W = F_xd_x + F_yd_y + F_zd_z = 6.0 - 4.0 - 10 = -8.0 \\) J. The negative sign means the force has a component opposite to the displacement (the angle between them exceeds \\( 90^\\circ \\)).",
+     "tol": 0.005
+    },
+    {
+     "id": "s1q3",
+     "kp": "k1",
+     "type": "mcq",
+     "prompt": "A crate is lowered at constant speed by a rope. What is the sign of the work done by the rope's tension on the crate?",
+     "options": [
+      "Positive, because the rope is doing the job of lowering the crate",
+      "Negative, because the tension points up while the crate moves down",
+      "Zero, because the speed is constant",
+      "It depends on how fast the crate is lowered"
+     ],
+     "answer": 1,
+     "why": "The tension is upward and the displacement downward, so \\( \\phi = 180^\\circ \\) and \\( W = -Td < 0 \\). Option 1 equates 'work' with its everyday meaning. Option 3 confuses the work of one force with the total work: the total work is zero (gravity does \\( +mgd \\), the rope \\( -mgd \\)), but the rope's own work is not. Option 4: the speed affects neither the sign nor, at constant speed, the magnitude."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "Total work, and forces that do no work",
+   "kps": [
+    "k3"
+   ],
+   "md": "A body is usually acted on by several forces at once, some helping the motion, some opposing it, some perpendicular to it. This section defines the total work and identifies the forces that do none.\n\n**Total work.** The **total work** (net work) on a body is the sum of the works done by all the forces acting on it:\n\\[ W_{\\text{tot}} = W_1 + W_2 + \\cdots. \\]\nFor a particle, every force acts at the same point and so shares the same displacement \\( \\vec d \\). Since the scalar product distributes over sums,\n\\[ W_{\\text{tot}} = \\vec F_1\\cdot\\vec d + \\vec F_2\\cdot\\vec d + \\cdots = \\Big(\\sum\\vec F\\Big)\\cdot\\vec d = \\vec F_{\\text{net}}\\cdot\\vec d. \\]\nThe total work equals the work done by the net force. Either route gives the same number, and computing both is a useful check.\n\n**Forces that do no work.** A force that is perpendicular to the displacement at every instant does zero work. Important cases:\n\n- The normal force on a body sliding along a fixed surface: the force is perpendicular to the surface and the motion is along it.\n- Gravity on a body moving horizontally.\n- The tension in the string of a stone in uniform circular motion, and more generally the net force in any uniform circular motion, which points to the center and is always perpendicular to the velocity.\n\nSuch forces can still be essential to the motion. The normal force and the string's tension fix the path and, through \\( f_k = \\mu_k N \\), the friction; they simply do not change the speed. A normal force from a support that itself moves, such as the floor of a rising elevator, is not perpendicular to the displacement and can do work.\n\n**Worked example.** The 30.0 kg sled of the previous section is pulled 12.0 m by the 80.0 N rope at \\( 35.0^\\circ \\); the coefficient of kinetic friction is 0.150. Find the total work.\n\n1. Normal force (vertical equation, \\( a_y = 0 \\)): \\( N = mg - T\\sin 35.0^\\circ = 294 - 45.9 = 248 \\) N.\n2. Friction: \\( f_k = 0.150(248) = 37.2 \\) N, opposite the motion.\n3. Works: tension \\( +786 \\) J; friction \\( -(37.2)(12.0) = -447 \\) J; gravity and the normal force, both perpendicular to the displacement, 0.\n4. Total: \\( W_{\\text{tot}} = 786 - 447 = 340 \\) J.\n\nCheck with the net force: \\( F_{\\text{net},x} = 80.0\\cos 35.0^\\circ - 37.2 = 28.3 \\) N, and \\( (28.3)(12.0) = 340 \\) J.\n\n**Common mistakes.** Adding the magnitudes of the works instead of their signed values. Taking \\( N = mg \\) when another force has a vertical component, which changes the friction and hence its work. Concluding that a force doing no work can be left off the free-body diagram.",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k3",
+     "type": "number",
+     "prompt": "A 10.0 kg crate is pushed 5.00 m across a level floor by a horizontal 60.0 N force; \\( \\mu_k = 0.300 \\). Using \\( g = 9.80 \\) m/s², find the total work done on the crate, in joules.",
+     "answer": "(60 - 0.3*10*9.8)*5",
+     "why": "\\( N = mg = 98.0 \\) N, \\( f_k = 29.4 \\) N. Works: push \\( +300 \\) J, friction \\( -147 \\) J, gravity and normal force 0. \\( W_{\\text{tot}} = 153 \\) J, equal to \\( (60.0 - 29.4)(5.00) \\).",
+     "tol": 0.005
+    },
+    {
+     "id": "s2q2",
+     "kp": "k3",
+     "type": "written",
+     "prompt": "Explain why (a) the normal force and gravity do no work on a crate sliding across a level floor, and (b) the tension does no work on a stone whirled at constant speed in a horizontal circle. Then (c) describe a situation in which a normal force does nonzero work, and state its sign.",
+     "rubric": [
+      "(a) Both forces are vertical and the displacement is horizontal: φ = 90°, W = 0",
+      "(b) The tension points to the center, perpendicular to the velocity (tangent) at every instant, so F·dr = 0 along the whole path",
+      "(c) A valid example: the floor of an elevator moving upward pushes up on a passenger who moves up, positive work (or moving down: negative)",
+      "States that zero work means the force does not change the speed, though it may change direction or set other forces"
+     ],
+     "model": "(a) Work is \\( \\vec F\\cdot\\vec d \\). The normal force and the weight are vertical, the crate's displacement is horizontal, so \\( \\phi = 90^\\circ \\) and both works are zero. (b) In uniform circular motion the tension points toward the center, while the displacement over any short interval, \\( d\\vec r = \\vec v\\,dt \\), is tangent to the circle; these are perpendicular at every instant, so each contribution \\( \\vec F_T\\cdot d\\vec r \\) vanishes and the total over any arc is zero. That is why the stone's speed stays constant while its direction changes. (c) The floor of an elevator moving upward pushes up on a passenger whose displacement is upward: the normal force is parallel to the displacement and does positive work. If the elevator moves down, the same upward normal force does negative work.",
+     "why": "'Perpendicular to the displacement' is the criterion; 'normal force' is not a synonym for 'zero work'."
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "Kinetic energy and the work–energy theorem",
+   "kps": [
+    "k4",
+    "k5"
+   ],
+   "md": "This section defines kinetic energy and proves the central result of the chapter: the total work on a particle equals the change in its kinetic energy.\n\n**Where the definition comes from.** Let a constant net force \\( F \\) act on a particle along the \\( x \\)-axis through a displacement \\( d \\). The acceleration \\( a = F/m \\) is constant, so the kinematic relation \\( v_f^2 = v_i^2 + 2ad \\) holds. Multiplying by \\( m/2 \\),\n\\[ \\tfrac12 mv_f^2 - \\tfrac12 mv_i^2 = mad = Fd = W_{\\text{tot}}. \\]\nThe total work is exactly the change in the quantity \\( \\tfrac12 mv^2 \\).\n\n> **Definition.** The **kinetic energy** of a particle of mass \\( m \\) moving with speed \\( v \\) is \\( K = \\tfrac12 mv^2 \\).\n\nIt is a scalar, never negative, measured in joules, and depends only on the speed, not on the direction of motion: \\( K = \\tfrac12 m(v_x^2 + v_y^2 + v_z^2) \\).\n\n> **Work–energy theorem.** The total work done on a particle equals the change in its kinetic energy: \\( W_{\\text{tot}} = K_f - K_i = \\Delta K \\).\n\n**Beyond constant forces.** The derivation above assumed a constant net force along a straight line. The theorem holds for any net force along any path. The proof for forces that vary along a line is given in the next section, once work has been defined for such forces, and the proof for curved paths in the section after that.\n\n**What the theorem says.** Positive total work speeds a particle up; negative total work slows it down; zero total work leaves the speed unchanged (uniform circular motion, for instance). The theorem relates speed to displacement without any reference to time, which is its power; correspondingly, it says nothing about how long the motion takes or which way the velocity points. It is a consequence of Newton's second law, not an additional law, and like the second law it holds in inertial frames, for a particle or a body treated as one.\n\n**Worked example 1.** The 30.0 kg sled of the previous section starts from rest, and the total work on it over 12.0 m is 340 J. Its final speed: \\( \\tfrac12(30.0)v^2 = 340 \\), so \\( v = \\sqrt{2(340)/30.0} = 4.76 \\) m/s.\n\n**Worked example 2 (stopping distance).** A car moving at 25.0 m/s locks its wheels and skids on a level road with \\( \\mu_k = 0.700 \\). The normal force and gravity are perpendicular to the motion; only friction, \\( \\mu_k mg \\), does work:\n\\[ -\\mu_k mg\\,d = 0 - \\tfrac12 mv_0^2 \\quad\\Longrightarrow\\quad d = \\frac{v_0^2}{2\\mu_k g} = \\frac{625}{2(0.700)(9.80)} = 45.6\\ \\text{m}. \\]\nThe mass cancels, and the distance grows as \\( v_0^2 \\): doubling the speed quadruples the stopping distance.\n\n**Common mistakes.** Using the work of one force in place of the total work. Treating kinetic energy as a vector or giving it a sign. Squaring a velocity component instead of the speed. Calling the theorem conservation of energy; it is a restatement of the second law, and energy conservation is the subject of the next chapter.",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k5",
+     "type": "number",
+     "prompt": "A 1.50 kg object initially at rest has 48.0 J of total work done on it. What is its final speed, in m/s?",
+     "answer": "sqrt(2*48/1.5)",
+     "why": "\\( W_{\\text{tot}} = \\tfrac12 mv^2 - 0 \\Rightarrow v = \\sqrt{2(48.0)/1.50} = \\sqrt{64.0} = 8.00 \\) m/s.",
+     "tol": 0.005
+    },
+    {
+     "id": "s3q2",
+     "kp": "k5",
+     "type": "number",
+     "prompt": "A car traveling at 20.0 m/s brakes with locked wheels on a level road with \\( \\mu_k = 0.600 \\). Using \\( g = 9.80 \\) m/s², find its stopping distance, in meters.",
+     "answer": "20^2/(2*0.6*9.8)",
+     "why": "Only friction does work: \\( -\\mu_k mg\\,d = -\\tfrac12 mv_0^2 \\), so \\( d = v_0^2/(2\\mu_k g) = 400/11.76 = 34.0 \\) m.",
+     "tol": 0.005
+    },
+    {
+     "id": "s3q3",
+     "kp": "k4",
+     "type": "written",
+     "prompt": "A ball is thrown straight up and returns to its launch height; air resistance is negligible. (a) Give the sign of the work done by gravity during the ascent, during the descent, and over the whole flight. (b) Use the work–energy theorem to find the ball's speed when it returns. (c) State two things the theorem cannot tell you about this motion.",
+     "rubric": [
+      "(a) Ascent: gravity opposite the displacement, negative work; descent: along it, positive work",
+      "Whole flight: the two cancel (−mgh + mgh = 0), so the total work is zero",
+      "(b) W_tot = 0 gives ΔK = 0: the ball returns with its launch speed (moving downward)",
+      "(c) It gives neither the time of flight nor the direction of the velocity"
+     ],
+     "model": "(a) On the way up, gravity points down while the displacement points up, so its work is \\( -mgh \\), negative, where \\( h \\) is the maximum height; on the way down force and displacement are both downward, so the work is \\( +mgh \\). Over the whole flight the total is zero. (b) Gravity is the only force, so \\( W_{\\text{tot}} = 0 = \\Delta K \\): the ball returns with the same kinetic energy, hence the same speed, as at launch, though now moving downward. (c) The theorem cannot give the time of flight, since time does not appear in it, and it cannot give the direction of the velocity, since kinetic energy depends only on the speed.",
+     "why": "Zero total work means unchanged speed, not unchanged velocity."
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "Work done by a varying force; springs",
+   "kps": [
+    "k6",
+    "k4",
+    "k7"
+   ],
+   "md": "When a force changes as the body moves, \\( W = Fd \\) no longer applies, because there is no single value of \\( F \\) to use. This section defines the work of a varying force by integration and applies it to the most important example, the spring.\n\n**Definition.** Let a force with \\( x \\)-component \\( F_x(x) \\) act on a particle moving along the \\( x \\)-axis from \\( x_i \\) to \\( x_f \\). Divide the interval into small pieces \\( \\Delta x \\). Over each piece the force is nearly constant, so the work is approximately \\( F_x(x_k)\\,\\Delta x \\); summing gives a Riemann sum, and in the limit of ever finer pieces,\n\\[ W = \\int_{x_i}^{x_f} F_x(x)\\,dx. \\]\nGeometrically, the work is the signed area under the graph of \\( F_x \\) against \\( x \\), counted negative where \\( F_x < 0 \\) (for motion in the \\( +x \\) direction). For a constant force it reduces to \\( F_x\\,(x_f - x_i) \\).\n\n**Worked example.** A force \\( F_x = (8.00\\ \\text{N})\\,e^{-x/(2.00\\ \\text{m})} \\) acts on a particle that moves from \\( x = 0 \\) to \\( x = 4.00 \\) m. Then\n\\[ W = \\int_0^{4.00} 8.00\\,e^{-x/2.00}\\,dx = \\Big[-16.0\\,e^{-x/2.00}\\Big]_0^{4.00} = 16.0\\left(1 - e^{-2}\\right) = 13.8\\ \\text{J}. \\]\nIn the plot, the shaded area under \\( F_x \\) (N, against \\( x \\) in m) from 0 to \\( b \\) is the work. Drag the slider \\( b \\): the area grows toward, but never exceeds, 16.0 J, although the force never becomes zero.\n\n```plot\nx: 0, 10\ny: 0, 9\nxlabel: x (m)\nylabel: F (N)\nslider: b, 0.5, 10, 4 | upper limit b (m)\nf: 8*exp(-x/2) | F(x)\nshade: 8*exp(-x/2), 0, b | work from 0 to b\n```\n\n**The work–energy theorem for a varying force.** With this definition the theorem of the previous section extends to forces that vary along a line. Let \\( F(x) \\) be the net force. By the second law \\( F = m\\,dv/dt \\), and by the chain rule \\( \\dfrac{dv}{dt} = \\dfrac{dv}{dx}\\dfrac{dx}{dt} = v\\dfrac{dv}{dx} \\), so\n\\[ W_{\\text{tot}} = \\int_{x_i}^{x_f} m\\frac{dv}{dt}\\,dx = \\int_{x_i}^{x_f} mv\\frac{dv}{dx}\\,dx = \\int_{v_i}^{v_f} mv\\,dv = \\tfrac12 mv_f^2 - \\tfrac12 mv_i^2. \\]\nThe chain rule is the step that eliminates the time.\n\n**Hooke's law.** An ideal spring exerts a force proportional to its deformation:\n\\[ F_x = -kx, \\]\nwhere \\( x \\) is the displacement of the spring's end from its relaxed (natural) length and \\( k > 0 \\) is the **spring constant**, in N/m. The minus sign makes the force **restoring**: a stretched spring pulls back, a compressed one pushes out. This is **Hooke's law**, an empirical rule that holds well for deformations small compared with the spring's length.\n\n**Work done by a spring.** As the end moves from \\( x_i \\) to \\( x_f \\), the spring does work\n\\[ W_s = \\int_{x_i}^{x_f}(-kx)\\,dx = \\tfrac12 kx_i^2 - \\tfrac12 kx_f^2. \\]\nIt is positive when the spring moves toward its natural length and negative when it is deformed further. To stretch a spring slowly from its natural length to \\( x \\), an external agent applies \\( +kx \\) at each position and does work\n\\[ W_{\\text{applied}} = \\int_0^x kx'\\,dx' = \\tfrac12 kx^2, \\]\nthe area of a triangle. It is not \\( kx \\cdot x \\), because the force rises from zero.\n\n*Worked example.* For \\( k = 400 \\) N/m, stretching from 0 to 0.150 m takes \\( \\tfrac12(400)(0.150)^2 = 4.50 \\) J; stretching further, from 0.150 m to 0.300 m, takes \\( \\tfrac12(400)(0.300^2 - 0.150^2) = 13.5 \\) J, three times as much for the same added extension.\n\n*Worked example with the work–energy theorem.* A 0.500 kg block slides at 3.00 m/s on a frictionless floor into a spring with \\( k = 200 \\) N/m. At maximum compression \\( d \\) the block is momentarily at rest, and only the spring has done work: \\( -\\tfrac12 kd^2 = 0 - \\tfrac12 mv^2 \\), so \\( d = v\\sqrt{m/k} = 3.00\\sqrt{0.500/200} = 0.150 \\) m.\n\n**Common mistakes.** Using \\( W = Fd \\) with the final (or average) force when the force is not linear in \\( x \\). Measuring \\( x \\) in Hooke's law from some point other than the natural length. Confusing the work done *by* the spring with the work done *on* it; for a slow deformation they are equal and opposite.",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k6",
+     "type": "number",
+     "prompt": "A force \\( F_x = (10.0\\ \\text{N})\\sin\\!\\big(\\pi x/(4.00\\ \\text{m})\\big) \\) acts on a particle moving along the \\( x \\)-axis from \\( x = 0 \\) to \\( x = 2.00 \\) m. Find the work done by the force, in joules.",
+     "answer": "40/pi",
+     "why": "\\( W = \\int_0^{2.00} 10.0\\sin(\\pi x/4.00)\\,dx = 10.0\\cdot\\dfrac{4.00}{\\pi}\\Big[-\\cos(\\pi x/4.00)\\Big]_0^{2.00} = \\dfrac{40.0}{\\pi}(1 - 0) = 12.7 \\) J.",
+     "tol": 0.005
+    },
+    {
+     "id": "s4q2",
+     "kp": "k7",
+     "type": "number",
+     "prompt": "A 0.500 kg block slides at 2.00 m/s on a frictionless floor into a spring with \\( k = 800 \\) N/m. Find the maximum compression of the spring, in meters.",
+     "answer": "2*sqrt(0.5/800)",
+     "why": "Only the spring does work: \\( -\\tfrac12 kd^2 = -\\tfrac12 mv^2 \\), so \\( d = v\\sqrt{m/k} = 2.00\\sqrt{6.25\\times10^{-4}} = 0.0500 \\) m.",
+     "tol": 0.005
+    },
+    {
+     "id": "s4q3",
+     "kp": "k4",
+     "type": "written",
+     "prompt": "Derive the work–energy theorem for a particle moving along the \\( x \\)-axis under a net force \\( F(x) \\) that varies with position. State exactly where Newton's second law and the chain rule enter, and explain why the theorem gives no information about time.",
+     "rubric": [
+      "Starts from W_tot = ∫ F dx with F the net force",
+      "Newton's second law: F = m dv/dt",
+      "Chain rule: dv/dt = (dv/dx)(dx/dt) = v dv/dx, turning the integral into ∫ m v dv",
+      "Evaluates to ½mv_f² − ½mv_i²; time has been eliminated by the chain rule, so the result relates speed and position only"
+     ],
+     "model": "The total work is \\( W_{\\text{tot}} = \\int_{x_i}^{x_f} F\\,dx \\), with \\( F \\) the net force. Newton's second law replaces \\( F \\) by \\( m\\,dv/dt \\). The chain rule, applied to \\( v \\) regarded as a function of \\( x \\) along the motion, gives \\( dv/dt = (dv/dx)(dx/dt) = v\\,dv/dx \\). Hence \\( W_{\\text{tot}} = \\int_{x_i}^{x_f} mv\\,\\dfrac{dv}{dx}\\,dx = \\int_{v_i}^{v_f} mv\\,dv = \\tfrac12 mv_f^2 - \\tfrac12 mv_i^2 = \\Delta K \\). The chain rule step is precisely where time is eliminated: the integrand is expressed through \\( x \\) and \\( v \\) alone. The theorem therefore connects speed with position but cannot say when the particle arrives anywhere; for that one must return to \\( F = ma \\) and integrate in time.",
+     "why": "This is the one-dimensional case; the curved-path version replaces \\( F\\,dx \\) by \\( \\vec F\\cdot d\\vec r \\)."
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "Work along a curved path",
+   "kps": [
+    "k8"
+   ],
+   "md": "A body may move along a curve while the force on it changes in both magnitude and direction. This section generalizes the definition of work to that case and proves the work–energy theorem in full generality.\n\n**The line integral.** Divide the path \\( C \\) into small displacements \\( d\\vec r \\). Over each, the force is nearly constant and the work is \\( \\vec F\\cdot d\\vec r \\); summing and taking the limit gives the **line integral**\n\\[ W = \\int_C \\vec F\\cdot d\\vec r = \\int_C \\left(F_x\\,dx + F_y\\,dy + F_z\\,dz\\right). \\]\nTo evaluate it, **parametrize** the path: write \\( \\vec r(t) \\) for \\( a \\le t \\le b \\), tracing \\( C \\) in the direction of motion. Then \\( d\\vec r = \\vec r\\,'(t)\\,dt \\) and\n\\[ W = \\int_a^b \\vec F(\\vec r(t))\\cdot\\vec r\\,'(t)\\,dt, \\]\nan ordinary integral in \\( t \\). The parameter need not be the time; any smooth parametrization in the direction of motion gives the same value.\n\n**Worked example.** A force \\( \\vec F = (2.0y\\,\\hat\\imath + 3.0x\\,\\hat\\jmath) \\) N (with \\( x, y \\) in meters) acts on a particle that moves from \\( (0, 0) \\) to \\( (1.0, 1.0) \\) m.\n\n*Along the parabola \\( y = x^2 \\).* Take \\( x = t \\), \\( y = t^2 \\), \\( 0 \\le t \\le 1 \\). Then \\( \\vec F = (2t^2, 3t) \\), \\( \\vec r\\,' = (1, 2t) \\), and\n\\[ W = \\int_0^1 (2t^2 + 6t^2)\\,dt = \\int_0^1 8t^2\\,dt = \\tfrac83 = 2.67\\ \\text{J}. \\]\n*Along the straight line \\( y = x \\).* Take \\( x = y = t \\). Then \\( \\vec F = (2t, 3t) \\), \\( \\vec r\\,' = (1, 1) \\), and \\( W = \\int_0^1 5t\\,dt = 2.50 \\) J.\n\nThe same endpoints, different paths, different work: for this force the work depends on the route. Forces for which it does not are singled out in the next chapter.\n\n**The work–energy theorem on any path.** For a particle, with \\( \\vec F_{\\text{net}} = m\\,d\\vec v/dt \\) and \\( d\\vec r = \\vec v\\,dt \\),\n\\[ \\vec F_{\\text{net}}\\cdot d\\vec r = m\\frac{d\\vec v}{dt}\\cdot\\vec v\\,dt = m\\,\\vec v\\cdot d\\vec v = d\\left(\\tfrac12 m\\,\\vec v\\cdot\\vec v\\right), \\]\nsince \\( d(\\vec v\\cdot\\vec v) = 2\\vec v\\cdot d\\vec v \\). Integrating along the path, \\( W_{\\text{tot}} = \\tfrac12 mv_f^2 - \\tfrac12 mv_i^2 \\). The theorem therefore holds for any path and any forces, however complicated.\n\n**Application.** A 20.0 kg child slides from rest down a frictionless slide of any shape, ending 3.00 m lower. The normal force is perpendicular to the slide at every point, so it does no work. Gravity, \\( \\vec F = -mg\\,\\hat\\jmath \\), gives \\( \\vec F\\cdot d\\vec r = -mg\\,dy \\), so its work is \\( -mg(y_f - y_i) = (20.0)(9.80)(3.00) = 588 \\) J whatever the shape. The work–energy theorem gives \\( \\tfrac12(20.0)v^2 = 588 \\), \\( v = 7.67 \\) m/s, without knowing the shape of the slide or the time taken. (With friction the answer would depend on the path length.)\n\n**Common mistakes.** Parametrizing the path in the direction opposite to the motion, which reverses the sign. Substituting the path into only some of the components of \\( \\vec F \\). Assuming the work between two points is independent of the path; for many forces it is not.",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k8",
+     "type": "number",
+     "prompt": "A force \\( \\vec F = (3.0y\\,\\hat\\imath + 2.0x\\,\\hat\\jmath) \\) N (with \\( x, y \\) in meters) acts on a particle that moves along the parabola \\( y = x^2/4 \\) from \\( (0, 0) \\) to \\( (2.0, 1.0) \\) m. Find the work done by the force, in joules.",
+     "answer": "14/3",
+     "why": "Parametrize \\( x = 2t \\), \\( y = t^2 \\), \\( 0 \\le t \\le 1 \\). Then \\( \\vec F = (3t^2, 4t) \\), \\( \\vec r\\,' = (2, 2t) \\), \\( \\vec F\\cdot\\vec r\\,' = 6t^2 + 8t^2 = 14t^2 \\). \\( W = \\int_0^1 14t^2\\,dt = 14/3 = 4.67 \\) J. (Along the straight line to the same point the work would be 5.00 J.)",
+     "tol": 0.005
+    },
+    {
+     "id": "s5q2",
+     "kp": "k8",
+     "type": "written",
+     "prompt": "Prove the work–energy theorem for a particle moving along an arbitrary curved path under a net force that may vary in magnitude and direction. Justify each step.",
+     "rubric": [
+      "W_tot = ∫_C F_net · dr (line integral of the net force)",
+      "Newton's second law F_net = m dv/dt and dr = v dt",
+      "m (dv/dt)·v dt = m v·dv = d(½ m v·v), using d(v·v) = 2 v·dv",
+      "Integrating: W_tot = ½ m v_f² − ½ m v_i², independent of the path's shape"
+     ],
+     "model": "The total work is the line integral of the net force along the path: \\( W_{\\text{tot}} = \\int_C \\vec F_{\\text{net}}\\cdot d\\vec r \\). By the second law, \\( \\vec F_{\\text{net}} = m\\,d\\vec v/dt \\); along the motion, the displacement in time \\( dt \\) is \\( d\\vec r = \\vec v\\,dt \\). So \\( \\vec F_{\\text{net}}\\cdot d\\vec r = m\\,\\dfrac{d\\vec v}{dt}\\cdot\\vec v\\,dt = m\\,\\vec v\\cdot d\\vec v \\). Since \\( d(\\vec v\\cdot\\vec v) = d\\vec v\\cdot\\vec v + \\vec v\\cdot d\\vec v = 2\\,\\vec v\\cdot d\\vec v \\), this equals \\( d\\big(\\tfrac12 m\\,\\vec v\\cdot\\vec v\\big) = d\\big(\\tfrac12 mv^2\\big) \\). Integrating from the initial to the final point, \\( W_{\\text{tot}} = \\tfrac12 mv_f^2 - \\tfrac12 mv_i^2 = \\Delta K \\). No assumption about the shape of the path or the form of the force was made.",
+     "why": "The key identity is \\( \\vec v\\cdot d\\vec v = d(v^2/2) \\): only the component of \\( d\\vec v \\) along \\( \\vec v \\) changes the speed."
+    },
+    {
+     "id": "s5q3",
+     "kp": "k8",
+     "type": "number",
+     "prompt": "A child starts from rest and slides down a frictionless curved slide, ending 4.00 m below the starting point. Using \\( g = 9.80 \\) m/s², find the child's speed at the bottom, in m/s.",
+     "answer": "sqrt(2*9.8*4)",
+     "why": "The normal force is perpendicular to the slide and does no work; gravity does \\( mgh \\) regardless of the shape. \\( mgh = \\tfrac12 mv^2 \\Rightarrow v = \\sqrt{2(9.80)(4.00)} = 8.85 \\) m/s, independent of the child's mass.",
+     "tol": 0.005
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "title": "Power",
+   "kps": [
+    "k9"
+   ],
+   "md": "Two motors that lift the same load through the same height do the same work, but the one that does it faster is the more capable machine. This section defines the rate of doing work.\n\n**Definitions.** If a force does work \\( \\Delta W \\) in a time interval \\( \\Delta t \\), the **average power** is \\( P_{\\text{av}} = \\Delta W/\\Delta t \\). The **instantaneous power** is the limit\n\\[ P = \\frac{dW}{dt}. \\]\nThe SI unit is the **watt**, \\( 1\\ \\text{W} = 1\\ \\text{J/s} \\). The horsepower, still used for engines, is 1 hp = 746 W. The kilowatt-hour is a unit of energy, not of power: \\( 1\\ \\text{kWh} = (1000\\ \\text{W})(3600\\ \\text{s}) = 3.60\\times10^6 \\) J.\n\n**Power and velocity.** In a short time \\( dt \\) a force does work \\( dW = \\vec F\\cdot d\\vec r \\). Dividing by \\( dt \\),\n\\[ P = \\vec F\\cdot\\frac{d\\vec r}{dt} = \\vec F\\cdot\\vec v. \\]\nThe power delivered by a force depends on the velocity of the point where it acts and on the angle between them; a force perpendicular to the velocity delivers no power.\n\n**Worked example 1.** An elevator motor lifts an 800 kg car at a constant 2.50 m/s. At constant velocity the cable tension equals the weight, 7840 N, and is parallel to the velocity, so \\( P = (7840)(2.50) = 1.96\\times10^4 \\) W = 19.6 kW, about 26.3 hp.\n\n**Worked example 2.** A car cruises at a constant 30.0 m/s against resistive forces totaling 600 N. The road must push it forward with 600 N, delivering \\( (600)(30.0) = 18.0 \\) kW to the wheels. Conversely, an engine delivering a fixed maximum power \\( P \\) can supply a forward force of at most \\( P/v \\), which shrinks as the speed grows; this is why a car accelerates briskly from rest but only slowly near its top speed.\n\n**Worked example 3 (a time-dependent force).** In the chapter on Newton's laws, a 2.00 kg block starting from rest was pulled by \\( F = (6.00\\ \\text{N/s})\\,t \\) and reached \\( v = 1.50t^2 \\) m/s. The power delivered is \\( P = Fv = 9.00t^3 \\) W, and the work done in the first 2.00 s is\n\\[ W = \\int_0^{2.00} 9.00t^3\\,dt = \\Big[2.25t^4\\Big]_0^{2.00} = 36.0\\ \\text{J}. \\]\nCheck with the work–energy theorem: \\( \\Delta K = \\tfrac12(2.00)(6.00)^2 = 36.0 \\) J.\n\nIntegrating power over time, \\( W = \\int P\\,dt \\), is the time-domain counterpart of integrating force over displacement.\n\n**Common mistakes.** Confusing the kilowatt (power) with the kilowatt-hour (energy). Using \\( P = Fv \\) when the force is not along the velocity; the general formula is the scalar product. Using an average speed in \\( P = Fv \\) and calling the result the instantaneous power.",
+   "questions": [
+    {
+     "id": "s6q1",
+     "kp": "k9",
+     "type": "number",
+     "prompt": "A crane lifts a 500 kg load at a constant 1.20 m/s. Using \\( g = 9.80 \\) m/s², find the power delivered by the cable, in watts.",
+     "answer": "500*9.8*1.2",
+     "why": "At constant velocity the tension equals the weight, 4900 N, parallel to the velocity: \\( P = Tv = 4900(1.20) = 5.88\\times10^3 \\) W.",
+     "tol": 0.005
+    },
+    {
+     "id": "s6q2",
+     "kp": "k9",
+     "type": "number",
+     "prompt": "A 2.00 kg block starts from rest on a frictionless floor and is pushed by a horizontal force \\( F = (4.00\\ \\text{N/s})\\,t \\). Find the instantaneous power delivered by the force at \\( t = 3.00 \\) s, in watts.",
+     "answer": "4*3*3^2",
+     "why": "\\( a = F/m = 2.00t \\), so \\( v = t^2 \\) (m/s). \\( P = Fv = (4.00t)(t^2) = 4.00t^3 \\); at \\( t = 3.00 \\) s, \\( P = 108 \\) W. Check: the work in 3.00 s is \\( \\int_0^3 4t^3\\,dt = 81 \\) J \\( = \\tfrac12(2.00)(9.00)^2 \\).",
+     "tol": 0.005
+    },
+    {
+     "id": "s6q3",
+     "kp": "k9",
+     "type": "mcq",
+     "prompt": "An electricity bill charges for a number of kilowatt-hours. What physical quantity does the kilowatt-hour measure?",
+     "options": [
+      "Power, since it contains the kilowatt",
+      "Energy, since it is a power multiplied by a time",
+      "The rate at which power changes, in kilowatts per hour",
+      "Time, the number of hours of use"
+     ],
+     "answer": 1,
+     "why": "1 kWh is the energy delivered in one hour at a power of 1 kW: \\( 3.60\\times10^6 \\) J. Option 1 misreads the unit's name; option 3 treats 'kilowatt-hour' as 'kilowatts per hour', a division instead of a product; option 4 ignores the power factor."
+    }
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "t": "work",
+   "d": "For a constant force and straight displacement, W = F·d = Fd cos φ; in general W = ∫F·dr. A scalar, in joules."
+  },
+  {
+   "t": "joule (J)",
+   "d": "The SI unit of work and energy: 1 J = 1 N·m = 1 kg·m²/s²."
+  },
+  {
+   "t": "scalar product",
+   "d": "A·B = AB cos φ = AₓBₓ + AᵧBᵧ + A_zB_z; a scalar."
+  },
+  {
+   "t": "total work",
+   "d": "The sum of the works done by all forces on a body; for a particle it equals the work of the net force."
+  },
+  {
+   "t": "kinetic energy",
+   "d": "K = ½mv², the energy of motion of a particle; a non-negative scalar depending only on the speed."
+  },
+  {
+   "t": "work–energy theorem",
+   "d": "W_tot = K_f − K_i: the total work on a particle equals its change in kinetic energy; a consequence of Newton's second law."
+  },
+  {
+   "t": "Hooke's law",
+   "d": "F = −kx for an ideal spring, x measured from the natural length; valid for small deformations."
+  },
+  {
+   "t": "spring constant",
+   "d": "The constant k in Hooke's law, in N/m; a measure of stiffness."
+  },
+  {
+   "t": "restoring force",
+   "d": "A force directed back toward an equilibrium position, such as the spring force −kx."
+  },
+  {
+   "t": "line integral",
+   "d": "∫_C F·dr, the work of a force along a path C, computed by parametrizing the path: ∫ F(r(t))·r′(t) dt."
+  },
+  {
+   "t": "parametrization",
+   "d": "A description of a path as r(t), a ≤ t ≤ b, traced in the direction of motion; it turns a line integral into an ordinary integral in t."
+  },
+  {
+   "t": "power",
+   "d": "The rate of doing work, P = dW/dt = F·v; in watts."
+  },
+  {
+   "t": "watt (W)",
+   "d": "The SI unit of power: 1 W = 1 J/s; 1 hp = 746 W."
+  },
+  {
+   "t": "kilowatt-hour",
+   "d": "A unit of energy: 1 kWh = 3.60 × 10⁶ J."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "formula",
+   "front": "Work by a constant force",
+   "back": "\\( W = \\vec F\\cdot\\vec d = Fd\\cos\\phi \\)",
+   "kp": "k1"
+  },
+  {
+   "id": "c2",
+   "type": "concept",
+   "front": "When is the work done by a force negative?",
+   "back": "When the angle between the force and the displacement exceeds 90°: the force has a component against the motion.",
+   "kp": "k1"
+  },
+  {
+   "id": "c3",
+   "type": "formula",
+   "front": "Scalar product in components",
+   "back": "\\( \\vec A\\cdot\\vec B = A_xB_x + A_yB_y + A_zB_z \\)",
+   "kp": "k2"
+  },
+  {
+   "id": "c4",
+   "type": "problem",
+   "front": "Work by \\( \\vec F = (4\\,\\hat\\imath - 3\\,\\hat\\jmath) \\) N over \\( \\vec d = (5\\,\\hat\\imath - 3\\,\\hat\\jmath) \\) m, in J",
+   "back": "\\( 20 + 9 = 29 \\) J",
+   "kp": "k2",
+   "answer": "4*5 + (-3)*(-3)",
+   "check": "number"
+  },
+  {
+   "id": "c5",
+   "type": "formula",
+   "front": "Total work on a particle",
+   "back": "\\( W_{\\text{tot}} = \\sum W_i = \\vec F_{\\text{net}}\\cdot\\vec d \\)",
+   "kp": "k3"
+  },
+  {
+   "id": "c6",
+   "type": "concept",
+   "front": "Why does the tension do no work in uniform circular motion?",
+   "back": "It points to the center, perpendicular to the velocity at every instant, so F·dr = 0.",
+   "kp": "k3"
+  },
+  {
+   "id": "c7",
+   "type": "term",
+   "front": "Define: kinetic energy",
+   "back": "\\( K = \\tfrac12 mv^2 \\), a non-negative scalar depending only on the speed.",
+   "kp": "k4"
+  },
+  {
+   "id": "c8",
+   "type": "formula",
+   "front": "Work–energy theorem",
+   "back": "\\( W_{\\text{tot}} = K_f - K_i \\)",
+   "kp": "k4"
+  },
+  {
+   "id": "c9",
+   "type": "concept",
+   "front": "Which step eliminates time in the derivation of the work–energy theorem?",
+   "back": "The chain rule \\( dv/dt = v\\,dv/dx \\).",
+   "kp": "k4"
+  },
+  {
+   "id": "c10",
+   "type": "formula",
+   "front": "Stopping distance with kinetic friction on a level road",
+   "back": "\\( d = \\dfrac{v_0^2}{2\\mu_k g} \\)",
+   "kp": "k5"
+  },
+  {
+   "id": "c11",
+   "type": "problem",
+   "front": "Speed of a 2.00 kg body from rest after 25.0 J of total work, in m/s",
+   "back": "\\( v = \\sqrt{2(25.0)/2.00} = 5.00 \\) m/s",
+   "kp": "k5",
+   "answer": "sqrt(2*25/2)",
+   "check": "number"
+  },
+  {
+   "id": "c12",
+   "type": "formula",
+   "front": "Work by a force varying along x",
+   "back": "\\( W = \\int_{x_i}^{x_f} F_x(x)\\,dx \\) (signed area under the F–x graph)",
+   "kp": "k6"
+  },
+  {
+   "id": "c13",
+   "type": "formula",
+   "front": "Hooke's law",
+   "back": "\\( F_x = -kx \\), \\( x \\) from the natural length",
+   "kp": "k7"
+  },
+  {
+   "id": "c14",
+   "type": "formula",
+   "front": "Work done by a spring from x_i to x_f",
+   "back": "\\( W_s = \\tfrac12 kx_i^2 - \\tfrac12 kx_f^2 \\)",
+   "kp": "k7"
+  },
+  {
+   "id": "c15",
+   "type": "problem",
+   "front": "Work to stretch a spring (k = 400 N/m) from 0 to 0.150 m, in J",
+   "back": "\\( \\tfrac12(400)(0.150)^2 = 4.50 \\) J",
+   "kp": "k7",
+   "answer": "0.5*400*0.15^2",
+   "check": "number"
+  },
+  {
+   "id": "c16",
+   "type": "formula",
+   "front": "Work along a parametrized path",
+   "back": "\\( W = \\int_a^b \\vec F(\\vec r(t))\\cdot\\vec r\\,'(t)\\,dt \\)",
+   "kp": "k8"
+  },
+  {
+   "id": "c17",
+   "type": "concept",
+   "front": "Does the work between two points depend on the path?",
+   "back": "In general yes (e.g. F = 2y î + 3x ĵ); forces for which it does not are conservative (next chapter).",
+   "kp": "k8"
+  },
+  {
+   "id": "c18",
+   "type": "formula",
+   "front": "Instantaneous power",
+   "back": "\\( P = \\dfrac{dW}{dt} = \\vec F\\cdot\\vec v \\)",
+   "kp": "k9"
+  },
+  {
+   "id": "c19",
+   "type": "concept",
+   "front": "Kilowatt versus kilowatt-hour",
+   "back": "kW is power (J/s); kWh is energy, 3.60 × 10⁶ J.",
+   "kp": "k9"
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k1",
+   "type": "number",
+   "prompt": "A 2.00 kg box slides 3.00 m down a \\( 30.0^\\circ \\) incline. Using \\( g = 9.80 \\) m/s², find the work done on it by gravity, in joules.",
+   "answer": "2*9.8*3*sin(30*pi/180)",
+   "why": "The angle between the weight (down) and the displacement (along the incline) is \\( 90^\\circ - 30.0^\\circ = 60.0^\\circ \\): \\( W = mgd\\cos 60.0^\\circ = mgd\\sin 30.0^\\circ = 19.6(3.00)(0.500) = 29.4 \\) J, equal to \\( mg \\) times the vertical drop 1.50 m.",
+   "tol": 0.005
+  },
+  {
+   "id": "p2",
+   "kp": "k2",
+   "type": "number",
+   "prompt": "Find the angle, in degrees, between \\( \\vec F = (5.0\\,\\hat\\imath + 2.0\\,\\hat\\jmath) \\) N and \\( \\vec d = (-3.0\\,\\hat\\imath + 4.0\\,\\hat\\jmath) \\) m.",
+   "answer": "acos(-7/(5*sqrt(29)))*180/pi",
+   "why": "\\( \\vec F\\cdot\\vec d = -15 + 8.0 = -7.0 \\) J; \\( F = \\sqrt{29} = 5.39 \\) N, \\( d = 5.0 \\) m. \\( \\cos\\phi = -7.0/(5.39 \\times 5.0) = -0.260 \\), so \\( \\phi = 105^\\circ \\).",
+   "tol": 0.005
+  },
+  {
+   "id": "p3",
+   "kp": "k5",
+   "type": "number",
+   "prompt": "A block slides across a level floor, starting at 6.00 m/s, and stops after 4.50 m. Using \\( g = 9.80 \\) m/s², find the coefficient of kinetic friction.",
+   "answer": "6^2/(2*9.8*4.5)",
+   "why": "\\( -\\mu_k mg\\,d = -\\tfrac12 mv_0^2 \\Rightarrow \\mu_k = v_0^2/(2gd) = 36.0/88.2 = 0.408 \\).",
+   "tol": 0.005
+  },
+  {
+   "id": "p4",
+   "kp": "k6",
+   "type": "number",
+   "prompt": "A force along \\( x \\) is \\( F_x = (5.00\\ \\text{N/m})\\,x \\) for \\( 0 \\le x \\le 4.00 \\) m and a constant 20.0 N for \\( 4.00 \\le x \\le 6.00 \\) m. Find the work it does as a particle moves from \\( x = 0 \\) to \\( x = 6.00 \\) m, in joules.",
+   "answer": "0.5*4*20 + 2*20",
+   "why": "Area under the graph: a triangle \\( \\tfrac12(4.00)(20.0) = 40.0 \\) J plus a rectangle \\( (2.00)(20.0) = 40.0 \\) J, total 80.0 J.",
+   "tol": 0.005
+  },
+  {
+   "id": "p5",
+   "kp": "k7",
+   "type": "number",
+   "prompt": "How much work, in joules, is needed to stretch a spring with \\( k = 250 \\) N/m from an extension of 0.100 m to an extension of 0.250 m?",
+   "answer": "0.5*250*(0.25^2 - 0.1^2)",
+   "why": "\\( W = \\int_{0.100}^{0.250} kx\\,dx = \\tfrac12(250)(0.0625 - 0.0100) = 6.56 \\) J.",
+   "tol": 0.005
+  },
+  {
+   "id": "p6",
+   "kp": "k7",
+   "type": "written",
+   "prompt": "A student computes the work needed to stretch a spring from its natural length to extension \\( x \\) as \\( (kx)(x) = kx^2 \\). Explain the error, give the correct result with its derivation, and state the sign of the work done by the spring itself during this stretch.",
+   "rubric": [
+    "The force is not constant: it grows from 0 to kx, so W = Fd with the final force overestimates",
+    "Correct: W = ∫₀ˣ kx′ dx′ = ½kx² (area of a triangle)",
+    "The spring's own force −kx opposes the stretch, so the spring does −½kx²",
+    "For a slow stretch the applied force equals kx at each point (so the two works are equal and opposite)"
+   ],
+   "model": "The product \\( (kx)(x) \\) treats the force as if it had its final value \\( kx \\) throughout. In fact the force needed rises linearly from zero at the natural length to \\( kx \\) at the end, so the work is the integral \\( \\int_0^x kx'\\,dx' = \\tfrac12 kx^2 \\), the area of the triangle under the force–extension graph: half the student's value. If the stretch is slow, the applied force balances the spring force, \\( +kx' \\), at each position. The spring's own force is \\( -kx' \\), opposite the displacement, so the spring does work \\( -\\tfrac12 kx^2 \\), equal and opposite to the work of the agent.",
+   "why": "Whenever a force varies over the displacement, work is an integral, not a product."
+  },
+  {
+   "id": "p7",
+   "kp": "k8",
+   "type": "number",
+   "prompt": "A force \\( \\vec F = (-y\\,\\hat\\imath + x\\,\\hat\\jmath) \\) N (with \\( x, y \\) in meters) acts on a particle moving counterclockwise along the circle of radius 2.00 m centered at the origin, from \\( (2.00, 0) \\) to \\( (0, 2.00) \\). Find the work done, in joules.",
+   "answer": "2*pi",
+   "why": "Parametrize \\( \\vec r = (2\\cos t, 2\\sin t) \\), \\( 0 \\le t \\le \\pi/2 \\). \\( \\vec F = (-2\\sin t, 2\\cos t) \\), \\( \\vec r\\,' = (-2\\sin t, 2\\cos t) \\), \\( \\vec F\\cdot\\vec r\\,' = 4\\sin^2 t + 4\\cos^2 t = 4 \\). \\( W = \\int_0^{\\pi/2} 4\\,dt = 2\\pi = 6.28 \\) J. The force is everywhere tangent to the circle, parallel to the motion.",
+   "tol": 0.005
+  },
+  {
+   "id": "p8",
+   "kp": "k9",
+   "type": "number",
+   "prompt": "A 1200 kg car climbs a \\( 5.00^\\circ \\) slope at a constant 25.0 m/s. Ignoring air resistance and rolling friction and using \\( g = 9.80 \\) m/s², find the power the road's driving force must deliver, in watts.",
+   "answer": "1200*9.8*sin(5*pi/180)*25",
+   "why": "At constant velocity the driving force balances the weight's component down the slope: \\( F = mg\\sin 5.00^\\circ = 1025 \\) N. \\( P = Fv = 1025(25.0) = 2.56\\times10^4 \\) W, about 34 hp.",
+   "tol": 0.005
+  },
+  {
+   "id": "p9",
+   "kp": "k3",
+   "type": "mcq",
+   "prompt": "A satellite moves in a circular orbit at constant speed. How much work does Earth's gravity do on it during half an orbit?",
+   "options": [
+    "Positive: gravity pulls on it throughout",
+    "Negative: gravity opposes its outward tendency",
+    "Zero: gravity is perpendicular to the velocity at every instant",
+    "The weight times half the circumference"
+   ],
+   "answer": 2,
+   "why": "In uniform circular motion the gravitational force points to the center, perpendicular to the velocity, so \\( \\vec F\\cdot d\\vec r = 0 \\) everywhere and the work is zero; consistently, the speed and hence \\( K \\) do not change. Options 1 and 4 multiply a force by a distance without the angle; option 2 invokes a nonexistent outward force."
+  },
+  {
+   "id": "p10",
+   "kp": "k4",
+   "type": "expression",
+   "prompt": "A particle of mass \\( m \\) starts from rest, and a total work \\( W \\) is done on it. Give its final speed in terms of \\( W \\) and \\( m \\).",
+   "answer": "sqrt(2*W/m)",
+   "vars": "W m",
+   "why": "\\( W = \\tfrac12 mv^2 - 0 \\Rightarrow v = \\sqrt{2W/m} \\)."
+  },
+  {
+   "id": "p11",
+   "kp": "k5",
+   "type": "written",
+   "prompt": "Use the work–energy theorem to compare the braking distances of a car at 50 km/h and at 100 km/h on the same level road with the same (constant) braking force. Explain why the result is not 'twice as far', and what it implies about the damage in a collision at the point where the slower car would have stopped.",
+   "rubric": [
+    "−F_b d = 0 − ½mv₀², so d = mv₀²/(2F_b) ∝ v₀²",
+    "Doubling v₀ quadruples d (four times as far)",
+    "The kinetic energy to be removed is proportional to v², and the braking force removes it at a fixed rate per meter",
+    "At the distance where the slower car stops, the faster car still has 3/4 of its initial K (speed √3/2 · 100 ≈ 87 km/h)"
+   ],
+   "model": "Only the braking force \\( F_b \\) does work, opposite to the motion: \\( -F_b d = 0 - \\tfrac12 mv_0^2 \\), so \\( d = mv_0^2/(2F_b) \\), proportional to \\( v_0^2 \\). At 100 km/h the car has four times the kinetic energy it has at 50 km/h, and the brakes remove a fixed amount of kinetic energy per meter, \\( F_b \\), so it needs four times the distance, not twice. At the point where the slower car would have stopped, the faster car has lost only the kinetic energy the slower one started with, one quarter of its own. It still has \\( \\tfrac34 \\) of its initial kinetic energy, so its speed there is \\( 100\\sqrt{3/4} \\approx 87 \\) km/h.",
+   "why": "The quadratic dependence of kinetic energy on speed is the physical basis of speed limits."
+  },
+  {
+   "id": "p12",
+   "kp": "k9",
+   "type": "number",
+   "prompt": "A 1500 W heater runs for 3.00 hours. How much energy does it use, in joules?",
+   "answer": "1500*3*3600",
+   "why": "\\( E = Pt = 1500(3.00 \\times 3600) = 1.62\\times10^7 \\) J, which is 4.50 kWh.",
+   "tol": 0.005
+  },
+  {
+   "id": "p13",
+   "kp": "k7",
+   "type": "expression",
+   "prompt": "The end of a spring with constant \\( k \\) moves from position \\( x_1 \\) (type `x1`) to \\( x_2 \\) (type `x2`), both measured from its natural length. Give the work done by the spring, in terms of \\( k \\), \\( x_1 \\) and \\( x_2 \\).",
+   "answer": "k*x1^2/2 - k*x2^2/2",
+   "vars": "k x1 x2",
+   "why": "\\( W_s = \\int_{x_1}^{x_2}(-kx)\\,dx = -\\tfrac12 k(x_2^2 - x_1^2) = \\tfrac12 kx_1^2 - \\tfrac12 kx_2^2 \\). It is positive when \\( |x_2| < |x_1| \\), i.e. when the spring relaxes."
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k5",
+   "type": "number",
+   "prompt": "A 5.00 kg block starts from rest and slides 2.00 m down a \\( 30.0^\\circ \\) incline with \\( \\mu_k = 0.200 \\). Using \\( g = 9.80 \\) m/s² and the work–energy theorem, find its speed after 2.00 m, in m/s.",
+   "answer": "sqrt(2*(5*9.8*2*sin(30*pi/180) - 0.2*5*9.8*cos(30*pi/180)*2)/5)",
+   "why": "Gravity: \\( W_g = mgd\\sin 30.0^\\circ = 49.0 \\) J. Friction: \\( N = mg\\cos 30.0^\\circ = 42.4 \\) N, \\( W_f = -0.200(42.4)(2.00) = -17.0 \\) J. Normal force: 0. \\( W_{\\text{tot}} = 32.0 \\) J \\( = \\tfrac12(5.00)v^2 \\Rightarrow v = 3.58 \\) m/s.",
+   "tol": 0.005
+  },
+  {
+   "id": "e2",
+   "kp": "k4",
+   "type": "written",
+   "prompt": "Starting from Newton's second law, derive the work–energy theorem for a particle moving along an arbitrary path under a net force that varies in magnitude and direction. Then state two things the theorem does not tell you, and explain why a force perpendicular to the velocity cannot change the kinetic energy.",
+   "rubric": [
+    "W_tot = ∫ F_net·dr with F_net = m dv/dt and dr = v dt",
+    "m v·dv = d(½mv²), giving W_tot = ΔK",
+    "Does not give the time taken, nor the direction of the velocity (only the speed)",
+    "If F ⊥ v, then F·v = 0, so dK/dt = F·v = 0 and K is constant"
+   ],
+   "model": "The total work along the path is \\( W_{\\text{tot}} = \\int_C \\vec F_{\\text{net}}\\cdot d\\vec r \\). With \\( \\vec F_{\\text{net}} = m\\,d\\vec v/dt \\) and \\( d\\vec r = \\vec v\\,dt \\), the integrand is \\( m\\,\\vec v\\cdot d\\vec v = d(\\tfrac12 m\\,\\vec v\\cdot\\vec v) \\), since \\( d(\\vec v\\cdot\\vec v) = 2\\vec v\\cdot d\\vec v \\). Integrating, \\( W_{\\text{tot}} = \\tfrac12 mv_f^2 - \\tfrac12 mv_i^2 = \\Delta K \\). The theorem does not give the time taken (time was eliminated) and does not give the direction of the final velocity (\\( K \\) depends only on the speed). Differentiating instead, \\( dK/dt = \\vec F_{\\text{net}}\\cdot\\vec v \\), the power of the net force. A force perpendicular to the velocity has \\( \\vec F\\cdot\\vec v = 0 \\), so it contributes nothing to \\( dK/dt \\): it can turn the velocity but cannot change the speed.",
+   "why": "The same identity explains why magnetic forces on moving charges, always perpendicular to the velocity, never change a particle's speed."
+  },
+  {
+   "id": "e3",
+   "kp": "k7",
+   "type": "number",
+   "prompt": "A 1.00 kg block moving at 4.00 m/s on a floor with \\( \\mu_k = 0.250 \\) runs into a spring with \\( k = 500 \\) N/m. Using \\( g = 9.80 \\) m/s², find the maximum compression of the spring, in meters.",
+   "answer": "(-0.25*9.8 + sqrt((0.25*9.8)^2 + 4*250*8))/(2*250)",
+   "why": "During the compression \\( d \\), the spring does \\( -\\tfrac12 kd^2 \\) and friction \\( -\\mu_k mg\\,d \\): \\( -250d^2 - 2.45d = 0 - 8.00 \\). So \\( 250d^2 + 2.45d - 8.00 = 0 \\) and, taking the positive root, \\( d = \\dfrac{-2.45 + \\sqrt{2.45^2 + 8000}}{500} = 0.174 \\) m.",
+   "tol": 0.005
+  },
+  {
+   "id": "e4",
+   "kp": "k6",
+   "type": "number",
+   "prompt": "A nonlinear spring exerts \\( F_x = -(40.0\\ \\text{N/m})\\,x - (200\\ \\text{N/m}^3)\\,x^3 \\), with \\( x \\) measured from its natural length. Find the work done by this spring as its end moves from \\( x = 0 \\) to \\( x = 0.300 \\) m, in joules.",
+   "answer": "-20*0.3^2 - 50*0.3^4",
+   "why": "\\( W = \\int_0^{0.300}(-40.0x - 200x^3)\\,dx = -20.0(0.300)^2 - 50.0(0.300)^4 = -1.80 - 0.405 = -2.21 \\) J. Negative, since the spring force opposes the stretch.",
+   "tol": 0.005
+  },
+  {
+   "id": "e5",
+   "kp": "k9",
+   "type": "number",
+   "prompt": "A 1000 kg car starts from rest, and its engine delivers a constant 50.0 kW to the wheels. Ignoring all losses, find its speed after 6.00 s, in m/s.",
+   "answer": "sqrt(2*50000*6/1000)",
+   "why": "At constant power, \\( W = Pt = 3.00\\times10^5 \\) J. By the work–energy theorem, \\( \\tfrac12(1000)v^2 = 3.00\\times10^5 \\), so \\( v = \\sqrt{600} = 24.5 \\) m/s. (The acceleration is not constant: the force \\( P/v \\) decreases as the speed grows.)",
+   "tol": 0.005
+  },
+  {
+   "id": "e6",
+   "kp": "k9",
+   "type": "written",
+   "prompt": "Derive \\( P = \\vec F\\cdot\\vec v \\) from the definitions of work and power. Then use it to explain why, at a fixed maximum engine power, a car's maximum acceleration decreases as its speed increases, and why it has a top speed on a level road when air resistance grows with speed.",
+   "rubric": [
+    "dW = F·dr, so P = dW/dt = F·dr/dt = F·v",
+    "At power P the largest forward force is F = P/v, which decreases as v increases",
+    "Max acceleration a = (P/v − resistive forces)/m falls with speed",
+    "Top speed where P/v equals the resistive force (which grows with v): net force zero, no further acceleration"
+   ],
+   "model": "In a time \\( dt \\) the force does work \\( dW = \\vec F\\cdot d\\vec r \\). Dividing by \\( dt \\), \\( P = dW/dt = \\vec F\\cdot d\\vec r/dt = \\vec F\\cdot\\vec v \\). For a car moving straight ahead with the driving force along the velocity, \\( P = Fv \\), so at a fixed maximum power the largest forward force the road can be made to exert is \\( F = P/v \\), which falls as \\( v \\) grows. The maximum acceleration, \\( a = (P/v - f_{\\text{res}})/m \\), therefore decreases with speed. Air resistance \\( f_{\\text{res}} \\) grows with speed, so eventually \\( P/v = f_{\\text{res}} \\): the net force is zero, and the car cannot go faster. That speed is its top speed on a level road.",
+   "why": "Power, not force, is the limiting quantity for engines at speed."
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "Work by a constant force",
+    "formula": "\\( W = Fd\\cos\\phi = F_xd_x + F_yd_y + F_zd_z \\)",
+    "when": "Constant force, straight displacement.",
+    "example": "80.0 N at 35.0° over 12.0 m: 786 J",
+    "watch": "φ is between F and d; sign matters."
+   },
+   {
+    "name": "Total work",
+    "formula": "\\( W_{\\text{tot}} = \\sum W_i = \\vec F_{\\text{net}}\\cdot\\vec d \\)",
+    "when": "Several forces on one body.",
+    "example": "sled: 786 − 447 = 340 J",
+    "watch": "Forces ⟂ displacement do zero work."
+   },
+   {
+    "name": "Work–energy theorem",
+    "formula": "\\( W_{\\text{tot}} = \\tfrac12 mv_f^2 - \\tfrac12 mv_i^2 \\)",
+    "when": "Speed wanted at a position, time not needed.",
+    "example": "skid from 25.0 m/s, \\( \\mu_k = 0.700 \\): 45.6 m",
+    "watch": "Use the total work, not one force's work."
+   },
+   {
+    "name": "Variable force",
+    "formula": "\\( W = \\int_{x_i}^{x_f} F_x\\,dx \\)",
+    "when": "Force depends on position along a line.",
+    "example": "\\( 8.00e^{-x/2} \\) N, 0 to 4.00 m: 13.8 J",
+    "watch": "Signed area under the F–x graph."
+   },
+   {
+    "name": "Spring",
+    "formula": "\\( F = -kx;\\ W_s = \\tfrac12 kx_i^2 - \\tfrac12 kx_f^2 \\)",
+    "when": "Ideal springs.",
+    "example": "k = 400 N/m, 0 to 0.150 m: 4.50 J",
+    "watch": "x from the natural length."
+   },
+   {
+    "name": "Line integral",
+    "formula": "\\( W = \\int_a^b \\vec F(\\vec r(t))\\cdot\\vec r\\,'(t)\\,dt \\)",
+    "when": "Force along a curved path.",
+    "example": "\\( (2y, 3x) \\) along \\( y = x^2 \\), (0,0) to (1,1): 8/3 J",
+    "watch": "Parametrize in the direction of motion."
+   },
+   {
+    "name": "Power",
+    "formula": "\\( P = dW/dt = \\vec F\\cdot\\vec v \\)",
+    "when": "Rate of doing work.",
+    "example": "800 kg lifted at 2.50 m/s: 19.6 kW",
+    "watch": "kWh is energy, not power."
+   }
+  ],
+  "stuck": [
+   "If the question links speed and position (not time), think work–energy theorem.",
+   "List every force, decide which are perpendicular to the motion (zero work), and compute the rest with signs.",
+   "If a force changes along the way, write the work as an integral; never multiply by the final force.",
+   "For a curved path, parametrize it and reduce the line integral to an ordinary integral.",
+   "Check a total work by also computing F_net·d, or a power result by integrating P dt and comparing with ΔK."
+  ]
+ }
+}

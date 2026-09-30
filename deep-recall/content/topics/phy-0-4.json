@@ -1,0 +1,768 @@
+{
+ "key": "phy-0-4",
+ "title": "Circular motion",
+ "v": 1,
+ "scope": "Kinematics of motion on a circle (angular position, angular speed, period, frequency), the centripetal acceleration derived by differentiation, nonuniform circular motion with tangential and centripetal components, the second law along the radius, the fictitious centrifugal force, strings, conical pendulums, flat and banked curves, and vertical circles at their top and bottom; rigid-body rotation and torque belong to the rotation chapters, orbits to Gravitation and orbits, and speeds found from energy to the energy chapters.",
+ "sources": [
+  {
+   "title": "OpenStax University Physics Vol. 1, 4.4 Uniform and Nonuniform Circular Motion",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/4-4-uniform-and-nonuniform-circular-motion"
+  },
+  {
+   "title": "OpenStax University Physics Vol. 1, 6.3 Centripetal Force",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/6-3-centripetal-force"
+  },
+  {
+   "title": "MIT 8.01SC Classical Mechanics, Chapter 6: Circular Motion",
+   "url": "https://ocw.mit.edu/courses/8-01sc-classical-mechanics-fall-2016/mit8_01scs22_chapter6.pdf"
+  }
+ ],
+ "pre": [
+  "phy-0-1",
+  "phy-0-2",
+  "phy-0-3"
+ ],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Angular speed, period and frequency",
+   "d": "Relate θ, s = rθ, ω, v = rω, T, f and rpm for motion on a circle, with angles in radians.",
+   "type": "procedure"
+  },
+  {
+   "id": "k2",
+   "t": "Centripetal acceleration",
+   "d": "Derive a = v²/r = ω²r toward the center by differentiating the position vector, and compute it.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k3",
+   "t": "Nonuniform circular motion",
+   "d": "Split the acceleration into tangential (dv/dt) and centripetal (v²/r) components and combine them.",
+   "type": "concept"
+  },
+  {
+   "id": "k4",
+   "t": "Net inward force equals mv²/r",
+   "d": "Apply ΣF toward the center = mv²/r, identifying which real forces supply the centripetal force.",
+   "type": "concept"
+  },
+  {
+   "id": "k5",
+   "t": "No centrifugal force in inertial frames",
+   "d": "Explain the outward sensation in turning vehicles and the tangential escape of a released body without a centrifugal force.",
+   "type": "distinction"
+  },
+  {
+   "id": "k6",
+   "t": "Level curves and friction",
+   "d": "Derive v_max = √(μₛgr) for a level curve and use static friction as the centripetal force.",
+   "type": "skill"
+  },
+  {
+   "id": "k7",
+   "t": "Banked curves",
+   "d": "Derive the ideal banking angle tan θ = v²/(rg) with horizontal and vertical axes, and extend to friction.",
+   "type": "skill"
+  },
+  {
+   "id": "k8",
+   "t": "Conical pendulum",
+   "d": "Find the tension, speed and period of a bob moving in a horizontal circle on a string.",
+   "type": "skill"
+  },
+  {
+   "id": "k9",
+   "t": "Vertical circles: top and bottom",
+   "d": "Write the radial equation at the top and bottom of a vertical circle, and find the minimum speed √(gr) at the top.",
+   "type": "skill"
+  }
+ ],
+ "intro": "A car rounding a bend, a stone whirled on a string, a centrifuge, and a point on a spinning wheel all move on circles, or on arcs that are circular over a short stretch. The speed may be constant, yet the velocity is not, because its direction turns continuously. By Newton's second law a changing velocity requires a net force. The questions of this chapter are therefore: what acceleration does motion on a circle require, and which forces provide it?\n\nThe first half answers the kinematic question. Differentiating the position of a particle on a circle shows that uniform circular motion has an acceleration of magnitude \\( v^2/r \\) directed toward the center, and that a changing speed adds a tangential component. The second half applies the second law along the radius to strings, road curves, banked tracks, conical pendulums and vertical loops, and explains why the outward \"centrifugal force\" of everyday speech has no place in an analysis made from an inertial frame.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "Describing motion on a circle",
+   "kps": [
+    "k1"
+   ],
+   "md": "This section sets up the quantities used to describe motion on a circle: angular position, angular speed, period and frequency. Everything later in the chapter is expressed through them.\n\n**Angular position and arc length.** A particle moving on a circle of radius \\( r \\) centered at the origin is located by its **angular position** \\( \\theta \\), measured counterclockwise from the \\( +x \\)-axis:\n\\[ x = r\\cos\\theta, \\qquad y = r\\sin\\theta. \\]\nWith \\( \\theta \\) in radians, the arc length from the \\( +x \\)-axis is \\( s = r\\theta \\). This is in fact the definition of the **radian** (the angle whose arc equals the radius, so a full turn is \\( 2\\pi \\) rad), and it is why radians, not degrees, appear in every formula below.\n\n**Angular velocity.** The rate of change of the angular position, \\( d\\theta/dt \\), is the **angular velocity**, measured in rad/s; its magnitude \\( \\omega = |d\\theta/dt| \\) is the angular speed. Differentiating \\( s = r\\theta \\) with \\( r \\) constant gives the speed along the circle:\n\\[ v = \\left|\\frac{ds}{dt}\\right| = r\\left|\\frac{d\\theta}{dt}\\right| = r\\omega. \\]\n\n**Uniform circular motion.** Motion on a circle at constant speed is **uniform circular motion**, and then, for counterclockwise motion, \\( \\theta = \\theta_0 + \\omega t \\). The **period** \\( T \\) is the time for one revolution, and the **frequency** \\( f = 1/T \\) is the number of revolutions per unit time, measured in hertz (1 Hz = 1 s⁻¹). One revolution is \\( 2\\pi \\) rad and a distance \\( 2\\pi r \\), so\n\\[ v = \\frac{2\\pi r}{T} = 2\\pi r f, \\qquad \\omega = \\frac{2\\pi}{T} = 2\\pi f. \\]\nRotation rates are often quoted in revolutions per minute (rpm); dividing by 60 gives revolutions per second, that is, hertz.\n\n**Worked example.** A laboratory centrifuge spins at 3000 rpm, and a sample sits 0.100 m from the axis.\n\n1. Frequency: \\( f = 3000/60 = 50.0 \\) Hz; period \\( T = 1/f = 0.0200 \\) s.\n2. Angular speed: \\( \\omega = 2\\pi(50.0) = 314 \\) rad/s.\n3. Speed of the sample: \\( v = r\\omega = (0.100)(314) = 31.4 \\) m/s.\n\nAll points of a rigid rotating body share the same \\( \\omega \\), but each point's speed \\( v = r\\omega \\) is proportional to its distance from the axis: a point halfway out moves at half the speed. Rigid-body rotation is developed in a later chapter; here each point is treated as a particle on its own circle.\n\n**Common mistakes.** Using degrees in \\( s = r\\theta \\) or \\( v = r\\omega \\). Confusing the frequency \\( f \\) (revolutions per second) with the angular speed \\( \\omega \\) (radians per second), which differ by the factor \\( 2\\pi \\). Forgetting to convert rpm to revolutions per second before using \\( \\omega = 2\\pi f \\).",
+   "questions": [
+    {
+     "id": "s1q1",
+     "kp": "k1",
+     "type": "number",
+     "prompt": "A wheel of radius 0.350 m turns at 480 rpm. Find the speed of a point on its rim, in m/s.",
+     "answer": "2*pi*0.35*480/60",
+     "why": "\\( f = 480/60 = 8.00 \\) Hz, so \\( \\omega = 2\\pi(8.00) = 50.3 \\) rad/s and \\( v = r\\omega = 0.350(50.3) = 17.6 \\) m/s.",
+     "tol": 0.005
+    },
+    {
+     "id": "s1q2",
+     "kp": "k1",
+     "type": "expression",
+     "prompt": "A point at distance \\( r \\) from an axis rotates at \\( n \\) revolutions per minute (type `n`). Give its speed in terms of \\( r \\) and \\( n \\), in units consistent with \\( r \\) per second.",
+     "answer": "2*pi*r*n/60",
+     "vars": "r n",
+     "why": "Frequency in hertz: \\( f = n/60 \\). Speed: \\( v = 2\\pi r f = 2\\pi r n/60 = \\pi r n/30 \\)."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "Centripetal acceleration",
+   "kps": [
+    "k2"
+   ],
+   "md": "In uniform circular motion the speed is constant but the direction of the velocity changes continually, so the particle accelerates. This section finds that acceleration by differentiating the position vector.\n\n**Derivation.** For uniform circular motion starting on the \\( +x \\)-axis, \\( \\theta = \\omega t \\) and\n\\[ \\vec r(t) = r\\cos(\\omega t)\\,\\hat\\imath + r\\sin(\\omega t)\\,\\hat\\jmath. \\]\nDifferentiating component by component, as in the chapter on projectile motion,\n\\[ \\vec v = \\frac{d\\vec r}{dt} = -r\\omega\\sin(\\omega t)\\,\\hat\\imath + r\\omega\\cos(\\omega t)\\,\\hat\\jmath, \\]\n\\[ \\vec a = \\frac{d\\vec v}{dt} = -r\\omega^2\\cos(\\omega t)\\,\\hat\\imath - r\\omega^2\\sin(\\omega t)\\,\\hat\\jmath = -\\omega^2\\,\\vec r. \\]\nThree facts follow. First, \\( |\\vec v| = r\\omega \\), confirming \\( v = r\\omega \\). Second, \\( \\vec v\\cdot\\vec r = 0 \\): the velocity is perpendicular to the radius, that is, tangent to the circle. Third, \\( \\vec a = -\\omega^2\\vec r \\) points from the particle toward the center, with magnitude\n\\[ a_c = \\omega^2 r = \\frac{v^2}{r} = \\frac{4\\pi^2 r}{T^2}. \\]\nThis is the **centripetal acceleration** (from the Latin for \"center-seeking\"). It is present whenever a particle moves on a circle, even at constant speed, because acceleration measures every change of the velocity vector, including a change of direction.\n\n**A geometric check.** In a short time \\( \\Delta t \\) the position vector turns through an angle \\( \\Delta\\theta \\), and the velocity vector, always perpendicular to it, turns through the same angle. The triangle formed by \\( \\vec r_1 \\), \\( \\vec r_2 \\) and \\( \\Delta\\vec r \\) and the triangle formed by \\( \\vec v_1 \\), \\( \\vec v_2 \\) and \\( \\Delta\\vec v \\) are therefore similar isosceles triangles, so \\( |\\Delta\\vec v|/v = |\\Delta\\vec r|/r \\). Dividing by \\( \\Delta t \\) and letting \\( \\Delta t \\to 0 \\), with \\( |\\Delta\\vec r|/\\Delta t \\to v \\), gives \\( a = v^2/r \\) again.\n\nThe plot shows a circle of unit radius (arbitrary units) with the velocity at \\( 45^\\circ \\), tangent to the circle, and the acceleration, pointing to the center.\n\n```plot\nx: -2, 2\ny: -1.18, 1.18\nparam: cos(t); sin(t) | path\nt: 0, 6.2832\nvector: (0.7071, 0.7071) -> (0.4243, 0.9899) | v\nvector: (0.7071, 0.7071) -> (0.4243, 0.4243) | a\npoint: 0, 0 | center\n```\n\n**Worked example 1.** A car takes a curve of radius 50.0 m at a constant 15.0 m/s. Its acceleration is \\( v^2/r = 225/50.0 = 4.50 \\) m/s², directed toward the center of the curve: almost half of \\( g \\), although the speedometer reading never changes.\n\n**Worked example 2.** A point on Earth's equator is carried around a circle of radius \\( 6.37\\times10^6 \\) m once per sidereal day, 86 164 s. Then \\( \\omega = 2\\pi/86\\,164 = 7.29\\times10^{-5} \\) rad/s, \\( v = r\\omega = 465 \\) m/s, and \\( a_c = \\omega^2 r = 0.0339 \\) m/s², about 0.35% of \\( g \\). This small value is what justifies treating the ground as an inertial frame.\n\n**Common mistakes.** Concluding that a body moving at constant speed has zero acceleration. Pointing the acceleration along the velocity, or outward. Using a diameter in place of the radius in \\( v^2/r \\).",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k2",
+     "type": "number",
+     "prompt": "A point on the rim of a wheel of radius 0.300 m turns at 1200 rpm. Find the magnitude of its centripetal acceleration, in m/s².",
+     "answer": "(2*pi*20)^2*0.3",
+     "why": "\\( f = 1200/60 = 20.0 \\) Hz, \\( \\omega = 2\\pi(20.0) = 125.7 \\) rad/s, \\( a_c = \\omega^2 r = (125.7)^2(0.300) = 4.74\\times10^{3} \\) m/s², nearly 500 times \\( g \\).",
+     "tol": 0.005
+    },
+    {
+     "id": "s2q2",
+     "kp": "k2",
+     "type": "written",
+     "prompt": "Starting from \\( \\vec r(t) = r\\cos(\\omega t)\\,\\hat\\imath + r\\sin(\\omega t)\\,\\hat\\jmath \\), derive the velocity and acceleration of a particle in uniform circular motion. Show that the velocity is tangent to the circle, that the acceleration points to the center, and that its magnitude is \\( v^2/r \\). Explain why the particle accelerates although its speed is constant.",
+     "rubric": [
+      "v = rω(−sin ωt î + cos ωt ĵ), with |v| = rω and v·r = 0 (tangent)",
+      "a = −rω²(cos ωt î + sin ωt ĵ) = −ω² r, pointing toward the center",
+      "|a| = ω²r = v²/r using v = rω",
+      "Acceleration is the rate of change of the velocity vector; its direction changes continuously even though its magnitude does not"
+     ],
+     "model": "Differentiating componentwise: \\( \\vec v = -r\\omega\\sin(\\omega t)\\,\\hat\\imath + r\\omega\\cos(\\omega t)\\,\\hat\\jmath \\). Its magnitude is \\( r\\omega\\sqrt{\\sin^2 + \\cos^2} = r\\omega \\), and \\( \\vec v\\cdot\\vec r = r^2\\omega(-\\cos\\sin + \\sin\\cos) = 0 \\), so the velocity is perpendicular to the radius, i.e. tangent to the circle. Differentiating again: \\( \\vec a = -r\\omega^2\\cos(\\omega t)\\,\\hat\\imath - r\\omega^2\\sin(\\omega t)\\,\\hat\\jmath = -\\omega^2\\vec r \\), which is antiparallel to the position vector measured from the center, so it points toward the center, with magnitude \\( \\omega^2 r = (v/r)^2 r = v^2/r \\). The particle accelerates because acceleration is the rate of change of the velocity vector, and although \\( |\\vec v| \\) is constant, the direction of \\( \\vec v \\) rotates continuously.",
+     "why": "The result \\( \\vec a = -\\omega^2\\vec r \\) holds at every instant, not only at the starting point."
+    },
+    {
+     "id": "s2q3",
+     "kp": "k2",
+     "type": "mcq",
+     "prompt": "A stone is whirled at constant speed in a horizontal circle. At the instant shown it is moving north, and the center of the circle is to its west. What is the direction of its acceleration?",
+     "options": [
+      "There is no acceleration, because the speed is constant.",
+      "North, along the velocity.",
+      "West, toward the center.",
+      "East, away from the center."
+     ],
+     "answer": 2,
+     "why": "In uniform circular motion the acceleration is \\( v^2/r \\) toward the center: west. Option 1 confuses constant speed with constant velocity. Option 2 treats acceleration as parallel to velocity, true only for straight-line motion. Option 4 reflects the idea of a centrifugal effect; in an inertial frame nothing accelerates the stone outward."
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "Nonuniform circular motion",
+   "kps": [
+    "k3"
+   ],
+   "md": "When the speed along the circle changes, as for a car accelerating out of a bend or a ball swinging on a string, the acceleration acquires a second component. This section derives both components for arbitrary motion on a circle.\n\n**Derivation.** Let \\( \\theta(t) \\) be any twice-differentiable function, and write a dot for \\( d/dt \\). Define the unit vectors\n\\[ \\hat r = \\cos\\theta\\,\\hat\\imath + \\sin\\theta\\,\\hat\\jmath \\ \\ (\\text{outward along the radius}), \\qquad \\hat\\theta = -\\sin\\theta\\,\\hat\\imath + \\cos\\theta\\,\\hat\\jmath \\ \\ (\\text{tangent, toward increasing } \\theta). \\]\nThey depend on time through \\( \\theta \\); by the chain rule, \\( d\\hat r/dt = \\dot\\theta\\,\\hat\\theta \\) and \\( d\\hat\\theta/dt = -\\dot\\theta\\,\\hat r \\). With \\( \\vec r = r\\hat r \\) and \\( r \\) constant, differentiating twice gives\n\\[ \\vec v = r\\dot\\theta\\,\\hat\\theta, \\qquad \\vec a = r\\ddot\\theta\\,\\hat\\theta - r\\dot\\theta^{2}\\,\\hat r. \\]\nWrite \\( v = r\\dot\\theta \\) for the velocity component along \\( \\hat\\theta \\) (the speed, for counterclockwise motion), and note that \\( \\dot\\theta^{2} = \\omega^2 \\). The acceleration has two perpendicular parts:\n\\[ a_t = r\\ddot\\theta = \\frac{dv}{dt} \\ \\ (\\text{tangential}), \\qquad a_c = r\\omega^2 = \\frac{v^2}{r} \\ \\ (\\text{toward the center}). \\]\nThe **tangential acceleration** changes the speed; the centripetal part changes the direction. Because they are perpendicular, the magnitude of the acceleration is\n\\[ a = \\sqrt{a_t^2 + a_c^2}. \\]\nUniform circular motion is the special case \\( a_t = 0 \\). The same decomposition holds at any point of any smooth curved path, with \\( r \\) replaced by the **radius of curvature**, the radius of the circle that best fits the path there.\n\n**Worked example.** A car starts from rest on a circular track of radius 80.0 m and speeds up with constant tangential acceleration 2.00 m/s². Find its acceleration at \\( t = 5.00 \\) s.\n\n1. Speed: \\( v = a_t t = 10.0 \\) m/s.\n2. Centripetal component: \\( a_c = v^2/r = 100/80.0 = 1.25 \\) m/s².\n3. Magnitude: \\( a = \\sqrt{2.00^2 + 1.25^2} = 2.36 \\) m/s², directed \\( \\arctan(1.25/2.00) = 32.0^\\circ \\) from the velocity, toward the inside of the curve.\n\nThe tangential component stays fixed while the centripetal one grows as \\( t^2 \\). They are equal when \\( v^2 = r a_t = 160 \\) m²/s², at \\( v = 12.6 \\) m/s and \\( t = 6.32 \\) s. By the second law the net force on the car points the same way as its acceleration: partly forward and partly inward, not toward the center.\n\n**Common mistakes.** Using \\( v^2/r \\) as the whole acceleration when the speed is changing. Adding the components as numbers (\\( 2.00 + 1.25 \\)) instead of in quadrature. Believing that the acceleration in circular motion always points to the center; it does so only when the speed is constant.",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k3",
+     "type": "number",
+     "prompt": "A car travels around a curve of radius 60.0 m. At the instant its speed is 12.0 m/s, it is braking with a tangential deceleration of 3.00 m/s². Find the magnitude of its total acceleration, in m/s².",
+     "answer": "sqrt(3^2 + (12^2/60)^2)",
+     "why": "\\( a_c = v^2/r = 144/60.0 = 2.40 \\) m/s² (inward), \\( a_t = 3.00 \\) m/s² (backward along the path). Perpendicular, so \\( a = \\sqrt{3.00^2 + 2.40^2} = 3.84 \\) m/s².",
+     "tol": 0.005
+    },
+    {
+     "id": "s3q2",
+     "kp": "k3",
+     "type": "number",
+     "prompt": "A particle moves on a circle of radius 2.00 m with angular position \\( \\theta(t) = bt^2 \\), where \\( b = 0.500 \\) rad/s². Find the magnitude of its acceleration at \\( t = 2.00 \\) s, in m/s².",
+     "answer": "sqrt((2*0.5*2)^2 + (2*(2*0.5*2)^2)^2)",
+     "why": "\\( \\dot\\theta = 2bt = 2.00 \\) rad/s and \\( \\ddot\\theta = 2b = 1.00 \\) rad/s² at \\( t = 2.00 \\) s. \\( a_t = R\\ddot\\theta = 2.00 \\) m/s², \\( a_c = R\\dot\\theta^2 = 2.00(4.00) = 8.00 \\) m/s². \\( a = \\sqrt{2.00^2 + 8.00^2} = 8.25 \\) m/s². In general \\( a = 2bR\\sqrt{1 + 4b^2t^4} \\): the centripetal part grows as \\( t^2 \\) and soon dominates.",
+     "tol": 0.005
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "Forces in circular motion",
+   "kps": [
+    "k4",
+    "k5",
+    "k8"
+   ],
+   "md": "Kinematics says what acceleration a circular path requires; the second law says what net force it takes. This section states the radial form of the second law, applies it, and clears up the most persistent misconception in the subject. In this chapter tension is written \\( F_T \\), to keep \\( T \\) for the period.\n\n**The radial equation.** Resolve the forces into a component toward the center and a tangential component. The second law gives\n\\[ \\sum F_{\\text{in}} = m\\frac{v^2}{r}, \\qquad \\sum F_t = m\\frac{dv}{dt}. \\]\nIn uniform circular motion the tangential sum is zero and the net force points exactly toward the center, with magnitude \\( mv^2/r \\). The name **centripetal force** describes this role, not a new kind of force: the inward net force is supplied by forces already known, such as tension, gravity, a normal force or friction. On a free-body diagram you draw those forces, set their inward sum equal to \\( mv^2/r \\), and never add an extra arrow labeled \"centripetal force\".\n\n**No centrifugal force in an inertial frame.** A passenger in a car turning left feels pressed against the right-hand door, and it is tempting to say that an outward \"centrifugal force\" pushes her. In the ground frame no body exerts such a force. By the first law she tends to continue in a straight line; the car turns left beneath her until the door reaches her and pushes her inward, to the left, supplying her centripetal force. Similarly, if the string of a whirled stone breaks, the stone does not fly radially outward: with no horizontal force acting, it moves off along the tangent, in the direction of its velocity at that instant. In the rotating frame of the car one can introduce a fictitious outward force of magnitude \\( mv^2/r \\) to make Newton's laws appear to hold, but it has no agent and no third-law partner. All analysis in this course is done in inertial frames, where it does not appear.\n\n**Worked example (string on a table).** A 0.250 kg puck on a frictionless horizontal table is tied by a 0.800 m string to a peg and makes 2.00 revolutions per second. The vertical forces (weight and normal force) balance, and the only horizontal force is the tension, directed toward the peg:\n\\[ F_T = m\\omega^2 r = (0.250)(2\\pi \\times 2.00)^2(0.800) = 31.6\\ \\text{N}. \\]\nBecause \\( F_T \\propto \\omega^2 \\), doubling the rotation rate quadruples the tension.\n\n**Worked example (conical pendulum).** A 0.200 kg bob on a string of length \\( L = 1.00 \\) m moves in a horizontal circle, with the string at \\( \\beta = 30.0^\\circ \\) to the vertical. This arrangement is a **conical pendulum**. The circle has radius \\( r = L\\sin\\beta = 0.500 \\) m and its center is directly below the support, so the acceleration is horizontal. Forces: weight \\( mg \\) down and tension \\( F_T \\) along the string. With horizontal (toward the center) and vertical axes,\n\\[ \\text{vertical: } F_T\\cos\\beta = mg, \\qquad \\text{horizontal: } F_T\\sin\\beta = \\frac{mv^2}{r}. \\]\n\n1. Tension: \\( F_T = mg/\\cos\\beta = 1.96/0.866 = 2.26 \\) N.\n2. Dividing the equations, \\( \\tan\\beta = v^2/(rg) \\), so \\( v = \\sqrt{rg\\tan\\beta} = \\sqrt{(0.500)(9.80)(0.577)} = 1.68 \\) m/s.\n3. Period: writing \\( v = \\omega r \\) with \\( r = L\\sin\\beta \\), the horizontal equation becomes \\( F_T = m\\omega^2 L \\); combined with the vertical one, \\( \\omega^2 = g/(L\\cos\\beta) \\), so \\( T = 2\\pi\\sqrt{L\\cos\\beta/g} = 2\\pi\\sqrt{0.866/9.80} = 1.87 \\) s, independent of the mass.\n\n**Common mistakes.** Adding \"centripetal force\" as an extra force on the diagram. Drawing an outward centrifugal force in an inertial-frame analysis. Tilting the axes along the string in the conical pendulum: the acceleration is horizontal, so horizontal and vertical axes give one equation with zero acceleration.",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k4",
+     "type": "number",
+     "prompt": "A 0.300 kg puck on a frictionless horizontal table moves in a circle on a 0.600 m string at 1.50 revolutions per second. Find the tension in the string, in newtons.",
+     "answer": "0.3*(2*pi*1.5)^2*0.6",
+     "why": "\\( \\omega = 2\\pi(1.50) = 9.42 \\) rad/s. The tension is the only horizontal force: \\( F_T = m\\omega^2 r = 0.300(88.8)(0.600) = 16.0 \\) N.",
+     "tol": 0.005
+    },
+    {
+     "id": "s4q2",
+     "kp": "k5",
+     "type": "written",
+     "prompt": "A stone is whirled in a horizontal circle on a string, and the string breaks. (a) Describe the stone's path immediately afterward, as seen from above. (b) A classmate explains the event by saying 'the centrifugal force threw it outward'. Explain, from an inertial frame, what actually happened and why no outward force was involved.",
+     "rubric": [
+      "(a) It moves off along the tangent to the circle at the release point (then falls as a projectile), not radially outward",
+      "(b) Before the break the tension pulled the stone inward, supplying the centripetal force mv²/r",
+      "When the string breaks the inward force vanishes; with no horizontal force the stone keeps its velocity (first law), which was tangent",
+      "No body exerts an outward force; 'centrifugal force' is a fictitious force that appears only in the rotating frame"
+     ],
+     "model": "(a) Seen from above, the stone leaves along the tangent to the circle at the point where the string broke, moving in the direction of its velocity at that instant; it does not move radially outward. (It also begins to fall, as a projectile.) (b) While the string was intact, the only horizontal force on the stone was the tension, pointing inward and supplying the centripetal force \\( mv^2/r \\) that kept turning its velocity. When the string breaks, that inward force disappears. With no horizontal force, the first law says the stone's horizontal velocity stays constant, and that velocity was tangent to the circle. Nothing pushed the stone outward: no body exerts such a force, and it would have no third-law partner. The 'centrifugal force' arises only if one describes the motion from the rotating frame of the string, which is not inertial.",
+     "why": "The absence of an outward force is visible in the path: a radially outward escape would require a radial push."
+    },
+    {
+     "id": "s4q3",
+     "kp": "k8",
+     "type": "number",
+     "prompt": "A conical pendulum has a string 1.50 m long that makes \\( 25.0^\\circ \\) with the vertical. Using \\( g = 9.80 \\) m/s², find its period, in seconds.",
+     "answer": "2*pi*sqrt(1.5*cos(25*pi/180)/9.8)",
+     "why": "\\( T = 2\\pi\\sqrt{L\\cos\\beta/g} = 2\\pi\\sqrt{1.50(0.906)/9.80} = 2\\pi(0.372) = 2.34 \\) s.",
+     "tol": 0.005
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "Curves on the road: flat and banked",
+   "kps": [
+    "k6",
+    "k7"
+   ],
+   "md": "A car cannot turn unless something pushes it toward the center of the curve. On a level road that something is friction; on a banked road the normal force helps. This section finds the speeds each arrangement can handle.\n\n**Level curve.** A car of mass \\( m \\) rounds a level curve of radius \\( r \\) at constant speed \\( v \\). The forces are its weight, the normal force, and friction from the road. The tires roll without skidding, so the friction is static, and since the speed is constant it points toward the center, perpendicular to the velocity. Vertically, \\( N = mg \\); radially, \\( f_s = mv^2/r \\). The tires hold if \\( f_s \\le \\mu_s N \\):\n\\[ \\frac{mv^2}{r} \\le \\mu_s mg \\quad\\Longrightarrow\\quad v \\le v_{\\max} = \\sqrt{\\mu_s g r}. \\]\nThe mass cancels: a truck and a small car with equally good tires have the same limiting speed. With \\( r = 50.0 \\) m and \\( \\mu_s = 0.800 \\) (dry pavement), \\( v_{\\max} = \\sqrt{0.800 \\times 9.80 \\times 50.0} = 19.8 \\) m/s, about 71 km/h; on a wet road with \\( \\mu_s = 0.400 \\), 14.0 m/s. Halving \\( \\mu_s \\) lowers the safe speed by the factor \\( \\sqrt2 \\), not 2.\n\n**Banked curve without friction.** Tilting the roadway by an angle \\( \\theta \\) toward the center tilts the normal force inward, so that its horizontal component can supply the centripetal force. The car moves in a horizontal circle, so its acceleration \\( v^2/r \\) is horizontal. Choose horizontal (toward the center) and vertical axes, not axes along the road surface as on an inclined plane. With no friction,\n\\[ \\text{vertical: } N\\cos\\theta = mg, \\qquad \\text{horizontal: } N\\sin\\theta = \\frac{mv^2}{r}, \\]\nand dividing,\n\\[ \\tan\\theta = \\frac{v^2}{rg}. \\]\nThis is the **ideal banking angle** for speed \\( v \\): at that speed no friction is needed at all. For a curve of radius 120 m designed for 25.0 m/s, \\( \\tan\\theta = 625/(120 \\times 9.80) = 0.531 \\), so \\( \\theta = 28.0^\\circ \\). Note that \\( N = mg/\\cos\\theta = 1.13\\,mg \\): on a banked curve the normal force exceeds the weight, the reverse of the inclined plane, because here it must also provide the horizontal acceleration.\n\nIn the plot, the curve is the ideal banking angle (degrees) against speed (m/s). Drag the slider \\( k \\), the radius in meters, and watch how a tighter curve needs a steeper bank for the same speed.\n\n```plot\nx: 0, 40\ny: 0, 80\nxlabel: v (m/s)\nylabel: θ (degrees)\nslider: k, 20, 300, 120 | radius r (m)\nf: atan(x^2/(9.8*k))*180/pi | ideal banking angle\n```\n\n**Banked curve with friction.** Above the design speed, friction must act down the slope to add inward force; below it, friction acts up the slope to keep the car from sliding inward and down. With friction at its limit \\( \\mu_s N \\) directed down the slope, the equations become \\( N\\cos\\theta - \\mu_s N\\sin\\theta = mg \\) and \\( N\\sin\\theta + \\mu_s N\\cos\\theta = mv^2/r \\), and dividing,\n\\[ v_{\\max}^2 = rg\\,\\frac{\\sin\\theta + \\mu_s\\cos\\theta}{\\cos\\theta - \\mu_s\\sin\\theta}. \\]\nThe minimum speed follows by reversing the friction, which amounts to replacing \\( \\mu_s \\) by \\( -\\mu_s \\).\n\n**Common mistakes.** Treating the friction on a turning car as kinetic; tires that are not skidding are held by static friction. Resolving along the banked surface and setting the acceleration along it to zero: the acceleration is horizontal and nonzero. Writing \\( N = mg\\cos\\theta \\) on a banked curve by analogy with the incline.",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k6",
+     "type": "number",
+     "prompt": "What is the greatest speed, in m/s, at which a car can round a level curve of radius 80.0 m if \\( \\mu_s = 0.600 \\) between tires and road? Use \\( g = 9.80 \\) m/s².",
+     "answer": "sqrt(0.6*9.8*80)",
+     "why": "Static friction supplies the centripetal force: \\( mv^2/r \\le \\mu_s mg \\), so \\( v_{\\max} = \\sqrt{\\mu_s g r} = \\sqrt{0.600(9.80)(80.0)} = \\sqrt{470} = 21.7 \\) m/s.",
+     "tol": 0.005
+    },
+    {
+     "id": "s5q2",
+     "kp": "k7",
+     "type": "number",
+     "prompt": "Find the ideal banking angle, in degrees, for a curve of radius 200 m designed for 30.0 m/s. Use \\( g = 9.80 \\) m/s².",
+     "answer": "atan(30^2/(200*9.8))*180/pi",
+     "why": "\\( \\tan\\theta = v^2/(rg) = 900/1960 = 0.459 \\), so \\( \\theta = 24.7^\\circ \\).",
+     "tol": 0.005
+    },
+    {
+     "id": "s5q3",
+     "kp": "k7",
+     "type": "written",
+     "prompt": "For a car on a frictionless banked curve, a student resolves forces along and perpendicular to the road surface, as for a block on an inclined plane, sets the acceleration along the surface to zero, and concludes that \\( N = mg\\cos\\theta \\). Identify the error, give the correct analysis, and explain why the normal force on the banked curve exceeds the weight.",
+     "rubric": [
+      "The car's acceleration is v²/r horizontally toward the center, not zero along the surface; its component along the slope is not zero",
+      "Correct axes: horizontal (toward center) and vertical, since the acceleration is horizontal",
+      "N cos θ = mg and N sin θ = mv²/r, so N = mg/cos θ and tan θ = v²/(rg)",
+      "N > mg because its vertical component alone must balance the weight, while it also has a horizontal component"
+     ],
+     "model": "The student has copied the inclined-plane analysis, in which the body slides along the surface or rests. On the banked curve the car moves in a horizontal circle, so its acceleration is \\( v^2/r \\), horizontal and toward the center. This acceleration has a component along the banked surface (toward the inside, down the slope), so setting the along-surface acceleration to zero is wrong. The clean choice is horizontal and vertical axes, because then the vertical acceleration is zero: \\( N\\cos\\theta = mg \\) and \\( N\\sin\\theta = mv^2/r \\), giving \\( N = mg/\\cos\\theta \\) and \\( \\tan\\theta = v^2/(rg) \\). The normal force exceeds the weight because only its vertical component, \\( N\\cos\\theta \\), balances the weight, while it must also have a horizontal component to supply the centripetal force.",
+     "why": "Choose axes so that one of them lies along the acceleration; on a banked curve that direction is horizontal."
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "title": "Vertical circles",
+   "kps": [
+    "k9"
+   ],
+   "md": "Motion in a vertical circle, such as a ball whirled on a string, a car in a loop, or a car over the crest of a hill, adds gravity to the forces along the radius. At most points gravity also has a tangential component, so the speed changes and the motion is nonuniform. The radial equation of the previous section still holds at every instant, with the speed at that instant; this section applies it at the top and the bottom, where the forces are simplest. How the speed varies around the circle is most easily found with energy methods, developed in the following chapters; here the speeds are given.\n\n**A ball on a string.** At each point, take the direction toward the center as positive in \\( \\sum F_{\\text{in}} = mv^2/r \\).\n\n- At the bottom, the tension points up, toward the center, and the weight points away from it: \\( F_T - mg = mv^2/r \\), so \\( F_T = mg + mv^2/r \\). The string must hold up the ball and also supply the centripetal force, so the tension is greatest here, and this is where a string is most likely to break.\n- At the top, both forces point down, toward the center: \\( F_T + mg = mv^2/r \\), so \\( F_T = mv^2/r - mg \\).\n\nA string can only pull, so \\( F_T \\ge 0 \\) at the top requires\n\\[ v_{\\text{top}} \\ge \\sqrt{gr}. \\]\nAt exactly this speed gravity alone supplies the centripetal force. At a lower speed the weight would exceed the inward force that circular motion at that speed requires; the string goes slack before the top, and the ball leaves the circle on a projectile path. The same condition, with the track's normal force in place of the tension, gives the minimum speed at the top of a roller-coaster loop.\n\n**Worked example.** A 0.500 kg ball is whirled in a vertical circle on a 1.20 m string.\n\n1. At the top, moving at 4.00 m/s: \\( F_T = (0.500)(4.00)^2/1.20 - (0.500)(9.80) = 6.67 - 4.90 = 1.77 \\) N.\n2. Minimum speed at the top: \\( \\sqrt{(9.80)(1.20)} = 3.43 \\) m/s.\n3. At the bottom, moving at 7.00 m/s: \\( F_T = 4.90 + (0.500)(49.0)/1.20 = 4.90 + 20.4 = 25.3 \\) N, about five times the ball's weight.\n\n**Over the crest of a hill.** A car passing over a rounded crest of radius \\( r \\) moves on the outside of the circle, whose center is below it. The weight points toward the center and the normal force away from it:\n\\[ mg - N = \\frac{mv^2}{r} \\quad\\Longrightarrow\\quad N = m\\left(g - \\frac{v^2}{r}\\right). \\]\nThe road pushes up with less than the car's weight, so the occupants' apparent weight is reduced. At \\( v = \\sqrt{gr} \\), \\( N = 0 \\) and the car loses contact with the road; faster than that, it leaves the road. For a crest of radius 40.0 m the limit is 19.8 m/s, and at 15.0 m/s the apparent weight is \\( 1 - 225/392 = 0.426 \\) of the true weight.\n\n**Inside a loop.** At the top of a loop the rider is upside down, with the track's normal force and the weight both pointing down, toward the center: \\( N + mg = mv^2/r \\). The rider is pressed into the seat with \\( N = m(v^2/r - g) \\), which can exceed \\( mg \\) if \\( v^2 > 2gr \\).\n\n**Common mistakes.** Using a fixed \"up is positive\" convention and then writing \\( mv^2/r \\) with the wrong sign at the top; take the direction toward the center as positive at each point. Assuming the tension is the same all around the circle. Treating \\( \\sqrt{gr} \\) as a minimum speed at the bottom; it is the condition at the top.",
+   "questions": [
+    {
+     "id": "s6q1",
+     "kp": "k9",
+     "type": "number",
+     "prompt": "A roller coaster car goes around the inside of a vertical loop of radius 6.00 m. Using \\( g = 9.80 \\) m/s², what is the minimum speed at the top, in m/s, for the car to stay on the track without any restraint?",
+     "answer": "sqrt(9.8*6)",
+     "why": "At the top \\( N + mg = mv^2/r \\) with \\( N \\ge 0 \\), so \\( v \\ge \\sqrt{gr} = \\sqrt{58.8} = 7.67 \\) m/s.",
+     "tol": 0.005
+    },
+    {
+     "id": "s6q2",
+     "kp": "k9",
+     "type": "number",
+     "prompt": "A 0.400 kg ball swings in a vertical circle on a 0.900 m string and passes the lowest point at 5.00 m/s. Using \\( g = 9.80 \\) m/s², find the tension there, in newtons.",
+     "answer": "0.4*9.8 + 0.4*25/0.9",
+     "why": "At the bottom, toward the center (up) is positive: \\( F_T - mg = mv^2/r \\). \\( F_T = 3.92 + 0.400(25.0)/0.900 = 3.92 + 11.1 = 15.0 \\) N.",
+     "tol": 0.005
+    },
+    {
+     "id": "s6q3",
+     "kp": "k9",
+     "type": "written",
+     "prompt": "A car drives over the rounded crest of a hill of radius \\( r \\) at speed \\( v \\). Derive the normal force on the car at the top, explain why the passengers feel lighter, and find the speed at which the car leaves the road. Does the answer depend on the car's mass?",
+     "rubric": [
+      "Center of the circle is below; weight points toward it, normal force away from it",
+      "mg − N = mv²/r, so N = m(g − v²/r) < mg: apparent weight reduced",
+      "N = 0 at v = √(gr); above that speed the road cannot hold the car on the circle, so it leaves the road",
+      "Independent of mass (m cancels)"
+     ],
+     "model": "At the crest the car moves on a circle whose center is below it. The weight \\( mg \\) points down, toward the center; the normal force \\( N \\) points up, away from it. The radial equation, with 'toward the center' positive, is \\( mg - N = mv^2/r \\), so \\( N = m(g - v^2/r) \\). Since \\( N < mg \\), the seat pushes on the passengers with less than their weight (each passenger obeys the same equation), and they feel lighter. The road can only push, so \\( N \\ge 0 \\), which requires \\( v \\le \\sqrt{gr} \\). At \\( v = \\sqrt{gr} \\) gravity alone supplies the needed centripetal force and \\( N = 0 \\); at a greater speed even gravity is not enough to bend the path to radius \\( r \\), so the car leaves the road. The mass cancels, so the critical speed is the same for every car.",
+     "why": "This is the outside-of-the-circle counterpart of the top of a loop."
+    }
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "t": "angular position",
+   "d": "The angle θ locating a particle on a circle, measured from a reference axis; x = r cos θ, y = r sin θ."
+  },
+  {
+   "t": "radian",
+   "d": "The angle whose arc length equals the radius; a full turn is 2π rad, and s = rθ holds only in radians."
+  },
+  {
+   "t": "angular velocity",
+   "d": "ω = dθ/dt, in rad/s; for motion on a circle the speed is v = rω."
+  },
+  {
+   "t": "uniform circular motion",
+   "d": "Motion on a circle at constant speed; the velocity changes direction but not magnitude."
+  },
+  {
+   "t": "period",
+   "d": "The time T for one revolution; T = 2πr/v = 2π/ω."
+  },
+  {
+   "t": "frequency",
+   "d": "Revolutions per unit time, f = 1/T, in hertz; ω = 2πf."
+  },
+  {
+   "t": "centripetal acceleration",
+   "d": "The acceleration toward the center of the circle, of magnitude v²/r = ω²r, present whenever a path curves."
+  },
+  {
+   "t": "tangential acceleration",
+   "d": "The component of acceleration along the velocity, aₜ = dv/dt; it changes the speed."
+  },
+  {
+   "t": "radius of curvature",
+   "d": "The radius of the circle that best fits a curved path at a point; the centripetal acceleration there is v² divided by it."
+  },
+  {
+   "t": "centripetal force",
+   "d": "The name for the net inward force mv²/r in circular motion, supplied by real forces such as tension, gravity, normal force or friction; not a separate force."
+  },
+  {
+   "t": "centrifugal force",
+   "d": "A fictitious outward force introduced in a rotating (non-inertial) frame; it has no agent and does not appear in inertial-frame analysis."
+  },
+  {
+   "t": "conical pendulum",
+   "d": "A bob moving in a horizontal circle on a string that sweeps out a cone; tan β = v²/(rg), period 2π√(L cos β/g)."
+  },
+  {
+   "t": "ideal banking angle",
+   "d": "The bank angle at which a curve can be taken with no friction: tan θ = v²/(rg)."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "formula",
+   "front": "Speed, angular speed, period and frequency on a circle",
+   "back": "\\( v = r\\omega = \\dfrac{2\\pi r}{T},\\ \\omega = \\dfrac{2\\pi}{T} = 2\\pi f \\)",
+   "kp": "k1"
+  },
+  {
+   "id": "c2",
+   "type": "concept",
+   "front": "Why must angles be in radians in s = rθ and v = rω?",
+   "back": "The radian is defined so that arc length equals r times the angle; the formulas are false for degrees.",
+   "kp": "k1"
+  },
+  {
+   "id": "c3",
+   "type": "problem",
+   "front": "Angular speed of 3000 rpm, in rad/s",
+   "back": "\\( \\omega = 2\\pi(3000/60) = 314 \\) rad/s",
+   "kp": "k1",
+   "answer": "2*pi*50",
+   "check": "number"
+  },
+  {
+   "id": "c4",
+   "type": "formula",
+   "front": "Centripetal acceleration (three forms)",
+   "back": "\\( a_c = \\dfrac{v^2}{r} = \\omega^2 r = \\dfrac{4\\pi^2 r}{T^2} \\), toward the center",
+   "kp": "k2"
+  },
+  {
+   "id": "c5",
+   "type": "concept",
+   "front": "Can a body moving at constant speed be accelerating?",
+   "back": "Yes: acceleration is the rate of change of the velocity vector, and on a curve its direction changes.",
+   "kp": "k2"
+  },
+  {
+   "id": "c6",
+   "type": "formula",
+   "front": "Acceleration vector for uniform circular motion",
+   "back": "\\( \\vec a = -\\omega^2\\vec r \\)",
+   "kp": "k2"
+  },
+  {
+   "id": "c7",
+   "type": "formula",
+   "front": "Tangential and centripetal components (nonuniform motion)",
+   "back": "\\( a_t = \\dfrac{dv}{dt},\\ a_c = \\dfrac{v^2}{r},\\ a = \\sqrt{a_t^2 + a_c^2} \\)",
+   "kp": "k3"
+  },
+  {
+   "id": "c8",
+   "type": "concept",
+   "front": "When does the acceleration in circular motion point exactly to the center?",
+   "back": "Only when the speed is constant (aₜ = 0).",
+   "kp": "k3"
+  },
+  {
+   "id": "c9",
+   "type": "formula",
+   "front": "Second law along the radius",
+   "back": "\\( \\sum F_{\\text{in}} = mv^2/r \\)",
+   "kp": "k4"
+  },
+  {
+   "id": "c10",
+   "type": "concept",
+   "front": "Is centripetal force a separate force to draw on a free-body diagram?",
+   "back": "No. It is the net inward force, supplied by tension, gravity, normal force, friction, etc.",
+   "kp": "k4"
+  },
+  {
+   "id": "c11",
+   "type": "concept",
+   "front": "Path of a whirled stone when its string breaks (seen from above)",
+   "back": "Along the tangent at the release point, not radially outward.",
+   "kp": "k5"
+  },
+  {
+   "id": "c12",
+   "type": "concept",
+   "front": "What pushes a passenger in a left-turning car?",
+   "back": "The door (or seat) pushes her inward, to the left; no outward force acts in the ground frame.",
+   "kp": "k5"
+  },
+  {
+   "id": "c13",
+   "type": "formula",
+   "front": "Maximum speed on a level curve",
+   "back": "\\( v_{\\max} = \\sqrt{\\mu_s g r} \\)",
+   "kp": "k6"
+  },
+  {
+   "id": "c14",
+   "type": "formula",
+   "front": "Ideal banking angle",
+   "back": "\\( \\tan\\theta = \\dfrac{v^2}{rg} \\)",
+   "kp": "k7"
+  },
+  {
+   "id": "c15",
+   "type": "concept",
+   "front": "Which axes for a car on a banked curve, and why?",
+   "back": "Horizontal and vertical: the acceleration v²/r is horizontal, so the vertical equation has zero acceleration.",
+   "kp": "k7"
+  },
+  {
+   "id": "c16",
+   "type": "formula",
+   "front": "Conical pendulum: angle and period",
+   "back": "\\( \\tan\\beta = \\dfrac{v^2}{rg},\\ T = 2\\pi\\sqrt{\\dfrac{L\\cos\\beta}{g}} \\)",
+   "kp": "k8"
+  },
+  {
+   "id": "c17",
+   "type": "formula",
+   "front": "Tension at bottom and top of a vertical circle",
+   "back": "bottom: \\( F_T = mg + mv^2/r \\); top: \\( F_T = mv^2/r - mg \\)",
+   "kp": "k9"
+  },
+  {
+   "id": "c18",
+   "type": "problem",
+   "front": "Minimum speed at the top of a vertical circle of radius r",
+   "back": "\\( v = \\sqrt{gr} \\) (tension or normal force zero)",
+   "kp": "k9",
+   "answer": "sqrt(g*r)",
+   "vars": "g r",
+   "check": "expression"
+  },
+  {
+   "id": "c19",
+   "type": "formula",
+   "front": "Normal force at the crest of a hill of radius r",
+   "back": "\\( N = m(g - v^2/r) \\); contact lost at \\( v = \\sqrt{gr} \\)",
+   "kp": "k9"
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k1",
+   "type": "number",
+   "prompt": "Earth orbits the Sun on a nearly circular path of radius \\( 1.496\\times10^{11} \\) m once every 365.25 days. Find its orbital speed, in m/s.",
+   "answer": "2*pi*1.496e11/(365.25*86400)",
+   "why": "\\( T = 365.25 \\times 86\\,400 = 3.156\\times10^7 \\) s. \\( v = 2\\pi r/T = 2\\pi(1.496\\times10^{11})/(3.156\\times10^7) = 2.98\\times10^4 \\) m/s, about 30 km/s.",
+   "tol": 0.005
+  },
+  {
+   "id": "p2",
+   "kp": "k2",
+   "type": "number",
+   "prompt": "The Moon moves on a nearly circular orbit of radius \\( 3.84\\times10^8 \\) m with a period of 27.3 days. Find its centripetal acceleration, in m/s².",
+   "answer": "4*pi^2*3.84e8/(27.3*86400)^2",
+   "why": "\\( T = 27.3 \\times 86\\,400 = 2.359\\times10^6 \\) s. \\( a_c = 4\\pi^2 r/T^2 = 4\\pi^2(3.84\\times10^8)/(2.359\\times10^6)^2 = 2.72\\times10^{-3} \\) m/s², about \\( g/3600 \\). (Newton used this comparison in his theory of gravitation.)",
+   "tol": 0.005
+  },
+  {
+   "id": "p3",
+   "kp": "k2",
+   "type": "expression",
+   "prompt": "Express the centripetal acceleration of a particle in uniform circular motion in terms of the radius \\( r \\) and the period \\( T \\).",
+   "answer": "4*pi^2*r/T^2",
+   "vars": "r T",
+   "why": "\\( v = 2\\pi r/T \\), so \\( a_c = v^2/r = 4\\pi^2 r^2/(T^2 r) = 4\\pi^2 r/T^2 \\)."
+  },
+  {
+   "id": "p4",
+   "kp": "k3",
+   "type": "number",
+   "prompt": "A particle moves on a circle of radius 2.00 m with speed \\( v(t) = (3.00\\ \\text{m/s}^2)\\,t \\). Find the magnitude of its acceleration at \\( t = 1.00 \\) s, in m/s².",
+   "answer": "sqrt(3^2 + (3^2/2)^2)",
+   "why": "\\( a_t = dv/dt = 3.00 \\) m/s². At \\( t = 1.00 \\) s, \\( v = 3.00 \\) m/s and \\( a_c = 9.00/2.00 = 4.50 \\) m/s². \\( a = \\sqrt{9.00 + 20.25} = 5.41 \\) m/s².",
+   "tol": 0.005
+  },
+  {
+   "id": "p5",
+   "kp": "k5",
+   "type": "mcq",
+   "prompt": "A car turns left at constant speed, and a passenger is pressed against the right-hand door. Viewed from the ground, what horizontal force acts on the passenger?",
+   "options": [
+    "An outward (rightward) centrifugal force produced by the turn",
+    "An inward (leftward) push from the door",
+    "No horizontal force, since she is at rest relative to the car",
+    "A forward force from the car's engine, transmitted through the seat"
+   ],
+   "answer": 1,
+   "why": "She moves on a circle curving left, so she needs a net force to the left, toward the center; the door supplies it. Option 1 is the fictitious force of the rotating frame, with no agent. Option 3 applies the first law in the car's frame, which is not inertial. Option 4 is not the relevant force: at constant speed there is no net forward force, and the question concerns the sideways push."
+  },
+  {
+   "id": "p6",
+   "kp": "k6",
+   "type": "number",
+   "prompt": "A level curve must be taken at 25.0 m/s by cars whose tires have \\( \\mu_s = 0.500 \\) on the road. Using \\( g = 9.80 \\) m/s², what is the smallest safe radius, in meters?",
+   "answer": "25^2/(0.5*9.8)",
+   "why": "\\( v^2/r \\le \\mu_s g \\Rightarrow r \\ge v^2/(\\mu_s g) = 625/4.90 = 128 \\) m.",
+   "tol": 0.005
+  },
+  {
+   "id": "p7",
+   "kp": "k7",
+   "type": "number",
+   "prompt": "A frictionless curve of radius 150 m is banked at \\( 15.0^\\circ \\). Using \\( g = 9.80 \\) m/s², at what speed, in m/s, can a car take it with no friction?",
+   "answer": "sqrt(150*9.8*tan(15*pi/180))",
+   "why": "\\( \\tan\\theta = v^2/(rg) \\Rightarrow v = \\sqrt{rg\\tan\\theta} = \\sqrt{150(9.80)(0.268)} = \\sqrt{394} = 19.8 \\) m/s.",
+   "tol": 0.005
+  },
+  {
+   "id": "p8",
+   "kp": "k8",
+   "type": "number",
+   "prompt": "A 0.150 kg bob of a conical pendulum moves so that its string makes \\( 40.0^\\circ \\) with the vertical. Using \\( g = 9.80 \\) m/s², find the tension, in newtons.",
+   "answer": "0.15*9.8/cos(40*pi/180)",
+   "why": "The vertical acceleration is zero: \\( F_T\\cos 40.0^\\circ = mg \\Rightarrow F_T = 1.47/0.766 = 1.92 \\) N. The length of the string is not needed.",
+   "tol": 0.005
+  },
+  {
+   "id": "p9",
+   "kp": "k9",
+   "type": "number",
+   "prompt": "A 60.0 kg rider passes the top of a vertical loop of radius 10.0 m at 12.0 m/s, upside down. Using \\( g = 9.80 \\) m/s², find the normal force of the seat on the rider, in newtons.",
+   "answer": "60*12^2/10 - 60*9.8",
+   "why": "At the top both the weight and the normal force point down, toward the center: \\( N + mg = mv^2/r \\). \\( N = 60.0(14.4) - 588 = 864 - 588 = 276 \\) N.",
+   "tol": 0.005
+  },
+  {
+   "id": "p10",
+   "kp": "k4",
+   "type": "written",
+   "prompt": "A bucket of water is swung in a vertical circle of radius \\( r \\), and the water stays in even when the bucket is upside down at the top. Explain, with a free-body diagram of the water at the top, why it does not fall out, and find the minimum speed for this to work.",
+   "rubric": [
+    "Forces on the water at the top: its weight and the push of the bucket bottom, both downward (toward the center)",
+    "Radial equation: N + mg = mv²/r",
+    "The water accelerates downward at v²/r; it stays on the circle if v²/r ≥ g, the bucket supplying the difference by pushing (N ≥ 0)",
+    "Minimum speed at the top √(gr); below it N would have to be negative (the bucket would need to pull), so the water leaves the circle"
+   ],
+   "model": "At the top, the water is acted on by its weight \\( mg \\), downward, and by the normal force \\( N \\) of the bucket's bottom. The bottom is on the outside of the circle, above the water, so it pushes the water downward, toward the center. The radial equation is \\( N + mg = mv^2/r \\). The water does accelerate downward, at \\( v^2/r \\); it stays in the bucket because at a sufficient speed the circular path requires a downward acceleration at least as large as \\( g \\), and the bucket supplies the difference by pushing down. The bucket can only push, so \\( N \\ge 0 \\), which requires \\( v^2/r \\ge g \\), i.e. \\( v \\ge \\sqrt{gr} \\). At a lower speed the path needs less downward acceleration than gravity alone produces; the water falls away from the bottom faster than the bucket's path curves, and it spills.",
+   "why": "The same inequality governs a roller coaster at the top of a loop and a ball on a string."
+  },
+  {
+   "id": "p11",
+   "kp": "k9",
+   "type": "number",
+   "prompt": "A 1200 kg car passes over the crest of a hill of radius 30.0 m at 12.0 m/s. Using \\( g = 9.80 \\) m/s², find the normal force of the road on the car, in newtons.",
+   "answer": "1200*(9.8 - 12^2/30)",
+   "why": "The center is below: \\( mg - N = mv^2/r \\). \\( N = 1200(9.80 - 4.80) = 6.00\\times10^3 \\) N, about 51% of the weight.",
+   "tol": 0.005
+  },
+  {
+   "id": "p12",
+   "kp": "k3",
+   "type": "written",
+   "prompt": "A pendulum bob swings through the bottom of its arc and rises toward one end. Describe the direction of its acceleration (a) at the lowest point and (b) at the highest point of the swing, where it is momentarily at rest. Justify each answer with the tangential and centripetal components.",
+   "rubric": [
+    "(a) At the lowest point the tangential component of gravity is zero, so aₜ = 0; the acceleration is v²/r, straight up toward the pivot",
+    "(b) At the end point v = 0, so the centripetal component v²/r is zero",
+    "(b) The tangential component g sin θ (θ from vertical) is nonzero, so the acceleration is tangent to the arc, directed back toward the lowest point",
+    "The acceleration points toward the center only where aₜ = 0"
+   ],
+   "model": "(a) At the lowest point the string is vertical, the weight and tension are both vertical, and neither has a component along the path, so \\( a_t = 0 \\). The speed is greatest there and \\( a_c = v^2/r \\ne 0 \\): the acceleration points straight up, toward the pivot. (b) At the turning point the bob is momentarily at rest, so \\( a_c = v^2/r = 0 \\). The weight has a component \\( mg\\sin\\theta \\) along the path (with \\( \\theta \\) the string's angle from the vertical), so \\( a_t = g\\sin\\theta \\), directed along the arc back toward the lowest point. The acceleration is therefore tangent to the circle, perpendicular to the string. In between, both components are present and the acceleration points neither to the center nor along the path.",
+   "why": "Only in uniform circular motion does the acceleration point at the center; a pendulum is nonuniform circular motion."
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k7",
+   "type": "number",
+   "prompt": "A curve of radius 100 m is banked at \\( 20.0^\\circ \\), and \\( \\mu_s = 0.300 \\) between tires and road. Using \\( g = 9.80 \\) m/s², find the greatest speed, in m/s, at which a car can take the curve without sliding.",
+   "answer": "sqrt(100*9.8*(sin(20*pi/180) + 0.3*cos(20*pi/180))/(cos(20*pi/180) - 0.3*sin(20*pi/180)))",
+   "why": "At the maximum speed friction acts down the slope at its limit. Vertical: \\( N\\cos\\theta - \\mu_s N\\sin\\theta = mg \\). Horizontal: \\( N\\sin\\theta + \\mu_s N\\cos\\theta = mv^2/r \\). Dividing: \\( v^2 = rg\\dfrac{\\sin\\theta + \\mu_s\\cos\\theta}{\\cos\\theta - \\mu_s\\sin\\theta} = 980\\dfrac{0.342 + 0.282}{0.940 - 0.103} = 730 \\) m²/s², so \\( v = 27.0 \\) m/s (the frictionless design speed would be 18.9 m/s).",
+   "tol": 0.005
+  },
+  {
+   "id": "e2",
+   "kp": "k3",
+   "type": "written",
+   "prompt": "A particle moves on a circle of radius \\( r \\) with angular position \\( \\theta(t) \\), not necessarily at constant rate. Using the unit vectors \\( \\hat r = \\cos\\theta\\,\\hat\\imath + \\sin\\theta\\,\\hat\\jmath \\) and \\( \\hat\\theta = -\\sin\\theta\\,\\hat\\imath + \\cos\\theta\\,\\hat\\jmath \\), derive the velocity and acceleration vectors, identify the tangential and centripetal components, and show that the uniform-motion result is a special case.",
+   "rubric": [
+    "dr̂/dt = θ̇ θ̂ and dθ̂/dt = −θ̇ r̂ (chain rule)",
+    "v = r θ̇ θ̂ (tangent, speed r|θ̇|)",
+    "a = r θ̈ θ̂ − r θ̇² r̂: tangential r θ̈ = dv/dt, centripetal r θ̇² = v²/r toward the center",
+    "Uniform motion: θ̈ = 0, so a = −rω² r̂, magnitude v²/r toward the center"
+   ],
+   "model": "Differentiate the unit vectors with the chain rule: \\( \\dfrac{d\\hat r}{dt} = (-\\sin\\theta\\,\\hat\\imath + \\cos\\theta\\,\\hat\\jmath)\\dot\\theta = \\dot\\theta\\,\\hat\\theta \\) and \\( \\dfrac{d\\hat\\theta}{dt} = (-\\cos\\theta\\,\\hat\\imath - \\sin\\theta\\,\\hat\\jmath)\\dot\\theta = -\\dot\\theta\\,\\hat r \\). With \\( \\vec r = r\\hat r \\) and \\( r \\) constant, \\( \\vec v = r\\dot\\theta\\,\\hat\\theta \\): tangent to the circle, with speed \\( r|\\dot\\theta| \\). Differentiating again, \\( \\vec a = r\\ddot\\theta\\,\\hat\\theta + r\\dot\\theta\\,\\dfrac{d\\hat\\theta}{dt} = r\\ddot\\theta\\,\\hat\\theta - r\\dot\\theta^2\\,\\hat r \\). The component \\( r\\ddot\\theta \\) along \\( \\hat\\theta \\) is the tangential acceleration, equal to \\( dv/dt \\) for \\( v = r\\dot\\theta \\); the component \\( -r\\dot\\theta^2 \\) along \\( \\hat r \\) points toward the center with magnitude \\( r\\dot\\theta^2 = v^2/r \\). For uniform motion \\( \\dot\\theta = \\omega \\) is constant, \\( \\ddot\\theta = 0 \\), and \\( \\vec a = -r\\omega^2\\hat r = -\\omega^2\\vec r \\), the centripetal acceleration \\( v^2/r \\) toward the center.",
+   "why": "The two terms separate the two ways a velocity can change: in magnitude (tangential) and in direction (centripetal)."
+  },
+  {
+   "id": "e3",
+   "kp": "k8",
+   "type": "number",
+   "prompt": "A conical pendulum has a string 1.20 m long making \\( 35.0^\\circ \\) with the vertical. Using \\( g = 9.80 \\) m/s², find the bob's speed, in m/s.",
+   "answer": "sqrt(9.8*1.2*sin(35*pi/180)*tan(35*pi/180))",
+   "why": "\\( r = L\\sin\\beta = 1.20(0.574) = 0.688 \\) m. From \\( \\tan\\beta = v^2/(rg) \\): \\( v = \\sqrt{rg\\tan\\beta} = \\sqrt{0.688(9.80)(0.700)} = \\sqrt{4.72} = 2.17 \\) m/s.",
+   "tol": 0.005
+  },
+  {
+   "id": "e4",
+   "kp": "k9",
+   "type": "number",
+   "prompt": "A 0.600 kg ball is whirled in a vertical circle on a 1.00 m string and passes the top at 4.50 m/s. Using \\( g = 9.80 \\) m/s², find the tension at the top, in newtons.",
+   "answer": "0.6*4.5^2/1 - 0.6*9.8",
+   "why": "At the top, tension and weight both point toward the center: \\( F_T + mg = mv^2/r \\). \\( F_T = 0.600(20.25)/1.00 - 5.88 = 12.15 - 5.88 = 6.27 \\) N.",
+   "tol": 0.005
+  },
+  {
+   "id": "e5",
+   "kp": "k4",
+   "type": "written",
+   "prompt": "A student's free-body diagram for a car rounding a level curve at constant speed shows: the weight, the normal force, static friction toward the center, a 'centripetal force' toward the center, and a 'centrifugal force' outward, with the last two equal and opposite. Critique the diagram, give the correct one, and derive the maximum speed in terms of \\( \\mu_s \\), \\( g \\) and \\( r \\).",
+   "rubric": [
+    "'Centripetal force' is not an additional force: it is the net inward force, here supplied entirely by static friction",
+    "'Centrifugal force' does not exist in the (inertial) ground frame; no body exerts it",
+    "Drawing the two as a balancing pair wrongly suggests equilibrium; the car accelerates toward the center, so the net force is nonzero and inward (friction)",
+    "Correct: mg down, N up, fₛ inward; N = mg, fₛ = mv²/r ≤ μₛmg, v_max = √(μₛgr)"
+   ],
+   "model": "Two arrows are wrong. The 'centripetal force' is not a separate force but the name for the net inward force; here the only horizontal force is static friction from the road, and it is the centripetal force. The 'centrifugal force' has no agent in the ground frame, which is inertial, and must not be drawn. Drawn equal and opposite, the two invented arrows cancel and add nothing to the sum, but they suggest a balance of forces, as if the car were in equilibrium. It is not: it accelerates toward the center, so the net force must be nonzero and inward. Correct diagram: weight \\( mg \\) down, normal force \\( N \\) up, static friction \\( f_s \\) horizontal, toward the center. Vertical: \\( N = mg \\). Radial: \\( f_s = mv^2/r \\). The tires hold while \\( f_s \\le \\mu_s N \\), so \\( mv^2/r \\le \\mu_s mg \\), and \\( v_{\\max} = \\sqrt{\\mu_s g r} \\), independent of the car's mass.",
+   "why": "Every arrow on a free-body diagram needs an agent; centripetal and centrifugal 'forces' have none of their own."
+  },
+  {
+   "id": "e6",
+   "kp": "k6",
+   "type": "number",
+   "prompt": "In an amusement-park rotor, riders stand against the inner wall of a vertical cylinder of radius 2.50 m, which spins with a period of 2.00 s; then the floor drops away. Using \\( g = 9.80 \\) m/s², find the minimum coefficient of static friction between rider and wall that keeps the riders from sliding down.",
+   "answer": "9.8*2^2/(4*pi^2*2.5)",
+   "why": "The wall's normal force points inward and is the centripetal force: \\( N = m\\omega^2 r = m(4\\pi^2 r/T^2) \\). Static friction, upward, must balance the weight: \\( mg \\le \\mu_s N \\). So \\( \\mu_s \\ge \\dfrac{gT^2}{4\\pi^2 r} = \\dfrac{9.80(4.00)}{4\\pi^2(2.50)} = 0.397 \\), independent of the rider's mass.",
+   "tol": 0.005
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "Circle kinematics",
+    "formula": "\\( v = r\\omega = 2\\pi r/T,\\ \\omega = 2\\pi f \\)",
+    "when": "Converting between rpm, period, angular speed and speed.",
+    "example": "3000 rpm, 0.100 m: \\( \\omega = 314 \\) rad/s, \\( v = 31.4 \\) m/s",
+    "watch": "Radians only; rpm ÷ 60 = Hz."
+   },
+   {
+    "name": "Centripetal acceleration",
+    "formula": "\\( a_c = v^2/r = \\omega^2 r = 4\\pi^2 r/T^2 \\)",
+    "when": "Any motion on a circle or curve.",
+    "example": "15.0 m/s on a 50.0 m curve: 4.50 m/s²",
+    "watch": "Toward the center, not along v."
+   },
+   {
+    "name": "Nonuniform motion",
+    "formula": "\\( a = \\sqrt{a_t^2 + a_c^2},\\ a_t = dv/dt \\)",
+    "when": "Speed changing along the circle.",
+    "example": "80.0 m track, \\( a_t = 2.00 \\), \\( v = 10.0 \\): 2.36 m/s²",
+    "watch": "Add in quadrature."
+   },
+   {
+    "name": "Radial second law",
+    "formula": "\\( \\sum F_{\\text{in}} = mv^2/r \\)",
+    "when": "Finding the force that keeps a body on a circle.",
+    "example": "puck, 0.250 kg, 0.800 m, 2.00 rev/s: 31.6 N",
+    "watch": "Never draw 'centripetal force' as an extra arrow."
+   },
+   {
+    "name": "Level curve",
+    "formula": "\\( v_{\\max} = \\sqrt{\\mu_s g r} \\)",
+    "when": "Car on an unbanked curve.",
+    "example": "\\( \\mu_s = 0.800 \\), 50.0 m: 19.8 m/s",
+    "watch": "Static friction, directed inward."
+   },
+   {
+    "name": "Banked curve",
+    "formula": "\\( \\tan\\theta = v^2/(rg) \\); \\( N = mg/\\cos\\theta \\)",
+    "when": "Curve banked at angle θ.",
+    "example": "120 m, 25.0 m/s: 28.0°",
+    "watch": "Horizontal and vertical axes."
+   },
+   {
+    "name": "Conical pendulum",
+    "formula": "\\( F_T = mg/\\cos\\beta,\\ T = 2\\pi\\sqrt{L\\cos\\beta/g} \\)",
+    "when": "Bob in a horizontal circle on a string.",
+    "example": "1.00 m at 30.0°: 1.87 s",
+    "watch": "Radius is L sin β."
+   },
+   {
+    "name": "Vertical circle",
+    "formula": "top: \\( F_T + mg = mv^2/r \\); bottom: \\( F_T - mg = mv^2/r \\)",
+    "when": "Ball on string, loop, hill crest.",
+    "example": "1.20 m string: \\( v_{\\text{top,min}} = 3.43 \\) m/s",
+    "watch": "Toward the center is positive at each point."
+   }
+  ],
+  "stuck": [
+   "Locate the center of the circle the body is actually moving on; the acceleration v²/r points there.",
+   "Choose one axis toward that center; on banked curves and conical pendulums it is horizontal.",
+   "List the real forces (weight, normal, tension, friction) and ask which of them have inward components.",
+   "If the speed changes, add a tangential equation ΣFₜ = m dv/dt; the net force is then not central.",
+   "For vertical circles, check the top: a string or track can only pull or push, so tension or normal force must be ≥ 0."
+  ]
+ }
+}

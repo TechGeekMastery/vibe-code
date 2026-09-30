@@ -1,0 +1,762 @@
+{
+ "key": "mth-2-8",
+ "title": "Power series and radius of convergence",
+ "v": 1,
+ "scope": "Power series centred at a point: the convergence theorem, radius and interval of convergence (with endpoint tests), representing functions by manipulating geometric series, term-by-term differentiation and integration, and using power series to sum numerical series and approximate integrals; Taylor and Maclaurin series of general functions are left to the next topic.",
+ "sources": [
+  {
+   "title": "OpenStax, Calculus Volume 2, Section 6.1: Power Series and Functions",
+   "url": "https://openstax.org/books/calculus-volume-2/pages/6-1-power-series-and-functions"
+  },
+  {
+   "title": "OpenStax, Calculus Volume 2, Section 6.2: Properties of Power Series",
+   "url": "https://openstax.org/books/calculus-volume-2/pages/6-2-properties-of-power-series"
+  },
+  {
+   "title": "Paul's Online Math Notes, Calculus II: Power Series",
+   "url": "https://tutorial.math.lamar.edu/Classes/CalcII/PowerSeries.aspx"
+  }
+ ],
+ "pre": [
+  "mth-2-7",
+  "mth-2-6"
+ ],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Power series as functions",
+   "d": "Read a power series as a function of x with a centre and coefficients, defined exactly where the series converges.",
+   "type": "concept"
+  },
+  {
+   "id": "k2",
+   "t": "Convergence theorem for power series",
+   "d": "State the three possible convergence behaviours and derive them from the lemma that convergence at one point gives absolute convergence closer to the centre.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k3",
+   "t": "Radius by the ratio test",
+   "d": "Compute the radius of convergence with the ratio test, including the cases R = 0 and R = infinity.",
+   "type": "procedure"
+  },
+  {
+   "id": "k4",
+   "t": "Radius in awkward forms",
+   "d": "Handle a coefficient on x, missing powers, and nth-power terms (root test) when computing the radius.",
+   "type": "skill"
+  },
+  {
+   "id": "k5",
+   "t": "Endpoints and the interval of convergence",
+   "d": "Test both endpoints with suitable numerical tests and state the interval of convergence.",
+   "type": "procedure"
+  },
+  {
+   "id": "k6",
+   "t": "Functions from the geometric series",
+   "d": "Represent rational functions as power series by substitution, factoring, multiplication by powers of x, recentring and partial fractions, with the interval of validity.",
+   "type": "procedure"
+  },
+  {
+   "id": "k7",
+   "t": "Term-by-term differentiation",
+   "d": "Differentiate power series term by term, shift indices correctly, and derive closed forms such as the sum of n x^n.",
+   "type": "procedure"
+  },
+  {
+   "id": "k8",
+   "t": "Term-by-term integration",
+   "d": "Integrate power series term by term, fix the constant at the centre, and derive the series for ln(1+x) and arctan x.",
+   "type": "procedure"
+  },
+  {
+   "id": "k9",
+   "t": "Endpoint behaviour under calculus operations",
+   "d": "Explain why differentiation and integration keep the radius but can change the endpoints.",
+   "type": "distinction"
+  },
+  {
+   "id": "k10",
+   "t": "Evaluating sums and integrals with series",
+   "d": "Use known power series to find exact sums of numerical series and to approximate integrals with an error bound.",
+   "type": "skill"
+  }
+ ],
+ "intro": "The series of the previous chapter had fixed numbers as terms. Replacing the numbers by multiples of powers of a variable, \\(c_0 + c_1x + c_2x^2 + \\cdots\\), produces a series whose value depends on \\(x\\): a function defined by an infinite polynomial. Such representations matter because polynomials are the functions calculus handles best: they are evaluated with arithmetic alone and differentiated and integrated term by term. If a function such as \\(\\ln(1+x)\\) or \\(\\arctan x\\) can be written as an infinite polynomial, its values can be approximated to any required accuracy, and integrals that resist the usual techniques can be computed.\n\nThree questions organise the chapter. For which \\(x\\) does a given power series converge? Which functions can be written as power series, at least on part of their domain? And does an infinite polynomial obey the rules for differentiating and integrating a finite one? The answers are: on an interval about the centre of the series, whose radius the ratio test finds; many, starting from the geometric series; and yes, inside that interval.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "Power series and the shape of their convergence sets",
+   "kps": [
+    "k1",
+    "k2"
+   ],
+   "md": "This section defines power series and answers the first question about them: for which values of the variable does such a series converge? The answer, that the set of convergence is always an interval centred at one point, is what makes power series usable as functions.\n\n> **Definition.** A **power series centred at \\(a\\)** is a series of the form\n> \\[ \\sum_{n=0}^{\\infty} c_n (x-a)^n = c_0 + c_1(x-a) + c_2(x-a)^2 + \\cdots, \\]\n> where \\(x\\) is a variable and the constants \\(c_n\\) are the **coefficients**. The number \\(a\\) is the **centre**. By convention \\((x-a)^0 = 1\\), even when \\(x = a\\).\n\nFor each fixed value of \\(x\\), a power series is an ordinary series of numbers, and the tests of the previous chapter decide whether it converges. Where it converges it defines a function \\(f(x) = \\sum c_n (x-a)^n\\), whose domain is the set of those \\(x\\).\n\nThe model example is the geometric series \\(\\sum_{n=0}^{\\infty} x^n\\), a power series centred at 0 with every coefficient equal to 1. It converges exactly when \\(|x| < 1\\), and then \\(\\sum x^n = \\frac{1}{1-x}\\). The series and the function agree only on \\((-1, 1)\\): at \\(x = 2\\) the function has the value \\(-1\\), but the series \\(1 + 2 + 4 + \\cdots\\) diverges.\n\nAt \\(x = a\\) every term except \\(c_0\\) is zero, so **every power series converges at its centre**, with sum \\(c_0\\). The key fact about the other points is the following.\n\n> **Lemma.** If \\(\\sum c_n (x-a)^n\\) converges at some \\(x_0 \\ne a\\), then it converges absolutely at every \\(x\\) with \\(|x - a| < |x_0 - a|\\).\n\n*Proof.* Because \\(\\sum c_n(x_0 - a)^n\\) converges, its terms tend to 0, so they are bounded: \\(|c_n (x_0-a)^n| \\le M\\) for all \\(n\\). For \\(|x - a| < |x_0 - a|\\), put \\(\\rho = \\frac{|x-a|}{|x_0-a|} < 1\\). Then\n\\[ |c_n (x-a)^n| = |c_n (x_0-a)^n|\\,\\rho^n \\le M\\rho^n, \\]\nand \\(\\sum M\\rho^n\\) is a convergent geometric series. By direct comparison, \\(\\sum |c_n(x-a)^n|\\) converges.\n\nTaking the contrapositive: if the series diverges at \\(x_1\\), it diverges at every \\(x\\) farther from the centre than \\(x_1\\). So the set of convergence has no gaps, and it is symmetric about \\(a\\) except possibly at its two ends.\n\n> **Theorem (convergence of a power series).** For a power series \\(\\sum c_n(x-a)^n\\), exactly one of the following holds.\n> (1) It converges only at \\(x = a\\).\n> (2) It converges (absolutely) for every real \\(x\\).\n> (3) There is a number \\(R > 0\\) such that it converges absolutely when \\(|x - a| < R\\) and diverges when \\(|x - a| > R\\).\n\nThe number \\(R\\) in case 3 is the **radius of convergence**; one writes \\(R = 0\\) in case 1 and \\(R = \\infty\\) in case 2. The set of all \\(x\\) at which the series converges is the **interval of convergence**. In case 3 it is one of \\((a-R, a+R)\\), \\([a-R, a+R)\\), \\((a-R, a+R]\\), \\([a-R, a+R]\\): the theorem says nothing about the two points with \\(|x - a| = R\\), and each must be tested separately. That the boundary \\(R\\) exists at all is a consequence of the completeness of the real numbers, the same property behind the monotone convergence theorem: \\(R\\) is the least upper bound of the distances \\(|x - a|\\) at which the series converges.\n\n**Worked example.** Suppose \\(\\sum c_n x^n\\) converges at \\(x = -4\\) and diverges at \\(x = 6\\). By the lemma it converges absolutely whenever \\(|x| < 4\\); by its contrapositive it diverges whenever \\(|x| > 6\\). Hence \\(4 \\le R \\le 6\\). At \\(x = 3\\) the series converges; at \\(x = 7\\) or \\(x = -6.5\\) it diverges; at \\(x = 5\\) or \\(x = -5\\) no conclusion is possible from this information.\n\n**Common mistakes.** Treating a power series as equal to the function it came from everywhere the function is defined, as with \\(\\frac{1}{1-x}\\) at \\(x = 2\\). And assuming the interval of convergence is symmetric including its ends: convergence at \\(a + R\\) says nothing about \\(a - R\\).",
+   "questions": [
+    {
+     "id": "s1q1",
+     "kp": "k2",
+     "type": "written",
+     "prompt": "A power series \\(\\sum c_n x^n\\) converges at \\(x = -4\\) and diverges at \\(x = 6\\). For each of \\(x = 3\\), \\(x = -5\\), \\(x = 7\\) and \\(x = -6.5\\), state whether the series converges, diverges, or cannot be decided from this information, and justify each answer. What can you say about the radius \\(R\\)?",
+     "rubric": [
+      "Uses convergence at \\(-4\\) and the lemma: absolute convergence for \\(|x| < 4\\), so it converges at \\(x = 3\\).",
+      "Uses divergence at 6 and the contrapositive: divergence for \\(|x| > 6\\), so it diverges at \\(x = 7\\) and \\(x = -6.5\\).",
+      "States that \\(x = -5\\) (with \\(4 \\le |x| \\le 6\\)) cannot be decided.",
+      "Concludes \\(4 \\le R \\le 6\\)."
+     ],
+     "model": "Convergence at \\(x_0 = -4\\) implies absolute convergence for every \\(x\\) with \\(|x| < 4\\); since \\(|3| < 4\\), the series converges at 3. Divergence at \\(x_1 = 6\\) implies divergence for every \\(x\\) with \\(|x| > 6\\) (otherwise convergence there would force convergence at 6); since \\(|7| > 6\\) and \\(|-6.5| > 6\\), it diverges at both. For \\(x = -5\\) we have \\(4 < 5 < 6\\), which lies in the undetermined range, so no conclusion is possible. The radius satisfies \\(4 \\le R \\le 6\\): \\(R \\ge 4\\) because the series converges on \\(|x| < 4\\), and \\(R \\le 6\\) because it diverges at distance 6.",
+     "why": "Everything follows from the lemma: convergence at a point spreads inward, divergence at a point spreads outward. The band between the two distances is undetermined."
+    },
+    {
+     "id": "s1q2",
+     "kp": "k1",
+     "type": "number",
+     "prompt": "Let \\(f(x) = \\sum_{n=0}^{\\infty} \\left(\\frac{x-1}{3}\\right)^n\\). Identify the centre of this power series and compute \\(f(2)\\).",
+     "answer": "3/2",
+     "why": "The centre is \\(a = 1\\), and the series is geometric with ratio \\(\\frac{x-1}{3}\\). At \\(x = 2\\) the ratio is \\(\\frac13\\), with \\(\\left|\\frac13\\right| < 1\\), so \\(f(2) = \\frac{1}{1 - 1/3} = \\frac32\\)."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "Finding the radius of convergence",
+   "kps": [
+    "k3",
+    "k4"
+   ],
+   "md": "The theorem of the previous section guarantees a radius of convergence but does not say how to find it. Because the terms of most power series involve factorials, powers or rational expressions in \\(n\\), the ratio test is the standard tool, and occasionally the root test.\n\n**Procedure.** Fix \\(x \\ne a\\) and apply the ratio test to the terms \\(u_n = c_n(x-a)^n\\):\n\\[ L(x) = \\lim_{n\\to\\infty}\\left|\\frac{u_{n+1}}{u_n}\\right|, \\]\nwhich equals \\(|x - a|\\lim_{n\\to\\infty}\\left|\\frac{c_{n+1}}{c_n}\\right|\\) when the coefficients are nonzero. The series converges absolutely where \\(L(x) < 1\\) and diverges where \\(L(x) > 1\\). Solve \\(L(x) < 1\\) in the form \\(|x - a| < R\\), and read off \\(R\\).\n\n**Worked example 1.** \\(\\sum_{n=1}^{\\infty} \\frac{(x+3)^n}{n\\,4^n}\\). The centre is \\(-3\\). The ratio is\n\\[ \\left|\\frac{(x+3)^{n+1}}{(n+1)4^{n+1}}\\cdot\\frac{n\\,4^n}{(x+3)^n}\\right| = \\frac{|x+3|}{4}\\cdot\\frac{n}{n+1} \\to \\frac{|x+3|}{4}. \\]\nThe series converges absolutely when \\(|x + 3| < 4\\) and diverges when \\(|x+3| > 4\\), so \\(R = 4\\).\n\n**Worked example 2 (\\(R = \\infty\\)).** \\(\\sum_{n=0}^{\\infty} \\frac{x^n}{n!}\\). For \\(x \\ne 0\\), \\(\\left|\\frac{x^{n+1}}{(n+1)!}\\cdot\\frac{n!}{x^n}\\right| = \\frac{|x|}{n+1} \\to 0 < 1\\). The series converges for every \\(x\\). As a by-product, the divergence test in contrapositive form gives \\(\\frac{x^n}{n!} \\to 0\\) for every real \\(x\\).\n\n**Worked example 3 (\\(R = 0\\)).** \\(\\sum_{n=0}^{\\infty} n!\\,x^n\\). For \\(x \\ne 0\\), the ratio is \\((n+1)|x| \\to \\infty\\). The series diverges for every \\(x \\ne 0\\) and converges only at its centre.\n\n**Worked example 4 (a coefficient on \\(x\\)).** \\(\\sum_{n=1}^{\\infty} \\frac{(2x - 5)^n}{n^2}\\). The ratio test gives \\(L = |2x - 5|\\), so the condition is \\(|2x - 5| < 1\\). This is not yet in the form \\(|x - a| < R\\). Factor out the 2: \\(2\\left|x - \\frac52\\right| < 1\\), that is, \\(\\left|x - \\frac52\\right| < \\frac12\\). The centre is \\(\\frac52\\) and \\(R = \\frac12\\), not 1.\n\n**Worked example 5 (missing powers).** \\(\\sum_{n=0}^{\\infty} \\frac{x^{2n}}{9^n}\\). Only even powers occur, so the odd coefficients are 0 and a formula built from \\(\\frac{c_{n}}{c_{n+1}}\\) cannot even be written. Apply the ratio test to the terms themselves: \\(\\left|\\frac{x^{2n+2}}{9^{n+1}}\\cdot\\frac{9^n}{x^{2n}}\\right| = \\frac{x^2}{9}\\), and \\(\\frac{x^2}{9} < 1\\) exactly when \\(|x| < 3\\). So \\(R = 3\\). (Here the series is geometric with ratio \\(\\frac{x^2}{9}\\), which confirms the answer.)\n\n**The root test.** When the whole term is an \\(n\\)th power, the root test is quicker. For \\(\\sum_{n=1}^\\infty \\left(\\frac{n}{2n+1}\\right)^n x^n\\),\n\\[ \\sqrt[n]{|u_n|} = \\frac{n}{2n+1}\\,|x| \\to \\frac{|x|}{2}, \\]\nwhich is less than 1 exactly when \\(|x| < 2\\). So \\(R = 2\\).\n\n**Common mistakes.** Dropping the absolute value, which produces meaningless conditions such as \\(x + 3 < 4\\) with no lower bound. Reading the radius off \\(|kx - b| < 1\\) without factoring out \\(k\\). And applying the ratio test at the points where \\(L(x) = 1\\): there it is inconclusive by design, which is the subject of the next section.",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k3",
+     "type": "number",
+     "prompt": "Find the radius of convergence of \\(\\sum_{n=1}^{\\infty} \\frac{n^2 (x-1)^n}{5^n}\\).",
+     "answer": "5",
+     "why": "The ratio of consecutive terms has absolute value \\(\\frac{(n+1)^2}{n^2}\\cdot\\frac{|x-1|}{5} \\to \\frac{|x-1|}{5}\\). This is less than 1 exactly when \\(|x - 1| < 5\\), so \\(R = 5\\) (centre 1)."
+    },
+    {
+     "id": "s2q2",
+     "kp": "k4",
+     "type": "number",
+     "prompt": "Find the radius of convergence of \\(\\sum_{n=1}^{\\infty} \\frac{(3x+2)^n}{n}\\).",
+     "answer": "1/3",
+     "why": "The ratio test gives \\(L = |3x + 2|\\cdot\\lim\\frac{n}{n+1} = |3x+2|\\). The condition \\(|3x + 2| < 1\\) becomes \\(3\\left|x + \\frac23\\right| < 1\\), i.e. \\(\\left|x + \\frac23\\right| < \\frac13\\). The centre is \\(-\\frac23\\) and \\(R = \\frac13\\); reading \\(R = 1\\) off \\(|3x+2| < 1\\) is the typical error."
+    },
+    {
+     "id": "s2q3",
+     "kp": "k3",
+     "type": "written",
+     "prompt": "Show that \\(\\sum_{n=0}^{\\infty} \\frac{x^n}{n!}\\) converges for every real \\(x\\), and deduce that \\(\\lim_{n\\to\\infty} \\frac{x^n}{n!} = 0\\) for every real \\(x\\).",
+     "rubric": [
+      "Handles \\(x = 0\\) (the series converges trivially at its centre).",
+      "For \\(x \\ne 0\\), computes \\(\\left|\\frac{x^{n+1}/(n+1)!}{x^n/n!}\\right| = \\frac{|x|}{n+1} \\to 0 < 1\\).",
+      "Concludes absolute convergence for all \\(x\\), so \\(R = \\infty\\).",
+      "Deduces \\(\\frac{x^n}{n!} \\to 0\\) because the terms of a convergent series tend to 0."
+     ],
+     "model": "At \\(x = 0\\) the series is \\(1 + 0 + 0 + \\cdots\\), which converges. For \\(x \\ne 0\\) the ratio test gives \\(\\left|\\frac{x^{n+1}}{(n+1)!}\\cdot\\frac{n!}{x^n}\\right| = \\frac{|x|}{n+1} \\to 0\\), which is less than 1, so the series converges absolutely. Thus it converges for every real \\(x\\) and \\(R = \\infty\\). Since the terms of any convergent series tend to 0, \\(\\frac{x^n}{n!} \\to 0\\) for every fixed \\(x\\).",
+     "why": "Convergence of a series is sometimes the easiest way to prove a sequence limit: here the factorial eventually overwhelms any fixed power base."
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "The interval of convergence: testing the endpoints",
+   "kps": [
+    "k5"
+   ],
+   "md": "The ratio test finds the open interval \\((a - R, a + R)\\) on which a power series converges absolutely. At the two endpoints \\(x = a \\pm R\\) the ratio test gives \\(L = 1\\) and decides nothing. This section completes the description of the interval of convergence by testing the endpoints directly.\n\n**Procedure.** Substitute each endpoint into the series. The result is a numerical series, often a \\(p\\)-series, an alternating series or a series whose terms do not tend to 0, and it is tested with the methods of the previous chapter: the divergence test, the \\(p\\)-series result, comparison, or the alternating series test. The ratio test is useless at this stage.\n\n**All four outcomes occur.** Each of the following series has centre 0 and radius 1, found by the ratio test.\n\n| Series | at \\(x = -1\\) | at \\(x = 1\\) | Interval |\n|---|---|---|---|\n| \\(\\sum x^n\\) | \\(\\sum (-1)^n\\): diverges | \\(\\sum 1\\): diverges | \\((-1, 1)\\) |\n| \\(\\sum \\frac{x^n}{n}\\) | \\(\\sum\\frac{(-1)^n}{n}\\): converges | \\(\\sum\\frac1n\\): diverges | \\([-1, 1)\\) |\n| \\(\\sum \\frac{(-1)^n x^n}{n}\\) | \\(\\sum\\frac1n\\): diverges | \\(\\sum\\frac{(-1)^n}{n}\\): converges | \\((-1, 1]\\) |\n| \\(\\sum \\frac{x^n}{n^2}\\) | converges absolutely | converges | \\([-1, 1]\\) |\n\nAt the two endpoints the terms have the same absolute values, so if the series converges absolutely at one endpoint it converges absolutely at the other. Different behaviour at the two ends is therefore always a matter of conditional convergence at one end.\n\n**Worked example.** Find the interval of convergence of \\(\\sum_{n=1}^{\\infty} \\frac{(x+3)^n}{n\\,4^n}\\). The previous section found centre \\(-3\\) and \\(R = 4\\), so the series converges absolutely on \\((-7, 1)\\) and diverges outside \\([-7, 1]\\).\n\n- At \\(x = 1\\): \\(x + 3 = 4\\), and the series is \\(\\sum \\frac{4^n}{n\\,4^n} = \\sum \\frac1n\\), the harmonic series, which diverges.\n- At \\(x = -7\\): \\(x + 3 = -4\\), and the series is \\(\\sum \\frac{(-4)^n}{n\\,4^n} = \\sum \\frac{(-1)^n}{n}\\). Here \\(\\frac1n\\) is positive, decreasing and tends to 0, so it converges by the alternating series test (conditionally).\n\nThe interval of convergence is \\([-7, 1)\\).\n\n**The picture.** In the graph, the curve \\(y = \\frac{1}{1-x}\\) is shown with the partial sum \\(1 + x + \\cdots + x^N\\) of its geometric series. Drag \\(N\\) upward. Between the vertical lines \\(x = \\pm1\\) the partial sums settle onto the curve, fastest near the centre. Outside them the partial sums move away from the curve without bound, and at \\(x = -1\\) they alternate between 1 and 0. The function \\(\\frac{1}{1-x}\\) is perfectly well defined at \\(x = -1.5\\); the series simply does not converge there.\n\n```plot\nx: -2, 2\ny: -3, 6\nslider: n, 0, 20, 2, 1 | N\nf: 1/(1 - x) | y = 1/(1 − x)\nf: (1 - x^(n+1))/(1 - x) | partial sum 1 + x + ⋯ + x^N\nvline: -1\nvline: 1\n```\n\n**Common mistakes.** Omitting the endpoint check and reporting an open interval by default. Applying the ratio test at an endpoint, where \\(L = 1\\) always. Substituting the endpoint carelessly: at \\(x = -7\\) above, \\((x+3)^n = (-4)^n = (-1)^n 4^n\\), and the sign factor \\((-1)^n\\) is what makes the series converge. Finally, confusing the question \"does it converge here?\" with \"does it converge absolutely here?\": for membership in the interval, conditional convergence counts.",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k5",
+     "type": "mcq",
+     "prompt": "What is the interval of convergence of \\(\\sum_{n=1}^{\\infty} \\frac{(x-2)^n}{n\\,3^n}\\)?",
+     "options": [
+      "\\((-1, 5)\\)",
+      "\\([-1, 5)\\)",
+      "\\((-1, 5]\\)",
+      "\\([-1, 5]\\)"
+     ],
+     "answer": 1,
+     "why": "The ratio test gives \\(\\frac{|x-2|}{3}\\), so the centre is 2 and \\(R = 3\\). At \\(x = 5\\) the series is \\(\\sum\\frac{3^n}{n3^n} = \\sum\\frac1n\\), which diverges. At \\(x = -1\\) it is \\(\\sum\\frac{(-3)^n}{n3^n} = \\sum\\frac{(-1)^n}{n}\\), which converges by the alternating series test. So the interval is \\([-1, 5)\\). Choosing \\((-1,5)\\) skips the endpoint check; choosing \\((-1, 5]\\) swaps the endpoints' behaviour; choosing \\([-1,5]\\) assumes an endpoint that converges conditionally forces the other to converge."
+    },
+    {
+     "id": "s3q2",
+     "kp": "k5",
+     "type": "written",
+     "prompt": "Find the interval of convergence of \\(\\sum_{n=1}^{\\infty} \\frac{(x-1)^n}{\\sqrt n\\;2^n}\\). Test both endpoints, naming the test used at each.",
+     "rubric": [
+      "Ratio test: \\(\\frac{|x-1|}{2}\\sqrt{\\frac{n}{n+1}} \\to \\frac{|x-1|}{2}\\); centre 1, \\(R = 2\\).",
+      "At \\(x = 3\\): \\(\\sum\\frac{1}{\\sqrt n}\\), a \\(p\\)-series with \\(p = \\frac12\\), diverges.",
+      "At \\(x = -1\\): \\(\\sum\\frac{(-1)^n}{\\sqrt n}\\) converges by the alternating series test (\\(\\frac1{\\sqrt n}\\) decreasing to 0).",
+      "States the interval \\([-1, 3)\\)."
+     ],
+     "model": "Ratio test: \\(\\left|\\frac{(x-1)^{n+1}}{\\sqrt{n+1}\\,2^{n+1}}\\cdot\\frac{\\sqrt n\\,2^n}{(x-1)^n}\\right| = \\frac{|x-1|}{2}\\sqrt{\\frac{n}{n+1}} \\to \\frac{|x-1|}{2}\\). The series converges absolutely for \\(|x - 1| < 2\\) and diverges for \\(|x-1| > 2\\): centre 1, \\(R = 2\\), endpoints \\(-1\\) and 3. At \\(x = 3\\): \\(\\sum\\frac{2^n}{\\sqrt n\\,2^n} = \\sum\\frac1{\\sqrt n}\\), a \\(p\\)-series with \\(p = \\frac12 \\le 1\\), which diverges. At \\(x = -1\\): \\(\\sum\\frac{(-2)^n}{\\sqrt n\\,2^n} = \\sum\\frac{(-1)^n}{\\sqrt n}\\); since \\(\\frac1{\\sqrt n}\\) is positive, decreasing and tends to 0, the alternating series test gives convergence. The interval of convergence is \\([-1, 3)\\).",
+     "why": "The endpoint series are the same up to the sign factor \\((-1)^n\\); the sign factor is exactly what the alternating series test exploits."
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "Representing functions as power series",
+   "kps": [
+    "k6"
+   ],
+   "md": "The previous sections started from a series and asked where it converges. This section reverses the direction: given a function, find a power series that equals it on an interval. The main source of such representations is the geometric series, read from right to left:\n\\[ \\frac{1}{1-u} = \\sum_{n=0}^{\\infty} u^n \\qquad \\text{for } |u| < 1. \\]\nReplacing \\(u\\) by an expression in \\(x\\) yields a power series, and the condition \\(|u| < 1\\) yields its interval of convergence.\n\n**Worked example 1 (substitution).** \\(\\frac{1}{1+x^2} = \\frac{1}{1 - (-x^2)}\\). With \\(u = -x^2\\),\n\\[ \\frac{1}{1+x^2} = \\sum_{n=0}^{\\infty} (-x^2)^n = \\sum_{n=0}^{\\infty} (-1)^n x^{2n} = 1 - x^2 + x^4 - \\cdots, \\]\nvalid when \\(|-x^2| < 1\\), that is, \\(|x| < 1\\). At \\(x = \\pm1\\) the series is \\(\\sum(-1)^n\\), which diverges. The function is defined and smooth for every real \\(x\\), yet its power series centred at 0 converges only on \\((-1, 1)\\).\n\n**Worked example 2 (factoring to get 1 in the denominator).** \\(\\frac{3}{5 - x} = \\frac{3}{5}\\cdot\\frac{1}{1 - x/5}\\), so\n\\[ \\frac{3}{5 - x} = \\frac35 \\sum_{n=0}^{\\infty}\\left(\\frac{x}{5}\\right)^n = \\sum_{n=0}^{\\infty} \\frac{3x^n}{5^{n+1}}, \\qquad \\left|\\frac x5\\right| < 1 \\iff |x| < 5. \\]\n\n**Worked example 3 (a power of \\(x\\) in front).** \\(\\frac{x^2}{1 + 2x} = x^2\\cdot\\frac{1}{1 - (-2x)} = \\sum_{n=0}^{\\infty} (-2)^n x^{n+2} = x^2 - 2x^3 + 4x^4 - \\cdots\\), valid for \\(|2x| < 1\\), that is, \\(|x| < \\frac12\\). Multiplying a power series by \\(x^m\\) shifts every power up by \\(m\\) and does not change where it converges.\n\n**Worked example 4 (a different centre).** To expand \\(\\frac1x\\) in powers of \\(x - 2\\), write the denominator in terms of \\(x - 2\\):\n\\[ \\frac1x = \\frac{1}{2 + (x - 2)} = \\frac12\\cdot\\frac{1}{1 + \\frac{x-2}{2}} = \\sum_{n=0}^{\\infty} \\frac{(-1)^n (x-2)^n}{2^{n+1}}, \\]\nvalid when \\(\\left|\\frac{x-2}{2}\\right| < 1\\), that is, \\(|x - 2| < 2\\), or \\(0 < x < 4\\). The radius is the distance from the centre to the point \\(x = 0\\) where the function blows up, a pattern that recurs often.\n\n**Combining series.** If \\(f(x) = \\sum a_n x^n\\) and \\(g(x) = \\sum b_n x^n\\) both converge on an interval \\(I\\), then \\(f(x) \\pm g(x) = \\sum (a_n \\pm b_n)x^n\\) on \\(I\\), because partial sums of the combination are combinations of partial sums. With partial fractions this handles many rational functions:\n\\[ \\frac{1}{(1-x)(1-2x)} = \\frac{2}{1-2x} - \\frac{1}{1-x} = \\sum_{n=0}^{\\infty} \\left(2^{n+1} - 1\\right)x^n. \\]\nThe first series requires \\(|x| < \\frac12\\) and the second \\(|x| < 1\\); the combination is guaranteed on the smaller interval \\(|x| < \\frac12\\), and in fact that is exactly its radius.\n\nDoes it matter which manipulation is used? No: a function has at most one power series with a given centre. If two power series centred at \\(a\\) have the same sum on an open interval around \\(a\\), their coefficients are equal. This **uniqueness** is proved in the next section, and it means any legitimate method of finding a representation gives the same series.\n\n**Common mistakes.** Forgetting to rescale the condition \\(|u| < 1\\): for \\(\\frac{3}{5-x}\\) the condition is \\(|x| < 5\\), not \\(|x| < 1\\). Losing the signs when \\(u\\) is negative: \\(\\frac{1}{1+x^2}\\) has alternating signs. And writing \\(\\frac{1}{5 - x} = \\sum \\frac{x^n}{5}\\) instead of \\(\\sum \\frac{x^n}{5^{n+1}}\\): the factor pulled out and the ratio are both needed.",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k6",
+     "type": "expression",
+     "prompt": "Find the power series centred at 0 for \\(\\frac{1}{1+4x^2}\\), and enter the sum of its terms up to and including the \\(x^6\\) term.",
+     "answer": "1 - 4*x^2 + 16*x^4 - 64*x^6",
+     "vars": "x",
+     "why": "With \\(u = -4x^2\\), \\(\\frac{1}{1+4x^2} = \\sum_{n=0}^\\infty(-4x^2)^n = \\sum (-1)^n 4^n x^{2n} = 1 - 4x^2 + 16x^4 - 64x^6 + \\cdots\\), valid for \\(4x^2 < 1\\), i.e. \\(|x| < \\frac12\\)."
+    },
+    {
+     "id": "s4q2",
+     "kp": "k6",
+     "type": "written",
+     "prompt": "Find a power series centred at 0 for \\(\\frac{x}{9 - x^2}\\), in summation notation, and determine its interval of convergence, including the endpoints.",
+     "rubric": [
+      "Rewrites \\(\\frac{x}{9-x^2} = \\frac{x}{9}\\cdot\\frac{1}{1 - x^2/9}\\).",
+      "Obtains \\(\\sum_{n=0}^\\infty \\frac{x^{2n+1}}{9^{n+1}}\\).",
+      "Derives the condition \\(\\frac{x^2}{9} < 1\\), i.e. \\(|x| < 3\\).",
+      "Checks \\(x = \\pm3\\): terms are \\(\\pm\\frac13\\), not tending to 0, so both diverge; interval \\((-3, 3)\\)."
+     ],
+     "model": "\\(\\frac{x}{9 - x^2} = \\frac{x}{9}\\cdot\\frac{1}{1 - \\frac{x^2}{9}} = \\frac x9\\sum_{n=0}^{\\infty}\\left(\\frac{x^2}{9}\\right)^n = \\sum_{n=0}^{\\infty}\\frac{x^{2n+1}}{9^{n+1}}\\), valid when \\(\\frac{x^2}{9} < 1\\), that is \\(|x| < 3\\). At \\(x = 3\\) the terms are \\(\\frac{3^{2n+1}}{9^{n+1}} = \\frac{3^{2n+1}}{3^{2n+2}} = \\frac13\\), which do not tend to 0, so the series diverges; at \\(x = -3\\) the terms are \\(-\\frac13\\), and it diverges likewise. The interval of convergence is \\((-3, 3)\\).",
+     "why": "The radius 3 is the distance from 0 to the points \\(\\pm 3\\) where the function has vertical asymptotes."
+    },
+    {
+     "id": "s4q3",
+     "kp": "k6",
+     "type": "number",
+     "prompt": "Expand \\(\\frac{1}{x}\\) as a power series centred at \\(a = 2\\). What is the coefficient of \\((x-2)^3\\)?",
+     "answer": "-1/16",
+     "why": "\\(\\frac1x = \\frac12\\cdot\\frac{1}{1 + \\frac{x-2}{2}} = \\sum_{n=0}^{\\infty}\\frac{(-1)^n(x-2)^n}{2^{n+1}}\\) for \\(|x - 2| < 2\\). The coefficient of \\((x-2)^3\\) is \\(\\frac{(-1)^3}{2^4} = -\\frac1{16}\\)."
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "Differentiating and integrating power series",
+   "kps": [
+    "k7",
+    "k8",
+    "k9"
+   ],
+   "md": "Polynomials are differentiated and integrated one term at a time. This section states that a power series may be treated the same way inside its interval of convergence, and uses this to find series for functions, such as \\(\\ln(1+x)\\) and \\(\\arctan x\\), that are not rational.\n\n> **Theorem (term-by-term differentiation and integration).** Suppose \\(\\sum_{n=0}^\\infty c_n (x-a)^n\\) has radius of convergence \\(R > 0\\), and let \\(f(x)\\) be its sum for \\(|x - a| < R\\). Then \\(f\\) is differentiable, and therefore continuous, on \\((a - R, a + R)\\), and there\n> \\[ f'(x) = \\sum_{n=1}^{\\infty} n\\,c_n (x-a)^{n-1}, \\qquad \\int f(x)\\,dx = C + \\sum_{n=0}^{\\infty} \\frac{c_n}{n+1}(x-a)^{n+1}. \\]\n> Both series have the same radius of convergence \\(R\\).\n\nThat the radius does not change is easy to see when the ratio test applies: the extra factor \\(n\\) or \\(\\frac{1}{n+1}\\) contributes a factor such as \\(\\frac{n+1}{n} \\to 1\\) to the ratio of consecutive terms, which does not change the limit. The harder part, that the differentiated series actually converges to \\(f'\\), is proved in real analysis courses and is taken as given here. The theorem makes no promise about the endpoints: they must be tested again.\n\n**Worked example 1.** Differentiating \\(\\frac{1}{1-x} = \\sum_{n=0}^{\\infty} x^n\\) for \\(|x| < 1\\) gives\n\\[ \\frac{1}{(1-x)^2} = \\sum_{n=1}^{\\infty} n x^{n-1} = 1 + 2x + 3x^2 + \\cdots, \\qquad |x| < 1. \\]\nThe constant term disappears under differentiation, which is why the new sum starts at \\(n = 1\\). Multiplying by \\(x\\) gives the closed form \\(\\sum_{n=1}^\\infty n x^n = \\frac{x}{(1-x)^2}\\) for \\(|x| < 1\\).\n\n**Worked example 2: \\(\\ln(1+x)\\).** Since \\(\\frac{d}{dx}\\ln(1+x) = \\frac{1}{1+x} = \\sum_{n=0}^{\\infty}(-1)^n x^n\\) for \\(|x| < 1\\), integrating term by term gives\n\\[ \\ln(1+x) = C + \\sum_{n=0}^{\\infty} \\frac{(-1)^n x^{n+1}}{n+1}. \\]\nAt \\(x = 0\\) both sides must agree: \\(\\ln 1 = 0 = C\\). Hence\n\\[ \\ln(1+x) = x - \\frac{x^2}{2} + \\frac{x^3}{3} - \\cdots = \\sum_{n=1}^{\\infty}\\frac{(-1)^{n+1}x^n}{n}, \\qquad |x| < 1. \\]\nNow the endpoints. At \\(x = 1\\) the series is the alternating harmonic series, which converges; at \\(x = -1\\) it is \\(-\\sum\\frac1n\\), which diverges. So the interval of convergence is \\((-1, 1]\\). That the sum at \\(x = 1\\) equals \\(\\ln 2\\) does not follow from the theorem, which covers only the open interval; it is proved in the next chapter.\n\n**Worked example 3: \\(\\arctan x\\).** From \\(\\frac{1}{1+t^2} = \\sum (-1)^n t^{2n}\\) for \\(|t| < 1\\), integrate from 0 to \\(x\\):\n\\[ \\arctan x = \\int_0^x \\frac{dt}{1+t^2} = \\sum_{n=0}^{\\infty} \\frac{(-1)^n x^{2n+1}}{2n+1} = x - \\frac{x^3}{3} + \\frac{x^5}{5} - \\cdots, \\qquad |x| < 1. \\]\nIntegrating from the centre builds in the constant: \\(\\arctan 0 = 0\\). At \\(x = \\pm1\\) the series converges by the alternating series test, so the interval of convergence is \\([-1, 1]\\), although the series of \\(\\frac{1}{1+x^2}\\) diverges at both points. In the graph, drag \\(m\\) to add terms: inside \\((-1, 1)\\) the partial sums close in on \\(\\arctan x\\), while beyond \\(|x| = 1\\) they swing ever further away, even though \\(\\arctan x\\) is defined and bounded there.\n\n```plot\nx: -1.8, 1.8\ny: -2, 2\nslider: m, 0, 12, 1, 1 | m\nf: atan(x) | y = arctan x\nf: sum(map(0:m, g(k) = (-1)^k * x^(2*k+1) / (2*k+1))) | partial sum of degree 2m + 1\nvline: -1\nvline: 1\n```\n\n**Uniqueness of coefficients.** Differentiate \\(f(x) = \\sum c_n(x-a)^n\\) \\(k\\) times: every term with \\(n < k\\) disappears, and at \\(x = a\\) every term with \\(n > k\\) vanishes, leaving \\(f^{(k)}(a) = k!\\,c_k\\). So\n\\[ c_k = \\frac{f^{(k)}(a)}{k!}, \\]\nand the coefficients are determined by \\(f\\). This formula is the starting point of the next chapter.\n\n**Common mistakes.** Forgetting the constant of integration; determine it by evaluating at the centre. Assuming the endpoints behave as before: integrating can gain endpoints and differentiating can lose them. And mishandling the index: after differentiating, the \\(n = 0\\) term is gone.",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k7",
+     "type": "expression",
+     "prompt": "For \\(|x| < 1\\), find a closed form for \\(\\sum_{n=0}^{\\infty} (-1)^n (n+1)\\, x^n = 1 - 2x + 3x^2 - \\cdots\\) by differentiating a geometric series.",
+     "answer": "1/(1 + x)^2",
+     "vars": "x",
+     "why": "Start from \\(\\frac{1}{1+x} = \\sum_{n=0}^\\infty (-1)^n x^n\\) for \\(|x|<1\\). Differentiating term by term, \\(-\\frac{1}{(1+x)^2} = \\sum_{n=1}^\\infty (-1)^n n x^{n-1}\\). Multiply by \\(-1\\) and shift the index (\\(n \\to n+1\\)): \\(\\frac{1}{(1+x)^2} = \\sum_{n=0}^\\infty (-1)^n (n+1) x^n\\)."
+    },
+    {
+     "id": "s5q2",
+     "kp": "k8",
+     "type": "written",
+     "prompt": "Use term-by-term integration to find the power series for \\(\\ln(1 - x)\\) centred at 0. Determine the constant of integration and the interval of convergence, including the endpoints.",
+     "rubric": [
+      "Uses \\(\\frac{d}{dx}\\ln(1-x) = -\\frac{1}{1-x} = -\\sum x^n\\) for \\(|x|<1\\).",
+      "Integrates to \\(C - \\sum_{n=0}^\\infty \\frac{x^{n+1}}{n+1}\\) and finds \\(C = 0\\) from \\(x = 0\\).",
+      "States \\(\\ln(1-x) = -\\sum_{n=1}^\\infty\\frac{x^n}{n}\\) with radius 1.",
+      "Endpoints: \\(x = 1\\) gives \\(-\\sum\\frac1n\\), divergent; \\(x = -1\\) gives \\(-\\sum\\frac{(-1)^n}{n}\\), convergent; interval \\([-1, 1)\\)."
+     ],
+     "model": "For \\(|x| < 1\\), \\(\\frac{d}{dx}\\ln(1-x) = -\\frac{1}{1-x} = -\\sum_{n=0}^\\infty x^n\\). Integrating term by term, \\(\\ln(1-x) = C - \\sum_{n=0}^\\infty\\frac{x^{n+1}}{n+1}\\). At \\(x = 0\\): \\(\\ln 1 = 0 = C\\). So \\(\\ln(1-x) = -\\sum_{n=1}^\\infty \\frac{x^n}{n} = -x - \\frac{x^2}{2} - \\frac{x^3}{3} - \\cdots\\), with radius 1 (unchanged by integration). At \\(x = 1\\) the series is \\(-\\sum\\frac1n\\), which diverges (and \\(\\ln 0\\) is undefined). At \\(x = -1\\) it is \\(-\\sum\\frac{(-1)^n}{n}\\), which converges by the alternating series test. The interval of convergence is \\([-1, 1)\\).",
+     "why": "The same result follows by replacing \\(x\\) with \\(-x\\) in the series for \\(\\ln(1+x)\\)."
+    },
+    {
+     "id": "s5q3",
+     "kp": "k8",
+     "type": "expression",
+     "prompt": "Using the series for \\(\\arctan x\\), write the first three nonzero terms of the power series of \\(\\arctan(x^2)\\) centred at 0, and enter their sum.",
+     "answer": "x^2 - x^6/3 + x^10/5",
+     "vars": "x",
+     "why": "\\(\\arctan u = u - \\frac{u^3}{3} + \\frac{u^5}{5} - \\cdots\\) for \\(|u| \\le 1\\). With \\(u = x^2\\): \\(x^2 - \\frac{x^6}{3} + \\frac{x^{10}}{5} - \\cdots\\), valid for \\(|x| \\le 1\\)."
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "title": "Using power series to evaluate sums and integrals",
+   "kps": [
+    "k10"
+   ],
+   "md": "A power series with a known sum is also a machine for computing. This section uses the representations of the previous two sections in two ways: to find the exact sums of numerical series, and to approximate integrals to a guaranteed accuracy.\n\n**Exact sums.** A numerical series that has the form \\(\\sum c_n x_0^n\\) can be summed if the power series \\(\\sum c_n x^n\\) has a known closed form and \\(x_0\\) lies inside its interval of convergence.\n\n*Example 1.* Find \\(\\sum_{n=1}^\\infty \\frac{n}{2^n}\\). The previous section gave \\(\\sum_{n=1}^\\infty n x^n = \\frac{x}{(1-x)^2}\\) for \\(|x| < 1\\). At \\(x = \\frac12\\), inside the interval,\n\\[ \\sum_{n=1}^\\infty \\frac{n}{2^n} = \\frac{1/2}{(1/2)^2} = 2. \\]\n\n*Example 2.* Find \\(\\sum_{n=1}^\\infty \\frac{1}{n\\,2^n}\\). Replacing \\(x\\) by \\(-x\\) in the series for \\(\\ln(1+x)\\) gives \\(-\\ln(1 - x) = \\sum_{n=1}^{\\infty}\\frac{x^n}{n}\\) for \\(|x| < 1\\). At \\(x = \\frac12\\),\n\\[ \\sum_{n=1}^\\infty \\frac{1}{n\\,2^n} = -\\ln\\tfrac12 = \\ln 2. \\]\nThis is a much better way to compute \\(\\ln 2\\) than the alternating harmonic series: ten terms give \\(0.693065\\), with error below \\(10^{-4}\\), whereas for the alternating harmonic series the error bound \\(\\frac{1}{n+1}\\) needs ten thousand terms to guarantee the same accuracy.\n\n*Example 3.* Differentiating \\(\\sum n x^n = \\frac{x}{(1-x)^2}\\) and multiplying by \\(x\\) gives \\(\\sum_{n=1}^\\infty n^2 x^n = \\frac{x(1+x)}{(1-x)^3}\\), so \\(\\sum \\frac{n^2}{2^n} = \\frac{(1/2)(3/2)}{1/8} = 6\\).\n\n**Approximating integrals.** Integrating a series term by term over an interval inside the interval of convergence gives a numerical series for the integral. When that series alternates with decreasing terms, the alternating series estimation theorem bounds the error.\n\n*Example 4.* Approximate \\(\\int_0^{1/2} \\frac{dx}{1+x^4}\\) with error less than \\(10^{-4}\\). For \\(|x| < 1\\), \\(\\frac{1}{1+x^4} = \\sum_{n=0}^\\infty (-1)^n x^{4n}\\). The interval \\([0, \\frac12]\\) lies inside \\((-1, 1)\\), so\n\\[ \\int_0^{1/2}\\frac{dx}{1+x^4} = \\sum_{n=0}^{\\infty} \\frac{(-1)^n}{4n+1}\\left(\\frac12\\right)^{4n+1} = \\frac12 - \\frac{1}{160} + \\frac{1}{4608} - \\frac{1}{106496} + \\cdots. \\]\nThis is an alternating series whose terms decrease to 0. The fourth term is about \\(9.4 \\times 10^{-6} < 10^{-4}\\), so the sum of the first three terms, \\(\\frac12 - \\frac1{160} + \\frac1{4608} \\approx 0.493967\\), is within \\(9.4\\times 10^{-6}\\) of the integral. (The integral equals \\(0.4939581\\ldots\\).) The integrand does have an elementary antiderivative, but it involves logarithms of quadratic expressions and several inverse tangents; the series gives the number with far less work, and the same method applies when no elementary antiderivative exists.\n\n**Common mistakes.** Substituting a value outside the interval of convergence: the formula \\(\\sum n x^n = \\frac{x}{(1-x)^2}\\) would \"give\" \\(\\sum n\\,2^n = 2\\), which is absurd, since the series diverges at \\(x = 2\\). Using the alternating series bound without checking that the terms decrease. And misplacing the starting index, which silently adds or drops a term: \\(\\sum_{n=0}^{\\infty} x^n\\) and \\(\\sum_{n=1}^{\\infty} x^n\\) differ by 1.",
+   "questions": [
+    {
+     "id": "s6q1",
+     "kp": "k10",
+     "type": "number",
+     "prompt": "Find the exact value of \\(\\sum_{n=1}^{\\infty} \\frac{n}{3^n}\\).",
+     "answer": "3/4",
+     "why": "\\(\\sum_{n=1}^\\infty n x^n = \\frac{x}{(1-x)^2}\\) for \\(|x| < 1\\). At \\(x = \\frac13\\): \\(\\frac{1/3}{(2/3)^2} = \\frac{1/3}{4/9} = \\frac34\\)."
+    },
+    {
+     "id": "s6q2",
+     "kp": "k10",
+     "type": "number",
+     "prompt": "Find the exact value of \\(\\sum_{n=1}^{\\infty} \\frac{(-1)^{n+1}}{n\\,3^n}\\).",
+     "answer": "log(4/3)",
+     "why": "\\(\\ln(1+x) = \\sum_{n=1}^\\infty\\frac{(-1)^{n+1}x^n}{n}\\) for \\(|x| < 1\\). At \\(x = \\frac13\\) the series is the given one, so its sum is \\(\\ln\\frac43\\)."
+    },
+    {
+     "id": "s6q3",
+     "kp": "k10",
+     "type": "written",
+     "prompt": "A student substitutes \\(x = 2\\) into \\(\\sum_{n=1}^{\\infty} n x^n = \\frac{x}{(1-x)^2}\\) and concludes that \\(\\sum_{n=1}^\\infty n\\,2^n = 2\\). Explain precisely which hypothesis is violated and what is actually true of this series.",
+     "rubric": [
+      "States that the identity holds only for \\(|x| < 1\\), the interval where the series converges.",
+      "Notes that \\(x = 2\\) lies outside the interval of convergence.",
+      "Shows \\(\\sum n2^n\\) diverges (terms do not tend to 0, or ratio \\(2 > 1\\))."
+     ],
+     "model": "The identity \\(\\sum n x^n = \\frac{x}{(1-x)^2}\\) was derived by differentiating the geometric series, and both the geometric series and its derivative converge only for \\(|x| < 1\\). Outside that interval the left side is not a number at all, so the equation says nothing. At \\(x = 2\\) the terms \\(n2^n\\) grow without bound, so by the divergence test \\(\\sum n 2^n\\) diverges (to \\(\\infty\\)); the right side, \\(\\frac{2}{1} = 2\\), is merely the value of the function \\(\\frac{x}{(1-x)^2}\\), which is defined at 2 even though the series is not.",
+     "why": "A power series and the function it represents agree only on the interval of convergence."
+    }
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "t": "power series",
+   "d": "A series \\(\\sum_{n=0}^\\infty c_n(x-a)^n\\) in a variable \\(x\\), with constant coefficients \\(c_n\\) and centre \\(a\\)."
+  },
+  {
+   "t": "centre",
+   "d": "The number \\(a\\) in \\(\\sum c_n (x-a)^n\\); every power series converges at its centre, with sum \\(c_0\\)."
+  },
+  {
+   "t": "coefficients",
+   "d": "The constants \\(c_n\\) multiplying the powers \\((x-a)^n\\) in a power series."
+  },
+  {
+   "t": "radius of convergence",
+   "d": "The number \\(R \\in [0, \\infty]\\) such that the power series converges absolutely for \\(|x - a| < R\\) and diverges for \\(|x - a| > R\\)."
+  },
+  {
+   "t": "interval of convergence",
+   "d": "The set of all \\(x\\) at which a power series converges: \\((a-R, a+R)\\) together with whichever endpoints give convergent series.",
+   "ex": "\\(\\sum \\frac{x^n}{n}\\) has interval \\([-1, 1)\\)."
+  },
+  {
+   "t": "term-by-term differentiation",
+   "d": "Differentiating a power series by differentiating each term: \\(\\frac{d}{dx}\\sum c_n(x-a)^n = \\sum n c_n (x-a)^{n-1}\\), valid inside the interval of convergence with the same radius."
+  },
+  {
+   "t": "term-by-term integration",
+   "d": "Integrating a power series by integrating each term: \\(\\int\\sum c_n(x-a)^n\\,dx = C + \\sum\\frac{c_n}{n+1}(x-a)^{n+1}\\), with the same radius."
+  },
+  {
+   "t": "uniqueness of power series",
+   "d": "If two power series centred at \\(a\\) have the same sum on an open interval around \\(a\\), their coefficients are equal; indeed \\(c_k = \\frac{f^{(k)}(a)}{k!}\\)."
+  },
+  {
+   "t": "power series representation",
+   "d": "An equation \\(f(x) = \\sum c_n (x-a)^n\\) valid for all \\(x\\) in a stated interval; outside it the equation has no meaning.",
+   "ex": "\\(\\frac{1}{1-x} = \\sum x^n\\) only for \\(|x| < 1\\)."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "term",
+   "front": "Define: power series centred at \\(a\\)",
+   "back": "A series \\(\\sum_{n=0}^\\infty c_n (x-a)^n\\) with constant coefficients \\(c_n\\); by convention \\((x-a)^0 = 1\\).",
+   "kp": "k1"
+  },
+  {
+   "id": "c2",
+   "type": "concept",
+   "front": "Where does every power series converge, whatever its coefficients?",
+   "back": "At its centre \\(x = a\\), where its sum is \\(c_0\\).",
+   "kp": "k1"
+  },
+  {
+   "id": "c3",
+   "type": "concept",
+   "front": "If \\(\\sum c_n(x-a)^n\\) converges at \\(x_0\\), what follows?",
+   "back": "It converges absolutely at every \\(x\\) with \\(|x - a| < |x_0 - a|\\) (comparison with a geometric series).",
+   "kp": "k2"
+  },
+  {
+   "id": "c4",
+   "type": "term",
+   "front": "The three possibilities for the convergence of a power series",
+   "back": "Only at \\(x = a\\) (\\(R = 0\\)); for all \\(x\\) (\\(R = \\infty\\)); or absolutely for \\(|x-a| < R\\) and divergence for \\(|x - a| > R\\).",
+   "kp": "k2"
+  },
+  {
+   "id": "c5",
+   "type": "concept",
+   "front": "How do you find the radius of convergence?",
+   "back": "Apply the ratio (or root) test to \\(|c_n(x-a)^n|\\), and solve \\(L(x) < 1\\) in the form \\(|x-a| < R\\).",
+   "kp": "k3"
+  },
+  {
+   "id": "c6",
+   "type": "concept",
+   "front": "Radius of convergence of \\(\\sum \\frac{(kx - b)^n}{\\ldots}\\) when the test gives \\(|kx - b| < 1\\)?",
+   "back": "Factor out \\(k\\): \\(\\left|x - \\frac bk\\right| < \\frac1{|k|}\\), so \\(R = \\frac{1}{|k|}\\), centre \\(\\frac bk\\).",
+   "kp": "k4"
+  },
+  {
+   "id": "c7",
+   "type": "concept",
+   "front": "Why must the endpoints of the interval of convergence be tested separately?",
+   "back": "There the ratio test gives \\(L = 1\\) and decides nothing; any combination of convergence and divergence can occur.",
+   "kp": "k5"
+  },
+  {
+   "id": "c8",
+   "type": "concept",
+   "front": "Intervals of convergence of \\(\\sum x^n\\), \\(\\sum\\frac{x^n}{n}\\), \\(\\sum\\frac{x^n}{n^2}\\)",
+   "back": "\\((-1,1)\\), \\([-1,1)\\), \\([-1,1]\\).",
+   "kp": "k5"
+  },
+  {
+   "id": "c9",
+   "type": "formula",
+   "front": "The geometric series as a function",
+   "back": "\\(\\frac{1}{1-u} = \\sum_{n=0}^\\infty u^n\\) for \\(|u| < 1\\).",
+   "kp": "k6"
+  },
+  {
+   "id": "c10",
+   "type": "problem",
+   "front": "Power series for \\(\\frac{1}{1+x^2}\\) and its interval",
+   "back": "\\(\\sum_{n=0}^\\infty (-1)^n x^{2n}\\), for \\(-1 < x < 1\\).",
+   "kp": "k6"
+  },
+  {
+   "id": "c11",
+   "type": "formula",
+   "front": "Term-by-term differentiation and integration of a power series",
+   "back": "\\(f' = \\sum n c_n (x-a)^{n-1}\\), \\(\\int f = C + \\sum \\frac{c_n}{n+1}(x-a)^{n+1}\\); same radius \\(R\\), endpoints re-checked.",
+   "kp": "k7"
+  },
+  {
+   "id": "c12",
+   "type": "formula",
+   "front": "Power series for \\(\\ln(1+x)\\)",
+   "back": "\\(\\sum_{n=1}^\\infty \\frac{(-1)^{n+1}x^n}{n} = x - \\frac{x^2}{2} + \\frac{x^3}{3} - \\cdots\\), interval \\((-1, 1]\\).",
+   "kp": "k8"
+  },
+  {
+   "id": "c13",
+   "type": "formula",
+   "front": "Power series for \\(\\arctan x\\)",
+   "back": "\\(\\sum_{n=0}^\\infty \\frac{(-1)^n x^{2n+1}}{2n+1} = x - \\frac{x^3}{3} + \\frac{x^5}{5} - \\cdots\\), interval \\([-1, 1]\\).",
+   "kp": "k8"
+  },
+  {
+   "id": "c14",
+   "type": "concept",
+   "front": "How is the constant fixed after integrating a power series term by term?",
+   "back": "Evaluate both sides at the centre (or integrate from the centre), e.g. \\(\\ln(1+0) = 0\\) gives \\(C = 0\\).",
+   "kp": "k8"
+  },
+  {
+   "id": "c15",
+   "type": "concept",
+   "front": "What can happen at the endpoints when a power series is differentiated or integrated?",
+   "back": "The radius is unchanged, but differentiation can lose endpoints and integration can gain them.",
+   "kp": "k9"
+  },
+  {
+   "id": "c16",
+   "type": "formula",
+   "front": "Closed form of \\(\\sum_{n=1}^\\infty n x^n\\)",
+   "back": "\\(\\frac{x}{(1-x)^2}\\) for \\(|x| < 1\\).",
+   "kp": "k7"
+  },
+  {
+   "id": "c17",
+   "type": "formula",
+   "front": "Coefficient formula from uniqueness",
+   "back": "If \\(f(x) = \\sum c_n (x-a)^n\\) near \\(a\\), then \\(c_k = \\frac{f^{(k)}(a)}{k!}\\).",
+   "kp": "k7"
+  },
+  {
+   "id": "c18",
+   "type": "problem",
+   "front": "\\(\\sum_{n=1}^\\infty \\frac{n}{2^n}\\)",
+   "back": "2. Put \\(x = \\frac12\\) in \\(\\frac{x}{(1-x)^2}\\).",
+   "kp": "k10",
+   "answer": "2",
+   "check": "number"
+  },
+  {
+   "id": "c19",
+   "type": "problem",
+   "front": "Radius of convergence of \\(\\sum \\frac{x^n}{n!}\\)",
+   "back": "\\(\\infty\\): the ratio \\(\\frac{|x|}{n+1} \\to 0\\) for every \\(x\\).",
+   "kp": "k3"
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k3",
+   "type": "number",
+   "prompt": "Find the radius of convergence of \\(\\sum_{n=0}^{\\infty} \\frac{(2n)!}{(n!)^2}\\, x^n\\).",
+   "answer": "1/4",
+   "why": "\\(\\left|\\frac{u_{n+1}}{u_n}\\right| = \\frac{(2n+2)(2n+1)}{(n+1)^2}|x| \\to 4|x|\\), which is less than 1 exactly when \\(|x| < \\frac14\\). So \\(R = \\frac14\\)."
+  },
+  {
+   "id": "p2",
+   "kp": "k4",
+   "type": "number",
+   "prompt": "Use the root test to find the radius of convergence of \\(\\sum_{n=1}^{\\infty} \\left(\\frac{2n+1}{n+3}\\right)^n x^n\\).",
+   "answer": "1/2",
+   "why": "\\(\\sqrt[n]{|u_n|} = \\frac{2n+1}{n+3}|x| \\to 2|x|\\), which is less than 1 exactly when \\(|x| < \\frac12\\). So \\(R = \\frac12\\)."
+  },
+  {
+   "id": "p3",
+   "kp": "k5",
+   "type": "written",
+   "prompt": "Find the interval of convergence of \\(\\sum_{n=1}^{\\infty} \\frac{(-1)^n (x-4)^n}{n\\,3^n}\\).",
+   "rubric": [
+    "Ratio test gives \\(\\frac{|x-4|}{3}\\): centre 4, \\(R = 3\\), endpoints 1 and 7.",
+    "At \\(x = 7\\): \\(\\sum\\frac{(-1)^n}{n}\\), convergent by the alternating series test.",
+    "At \\(x = 1\\): \\((-1)^n(-3)^n = 3^n\\), giving \\(\\sum\\frac1n\\), divergent.",
+    "States the interval \\((1, 7]\\)."
+   ],
+   "model": "The ratio test gives \\(\\frac{|x-4|}{3}\\cdot\\frac{n}{n+1} \\to \\frac{|x-4|}{3}\\), so the centre is 4 and \\(R = 3\\). At \\(x = 7\\): \\(\\sum\\frac{(-1)^n 3^n}{n3^n} = \\sum\\frac{(-1)^n}{n}\\), which converges by the alternating series test. At \\(x = 1\\): \\((-1)^n(-3)^n = 3^n\\), so the series is \\(\\sum\\frac1n\\), which diverges. The interval of convergence is \\((1, 7]\\).",
+   "why": "The factor \\((-1)^n\\) in the coefficients moves the conditionally convergent endpoint to the right-hand end."
+  },
+  {
+   "id": "p4",
+   "kp": "k5",
+   "type": "written",
+   "prompt": "Find the interval of convergence of \\(\\sum_{n=1}^{\\infty} \\frac{n\\,(x+2)^n}{3^{n+1}}\\).",
+   "rubric": [
+    "Ratio test: \\(\\frac{n+1}{n}\\cdot\\frac{|x+2|}{3} \\to \\frac{|x+2|}{3}\\); centre \\(-2\\), \\(R = 3\\).",
+    "At \\(x = 1\\): terms \\(\\frac n3\\), which do not tend to 0: diverges.",
+    "At \\(x = -5\\): terms \\(\\frac{(-1)^n n}{3}\\), which do not tend to 0: diverges.",
+    "States the interval \\((-5, 1)\\)."
+   ],
+   "model": "Ratio test: \\(\\frac{(n+1)|x+2|^{n+1}}{3^{n+2}}\\cdot\\frac{3^{n+1}}{n|x+2|^n} = \\frac{n+1}{n}\\cdot\\frac{|x+2|}{3} \\to \\frac{|x+2|}{3}\\). So the centre is \\(-2\\), \\(R = 3\\), and the endpoints are \\(-5\\) and 1. At \\(x = 1\\): \\(\\frac{n\\,3^n}{3^{n+1}} = \\frac n3 \\to \\infty\\); the divergence test gives divergence. At \\(x = -5\\): the terms are \\(\\frac{(-1)^n n}{3}\\), whose absolute values tend to \\(\\infty\\), so again the terms do not tend to 0 and the series diverges. The interval is \\((-5, 1)\\).",
+   "why": "At an endpoint, check first whether the terms tend to 0; here they do not, which settles both endpoints at once."
+  },
+  {
+   "id": "p5",
+   "kp": "k6",
+   "type": "expression",
+   "prompt": "Find the power series centred at 0 for \\(\\frac{x}{1 - x^3}\\) and enter the sum of its terms up to and including the \\(x^{10}\\) term.",
+   "answer": "x + x^4 + x^7 + x^10",
+   "vars": "x",
+   "why": "\\(\\frac{x}{1-x^3} = x\\sum_{n=0}^\\infty x^{3n} = \\sum_{n=0}^\\infty x^{3n+1} = x + x^4 + x^7 + x^{10} + \\cdots\\), valid for \\(|x^3| < 1\\), i.e. \\(|x| < 1\\)."
+  },
+  {
+   "id": "p6",
+   "kp": "k6",
+   "type": "written",
+   "prompt": "Use partial fractions to find the power series centred at 0 for \\(\\frac{1}{x^2 - 3x + 2}\\). Give the general coefficient and the radius of convergence.",
+   "rubric": [
+    "Factors and decomposes: \\(\\frac{1}{(x-1)(x-2)} = \\frac{1}{x-2} - \\frac{1}{x-1}\\).",
+    "Rewrites \\(\\frac1{x-2} = -\\frac12\\cdot\\frac{1}{1 - x/2}\\) and \\(-\\frac{1}{x-1} = \\frac1{1-x}\\) and expands both.",
+    "Combines to \\(\\sum_{n=0}^\\infty\\left(1 - \\frac{1}{2^{n+1}}\\right)x^n\\).",
+    "Radius 1: the smaller of the two radii 2 and 1."
+   ],
+   "model": "\\(x^2 - 3x + 2 = (x-1)(x-2)\\), and \\(\\frac{1}{(x-1)(x-2)} = \\frac{1}{x-2} - \\frac{1}{x-1}\\). Now \\(\\frac{1}{x - 2} = -\\frac{1}{2}\\cdot\\frac{1}{1 - x/2} = -\\sum_{n=0}^\\infty\\frac{x^n}{2^{n+1}}\\) for \\(|x| < 2\\), and \\(-\\frac{1}{x-1} = \\frac{1}{1-x} = \\sum_{n=0}^\\infty x^n\\) for \\(|x| < 1\\). Adding, \\(\\frac{1}{x^2 - 3x + 2} = \\sum_{n=0}^\\infty\\left(1 - \\frac{1}{2^{n+1}}\\right)x^n\\) for \\(|x| < 1\\). The coefficients tend to 1, so the ratio test gives \\(L = |x|\\), and the radius is exactly 1: the distance from 0 to the nearer singularity \\(x = 1\\).",
+   "why": "The first terms are \\(\\frac12 + \\frac34x + \\frac78x^2 + \\cdots\\); check: \\(\\frac{1}{2}\\) is the value at 0."
+  },
+  {
+   "id": "p7",
+   "kp": "k8",
+   "type": "expression",
+   "prompt": "For \\(|x| < 1\\), find a closed form for \\(\\sum_{n=1}^{\\infty} \\frac{x^n}{n}\\).",
+   "answer": "-log(1 - x)",
+   "vars": "x",
+   "why": "Differentiating term by term gives \\(\\sum_{n=1}^\\infty x^{n-1} = \\frac{1}{1-x}\\), so the sum is an antiderivative of \\(\\frac{1}{1-x}\\), namely \\(-\\ln(1-x) + C\\); at \\(x = 0\\) the series is 0, so \\(C = 0\\). The sum is \\(-\\ln(1 - x) = \\ln\\frac{1}{1-x}\\)."
+  },
+  {
+   "id": "p8",
+   "kp": "k10",
+   "type": "number",
+   "prompt": "Find the exact value of \\(\\sum_{n=1}^{\\infty} \\frac{n^2}{2^n}\\).",
+   "answer": "6",
+   "why": "From \\(\\sum n x^n = \\frac{x}{(1-x)^2}\\), differentiate: \\(\\sum n^2 x^{n-1} = \\frac{1+x}{(1-x)^3}\\), so \\(\\sum n^2 x^n = \\frac{x(1+x)}{(1-x)^3}\\) for \\(|x| < 1\\). At \\(x = \\frac12\\): \\(\\frac{(1/2)(3/2)}{(1/2)^3} = \\frac{3/4}{1/8} = 6\\)."
+  },
+  {
+   "id": "p9",
+   "kp": "k9",
+   "type": "written",
+   "prompt": "Derive the power series for \\(\\arctan x\\) centred at 0, and determine its interval of convergence. Explain why the endpoint behaviour cannot simply be copied from the series for \\(\\frac{1}{1+x^2}\\).",
+   "rubric": [
+    "Writes \\(\\frac{1}{1+t^2} = \\sum(-1)^n t^{2n}\\) for \\(|t| < 1\\).",
+    "Integrates from 0 to \\(x\\) to get \\(\\sum\\frac{(-1)^n x^{2n+1}}{2n+1}\\), noting the constant is 0 since \\(\\arctan 0 = 0\\).",
+    "Checks \\(x = \\pm1\\) with the alternating series test: both converge; interval \\([-1, 1]\\).",
+    "Explains that the term-by-term theorem preserves only the radius; the series for \\(\\frac{1}{1+x^2}\\) diverges at \\(\\pm1\\) while the integrated series converges there."
+   ],
+   "model": "For \\(|t| < 1\\), \\(\\frac{1}{1+t^2} = \\sum_{n=0}^\\infty (-1)^n t^{2n}\\). Integrating term by term from 0 to \\(x\\) (valid for \\(|x| < 1\\)), \\(\\arctan x = \\sum_{n=0}^\\infty \\frac{(-1)^n x^{2n+1}}{2n+1}\\); the lower limit 0 builds in the constant, since \\(\\arctan 0 = 0\\). The radius is 1. At \\(x = 1\\) the series is \\(\\sum\\frac{(-1)^n}{2n+1}\\), and \\(\\frac1{2n+1}\\) is positive, decreasing and tends to 0, so it converges; at \\(x = -1\\) it is the negative of that series and also converges. The interval is \\([-1, 1]\\). The theorem on term-by-term integration guarantees only that the radius is unchanged; it says nothing at \\(|x| = R\\). Integration divides the \\(n\\)th term by \\(2n+1\\), which here turns the divergent endpoint series \\(\\sum(-1)^n\\) into convergent ones.",
+   "why": "At \\(x = 1\\) the series gives \\(1 - \\frac13 + \\frac15 - \\cdots\\); that its sum is \\(\\frac\\pi4\\) requires an extra argument (Abel's theorem), because the term-by-term theorem covers only the open interval."
+  },
+  {
+   "id": "p10",
+   "kp": "k10",
+   "type": "number",
+   "prompt": "Define \\(g(x) = \\frac{\\arctan x}{x}\\) for \\(x \\ne 0\\) and \\(g(0) = 1\\). Using the power series of \\(g\\), approximate \\(\\int_0^{1/2} g(x)\\,dx\\) by the sum of the first four nonzero terms of the resulting series. Give the value to at least four decimal places.",
+   "answer": "0.48720",
+   "tol": 0.0002,
+   "why": "Dividing the arctangent series by \\(x\\): \\(g(x) = \\sum_{n=0}^\\infty \\frac{(-1)^n x^{2n}}{2n+1}\\) for \\(|x| \\le 1\\) (the value at 0 is the constant term, 1). Integrating over \\([0, \\frac12]\\): \\(\\sum_{n=0}^\\infty\\frac{(-1)^n}{(2n+1)^2}\\left(\\frac12\\right)^{2n+1} = \\frac12 - \\frac{1}{72} + \\frac{1}{800} - \\frac{1}{6272} + \\cdots \\approx 0.487202\\). The next term is \\(\\frac{1}{41472} \\approx 2.4\\times10^{-5}\\), which bounds the error (the true value is \\(0.487222\\ldots\\))."
+  },
+  {
+   "id": "p11",
+   "kp": "k2",
+   "type": "mcq",
+   "prompt": "A power series \\(\\sum c_n (x-2)^n\\) is known to converge at \\(x = 5\\). Which statement must be true?",
+   "options": [
+    "It converges at \\(x = -1\\).",
+    "It converges absolutely at \\(x = 0\\).",
+    "It diverges at \\(x = 6\\).",
+    "It converges absolutely at \\(x = 5\\)."
+   ],
+   "answer": 1,
+   "why": "Convergence at distance 3 from the centre gives absolute convergence at every point of distance less than 3; \\(x = 0\\) is at distance 2. The point \\(x = -1\\) is also at distance 3 and may be a divergent endpoint: \\(\\sum\\frac{(-1)^n(x-2)^n}{n\\,3^n}\\) converges at 5 (alternating harmonic) and diverges at \\(-1\\) (harmonic). Divergence at 6 is not forced, because \\(R\\) might exceed 3. And convergence at 5 may be only conditional, as in the same example."
+  },
+  {
+   "id": "p12",
+   "kp": "k9",
+   "type": "written",
+   "prompt": "The series \\(\\sum_{n=1}^\\infty \\frac{x^n}{n}\\) has interval of convergence \\([-1, 1)\\). Differentiate it term by term, state the interval of convergence of the result, and explain why the radius is unchanged while an endpoint is lost.",
+   "rubric": [
+    "Differentiates to \\(\\sum_{n=1}^\\infty x^{n-1} = \\sum_{n=0}^\\infty x^n\\).",
+    "States its interval \\((-1, 1)\\): at \\(x = -1\\) the terms \\((-1)^n\\) do not tend to 0.",
+    "Explains the radius is unchanged because the factor \\(n\\) changes the ratio of consecutive terms only by \\(\\frac{n+1}{n} \\to 1\\) (or cites the theorem).",
+    "Explains the endpoint is lost because multiplying the terms by \\(n\\) destroys the decay \\(\\frac1n\\) that the alternating series test needed."
+   ],
+   "model": "Term by term, \\(\\frac{d}{dx}\\frac{x^n}{n} = x^{n-1}\\), so the derivative is \\(\\sum_{n=1}^\\infty x^{n-1} = 1 + x + x^2 + \\cdots\\), the geometric series, with interval \\((-1, 1)\\). The radius is still 1: differentiation multiplies the \\(n\\)th coefficient by \\(n\\), and in the ratio test this contributes \\(\\frac{n+1}{n} \\to 1\\), which leaves the limit \\(|x|\\) unchanged. The endpoint \\(x = -1\\) is lost: the original series converged there because its terms \\(\\frac{(-1)^n}{n}\\) decrease in size to 0; after differentiation the terms are \\((-1)^{n-1}\\), which do not tend to 0, so the divergence test applies.",
+   "why": "Integration divides coefficients by \\(n+1\\) and can only help convergence at an endpoint; differentiation multiplies by \\(n\\) and can only hurt it."
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k5",
+   "type": "written",
+   "prompt": "Find the radius and the interval of convergence of \\(\\sum_{n=1}^{\\infty} \\frac{(x-3)^n}{n^2\\,2^n}\\). Justify the behaviour at each endpoint.",
+   "rubric": [
+    "Ratio test: \\(\\frac{n^2}{(n+1)^2}\\cdot\\frac{|x-3|}{2} \\to \\frac{|x-3|}{2}\\); centre 3, \\(R = 2\\).",
+    "At \\(x = 5\\): \\(\\sum\\frac1{n^2}\\), a convergent \\(p\\)-series.",
+    "At \\(x = 1\\): \\(\\sum\\frac{(-1)^n}{n^2}\\), absolutely convergent.",
+    "States the interval \\([1, 5]\\)."
+   ],
+   "model": "Ratio test: \\(\\left|\\frac{(x-3)^{n+1}}{(n+1)^2 2^{n+1}}\\cdot\\frac{n^2 2^n}{(x-3)^n}\\right| = \\frac{n^2}{(n+1)^2}\\cdot\\frac{|x-3|}{2} \\to \\frac{|x-3|}{2}\\). The series converges absolutely for \\(|x - 3| < 2\\) and diverges for \\(|x-3| > 2\\): \\(R = 2\\), endpoints 1 and 5. At \\(x = 5\\): \\(\\sum\\frac{2^n}{n^2 2^n} = \\sum\\frac{1}{n^2}\\), a \\(p\\)-series with \\(p = 2 > 1\\), convergent. At \\(x = 1\\): \\(\\sum\\frac{(-2)^n}{n^22^n} = \\sum\\frac{(-1)^n}{n^2}\\), whose absolute values form the same convergent \\(p\\)-series, so it converges absolutely. The interval of convergence is \\([1, 5]\\).",
+   "why": "Absolute convergence at one endpoint always gives absolute convergence at the other, because the absolute values of the terms coincide."
+  },
+  {
+   "id": "e2",
+   "kp": "k3",
+   "type": "number",
+   "prompt": "Find the radius of convergence of \\(\\sum_{n=1}^{\\infty} \\frac{n!}{n^n}\\, x^n\\). Give the exact value.",
+   "answer": "e",
+   "why": "\\(\\left|\\frac{u_{n+1}}{u_n}\\right| = \\frac{(n+1)!}{(n+1)^{n+1}}\\cdot\\frac{n^n}{n!}|x| = \\left(\\frac{n}{n+1}\\right)^n|x| \\to \\frac{|x|}{e}\\). This is less than 1 exactly when \\(|x| < e\\), so \\(R = e\\)."
+  },
+  {
+   "id": "e3",
+   "kp": "k7",
+   "type": "expression",
+   "prompt": "For \\(|x| < 1\\), find a closed form for \\(\\sum_{n=1}^{\\infty} n^2 x^n\\).",
+   "answer": "x*(1 + x)/(1 - x)^3",
+   "vars": "x",
+   "why": "From \\(\\sum_{n=1}^\\infty n x^n = \\frac{x}{(1-x)^2}\\), differentiate: \\(\\sum n^2 x^{n-1} = \\frac{(1-x)^2 + 2x(1-x)}{(1-x)^4} = \\frac{1+x}{(1-x)^3}\\). Multiply by \\(x\\): \\(\\sum n^2x^n = \\frac{x(1+x)}{(1-x)^3}\\)."
+  },
+  {
+   "id": "e4",
+   "kp": "k8",
+   "type": "written",
+   "prompt": "Show that \\(\\ln\\frac{1+x}{1-x} = 2\\sum_{n=0}^{\\infty}\\frac{x^{2n+1}}{2n+1}\\) for \\(|x| < 1\\), starting from known power series and justifying each step. Then explain why this series is well suited to computing \\(\\ln 2\\).",
+   "rubric": [
+    "Uses \\(\\ln(1+x) = \\sum\\frac{(-1)^{n+1}x^n}{n}\\) and \\(\\ln(1-x) = -\\sum\\frac{x^n}{n}\\), both valid for \\(|x| < 1\\).",
+    "Subtracts (valid on the common interval) and shows even powers cancel and odd powers double.",
+    "Alternatively or additionally, integrates \\(\\frac{2}{1-x^2} = 2\\sum x^{2n}\\) with constant 0.",
+    "Notes \\(\\frac{1+x}{1-x} = 2\\) at \\(x = \\frac13\\), so \\(\\ln 2 = 2\\sum\\frac{1}{(2n+1)3^{2n+1}}\\), whose terms shrink by a factor of about 9 each step."
+   ],
+   "model": "For \\(|x| < 1\\), \\(\\ln(1+x) = x - \\frac{x^2}{2} + \\frac{x^3}{3} - \\frac{x^4}{4} + \\cdots\\) and \\(\\ln(1-x) = -x - \\frac{x^2}{2} - \\frac{x^3}{3} - \\frac{x^4}{4} - \\cdots\\). Both converge on \\((-1,1)\\), so their difference is the term-by-term difference: \\(\\ln\\frac{1+x}{1-x} = \\ln(1+x) - \\ln(1-x) = 2x + \\frac{2x^3}{3} + \\frac{2x^5}{5} + \\cdots = 2\\sum_{n=0}^\\infty\\frac{x^{2n+1}}{2n+1}\\); the even powers cancel and the odd ones double. For \\(\\ln 2\\), solve \\(\\frac{1+x}{1-x} = 2\\): \\(x = \\frac13\\), well inside the interval. Then \\(\\ln 2 = 2\\left(\\frac13 + \\frac{1}{3\\cdot 27} + \\frac{1}{5\\cdot 243} + \\cdots\\right)\\). Each term is less than \\(\\frac19\\) of the previous one, so a handful of terms gives many correct digits, in contrast to the alternating harmonic series.",
+   "why": "Every positive number \\(y\\) equals \\(\\frac{1+x}{1-x}\\) for \\(x = \\frac{y-1}{y+1} \\in (-1, 1)\\), so this one series computes every natural logarithm."
+  },
+  {
+   "id": "e5",
+   "kp": "k10",
+   "type": "number",
+   "prompt": "Find the exact value of \\(\\sum_{n=0}^{\\infty} \\frac{2}{(2n+1)\\,3^{2n+1}}\\).",
+   "answer": "log(2)",
+   "why": "This is \\(2\\sum\\frac{x^{2n+1}}{2n+1}\\) at \\(x = \\frac13\\), which equals \\(\\ln\\frac{1+x}{1-x} = \\ln\\frac{4/3}{2/3} = \\ln 2\\)."
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "Radius by the ratio test",
+    "formula": "\\(\\lim\\left|\\frac{c_{n+1}(x-a)^{n+1}}{c_n(x-a)^n}\\right| < 1 \\iff |x-a| < R\\)",
+    "when": "Any power series with factorials, powers or rational coefficients.",
+    "example": "\\(\\sum\\frac{(x+3)^n}{n4^n}\\): \\(\\frac{|x+3|}{4} < 1\\), \\(R = 4\\).",
+    "watch": "Keep the absolute value; factor out the coefficient of \\(x\\)."
+   },
+   {
+    "name": "Radius by the root test",
+    "formula": "\\(\\lim\\sqrt[n]{|c_n (x-a)^n|} < 1\\)",
+    "when": "The term is an \\(n\\)th power.",
+    "example": "\\(\\sum\\left(\\frac{n}{2n+1}\\right)^n x^n\\): \\(\\frac{|x|}{2} < 1\\), \\(R = 2\\).",
+    "watch": "Uses \\(\\sqrt[n]{n} \\to 1\\) when polynomial factors appear."
+   },
+   {
+    "name": "Endpoint check",
+    "formula": "Substitute \\(x = a \\pm R\\) and test the numerical series",
+    "when": "After every radius computation.",
+    "example": "\\(\\sum\\frac{x^n}{n}\\): \\(x = -1\\) converges, \\(x = 1\\) diverges.",
+    "watch": "Never the ratio test here (\\(L = 1\\)); conditional convergence counts."
+   },
+   {
+    "name": "Geometric representation",
+    "formula": "\\(\\frac{1}{1-u} = \\sum u^n\\), \\(|u| < 1\\)",
+    "when": "Rational functions: make the denominator 1 − (something).",
+    "example": "\\(\\frac{3}{5-x} = \\sum\\frac{3x^n}{5^{n+1}}\\), \\(|x| < 5\\).",
+    "watch": "Rescale \\(|u| < 1\\) into a condition on \\(x\\)."
+   },
+   {
+    "name": "Recentring",
+    "formula": "Write the denominator in terms of \\(x - a\\)",
+    "when": "A series in powers of \\(x - a\\) is wanted.",
+    "example": "\\(\\frac1x = \\frac12\\cdot\\frac{1}{1 + \\frac{x-2}{2}}\\)",
+    "watch": "The radius is often the distance to the nearest point where the function blows up."
+   },
+   {
+    "name": "Term-by-term calculus",
+    "formula": "\\(f' = \\sum n c_n (x-a)^{n-1}\\), \\(\\int f = C + \\sum\\frac{c_n (x-a)^{n+1}}{n+1}\\)",
+    "when": "Functions whose derivative has a known series: \\(\\ln(1+x)\\), \\(\\arctan x\\), \\(\\frac{1}{(1-x)^2}\\).",
+    "example": "\\(\\ln(1+x) = \\sum\\frac{(-1)^{n+1}x^n}{n}\\)",
+    "watch": "Find C at the centre; recheck endpoints."
+   },
+   {
+    "name": "Summing numerical series",
+    "formula": "\\(\\sum c_n x_0^n = f(x_0)\\) if \\(x_0\\) is inside the interval",
+    "when": "A numerical series looks like a known power series at a specific x.",
+    "example": "\\(\\sum\\frac{n}{2^n} = \\frac{1/2}{(1/2)^2} = 2\\)",
+    "watch": "Check that the point lies in the interval of convergence."
+   },
+   {
+    "name": "Integrals by series",
+    "formula": "\\(\\int_0^b \\sum c_n x^n\\,dx = \\sum \\frac{c_n b^{n+1}}{n+1}\\), \\(|b| < R\\)",
+    "when": "Integrands with no convenient antiderivative.",
+    "example": "\\(\\int_0^{1/2}\\frac{dx}{1+x^4} \\approx \\frac12 - \\frac1{160} + \\frac1{4608}\\)",
+    "watch": "Bound the error with the alternating series estimate when it applies."
+   }
+  ],
+  "stuck": [
+   "To find \\(R\\), compute the ratio of consecutive terms including the powers of \\((x-a)\\), then solve the inequality for \\(|x - a|\\).",
+   "If only even or odd powers appear, apply the ratio test to the terms, not to a formula in the coefficients.",
+   "At each endpoint ask first whether the terms tend to 0; then look for a \\(p\\)-series or an alternating series.",
+   "For a rational function, factor the constant out of the denominator so that it reads \\(1 - u\\).",
+   "If the function is a logarithm or an inverse tangent, differentiate it, expand the derivative as a geometric series, and integrate back.",
+   "Before substituting a number into a closed-form identity, check it lies in the interval of convergence."
+  ]
+ }
+}

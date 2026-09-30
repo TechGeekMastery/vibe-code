@@ -1,0 +1,976 @@
+{
+ "key": "mth-6-3",
+ "title": "Sets, functions, and relations",
+ "v": 1,
+ "scope": "Sets and set operations, element-chasing proofs of set identities, functions (injective, surjective, bijective, composition, inverses, images and preimages), relations and their properties, partial orders, and equivalence relations with partitions; cardinality of infinite sets and modular arithmetic itself are left to other topics.",
+ "sources": [
+  {
+   "title": "R. Hammack, Book of Proof, 3rd ed., Chapters 1 (Sets), 8 (Proofs Involving Sets), 11 (Relations), 12 (Functions)",
+   "url": "https://richardhammack.github.io/BookOfProof/"
+  },
+  {
+   "title": "T. Judson, Abstract Algebra: Theory and Applications, §1.2 Sets and Equivalence Relations (LibreTexts)",
+   "url": "https://math.libretexts.org/Bookshelves/Abstract_and_Geometric_Algebra/Abstract_Algebra:_Theory_and_Applications_(Judson)/01:_Preliminaries/1.02:_Sets_and_Equivalence_Relations"
+  },
+  {
+   "title": "UBC Mathematics 220, notes on functions, images and preimages",
+   "url": "https://personal.math.ubc.ca/~gor/Math220_2020/functions_notes.pdf"
+  },
+  {
+   "title": "UCL MATH0005 Algebra 1, §2.10 Conditions for invertibility",
+   "url": "https://www.homepages.ucl.ac.uk/~ucahmto/0005_2021/Ch2.S10.html"
+  }
+ ],
+ "pre": [
+  "mth-6-0",
+  "mth-6-1",
+  "mth-0-4"
+ ],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Sets, elements and subsets",
+   "d": "Use roster and set-builder notation, state the definitions of subset and set equality, and distinguish membership from inclusion.",
+   "type": "fact"
+  },
+  {
+   "id": "k2",
+   "t": "Set operations and constructions",
+   "d": "Compute unions, intersections, differences, complements, Cartesian products and power sets, and their sizes for finite sets.",
+   "type": "procedure"
+  },
+  {
+   "id": "k3",
+   "t": "Element-chasing and double inclusion",
+   "d": "Prove A ⊆ B from an arbitrary element, and A = B by proving both inclusions.",
+   "type": "skill"
+  },
+  {
+   "id": "k4",
+   "t": "Set identities and counterexamples",
+   "d": "Prove De Morgan and distributive laws for sets and refute false identities with specific small sets.",
+   "type": "skill"
+  },
+  {
+   "id": "k5",
+   "t": "Functions and well-definedness",
+   "d": "Define a function with domain, codomain and range, and decide whether a stated rule defines a function.",
+   "type": "concept"
+  },
+  {
+   "id": "k6",
+   "t": "Injective, surjective, bijective",
+   "d": "Prove or disprove injectivity and surjectivity of a given function from the definitions.",
+   "type": "skill"
+  },
+  {
+   "id": "k7",
+   "t": "Composition and inverse functions",
+   "d": "Prove that composition preserves injectivity and surjectivity and that a function has an inverse exactly when it is bijective.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k8",
+   "t": "Images and preimages",
+   "d": "Compute images and preimages of sets and prove or refute their interaction with unions and intersections.",
+   "type": "skill"
+  },
+  {
+   "id": "k9",
+   "t": "Properties of relations",
+   "d": "Decide whether a relation is reflexive, symmetric, antisymmetric or transitive, with a proof or a counterexample.",
+   "type": "procedure"
+  },
+  {
+   "id": "k10",
+   "t": "Equivalence relations and classes",
+   "d": "Prove that a relation is an equivalence relation and describe its equivalence classes.",
+   "type": "skill"
+  },
+  {
+   "id": "k11",
+   "t": "Partitions",
+   "d": "Prove that equivalence classes partition a set and pass between partitions and equivalence relations.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k12",
+   "t": "Partial and total orders",
+   "d": "Recognize partial and total orders and distinguish antisymmetry from failure of symmetry.",
+   "type": "distinction"
+  }
+ ],
+ "intro": "Almost every object in modern mathematics is defined as a set: the solution set of an equation, the domain of a function, the collection of integers that leave remainder 3 on division by 5. Functions and relations, which in earlier courses were formulas and pictures, become sets of ordered pairs, and that change is what allows statements such as \"\\( f \\) has an inverse\" or \"these two fractions represent the same number\" to be proved rather than merely illustrated.\n\nThis topic sets out the vocabulary and the proof patterns of that language. The central method is **element-chasing**: to prove a statement about sets, take an arbitrary element and follow the definitions, using the logic of the first topic. Applied to functions, the same method gives the standard proofs of injectivity and surjectivity and the characterization of invertible functions. Applied to relations, it leads to equivalence relations and partitions, the device by which mathematics treats objects that agree in a specified respect as a single object.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "Sets, subsets and operations",
+   "kps": [
+    "k1",
+    "k2"
+   ],
+   "md": "Before any statement about sets can be proved, the objects and the notation must be fixed precisely. This section defines sets, the two different relations \"is an element of\" and \"is a subset of\", and the standard ways of building new sets from old ones.\n\nA **set** is a collection of objects, called its **elements**; \\( x \\in A \\) means that \\( x \\) is an element of \\( A \\), and \\( x \\notin A \\) that it is not. A set is determined by its elements alone: \\( \\{1, 2, 2\\} = \\{2, 1\\} \\), because order and repetition in a listing carry no information. Sets are described by listing, as in \\( \\{1, 2, 3\\} \\), or in **set-builder notation** \\( \\{ x \\in U : P(x) \\} \\), the set of all elements of \\( U \\) for which the predicate \\( P(x) \\) is true. For example, \\( \\{ n \\in \\mathbb{Z} : n = 2k \\text{ for some } k \\in \\mathbb{Z} \\} \\) is the set of even integers. Standard sets are \\( \\mathbb{Z} \\) (integers), \\( \\mathbb{Q} \\) (rationals), \\( \\mathbb{R} \\) (reals) and \\( \\mathbb{N} = \\{0, 1, 2, \\dots\\} \\) (natural numbers; some authors start at 1). The **empty set** \\( \\varnothing \\) has no elements.\n\n> \\( A \\) is a **subset** of \\( B \\), written \\( A \\subseteq B \\), if every element of \\( A \\) is an element of \\( B \\): \\( \\forall x\\,(x \\in A \\to x \\in B) \\). Two sets are **equal** if they have the same elements; equivalently, \\( A = B \\) if and only if \\( A \\subseteq B \\) and \\( B \\subseteq A \\). If \\( A \\subseteq B \\) and \\( A \\ne B \\), \\( A \\) is a **proper subset** of \\( B \\).\n\nSince the conditional \\( x \\in \\varnothing \\to x \\in B \\) is vacuously true, \\( \\varnothing \\subseteq B \\) for every set \\( B \\).\n\nThe relations \\( \\in \\) and \\( \\subseteq \\) must not be confused: \\( \\in \\) relates an object to a set that contains it, while \\( \\subseteq \\) relates two sets. Elements of a set may themselves be sets.\n\n**Worked example 1.** Let \\( X = \\{1, \\{1\\}, \\{1, 2\\}\\} \\), a set with three elements. Then \\( 1 \\in X \\) and \\( \\{1\\} \\in X \\); also \\( \\{1\\} \\subseteq X \\), since its only element, 1, belongs to \\( X \\). Next, \\( \\{1, 2\\} \\in X \\), but \\( \\{1, 2\\} \\not\\subseteq X \\), because \\( 2 \\notin X \\): the element \\( \\{1, 2\\} \\) contains 2, but 2 itself is not an element of \\( X \\).\n\n**Operations.** Fix a **universal set** \\( U \\) containing all the sets under discussion. For \\( A, B \\subseteq U \\):\n\n- the **union** \\( A \\cup B = \\{ x : x \\in A \\text{ or } x \\in B \\} \\);\n- the **intersection** \\( A \\cap B = \\{ x : x \\in A \\text{ and } x \\in B \\} \\); \\( A \\) and \\( B \\) are **disjoint** if \\( A \\cap B = \\varnothing \\);\n- the **difference** \\( A \\setminus B = \\{ x : x \\in A \\text{ and } x \\notin B \\} \\) (also written \\( A - B \\));\n- the **complement** \\( \\overline{A} = U \\setminus A \\).\n\nTwo constructions produce sets of a new kind. The **Cartesian product** \\( A \\times B = \\{ (a, b) : a \\in A,\\ b \\in B \\} \\) is a set of **ordered pairs**, where \\( (a, b) = (c, d) \\) exactly when \\( a = c \\) and \\( b = d \\). The **power set** \\( \\mathcal{P}(A) = \\{ S : S \\subseteq A \\} \\) is the set of all subsets of \\( A \\). For finite sets, writing \\( |A| \\) for the number of elements, \\( |A \\times B| = |A| \\cdot |B| \\) and \\( |\\mathcal{P}(A)| = 2^{|A|} \\), since a subset is determined by an independent choice, in or out, for each element (an induction proof is in the practice set).\n\n**Worked example 2.** Let \\( U = \\{1, 2, 3, 4, 5\\} \\), \\( A = \\{1, 2, 3\\} \\) and \\( B = \\{2, 4\\} \\). Then \\( A \\cup B = \\{1, 2, 3, 4\\} \\), \\( A \\cap B = \\{2\\} \\), \\( A \\setminus B = \\{1, 3\\} \\), \\( B \\setminus A = \\{4\\} \\), \\( \\overline{A} = \\{4, 5\\} \\), and\n\\[ A \\times B = \\{(1,2), (1,4), (2,2), (2,4), (3,2), (3,4)\\}, \\qquad \\mathcal{P}(B) = \\{\\varnothing, \\{2\\}, \\{4\\}, \\{2, 4\\}\\}. \\]\nAs predicted, \\( |A \\times B| = 3 \\cdot 2 = 6 \\) and \\( |\\mathcal{P}(B)| = 2^{2} = 4 \\). Note that \\( B \\times A \\ne A \\times B \\): \\( (4, 1) \\in B \\times A \\) but \\( (4, 1) \\notin A \\times B \\).\n\n**The common mistakes.** Writing \\( 1 \\subseteq A \\) for \\( 1 \\in A \\), or \\( \\{1\\} \\in A \\) for \\( \\{1\\} \\subseteq A \\); believing that \\( \\varnothing \\in A \\) for every \\( A \\) (true only when \\( \\varnothing \\) is one of the listed elements, whereas \\( \\varnothing \\subseteq A \\) always holds); and treating an ordered pair as a two-element set, which would wrongly identify \\( (1, 2) \\) with \\( (2, 1) \\).",
+   "questions": [
+    {
+     "id": "s1q1",
+     "kp": "k1",
+     "type": "written",
+     "prompt": "Let \\( X = \\{1, \\{1\\}, \\{1, 2\\}, \\varnothing\\} \\). Decide whether each statement is true or false, with a one-line reason: (a) \\( 1 \\in X \\); (b) \\( \\{1\\} \\subseteq X \\); (c) \\( \\{1\\} \\in X \\); (d) \\( \\{1, 2\\} \\subseteq X \\); (e) \\( \\varnothing \\in X \\); (f) \\( \\varnothing \\subseteq X \\); (g) \\( \\{\\varnothing\\} \\subseteq X \\). Then give \\( |\\mathcal{P}(X)| \\).",
+     "rubric": [
+      "(a) true, (c) true, (e) true: each is listed as an element",
+      "(b) true because 1 ∈ X; (g) true because ∅ ∈ X",
+      "(d) false because 2 ∉ X; (f) true for every set (vacuous)",
+      "|X| = 4, so |P(X)| = 2⁴ = 16"
+     ],
+     "model": "(a) True: 1 is listed. (b) True: the only element of \\( \\{1\\} \\) is 1, and \\( 1 \\in X \\). (c) True: \\( \\{1\\} \\) is listed. (d) False: \\( 2 \\in \\{1, 2\\} \\) but \\( 2 \\notin X \\). (e) True: \\( \\varnothing \\) is listed. (f) True: \\( \\varnothing \\subseteq A \\) for every set \\( A \\), vacuously. (g) True: the only element of \\( \\{\\varnothing\\} \\) is \\( \\varnothing \\), which belongs to \\( X \\).\n\n\\( X \\) has four elements, \\( 1, \\{1\\}, \\{1, 2\\}, \\varnothing \\), so \\( |\\mathcal{P}(X)| = 2^{4} = 16 \\).",
+     "why": "To test \\( S \\subseteq X \\), check each element of \\( S \\) for membership in \\( X \\); to test \\( S \\in X \\), look for \\( S \\) itself in the list of elements."
+    },
+    {
+     "id": "s1q2",
+     "kp": "k2",
+     "type": "number",
+     "prompt": "Let \\( A = \\{a, b\\} \\) and \\( B = \\{1, 2, 3\\} \\). How many elements does \\( \\mathcal{P}(A \\times B) \\) have?",
+     "answer": "64",
+     "why": "\\( |A \\times B| = 2 \\cdot 3 = 6 \\), so \\( |\\mathcal{P}(A \\times B)| = 2^{6} = 64 \\)."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "Proofs about sets",
+   "kps": [
+    "k3",
+    "k4"
+   ],
+   "md": "A Venn diagram can suggest that two sets are equal, but it depicts one configuration of the sets and proves nothing about all configurations. This section develops the method that does prove statements about sets, **element-chasing**, and shows how set identities reduce to the logical equivalences of the first topic.\n\n**Proving \\( A \\subseteq B \\).** The definition is a universal conditional, so the proof has the form: \"Let \\( x \\in A \\) be arbitrary. … Therefore \\( x \\in B \\).\" The middle consists of unfolding the definitions of the sets involved.\n\n**Proving \\( A = B \\).** Prove \\( A \\subseteq B \\) and \\( B \\subseteq A \\). This is a proof by **double inclusion**. When every step is reversible, the two inclusions can be combined into a single chain of \"if and only if\" statements, but then each step must genuinely be an equivalence.\n\n**Translating membership.** By definition,\n\\[ x \\in A \\cup B \\iff (x \\in A) \\vee (x \\in B), \\qquad x \\in A \\cap B \\iff (x \\in A) \\wedge (x \\in B), \\]\n\\[ x \\in \\overline{A} \\iff \\neg(x \\in A), \\qquad x \\in A \\setminus B \\iff (x \\in A) \\wedge \\neg(x \\in B). \\]\nSo every identity of set algebra corresponds to a logical equivalence: the distributive laws for sets come from the distributive laws for \\( \\wedge \\) and \\( \\vee \\), and De Morgan's laws for sets from De Morgan's laws for statements.\n\n**Worked example 1 (De Morgan's law).** For subsets \\( A, B \\) of \\( U \\), \\( \\overline{A \\cup B} = \\overline{A} \\cap \\overline{B} \\).\n\n*Proof.* (\\( \\subseteq \\)) Let \\( x \\in \\overline{A \\cup B} \\). Then \\( x \\notin A \\cup B \\): it is not the case that \\( x \\in A \\) or \\( x \\in B \\). By De Morgan's law for statements, \\( x \\notin A \\) and \\( x \\notin B \\). Hence \\( x \\in \\overline{A} \\) and \\( x \\in \\overline{B} \\), so \\( x \\in \\overline{A} \\cap \\overline{B} \\).\n\n(\\( \\supseteq \\)) Let \\( x \\in \\overline{A} \\cap \\overline{B} \\). Then \\( x \\notin A \\) and \\( x \\notin B \\), so \\( x \\) lies in neither set and \\( x \\notin A \\cup B \\); that is, \\( x \\in \\overline{A \\cup B} \\). \\( \\blacksquare \\)\n\n**Worked example 2 (a distributive law, with cases).** For all sets, \\( A \\cap (B \\cup C) = (A \\cap B) \\cup (A \\cap C) \\).\n\n*Proof.* (\\( \\subseteq \\)) Let \\( x \\in A \\cap (B \\cup C) \\). Then \\( x \\in A \\), and \\( x \\in B \\) or \\( x \\in C \\). *Case \\( x \\in B \\):* then \\( x \\in A \\cap B \\). *Case \\( x \\in C \\):* then \\( x \\in A \\cap C \\). In either case \\( x \\in (A \\cap B) \\cup (A \\cap C) \\).\n\n(\\( \\supseteq \\)) Let \\( x \\in (A \\cap B) \\cup (A \\cap C) \\). *Case \\( x \\in A \\cap B \\):* then \\( x \\in A \\) and \\( x \\in B \\subseteq B \\cup C \\). *Case \\( x \\in A \\cap C \\):* then \\( x \\in A \\) and \\( x \\in C \\subseteq B \\cup C \\). In either case \\( x \\in A \\cap (B \\cup C) \\). \\( \\blacksquare \\)\n\nA union among the givens produces a proof by cases; a union in the goal requires showing membership in only one of its parts.\n\n**Disproving a set identity.** A proposed identity is a universal statement about all sets, so one counterexample refutes it. Choose small, specific sets.\n\n**Worked example 3.** Disprove: \\( A \\setminus (B \\setminus C) = (A \\setminus B) \\setminus C \\) for all sets \\( A, B, C \\).\n\nTake \\( A = B = C = \\{1\\} \\). Then \\( B \\setminus C = \\varnothing \\), so the left side is \\( \\{1\\} \\setminus \\varnothing = \\{1\\} \\). But \\( A \\setminus B = \\varnothing \\), so the right side is \\( \\varnothing \\setminus \\{1\\} = \\varnothing \\). The sides differ, so the identity is false. (One inclusion does hold: an element of \\( (A \\setminus B) \\setminus C \\) lies in \\( A \\) and not in \\( B \\), hence not in \\( B \\setminus C \\), so it lies in \\( A \\setminus (B \\setminus C) \\).)\n\nTo find a counterexample systematically, test the identity with a single element placed in each region of the Venn diagram; here the element in \\( A \\cap B \\cap C \\) is the one that separates the two sides.\n\n**The common mistakes.** Offering a Venn diagram as a proof; choosing a particular element (\"let \\( x = 3 \\)\") instead of an arbitrary one; proving only one inclusion of an equality; and negating membership in a union incorrectly: \\( x \\notin A \\cup B \\) means \\( x \\notin A \\) *and* \\( x \\notin B \\).",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k3",
+     "type": "written",
+     "prompt": "Prove that for all sets \\( A, B, C \\), \\( A \\times (B \\cap C) = (A \\times B) \\cap (A \\times C) \\). Your proof must treat an arbitrary element of each side as an ordered pair.",
+     "rubric": [
+      "⊆: takes an arbitrary element (a, b) with a ∈ A and b ∈ B ∩ C",
+      "Deduces (a, b) ∈ A × B and (a, b) ∈ A × C",
+      "⊇: an element of (A × B) ∩ (A × C) is a pair (a, b) with a ∈ A, b ∈ B and b ∈ C (using equality of ordered pairs)",
+      "Concludes b ∈ B ∩ C, so (a, b) ∈ A × (B ∩ C); both inclusions stated"
+     ],
+     "model": "*Proof.* (\\( \\subseteq \\)) Let \\( p \\in A \\times (B \\cap C) \\). Then \\( p = (a, b) \\) with \\( a \\in A \\) and \\( b \\in B \\cap C \\), so \\( b \\in B \\) and \\( b \\in C \\). Hence \\( (a, b) \\in A \\times B \\) and \\( (a, b) \\in A \\times C \\), so \\( p \\in (A \\times B) \\cap (A \\times C) \\).\n\n(\\( \\supseteq \\)) Let \\( p \\in (A \\times B) \\cap (A \\times C) \\). Since \\( p \\in A \\times B \\), \\( p = (a, b) \\) with \\( a \\in A \\), \\( b \\in B \\). Since \\( p \\in A \\times C \\), also \\( p = (a', c) \\) with \\( a' \\in A \\), \\( c \\in C \\); by equality of ordered pairs \\( a' = a \\) and \\( c = b \\), so \\( b \\in C \\). Thus \\( b \\in B \\cap C \\) and \\( p = (a, b) \\in A \\times (B \\cap C) \\). \\( \\blacksquare \\)",
+     "why": "The one subtle point is the reverse inclusion: the two memberships describe the same pair, so equality of ordered pairs identifies the coordinates."
+    },
+    {
+     "id": "s2q2",
+     "kp": "k4",
+     "type": "written",
+     "prompt": "Prove or disprove each identity for all sets: (a) \\( A \\setminus (B \\cup C) = (A \\setminus B) \\cap (A \\setminus C) \\); (b) \\( (A \\cup B) \\setminus B = A \\). For any false identity, also state the correct right-hand side.",
+     "rubric": [
+      "(a) True, proved by a chain of equivalences or double inclusion using De Morgan for statements",
+      "The key step: x ∉ B ∪ C iff x ∉ B and x ∉ C",
+      "(b) False: counterexample such as A = B = {1}, giving ∅ ≠ {1}",
+      "(b) correct identity: (A ∪ B) \\ B = A \\ B"
+     ],
+     "model": "(a) True. For any \\( x \\):\n\\[ x \\in A \\setminus (B \\cup C) \\iff x \\in A \\wedge x \\notin B \\cup C \\iff x \\in A \\wedge x \\notin B \\wedge x \\notin C \\]\n\\[ \\iff (x \\in A \\wedge x \\notin B) \\wedge (x \\in A \\wedge x \\notin C) \\iff x \\in (A \\setminus B) \\cap (A \\setminus C). \\]\nThe second step is De Morgan's law, \\( \\neg(x \\in B \\vee x \\in C) \\equiv x \\notin B \\wedge x \\notin C \\); each step is an equivalence, so the sets are equal.\n\n(b) False. Take \\( A = B = \\{1\\} \\): then \\( (A \\cup B) \\setminus B = \\{1\\} \\setminus \\{1\\} = \\varnothing \\ne A \\). The correct identity is \\( (A \\cup B) \\setminus B = A \\setminus B \\): an element of the left side lies in \\( A \\) or \\( B \\) but not in \\( B \\), hence in \\( A \\) and not in \\( B \\), and conversely.",
+     "why": "Removing \\( B \\) removes the part of \\( A \\) inside \\( B \\) as well; the identity in (b) holds only when \\( A \\cap B = \\varnothing \\)."
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "Functions",
+   "kps": [
+    "k5",
+    "k6"
+   ],
+   "md": "In calculus a function is usually a formula. For proofs, and for functions between arbitrary sets (sets of pairs, of strings, of subsets), a definition is needed that does not depend on formulas and that makes \"one output for each input\" something that can be checked. This section gives that definition and the three properties that matter most.\n\n> A **function** \\( f \\) from a set \\( A \\) to a set \\( B \\), written \\( f : A \\to B \\), assigns to each element \\( a \\in A \\) exactly one element \\( f(a) \\in B \\). Formally, \\( f \\) is a subset of \\( A \\times B \\) such that for each \\( a \\in A \\) there is exactly one \\( b \\in B \\) with \\( (a, b) \\in f \\), and we write \\( f(a) = b \\). The set \\( A \\) is the **domain**, \\( B \\) the **codomain**, and \\( f(A) = \\{ f(a) : a \\in A \\} \\subseteq B \\) the **range** (or image) of \\( f \\).\n\nTwo functions are equal when they have the same domain and codomain and agree at every point. The codomain is part of the function: \\( x \\mapsto x^{2} \\) from \\( \\mathbb{R} \\) to \\( \\mathbb{R} \\) and from \\( \\mathbb{R} \\) to \\( [0, \\infty) \\) are different functions, and only the second is surjective.\n\n**Well-definedness.** A rule defines a function only if each input receives exactly one output in the codomain. This fails if some input has no output (\\( x \\mapsto \\frac{1}{x} \\) on \\( \\mathbb{R} \\)), if an output lies outside the codomain (\\( n \\mapsto \\frac{n}{2} \\) from \\( \\mathbb{Z} \\) to \\( \\mathbb{Z} \\)), or if the rule depends on how the input is written. For example, \"\\( f\\left(\\frac{a}{b}\\right) = a \\)\" does not define a function on \\( \\mathbb{Q} \\): \\( \\frac{1}{2} = \\frac{2}{4} \\), yet the rule gives 1 and 2. A rule stated in terms of a representation is **well-defined** when equal inputs, however represented, give equal outputs.\n\n> Let \\( f : A \\to B \\).\n> - \\( f \\) is **injective** (one-to-one) if for all \\( a_{1}, a_{2} \\in A \\), \\( f(a_{1}) = f(a_{2}) \\) implies \\( a_{1} = a_{2} \\).\n> - \\( f \\) is **surjective** (onto) if for every \\( b \\in B \\) there is an \\( a \\in A \\) with \\( f(a) = b \\); that is, \\( f(A) = B \\).\n> - \\( f \\) is **bijective** (a bijection) if it is both injective and surjective.\n\nThe definition of injectivity is the contrapositive of \"distinct inputs have distinct outputs\"; it is stated this way because it begins from an equation, which is easier to use.\n\n**Proof templates.**\n\n- *Injective:* assume \\( f(a_{1}) = f(a_{2}) \\) and deduce \\( a_{1} = a_{2} \\).\n- *Not injective:* exhibit \\( a_{1} \\ne a_{2} \\) with \\( f(a_{1}) = f(a_{2}) \\).\n- *Surjective:* let \\( b \\in B \\) be arbitrary; find a candidate \\( a \\) (scratch work: solve \\( f(a) = b \\)), check that \\( a \\in A \\), and verify \\( f(a) = b \\).\n- *Not surjective:* exhibit \\( b \\in B \\) and prove that no \\( a \\in A \\) satisfies \\( f(a) = b \\).\n\n**Worked example 1.** \\( f : \\mathbb{R} \\to \\mathbb{R} \\), \\( f(x) = 5x - 3 \\), is bijective. *Injective:* if \\( 5x_{1} - 3 = 5x_{2} - 3 \\), then \\( 5x_{1} = 5x_{2} \\), so \\( x_{1} = x_{2} \\). *Surjective:* let \\( y \\in \\mathbb{R} \\) and put \\( x = \\frac{y + 3}{5} \\), a real number; then \\( f(x) = (y + 3) - 3 = y \\).\n\n**Worked example 2.** \\( g : \\mathbb{Z} \\to \\mathbb{Z} \\), \\( g(n) = 5n - 3 \\), is injective by the same computation, but it is not surjective: \\( 5n - 3 = 0 \\) would require \\( n = \\frac{3}{5} \\notin \\mathbb{Z} \\), so 0 is not in the range. The formula is the same as in example 1; the domain and codomain changed the answer.\n\n**Worked example 3.** \\( h : \\mathbb{Z} \\times \\mathbb{Z} \\to \\mathbb{Z} \\), \\( h(m, n) = 2m + 3n \\). *Surjective:* for \\( b \\in \\mathbb{Z} \\), \\( h(-b, b) = -2b + 3b = b \\). *Not injective:* \\( h(3, 0) = 6 = h(0, 2) \\), although \\( (3, 0) \\ne (0, 2) \\).\n\n**The common mistakes.** \"Proving\" injectivity by showing that \\( a_{1} = a_{2} \\) implies \\( f(a_{1}) = f(a_{2}) \\), which holds for every function; in a surjectivity proof, producing \\( a \\) without checking that \\( a \\in A \\) (the value \\( \\frac{3}{5} \\) above); and confusing the codomain with the range.",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k6",
+     "type": "written",
+     "prompt": "Prove that \\( f : \\mathbb{Z} \\to \\mathbb{Z} \\), \\( f(n) = n + (-1)^{n} \\), is a bijection. (Hint: compute \\( f(f(n)) \\), treating \\( n \\) even and \\( n \\) odd separately.)",
+     "rubric": [
+      "For n even f(n) = n + 1 (odd); for n odd f(n) = n − 1 (even)",
+      "Deduces f(f(n)) = n in both cases",
+      "Injective: f(a) = f(b) gives a = f(f(a)) = f(f(b)) = b",
+      "Surjective: every m ∈ ℤ equals f(f(m)), so m = f(k) with k = f(m) ∈ ℤ"
+     ],
+     "model": "If \\( n \\) is even, \\( (-1)^{n} = 1 \\) and \\( f(n) = n + 1 \\), which is odd. If \\( n \\) is odd, \\( f(n) = n - 1 \\), which is even. Hence \\( f(f(n)) = (n + 1) - 1 = n \\) for even \\( n \\), and \\( f(f(n)) = (n - 1) + 1 = n \\) for odd \\( n \\). So \\( f(f(n)) = n \\) for every integer \\( n \\).\n\n*Injective.* If \\( f(a) = f(b) \\), then \\( a = f(f(a)) = f(f(b)) = b \\).\n\n*Surjective.* Let \\( m \\in \\mathbb{Z} \\). Then \\( k = f(m) \\) is an integer and \\( f(k) = f(f(m)) = m \\).\n\nSo \\( f \\) is a bijection (it swaps \\( 2j \\) and \\( 2j + 1 \\) for every integer \\( j \\)), and it is its own inverse. \\( \\blacksquare \\)",
+     "why": "A function with \\( f \\circ f = i_{A} \\) is automatically a bijection; this is a special case of the inverse theorem of the next section."
+    },
+    {
+     "id": "s3q2",
+     "kp": "k6",
+     "type": "written",
+     "prompt": "For each function decide whether it is injective and whether it is surjective, with proof or counterexample: (a) \\( f : \\mathbb{N} \\to \\mathbb{N} \\), \\( f(n) = n + 1 \\), where \\( \\mathbb{N} = \\{0, 1, 2, \\dots\\} \\); (b) \\( q : \\mathbb{Z} \\to \\mathbb{Z} \\), \\( q(n) = \\lfloor n/2 \\rfloor \\), where \\( \\lfloor x \\rfloor \\) is the greatest integer less than or equal to \\( x \\).",
+     "rubric": [
+      "(a) injective: m + 1 = n + 1 gives m = n",
+      "(a) not surjective: 0 would need n = −1 ∉ ℕ",
+      "(b) surjective: q(2m) = m for every integer m",
+      "(b) not injective: q(0) = q(1) = 0"
+     ],
+     "model": "(a) *Injective:* if \\( m + 1 = n + 1 \\) then \\( m = n \\). *Not surjective:* \\( f(n) = 0 \\) would require \\( n = -1 \\notin \\mathbb{N} \\), so 0 is not in the range.\n\n(b) *Surjective:* for any \\( m \\in \\mathbb{Z} \\), \\( q(2m) = \\lfloor m \\rfloor = m \\). *Not injective:* \\( q(0) = \\lfloor 0 \\rfloor = 0 \\) and \\( q(1) = \\lfloor \\tfrac{1}{2} \\rfloor = 0 \\), with \\( 0 \\ne 1 \\).",
+     "why": "On a finite set, injective and surjective are equivalent for functions from the set to itself; (a) and (b) show that on infinite sets either can hold without the other."
+    },
+    {
+     "id": "s3q3",
+     "kp": "k5",
+     "type": "mcq",
+     "prompt": "Which of the following rules defines a function?",
+     "options": [
+      "\\( f : \\mathbb{Q} \\to \\mathbb{Z} \\), \\( f\\left(\\frac{a}{b}\\right) = a + b \\) (for integers \\( a, b \\), \\( b \\ne 0 \\))",
+      "\\( g : \\mathbb{R} \\to \\mathbb{R} \\), \\( g(x) = \\sqrt{x} \\)",
+      "\\( k : \\mathbb{Q} \\to \\mathbb{Q} \\), \\( k\\left(\\frac{a}{b}\\right) = \\frac{a + b}{b} \\) (for integers \\( a, b \\), \\( b \\ne 0 \\))",
+      "\\( h : \\mathbb{Z} \\to \\mathbb{Z} \\), \\( h(n) = \\frac{n}{2} \\)"
+     ],
+     "answer": 2,
+     "why": "\\( k\\left(\\frac{a}{b}\\right) = \\frac{a}{b} + 1 \\) depends only on the number \\( \\frac{a}{b} \\), not on its representation, so \\( k \\) is well-defined (it is \\( x \\mapsto x + 1 \\)). The rule for \\( f \\) depends on the representation: \\( \\frac{1}{2} \\mapsto 3 \\) but \\( \\frac{2}{4} \\mapsto 6 \\). \\( g \\) assigns no real output to negative inputs. \\( h(1) = \\frac{1}{2} \\) is not in the codomain \\( \\mathbb{Z} \\)."
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "Composition and inverse functions",
+   "kps": [
+    "k7"
+   ],
+   "md": "Functions are combined by applying one after another, and a function is undone by an inverse. This section proves that composition preserves injectivity and surjectivity, and identifies exactly which functions have inverses.\n\n> For \\( f : A \\to B \\) and \\( g : B \\to C \\), the **composition** \\( g \\circ f : A \\to C \\) is defined by \\( (g \\circ f)(a) = g(f(a)) \\).\n\nNote the order: \\( g \\circ f \\) applies \\( f \\) first. Composition is associative, \\( h \\circ (g \\circ f) = (h \\circ g) \\circ f \\), since both send \\( a \\) to \\( h(g(f(a))) \\), but not commutative: for \\( f(x) = x + 1 \\) and \\( g(x) = x^{2} \\) on \\( \\mathbb{R} \\), \\( (g \\circ f)(x) = (x + 1)^{2} \\) while \\( (f \\circ g)(x) = x^{2} + 1 \\).\n\n> **Theorem.** Let \\( f : A \\to B \\) and \\( g : B \\to C \\). If \\( f \\) and \\( g \\) are injective, so is \\( g \\circ f \\). If \\( f \\) and \\( g \\) are surjective, so is \\( g \\circ f \\). Hence a composition of bijections is a bijection.\n\n*Proof.* Injective: suppose \\( g(f(a_{1})) = g(f(a_{2})) \\). Since \\( g \\) is injective, \\( f(a_{1}) = f(a_{2}) \\); since \\( f \\) is injective, \\( a_{1} = a_{2} \\). Surjective: let \\( c \\in C \\). Since \\( g \\) is surjective, there is \\( b \\in B \\) with \\( g(b) = c \\); since \\( f \\) is surjective, there is \\( a \\in A \\) with \\( f(a) = b \\). Then \\( (g \\circ f)(a) = g(b) = c \\). \\( \\blacksquare \\)\n\n**Inverses.** The **identity function** on \\( A \\) is \\( i_{A} : A \\to A \\), \\( i_{A}(a) = a \\).\n\n> A function \\( g : B \\to A \\) is an **inverse** of \\( f : A \\to B \\) if \\( g \\circ f = i_{A} \\) and \\( f \\circ g = i_{B} \\); that is, \\( g(f(a)) = a \\) for all \\( a \\in A \\) and \\( f(g(b)) = b \\) for all \\( b \\in B \\).\n\n> **Theorem.** A function \\( f : A \\to B \\) has an inverse if and only if \\( f \\) is bijective. The inverse is then unique; it is denoted \\( f^{-1} \\), and \\( f^{-1}(b) \\) is the unique \\( a \\in A \\) with \\( f(a) = b \\).\n\n*Proof.* (\\( \\Rightarrow \\)) Let \\( g \\) be an inverse. If \\( f(a_{1}) = f(a_{2}) \\), applying \\( g \\) gives \\( a_{1} = g(f(a_{1})) = g(f(a_{2})) = a_{2} \\), so \\( f \\) is injective. For \\( b \\in B \\), the element \\( a = g(b) \\) satisfies \\( f(a) = f(g(b)) = b \\), so \\( f \\) is surjective.\n\n(\\( \\Leftarrow \\)) Let \\( f \\) be bijective. For each \\( b \\in B \\), surjectivity gives some \\( a \\) with \\( f(a) = b \\), and injectivity makes it unique; define \\( g(b) \\) to be this \\( a \\). Then \\( g : B \\to A \\) is a function, \\( f(g(b)) = b \\) by construction, and \\( g(f(a)) = a \\) because \\( a \\) is the unique element mapped to \\( f(a) \\). If \\( g \\) and \\( h \\) are both inverses, then \\( g = g \\circ i_{B} = g \\circ (f \\circ h) = (g \\circ f) \\circ h = i_{A} \\circ h = h \\), so the inverse is unique. \\( \\blacksquare \\)\n\n**Worked example.** The function \\( f : \\mathbb{R} \\to \\mathbb{R} \\), \\( f(x) = 5x - 3 \\), is bijective (previous section). Solving \\( y = 5x - 3 \\) for \\( x \\) gives \\( f^{-1}(y) = \\frac{y + 3}{5} \\). Both compositions check: \\( f^{-1}(f(x)) = \\frac{(5x - 3) + 3}{5} = x \\) and \\( f(f^{-1}(y)) = 5 \\cdot \\frac{y + 3}{5} - 3 = y \\).\n\n**Why both compositions are required.** Let \\( s : \\mathbb{N} \\to \\mathbb{N} \\), \\( s(n) = n + 1 \\), and let \\( t : \\mathbb{N} \\to \\mathbb{N} \\) be given by \\( t(n) = n - 1 \\) for \\( n \\ge 1 \\) and \\( t(0) = 0 \\). Then \\( t(s(n)) = n \\) for every \\( n \\), so \\( t \\circ s = i_{\\mathbb{N}} \\); but \\( s(t(0)) = 1 \\ne 0 \\), so \\( s \\circ t \\ne i_{\\mathbb{N}} \\). Indeed \\( s \\) is injective but not surjective (0 is not in its range), so by the theorem it has no inverse. A one-sided inverse certifies only half of bijectivity.\n\n**The common mistakes.** Composing in the wrong order; writing \\( f^{-1} \\) for a function that is not bijective, such as \\( x \\mapsto x^{2} \\) on \\( \\mathbb{R} \\) (restricting both domain and codomain to \\( [0, \\infty) \\) gives a bijection, with inverse \\( y \\mapsto \\sqrt{y} \\)); and confusing \\( f^{-1}(y) \\) with \\( \\frac{1}{f(y)} \\). Note also that \\( (g \\circ f)^{-1} = f^{-1} \\circ g^{-1} \\), in reversed order: the function applied last is the first to be undone.",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k7",
+     "type": "written",
+     "prompt": "Let \\( f : A \\to B \\) and \\( g : B \\to C \\). Prove that if \\( g \\circ f \\) is injective, then \\( f \\) is injective. Then give an explicit example in which \\( g \\circ f \\) is injective but \\( g \\) is not.",
+     "rubric": [
+      "Assumes f(a₁) = f(a₂) and applies g to both sides",
+      "Uses injectivity of g ∘ f to conclude a₁ = a₂",
+      "Example with explicit finite sets, e.g. A = {1}, B = {1, 2}, C = {1}, f(1) = 1, g(1) = g(2) = 1",
+      "Verifies g ∘ f injective (one-element domain) and g not injective (g(1) = g(2))"
+     ],
+     "model": "*Proof.* Suppose \\( f(a_{1}) = f(a_{2}) \\). Applying \\( g \\), \\( (g \\circ f)(a_{1}) = g(f(a_{1})) = g(f(a_{2})) = (g \\circ f)(a_{2}) \\). Since \\( g \\circ f \\) is injective, \\( a_{1} = a_{2} \\). So \\( f \\) is injective. \\( \\blacksquare \\)\n\n*Example.* Let \\( A = \\{1\\} \\), \\( B = \\{1, 2\\} \\), \\( C = \\{1\\} \\), \\( f(1) = 1 \\), and \\( g(1) = g(2) = 1 \\). Then \\( g \\circ f \\) has a one-element domain, so it is injective, but \\( g(1) = g(2) \\) with \\( 1 \\ne 2 \\), so \\( g \\) is not injective. The element 2 is never reached by \\( f \\), so the failure of \\( g \\) there is invisible to \\( g \\circ f \\).",
+     "why": "Injectivity of \\( g \\circ f \\) constrains \\( g \\) only on the range of \\( f \\)."
+    },
+    {
+     "id": "s4q2",
+     "kp": "k7",
+     "type": "written",
+     "prompt": "Prove that \\( f : \\mathbb{R} \\to \\mathbb{R} \\), \\( f(x) = x^{3} + 1 \\), is a bijection, find \\( f^{-1} \\), and verify both \\( f^{-1} \\circ f = i_{\\mathbb{R}} \\) and \\( f \\circ f^{-1} = i_{\\mathbb{R}} \\). You may use that every real number \\( t \\) has a unique real cube root \\( \\sqrt[3]{t} \\).",
+     "rubric": [
+      "Injective: x₁³ + 1 = x₂³ + 1 gives x₁³ = x₂³, and uniqueness of real cube roots gives x₁ = x₂",
+      "Surjective: for y ∈ ℝ, x = ∛(y − 1) satisfies f(x) = y",
+      "States f⁻¹(y) = ∛(y − 1)",
+      "Verifies f⁻¹(f(x)) = ∛(x³) = x and f(f⁻¹(y)) = (y − 1) + 1 = y"
+     ],
+     "model": "*Injective.* If \\( x_{1}^{3} + 1 = x_{2}^{3} + 1 \\), then \\( x_{1}^{3} = x_{2}^{3} \\); both \\( x_{1} \\) and \\( x_{2} \\) are real cube roots of the same number, so by uniqueness \\( x_{1} = x_{2} \\).\n\n*Surjective.* Let \\( y \\in \\mathbb{R} \\) and put \\( x = \\sqrt[3]{y - 1} \\in \\mathbb{R} \\). Then \\( f(x) = (y - 1) + 1 = y \\).\n\nSo \\( f \\) is bijective, and \\( f^{-1}(y) = \\sqrt[3]{y - 1} \\). *Check:* \\( f^{-1}(f(x)) = \\sqrt[3]{x^{3}} = x \\), since \\( x \\) is the real cube root of \\( x^{3} \\); and \\( f(f^{-1}(y)) = \\left(\\sqrt[3]{y - 1}\\right)^{3} + 1 = y \\). \\( \\blacksquare \\)",
+     "why": "The surjectivity computation (solving \\( y = f(x) \\)) produces the inverse formula; the two composition checks confirm it."
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "Images and preimages",
+   "kps": [
+    "k8"
+   ],
+   "md": "A function acts on individual elements, but many questions concern whole sets: which outputs arise from inputs in an interval, or which inputs produce outputs in a given set. This section defines the image and preimage of a set and determines how they interact with unions and intersections.\n\n> Let \\( f : A \\to B \\), \\( C \\subseteq A \\) and \\( D \\subseteq B \\). The **image** of \\( C \\) under \\( f \\) is \\( f(C) = \\{ f(c) : c \\in C \\} \\subseteq B \\). The **preimage** (inverse image) of \\( D \\) is \\( f^{-1}(D) = \\{ a \\in A : f(a) \\in D \\} \\subseteq A \\).\n\nUnfolded, the two memberships read\n\\[ y \\in f(C) \\iff \\exists c \\in C\\ \\ f(c) = y, \\qquad a \\in f^{-1}(D) \\iff f(a) \\in D. \\]\nThe preimage is defined for *every* function; the notation \\( f^{-1}(D) \\) does not presuppose an inverse function. (When \\( f \\) is bijective, \\( f^{-1}(D) \\) coincides with the image of \\( D \\) under the inverse function, so the notation is consistent.)\n\n**Worked example 1.** Let \\( f : \\mathbb{R} \\to \\mathbb{R} \\), \\( f(x) = x^{2} \\). Then \\( f([-1, 2]) = [0, 4] \\): every value \\( x^{2} \\) with \\( -1 \\le x \\le 2 \\) lies in \\( [0, 4] \\), and each \\( y \\in [0, 4] \\) equals \\( f(\\sqrt{y}) \\) with \\( \\sqrt{y} \\in [0, 2] \\). Next, \\( f^{-1}([1, 4]) = \\{ x : 1 \\le x^{2} \\le 4 \\} = [-2, -1] \\cup [1, 2] \\), and \\( f^{-1}(\\{-1\\}) = \\varnothing \\), since no real square equals \\( -1 \\).\n\n**Preimages preserve set operations.** Because \\( a \\in f^{-1}(D) \\) is simply the condition \\( f(a) \\in D \\), preimages commute with every set operation.\n\n> **Theorem.** For \\( D_{1}, D_{2} \\subseteq B \\): \\( f^{-1}(D_{1} \\cup D_{2}) = f^{-1}(D_{1}) \\cup f^{-1}(D_{2}) \\) and \\( f^{-1}(D_{1} \\cap D_{2}) = f^{-1}(D_{1}) \\cap f^{-1}(D_{2}) \\).\n\n*Proof of the second.* For \\( a \\in A \\),\n\\[ a \\in f^{-1}(D_{1} \\cap D_{2}) \\iff f(a) \\in D_{1} \\cap D_{2} \\iff f(a) \\in D_{1} \\text{ and } f(a) \\in D_{2} \\iff a \\in f^{-1}(D_{1}) \\cap f^{-1}(D_{2}). \\]\nEach step is an equivalence by definition, so the two sets are equal. \\( \\blacksquare \\)\n\n**Images of intersections.** Images preserve unions, \\( f(C_{1} \\cup C_{2}) = f(C_{1}) \\cup f(C_{2}) \\), but not intersections.\n\n> **Theorem.** \\( f(C_{1} \\cap C_{2}) \\subseteq f(C_{1}) \\cap f(C_{2}) \\), with equality when \\( f \\) is injective.\n\n*Proof of the inclusion.* Let \\( y \\in f(C_{1} \\cap C_{2}) \\), so \\( y = f(c) \\) for some \\( c \\in C_{1} \\cap C_{2} \\). Since \\( c \\in C_{1} \\), \\( y \\in f(C_{1}) \\); since \\( c \\in C_{2} \\), \\( y \\in f(C_{2}) \\). \\( \\blacksquare \\)\n\nThe reverse inclusion fails in general. With \\( f(x) = x^{2} \\), \\( C_{1} = \\{-1\\} \\) and \\( C_{2} = \\{1\\} \\), the intersection \\( C_{1} \\cap C_{2} \\) is empty, so \\( f(C_{1} \\cap C_{2}) = \\varnothing \\), while \\( f(C_{1}) \\cap f(C_{2}) = \\{1\\} \\). An attempted proof breaks at a precise point: from \\( y \\in f(C_{1}) \\) and \\( y \\in f(C_{2}) \\) one gets \\( y = f(c_{1}) = f(c_{2}) \\) with \\( c_{1} \\in C_{1} \\) and \\( c_{2} \\in C_{2} \\), but \\( c_{1} \\) and \\( c_{2} \\) may be different elements. Injectivity is exactly what forces \\( c_{1} = c_{2} \\); completing the equality case is an exam exercise.\n\n**The common mistakes.** Assuming that \\( f^{-1}(D) \\) requires \\( f \\) to be invertible; asserting \\( f(C_{1} \\cap C_{2}) = f(C_{1}) \\cap f(C_{2}) \\) without injectivity; and, in proofs about images, using one letter for the preimages of \\( y \\) in \\( C_{1} \\) and in \\( C_{2} \\), which is the reused-letter error of the proof-techniques topic in a new setting.",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k8",
+     "type": "written",
+     "prompt": "Let \\( f : \\mathbb{R} \\to \\mathbb{R} \\), \\( f(x) = x^{2} - 2x \\). Determine, with justification, (a) \\( f([0, 3]) \\); (b) \\( f^{-1}([-1, 0]) \\); (c) \\( f^{-1}(\\{3\\}) \\); (d) \\( f^{-1}((-\\infty, -2)) \\). (Completing the square helps.)",
+     "rubric": [
+      "Writes f(x) = (x − 1)² − 1, so f has minimum −1 at x = 1",
+      "(a) [−1, 3]: on [0, 3], (x − 1)² takes every value in [0, 4]",
+      "(b) [0, 2]: −1 ≤ (x − 1)² − 1 ≤ 0 iff (x − 1)² ≤ 1 iff 0 ≤ x ≤ 2",
+      "(c) {−1, 3} from x² − 2x − 3 = (x − 3)(x + 1) = 0; (d) ∅ since f(x) ≥ −1"
+     ],
+     "model": "Completing the square, \\( f(x) = (x - 1)^{2} - 1 \\).\n\n(a) For \\( x \\in [0, 3] \\), \\( x - 1 \\in [-1, 2] \\), so \\( (x - 1)^{2} \\) takes exactly the values in \\( [0, 4] \\) (the value \\( t^{2} \\) for \\( t \\in [0, 2] \\) covers \\( [0, 4] \\), and \\( t \\in [-1, 0] \\) adds nothing new). Hence \\( f([0, 3]) = [-1, 3] \\).\n\n(b) \\( -1 \\le (x - 1)^{2} - 1 \\le 0 \\iff (x - 1)^{2} \\le 1 \\iff -1 \\le x - 1 \\le 1 \\iff 0 \\le x \\le 2 \\) (the left inequality always holds). So \\( f^{-1}([-1, 0]) = [0, 2] \\).\n\n(c) \\( x^{2} - 2x = 3 \\iff (x - 3)(x + 1) = 0 \\), so \\( f^{-1}(\\{3\\}) = \\{-1, 3\\} \\).\n\n(d) \\( f(x) \\ge -1 \\) for every \\( x \\), so no \\( x \\) has \\( f(x) < -2 \\): \\( f^{-1}((-\\infty, -2)) = \\varnothing \\).",
+     "why": "An image requires both inclusions (every output lands in the set, and every point of the set is attained); a preimage is the solution set of a condition on \\( f(x) \\)."
+    },
+    {
+     "id": "s5q2",
+     "kp": "k8",
+     "type": "written",
+     "prompt": "Let \\( f : A \\to B \\) and \\( D, D_{1}, D_{2} \\subseteq B \\). Prove (a) \\( f^{-1}(D_{1} \\cup D_{2}) = f^{-1}(D_{1}) \\cup f^{-1}(D_{2}) \\) and (b) \\( f^{-1}(B \\setminus D) = A \\setminus f^{-1}(D) \\).",
+     "rubric": [
+      "(a) chain: a ∈ f⁻¹(D₁ ∪ D₂) iff f(a) ∈ D₁ ∪ D₂ iff f(a) ∈ D₁ or f(a) ∈ D₂ iff a ∈ f⁻¹(D₁) ∪ f⁻¹(D₂)",
+      "(b) for a ∈ A: a ∈ f⁻¹(B \\ D) iff f(a) ∈ B and f(a) ∉ D",
+      "Uses f(a) ∈ B automatically, so this is iff a ∉ f⁻¹(D), i.e. a ∈ A \\ f⁻¹(D)",
+      "States that each step is an equivalence, so the sets are equal"
+     ],
+     "model": "(a) For \\( a \\in A \\):\n\\[ a \\in f^{-1}(D_{1} \\cup D_{2}) \\iff f(a) \\in D_{1} \\cup D_{2} \\iff f(a) \\in D_{1} \\text{ or } f(a) \\in D_{2} \\iff a \\in f^{-1}(D_{1}) \\cup f^{-1}(D_{2}). \\]\n\n(b) For \\( a \\in A \\), \\( f(a) \\in B \\) always holds, so\n\\[ a \\in f^{-1}(B \\setminus D) \\iff f(a) \\in B \\setminus D \\iff f(a) \\notin D \\iff a \\notin f^{-1}(D) \\iff a \\in A \\setminus f^{-1}(D). \\]\nEvery step is an equivalence, so in each part the two sets are equal. \\( \\blacksquare \\)",
+     "why": "Preimages commute with unions, intersections and complements because membership in a preimage is just a condition on \\( f(a) \\). Images commute with unions only."
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "title": "Relations and their properties",
+   "kps": [
+    "k9",
+    "k12"
+   ],
+   "md": "Many mathematical statements relate two objects: \\( a \\le b \\), \\( a \\mid b \\), \\( A \\subseteq B \\), \"\\( a \\) and \\( b \\) leave the same remainder on division by 5\". A relation abstracts this pattern in the same way that a function abstracts assignment. This section defines relations and the four properties that classify the important ones.\n\n> A **relation** from \\( A \\) to \\( B \\) is a subset \\( R \\subseteq A \\times B \\); we write \\( a \\mathrel{R} b \\) for \\( (a, b) \\in R \\). A relation on \\( A \\) is a relation from \\( A \\) to \\( A \\).\n\nA function \\( f : A \\to B \\) is the special case in which each \\( a \\in A \\) is related to exactly one \\( b \\in B \\).\n\n> A relation \\( R \\) on \\( A \\) is\n> - **reflexive** if \\( a \\mathrel{R} a \\) for every \\( a \\in A \\);\n> - **symmetric** if \\( a \\mathrel{R} b \\) implies \\( b \\mathrel{R} a \\), for all \\( a, b \\in A \\);\n> - **antisymmetric** if \\( a \\mathrel{R} b \\) and \\( b \\mathrel{R} a \\) together imply \\( a = b \\), for all \\( a, b \\in A \\);\n> - **transitive** if \\( a \\mathrel{R} b \\) and \\( b \\mathrel{R} c \\) together imply \\( a \\mathrel{R} c \\), for all \\( a, b, c \\in A \\).\n\nEach property is a universal statement: to establish it, argue for arbitrary elements; to refute it, give one specific counterexample.\n\n**Worked example 1.** On \\( \\mathbb{Z} \\), let \\( a \\mathrel{R} b \\) mean \\( |a - b| \\le 1 \\).\n- Reflexive: \\( |a - a| = 0 \\le 1 \\).\n- Symmetric: \\( |b - a| = |a - b| \\).\n- Not antisymmetric: \\( 0 \\mathrel{R} 1 \\) and \\( 1 \\mathrel{R} 0 \\), but \\( 0 \\ne 1 \\).\n- Not transitive: \\( 0 \\mathrel{R} 1 \\) and \\( 1 \\mathrel{R} 2 \\), but \\( |0 - 2| = 2 \\), so \\( 0 \\mathrel{R} 2 \\) fails.\n\n**Worked example 2 (divisibility).** On the positive integers, \\( a \\mid b \\) is reflexive (\\( a = a \\cdot 1 \\)), transitive (proved in the proof-techniques topic) and antisymmetric: if \\( b = ak \\) and \\( a = bl \\) with \\( k, l \\) positive integers, then \\( a = akl \\), so \\( kl = 1 \\), which forces \\( k = l = 1 \\) and \\( a = b \\). On all of \\( \\mathbb{Z} \\), divisibility is not antisymmetric: \\( 1 \\mid -1 \\) and \\( -1 \\mid 1 \\), but \\( 1 \\ne -1 \\).\n\n**Antisymmetric is not the same as \"not symmetric\".** The equality relation on any set is both symmetric and antisymmetric. On \\( \\{1, 2, 3\\} \\) the relation \\( \\{(1, 2), (2, 1), (1, 3)\\} \\) is neither: \\( (1, 3) \\) is present without \\( (3, 1) \\), and \\( (1, 2) \\), \\( (2, 1) \\) are both present with \\( 1 \\ne 2 \\).\n\n**Vacuous truth.** The empty relation on a nonempty set is symmetric, antisymmetric and transitive, because each of these properties is a conditional whose hypothesis is never satisfied. It is not reflexive, because reflexivity makes an unconditional demand on every element.\n\n**Partial orders.** The common properties of \\( \\le \\), of \\( \\subseteq \\) and of divisibility on the positive integers are abstracted as follows.\n\n> A **partial order** on \\( A \\) is a relation that is reflexive, antisymmetric and transitive; the set \\( A \\) together with it is a **partially ordered set** (poset). Elements \\( a, b \\) are **comparable** if \\( a \\preceq b \\) or \\( b \\preceq a \\). A partial order in which every two elements are comparable is a **total order**.\n\nThe relation \\( \\le \\) on \\( \\mathbb{R} \\) is a total order. Divisibility on the positive integers is a partial order that is not total: \\( 2 \\nmid 3 \\) and \\( 3 \\nmid 2 \\). Likewise \\( \\subseteq \\) on \\( \\mathcal{P}(\\{1, 2\\}) \\) is a partial order that is not total, since \\( \\{1\\} \\) and \\( \\{2\\} \\) are incomparable. The strict relation \\( < \\) on \\( \\mathbb{R} \\) is not a partial order, because it is not reflexive.\n\n**The common mistakes.** Checking reflexivity for some elements rather than all; \"proving\" transitivity from examples; confusing antisymmetry with failure of symmetry; and overlooking special elements, such as 0, that often supply the counterexample to transitivity.",
+   "questions": [
+    {
+     "id": "s6q1",
+     "kp": "k9",
+     "type": "written",
+     "prompt": "On \\( \\mathbb{Z} \\), define \\( a \\mathrel{R} b \\) if \\( ab \\ge 0 \\). Determine whether \\( R \\) is reflexive, symmetric, antisymmetric and transitive, giving a proof or a specific counterexample for each.",
+     "rubric": [
+      "Reflexive: a·a = a² ≥ 0",
+      "Symmetric: ba = ab",
+      "Not antisymmetric: 1 R 2 and 2 R 1 with 1 ≠ 2",
+      "Not transitive: 1 R 0 and 0 R −1 but 1·(−1) = −1 < 0"
+     ],
+     "model": "*Reflexive:* \\( a \\cdot a = a^{2} \\ge 0 \\) for every integer \\( a \\).\n\n*Symmetric:* if \\( ab \\ge 0 \\), then \\( ba = ab \\ge 0 \\).\n\n*Not antisymmetric:* \\( 1 \\cdot 2 = 2 \\ge 0 \\), so \\( 1 \\mathrel{R} 2 \\) and \\( 2 \\mathrel{R} 1 \\), yet \\( 1 \\ne 2 \\).\n\n*Not transitive:* \\( 1 \\cdot 0 = 0 \\ge 0 \\) and \\( 0 \\cdot (-1) = 0 \\ge 0 \\), so \\( 1 \\mathrel{R} 0 \\) and \\( 0 \\mathrel{R} (-1) \\); but \\( 1 \\cdot (-1) = -1 < 0 \\), so \\( 1 \\mathrel{R} (-1) \\) fails.",
+     "why": "On the nonzero integers, \\( ab > 0 \\) means \\\"same sign\\\" and is transitive; the element 0, related to everything, breaks transitivity."
+    },
+    {
+     "id": "s6q2",
+     "kp": "k12",
+     "type": "written",
+     "prompt": "(a) Prove that divisibility is a partial order on the positive integers, and show that it is not a total order. (b) Show that divisibility on \\( \\mathbb{Z} \\) is not a partial order. (c) Is the relation \\( < \\) on \\( \\mathbb{R} \\) antisymmetric? Is it a partial order?",
+     "rubric": [
+      "(a) reflexive (a = a·1), transitive (b = ak, c = bl gives c = a(kl)), antisymmetric (b = ak, a = bl gives kl = 1, so k = l = 1)",
+      "(a) not total: 2 and 3 are incomparable",
+      "(b) antisymmetry fails on ℤ: 2 | −2 and −2 | 2 but 2 ≠ −2",
+      "(c) < is antisymmetric vacuously (a < b and b < a never both hold) but not reflexive, so not a partial order"
+     ],
+     "model": "(a) *Reflexive:* \\( a = a \\cdot 1 \\). *Transitive:* if \\( b = ak \\) and \\( c = bl \\), then \\( c = a(kl) \\). *Antisymmetric:* if \\( b = ak \\) and \\( a = bl \\) with \\( a, b \\) positive, then \\( k, l \\) are positive integers and \\( a = akl \\), so \\( kl = 1 \\), hence \\( k = l = 1 \\) and \\( a = b \\). So divisibility is a partial order on the positive integers. It is not total: neither \\( 2 \\mid 3 \\) nor \\( 3 \\mid 2 \\).\n\n(b) On \\( \\mathbb{Z} \\), \\( 2 \\mid -2 \\) (since \\( -2 = 2 \\cdot (-1) \\)) and \\( -2 \\mid 2 \\) (since \\( 2 = (-2)(-1) \\)), but \\( 2 \\ne -2 \\). Antisymmetry fails, so divisibility is not a partial order on \\( \\mathbb{Z} \\).\n\n(c) \\( < \\) is antisymmetric: the hypothesis \\( a < b \\) and \\( b < a \\) is never satisfied, so the conditional is vacuously true. It is not reflexive (\\( 0 < 0 \\) is false), so it is not a partial order.",
+     "why": "Antisymmetry says two-way relatedness forces equality; it does not say anything about whether elements are related at all."
+    }
+   ]
+  },
+  {
+   "id": "s7",
+   "title": "Equivalence relations and partitions",
+   "kps": [
+    "k10",
+    "k11"
+   ],
+   "md": "Mathematics constantly identifies objects that differ but agree in a respect that matters: integers with the same remainder on division by 3, or the fractions \\( \\frac{1}{2} \\) and \\( \\frac{2}{4} \\), which name the same number. The notion of an equivalence relation makes this precise, and its central theorem says that such a relation amounts to the same thing as a division of the set into non-overlapping blocks.\n\n> An **equivalence relation** on \\( A \\) is a relation \\( \\sim \\) that is reflexive, symmetric and transitive. For \\( a \\in A \\), the **equivalence class** of \\( a \\) is \\( [a] = \\{ x \\in A : x \\sim a \\} \\).\n\n**Worked example 1 (congruence).** Fix an integer \\( n \\ge 1 \\). For integers \\( a, b \\), define \\( a \\equiv b \\pmod{n} \\), read \"\\( a \\) is **congruent** to \\( b \\) modulo \\( n \\)\", to mean \\( n \\mid (a - b) \\). This is an equivalence relation on \\( \\mathbb{Z} \\):\n- reflexive: \\( a - a = 0 = n \\cdot 0 \\);\n- symmetric: if \\( a - b = nk \\), then \\( b - a = n(-k) \\);\n- transitive: if \\( a - b = nk \\) and \\( b - c = nl \\), then \\( a - c = n(k + l) \\).\n\nFor \\( n = 3 \\) there are exactly three classes,\n\\[ [0] = \\{\\dots, -3, 0, 3, 6, \\dots\\}, \\quad [1] = \\{\\dots, -2, 1, 4, 7, \\dots\\}, \\quad [2] = \\{\\dots, -1, 2, 5, 8, \\dots\\}. \\]\nEach integer lies in exactly one of them, and a class has many names: \\( [1] = [4] = [-2] \\). Arithmetic with these classes is the subject of the topic on modular arithmetic.\n\n> A **partition** of a set \\( A \\) is a collection of nonempty subsets of \\( A \\), called blocks, that are pairwise disjoint and whose union is \\( A \\); equivalently, every element of \\( A \\) lies in exactly one block.\n\n> **Theorem.** Let \\( \\sim \\) be an equivalence relation on \\( A \\). For all \\( a, b \\in A \\): if \\( a \\sim b \\) then \\( [a] = [b] \\), and if \\( a \\not\\sim b \\) then \\( [a] \\cap [b] = \\varnothing \\). Consequently the distinct equivalence classes form a partition of \\( A \\). Conversely, for any partition of \\( A \\), the relation \"\\( a \\) and \\( b \\) lie in the same block\" is an equivalence relation whose classes are the blocks.\n\n*Proof of the first part.* Suppose \\( a \\sim b \\), and let \\( x \\in [a] \\). Then \\( x \\sim a \\) and \\( a \\sim b \\), so \\( x \\sim b \\) by transitivity, and \\( x \\in [b] \\). Thus \\( [a] \\subseteq [b] \\). By symmetry \\( b \\sim a \\), and the same argument gives \\( [b] \\subseteq [a] \\). Next, suppose \\( [a] \\cap [b] \\) contains some \\( c \\). Then \\( c \\sim a \\) and \\( c \\sim b \\); by symmetry \\( a \\sim c \\), and by transitivity \\( a \\sim b \\). So if \\( a \\not\\sim b \\), the classes are disjoint. Finally, \\( a \\in [a] \\) by reflexivity, so every class is nonempty and every element of \\( A \\) lies in some class. The distinct classes are therefore nonempty, pairwise disjoint and cover \\( A \\). \\( \\blacksquare \\)\n\nAll three properties are used: reflexivity puts each element in its own class, and symmetry and transitivity force overlapping classes to coincide. The set of classes is written \\( A/{\\sim} \\) and called the **quotient set**.\n\n**Worked example 2 (fractions).** On \\( S = \\mathbb{Z} \\times (\\mathbb{Z} \\setminus \\{0\\}) \\), define \\( (a, b) \\sim (c, d) \\) if \\( ad = bc \\). Reflexivity (\\( ab = ba \\)) and symmetry (\\( ad = bc \\) gives \\( cb = da \\)) are immediate. Transitivity: suppose \\( ad = bc \\) and \\( cf = de \\). Then \\( adf = bcf = bde \\), so \\( d(af - be) = 0 \\), and since \\( d \\ne 0 \\), \\( af = be \\): \\( (a, b) \\sim (e, f) \\). The class of \\( (1, 2) \\) is \\( \\{(1, 2), (2, 4), (-3, -6), \\dots\\} \\); the classes are precisely the rational numbers, and a rule on \\( \\mathbb{Q} \\) stated through a representative \\( \\frac{a}{b} \\) is well-defined exactly when its value is constant on each class. The hypothesis \\( d \\ne 0 \\) is essential: if 0 were allowed as a second coordinate, then \\( (1, 1) \\sim (0, 0) \\) and \\( (0, 0) \\sim (2, 1) \\), but \\( (1, 1) \\not\\sim (2, 1) \\).\n\n**The common mistakes.** Counting \\( [1] \\) and \\( [4] \\) (mod 3) as different classes; proving reflexivity and symmetry but not transitivity, which is usually where the work lies; and describing the classes without checking that every element lies in exactly one of them.",
+   "questions": [
+    {
+     "id": "s7q1",
+     "kp": "k10",
+     "type": "written",
+     "prompt": "On \\( \\mathbb{Z} \\), define \\( a \\sim b \\) if \\( 3 \\mid (a + 2b) \\). Prove that \\( \\sim \\) is an equivalence relation and describe its equivalence classes.",
+     "rubric": [
+      "Reflexive: a + 2a = 3a",
+      "Symmetric: if a + 2b = 3k then b + 2a = 3(a + b) − (a + 2b) = 3(a + b − k)",
+      "Transitive: a + 2c = (a + 2b) + (b + 2c) − 3b = 3(k + l − b)",
+      "Classes: a ∼ b iff 3 | (a − b), since a + 2b = (a − b) + 3b; three classes [0], [1], [2] (mod 3)"
+     ],
+     "model": "*Reflexive:* \\( a + 2a = 3a \\), divisible by 3.\n\n*Symmetric:* suppose \\( a + 2b = 3k \\). Then \\( b + 2a = 3(a + b) - (a + 2b) = 3(a + b - k) \\), so \\( b \\sim a \\).\n\n*Transitive:* suppose \\( a + 2b = 3k \\) and \\( b + 2c = 3l \\). Then \\( a + 2c = (a + 2b) + (b + 2c) - 3b = 3(k + l - b) \\), so \\( a \\sim c \\).\n\n*Classes.* Since \\( a + 2b = (a - b) + 3b \\), we have \\( 3 \\mid (a + 2b) \\) if and only if \\( 3 \\mid (a - b) \\). So \\( \\sim \\) is congruence modulo 3, and its classes are\n\\[ [0] = \\{3k : k \\in \\mathbb{Z}\\}, \\quad [1] = \\{3k + 1 : k \\in \\mathbb{Z}\\}, \\quad [2] = \\{3k + 2 : k \\in \\mathbb{Z}\\}. \\]",
+     "why": "Recognizing \\( a + 2b \\equiv a - b \\) modulo 3 identifies the relation; the three properties can also be read off from that identification."
+    },
+    {
+     "id": "s7q2",
+     "kp": "k11",
+     "type": "number",
+     "prompt": "How many different equivalence relations are there on the set \\( \\{1, 2, 3\\} \\)? (Use the correspondence between equivalence relations and partitions.)",
+     "answer": "5",
+     "why": "Equivalence relations on a set correspond exactly to partitions of it. The partitions of \\( \\{1, 2, 3\\} \\) are \\( \\{\\{1, 2, 3\\}\\} \\); \\( \\{\\{1\\}, \\{2, 3\\}\\} \\), \\( \\{\\{2\\}, \\{1, 3\\}\\} \\), \\( \\{\\{3\\}, \\{1, 2\\}\\} \\); and \\( \\{\\{1\\}, \\{2\\}, \\{3\\}\\} \\): five in all."
+    }
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "t": "set, element",
+   "d": "A set is a collection of objects, its elements, determined entirely by which objects belong to it; \\( x \\in A \\) means \\( x \\) is an element of \\( A \\)."
+  },
+  {
+   "t": "set-builder notation",
+   "d": "\\( \\{ x \\in U : P(x) \\} \\), the set of elements of \\( U \\) for which \\( P(x) \\) is true."
+  },
+  {
+   "t": "subset",
+   "d": "\\( A \\subseteq B \\) if every element of \\( A \\) is an element of \\( B \\); proper if also \\( A \\ne B \\)."
+  },
+  {
+   "t": "empty set",
+   "d": "The set \\( \\varnothing \\) with no elements; it is a subset of every set."
+  },
+  {
+   "t": "union, intersection, difference, complement",
+   "d": "\\( A \\cup B \\): in \\( A \\) or \\( B \\). \\( A \\cap B \\): in both. \\( A \\setminus B \\): in \\( A \\) and not in \\( B \\). \\( \\overline{A} = U \\setminus A \\), relative to a universal set \\( U \\)."
+  },
+  {
+   "t": "disjoint",
+   "d": "Sets \\( A \\) and \\( B \\) with \\( A \\cap B = \\varnothing \\)."
+  },
+  {
+   "t": "Cartesian product",
+   "d": "\\( A \\times B = \\{ (a, b) : a \\in A, b \\in B \\} \\), a set of ordered pairs; \\( (a, b) = (c, d) \\) iff \\( a = c \\) and \\( b = d \\)."
+  },
+  {
+   "t": "power set",
+   "d": "\\( \\mathcal{P}(A) \\), the set of all subsets of \\( A \\); \\( |\\mathcal{P}(A)| = 2^{|A|} \\) for finite \\( A \\)."
+  },
+  {
+   "t": "double inclusion",
+   "d": "Proving \\( A = B \\) by proving \\( A \\subseteq B \\) and \\( B \\subseteq A \\)."
+  },
+  {
+   "t": "function",
+   "d": "\\( f : A \\to B \\) assigns to each \\( a \\in A \\) exactly one \\( f(a) \\in B \\); formally a subset of \\( A \\times B \\) with exactly one pair for each first coordinate."
+  },
+  {
+   "t": "domain, codomain, range",
+   "d": "For \\( f : A \\to B \\): the domain is \\( A \\), the codomain is \\( B \\), and the range is \\( f(A) = \\{ f(a) : a \\in A \\} \\subseteq B \\)."
+  },
+  {
+   "t": "well-defined",
+   "d": "A rule stated in terms of a representation of the input is well-defined if equal inputs, however represented, receive the same output (and the output lies in the codomain)."
+  },
+  {
+   "t": "injective (one-to-one)",
+   "d": "\\( f(a_{1}) = f(a_{2}) \\) implies \\( a_{1} = a_{2} \\)."
+  },
+  {
+   "t": "surjective (onto)",
+   "d": "For every \\( b \\) in the codomain there is \\( a \\) with \\( f(a) = b \\); equivalently, range = codomain."
+  },
+  {
+   "t": "bijective",
+   "d": "Both injective and surjective."
+  },
+  {
+   "t": "composition",
+   "d": "For \\( f : A \\to B \\) and \\( g : B \\to C \\), \\( (g \\circ f)(a) = g(f(a)) \\)."
+  },
+  {
+   "t": "inverse function",
+   "d": "\\( g : B \\to A \\) with \\( g \\circ f = i_{A} \\) and \\( f \\circ g = i_{B} \\); it exists iff \\( f \\) is bijective, and is then unique, written \\( f^{-1} \\)."
+  },
+  {
+   "t": "image of a set",
+   "d": "\\( f(C) = \\{ f(c) : c \\in C \\} \\) for \\( C \\subseteq A \\)."
+  },
+  {
+   "t": "preimage",
+   "d": "\\( f^{-1}(D) = \\{ a \\in A : f(a) \\in D \\} \\) for \\( D \\subseteq B \\); defined for every function, invertible or not."
+  },
+  {
+   "t": "relation",
+   "d": "A subset \\( R \\subseteq A \\times B \\); \\( a \\mathrel{R} b \\) means \\( (a, b) \\in R \\). A relation on \\( A \\) is a subset of \\( A \\times A \\)."
+  },
+  {
+   "t": "reflexive, symmetric, transitive",
+   "d": "\\( a \\mathrel{R} a \\) for all \\( a \\); \\( a \\mathrel{R} b \\Rightarrow b \\mathrel{R} a \\); \\( a \\mathrel{R} b \\wedge b \\mathrel{R} c \\Rightarrow a \\mathrel{R} c \\)."
+  },
+  {
+   "t": "antisymmetric",
+   "d": "\\( a \\mathrel{R} b \\wedge b \\mathrel{R} a \\Rightarrow a = b \\)."
+  },
+  {
+   "t": "partial order, total order",
+   "d": "A partial order is reflexive, antisymmetric and transitive; it is total if every two elements are comparable."
+  },
+  {
+   "t": "equivalence relation",
+   "d": "A relation that is reflexive, symmetric and transitive."
+  },
+  {
+   "t": "equivalence class",
+   "d": "\\( [a] = \\{ x \\in A : x \\sim a \\} \\) for an equivalence relation \\( \\sim \\) on \\( A \\)."
+  },
+  {
+   "t": "partition",
+   "d": "A collection of nonempty, pairwise disjoint subsets of \\( A \\) whose union is \\( A \\)."
+  },
+  {
+   "t": "congruence modulo n",
+   "d": "\\( a \\equiv b \\pmod{n} \\) means \\( n \\mid (a - b) \\); an equivalence relation on \\( \\mathbb{Z} \\) with \\( n \\) classes."
+  },
+  {
+   "t": "quotient set",
+   "d": "\\( A/{\\sim} \\), the set of equivalence classes of \\( \\sim \\) on \\( A \\)."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "term",
+   "front": "Define: \\( A \\subseteq B \\)",
+   "back": "\\( \\forall x\\,(x \\in A \\to x \\in B) \\).",
+   "kp": "k1"
+  },
+  {
+   "id": "c2",
+   "type": "concept",
+   "front": "How is \\( A = B \\) proved for sets?",
+   "back": "Double inclusion: prove \\( A \\subseteq B \\) and \\( B \\subseteq A \\).",
+   "kp": "k3"
+  },
+  {
+   "id": "c3",
+   "type": "concept",
+   "front": "Is \\( \\{1\\} \\subseteq \\{1, \\{1\\}\\} \\)? Is \\( \\{1\\} \\in \\{1, \\{1\\}\\} \\)?",
+   "back": "Both: \\( 1 \\) is an element, so \\( \\{1\\} \\subseteq \\); and \\( \\{1\\} \\) itself is listed, so \\( \\{1\\} \\in \\).",
+   "kp": "k1"
+  },
+  {
+   "id": "c4",
+   "type": "formula",
+   "front": "Sizes of a Cartesian product and a power set (finite sets)",
+   "back": "\\( |A \\times B| = |A|\\,|B| \\), \\( |\\mathcal{P}(A)| = 2^{|A|} \\).",
+   "kp": "k2"
+  },
+  {
+   "id": "c5",
+   "type": "formula",
+   "front": "De Morgan's laws for sets",
+   "back": "\\( \\overline{A \\cup B} = \\overline{A} \\cap \\overline{B} \\), \\( \\overline{A \\cap B} = \\overline{A} \\cup \\overline{B} \\).",
+   "kp": "k4"
+  },
+  {
+   "id": "c6",
+   "type": "concept",
+   "front": "How do you disprove a proposed set identity?",
+   "back": "Exhibit specific small sets for which the two sides differ (test one element in each Venn region).",
+   "kp": "k4"
+  },
+  {
+   "id": "c7",
+   "type": "term",
+   "front": "Define: function \\( f : A \\to B \\)",
+   "back": "A rule (formally a subset of \\( A \\times B \\)) assigning to each \\( a \\in A \\) exactly one \\( f(a) \\in B \\).",
+   "kp": "k5"
+  },
+  {
+   "id": "c8",
+   "type": "concept",
+   "front": "Why is \\( f(a/b) = a \\) not a function on \\( \\mathbb{Q} \\)?",
+   "back": "Not well-defined: \\( 1/2 = 2/4 \\) but the rule gives 1 and 2.",
+   "kp": "k5"
+  },
+  {
+   "id": "c9",
+   "type": "term",
+   "front": "Define: injective",
+   "back": "\\( f(a_{1}) = f(a_{2}) \\Rightarrow a_{1} = a_{2} \\) for all \\( a_{1}, a_{2} \\) in the domain.",
+   "kp": "k6"
+  },
+  {
+   "id": "c10",
+   "type": "term",
+   "front": "Define: surjective",
+   "back": "For every \\( b \\) in the codomain there is \\( a \\) in the domain with \\( f(a) = b \\).",
+   "kp": "k6"
+  },
+  {
+   "id": "c11",
+   "type": "concept",
+   "front": "Is \\( g(n) = 5n - 3 \\) from \\( \\mathbb{Z} \\) to \\( \\mathbb{Z} \\) surjective?",
+   "back": "No: \\( g(n) = 0 \\) needs \\( n = 3/5 \\notin \\mathbb{Z} \\). (It is injective.)",
+   "kp": "k6"
+  },
+  {
+   "id": "c12",
+   "type": "concept",
+   "front": "When does a function have an inverse?",
+   "back": "Exactly when it is bijective; the inverse is then unique.",
+   "kp": "k7"
+  },
+  {
+   "id": "c13",
+   "type": "formula",
+   "front": "Inverse of a composition \\( g \\circ f \\) of bijections",
+   "back": "\\( (g \\circ f)^{-1} = f^{-1} \\circ g^{-1} \\).",
+   "kp": "k7"
+  },
+  {
+   "id": "c14",
+   "type": "term",
+   "front": "Define: preimage \\( f^{-1}(D) \\)",
+   "back": "\\( \\{ a \\in A : f(a) \\in D \\} \\); defined for every function.",
+   "kp": "k8"
+  },
+  {
+   "id": "c15",
+   "type": "concept",
+   "front": "Relation between \\( f(C_{1} \\cap C_{2}) \\) and \\( f(C_{1}) \\cap f(C_{2}) \\)",
+   "back": "\\( \\subseteq \\) always; equality if \\( f \\) is injective. (\\( x^{2} \\), \\( \\{-1\\}, \\{1\\} \\) gives strict inclusion.)",
+   "kp": "k8"
+  },
+  {
+   "id": "c16",
+   "type": "term",
+   "front": "Define: antisymmetric relation",
+   "back": "\\( a \\mathrel{R} b \\) and \\( b \\mathrel{R} a \\) imply \\( a = b \\).",
+   "kp": "k9"
+  },
+  {
+   "id": "c17",
+   "type": "concept",
+   "front": "Which properties does the empty relation on a nonempty set have?",
+   "back": "Symmetric, antisymmetric and transitive (vacuously); not reflexive.",
+   "kp": "k9"
+  },
+  {
+   "id": "c18",
+   "type": "term",
+   "front": "Define: partial order",
+   "back": "A relation that is reflexive, antisymmetric and transitive.",
+   "kp": "k12"
+  },
+  {
+   "id": "c19",
+   "type": "term",
+   "front": "Define: equivalence relation",
+   "back": "A relation that is reflexive, symmetric and transitive.",
+   "kp": "k10"
+  },
+  {
+   "id": "c20",
+   "type": "term",
+   "front": "Define: partition of A",
+   "back": "A collection of nonempty, pairwise disjoint subsets of \\( A \\) whose union is \\( A \\).",
+   "kp": "k11"
+  },
+  {
+   "id": "c21",
+   "type": "concept",
+   "front": "Two equivalence classes [a] and [b] are either…",
+   "back": "Equal (when \\( a \\sim b \\)) or disjoint (when \\( a \\not\\sim b \\)).",
+   "kp": "k11"
+  },
+  {
+   "id": "c22",
+   "type": "problem",
+   "front": "Number of equivalence relations on a 3-element set",
+   "back": "5, one for each partition.",
+   "kp": "k11",
+   "answer": "5",
+   "check": "number"
+  },
+  {
+   "id": "c23",
+   "type": "problem",
+   "front": "\\( |\\mathcal{P}(A \\times B)| \\) when \\( |A| = 2 \\), \\( |B| = 3 \\)",
+   "back": "\\( 2^{6} = 64 \\).",
+   "kp": "k2",
+   "answer": "64",
+   "check": "number"
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k2",
+   "type": "written",
+   "prompt": "Prove by induction on \\( n \\ge 0 \\) that every set with \\( n \\) elements has exactly \\( 2^{n} \\) subsets.",
+   "rubric": [
+    "Base case n = 0: the empty set has exactly one subset, ∅",
+    "Inductive step: write A = A′ ∪ {x} with |A′| = k",
+    "Subsets of A split into those not containing x (subsets of A′) and those containing x (S ∪ {x} for S ⊆ A′), with a bijection between the two families",
+    "Counts 2^k + 2^k = 2^{k+1}"
+   ],
+   "model": "*Base case.* \\( n = 0 \\): the only set with no elements is \\( \\varnothing \\), whose only subset is \\( \\varnothing \\); and \\( 2^{0} = 1 \\).\n\n*Inductive step.* Let \\( k \\ge 0 \\) and assume every \\( k \\)-element set has \\( 2^{k} \\) subsets. Let \\( A \\) have \\( k + 1 \\) elements; choose \\( x \\in A \\) and let \\( A' = A \\setminus \\{x\\} \\), which has \\( k \\) elements. Every subset \\( S \\) of \\( A \\) either does not contain \\( x \\), in which case \\( S \\subseteq A' \\), or contains \\( x \\), in which case \\( S = T \\cup \\{x\\} \\) with \\( T = S \\setminus \\{x\\} \\subseteq A' \\). The map \\( T \\mapsto T \\cup \\{x\\} \\) is a bijection from the subsets of \\( A' \\) to the subsets of \\( A \\) containing \\( x \\) (its inverse removes \\( x \\)). So each family has \\( 2^{k} \\) members by the inductive hypothesis, the families are disjoint, and \\( A \\) has \\( 2^{k} + 2^{k} = 2^{k+1} \\) subsets. By induction the claim holds for all \\( n \\ge 0 \\). \\( \\blacksquare \\)",
+   "why": "Splitting subsets according to whether they contain a chosen element is the standard recursive decomposition; it reappears in Pascal's identity in the counting topic."
+  },
+  {
+   "id": "p2",
+   "kp": "k3",
+   "type": "written",
+   "prompt": "Prove that \\( \\{ n \\in \\mathbb{Z} : 4 \\mid n \\} \\cap \\{ n \\in \\mathbb{Z} : 6 \\mid n \\} = \\{ n \\in \\mathbb{Z} : 12 \\mid n \\} \\).",
+   "rubric": [
+    "⊇: n = 12k gives n = 4(3k) and n = 6(2k)",
+    "⊆: n = 4a = 6b gives 2a = 3b",
+    "Deduces b even (if b odd then 3b odd, but 3b = 2a is even), b = 2c",
+    "Concludes n = 6b = 12c; both inclusions stated"
+   ],
+   "model": "(\\( \\supseteq \\)) If \\( n = 12k \\), then \\( n = 4(3k) \\) and \\( n = 6(2k) \\), so \\( n \\) lies in both sets.\n\n(\\( \\subseteq \\)) Let \\( n \\) lie in both sets: \\( n = 4a \\) and \\( n = 6b \\) for integers \\( a, b \\). Then \\( 4a = 6b \\), so \\( 2a = 3b \\), and \\( 3b \\) is even. If \\( b \\) were odd, \\( 3b \\) would be a product of odd integers, hence odd; so \\( b \\) is even, \\( b = 2c \\). Therefore \\( n = 6b = 12c \\), and \\( 12 \\mid n \\). \\( \\blacksquare \\)",
+   "why": "The inclusion \\( \\subseteq \\) is the real content: divisibility by 4 and by 6 gives divisibility by \\( \\operatorname{lcm}(4, 6) = 12 \\), not by \\( 4 \\cdot 6 = 24 \\)."
+  },
+  {
+   "id": "p3",
+   "kp": "k4",
+   "type": "written",
+   "prompt": "Prove that for all sets, \\( A \\cup (B \\cap C) = (A \\cup B) \\cap (A \\cup C) \\).",
+   "rubric": [
+    "⊆: case x ∈ A gives x in both A ∪ B and A ∪ C; case x ∈ B ∩ C likewise",
+    "⊇: x ∈ (A ∪ B) ∩ (A ∪ C); case x ∈ A done",
+    "Case x ∉ A: then x ∈ B and x ∈ C, so x ∈ B ∩ C",
+    "Both inclusions concluded"
+   ],
+   "model": "(\\( \\subseteq \\)) Let \\( x \\in A \\cup (B \\cap C) \\). If \\( x \\in A \\), then \\( x \\in A \\cup B \\) and \\( x \\in A \\cup C \\). If \\( x \\in B \\cap C \\), then \\( x \\in B \\subseteq A \\cup B \\) and \\( x \\in C \\subseteq A \\cup C \\). Either way \\( x \\in (A \\cup B) \\cap (A \\cup C) \\).\n\n(\\( \\supseteq \\)) Let \\( x \\in (A \\cup B) \\cap (A \\cup C) \\). If \\( x \\in A \\), then \\( x \\in A \\cup (B \\cap C) \\). If \\( x \\notin A \\), then from \\( x \\in A \\cup B \\) we get \\( x \\in B \\), and from \\( x \\in A \\cup C \\) we get \\( x \\in C \\); so \\( x \\in B \\cap C \\subseteq A \\cup (B \\cap C) \\). \\( \\blacksquare \\)",
+   "why": "This is the set version of \\( p \\vee (q \\wedge r) \\equiv (p \\vee q) \\wedge (p \\vee r) \\). Splitting on \\( x \\in A \\) versus \\( x \\notin A \\) is the efficient case division."
+  },
+  {
+   "id": "p4",
+   "kp": "k4",
+   "type": "written",
+   "prompt": "(a) Prove or disprove: if \\( A \\cup C = B \\cup C \\), then \\( A = B \\). (b) Prove: if \\( A \\cup C = B \\cup C \\) and \\( A \\cap C = B \\cap C \\), then \\( A = B \\).",
+   "rubric": [
+    "(a) False: A = {1}, B = ∅, C = {1}",
+    "(b) By symmetry it suffices to show A ⊆ B; let x ∈ A",
+    "Case x ∈ C: x ∈ A ∩ C = B ∩ C, so x ∈ B",
+    "Case x ∉ C: x ∈ A ∪ C = B ∪ C and x ∉ C, so x ∈ B"
+   ],
+   "model": "(a) False. Take \\( A = \\{1\\} \\), \\( B = \\varnothing \\), \\( C = \\{1\\} \\): then \\( A \\cup C = \\{1\\} = B \\cup C \\), but \\( A \\ne B \\).\n\n(b) *Proof.* We show \\( A \\subseteq B \\); the reverse inclusion follows by exchanging the roles of \\( A \\) and \\( B \\), since the hypotheses are symmetric in them. Let \\( x \\in A \\). *Case \\( x \\in C \\):* then \\( x \\in A \\cap C = B \\cap C \\), so \\( x \\in B \\). *Case \\( x \\notin C \\):* then \\( x \\in A \\cup C = B \\cup C \\), and since \\( x \\notin C \\), \\( x \\in B \\). In both cases \\( x \\in B \\). \\( \\blacksquare \\)",
+   "why": "Union with \\( C \\) hides what happens inside \\( C \\); the intersection condition recovers exactly that part."
+  },
+  {
+   "id": "p5",
+   "kp": "k6",
+   "type": "written",
+   "prompt": "Prove that \\( f : \\mathbb{Z} \\times \\mathbb{Z} \\to \\mathbb{Z} \\times \\mathbb{Z} \\), \\( f(m, n) = (m + n,\\ m + 2n) \\), is a bijection, and find \\( f^{-1} \\).",
+   "rubric": [
+    "Injective: equal images give m + n = m′ + n′ and m + 2n = m′ + 2n′; subtracting gives n = n′, then m = m′",
+    "Surjective: for (a, b), solve m + n = a, m + 2n = b to get n = b − a, m = 2a − b",
+    "Checks these are integers and f(2a − b, b − a) = (a, b)",
+    "f⁻¹(a, b) = (2a − b, b − a)"
+   ],
+   "model": "*Injective.* Suppose \\( f(m, n) = f(m', n') \\): \\( m + n = m' + n' \\) and \\( m + 2n = m' + 2n' \\). Subtracting the first equation from the second gives \\( n = n' \\), and then \\( m = m' \\).\n\n*Surjective.* Let \\( (a, b) \\in \\mathbb{Z} \\times \\mathbb{Z} \\). Solving \\( m + n = a \\), \\( m + 2n = b \\) gives \\( n = b - a \\) and \\( m = 2a - b \\), both integers. Check: \\( f(2a - b, b - a) = \\bigl((2a - b) + (b - a),\\ (2a - b) + 2(b - a)\\bigr) = (a, b) \\).\n\nSo \\( f \\) is a bijection, and \\( f^{-1}(a, b) = (2a - b,\\ b - a) \\). \\( \\blacksquare \\)",
+   "why": "The system has an integer solution for every integer right-hand side because its coefficient determinant is \\( 1 \\cdot 2 - 1 \\cdot 1 = 1 \\)."
+  },
+  {
+   "id": "p6",
+   "kp": "k7",
+   "type": "written",
+   "prompt": "Let \\( f : A \\to B \\) and \\( g : B \\to C \\). Prove that if \\( g \\circ f \\) is surjective, then \\( g \\) is surjective, and give an example in which \\( g \\circ f \\) is surjective but \\( f \\) is not.",
+   "rubric": [
+    "For c ∈ C, surjectivity of g ∘ f gives a with g(f(a)) = c",
+    "Then b = f(a) ∈ B satisfies g(b) = c, so g is surjective",
+    "Example: A = {1}, B = {1, 2}, C = {1}, f(1) = 1, g(1) = g(2) = 1",
+    "Verifies g ∘ f onto C and f not onto B (2 not hit)"
+   ],
+   "model": "*Proof.* Let \\( c \\in C \\). Since \\( g \\circ f \\) is surjective, there is \\( a \\in A \\) with \\( g(f(a)) = c \\). Then \\( b = f(a) \\in B \\) satisfies \\( g(b) = c \\). So \\( g \\) is surjective. \\( \\blacksquare \\)\n\n*Example.* \\( A = \\{1\\} \\), \\( B = \\{1, 2\\} \\), \\( C = \\{1\\} \\), \\( f(1) = 1 \\), \\( g(1) = g(2) = 1 \\). Then \\( (g \\circ f)(1) = 1 \\), so \\( g \\circ f \\) is onto \\( C \\); but \\( 2 \\in B \\) is not in the range of \\( f \\).",
+   "why": "Surjectivity of the composite is a statement about the last function applied; the first function need only reach enough of \\( B \\)."
+  },
+  {
+   "id": "p7",
+   "kp": "k8",
+   "type": "written",
+   "prompt": "Let \\( f : A \\to B \\) and \\( C \\subseteq A \\). Prove that \\( C \\subseteq f^{-1}(f(C)) \\), give an example where the inclusion is strict, and prove that equality holds when \\( f \\) is injective.",
+   "rubric": [
+    "For c ∈ C, f(c) ∈ f(C), so c ∈ f⁻¹(f(C))",
+    "Strict example: f(x) = x², C = {1}, f⁻¹(f(C)) = {−1, 1}",
+    "If f injective and a ∈ f⁻¹(f(C)): f(a) = f(c) for some c ∈ C",
+    "Injectivity gives a = c ∈ C"
+   ],
+   "model": "*Inclusion.* Let \\( c \\in C \\). Then \\( f(c) \\in f(C) \\), which by definition of the preimage means \\( c \\in f^{-1}(f(C)) \\).\n\n*Strict example.* \\( f : \\mathbb{R} \\to \\mathbb{R} \\), \\( f(x) = x^{2} \\), \\( C = \\{1\\} \\): \\( f(C) = \\{1\\} \\) and \\( f^{-1}(\\{1\\}) = \\{-1, 1\\} \\ne C \\).\n\n*Equality for injective \\( f \\).* Let \\( a \\in f^{-1}(f(C)) \\). Then \\( f(a) \\in f(C) \\), so \\( f(a) = f(c) \\) for some \\( c \\in C \\). By injectivity \\( a = c \\in C \\). Hence \\( f^{-1}(f(C)) \\subseteq C \\), and with the inclusion above, equality holds. \\( \\blacksquare \\)",
+   "why": "The preimage of the image collects every input that shares an output with some element of \\( C \\); injectivity means no other input does."
+  },
+  {
+   "id": "p8",
+   "kp": "k9",
+   "type": "mcq",
+   "prompt": "Let \\( A \\) be a nonempty set and let \\( R = \\varnothing \\) be the empty relation on \\( A \\). Which statement is correct?",
+   "options": [
+    "\\( R \\) is symmetric and transitive but not reflexive.",
+    "\\( R \\) is reflexive, symmetric and transitive, so it is an equivalence relation.",
+    "\\( R \\) is not symmetric, because it contains no pairs \\( (a, b) \\) and \\( (b, a) \\).",
+    "\\( R \\) is neither transitive nor antisymmetric, because no pairs are available to verify the conditions."
+   ],
+   "answer": 0,
+   "why": "Symmetry, antisymmetry and transitivity are conditionals whose hypotheses (\\( a \\mathrel{R} b \\), etc.) are never satisfied, so they hold vacuously. Reflexivity demands \\( a \\mathrel{R} a \\) for every \\( a \\in A \\), which fails because \\( A \\) is nonempty. So \\( R \\) is not an equivalence relation (it would be only if \\( A = \\varnothing \\))."
+  },
+  {
+   "id": "p9",
+   "kp": "k10",
+   "type": "written",
+   "prompt": "On \\( \\mathbb{R} \\), define \\( x \\sim y \\) if \\( x - y \\in \\mathbb{Z} \\). Prove that \\( \\sim \\) is an equivalence relation, and prove that every equivalence class contains exactly one element of \\( [0, 1) \\).",
+   "rubric": [
+    "Reflexive (0 ∈ ℤ), symmetric (negatives of integers are integers), transitive (sums of integers are integers)",
+    "Existence: x ∼ x − ⌊x⌋ and 0 ≤ x − ⌊x⌋ < 1",
+    "Uniqueness: if s, t ∈ [0, 1) with s ∼ t, then s − t ∈ ℤ and −1 < s − t < 1",
+    "Concludes s − t = 0"
+   ],
+   "model": "*Equivalence relation.* Reflexive: \\( x - x = 0 \\in \\mathbb{Z} \\). Symmetric: if \\( x - y = k \\in \\mathbb{Z} \\), then \\( y - x = -k \\in \\mathbb{Z} \\). Transitive: if \\( x - y = k \\) and \\( y - z = l \\) are integers, then \\( x - z = k + l \\in \\mathbb{Z} \\).\n\n*Exactly one element of \\( [0, 1) \\) in each class.* Existence: for \\( x \\in \\mathbb{R} \\), let \\( \\lfloor x \\rfloor \\) be the greatest integer \\( \\le x \\); then \\( 0 \\le x - \\lfloor x \\rfloor < 1 \\), and \\( x - (x - \\lfloor x \\rfloor) = \\lfloor x \\rfloor \\in \\mathbb{Z} \\), so \\( x - \\lfloor x \\rfloor \\) is an element of \\( [0, 1) \\) in the class of \\( x \\). Uniqueness: if \\( s, t \\in [0, 1) \\) and \\( s \\sim t \\), then \\( s - t \\) is an integer with \\( -1 < s - t < 1 \\), so \\( s - t = 0 \\). \\( \\blacksquare \\)",
+   "why": "The quotient \\( \\mathbb{R}/{\\sim} \\) can be pictured as \\( [0, 1) \\), with the endpoints of \\( [0, 1] \\) glued together: a circle."
+  },
+  {
+   "id": "p10",
+   "kp": "k11",
+   "type": "written",
+   "prompt": "Let \\( \\mathcal{P} \\) be a partition of a set \\( A \\), and define \\( a \\sim b \\) if \\( a \\) and \\( b \\) lie in the same block of \\( \\mathcal{P} \\). Prove that \\( \\sim \\) is an equivalence relation and that its equivalence classes are exactly the blocks of \\( \\mathcal{P} \\).",
+   "rubric": [
+    "Reflexive: each a lies in some block (blocks cover A)",
+    "Symmetric: immediate from the definition",
+    "Transitive: a, b in block X and b, c in block Y; X ∩ Y contains b, so X = Y by disjointness, hence a, c in X",
+    "Classes: if a ∈ X, then [a] = X (x ∼ a iff x ∈ X, using uniqueness of the block containing a)"
+   ],
+   "model": "*Reflexive.* Every \\( a \\in A \\) lies in some block, since the blocks cover \\( A \\); so \\( a \\sim a \\).\n\n*Symmetric.* \"\\( a \\) and \\( b \\) lie in the same block\" is symmetric in \\( a \\) and \\( b \\).\n\n*Transitive.* Suppose \\( a, b \\in X \\) and \\( b, c \\in Y \\) for blocks \\( X, Y \\). Then \\( b \\in X \\cap Y \\); distinct blocks are disjoint, so \\( X = Y \\), and \\( a, c \\in X \\): \\( a \\sim c \\).\n\n*Classes.* Let \\( a \\in A \\), and let \\( X \\) be the block containing \\( a \\) (unique, by disjointness). If \\( x \\in X \\), then \\( x \\sim a \\). Conversely, if \\( x \\sim a \\), then \\( x \\) and \\( a \\) share a block, which must be \\( X \\), so \\( x \\in X \\). Hence \\( [a] = X \\), and every block, being nonempty, is the class of any of its elements. \\( \\blacksquare \\)",
+   "why": "Together with the theorem of the section, this shows that equivalence relations on \\( A \\) and partitions of \\( A \\) are two descriptions of the same structure."
+  },
+  {
+   "id": "p11",
+   "kp": "k12",
+   "type": "written",
+   "prompt": "On \\( \\mathbb{R}^{2} \\), define \\( (a, b) \\preceq (c, d) \\) if \\( a \\le c \\) and \\( b \\le d \\). Prove that \\( \\preceq \\) is a partial order and that it is not a total order.",
+   "rubric": [
+    "Reflexive: a ≤ a and b ≤ b",
+    "Antisymmetric: a ≤ c, c ≤ a, b ≤ d, d ≤ b give a = c, b = d, so the pairs are equal",
+    "Transitive: componentwise transitivity of ≤",
+    "Not total: (0, 1) and (1, 0) are incomparable"
+   ],
+   "model": "*Reflexive:* \\( a \\le a \\) and \\( b \\le b \\), so \\( (a, b) \\preceq (a, b) \\).\n\n*Antisymmetric:* if \\( (a, b) \\preceq (c, d) \\) and \\( (c, d) \\preceq (a, b) \\), then \\( a \\le c \\le a \\) and \\( b \\le d \\le b \\), so \\( a = c \\), \\( b = d \\), and \\( (a, b) = (c, d) \\).\n\n*Transitive:* if \\( a \\le c \\), \\( b \\le d \\), \\( c \\le e \\), \\( d \\le f \\), then \\( a \\le e \\) and \\( b \\le f \\).\n\n*Not total:* \\( (0, 1) \\preceq (1, 0) \\) fails since \\( 1 \\not\\le 0 \\), and \\( (1, 0) \\preceq (0, 1) \\) fails since \\( 1 \\not\\le 0 \\). \\( \\blacksquare \\)",
+   "why": "Each property of \\( \\preceq \\) is inherited coordinatewise from \\( \\le \\), except totality, which fails as soon as the coordinates disagree in direction."
+  },
+  {
+   "id": "p12",
+   "kp": "k5",
+   "type": "written",
+   "prompt": "Decide which rule is well-defined as a function \\( \\mathbb{Q} \\to \\mathbb{Q} \\), where \\( \\frac{a}{b} \\) denotes a rational with integers \\( a, b \\), \\( b \\ne 0 \\): (a) \\( f\\left(\\frac{a}{b}\\right) = \\frac{a^{2}}{b^{2}} \\); (b) \\( g\\left(\\frac{a}{b}\\right) = \\frac{a + 1}{b} \\). Prove your answers.",
+   "rubric": [
+    "States the criterion: a/b = c/d (i.e. ad = bc) must imply equal outputs",
+    "(a) well-defined: ad = bc gives a²d² = b²c², so a²/b² = c²/d²",
+    "(b) not well-defined: 1/2 = 2/4 but g gives 2/2 = 1 and 3/4",
+    "Concludes f is a function (x ↦ x²) and g is not"
+   ],
+   "model": "A rule of this kind is well-defined if \\( \\frac{a}{b} = \\frac{c}{d} \\), that is \\( ad = bc \\), always gives the same output.\n\n(a) Well-defined: if \\( ad = bc \\), then \\( a^{2}d^{2} = b^{2}c^{2} \\), so \\( \\frac{a^{2}}{b^{2}} = \\frac{c^{2}}{d^{2}} \\). In fact \\( f(x) = x^{2} \\).\n\n(b) Not well-defined: \\( \\frac{1}{2} = \\frac{2}{4} \\), but the rule gives \\( \\frac{1 + 1}{2} = 1 \\) and \\( \\frac{2 + 1}{4} = \\frac{3}{4} \\). Since \\( g\\left(\\frac{a}{b}\\right) = \\frac{a}{b} + \\frac{1}{b} \\), the output depends on the denominator chosen, not only on the number.",
+   "why": "A rule defined on representatives must be constant on each equivalence class of the relation \\( ad = bc \\)."
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k4",
+   "type": "written",
+   "prompt": "Prove that for all sets \\( A, B, C \\), \\( A \\setminus (B \\cap C) = (A \\setminus B) \\cup (A \\setminus C) \\).",
+   "rubric": [
+    "⊆: x ∈ A and x ∉ B ∩ C; by De Morgan x ∉ B or x ∉ C",
+    "Cases give x ∈ A \\ B or x ∈ A \\ C",
+    "⊇: each case gives x ∈ A and x ∉ B ∩ C",
+    "Both inclusions stated"
+   ],
+   "model": "(\\( \\subseteq \\)) Let \\( x \\in A \\setminus (B \\cap C) \\). Then \\( x \\in A \\) and \\( x \\notin B \\cap C \\), so by De Morgan's law, \\( x \\notin B \\) or \\( x \\notin C \\). In the first case \\( x \\in A \\setminus B \\); in the second \\( x \\in A \\setminus C \\). Either way \\( x \\in (A \\setminus B) \\cup (A \\setminus C) \\).\n\n(\\( \\supseteq \\)) Let \\( x \\in (A \\setminus B) \\cup (A \\setminus C) \\). If \\( x \\in A \\setminus B \\), then \\( x \\in A \\) and \\( x \\notin B \\), so \\( x \\notin B \\cap C \\). If \\( x \\in A \\setminus C \\), then \\( x \\in A \\) and \\( x \\notin C \\), so again \\( x \\notin B \\cap C \\). Either way \\( x \\in A \\setminus (B \\cap C) \\). \\( \\blacksquare \\)",
+   "why": "This is De Morgan's law relative to \\( A \\): removing an intersection removes less than removing either set."
+  },
+  {
+   "id": "e2",
+   "kp": "k7",
+   "type": "written",
+   "prompt": "Let \\( f : \\mathbb{R} \\setminus \\{3\\} \\to \\mathbb{R} \\setminus \\{1\\} \\), \\( f(x) = \\frac{x + 1}{x - 3} \\). (a) Show that \\( f \\) is well-defined, i.e. \\( f(x) \\ne 1 \\) for every \\( x \\ne 3 \\). (b) Prove that \\( f \\) is bijective. (c) Find \\( f^{-1} \\) and verify one of the two composition identities.",
+   "rubric": [
+    "(a) (x + 1)/(x − 3) = 1 would give x + 1 = x − 3, impossible",
+    "(b) injective: cross-multiplying (x₁ + 1)(x₂ − 3) = (x₂ + 1)(x₁ − 3) reduces to x₁ = x₂",
+    "(b) surjective: for y ≠ 1, x = (3y + 1)/(y − 1) lies in the domain (x ≠ 3) and f(x) = y",
+    "(c) f⁻¹(y) = (3y + 1)/(y − 1) with a correct composition check"
+   ],
+   "model": "(a) If \\( \\frac{x + 1}{x - 3} = 1 \\), then \\( x + 1 = x - 3 \\), i.e. \\( 1 = -3 \\), which is impossible. So every output lies in \\( \\mathbb{R} \\setminus \\{1\\} \\).\n\n(b) *Injective.* If \\( \\frac{x_{1} + 1}{x_{1} - 3} = \\frac{x_{2} + 1}{x_{2} - 3} \\), cross-multiplying gives \\( x_{1}x_{2} - 3x_{1} + x_{2} - 3 = x_{1}x_{2} - 3x_{2} + x_{1} - 3 \\), so \\( -4x_{1} = -4x_{2} \\) and \\( x_{1} = x_{2} \\).\n\n*Surjective.* Let \\( y \\ne 1 \\). Solving \\( y = \\frac{x + 1}{x - 3} \\): \\( yx - 3y = x + 1 \\), so \\( x(y - 1) = 3y + 1 \\) and \\( x = \\frac{3y + 1}{y - 1} \\), defined since \\( y \\ne 1 \\). This \\( x \\) is not 3, since \\( \\frac{3y + 1}{y - 1} = 3 \\) would give \\( 3y + 1 = 3y - 3 \\). And\n\\[ f(x) = \\frac{\\frac{3y + 1}{y - 1} + 1}{\\frac{3y + 1}{y - 1} - 3} = \\frac{3y + 1 + y - 1}{3y + 1 - 3y + 3} = \\frac{4y}{4} = y. \\]\n\n(c) \\( f^{-1}(y) = \\frac{3y + 1}{y - 1} \\). The computation above is the identity \\( f(f^{-1}(y)) = y \\). (Also \\( f^{-1}(f(x)) = \\frac{3\\frac{x + 1}{x - 3} + 1}{\\frac{x + 1}{x - 3} - 1} = \\frac{3x + 3 + x - 3}{x + 1 - x + 3} = \\frac{4x}{4} = x \\).) \\( \\blacksquare \\)",
+   "why": "Both the domain restriction \\( x \\ne 3 \\) and the codomain restriction \\( y \\ne 1 \\) are needed: the first for \\( f \\) to be defined, the second for \\( f \\) to be onto (1 is the horizontal asymptote's value, never attained)."
+  },
+  {
+   "id": "e3",
+   "kp": "k8",
+   "type": "written",
+   "prompt": "Let \\( f : A \\to B \\) and \\( C_{1}, C_{2} \\subseteq A \\). (a) Prove that if \\( f \\) is injective, then \\( f(C_{1} \\cap C_{2}) = f(C_{1}) \\cap f(C_{2}) \\). (b) Give an explicit example showing that the equality can fail when \\( f \\) is not injective, and identify the step of (a) that fails.",
+   "rubric": [
+    "States that f(C₁ ∩ C₂) ⊆ f(C₁) ∩ f(C₂) always holds, with its short proof",
+    "Reverse inclusion: y = f(c₁) = f(c₂) with c₁ ∈ C₁, c₂ ∈ C₂; injectivity gives c₁ = c₂ ∈ C₁ ∩ C₂",
+    "Counterexample, e.g. f(x) = x², C₁ = {−1}, C₂ = {1}: ∅ versus {1}",
+    "Identifies the failing step: c₁ = c₂ cannot be concluded without injectivity"
+   ],
+   "model": "(a) (\\( \\subseteq \\)) If \\( y = f(c) \\) with \\( c \\in C_{1} \\cap C_{2} \\), then \\( y \\in f(C_{1}) \\) and \\( y \\in f(C_{2}) \\). This holds for every \\( f \\).\n\n(\\( \\supseteq \\)) Let \\( y \\in f(C_{1}) \\cap f(C_{2}) \\). Then \\( y = f(c_{1}) \\) for some \\( c_{1} \\in C_{1} \\) and \\( y = f(c_{2}) \\) for some \\( c_{2} \\in C_{2} \\). So \\( f(c_{1}) = f(c_{2}) \\), and since \\( f \\) is injective, \\( c_{1} = c_{2} \\). This element lies in \\( C_{1} \\cap C_{2} \\), so \\( y \\in f(C_{1} \\cap C_{2}) \\). \\( \\blacksquare \\)\n\n(b) Let \\( f : \\mathbb{R} \\to \\mathbb{R} \\), \\( f(x) = x^{2} \\), \\( C_{1} = \\{-1\\} \\), \\( C_{2} = \\{1\\} \\). Then \\( f(C_{1} \\cap C_{2}) = f(\\varnothing) = \\varnothing \\), while \\( f(C_{1}) \\cap f(C_{2}) = \\{1\\} \\cap \\{1\\} = \\{1\\} \\). The step that fails is \"\\( f(c_{1}) = f(c_{2}) \\) implies \\( c_{1} = c_{2} \\)\": here \\( c_{1} = -1 \\) and \\( c_{2} = 1 \\) have the same image but are different.",
+   "why": "The two witnesses \\( c_{1}, c_{2} \\) must be named separately; injectivity is precisely the hypothesis that merges them."
+  },
+  {
+   "id": "e4",
+   "kp": "k11",
+   "type": "written",
+   "prompt": "Let \\( \\sim \\) be an equivalence relation on \\( A \\). Prove that for all \\( a, b \\in A \\), either \\( [a] = [b] \\) or \\( [a] \\cap [b] = \\varnothing \\), and deduce that the distinct equivalence classes form a partition of \\( A \\). State where each of reflexivity, symmetry and transitivity is used.",
+   "rubric": [
+    "If [a] ∩ [b] contains c: c ∼ a, c ∼ b, so a ∼ c (symmetry) and a ∼ b (transitivity)",
+    "From a ∼ b: x ∼ a implies x ∼ b (transitivity), so [a] ⊆ [b]; symmetry gives b ∼ a and [b] ⊆ [a]",
+    "Reflexivity: a ∈ [a], so classes are nonempty and cover A",
+    "Concludes the distinct classes are nonempty, pairwise disjoint and cover A"
+   ],
+   "model": "*Proof.* Suppose \\( [a] \\cap [b] \\ne \\varnothing \\); we show \\( [a] = [b] \\). Let \\( c \\in [a] \\cap [b] \\), so \\( c \\sim a \\) and \\( c \\sim b \\). By symmetry \\( a \\sim c \\), and by transitivity (\\( a \\sim c \\), \\( c \\sim b \\)) \\( a \\sim b \\).\n\nNow let \\( x \\in [a] \\): \\( x \\sim a \\) and \\( a \\sim b \\) give \\( x \\sim b \\) by transitivity, so \\( x \\in [b] \\); thus \\( [a] \\subseteq [b] \\). By symmetry \\( b \\sim a \\), and the same argument gives \\( [b] \\subseteq [a] \\). So \\( [a] = [b] \\). Hence any two classes are equal or disjoint.\n\nBy reflexivity \\( a \\sim a \\), so \\( a \\in [a] \\): every class is nonempty, and every element of \\( A \\) lies in some class. Therefore the distinct classes are nonempty, pairwise disjoint and have union \\( A \\); they form a partition. \\( \\blacksquare \\)\n\nReflexivity: nonemptiness and covering. Symmetry: turning \\( c \\sim a \\) into \\( a \\sim c \\), and \\( a \\sim b \\) into \\( b \\sim a \\). Transitivity: deducing \\( a \\sim b \\) and the inclusions of classes.",
+   "why": "This theorem is why an equivalence relation can be replaced by the set of its classes: each element belongs to exactly one."
+  },
+  {
+   "id": "e5",
+   "kp": "k10",
+   "type": "written",
+   "prompt": "On \\( \\mathbb{Z} \\), define \\( a \\sim b \\) if \\( 5 \\mid (a^{2} - b^{2}) \\). Prove that \\( \\sim \\) is an equivalence relation, and determine the number of equivalence classes, describing each class in terms of the remainder of its elements on division by 5.",
+   "rubric": [
+    "Reflexive, symmetric and transitive proved (0 = 5·0; negation; adding a² − b² and b² − c²)",
+    "Computes squares by remainder: (5k + r)² = 5(…) + r² with r² giving remainders 0, 1, 4, 4, 1 for r = 0, 1, 2, 3, 4",
+    "a ∼ b iff a² and b² leave the same remainder in {0, 1, 4} (difference of two such remainders is divisible by 5 only if they are equal)",
+    "Three classes: {5k}, {5k ± 1}, {5k ± 2}"
+   ],
+   "model": "*Equivalence relation.* Reflexive: \\( a^{2} - a^{2} = 0 = 5 \\cdot 0 \\). Symmetric: if \\( a^{2} - b^{2} = 5k \\), then \\( b^{2} - a^{2} = 5(-k) \\). Transitive: if \\( a^{2} - b^{2} = 5k \\) and \\( b^{2} - c^{2} = 5l \\), then \\( a^{2} - c^{2} = 5(k + l) \\).\n\n*Squares by remainder.* Write \\( a = 5k + r \\) with \\( r \\in \\{0, 1, 2, 3, 4\\} \\). Then \\( a^{2} = 5(5k^{2} + 2kr) + r^{2} \\), and \\( r^{2} = 0, 1, 4, 9, 16 \\) leaves remainder \\( 0, 1, 4, 4, 1 \\). So \\( a^{2} = 5m + s(a) \\) with \\( s(a) \\in \\{0, 1, 4\\} \\): \\( s(a) = 0 \\) if \\( r = 0 \\), \\( s(a) = 1 \\) if \\( r \\in \\{1, 4\\} \\), \\( s(a) = 4 \\) if \\( r \\in \\{2, 3\\} \\).\n\n*Classes.* \\( a^{2} - b^{2} = 5(\\cdots) + (s(a) - s(b)) \\), and \\( s(a) - s(b) \\in \\{-4, \\dots, 4\\} \\) is divisible by 5 only when it is 0. So \\( a \\sim b \\) if and only if \\( s(a) = s(b) \\). There are exactly three classes:\n\\[ [0] = \\{ a : a = 5k \\}, \\quad [1] = \\{ a : a = 5k + 1 \\text{ or } 5k + 4 \\}, \\quad [2] = \\{ a : a = 5k + 2 \\text{ or } 5k + 3 \\}. \\]",
+   "why": "The relation identifies integers whose squares agree modulo 5; since \\( r \\) and \\( 5 - r \\) have the same square modulo 5, the five remainder classes merge into three."
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "Subset proof",
+    "formula": "Let \\( x \\in A \\) be arbitrary; …; therefore \\( x \\in B \\).",
+    "when": "Proving \\( A \\subseteq B \\).",
+    "example": "\\( x \\in A \\cap B \\Rightarrow x \\in A \\), so \\( A \\cap B \\subseteq A \\).",
+    "watch": "Never choose a specific element; unfold every definition."
+   },
+   {
+    "name": "Double inclusion",
+    "formula": "\\( A = B \\iff A \\subseteq B \\wedge B \\subseteq A \\)",
+    "when": "Proving two sets equal.",
+    "example": "\\( \\overline{A \\cup B} = \\overline{A} \\cap \\overline{B} \\), one inclusion at a time.",
+    "watch": "Both inclusions are required; an iff-chain is valid only if every step reverses."
+   },
+   {
+    "name": "Disprove an identity",
+    "formula": "Exhibit specific \\( A, B, C \\) with the two sides different",
+    "when": "A set identity seems false.",
+    "example": "\\( A = B = C = \\{1\\} \\) refutes \\( A \\setminus (B \\setminus C) = (A \\setminus B) \\setminus C \\).",
+    "watch": "Test one element in each Venn region to locate the failure."
+   },
+   {
+    "name": "Injective",
+    "formula": "\\( f(a_{1}) = f(a_{2}) \\Rightarrow a_{1} = a_{2} \\)",
+    "when": "Proving one-to-one; to refute, exhibit a collision.",
+    "example": "\\( 5x_{1} - 3 = 5x_{2} - 3 \\Rightarrow x_{1} = x_{2} \\).",
+    "watch": "Do not prove the converse \\( a_{1} = a_{2} \\Rightarrow f(a_{1}) = f(a_{2}) \\)."
+   },
+   {
+    "name": "Surjective",
+    "formula": "\\( \\forall b \\in B\\ \\exists a \\in A\\ f(a) = b \\)",
+    "when": "Proving onto: solve \\( f(a) = b \\) for \\( a \\).",
+    "example": "\\( h(m, n) = 2m + 3n \\): \\( h(-b, b) = b \\).",
+    "watch": "Check that the solution lies in the domain."
+   },
+   {
+    "name": "Inverse exists iff bijective",
+    "formula": "\\( g \\circ f = i_{A} \\) and \\( f \\circ g = i_{B} \\)",
+    "when": "Finding or proving an inverse.",
+    "example": "\\( f(x) = 5x - 3 \\), \\( f^{-1}(y) = \\frac{y + 3}{5} \\).",
+    "watch": "Verify both compositions; a one-sided inverse is not enough."
+   },
+   {
+    "name": "Image and preimage",
+    "formula": "\\( y \\in f(C) \\iff \\exists c \\in C\\ f(c) = y \\); \\( a \\in f^{-1}(D) \\iff f(a) \\in D \\)",
+    "when": "Statements about sets of inputs or outputs.",
+    "example": "\\( f(x) = x^{2} \\): \\( f^{-1}([1, 4]) = [-2, -1] \\cup [1, 2] \\).",
+    "watch": "\\( f(C_{1} \\cap C_{2}) = f(C_{1}) \\cap f(C_{2}) \\) needs injectivity."
+   },
+   {
+    "name": "Relation properties",
+    "formula": "Reflexive, symmetric, antisymmetric, transitive: each \\( \\forall \\)-statement",
+    "when": "Classifying a relation.",
+    "example": "\\( |a - b| \\le 1 \\): reflexive, symmetric, not transitive (0, 1, 2).",
+    "watch": "Refute with one explicit counterexample; watch special elements such as 0."
+   },
+   {
+    "name": "Equivalence classes partition",
+    "formula": "\\( a \\sim b \\Rightarrow [a] = [b] \\); \\( a \\not\\sim b \\Rightarrow [a] \\cap [b] = \\varnothing \\)",
+    "when": "Describing the classes of an equivalence relation.",
+    "example": "Congruence mod 3: classes \\( [0], [1], [2] \\).",
+    "watch": "A class has many names: \\( [1] = [4] \\) mod 3."
+   }
+  ],
+  "stuck": [
+   "Write out the definition of every set or property in the statement as a condition on an element, then translate the goal into logic.",
+   "For an equality of sets, split into two inclusions and prove each separately.",
+   "If a union appears among your givens, split into cases; if it appears in the goal, aim for one part.",
+   "For surjectivity, solve \\( f(a) = b \\) for \\( a \\) in scratch work, then check that the solution lies in the domain.",
+   "If a claimed property of a function or relation looks doubtful, test small or special inputs (0, negatives, equal elements) for a counterexample."
+  ]
+ }
+}

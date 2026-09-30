@@ -1,0 +1,731 @@
+{
+ "key": "mth-2-4",
+ "title": "Area between curves and volumes of revolution",
+ "v": 1,
+ "scope": "Areas between curves with vertical and horizontal slices, including crossing curves; volumes by slicing with known cross-sections; solids of revolution by disks, washers and cylindrical shells about any horizontal or vertical axis, and choosing between them; arc length, surface area, and areas in parametric or polar form are later topics.",
+ "sources": [
+  {
+   "title": "OpenStax, Calculus Volume 2, Section 2.1: Areas between Curves",
+   "url": "https://openstax.org/books/calculus-volume-2/pages/2-1-areas-between-curves"
+  },
+  {
+   "title": "OpenStax, Calculus Volume 2, Section 2.2: Determining Volumes by Slicing",
+   "url": "https://openstax.org/books/calculus-volume-2/pages/2-2-determining-volumes-by-slicing"
+  },
+  {
+   "title": "OpenStax, Calculus Volume 2, Section 2.3: Volumes of Revolution: Cylindrical Shells",
+   "url": "https://openstax.org/books/calculus-volume-2/pages/2-3-volumes-of-revolution-cylindrical-shells"
+  },
+  {
+   "title": "Paul Dawkins, Paul's Online Math Notes, Calculus I: Volumes of Solids of Revolution / Method of Rings",
+   "url": "https://tutorial.math.lamar.edu/classes/calci/volumewithrings.aspx"
+  },
+  {
+   "title": "Paul Dawkins, Paul's Online Math Notes, Calculus I: Volumes of Solids of Revolution / Method of Cylinders",
+   "url": "https://tutorial.math.lamar.edu/classes/calci/volumewithcylinder.aspx"
+  }
+ ],
+ "pre": [
+  "mth-1-11",
+  "mth-1-12",
+  "mth-1-13",
+  "mth-2-0"
+ ],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Area between curves with vertical slices",
+   "d": "Derive and apply the area formula for a region between y = f(x) above and y = g(x) below, including regions below the x-axis.",
+   "type": "procedure"
+  },
+  {
+   "id": "k2",
+   "t": "Curves that cross",
+   "d": "Find the intersection points, split the interval where the upper and lower curves exchange roles, and distinguish area from a signed integral.",
+   "type": "skill"
+  },
+  {
+   "id": "k3",
+   "t": "Area with horizontal slices",
+   "d": "Describe a region by left and right boundaries x = v(y), x = u(y) and integrate with respect to y when that needs fewer pieces.",
+   "type": "skill"
+  },
+  {
+   "id": "k4",
+   "t": "Volume by slicing",
+   "d": "Compute a volume as the integral of cross-sectional area, V = ∫A(x)dx, for cross-sections of known shape.",
+   "type": "concept"
+  },
+  {
+   "id": "k5",
+   "t": "The disk method",
+   "d": "Compute the volume of a solid of revolution whose cross-sections perpendicular to the axis are disks.",
+   "type": "procedure"
+  },
+  {
+   "id": "k6",
+   "t": "The washer method and other axes",
+   "d": "Compute volumes with washer cross-sections, measuring outer and inner radii from any horizontal or vertical axis.",
+   "type": "procedure"
+  },
+  {
+   "id": "k7",
+   "t": "The shell method",
+   "d": "Derive the volume of a thin cylindrical shell and compute volumes as the integral of 2π(radius)(height).",
+   "type": "procedure"
+  },
+  {
+   "id": "k8",
+   "t": "Choosing washers or shells",
+   "d": "Decide between washers and shells from the axis and the description of the region, and confirm a result by computing it both ways.",
+   "type": "skill"
+  }
+ ],
+ "intro": "The definite integral was introduced to compute the area under a single curve. The same idea, dividing a quantity into thin pieces, approximating each piece, and passing to the limit of a Riemann sum, measures much more than that. This chapter applies it to two geometric questions.\n\nThe first is the area of a region bounded by two curves, such as the lens between a line and a parabola. Here each thin piece is a rectangle whose height is the gap between the curves. The second is the volume of a solid. If the solid is cut into thin slabs, each slab's volume is approximately its cross-sectional area times its thickness, so volume is an integral of area. For **solids of revolution**, obtained by rotating a plane region about a line, the cross-sections are disks or washers, or the solid can instead be built from thin cylindrical shells. The chapter derives each formula from its slices, so that you can set up an integral for a region or axis you have not seen before rather than match a memorised template.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "Area between two curves",
+   "kps": [
+    "k1",
+    "k2"
+   ],
+   "md": "This section answers the basic question: what is the area of the region between two curves \\( y = f(x) \\) and \\( y = g(x) \\) over an interval \\( [a, b] \\)?\n\n**Derivation.** Suppose \\( f \\) and \\( g \\) are continuous and \\( f(x) \\ge g(x) \\) on \\( [a, b] \\). Partition \\( [a, b] \\) into subintervals of width \\( \\Delta x \\) and choose a sample point \\( x_{i}^{*} \\) in each. Over the \\( i \\)-th subinterval the region is approximately a rectangle of height \\( f(x_{i}^{*}) - g(x_{i}^{*}) \\) and width \\( \\Delta x \\), so the area is approximately \\( \\sum_{i}\\big[f(x_{i}^{*}) - g(x_{i}^{*})\\big]\\Delta x \\). This is a Riemann sum for \\( f - g \\), and as the partition is refined it tends to an integral.\n\n> **Area between curves.** If \\( f \\) and \\( g \\) are continuous on \\( [a, b] \\) and \\( f(x) \\ge g(x) \\) there, the area of the region bounded by \\( y = f(x) \\), \\( y = g(x) \\), \\( x = a \\) and \\( x = b \\) is \\[ A = \\int_{a}^{b}\\big[f(x) - g(x)\\big]\\,dx. \\]\n\nThe height of each rectangle is \"top minus bottom\" whatever the signs of \\( f \\) and \\( g \\): if both curves lie below the axis, \\( f(x) - g(x) \\) is still the vertical distance between them. The formula therefore needs no adjustment for regions below the \\( x \\)-axis.\n\n**Worked example 1.** Find the area enclosed by \\( y = x \\) and \\( y = x^{2} - 2x \\). The limits are not given, so find the intersections: \\( x^{2} - 2x = x \\) gives \\( x(x - 3) = 0 \\), so \\( x = 0 \\) and \\( x = 3 \\). At a test point such as \\( x = 1 \\), the line gives \\( 1 \\) and the parabola \\( -1 \\), so the line is on top. Then\n\\[ A = \\int_{0}^{3}\\big[x - (x^{2} - 2x)\\big]dx = \\int_{0}^{3}(3x - x^{2})\\,dx = \\Big[\\frac{3x^{2}}{2} - \\frac{x^{3}}{3}\\Big]_{0}^{3} = \\frac{27}{2} - 9 = \\frac92. \\]\nPart of this region lies below the \\( x \\)-axis, and no special treatment was needed.\n\nThe graph shows both curves and the difference \\( h(x) = 3x - x^{2} \\). The shaded region under \\( h \\) has the same area as the region between the two curves, because at every \\( x \\) their vertical cross-sections have the same length \\( f(x) - g(x) \\).\n\n```plot\nx: -1, 4\ny: -2, 4\nf: x | y = x\nf: x^2 - 2*x | y = x² − 2x\nf: 3*x - x^2 | y = 3x − x² (the difference)\nshade: 3*x - x^2, 0, 3 | area under the difference\n```\n\n**Curves that cross.** If the curves exchange roles inside \\( [a, b] \\), the height of the rectangle is \\( |f(x) - g(x)| \\), and\n\\[ A = \\int_{a}^{b}\\big|f(x) - g(x)\\big|\\,dx. \\]\nTo evaluate it, find the points where \\( f = g \\), split the interval there, and on each piece integrate top minus bottom.\n\n**Worked example 2.** Find the area between \\( y = \\sin x \\) and \\( y = \\cos x \\) on \\( [0, \\frac{\\pi}{2}] \\). They cross where \\( \\tan x = 1 \\), at \\( x = \\frac{\\pi}{4} \\); cosine is on top before, sine after. So\n\\[ A = \\int_{0}^{\\pi/4}(\\cos x - \\sin x)\\,dx + \\int_{\\pi/4}^{\\pi/2}(\\sin x - \\cos x)\\,dx = (\\sqrt2 - 1) + (\\sqrt2 - 1) = 2\\sqrt2 - 2. \\]\nBy contrast, \\( \\int_{0}^{\\pi/2}(\\sin x - \\cos x)\\,dx = 0 \\): the signed integral lets the two pieces cancel, and it is not the area.\n\n**The common mistakes.** Subtracting in the wrong order (a negative \"area\" is the signal); integrating across a crossing point without splitting; and taking the limits from the problem's picture instead of solving \\( f(x) = g(x) \\).",
+   "questions": [
+    {
+     "id": "s1q1",
+     "kp": "k1",
+     "type": "number",
+     "prompt": "Find the area of the region enclosed by \\( y = \\sqrt{x} \\) and \\( y = \\frac{x}{2} \\).",
+     "why": "Intersections: \\( \\sqrt{x} = \\frac{x}{2} \\) gives \\( x = \\frac{x^{2}}{4} \\), so \\( x = 0 \\) or \\( x = 4 \\). At \\( x = 1 \\), \\( \\sqrt1 = 1 > \\frac12 \\), so \\( \\sqrt x \\) is on top. \\[ A = \\int_{0}^{4}\\Big(\\sqrt x - \\frac x2\\Big)dx = \\Big[\\frac23x^{3/2} - \\frac{x^{2}}{4}\\Big]_{0}^{4} = \\frac{16}{3} - 4 = \\frac43. \\]",
+     "answer": "4/3"
+    },
+    {
+     "id": "s1q2",
+     "kp": "k2",
+     "type": "number",
+     "prompt": "Find the total area of the region between \\( y = x^{3} \\) and \\( y = x \\) for \\( -1 \\le x \\le 1 \\).",
+     "why": "The curves meet at \\( x = -1, 0, 1 \\). On \\( [-1, 0] \\), \\( x^{3} \\ge x \\) (e.g. at \\( -\\tfrac12 \\): \\( -\\tfrac18 > -\\tfrac12 \\)); on \\( [0, 1] \\), \\( x \\ge x^{3} \\). So \\( A = \\int_{-1}^{0}(x^{3} - x)dx + \\int_{0}^{1}(x - x^{3})dx = \\tfrac14 + \\tfrac14 = \\tfrac12 \\). The signed integral \\( \\int_{-1}^{1}(x - x^{3})dx \\) is \\( 0 \\), which is not the area.",
+     "answer": "1/2"
+    },
+    {
+     "id": "s1q3",
+     "kp": "k1",
+     "type": "written",
+     "prompt": "Derive the formula \\( A = \\int_{a}^{b}[f(x) - g(x)]\\,dx \\) for the area between \\( y = f(x) \\) and \\( y = g(x) \\), where \\( f \\ge g \\) on \\( [a, b] \\), from a Riemann sum. Explain why the formula holds even when both curves lie below the \\( x \\)-axis, and why it gives the wrong answer if \\( f - g \\) changes sign.",
+     "why": "The formula rests on one geometric fact: a thin vertical rectangle has height equal to the vertical distance between the curves, which is \\( f - g \\) when \\( f \\ge g \\), regardless of position.",
+     "rubric": [
+      "Partitions \\( [a, b] \\), uses rectangles of height \\( f(x_{i}^{*}) - g(x_{i}^{*}) \\) and width \\( \\Delta x \\), and identifies the sum as a Riemann sum for \\( f - g \\).",
+      "Concludes that the limit is \\( \\int_{a}^{b}(f - g)\\,dx \\) (continuity guarantees the integral exists).",
+      "Explains that \\( f(x) - g(x) \\) is the vertical distance between the curves whatever their signs, so no correction is needed below the axis.",
+      "Explains that if \\( f - g \\) changes sign, the integral counts some pieces negatively; the area is \\( \\int|f - g| \\), computed by splitting at the crossings."
+     ],
+     "model": "Partition \\( [a, b] \\) into \\( n \\) subintervals of width \\( \\Delta x \\) with sample points \\( x_{i}^{*} \\). Over the \\( i \\)-th subinterval the region is approximated by a rectangle of width \\( \\Delta x \\) and height \\( f(x_{i}^{*}) - g(x_{i}^{*}) \\), the vertical distance between the curves there. The total area is approximately \\( \\sum_{i=1}^{n}[f(x_{i}^{*}) - g(x_{i}^{*})]\\Delta x \\), a Riemann sum for the continuous function \\( f - g \\); as \\( n \\to \\infty \\) it converges to \\( \\int_{a}^{b}[f(x) - g(x)]dx \\), which is taken as the area. Nothing in this argument uses the signs of \\( f \\) and \\( g \\): if both are negative, say \\( f(x) = -1 \\) and \\( g(x) = -3 \\), the distance between them is still \\( f - g = 2 \\). If \\( f - g \\) changes sign, then where \\( g > f \\) the rectangles have height \\( g - f \\), but the integrand \\( f - g \\) is negative there, so those pieces are subtracted instead of added. The correct area is \\( \\int_{a}^{b}|f - g|\\,dx \\), evaluated by splitting at the points where \\( f = g \\)."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "Slicing horizontally",
+   "kps": [
+    "k3"
+   ],
+   "md": "Some regions are awkward to slice vertically: the top or bottom boundary changes formula partway across, or a boundary is naturally given as \\( x \\) in terms of \\( y \\). This section shows how to slice horizontally instead.\n\n> **Area with respect to \\( y \\).** If \\( u \\) and \\( v \\) are continuous on \\( [c, d] \\) and \\( u(y) \\ge v(y) \\) there, the area of the region bounded by \\( x = u(y) \\) on the right, \\( x = v(y) \\) on the left, \\( y = c \\) and \\( y = d \\) is \\[ A = \\int_{c}^{d}\\big[u(y) - v(y)\\big]\\,dy. \\]\n\nThe derivation is the same as before with the roles of the variables exchanged: a thin horizontal rectangle at height \\( y \\) has length \"right minus left\" and thickness \\( \\Delta y \\).\n\n**Worked example.** Find the area of the region bounded by the parabola \\( x = y^{2} \\) and the line \\( x = y + 6 \\). The intersections satisfy \\( y^{2} = y + 6 \\), that is \\( (y - 3)(y + 2) = 0 \\), so \\( y = -2 \\) and \\( y = 3 \\), at the points \\( (4, -2) \\) and \\( (9, 3) \\). At \\( y = 0 \\) the line gives \\( x = 6 \\) and the parabola \\( x = 0 \\), so the line is on the right. Then\n\\[ A = \\int_{-2}^{3}\\big[(y + 6) - y^{2}\\big]dy = \\Big[\\frac{y^{2}}{2} + 6y - \\frac{y^{3}}{3}\\Big]_{-2}^{3} = \\frac{27}{2} - \\Big(-\\frac{22}{3}\\Big) = \\frac{125}{6}. \\]\n\nIn the graph, drag \\( c \\) to move a horizontal slice. For every height between \\( -2 \\) and \\( 3 \\), the slice runs from the parabola on the left to the line on the right, so one integral suffices.\n\n```plot\nx: -1, 10\ny: -3, 4\nt: -2.5, 3.5\nparam: t^2; t | x = y²\nf: x - 6 | x = y + 6\nslider: c, -2, 3, 1 | c\nhline: c\npoint: 4, -2\npoint: 9, 3\n```\n\n**The same region with vertical slices.** Solving \\( x = y^{2} \\) for \\( y \\) gives two branches, \\( y = \\pm\\sqrt{x} \\), and the line becomes \\( y = x - 6 \\). For \\( 0 \\le x \\le 4 \\) a vertical slice runs from \\( -\\sqrt{x} \\) to \\( \\sqrt{x} \\); for \\( 4 \\le x \\le 9 \\) it runs from \\( x - 6 \\) to \\( \\sqrt{x} \\). So\n\\[ A = \\int_{0}^{4}2\\sqrt{x}\\,dx + \\int_{4}^{9}\\big[\\sqrt{x} - (x - 6)\\big]dx = \\frac{32}{3} + \\frac{61}{6} = \\frac{125}{6}. \\]\nBoth methods give the same number, as they must, but the horizontal slices needed one integral and no square roots.\n\n**How to choose.** Sketch the region and ask, for each slicing direction, whether every slice has the same two boundary curves. Choose the direction in which the answer is yes, or in which the fewest pieces are needed; also prefer the variable in which the boundaries are given as functions. A boundary such as \\( x = y^{2} \\) is a function of \\( y \\) but not of \\( x \\).\n\n**The common mistakes.** Using \\( x \\)-values as limits for a \\( dy \\) integral (the limits must be the \\( y \\)-coordinates of the intersections); subtracting top minus bottom when the formula calls for right minus left; and missing the change of boundary that forces a split when slicing vertically.",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k3",
+     "type": "number",
+     "prompt": "Find the area of the region enclosed by \\( x = y^{2} \\) and \\( x = 2 - y^{2} \\).",
+     "why": "Intersections: \\( y^{2} = 2 - y^{2} \\), so \\( y = \\pm1 \\). For \\( -1 < y < 1 \\), \\( 2 - y^{2} > y^{2} \\), so \\( x = 2 - y^{2} \\) is on the right. \\[ A = \\int_{-1}^{1}\\big[(2 - y^{2}) - y^{2}\\big]dy = \\Big[2y - \\frac{2y^{3}}{3}\\Big]_{-1}^{1} = \\frac83. \\]",
+     "answer": "8/3"
+    },
+    {
+     "id": "s2q2",
+     "kp": "k3",
+     "type": "written",
+     "prompt": "Let \\( R \\) be the region bounded by \\( y = \\sqrt{x} \\), \\( y = 2 - x \\) and the \\( x \\)-axis. Set up the area of \\( R \\) with vertical slices and with horizontal slices, evaluate both, and explain which set-up is simpler and why.",
+     "why": "With vertical slices the upper boundary changes at \\( x = 1 \\); with horizontal slices every slice runs from the parabola to the line.",
+     "rubric": [
+      "Finds the vertices: \\( \\sqrt x = 2 - x \\) at \\( (1, 1) \\); \\( y = 2 - x \\) meets the axis at \\( (2, 0) \\); \\( y = \\sqrt x \\) meets it at \\( (0, 0) \\).",
+      "Vertical: \\( \\int_{0}^{1}\\sqrt x\\,dx + \\int_{1}^{2}(2 - x)\\,dx = \\frac23 + \\frac12 = \\frac76 \\).",
+      "Horizontal: left \\( x = y^{2} \\), right \\( x = 2 - y \\), \\( 0 \\le y \\le 1 \\): \\( \\int_{0}^{1}(2 - y - y^{2})dy = \\frac76 \\).",
+      "Explains that horizontal slices need one integral because every slice has the same two boundaries, while vertical slices need two because the top boundary changes."
+     ],
+     "model": "The curve \\( y = \\sqrt x \\) and the line \\( y = 2 - x \\) meet where \\( \\sqrt x = 2 - x \\); squaring, \\( x = 4 - 4x + x^{2} \\), so \\( x^{2} - 5x + 4 = 0 \\), giving \\( x = 1 \\) (the root \\( x = 4 \\) is extraneous, since \\( 2 - 4 < 0 \\)). So the region has vertices \\( (0, 0) \\), \\( (1, 1) \\), \\( (2, 0) \\). Vertical slices: for \\( 0 \\le x \\le 1 \\) the top is \\( \\sqrt x \\), for \\( 1 \\le x \\le 2 \\) it is \\( 2 - x \\), and the bottom is \\( y = 0 \\) throughout, so \\( A = \\int_{0}^{1}\\sqrt x\\,dx + \\int_{1}^{2}(2 - x)dx = \\frac23 + \\frac12 = \\frac76 \\). Horizontal slices: for \\( 0 \\le y \\le 1 \\), the left boundary is \\( x = y^{2} \\) and the right boundary is \\( x = 2 - y \\), so \\( A = \\int_{0}^{1}(2 - y - y^{2})dy = 2 - \\frac12 - \\frac13 = \\frac76 \\). The horizontal set-up is simpler: every horizontal slice has the same two boundary curves, so one integral suffices, whereas vertical slices meet a change of upper boundary at \\( x = 1 \\) and need two integrals."
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "Volume as an integral of cross-sectional area",
+   "kps": [
+    "k4"
+   ],
+   "md": "Volume is the next quantity to compute by slicing. This section gives the general principle: a volume is the integral of the areas of its cross-sections.\n\n**Derivation.** Let a solid lie between the planes \\( x = a \\) and \\( x = b \\), and let \\( A(x) \\) be the area of its cross-section by the plane perpendicular to the \\( x \\)-axis at \\( x \\). Partition \\( [a, b] \\) into subintervals of width \\( \\Delta x \\). The part of the solid over the \\( i \\)-th subinterval is a thin slab whose volume is approximately \\( A(x_{i}^{*})\\,\\Delta x \\), the volume of a cylinder (in the general sense: a base of area \\( A \\) moved straight through a distance \\( \\Delta x \\)). Summing and refining the partition:\n\n> **Volume by slicing.** If the cross-sectional area \\( A(x) \\) is continuous on \\( [a, b] \\), the volume of the solid is \\[ V = \\int_{a}^{b} A(x)\\,dx. \\]\n\nAn immediate consequence is **Cavalieri's principle**: two solids whose cross-sections at every height have equal areas have equal volumes, whatever the shapes of the cross-sections.\n\nThe method has three steps: choose the axis along which to slice, find a formula for \\( A(x) \\) from the geometry, and integrate over the extent of the solid.\n\n**Worked example 1: a pyramid.** A pyramid has a square base of side \\( s \\) and height \\( h \\). Slice perpendicular to the vertical axis, measuring \\( y \\) upward from the base. At height \\( y \\) the cross-section is a square, and by similar triangles its side shrinks linearly from \\( s \\) at \\( y = 0 \\) to \\( 0 \\) at \\( y = h \\): the side is \\( s\\big(1 - \\frac{y}{h}\\big) \\). So \\( A(y) = s^{2}\\big(1 - \\frac{y}{h}\\big)^{2} \\) and\n\\[ V = \\int_{0}^{h}s^{2}\\Big(1 - \\frac{y}{h}\\Big)^{2}dy = s^{2}\\Big[-\\frac{h}{3}\\Big(1 - \\frac{y}{h}\\Big)^{3}\\Big]_{0}^{h} = \\frac{s^{2}h}{3}. \\]\nThis is the familiar \"one third of base times height\", now derived rather than quoted.\n\n**Worked example 2: a solid with a given base.** A solid has as its base the disk \\( x^{2} + y^{2} \\le r^{2} \\), and every cross-section perpendicular to the \\( x \\)-axis is a square with one side in the base. At \\( x \\) the chord of the disk runs from \\( y = -\\sqrt{r^{2} - x^{2}} \\) to \\( y = \\sqrt{r^{2} - x^{2}} \\), so the side is \\( 2\\sqrt{r^{2} - x^{2}} \\) and \\( A(x) = 4(r^{2} - x^{2}) \\). Then\n\\[ V = \\int_{-r}^{r}4(r^{2} - x^{2})\\,dx = 4\\Big[r^{2}x - \\frac{x^{3}}{3}\\Big]_{-r}^{r} = \\frac{16r^{3}}{3}. \\]\nThis solid is not a solid of revolution, but slicing handles it without difficulty.\n\n**Solids of revolution.** When a region in the plane is rotated about a line in that plane (the **axis of revolution**), the result is a **solid of revolution**. Every cross-section perpendicular to the axis is then a disk or a disk with a hole, and \\( A(x) \\) is given by the area of a circle. The next section develops this case.\n\n**The common mistakes.** Integrating along an axis that is not perpendicular to the given cross-sections; using a length (such as the side \\( s(1 - y/h) \\)) where an area is required; and taking the limits of integration from the base region's description in the wrong variable.",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k4",
+     "type": "number",
+     "prompt": "A solid has as its base the region between \\( y = 1 - x^{2} \\) and the \\( x \\)-axis. Every cross-section perpendicular to the \\( x \\)-axis is a square with one side in the base. Find the volume.",
+     "why": "At \\( x \\in [-1, 1] \\) the side is \\( 1 - x^{2} \\), so \\( A(x) = (1 - x^{2})^{2} = 1 - 2x^{2} + x^{4} \\). \\[ V = \\int_{-1}^{1}(1 - 2x^{2} + x^{4})\\,dx = 2\\Big(1 - \\frac23 + \\frac15\\Big) = \\frac{16}{15}. \\]",
+     "answer": "16/15"
+    },
+    {
+     "id": "s3q2",
+     "kp": "k4",
+     "type": "written",
+     "prompt": "Derive the volume of a right circular cone of base radius \\( r \\) and height \\( h \\) by slicing. State the variable you use, the cross-sectional area as a function of it, and justify that formula geometrically.",
+     "why": "The cross-sections perpendicular to the axis are disks whose radius changes linearly along the axis (similar triangles).",
+     "rubric": [
+      "Places the axis along a coordinate, e.g. \\( y \\) measured from the apex, \\( 0 \\le y \\le h \\).",
+      "Uses similar triangles: the radius at \\( y \\) is \\( \\frac{r}{h}y \\) (or \\( r(1 - \\frac yh) \\) measured from the base).",
+      "Writes \\( A(y) = \\pi\\frac{r^{2}}{h^{2}}y^{2} \\) and \\( V = \\int_{0}^{h}A(y)\\,dy \\).",
+      "Obtains \\( V = \\frac13\\pi r^{2}h \\)."
+     ],
+     "model": "Put the apex at the origin and the axis along the \\( y \\)-axis, so the cone occupies \\( 0 \\le y \\le h \\) with its base at \\( y = h \\). The cross-section by the plane at height \\( y \\) is a disk. The generating line from the apex to the rim of the base, together with the axis, forms a right triangle with legs \\( h \\) and \\( r \\); the cross-section at height \\( y \\) cuts off a similar triangle with legs \\( y \\) and \\( \\rho(y) \\), so \\( \\frac{\\rho(y)}{y} = \\frac{r}{h} \\) and \\( \\rho(y) = \\frac{r}{h}y \\). Hence \\( A(y) = \\pi\\rho(y)^{2} = \\frac{\\pi r^{2}}{h^{2}}y^{2} \\), which is continuous, and \\[ V = \\int_{0}^{h}\\frac{\\pi r^{2}}{h^{2}}y^{2}\\,dy = \\frac{\\pi r^{2}}{h^{2}}\\cdot\\frac{h^{3}}{3} = \\frac13\\pi r^{2}h. \\]"
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "Disks and washers",
+   "kps": [
+    "k5",
+    "k6"
+   ],
+   "md": "This section applies slicing to solids of revolution, where each cross-section perpendicular to the axis is a disk or a washer.\n\n**The disk method.** Rotate the region under \\( y = f(x) \\ge 0 \\), for \\( a \\le x \\le b \\), about the \\( x \\)-axis. The cross-section at \\( x \\) is a disk of radius \\( f(x) \\), so \\( A(x) = \\pi[f(x)]^{2} \\) and\n\\[ V = \\pi\\int_{a}^{b}[f(x)]^{2}\\,dx. \\]\n\n**Worked example 1: the sphere.** Rotating the semicircle \\( y = \\sqrt{r^{2} - x^{2}} \\), \\( -r \\le x \\le r \\), about the \\( x \\)-axis gives a ball of radius \\( r \\):\n\\[ V = \\pi\\int_{-r}^{r}(r^{2} - x^{2})\\,dx = \\pi\\Big[r^{2}x - \\frac{x^{3}}{3}\\Big]_{-r}^{r} = \\frac{4}{3}\\pi r^{3}. \\]\n\n**The washer method.** If the region lies between \\( y = f(x) \\) and \\( y = g(x) \\) with \\( f(x) \\ge g(x) \\ge 0 \\), rotating it about the \\( x \\)-axis produces a solid with a hole. The cross-section is a **washer**, a disk of **outer radius** \\( R = f(x) \\) with a concentric disk of **inner radius** \\( r = g(x) \\) removed, so \\( A(x) = \\pi R^{2} - \\pi r^{2} \\) and\n\\[ V = \\pi\\int_{a}^{b}\\Big([f(x)]^{2} - [g(x)]^{2}\\Big)dx. \\]\n\n**Worked example 2.** Rotate the region between \\( y = \\sqrt{x} \\) and \\( y = x^{2} \\), for \\( 0 \\le x \\le 1 \\), about the \\( x \\)-axis. On \\( [0, 1] \\), \\( \\sqrt{x} \\ge x^{2} \\), so \\( R = \\sqrt{x} \\) and \\( r = x^{2} \\):\n\\[ V = \\pi\\int_{0}^{1}(x - x^{4})\\,dx = \\pi\\Big(\\frac12 - \\frac15\\Big) = \\frac{3\\pi}{10}. \\]\nThe graph shows the region together with its mirror image in the axis, which is the outline of the solid cut through its axis. Drag \\( a \\) to move the slice: the vertical line crosses the solid in a washer of outer radius \\( \\sqrt{a} \\) and inner radius \\( a^{2} \\).\n\n```plot\nx: -0.2, 1.2\ny: -1.2, 1.2\nslider: a, 0, 1, 0.5 | a\nf: sqrt(x) | y = √x\nf: x^2 | y = x²\nf: -sqrt(x) | mirror of √x\nf: -x^2 | mirror of x²\nvline: a\n```\n\n**Other axes.** The radii are distances from the axis of revolution, not \\( y \\)-values. For rotation about the horizontal line \\( y = k \\) with the region above it, \\( R = f(x) - k \\) and \\( r = g(x) - k \\). Rotating the same region about \\( y = -1 \\): \\( R = \\sqrt{x} + 1 \\), \\( r = x^{2} + 1 \\), and\n\\[ V = \\pi\\int_{0}^{1}\\Big[(\\sqrt{x} + 1)^{2} - (x^{2} + 1)^{2}\\Big]dx = \\pi\\int_{0}^{1}\\big(x + 2\\sqrt{x} - x^{4} - 2x^{2}\\big)dx = \\pi\\Big(\\frac12 + \\frac43 - \\frac15 - \\frac23\\Big) = \\frac{29\\pi}{30}. \\]\nFor a vertical axis, slice horizontally: the radii are horizontal distances, written as functions of \\( y \\), and the integral is in \\( y \\).\n\n**The common mistakes.** Writing \\( \\pi\\int(R - r)^{2} \\) instead of \\( \\pi\\int(R^{2} - r^{2}) \\): the area of a washer is a difference of two circle areas, not the area of a circle whose radius is the washer's width. Using \\( f(x) \\) as the radius when the axis is not the \\( x \\)-axis. Forgetting the hole when the region does not touch the axis.",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k5",
+     "type": "number",
+     "prompt": "The region under \\( y = \\sqrt{x} \\), \\( 0 \\le x \\le 4 \\), is rotated about the \\( x \\)-axis. Find the volume.",
+     "why": "Disks of radius \\( \\sqrt x \\): \\( V = \\pi\\int_{0}^{4}(\\sqrt x)^{2}dx = \\pi\\int_{0}^{4}x\\,dx = 8\\pi \\).",
+     "answer": "8*pi"
+    },
+    {
+     "id": "s4q2",
+     "kp": "k6",
+     "type": "number",
+     "prompt": "The region between \\( y = x \\) and \\( y = x^{2} \\), \\( 0 \\le x \\le 1 \\), is rotated about the \\( x \\)-axis. Find the volume.",
+     "why": "On \\( [0, 1] \\), \\( x \\ge x^{2} \\), so \\( R = x \\) and \\( r = x^{2} \\). \\( V = \\pi\\int_{0}^{1}(x^{2} - x^{4})dx = \\pi\\big(\\tfrac13 - \\tfrac15\\big) = \\tfrac{2\\pi}{15} \\).",
+     "answer": "2*pi/15"
+    },
+    {
+     "id": "s4q3",
+     "kp": "k6",
+     "type": "mcq",
+     "prompt": "The region between \\( y = \\sqrt{x} \\) and \\( y = x^{2} \\), \\( 0 \\le x \\le 1 \\), is rotated about the line \\( y = -1 \\). Which integral gives the volume?",
+     "why": "Radii are distances from the axis \\( y = -1 \\): a point at height \\( y \\ge -1 \\) is at distance \\( y + 1 \\). So \\( R = \\sqrt x + 1 \\), \\( r = x^{2} + 1 \\), and the washer area is \\( \\pi(R^{2} - r^{2}) \\): option A, whose value is \\( \\frac{29\\pi}{30} \\). Option B squares the width of the washer instead of subtracting two circle areas. Option C ignores the shift of the axis (it is the volume about \\( y = 0 \\)). Option D measures distances to \\( y = 1 \\), the wrong line.",
+     "options": [
+      "\\( \\pi\\int_{0}^{1}\\Big[(\\sqrt x + 1)^{2} - (x^{2} + 1)^{2}\\Big]dx \\)",
+      "\\( \\pi\\int_{0}^{1}\\big(\\sqrt x - x^{2}\\big)^{2}dx \\)",
+      "\\( \\pi\\int_{0}^{1}\\big(x - x^{4}\\big)dx \\)",
+      "\\( \\pi\\int_{0}^{1}\\Big[(\\sqrt x - 1)^{2} - (x^{2} - 1)^{2}\\Big]dx \\)"
+     ],
+     "answer": 0
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "Cylindrical shells",
+   "kps": [
+    "k7"
+   ],
+   "md": "Washers require slicing perpendicular to the axis, and that can be impractical. Rotating the region under \\( y = 3x^{2} - x^{3} \\), \\( 0 \\le x \\le 3 \\), about the \\( y \\)-axis would need horizontal slices, and so the curve solved for \\( x \\) in terms of \\( y \\), a cubic equation. This section develops the alternative: slice **parallel** to the axis.\n\n**The volume of a shell.** A **cylindrical shell** is the solid between two coaxial cylinders of the same height \\( h \\), with inner radius \\( r_{1} \\) and outer radius \\( r_{2} \\). Its volume is\n\\[ \\pi r_{2}^{2}h - \\pi r_{1}^{2}h = \\pi(r_{2} + r_{1})(r_{2} - r_{1})h = 2\\pi\\,\\bar{r}\\,h\\,\\Delta r, \\]\nwhere \\( \\bar{r} = \\frac{r_{1} + r_{2}}{2} \\) is the average radius and \\( \\Delta r = r_{2} - r_{1} \\) the thickness. This is exact. It says: cut the shell open and flatten it into a slab of length \\( 2\\pi\\bar{r} \\) (the circumference), height \\( h \\) and thickness \\( \\Delta r \\).\n\n**Derivation of the method.** Rotate the region under \\( y = f(x) \\ge 0 \\), \\( 0 \\le a \\le x \\le b \\), about the \\( y \\)-axis. A thin vertical strip over \\( [x_{i-1}, x_{i}] \\) with height \\( f(\\bar{x}_{i}) \\), where \\( \\bar{x}_{i} \\) is the midpoint, sweeps out a shell of volume \\( 2\\pi\\bar{x}_{i}f(\\bar{x}_{i})\\Delta x \\). Summing gives a Riemann sum for \\( 2\\pi xf(x) \\):\n\n> **The shell method.** \\[ V = \\int_{a}^{b}2\\pi x\\,f(x)\\,dx, \\] and in general \\( V = \\int 2\\pi\\,(\\text{radius})(\\text{height})\\,d(\\text{variable}) \\), where the radius is the distance from the strip to the axis and the height is the length of the strip.\n\n**Worked example.** Rotate the region under \\( y = 3x^{2} - x^{3} \\), \\( 0 \\le x \\le 3 \\), about the \\( y \\)-axis. The strip at \\( x \\) has radius \\( x \\) and height \\( 3x^{2} - x^{3} \\):\n\\[ V = \\int_{0}^{3}2\\pi x(3x^{2} - x^{3})\\,dx = 2\\pi\\Big[\\frac{3x^{4}}{4} - \\frac{x^{5}}{5}\\Big]_{0}^{3} = 2\\pi\\Big(\\frac{243}{4} - \\frac{243}{5}\\Big) = \\frac{243\\pi}{10}. \\]\nDrag \\( a \\) in the graph: the segment from \\( (a, 0) \\) to \\( (a, f(a)) \\) is the strip that sweeps out the shell of radius \\( a \\) and height \\( f(a) \\).\n\n```plot\nx: -0.5, 3.5\ny: -0.5, 4.5\nf: 3*x^2 - x^3 | y = 3x² − x³\nshade: 3*x^2 - x^3, 0, 3 | region\nslider: a, 0, 3, 2 | a\nvline: a\npoint: a, 3*a^2 - a^3\n```\n\n**Other axes.** Only the radius changes. Rotating the same region about the line \\( x = -1 \\), the strip at \\( x \\) is at distance \\( x + 1 \\) from the axis:\n\\[ V = \\int_{0}^{3}2\\pi(x + 1)(3x^{2} - x^{3})\\,dx = \\frac{189\\pi}{5}. \\]\nFor a horizontal axis, use horizontal strips: the radius is a vertical distance, the height a horizontal length, and the integral is in \\( y \\).\n\n**The common mistakes.** Using \\( f(x) \\) as the radius and \\( x \\) as the height (the radius is always the distance to the axis); forgetting that the radius changes when the axis moves; and integrating shells in the wrong variable. Shells parallel to a vertical axis are vertical strips, so they are integrated in \\( x \\).",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k7",
+     "type": "number",
+     "prompt": "The region under \\( y = \\frac{1}{1 + x^{2}} \\), \\( 0 \\le x \\le 1 \\), is rotated about the \\( y \\)-axis. Find the volume.",
+     "why": "Shells: radius \\( x \\), height \\( \\frac{1}{1+x^{2}} \\). \\( V = \\int_{0}^{1}\\frac{2\\pi x}{1 + x^{2}}dx = \\pi\\Big[\\ln(1 + x^{2})\\Big]_{0}^{1} = \\pi\\ln 2 \\approx 2.178 \\). Washers would need \\( x = \\sqrt{1/y - 1} \\) and a split at \\( y = \\tfrac12 \\); the shell integrand is a direct substitution.",
+     "answer": "pi*log(2)"
+    },
+    {
+     "id": "s5q2",
+     "kp": "k7",
+     "type": "number",
+     "prompt": "The region under \\( y = x - x^{2} \\), \\( 0 \\le x \\le 1 \\), is rotated about the line \\( x = 2 \\). Find the volume.",
+     "why": "Vertical strips are parallel to the axis, so use shells. The strip at \\( x \\) is at distance \\( 2 - x \\) from the axis and has height \\( x - x^{2} \\): \\[ V = \\int_{0}^{1}2\\pi(2 - x)(x - x^{2})\\,dx = 2\\pi\\int_{0}^{1}(2x - 3x^{2} + x^{3})\\,dx = 2\\pi\\Big(1 - 1 + \\frac14\\Big) = \\frac{\\pi}{2}. \\]",
+     "answer": "pi/2"
+    },
+    {
+     "id": "s5q3",
+     "kp": "k7",
+     "type": "written",
+     "prompt": "Show that the volume of a cylindrical shell with inner radius \\( r_{1} \\), outer radius \\( r_{2} \\) and height \\( h \\) is exactly \\( 2\\pi\\bar{r}h\\Delta r \\), where \\( \\bar r \\) is the average radius and \\( \\Delta r = r_{2} - r_{1} \\). Explain how this leads to \\( V = \\int_{a}^{b}2\\pi x f(x)\\,dx \\) for rotation about the \\( y \\)-axis.",
+     "why": "The factorisation \\( r_{2}^{2} - r_{1}^{2} = (r_{2} + r_{1})(r_{2} - r_{1}) \\) is the whole computation; choosing midpoints as sample points turns the sum of shell volumes into a Riemann sum.",
+     "rubric": [
+      "Computes \\( \\pi r_{2}^{2}h - \\pi r_{1}^{2}h = \\pi(r_{2} + r_{1})(r_{2} - r_{1})h = 2\\pi\\bar r h\\Delta r \\).",
+      "Partitions \\( [a, b] \\) and rotates the strip over \\( [x_{i-1}, x_{i}] \\) with height \\( f(\\bar x_{i}) \\) (midpoint) to get a shell of volume \\( 2\\pi\\bar x_{i}f(\\bar x_{i})\\Delta x \\).",
+      "Recognises \\( \\sum 2\\pi\\bar x_{i}f(\\bar x_{i})\\Delta x \\) as a Riemann sum for \\( 2\\pi xf(x) \\).",
+      "Concludes \\( V = \\int_{a}^{b}2\\pi xf(x)\\,dx \\) in the limit (continuity of \\( f \\))."
+     ],
+     "model": "The shell is the solid cylinder of radius \\( r_{2} \\) with the solid cylinder of radius \\( r_{1} \\) removed, so its volume is \\( \\pi r_{2}^{2}h - \\pi r_{1}^{2}h = \\pi(r_{2} + r_{1})(r_{2} - r_{1})h = 2\\pi\\cdot\\frac{r_{1} + r_{2}}{2}\\cdot h\\cdot(r_{2} - r_{1}) = 2\\pi\\bar r h\\Delta r \\), with no approximation. Now let \\( f \\ge 0 \\) be continuous on \\( [a, b] \\), \\( a \\ge 0 \\), and partition \\( [a, b] \\) with midpoints \\( \\bar x_{i} \\). Replace the part of the region over \\( [x_{i-1}, x_{i}] \\) by the rectangle of height \\( f(\\bar x_{i}) \\). Rotated about the \\( y \\)-axis, this rectangle sweeps a shell with radii \\( x_{i-1} \\) and \\( x_{i} \\), average radius \\( \\bar x_{i} \\), thickness \\( \\Delta x \\) and height \\( f(\\bar x_{i}) \\), whose volume is exactly \\( 2\\pi\\bar x_{i}f(\\bar x_{i})\\Delta x \\). The total \\( \\sum_{i}2\\pi\\bar x_{i}f(\\bar x_{i})\\Delta x \\) approximates the volume of the solid and is a Riemann sum for the continuous function \\( 2\\pi xf(x) \\), so as the partition is refined it tends to \\( \\int_{a}^{b}2\\pi xf(x)\\,dx \\), which is the volume."
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "title": "Choosing between washers and shells",
+   "kps": [
+    "k8"
+   ],
+   "md": "Most solids of revolution can be computed either with washers or with shells. This section explains how the two relate and how to choose between them.\n\n**The rule of orientation.** Washers come from slices **perpendicular** to the axis; shells come from strips **parallel** to it. So:\n\n- axis horizontal: washers integrate in \\( x \\), shells in \\( y \\);\n- axis vertical: washers integrate in \\( y \\), shells in \\( x \\).\n\nOnce the variable is fixed, write the boundaries as functions of that variable; this is usually what decides the choice.\n\n**Worked example: one solid, two methods.** Rotate the region between \\( y = x \\) and \\( y = x^{2} \\), \\( 0 \\le x \\le 1 \\), about the \\( y \\)-axis.\n\n*Shells* (vertical strips, in \\( x \\)): the strip at \\( x \\) has radius \\( x \\) and height \\( x - x^{2} \\):\n\\[ V = \\int_{0}^{1}2\\pi x(x - x^{2})\\,dx = 2\\pi\\Big(\\frac13 - \\frac14\\Big) = \\frac{\\pi}{6}. \\]\n\n*Washers* (horizontal slices, in \\( y \\)): write the boundaries as \\( x = y \\) and \\( x = \\sqrt{y} \\). At height \\( y \\) the slice runs from \\( x = y \\) to \\( x = \\sqrt{y} \\) (since \\( y \\le \\sqrt{y} \\) on \\( [0, 1] \\)), so the outer radius is \\( \\sqrt{y} \\) and the inner radius is \\( y \\):\n\\[ V = \\pi\\int_{0}^{1}\\big(y - y^{2}\\big)\\,dy = \\pi\\Big(\\frac12 - \\frac13\\Big) = \\frac{\\pi}{6}. \\]\nThe agreement is a useful check whenever both set-ups are easy.\n\n**Criteria for choosing.**\n\n1. Prefer the method whose variable lets you write the boundaries as functions. If the curve is \\( y = f(x) \\) and cannot be solved for \\( x \\), and the axis is vertical, shells are the natural choice.\n2. Prefer the method that needs fewer integrals. If the boundary of a slice changes partway across the region in one direction but not the other, choose the direction without the change.\n3. Prefer the integrand you can integrate. Shells multiply by the radius, which can supply exactly the factor a substitution needs: for the region under \\( y = e^{-x^{2}} \\), \\( 0 \\le x \\le 1 \\), rotated about the \\( y \\)-axis, the shell integral \\( \\int_{0}^{1}2\\pi xe^{-x^{2}}\\,dx = \\pi(1 - e^{-1}) \\) is immediate, while washers would need \\( x = \\sqrt{-\\ln y} \\) and a split at \\( y = e^{-1} \\).\n\n**Worked example 2.** Rotate the region bounded by \\( y = \\ln x \\), \\( y = 0 \\) and \\( x = e \\) about the \\( y \\)-axis. Shells need no inversion: radius \\( x \\), height \\( \\ln x \\), and by parts\n\\[ V = \\int_{1}^{e}2\\pi x\\ln x\\,dx = 2\\pi\\Big[\\frac{x^{2}}{2}\\ln x - \\frac{x^{2}}{4}\\Big]_{1}^{e} = 2\\pi\\Big(\\frac{e^{2}}{4} + \\frac14\\Big) = \\frac{\\pi(e^{2} + 1)}{2}. \\]\nWashers also work (the curve inverts to \\( x = e^{y} \\)): at height \\( y \\in [0, 1] \\) the outer radius is \\( e \\) and the inner radius is \\( e^{y} \\), giving \\( \\pi\\int_{0}^{1}(e^{2} - e^{2y})\\,dy \\), which has the same value.\n\n**The common mistakes.** Mixing the methods, for instance writing a shell integrand \\( 2\\pi x\\,h \\) with washer limits in \\( y \\); choosing a method and then forcing it through a split region when the other method needs one integral; and forgetting that both the radius and the height must be expressed in the variable of integration.",
+   "questions": [
+    {
+     "id": "s6q1",
+     "kp": "k8",
+     "type": "written",
+     "prompt": "The region bounded by \\( y = x^{2} \\), \\( y = 0 \\) and \\( x = 2 \\) is rotated about the \\( y \\)-axis. Compute the volume by shells and by washers, and state which you consider simpler and why.",
+     "why": "Shells use vertical strips (radius \\( x \\), height \\( x^{2} \\)); washers use horizontal slices from \\( x = \\sqrt y \\) to \\( x = 2 \\). Both give \\( 8\\pi \\).",
+     "rubric": [
+      "Shells: \\( V = \\int_{0}^{2}2\\pi x\\cdot x^{2}\\,dx = 8\\pi \\).",
+      "Washers: for \\( 0 \\le y \\le 4 \\), outer radius \\( 2 \\), inner radius \\( \\sqrt y \\): \\( V = \\pi\\int_{0}^{4}(4 - y)\\,dy = 8\\pi \\).",
+      "Uses \\( y \\)-limits \\( 0 \\) to \\( 4 \\) for the washers (not \\( 0 \\) to \\( 2 \\)).",
+      "Gives a reason for the choice, e.g. shells avoid inverting the function and identifying the hole."
+     ],
+     "model": "Shells: the vertical strip at \\( x \\in [0, 2] \\) is parallel to the axis, at distance \\( x \\) from it, with height \\( x^{2} \\). So \\( V = \\int_{0}^{2}2\\pi x\\cdot x^{2}\\,dx = 2\\pi\\cdot\\frac{2^{4}}{4} = 8\\pi \\). Washers: slice horizontally at height \\( y \\in [0, 4] \\). The slice runs from the parabola, \\( x = \\sqrt y \\), to the line \\( x = 2 \\). Rotating it about the \\( y \\)-axis gives a washer with outer radius \\( 2 \\) and inner radius \\( \\sqrt y \\), so \\( V = \\pi\\int_{0}^{4}(2^{2} - (\\sqrt y)^{2})\\,dy = \\pi\\int_{0}^{4}(4 - y)\\,dy = \\pi(16 - 8) = 8\\pi \\). The two agree. Shells are simpler here: the boundary is already given as \\( y = x^{2} \\), the height of each strip is read off directly, and there is no need to invert the function or to notice that the solid has a hole of radius \\( \\sqrt y \\)."
+    },
+    {
+     "id": "s6q2",
+     "kp": "k8",
+     "type": "number",
+     "prompt": "The region bounded by \\( y = \\ln x \\), the \\( x \\)-axis and \\( x = e \\) is rotated about the \\( x \\)-axis. Find the volume. (Choose your method; one choice needs integration by parts twice or a reduction formula.)",
+     "why": "Disks in \\( x \\): radius \\( \\ln x \\), \\( 1 \\le x \\le e \\). \\( V = \\pi\\int_{1}^{e}(\\ln x)^{2}dx \\). By the reduction formula \\( \\int(\\ln x)^{2}dx = x(\\ln x)^{2} - 2x\\ln x + 2x \\), so \\( V = \\pi[(e - 2e + 2e) - (0 - 0 + 2)] = \\pi(e - 2) \\approx 2.257 \\). (Shells in \\( y \\): radius \\( y \\), height \\( e - e^{y} \\), \\( V = 2\\pi\\int_{0}^{1}y(e - e^{y})dy = 2\\pi(\\tfrac e2 - 1) \\), the same.)",
+     "answer": "pi*(exp(1) - 2)"
+    }
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "t": "area between curves",
+   "d": "For continuous \\( f \\ge g \\) on \\( [a, b] \\), the number \\( \\int_{a}^{b}[f(x) - g(x)]dx \\); in general the area is \\( \\int_{a}^{b}|f - g|\\,dx \\).",
+   "ex": "Between \\( y = x \\) and \\( y = x^{2} - 2x \\): \\( \\frac92 \\)."
+  },
+  {
+   "t": "cross-section",
+   "d": "The intersection of a solid with a plane, here a plane perpendicular to the axis along which the solid is sliced.",
+   "ex": "The cross-sections of a pyramid parallel to its base are squares."
+  },
+  {
+   "t": "method of slicing",
+   "d": "Computing a volume as \\( V = \\int_{a}^{b}A(x)\\,dx \\), where \\( A(x) \\) is the area of the cross-section at \\( x \\).",
+   "ex": "Pyramid: \\( \\int_{0}^{h}s^{2}(1 - y/h)^{2}dy = \\frac{s^{2}h}{3} \\)."
+  },
+  {
+   "t": "Cavalieri's principle",
+   "d": "Two solids whose cross-sections at every level have equal areas have equal volumes.",
+   "ex": "An oblique cylinder has the same volume as a right cylinder with the same base and height."
+  },
+  {
+   "t": "solid of revolution",
+   "d": "The solid swept out when a plane region is rotated about a line in its plane, the axis of revolution.",
+   "ex": "Rotating a semicircle about its diameter gives a ball."
+  },
+  {
+   "t": "disk method",
+   "d": "Volume of a solid of revolution with disk cross-sections: \\( V = \\pi\\int_{a}^{b}[R(x)]^{2}dx \\), where \\( R \\) is the distance from the axis to the boundary.",
+   "ex": "Sphere: \\( \\pi\\int_{-r}^{r}(r^{2} - x^{2})dx = \\frac43\\pi r^{3} \\)."
+  },
+  {
+   "t": "washer method",
+   "d": "Volume with washer cross-sections: \\( V = \\pi\\int_{a}^{b}\\big(R^{2} - r^{2}\\big)dx \\), with outer radius \\( R \\) and inner radius \\( r \\) measured from the axis.",
+   "ex": "Between \\( \\sqrt x \\) and \\( x^{2} \\) about the \\( x \\)-axis: \\( \\frac{3\\pi}{10} \\)."
+  },
+  {
+   "t": "cylindrical shell",
+   "d": "The solid between two coaxial cylinders of equal height; its volume is exactly \\( 2\\pi\\bar r h\\Delta r \\) (average radius, height, thickness).",
+   "ex": "Swept out by a thin strip parallel to the axis of revolution."
+  },
+  {
+   "t": "shell method",
+   "d": "Volume of a solid of revolution as \\( \\int 2\\pi(\\text{radius})(\\text{height})\\,d(\\text{variable}) \\), using strips parallel to the axis.",
+   "ex": "\\( \\int_{0}^{3}2\\pi x(3x^{2} - x^{3})dx = \\frac{243\\pi}{10} \\)."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "formula",
+   "front": "Area between \\( y = f(x) \\) and \\( y = g(x) \\), \\( f \\ge g \\) on \\( [a, b] \\)",
+   "back": "\\( A = \\int_{a}^{b}[f(x) - g(x)]\\,dx \\)",
+   "kp": "k1"
+  },
+  {
+   "id": "c2",
+   "type": "concept",
+   "front": "What do you do when the two curves cross inside the interval?",
+   "back": "Find where \\( f = g \\), split there, and integrate top minus bottom on each piece (the area is \\( \\int|f - g| \\)).",
+   "kp": "k2"
+  },
+  {
+   "id": "c3",
+   "type": "concept",
+   "front": "Does the area formula need adjusting when the region lies below the x-axis?",
+   "back": "No: \\( f(x) - g(x) \\) is the vertical distance between the curves whatever their signs.",
+   "kp": "k1"
+  },
+  {
+   "id": "c4",
+   "type": "formula",
+   "front": "Area between \\( x = u(y) \\) (right) and \\( x = v(y) \\) (left), \\( c \\le y \\le d \\)",
+   "back": "\\( A = \\int_{c}^{d}[u(y) - v(y)]\\,dy \\)",
+   "kp": "k3"
+  },
+  {
+   "id": "c5",
+   "type": "concept",
+   "front": "When are horizontal slices better than vertical ones?",
+   "back": "When every horizontal slice has the same two boundaries (while vertical slices meet a change), or when the boundaries are given as x in terms of y.",
+   "kp": "k3"
+  },
+  {
+   "id": "c6",
+   "type": "formula",
+   "front": "Volume by slicing",
+   "back": "\\( V = \\int_{a}^{b}A(x)\\,dx \\), \\( A(x) \\) = area of the cross-section at \\( x \\)",
+   "kp": "k4"
+  },
+  {
+   "id": "c7",
+   "type": "term",
+   "front": "Define: Cavalieri's principle",
+   "back": "Solids with equal cross-sectional areas at every level have equal volumes.",
+   "kp": "k4"
+  },
+  {
+   "id": "c8",
+   "type": "formula",
+   "front": "Disk method (about the x-axis)",
+   "back": "\\( V = \\pi\\int_{a}^{b}[f(x)]^{2}\\,dx \\)",
+   "kp": "k5"
+  },
+  {
+   "id": "c9",
+   "type": "formula",
+   "front": "Washer method",
+   "back": "\\( V = \\pi\\int_{a}^{b}\\big(R^{2} - r^{2}\\big)\\,dx \\), radii measured from the axis",
+   "kp": "k6"
+  },
+  {
+   "id": "c10",
+   "type": "concept",
+   "front": "Why is \\( \\pi\\int(R - r)^{2}dx \\) wrong for washers?",
+   "back": "A washer's area is \\( \\pi R^{2} - \\pi r^{2} \\), a difference of two circles, not the area of a circle of radius \\( R - r \\).",
+   "kp": "k6"
+  },
+  {
+   "id": "c11",
+   "type": "concept",
+   "front": "Radius for rotation about \\( y = k \\) of a boundary \\( y = f(x) \\) lying above the axis",
+   "back": "\\( f(x) - k \\), the distance from the curve to the axis",
+   "kp": "k6"
+  },
+  {
+   "id": "c12",
+   "type": "formula",
+   "front": "Shell method (about the y-axis)",
+   "back": "\\( V = \\int_{a}^{b}2\\pi x\\,f(x)\\,dx \\); in general \\( \\int 2\\pi(\\text{radius})(\\text{height}) \\)",
+   "kp": "k7"
+  },
+  {
+   "id": "c13",
+   "type": "formula",
+   "front": "Exact volume of a shell (radii \\( r_{1} < r_{2} \\), height \\( h \\))",
+   "back": "\\( 2\\pi\\bar r h\\Delta r \\), with \\( \\bar r = \\frac{r_{1}+r_{2}}{2} \\), \\( \\Delta r = r_{2} - r_{1} \\)",
+   "kp": "k7"
+  },
+  {
+   "id": "c14",
+   "type": "concept",
+   "front": "Washers or shells: which variable for each, with a vertical axis?",
+   "back": "Washers (slices perpendicular) integrate in \\( y \\); shells (strips parallel) integrate in \\( x \\).",
+   "kp": "k8"
+  },
+  {
+   "id": "c15",
+   "type": "concept",
+   "front": "Main criterion for choosing washers or shells",
+   "back": "Use the variable in which the boundaries are functions and the region needs the fewest pieces.",
+   "kp": "k8"
+  },
+  {
+   "id": "c16",
+   "type": "problem",
+   "front": "Volume of a ball of radius \\( r \\) by disks",
+   "back": "\\( \\pi\\int_{-r}^{r}(r^{2} - x^{2})dx = \\frac43\\pi r^{3} \\)",
+   "kp": "k5",
+   "answer": "4*pi*r^3/3",
+   "vars": "r",
+   "check": "expression"
+  },
+  {
+   "id": "c17",
+   "type": "problem",
+   "front": "Volume of a cone of radius \\( r \\), height \\( h \\), by slicing",
+   "back": "\\( \\int_{0}^{h}\\pi\\big(\\frac{r}{h}y\\big)^{2}dy = \\frac13\\pi r^{2}h \\)",
+   "kp": "k4",
+   "answer": "pi*r^2*h/3",
+   "vars": "r h",
+   "check": "expression"
+  },
+  {
+   "id": "c18",
+   "type": "problem",
+   "front": "Area between \\( y = x \\) and \\( y = x^{2} \\)",
+   "back": "\\( \\int_{0}^{1}(x - x^{2})dx = \\frac16 \\)",
+   "kp": "k1",
+   "answer": "1/6",
+   "check": "number"
+  },
+  {
+   "id": "c19",
+   "type": "problem",
+   "front": "Rotate the region under \\( y = x^{2} \\), \\( 0 \\le x \\le 1 \\), about the \\( x \\)-axis",
+   "back": "\\( \\pi\\int_{0}^{1}x^{4}dx = \\frac{\\pi}{5} \\)",
+   "kp": "k5",
+   "answer": "pi/5",
+   "check": "number"
+  },
+  {
+   "id": "c20",
+   "type": "problem",
+   "front": "Rotate the region under \\( y = x^{2} \\), \\( 0 \\le x \\le 1 \\), about the \\( y \\)-axis",
+   "back": "Shells: \\( \\int_{0}^{1}2\\pi x\\cdot x^{2}dx = \\frac{\\pi}{2} \\)",
+   "kp": "k7",
+   "answer": "pi/2",
+   "check": "number"
+  },
+  {
+   "id": "c21",
+   "type": "concept",
+   "front": "Your area integral came out negative. What went wrong?",
+   "back": "Top and bottom (or right and left) are reversed on some or all of the interval; check with a test point and split at crossings.",
+   "kp": "k2"
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k2",
+   "type": "number",
+   "prompt": "Find the area between \\( y = \\sin x \\) and \\( y = \\cos x \\) for \\( 0 \\le x \\le \\pi \\).",
+   "why": "They cross at \\( x = \\frac{\\pi}{4} \\) only. \\( \\int_{0}^{\\pi/4}(\\cos x - \\sin x)dx = \\sqrt2 - 1 \\); \\( \\int_{\\pi/4}^{\\pi}(\\sin x - \\cos x)dx = \\big[-\\cos x - \\sin x\\big]_{\\pi/4}^{\\pi} = 1 + \\sqrt2 \\). Total \\( 2\\sqrt2 \\approx 2.828 \\).",
+   "answer": "2*sqrt(2)"
+  },
+  {
+   "id": "p2",
+   "kp": "k2",
+   "type": "number",
+   "prompt": "Find the total area enclosed by \\( y = x^{3} - x \\) and \\( y = 3x \\).",
+   "why": "\\( x^{3} - x = 3x \\iff x(x^{2} - 4) = 0 \\), so \\( x = -2, 0, 2 \\). On \\( [0, 2] \\), \\( 3x \\ge x^{3} - x \\); on \\( [-2, 0] \\) the order reverses. By symmetry \\( A = 2\\int_{0}^{2}(4x - x^{3})dx = 2(8 - 4) = 8 \\).",
+   "answer": "8"
+  },
+  {
+   "id": "p3",
+   "kp": "k1",
+   "type": "number",
+   "prompt": "Find the area of the region bounded by \\( y = e^{x} \\), \\( y = e^{-x} \\) and \\( x = 1 \\).",
+   "why": "The curves meet at \\( x = 0 \\); for \\( 0 \\le x \\le 1 \\), \\( e^{x} \\ge e^{-x} \\). \\( A = \\int_{0}^{1}(e^{x} - e^{-x})dx = (e - 1) + (e^{-1} - 1) = e + e^{-1} - 2 \\approx 1.086 \\).",
+   "answer": "exp(1) + exp(-1) - 2"
+  },
+  {
+   "id": "p4",
+   "kp": "k3",
+   "type": "number",
+   "prompt": "Find the area of the region between the parabola \\( x = 4 - y^{2} \\) and the \\( y \\)-axis.",
+   "why": "The parabola meets \\( x = 0 \\) at \\( y = \\pm2 \\), and \\( 4 - y^{2} \\ge 0 \\) between. \\( A = \\int_{-2}^{2}(4 - y^{2})dy = 16 - \\frac{16}{3} = \\frac{32}{3} \\).",
+   "answer": "32/3"
+  },
+  {
+   "id": "p5",
+   "kp": "k4",
+   "type": "number",
+   "prompt": "A solid has as its base the disk \\( x^{2} + y^{2} \\le 4 \\). Every cross-section perpendicular to the \\( x \\)-axis is an equilateral triangle with one side in the base. Find the volume.",
+   "why": "At \\( x \\) the side is \\( s = 2\\sqrt{4 - x^{2}} \\), and an equilateral triangle has area \\( \\frac{\\sqrt3}{4}s^{2} = \\sqrt3(4 - x^{2}) \\). \\( V = \\sqrt3\\int_{-2}^{2}(4 - x^{2})dx = \\sqrt3\\cdot\\frac{32}{3} = \\frac{32\\sqrt3}{3} \\approx 18.48 \\).",
+   "answer": "32*sqrt(3)/3"
+  },
+  {
+   "id": "p6",
+   "kp": "k5",
+   "type": "number",
+   "prompt": "The unbounded region under \\( y = e^{-x} \\), \\( x \\ge 0 \\), is rotated about the \\( x \\)-axis. Find the volume (an improper integral).",
+   "why": "Disks of radius \\( e^{-x} \\): \\( V = \\pi\\int_{0}^{\\infty}e^{-2x}dx = \\pi\\lim_{t\\to\\infty}\\frac{1 - e^{-2t}}{2} = \\frac{\\pi}{2} \\). An unbounded solid can have finite volume.",
+   "answer": "pi/2"
+  },
+  {
+   "id": "p7",
+   "kp": "k6",
+   "type": "number",
+   "prompt": "The region between \\( y = x^{2} \\) and \\( y = 1 \\) is rotated about the line \\( y = 2 \\). Find the volume.",
+   "why": "The region spans \\( -1 \\le x \\le 1 \\) and lies below the axis \\( y = 2 \\). Distances to the axis: the far boundary \\( y = x^{2} \\) gives \\( R = 2 - x^{2} \\), the near boundary \\( y = 1 \\) gives \\( r = 1 \\). \\( V = \\pi\\int_{-1}^{1}\\big[(2 - x^{2})^{2} - 1\\big]dx = \\pi\\int_{-1}^{1}(3 - 4x^{2} + x^{4})dx = \\pi\\Big(6 - \\frac83 + \\frac25\\Big) = \\frac{56\\pi}{15} \\).",
+   "answer": "56*pi/15"
+  },
+  {
+   "id": "p8",
+   "kp": "k7",
+   "type": "number",
+   "prompt": "The region under \\( y = \\sin(x^{2}) \\), \\( 0 \\le x \\le \\sqrt{\\pi} \\), is rotated about the \\( y \\)-axis. Find the volume.",
+   "why": "Shells: \\( V = \\int_{0}^{\\sqrt\\pi}2\\pi x\\sin(x^{2})\\,dx \\). With \\( w = x^{2} \\), \\( dw = 2x\\,dx \\): \\( V = \\pi\\int_{0}^{\\pi}\\sin w\\,dw = \\pi[-\\cos w]_{0}^{\\pi} = 2\\pi \\). The factor \\( x \\) supplied by the shell radius is exactly what the substitution needs.",
+   "answer": "2*pi"
+  },
+  {
+   "id": "p9",
+   "kp": "k6",
+   "type": "written",
+   "prompt": "A student computes the volume obtained by rotating the region between \\( y = 2 \\) and \\( y = 1 \\), \\( 0 \\le x \\le 1 \\), about the \\( x \\)-axis as \\( \\pi\\int_{0}^{1}(2 - 1)^{2}dx = \\pi \\). Explain what solid this is, compute its correct volume by elementary geometry and by the washer formula, and state the general error.",
+   "why": "The solid is a cylindrical tube; its volume is a difference of two cylinders, which is what \\( R^{2} - r^{2} \\) encodes.",
+   "rubric": [
+    "Identifies the solid: a cylinder of radius 2 and length 1 with a coaxial cylinder of radius 1 removed.",
+    "Elementary volume: \\( \\pi\\cdot 4\\cdot 1 - \\pi\\cdot1\\cdot1 = 3\\pi \\).",
+    "Washer formula: \\( \\pi\\int_{0}^{1}(2^{2} - 1^{2})dx = 3\\pi \\).",
+    "States the error: \\( (R - r)^{2} \\ne R^{2} - r^{2} \\); a washer's area is the difference of two disk areas."
+   ],
+   "model": "Rotating the rectangle \\( 0 \\le x \\le 1 \\), \\( 1 \\le y \\le 2 \\) about the \\( x \\)-axis gives a tube: a solid cylinder of radius \\( 2 \\) and length \\( 1 \\) with a coaxial cylinder of radius \\( 1 \\) removed. Its volume is \\( \\pi(2)^{2}(1) - \\pi(1)^{2}(1) = 3\\pi \\). The washer formula gives the same: \\( \\pi\\int_{0}^{1}(R^{2} - r^{2})dx = \\pi\\int_{0}^{1}(4 - 1)dx = 3\\pi \\). The student's integrand \\( \\pi(R - r)^{2} \\) is the area of a disk whose radius is the width of the washer, which is a different and smaller quantity: \\( (R - r)^{2} = R^{2} - 2Rr + r^{2} \\), which differs from \\( R^{2} - r^{2} \\) by \\( 2r(R - r) \\), zero only when \\( r = 0 \\) or \\( R = r \\)."
+  },
+  {
+   "id": "p10",
+   "kp": "k8",
+   "type": "mcq",
+   "prompt": "The region under \\( y = x^{2} \\), \\( 0 \\le x \\le 2 \\), is rotated about the line \\( x = 3 \\). Which integral gives the volume?",
+   "why": "The axis is vertical, so vertical strips give shells. The strip at \\( x \\) is at distance \\( 3 - x \\) from the axis (the region lies to the left of it) and has height \\( x^{2} \\): option A, value \\( 8\\pi \\). Option B uses the radius for the \\( y \\)-axis. Option C uses \\( x - 3 \\), which is negative on \\( [0, 2] \\) and gives a negative volume. Option D is a washer set-up that forgets the hole: at height \\( y \\) the slice runs from \\( x = \\sqrt y \\) to \\( x = 2 \\), so the inner radius is \\( 3 - 2 = 1 \\) and the correct washer integral is \\( \\pi\\int_{0}^{4}\\big[(3 - \\sqrt y)^{2} - 1\\big]dy \\).",
+   "options": [
+    "\\( \\int_{0}^{2}2\\pi(3 - x)x^{2}\\,dx \\)",
+    "\\( \\int_{0}^{2}2\\pi x\\cdot x^{2}\\,dx \\)",
+    "\\( \\int_{0}^{2}2\\pi(x - 3)x^{2}\\,dx \\)",
+    "\\( \\pi\\int_{0}^{4}(3 - \\sqrt y)^{2}\\,dy \\)"
+   ],
+   "answer": 0
+  },
+  {
+   "id": "p11",
+   "kp": "k5",
+   "type": "expression",
+   "prompt": "A bowl is formed by rotating the curve \\( y = x^{2} \\), \\( x \\ge 0 \\), about the \\( y \\)-axis (units in metres). Find the volume of liquid in the bowl when it is filled to depth \\( h \\), as a function of \\( h \\).",
+   "why": "Slice horizontally: at height \\( y \\) the liquid's cross-section is a disk of radius \\( x = \\sqrt y \\), area \\( \\pi y \\). So \\( V(h) = \\int_{0}^{h}\\pi y\\,dy = \\frac{\\pi h^{2}}{2} \\) cubic metres.",
+   "answer": "pi*h^2/2",
+   "vars": "h"
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k7",
+   "type": "number",
+   "prompt": "A torus is obtained by rotating the disk \\( (x - 2)^{2} + y^{2} \\le 1 \\) about the \\( y \\)-axis. Find its volume.",
+   "why": "Shells: the vertical strip at \\( x \\in [1, 3] \\) has height \\( 2\\sqrt{1 - (x - 2)^{2}} \\) and radius \\( x \\). \\( V = \\int_{1}^{3}2\\pi x\\cdot2\\sqrt{1 - (x-2)^{2}}\\,dx \\). With \\( u = x - 2 \\): \\( V = 4\\pi\\int_{-1}^{1}(u + 2)\\sqrt{1 - u^{2}}\\,du = 4\\pi\\Big[\\int_{-1}^{1}u\\sqrt{1-u^{2}}\\,du + 2\\int_{-1}^{1}\\sqrt{1-u^{2}}\\,du\\Big] = 4\\pi\\Big[0 + 2\\cdot\\frac{\\pi}{2}\\Big] = 4\\pi^{2} \\approx 39.48 \\). The first integral vanishes because the integrand is odd; the second is the area of a half-disk of radius 1.",
+   "answer": "4*pi^2"
+  },
+  {
+   "id": "e2",
+   "kp": "k1",
+   "type": "number",
+   "prompt": "Find the area of the region enclosed by \\( y = x^{2} - 2x \\) and \\( y = 4 - x^{2} \\).",
+   "why": "\\( x^{2} - 2x = 4 - x^{2} \\iff x^{2} - x - 2 = 0 \\), so \\( x = -1, 2 \\). At \\( x = 0 \\), \\( 4 > 0 \\), so \\( 4 - x^{2} \\) is on top. \\[ A = \\int_{-1}^{2}(4 + 2x - 2x^{2})dx = \\Big[4x + x^{2} - \\frac{2x^{3}}{3}\\Big]_{-1}^{2} = \\frac{20}{3} + \\frac73 = 9. \\]",
+   "answer": "9"
+  },
+  {
+   "id": "e3",
+   "kp": "k7",
+   "type": "number",
+   "prompt": "The region bounded by \\( y = \\sqrt{x} \\), the \\( x \\)-axis and \\( x = 4 \\) is rotated about the line \\( x = -1 \\). Find the volume.",
+   "why": "Shells (the axis is vertical): the strip at \\( x \\in [0, 4] \\) has radius \\( x + 1 \\) and height \\( \\sqrt x \\). \\[ V = \\int_{0}^{4}2\\pi(x + 1)\\sqrt x\\,dx = 2\\pi\\Big[\\frac25x^{5/2} + \\frac23x^{3/2}\\Big]_{0}^{4} = 2\\pi\\Big(\\frac{64}{5} + \\frac{16}{3}\\Big) = \\frac{544\\pi}{15} \\approx 113.9. \\] (Washers in \\( y \\), with outer radius \\( 5 \\) and inner radius \\( y^{2} + 1 \\) for \\( 0 \\le y \\le 2 \\), give the same value.)",
+   "answer": "544*pi/15"
+  },
+  {
+   "id": "e4",
+   "kp": "k8",
+   "type": "written",
+   "prompt": "The region bounded by \\( y = x^{2} \\) and \\( y = 2x \\) is rotated about the \\( y \\)-axis. Set up the volume both as a shell integral and as a washer integral, justifying each radius, height and limit, and evaluate both.",
+   "why": "The curves meet at \\( (0, 0) \\) and \\( (2, 4) \\). Shells use vertical strips between the curves; washers use horizontal slices from the line \\( x = y/2 \\) to the parabola \\( x = \\sqrt y \\).",
+   "rubric": [
+    "Finds intersections \\( x = 0, 2 \\) (\\( y = 0, 4 \\)) and that \\( 2x \\ge x^{2} \\) on \\( [0, 2] \\).",
+    "Shells: radius \\( x \\), height \\( 2x - x^{2} \\), \\( V = \\int_{0}^{2}2\\pi x(2x - x^{2})dx = \\frac{8\\pi}{3} \\).",
+    "Washers: at height \\( y \\in [0, 4] \\), inner radius \\( \\frac y2 \\) (line), outer radius \\( \\sqrt y \\) (parabola), \\( V = \\pi\\int_{0}^{4}\\big(y - \\frac{y^{2}}{4}\\big)dy = \\frac{8\\pi}{3} \\).",
+    "Justifies which boundary is inner and outer (e.g. by a test value) and that the limits are in the variable of integration."
+   ],
+   "model": "The curves meet where \\( x^{2} = 2x \\), at \\( x = 0 \\) and \\( x = 2 \\), i.e. at \\( (0, 0) \\) and \\( (2, 4) \\); for \\( 0 < x < 2 \\), \\( 2x > x^{2} \\) (test \\( x = 1 \\): \\( 2 > 1 \\)). Shells: a vertical strip at \\( x \\in [0, 2] \\) is parallel to the axis, at distance \\( x \\), with height \\( 2x - x^{2} \\), so \\( V = \\int_{0}^{2}2\\pi x(2x - x^{2})dx = 2\\pi\\Big[\\frac{2x^{3}}{3} - \\frac{x^{4}}{4}\\Big]_{0}^{2} = 2\\pi\\Big(\\frac{16}{3} - 4\\Big) = \\frac{8\\pi}{3} \\). Washers: write the boundaries as \\( x = \\frac y2 \\) (line) and \\( x = \\sqrt y \\) (parabola), \\( 0 \\le y \\le 4 \\). At height \\( y \\), \\( \\frac y2 \\le \\sqrt y \\) (test \\( y = 1 \\): \\( \\frac12 < 1 \\)), so the slice runs from the line to the parabola, and rotating it gives a washer with inner radius \\( \\frac y2 \\) and outer radius \\( \\sqrt y \\). Then \\( V = \\pi\\int_{0}^{4}\\Big(y - \\frac{y^{2}}{4}\\Big)dy = \\pi\\Big(8 - \\frac{16}{3}\\Big) = \\frac{8\\pi}{3} \\). The two methods agree."
+  },
+  {
+   "id": "e5",
+   "kp": "k4",
+   "type": "number",
+   "prompt": "A solid has as its base the region between \\( y = x \\) and \\( y = x^{2} \\), \\( 0 \\le x \\le 1 \\). Its cross-sections perpendicular to the \\( x \\)-axis are semicircles whose diameters lie in the base. Find the volume.",
+   "why": "At \\( x \\) the diameter is \\( x - x^{2} \\), so the radius is \\( \\frac{x - x^{2}}{2} \\) and the semicircle has area \\( \\frac12\\pi\\Big(\\frac{x - x^{2}}{2}\\Big)^{2} = \\frac{\\pi}{8}(x - x^{2})^{2} \\). \\[ V = \\frac{\\pi}{8}\\int_{0}^{1}(x^{2} - 2x^{3} + x^{4})dx = \\frac{\\pi}{8}\\Big(\\frac13 - \\frac12 + \\frac15\\Big) = \\frac{\\pi}{8}\\cdot\\frac{1}{30} = \\frac{\\pi}{240}. \\]",
+   "answer": "pi/240"
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "Area, vertical slices",
+    "formula": "\\( A = \\int_{a}^{b}[\\text{top} - \\text{bottom}]\\,dx \\)",
+    "when": "Boundaries are functions of \\( x \\) and do not change across the region.",
+    "example": "\\( \\int_{0}^{3}[x - (x^{2} - 2x)]dx = \\frac92 \\)",
+    "watch": "Solve f = g for the limits; test which curve is on top."
+   },
+   {
+    "name": "Crossing curves",
+    "formula": "\\( A = \\int_{a}^{b}|f - g|\\,dx \\)",
+    "when": "The curves intersect inside the interval.",
+    "example": "\\( \\sin x \\), \\( \\cos x \\) on \\( [0, \\frac{\\pi}{2}] \\): \\( 2\\sqrt2 - 2 \\)",
+    "watch": "The signed integral is not the area."
+   },
+   {
+    "name": "Area, horizontal slices",
+    "formula": "\\( A = \\int_{c}^{d}[\\text{right} - \\text{left}]\\,dy \\)",
+    "when": "Boundaries are given as \\( x \\) in terms of \\( y \\), or vertical slices need splitting.",
+    "example": "\\( x = y^{2} \\), \\( x = y + 6 \\): \\( \\frac{125}{6} \\)",
+    "watch": "Limits are \\( y \\)-values."
+   },
+   {
+    "name": "Slicing",
+    "formula": "\\( V = \\int_{a}^{b}A(x)\\,dx \\)",
+    "when": "Cross-sections of known shape.",
+    "example": "Pyramid: \\( \\frac{s^{2}h}{3} \\)",
+    "watch": "A(x) must be an area, not a length."
+   },
+   {
+    "name": "Disks",
+    "formula": "\\( V = \\pi\\int_{a}^{b}R^{2}\\,dx \\)",
+    "when": "The region touches the axis along the whole interval.",
+    "example": "Ball: \\( \\frac43\\pi r^{3} \\)",
+    "watch": "R is the distance to the axis."
+   },
+   {
+    "name": "Washers",
+    "formula": "\\( V = \\pi\\int_{a}^{b}(R^{2} - r^{2})\\,dx \\)",
+    "when": "Slices perpendicular to the axis leave a hole.",
+    "example": "\\( \\sqrt x \\), \\( x^{2} \\) about \\( y = -1 \\): \\( \\frac{29\\pi}{30} \\)",
+    "watch": "Not \\( (R - r)^{2} \\)."
+   },
+   {
+    "name": "Shells",
+    "formula": "\\( V = \\int 2\\pi(\\text{radius})(\\text{height})\\,d(\\text{var}) \\)",
+    "when": "Strips parallel to the axis are easier (no inversion, one piece).",
+    "example": "\\( \\int_{0}^{3}2\\pi x(3x^{2} - x^{3})dx = \\frac{243\\pi}{10} \\)",
+    "watch": "Radius = distance from strip to axis; it changes when the axis moves."
+   },
+   {
+    "name": "Orientation rule",
+    "formula": "Washers: perpendicular slices. Shells: parallel strips.",
+    "when": "Choosing the variable.",
+    "example": "Vertical axis: washers in \\( y \\), shells in \\( x \\)",
+    "watch": "Radius and height must both be in the variable of integration."
+   }
+  ],
+  "stuck": [
+   "Sketch the region, mark the intersection points, and draw one typical slice or strip before writing any integral.",
+   "Label the slice: its length (for areas), or its radius and height (for volumes), as functions of the variable of integration.",
+   "If a slice's boundaries change partway across the region, try the other direction or split the integral.",
+   "For volumes, measure every radius from the axis of revolution, not from a coordinate axis.",
+   "If both washers and shells are easy, compute both; agreement is a strong check."
+  ]
+ }
+}

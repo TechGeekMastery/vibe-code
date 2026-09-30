@@ -1,0 +1,836 @@
+{
+ "key": "phy-0-11",
+ "title": "Simple harmonic motion",
+ "v": 1,
+ "scope": "Oscillation under a linear restoring force: the equation \\( \\ddot x = -\\omega^2x \\) and its general solution, amplitude and phase from initial conditions, period and frequency, velocity, acceleration and energy, the vertical spring, the reference circle, simple and physical pendulums in the small-angle approximation, small oscillations about any potential-energy minimum, and a mainly qualitative account of damped and driven oscillations; waves belong to the course on waves.",
+ "sources": [
+  {
+   "title": "OpenStax University Physics Volume 1, 15.1 Simple Harmonic Motion",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/15-1-simple-harmonic-motion"
+  },
+  {
+   "title": "OpenStax University Physics Volume 1, 15.4 Pendulums",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/15-4-pendulums"
+  },
+  {
+   "title": "OpenStax University Physics Volume 1, 15.5 Damped Oscillations",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/15-5-damped-oscillations"
+  },
+  {
+   "title": "OpenStax University Physics Volume 1, 15.3 Energy in Simple Harmonic Motion (LibreTexts edition)",
+   "url": "https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/Book:_University_Physics_I_-_Mechanics_Sound_Oscillations_and_Waves_(OpenStax)/15:_Oscillations/15.03:_Energy_in_Simple_Harmonic_Motion"
+  }
+ ],
+ "pre": [
+  "phy-0-6",
+  "phy-0-9",
+  "phy-0-4"
+ ],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Linear restoring force and the SHM equation",
+   "d": "Derive \\( \\ddot x = -\\omega^2x \\) with \\( \\omega = \\sqrt{k/m} \\) from Hooke's law and Newton's second law, and recognize when a force produces SHM.",
+   "type": "concept"
+  },
+  {
+   "id": "k2",
+   "t": "General solution of the SHM equation",
+   "d": "Verify that \\( x = A\\cos(\\omega t + \\phi) \\) solves the equation and explain why it is the general solution.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k3",
+   "t": "Amplitude and phase from initial conditions",
+   "d": "Find \\( A \\) and \\( \\phi \\) from \\( x_0 \\) and \\( v_0 \\), choosing the correct quadrant for \\( \\phi \\).",
+   "type": "procedure"
+  },
+  {
+   "id": "k4",
+   "t": "Period, frequency, angular frequency",
+   "d": "Use \\( T = 2\\pi/\\omega \\) and \\( f = 1/T \\), and explain why the period of SHM does not depend on amplitude.",
+   "type": "fact"
+  },
+  {
+   "id": "k5",
+   "t": "Velocity and acceleration in SHM",
+   "d": "Differentiate \\( x(t) \\) and use \\( v_{\\max} = \\omega A \\), \\( a_{\\max} = \\omega^2A \\) and their phase relations.",
+   "type": "procedure"
+  },
+  {
+   "id": "k6",
+   "t": "Energy in SHM",
+   "d": "Show that \\( E = \\tfrac12kA^2 \\) is constant and use \\( v = \\pm\\omega\\sqrt{A^2 - x^2} \\).",
+   "type": "procedure"
+  },
+  {
+   "id": "k7",
+   "t": "Vertical spring",
+   "d": "Show that a constant force such as gravity shifts the equilibrium but not the frequency, and use the static stretch.",
+   "type": "concept"
+  },
+  {
+   "id": "k8",
+   "t": "SHM and uniform circular motion",
+   "d": "Interpret SHM as the projection of uniform circular motion and read the angular frequency and phase from it.",
+   "type": "concept"
+  },
+  {
+   "id": "k9",
+   "t": "Simple pendulum",
+   "d": "Derive \\( T = 2\\pi\\sqrt{L/g} \\) with the small-angle approximation and state its limits.",
+   "type": "procedure"
+  },
+  {
+   "id": "k10",
+   "t": "Physical pendulum",
+   "d": "Derive and apply \\( T = 2\\pi\\sqrt{I/(mgd)} \\) for rigid bodies swinging about a pivot.",
+   "type": "procedure"
+  },
+  {
+   "id": "k11",
+   "t": "Small oscillations about any minimum",
+   "d": "Use \\( k_{\\text{eff}} = U''(x_0) \\) to find the frequency of small oscillations about a stable equilibrium.",
+   "type": "skill"
+  },
+  {
+   "id": "k12",
+   "t": "Damped and driven oscillations",
+   "d": "Describe underdamped, critically damped and overdamped motion, the decaying envelope, and resonance.",
+   "type": "distinction"
+  }
+ ],
+ "intro": "A mass on a spring, a pendulum, a tuning fork, an atom in a crystal and the air in an organ pipe all move back and forth about an equilibrium. The reason is always the same: near a stable equilibrium the net force pushes the system back, and for small displacements that force is, to a good approximation, proportional to the displacement. This topic asks what motion such a force produces.\n\nThe answer, **simple harmonic motion**, comes from solving a differential equation, \\( \\ddot x = -\\omega^2x \\), whose solutions are sines and cosines. From that solution follow the period, which does not depend on the amplitude, and the exchange of kinetic and potential energy. The same equation then describes the pendulum and, through a Taylor expansion of the potential energy, small oscillations about nearly any stable equilibrium, which is why the oscillator is one of the most widely used models in physics. The topic closes with what friction and periodic driving do to the motion.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "The restoring force and the equation of motion",
+   "kps": [
+    "k1",
+    "k2"
+   ],
+   "md": "This section derives the equation that governs a body subject to a restoring force proportional to its displacement, and solves it.\n\n**The model.** A block of mass \\( m \\) on a frictionless horizontal surface is attached to a spring of **force constant** \\( k \\). Let \\( x \\) be the displacement from the position where the spring is relaxed, which is the equilibrium. By Hooke's law the spring exerts \\( F = -kx \\): a **linear restoring force**, proportional to the displacement and directed back toward equilibrium. Newton's second law gives\n\\[ m\\frac{d^2x}{dt^2} = -kx \\quad\\Longleftrightarrow\\quad \\frac{d^2x}{dt^2} = -\\omega^2x, \\qquad \\omega = \\sqrt{\\frac km}. \\]\n\n> **Definition.** A quantity \\( x(t) \\) executes **simple harmonic motion** (SHM) if it satisfies \\( \\ddot x = -\\omega^2x \\) for some constant \\( \\omega > 0 \\): its acceleration is proportional to its displacement from equilibrium and opposite in sign.\n\n**Solving the equation.** We need functions whose second derivative is a negative constant times the function itself. Sine and cosine have this property. Try \\( x(t) = A\\cos(\\omega t + \\phi) \\) with constants \\( A \\) and \\( \\phi \\):\n\\[ \\dot x = -A\\omega\\sin(\\omega t + \\phi), \\qquad \\ddot x = -A\\omega^2\\cos(\\omega t + \\phi) = -\\omega^2x. \\]\nSo it is a solution for every \\( A \\) and \\( \\phi \\), and substitution also shows that \\( \\omega \\) must equal \\( \\sqrt{k/m} \\): the frequency is fixed by the system, not by how it is started. Expanding the cosine gives the equivalent form \\( x = C_1\\cos\\omega t + C_2\\sin\\omega t \\) with \\( C_1 = A\\cos\\phi \\) and \\( C_2 = -A\\sin\\phi \\).\n\n*Why this is every solution.* The equation is a linear second-order differential equation. By the existence and uniqueness theorem for such equations, once the initial position \\( x(0) = x_0 \\) and velocity \\( \\dot x(0) = v_0 \\) are given, there is exactly one solution. The family \\( C_1\\cos\\omega t + C_2\\sin\\omega t \\) can match any pair \\( (x_0, v_0) \\), by taking \\( C_1 = x_0 \\) and \\( C_2 = v_0/\\omega \\). Hence every solution belongs to the family, and \\( x = A\\cos(\\omega t + \\phi) \\) is the **general solution**. Two constants appear because a second-order equation needs two initial conditions.\n\n**Names.** In \\( x = A\\cos(\\omega t + \\phi) \\): \\( A \\ge 0 \\) is the **amplitude** (maximum displacement), \\( \\omega \\) the **angular frequency** (rad/s), \\( \\omega t + \\phi \\) the **phase**, and \\( \\phi \\) the **phase constant**. The motion repeats when the phase increases by \\( 2\\pi \\), so the **period** and **frequency** are\n\\[ T = \\frac{2\\pi}{\\omega} = 2\\pi\\sqrt{\\frac mk}, \\qquad f = \\frac1T = \\frac{\\omega}{2\\pi}, \\]\nwith \\( f \\) in hertz (Hz, cycles per second).\n\n*Worked example.* A 0.50 kg block on a spring with \\( k = 200 \\) N/m has \\( \\omega = \\sqrt{200/0.50} = 20 \\) rad/s, \\( f = 20/(2\\pi) = 3.18 \\) Hz and \\( T = 0.314 \\) s. A heavier block oscillates more slowly; a stiffer spring, faster.\n\n**Common mistakes.** Confusing \\( \\omega \\) (rad/s) with \\( f \\) (Hz), which differ by \\( 2\\pi \\); evaluating \\( \\cos(\\omega t + \\phi) \\) with a calculator in degree mode; and assuming that every oscillation is simple harmonic, when SHM requires the restoring force to be exactly linear in the displacement.",
+   "questions": [
+    {
+     "id": "s1q1",
+     "kp": "k1",
+     "type": "number",
+     "prompt": "A 0.25 kg mass on a horizontal frictionless surface is attached to a spring with force constant 100 N/m. What is the period of its oscillation, in s?",
+     "answer": "2*pi*sqrt(0.25/100)",
+     "tol": 0.01,
+     "why": "\\( \\omega = \\sqrt{k/m} = \\sqrt{100/0.25} = 20 \\) rad/s, so \\( T = 2\\pi/\\omega = 0.314 \\) s. The amplitude is not needed."
+    },
+    {
+     "id": "s1q2",
+     "kp": "k1",
+     "type": "mcq",
+     "prompt": "Which of the following net forces on a particle moving along the \\( x \\)-axis produces exactly simple harmonic motion, for every amplitude? (\\( k \\), \\( F_0 \\), \\( L \\) are positive constants.)",
+     "options": [
+      "\\( F = -kx + F_0 \\)",
+      "\\( F = -kx^3 \\)",
+      "\\( F = -kL\\sin(x/L) \\)",
+      "\\( F = +kx \\)"
+     ],
+     "answer": 0,
+     "why": "Writing \\( x' = x - F_0/k \\), the first force becomes \\( F = -kx' \\): exactly SHM about the shifted equilibrium \\( x = F_0/k \\), with \\( \\omega = \\sqrt{k/m} \\). The cubic force restores but is not linear, so the period depends on amplitude. The sine force is linear only for \\( |x| \\ll L \\) (this is the pendulum): approximately, not exactly, SHM. The force \\( +kx \\) pushes away from equilibrium and gives exponential growth, not oscillation."
+    },
+    {
+     "id": "s1q3",
+     "kp": "k2",
+     "type": "written",
+     "prompt": "Show that \\( x(t) = C_1\\cos\\omega t + C_2\\sin\\omega t \\) satisfies \\( \\ddot x = -\\omega^2x \\), and explain why every solution of the equation has this form. Express \\( C_1 \\) and \\( C_2 \\) in terms of the initial position and velocity.",
+     "rubric": [
+      "Differentiates twice: \\( \\ddot x = -\\omega^2(C_1\\cos\\omega t + C_2\\sin\\omega t) = -\\omega^2x \\).",
+      "Initial conditions: \\( x(0) = C_1 = x_0 \\), \\( \\dot x(0) = \\omega C_2 = v_0 \\), so \\( C_2 = v_0/\\omega \\).",
+      "Appeals to existence and uniqueness for a linear second-order equation: given x₀ and v₀ there is exactly one solution.",
+      "Since the family matches any initial data, the unique solution with those data is in the family; so it is the general solution."
+     ],
+     "model": "Differentiate: \\( \\dot x = -C_1\\omega\\sin\\omega t + C_2\\omega\\cos\\omega t \\) and \\( \\ddot x = -C_1\\omega^2\\cos\\omega t - C_2\\omega^2\\sin\\omega t = -\\omega^2x \\), so the equation holds for any constants. At \\( t = 0 \\): \\( x(0) = C_1 \\) and \\( \\dot x(0) = C_2\\omega \\), so choosing \\( C_1 = x_0 \\) and \\( C_2 = v_0/\\omega \\) matches any prescribed initial position and velocity. The equation \\( \\ddot x + \\omega^2x = 0 \\) is linear, second order, with constant coefficients; by the existence and uniqueness theorem it has exactly one solution for each pair \\( (x_0, v_0) \\). Given any solution, take its \\( x_0 \\) and \\( v_0 \\): the member of the family with \\( C_1 = x_0 \\), \\( C_2 = v_0/\\omega \\) is a solution with the same initial data, so by uniqueness it is that solution. Hence every solution has the stated form.",
+     "why": "Guessing a solution is legitimate; the uniqueness theorem is what guarantees nothing has been missed."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "Amplitude, phase and period",
+   "kps": [
+    "k3",
+    "k4"
+   ],
+   "md": "The general solution contains two constants. This section shows how the way the oscillator is started determines them, and establishes the most distinctive property of simple harmonic motion: its period does not depend on its amplitude.\n\n**From initial conditions to \\( A \\) and \\( \\phi \\).** Suppose that at \\( t = 0 \\) the displacement is \\( x_0 \\) and the velocity \\( v_0 \\). From \\( x = A\\cos(\\omega t + \\phi) \\) and \\( v = -A\\omega\\sin(\\omega t + \\phi) \\),\n\\[ x_0 = A\\cos\\phi, \\qquad v_0 = -A\\omega\\sin\\phi. \\]\nSquaring and adding the equations \\( \\cos\\phi = x_0/A \\) and \\( \\sin\\phi = -v_0/(\\omega A) \\) gives\n\\[ A = \\sqrt{x_0^2 + \\left(\\frac{v_0}{\\omega}\\right)^2}. \\]\nThe phase constant is fixed by the pair of values \\( \\cos\\phi = x_0/A \\) and \\( \\sin\\phi = -v_0/(\\omega A) \\). Dividing gives \\( \\tan\\phi = -v_0/(\\omega x_0) \\), but the tangent does not determine the quadrant: \\( \\arctan \\) returns an angle in \\( (-\\pi/2, \\pi/2) \\), which is correct only when \\( x_0 > 0 \\). If \\( x_0 < 0 \\), add \\( \\pi \\). Always check the signs of \\( \\cos\\phi \\) and \\( \\sin\\phi \\).\n\n*Worked example.* The block of the previous section (\\( \\omega = 20 \\) rad/s) is at \\( x_0 = 0.030 \\) m moving with \\( v_0 = +0.80 \\) m/s at \\( t = 0 \\). Then \\( A = \\sqrt{0.030^2 + 0.040^2} = 0.050 \\) m, \\( \\cos\\phi = 0.60 \\) and \\( \\sin\\phi = -0.80 \\), so \\( \\phi \\) is in the fourth quadrant: \\( \\phi = -0.927 \\) rad (\\( -53.1^\\circ \\)). Thus \\( x(t) = (0.050\\text{ m})\\cos(20t - 0.927) \\). Check: \\( x(0) = 0.050(0.60) = 0.030 \\) m and \\( v(0) = -(0.050)(20)\\sin(-0.927) = +0.80 \\) m/s.\n\n**Isochronism.** The period \\( T = 2\\pi\\sqrt{m/k} \\) contains no reference to \\( A \\): a spring oscillator takes the same time for a large swing as for a small one. The reason is that a larger displacement produces a proportionally larger restoring force, so the motion is simply scaled up; the equation \\( \\ddot x = -\\omega^2x \\) is unchanged when \\( x \\) is multiplied by a constant. This property, called **isochronism**, belongs to linear restoring forces only. With a force such as \\( -kx^3 \\), doubling the amplitude changes the period.\n\nIn the plot, the black reference curve is \\( \\cos 2t \\), with time on the horizontal axis. Drag \\( a \\) (the amplitude) and \\( p \\) (the phase constant): the curve stretches vertically and slides horizontally, but the spacing of its peaks, the period \\( \\pi \\) s, never changes.\n\n```plot\nx: 0, 8\ny: -2.2, 2.2\nslider: a, 0.2, 2, 1.5\nslider: p, -3.14, 3.14, 1\nf: cos(2*x) | reference, A = 1, φ = 0\nf: a*cos(2*x + p) | A cos(2t + φ)\nhline: 0\n```\n\nA positive \\( \\phi \\) shifts the curve to the left, earlier in time, by \\( \\phi/\\omega \\); the oscillation is ahead in phase.\n\n**Common mistakes.** Taking \\( \\phi = \\arctan(-v_0/(\\omega x_0)) \\) without checking the quadrant; mixing the phase \\( \\omega t + \\phi \\) with the phase constant \\( \\phi \\); and believing that a larger amplitude, with its larger speeds, must shorten or lengthen the period.",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k3",
+     "type": "numbers",
+     "prompt": "An oscillator has \\( \\omega = 5.0 \\) rad/s. At \\( t = 0 \\) its displacement is \\( x_0 = -0.040 \\) m and its velocity \\( v_0 = -0.15 \\) m/s. Writing \\( x = A\\cos(\\omega t + \\phi) \\) with \\( A > 0 \\) and \\( -\\pi < \\phi \\le \\pi \\), find \\( A \\) (in m) and \\( \\phi \\) (in rad), in that order, separated by a comma.",
+     "answer": "0.05, pi - atan(0.75)",
+     "tol": 0.01,
+     "why": "\\( A = \\sqrt{0.040^2 + (0.15/5.0)^2} = \\sqrt{0.0016 + 0.0009} = 0.050 \\) m. Then \\( \\cos\\phi = x_0/A = -0.80 \\) and \\( \\sin\\phi = -v_0/(\\omega A) = 0.15/0.25 = +0.60 \\): second quadrant, \\( \\phi = \\pi - \\arctan(0.75) = 2.50 \\) rad. The calculator value \\( \\arctan(-v_0/(\\omega x_0)) = \\arctan(-0.75) = -0.644 \\) rad has the wrong quadrant; it would give \\( x(0) = +0.040 \\) m."
+    },
+    {
+     "id": "s2q2",
+     "kp": "k4",
+     "type": "number",
+     "prompt": "When a 0.30 kg mass is attached to a spring and set oscillating, its period is 0.60 s. What is the spring's force constant, in N/m?",
+     "answer": "4*pi^2*0.3/0.6^2",
+     "tol": 0.01,
+     "why": "\\( T = 2\\pi\\sqrt{m/k} \\Rightarrow k = 4\\pi^2m/T^2 = 4\\pi^2(0.30)/(0.60)^2 = 32.9 \\) N/m. The amplitude does not enter, by isochronism."
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "Velocity, acceleration and energy",
+   "kps": [
+    "k5",
+    "k6"
+   ],
+   "md": "With \\( x(t) \\) known, the velocity and acceleration follow by differentiation, and energy conservation gives the speed at any position without reference to time. This section develops both.\n\n**Velocity and acceleration.** From \\( x = A\\cos(\\omega t + \\phi) \\),\n\\[ v = \\dot x = -A\\omega\\sin(\\omega t + \\phi), \\qquad a = \\ddot x = -A\\omega^2\\cos(\\omega t + \\phi) = -\\omega^2x. \\]\nHence \\( v_{\\max} = \\omega A \\), reached when \\( x = 0 \\), and \\( a_{\\max} = \\omega^2A \\), reached at the turning points \\( x = \\pm A \\), where the velocity is zero. Since \\( -\\sin\\theta = \\cos(\\theta + \\pi/2) \\), the velocity leads the displacement by a quarter cycle (\\( \\pi/2 \\) in phase), and the acceleration is exactly opposite to the displacement (\\( \\pi \\) out of phase).\n\n**Energy.** For the block and spring, the mechanical energy is \\( E = \\tfrac12mv^2 + \\tfrac12kx^2 \\). Substituting the solution and using \\( m\\omega^2 = k \\),\n\\[ E = \\tfrac12mA^2\\omega^2\\sin^2(\\omega t + \\phi) + \\tfrac12kA^2\\cos^2(\\omega t + \\phi) = \\tfrac12kA^2\\big[\\sin^2(\\omega t + \\phi) + \\cos^2(\\omega t + \\phi)\\big] = \\tfrac12kA^2. \\]\nThe energy is constant, as it must be with only a conservative force acting, and is proportional to the square of the amplitude. It passes back and forth between kinetic and potential forms twice per cycle; averaged over a cycle each holds half of \\( E \\). Solving \\( \\tfrac12mv^2 + \\tfrac12kx^2 = \\tfrac12kA^2 \\) for the speed:\n\\[ v = \\pm\\,\\omega\\sqrt{A^2 - x^2}. \\]\nThis gives the speed at any position directly, and shows again that the motion is confined to \\( |x| \\le A \\).\n\nIn the plot (with \\( k = 1 \\)), the parabola is \\( U = \\tfrac12x^2 \\) and the horizontal line is \\( E = \\tfrac12a^2 \\). The third curve is \\( K = E - U \\), positive only between the turning points \\( x = \\pm a \\). Drag \\( a \\): the turning points move out and the maximum kinetic energy grows as \\( a^2 \\).\n\n```plot\nx: -2.2, 2.2\ny: -0.6, 2.2\nslider: a, 0.3, 2, 1.4\nf: 0.5*x^2 | U\nf: 0.5*a^2 + 0*x | E\nf: 0.5*(a^2 - x^2) | K = E − U\n```\n\n*Worked example.* For the block with \\( k = 200 \\) N/m, \\( m = 0.50 \\) kg, \\( A = 0.050 \\) m (\\( \\omega = 20 \\) rad/s): \\( v_{\\max} = (20)(0.050) = 1.0 \\) m/s, \\( a_{\\max} = (400)(0.050) = 20 \\) m/s², and \\( E = \\tfrac12(200)(0.050)^2 = 0.25 \\) J. At \\( x = 0.030 \\) m the speed is \\( 20\\sqrt{0.0025 - 0.0009} = 0.80 \\) m/s, agreeing with the initial condition used in the previous section.\n\n**Common mistakes.** Placing the maximum speed at the turning points (it is zero there) or the maximum acceleration at equilibrium (it is zero there); forgetting the \\( \\pm \\) in \\( v(x) \\), since the block passes each position moving in both directions; and writing \\( E = \\tfrac12mA^2 \\) without the \\( \\omega^2 \\).",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k6",
+     "type": "number",
+     "prompt": "A 0.40 kg block on a spring with force constant 160 N/m oscillates with amplitude 0.10 m on a frictionless surface. What is its speed (in m/s) when it is 0.060 m from equilibrium?",
+     "answer": "sqrt(160/0.4)*sqrt(0.1^2 - 0.06^2)",
+     "tol": 0.01,
+     "why": "\\( \\omega = \\sqrt{160/0.40} = 20 \\) rad/s. \\( v = \\omega\\sqrt{A^2 - x^2} = 20\\sqrt{0.0100 - 0.0036} = 20(0.080) = 1.6 \\) m/s. Equivalently, \\( \\tfrac12mv^2 = \\tfrac12k(A^2 - x^2) = 0.512 \\) J."
+    },
+    {
+     "id": "s3q2",
+     "kp": "k5",
+     "type": "number",
+     "prompt": "A 0.20 kg mass oscillates in SHM with amplitude 0.10 m and period 0.50 s. What is the maximum magnitude of the net force on it, in N?",
+     "answer": "0.2*(2*pi/0.5)^2*0.1",
+     "tol": 0.01,
+     "why": "\\( \\omega = 2\\pi/T = 12.6 \\) rad/s. \\( a_{\\max} = \\omega^2A = (157.9)(0.10) = 15.8 \\) m/s², so \\( F_{\\max} = ma_{\\max} = 3.16 \\) N, at the turning points."
+    },
+    {
+     "id": "s3q3",
+     "kp": "k6",
+     "type": "written",
+     "prompt": "Using the solution \\( x = A\\cos(\\omega t + \\phi) \\), prove that the mechanical energy of a block–spring oscillator is constant and equal to \\( \\tfrac12kA^2 \\). Then derive the speed as a function of position, and explain where the speed and the acceleration are largest.",
+     "rubric": [
+      "Computes \\( K = \\tfrac12mA^2\\omega^2\\sin^2(\\cdot) \\) and \\( U = \\tfrac12kA^2\\cos^2(\\cdot) \\).",
+      "Uses \\( m\\omega^2 = k \\) and \\( \\sin^2 + \\cos^2 = 1 \\) to get \\( E = \\tfrac12kA^2 \\).",
+      "Solves for \\( v = \\pm\\omega\\sqrt{A^2 - x^2} \\).",
+      "Speed largest at \\( x = 0 \\) (\\( \\omega A \\)); acceleration \\( -\\omega^2x \\) largest in magnitude at \\( x = \\pm A \\)."
+     ],
+     "model": "With \\( v = -A\\omega\\sin(\\omega t + \\phi) \\), \\( K = \\tfrac12mv^2 = \\tfrac12mA^2\\omega^2\\sin^2(\\omega t + \\phi) \\), and \\( U = \\tfrac12kx^2 = \\tfrac12kA^2\\cos^2(\\omega t + \\phi) \\). Since \\( \\omega^2 = k/m \\), \\( m\\omega^2 = k \\), so \\( K = \\tfrac12kA^2\\sin^2(\\omega t + \\phi) \\) and \\( E = K + U = \\tfrac12kA^2(\\sin^2 + \\cos^2) = \\tfrac12kA^2 \\), independent of time. Setting \\( \\tfrac12mv^2 + \\tfrac12kx^2 = \\tfrac12kA^2 \\) and solving, \\( v^2 = (k/m)(A^2 - x^2) \\), so \\( v = \\pm\\omega\\sqrt{A^2 - x^2} \\). The speed is greatest, \\( \\omega A \\), at \\( x = 0 \\), where all the energy is kinetic; it is zero at \\( x = \\pm A \\). The acceleration \\( a = -\\omega^2x \\) is zero at equilibrium and greatest in magnitude, \\( \\omega^2A \\), at the turning points, where the spring force is largest.",
+     "why": "The energy is the square of the amplitude times a constant; doubling A quadruples E."
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "The vertical spring and the reference circle",
+   "kps": [
+    "k7",
+    "k8"
+   ],
+   "md": "Two questions arise at once. Does gravity change the motion when the spring hangs vertically? And why is the constant in the solution called an angular frequency? This section answers both.\n\n**A mass hanging from a spring.** Hang a mass \\( m \\) from a vertical spring of force constant \\( k \\). At equilibrium the spring is stretched by \\( d \\), where \\( kd = mg \\). Let \\( y \\) be the downward displacement from this equilibrium position. The spring is then stretched by \\( d + y \\), and with down positive,\n\\[ m\\ddot y = mg - k(d + y) = -ky, \\]\nsince \\( mg - kd = 0 \\). The equation is identical to the horizontal case: SHM about the new equilibrium, with the same \\( \\omega = \\sqrt{k/m} \\). The constant force of gravity shifts the equilibrium position but does not change the frequency. The same is true of any constant force added to a linear restoring force. Energy conservation also takes its horizontal form if \\( y \\) is measured from the new equilibrium: the gravitational and spring potential energies together equal \\( \\tfrac12ky^2 \\) plus a constant.\n\nBecause \\( k/m = g/d \\), the period can be read from the static stretch alone:\n\\[ T = 2\\pi\\sqrt{\\frac dg}. \\]\n*Worked example.* A mass stretches a spring by 9.8 cm when it hangs at rest. Displaced and released, it oscillates with \\( T = 2\\pi\\sqrt{0.098/9.8} = 2\\pi(0.10) = 0.63 \\) s, whatever the mass.\n\n**The reference circle.** Let a point \\( P \\) move counterclockwise around a circle of radius \\( A \\) with constant angular speed \\( \\omega \\), starting at angle \\( \\phi \\). Its angle at time \\( t \\) is \\( \\omega t + \\phi \\), and its \\( x \\)-coordinate is\n\\[ x = A\\cos(\\omega t + \\phi). \\]\nSo the projection of uniform circular motion onto a diameter is simple harmonic motion. The projections of the point's velocity (magnitude \\( \\omega A \\), tangent to the circle) and of its centripetal acceleration (magnitude \\( \\omega^2A \\), toward the center) are exactly \\( -A\\omega\\sin(\\omega t + \\phi) \\) and \\( -A\\omega^2\\cos(\\omega t + \\phi) \\), the velocity and acceleration of SHM. This explains the vocabulary: \\( \\omega \\), in rad/s, is the angular speed of the reference point, and the phase \\( \\omega t + \\phi \\) is its angle.\n\nIn the plot, drag \\( s \\), the angle of the reference point. The second point is its projection on the \\( x \\)-axis; as \\( s \\) increases steadily, the projection moves back and forth between \\( -1 \\) and \\( 1 \\), fastest at the center and momentarily at rest at the ends.\n\n```plot\nx: -1.6, 1.6\ny: -1.2, 1.2\nparam: cos(t); sin(t)\nt: 0, 6.2832\nslider: s, 0, 6.28, 0.8\npoint: cos(s), sin(s) | reference point\npoint: cos(s), 0 | projection\n```\n\n**Common mistakes.** Measuring the displacement of a vertical oscillator from the relaxed length of the spring rather than from the loaded equilibrium (the equation is then \\( m\\ddot y = mg - ky \\), whose solution oscillates about \\( y = mg/k \\), not about 0); and thinking that the vertical oscillator's period depends on \\( g \\) in some way other than through the static stretch.",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k7",
+     "type": "number",
+     "prompt": "A mass hung from a vertical spring stretches it by 5.0 cm at equilibrium. It is pulled down and released. What is the period of the oscillation, in s? Use \\( g = 9.80 \\) m/s².",
+     "answer": "2*pi*sqrt(0.05/9.8)",
+     "tol": 0.01,
+     "why": "\\( k/m = g/d \\), so \\( T = 2\\pi\\sqrt{d/g} = 2\\pi\\sqrt{0.050/9.80} = 0.449 \\) s. Neither \\( m \\) nor \\( k \\) is needed separately."
+    },
+    {
+     "id": "s4q2",
+     "kp": "k7",
+     "type": "written",
+     "prompt": "A block hangs from a vertical spring and oscillates. Explain why gravity does not change the period of the oscillation even though it changes the equilibrium position. Support your explanation with the equation of motion.",
+     "rubric": [
+      "At equilibrium \\( kd = mg \\), where \\( d \\) is the static stretch.",
+      "With \\( y \\) measured from that equilibrium: \\( m\\ddot y = mg - k(d + y) = -ky \\).",
+      "Same equation as the horizontal case, so \\( \\omega = \\sqrt{k/m} \\) is unchanged.",
+      "General principle: a constant force added to a linear restoring force only shifts the equilibrium; the rate at which the restoring force grows with displacement (k) is unchanged."
+     ],
+     "model": "At the equilibrium position the spring is stretched by \\( d \\) with \\( kd = mg \\). Measure the displacement \\( y \\) downward from this position. The forces are the weight \\( mg \\) downward and the spring force \\( k(d + y) \\) upward, so \\( m\\ddot y = mg - kd - ky = -ky \\). This is exactly the horizontal oscillator's equation, so the motion is SHM about the loaded equilibrium with \\( \\omega = \\sqrt{k/m} \\). Gravity is a constant force: it moves the point where the net force vanishes, but the net force still changes by \\( -k \\) per unit displacement from that point, and it is this rate that sets the frequency.",
+     "why": "Gravity enters the period only through the combination \\( m/k = d/g \\)."
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "Pendulums",
+   "kps": [
+    "k9",
+    "k10"
+   ],
+   "md": "The pendulum was the first precise timekeeper and remains a standard way to measure \\( g \\). Its restoring force is not exactly linear, so its motion is simple harmonic only approximately. This section derives the equation of motion, makes the small-angle approximation explicit, and extends the result to rigid bodies.\n\n**The simple pendulum.** A **simple pendulum** is a point mass \\( m \\) on a massless, inextensible string of length \\( L \\). Let \\( \\theta \\) be the angle from the vertical, in radians. About the pivot, the tension has no torque, and gravity's torque is \\( -mgL\\sin\\theta \\) (negative because it acts to reduce \\( \\theta \\)). With \\( I = mL^2 \\), the rotational second law gives\n\\[ mL^2\\ddot\\theta = -mgL\\sin\\theta \\quad\\Longrightarrow\\quad \\ddot\\theta = -\\frac gL\\sin\\theta. \\]\nThis is not the SHM equation, because \\( \\sin\\theta \\) is not proportional to \\( \\theta \\). But \\( \\sin\\theta = \\theta - \\theta^3/6 + \\cdots \\), so for small angles \\( \\sin\\theta \\approx \\theta \\) and\n\\[ \\ddot\\theta \\approx -\\frac gL\\,\\theta, \\qquad \\omega = \\sqrt{\\frac gL}, \\qquad T = 2\\pi\\sqrt{\\frac Lg}. \\]\nThe period is independent of the mass (which cancels) and, in this approximation, of the amplitude.\n\n*How good is the approximation?* At \\( 15^\\circ \\), \\( \\theta \\) exceeds \\( \\sin\\theta \\) by about 1%, and the true period is longer than \\( 2\\pi\\sqrt{L/g} \\) by about 0.4%. The exact period has the expansion \\( T = 2\\pi\\sqrt{L/g}\\left(1 + \\tfrac1{16}\\theta_0^2 + \\cdots\\right) \\) in the angular amplitude \\( \\theta_0 \\); at \\( 20^\\circ \\) the correction is 0.8%. Large swings take longer, so the pendulum is isochronous only approximately.\n\n*Worked example.* A pendulum whose period is 2.00 s (each swing lasting one second) needs \\( L = gT^2/(4\\pi^2) = (9.80)(4.00)/(4\\pi^2) = 0.993 \\) m.\n\n**The physical pendulum.** A **physical pendulum** is any rigid body swinging about a fixed horizontal axis through a point other than its center of mass. Let \\( d \\) be the distance from the pivot to the center of mass, and \\( I \\) the moment of inertia about the pivot. Gravity, acting at the center of mass, has torque \\( -mgd\\sin\\theta \\), so\n\\[ I\\ddot\\theta = -mgd\\sin\\theta \\approx -mgd\\,\\theta, \\qquad \\omega = \\sqrt{\\frac{mgd}{I}}, \\qquad T = 2\\pi\\sqrt{\\frac{I}{mgd}}. \\]\nThe simple pendulum is the special case \\( I = mL^2 \\), \\( d = L \\).\n\n*Worked example.* A uniform rod of length \\( L \\) swinging about one end has \\( I = \\tfrac13mL^2 \\) and \\( d = L/2 \\), so \\( T = 2\\pi\\sqrt{2L/(3g)} \\): it swings like a simple pendulum of length \\( \\tfrac23L \\), faster than a simple pendulum of the full length, because part of its mass is close to the pivot. For \\( L = 1.00 \\) m, \\( T = 1.64 \\) s.\n\n**Common mistakes.** Using the moment of inertia about the center of mass instead of about the pivot (use the parallel-axis theorem); measuring \\( L \\) to the top of the bob rather than to its center; applying \\( T = 2\\pi\\sqrt{L/g} \\) to large amplitudes; and computing \\( \\sin\\theta \\approx \\theta \\) with \\( \\theta \\) in degrees.",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k10",
+     "type": "number",
+     "prompt": "A uniform meter stick (length 1.00 m) swings in a vertical plane about a horizontal axis through a point 25.0 cm from one end. What is its period for small oscillations, in s? Use \\( g = 9.80 \\) m/s².",
+     "answer": "2*pi*sqrt((1/12 + 0.25^2)/(9.8*0.25))",
+     "tol": 0.01,
+     "why": "The pivot is \\( d = 0.250 \\) m from the center. By the parallel-axis theorem \\( I = m\\left(\\tfrac1{12}(1.00)^2 + 0.250^2\\right) = 0.1458m \\). \\( T = 2\\pi\\sqrt{I/(mgd)} = 2\\pi\\sqrt{0.1458/(9.80 \\times 0.250)} = 1.53 \\) s. The mass cancels."
+    },
+    {
+     "id": "s5q2",
+     "kp": "k10",
+     "type": "expression",
+     "prompt": "A uniform disk of radius \\( R \\) hangs from a horizontal axle through a point on its rim, perpendicular to the disk, and swings in its own plane. Find the period of small oscillations. Enter it using `R` and `g`.",
+     "answer": "2*pi*sqrt(3*R/(2*g))",
+     "vars": "R, g",
+     "why": "\\( I_{\\text{pivot}} = \\tfrac12mR^2 + mR^2 = \\tfrac32mR^2 \\), \\( d = R \\). \\( T = 2\\pi\\sqrt{\\dfrac{\\tfrac32mR^2}{mgR}} = 2\\pi\\sqrt{\\dfrac{3R}{2g}} \\)."
+    },
+    {
+     "id": "s5q3",
+     "kp": "k9",
+     "type": "number",
+     "prompt": "What length (in m) must a simple pendulum have for its period to be 2.00 s? Use \\( g = 9.80 \\) m/s².",
+     "answer": "9.8*2^2/(4*pi^2)",
+     "tol": 0.01,
+     "why": "\\( L = gT^2/(4\\pi^2) = (9.80)(4.00)/(39.48) = 0.993 \\) m, valid for small amplitudes."
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "title": "Small oscillations about any stable equilibrium",
+   "kps": [
+    "k11"
+   ],
+   "md": "The spring and the pendulum are not special. This section shows that small oscillations about essentially any stable equilibrium are simple harmonic, and gives a recipe for their frequency, directly from the potential energy.\n\n**The argument.** Let a particle of mass \\( m \\) move along \\( x \\) with potential energy \\( U(x) \\), and let \\( x_0 \\) be a stable equilibrium: \\( U'(x_0) = 0 \\) and \\( U''(x_0) > 0 \\). By Taylor's theorem,\n\\[ U(x) = U(x_0) + U'(x_0)(x - x_0) + \\tfrac12U''(x_0)(x - x_0)^2 + \\cdots = U(x_0) + \\tfrac12U''(x_0)(x - x_0)^2 + \\cdots. \\]\nNear \\( x_0 \\), the potential energy is that of a spring with effective force constant \\( k_{\\text{eff}} = U''(x_0) \\). The force \\( F = -dU/dx \\approx -U''(x_0)(x - x_0) \\) is a linear restoring force, so\n\\[ \\omega = \\sqrt{\\frac{U''(x_0)}{m}}. \\]\nThe approximation is good as long as the cubic and higher terms of the expansion are small compared with the quadratic one, that is, for sufficiently small amplitudes.\n\nThis is why simple harmonic motion is the universal first model of oscillation: vibrations of molecules and crystal lattices, the swaying of buildings and the small motions of mechanical structures near equilibrium are all approximately harmonic for small amplitudes.\n\n*Check with the pendulum.* In terms of the arc length \\( s = L\\theta \\), the pendulum's potential energy is \\( U = mgL(1 - \\cos(s/L)) \\). Then \\( U''(0) = mg/L \\), and \\( \\omega = \\sqrt{(mg/L)/m} = \\sqrt{g/L} \\), as found from torques.\n\n*Worked example.* A 0.50 kg particle moves in the double-well potential \\( U(x) = x^4 - 2x^2 \\) (J, with \\( x \\) in m). Its stable equilibria are at \\( x = \\pm1 \\), where \\( U''(x) = 12x^2 - 4 = 8 \\) J/m². Small oscillations about \\( x = 1 \\) have \\( \\omega = \\sqrt{8/0.50} = 4.0 \\) rad/s and period \\( 2\\pi/4.0 = 1.57 \\) s. For larger amplitudes the well is not symmetric about \\( x = 1 \\) (it is steeper on the outside), the motion is no longer harmonic, and the period changes with amplitude.\n\n**When the method fails.** If \\( U''(x_0) < 0 \\), the equilibrium is unstable and the linearized force pushes the particle away; there is no oscillation. If \\( U''(x_0) = 0 \\), as for \\( U = cx^4 \\), the leading term is not quadratic, the restoring force is not linear even for small displacements, and the oscillation is not simple harmonic: its period depends on the amplitude however small it is.\n\n**Common mistakes.** Evaluating \\( U'' \\) somewhere other than at the equilibrium; forgetting to confirm that \\( U''(x_0) > 0 \\); and using the result for amplitudes at which the neglected terms matter.",
+   "questions": [
+    {
+     "id": "s6q1",
+     "kp": "k11",
+     "type": "number",
+     "prompt": "A 0.20 kg particle moves along \\( x \\) with potential energy \\( U(x) = 3x^2 - 2x^3 \\) (J, with \\( x \\) in m). Find the angular frequency (in rad/s) of small oscillations about its stable equilibrium.",
+     "answer": "sqrt(6/0.2)",
+     "tol": 0.01,
+     "why": "\\( U'(x) = 6x - 6x^2 = 6x(1 - x) \\), zero at \\( x = 0 \\) and \\( x = 1 \\). \\( U''(x) = 6 - 12x \\): \\( U''(0) = 6 > 0 \\) (stable), \\( U''(1) = -6 < 0 \\) (unstable). So \\( \\omega = \\sqrt{6/0.20} = 5.48 \\) rad/s about \\( x = 0 \\)."
+    },
+    {
+     "id": "s6q2",
+     "kp": "k11",
+     "type": "written",
+     "prompt": "Explain why small oscillations about almost any stable equilibrium are simple harmonic. Give the formula for the angular frequency in terms of the potential energy, and describe two situations in which the conclusion fails.",
+     "rubric": [
+      "Taylor-expands \\( U \\) about \\( x_0 \\): the linear term vanishes because \\( U'(x_0) = 0 \\).",
+      "The leading term \\( \\tfrac12U''(x_0)(x - x_0)^2 \\) is a spring potential; force \\( \\approx -U''(x_0)(x - x_0) \\), linear.",
+      "\\( \\omega = \\sqrt{U''(x_0)/m} \\), requiring \\( U''(x_0) > 0 \\).",
+      "Failures: large amplitudes (higher-order terms matter, period depends on amplitude); \\( U''(x_0) = 0 \\) (no quadratic term, not SHM); \\( U''(x_0) < 0 \\) (unstable, no oscillation)."
+     ],
+     "model": "At an equilibrium \\( x_0 \\), \\( U'(x_0) = 0 \\). Expanding by Taylor's theorem, \\( U(x) = U(x_0) + \\tfrac12U''(x_0)(x - x_0)^2 + O((x - x_0)^3) \\). For small displacements the quadratic term dominates, so the potential energy is that of a spring with \\( k_{\\text{eff}} = U''(x_0) \\), and the force \\( -dU/dx \\approx -U''(x_0)(x - x_0) \\) is a linear restoring force if \\( U''(x_0) > 0 \\). The motion is then SHM with \\( \\omega = \\sqrt{U''(x_0)/m} \\). The conclusion fails (1) for large amplitudes, when the cubic and higher terms are not negligible and the period becomes amplitude-dependent, as for a pendulum swinging through large angles; (2) when \\( U''(x_0) = 0 \\), as for \\( U = cx^4 \\), where the restoring force is cubic even for tiny displacements; and (3) when \\( U''(x_0) < 0 \\), where the equilibrium is unstable and there is no oscillation.",
+     "why": "The word almost refers to the degenerate case U''(x₀) = 0; generic smooth potentials have a nonzero second derivative at a minimum."
+    }
+   ]
+  },
+  {
+   "id": "s7",
+   "title": "Damped and driven oscillations",
+   "kps": [
+    "k12"
+   ],
+   "md": "A real oscillator left to itself eventually stops, and an oscillator pushed periodically can build up large amplitudes. This section describes both effects, mostly qualitatively; their full treatment requires solving the corresponding differential equations, which is standard in a course on differential equations.\n\n**Damping.** Friction in a fluid often exerts a force approximately proportional to velocity, \\( F_d = -b\\dot x \\), with **damping coefficient** \\( b \\) (kg/s). The equation of motion becomes\n\\[ m\\ddot x + b\\dot x + kx = 0. \\]\nThe damping force always opposes the motion, so it does negative work and the mechanical energy decreases. Three regimes appear, depending on how \\( b \\) compares with the value \\( 2\\sqrt{mk} \\):\n- **Underdamped**, \\( b < 2\\sqrt{mk} \\): the system oscillates with a slowly decaying amplitude. Substitution verifies the solution\n\\[ x(t) = A_0e^{-bt/(2m)}\\cos(\\omega' t + \\phi), \\qquad \\omega' = \\sqrt{\\frac km - \\frac{b^2}{4m^2}}, \\]\nan oscillation at a slightly lower angular frequency inside an exponentially shrinking envelope \\( \\pm A_0e^{-bt/(2m)} \\).\n- **Critically damped**, \\( b = 2\\sqrt{mk} \\): the system returns to equilibrium without oscillating, as fast as possible without overshooting.\n- **Overdamped**, \\( b > 2\\sqrt{mk} \\): the system creeps back to equilibrium without oscillating, more slowly than in the critical case.\n\nThe plot shows an underdamped oscillation with its envelope; drag \\( c \\), which plays the role of \\( b/(2m) \\), to see the decay rate change.\n\n```plot\nx: 0, 12\ny: -1.1, 1.1\nslider: c, 0, 1, 0.2\nf: exp(-c*x)*cos(3*x) | underdamped x(t)\nf: exp(-c*x) | envelope\nf: -exp(-c*x) | envelope\n```\n\n*Worked example.* For \\( m = 0.50 \\) kg and \\( b = 0.10 \\) kg/s, the envelope falls to half its initial value when \\( e^{-bt/(2m)} = \\tfrac12 \\), at \\( t = 2m\\ln2/b = 6.9 \\) s. Since the energy is proportional to the square of the amplitude, it has then fallen to a quarter.\n\nDesign choices follow the regimes. Automobile suspensions are damped close to the critical value, so that the car settles after a bump without bouncing; a worn shock absorber makes the suspension underdamped. The needles of analog meters are damped near critically so that they settle quickly on a reading.\n\n**Driven oscillations and resonance.** If an external force \\( F_0\\cos\\omega_dt \\) acts on a damped oscillator, then after the initial transient dies out the system oscillates at the **driving frequency** \\( \\omega_d \\), not at its own natural frequency \\( \\omega_0 = \\sqrt{k/m} \\). The steady amplitude is\n\\[ A = \\frac{F_0}{\\sqrt{m^2(\\omega_0^2 - \\omega_d^2)^2 + b^2\\omega_d^2}}, \\]\nwhich is largest when \\( \\omega_d \\) is near \\( \\omega_0 \\). This large response to driving near the natural frequency is **resonance**. The smaller the damping, the higher and narrower the resonance peak. A child on a swing, pushed once per swing, is driven at resonance; engineers must keep the natural frequencies of machines and structures away from the frequencies of the forces that act on them.\n\n**Common mistakes.** Supposing that damping changes the frequency a great deal when it is light (the shift of \\( \\omega' \\) from \\( \\omega_0 \\) is second order in \\( b \\)); confusing critical damping, the fastest non-oscillatory return, with overdamping; and assuming that a driven oscillator vibrates at its natural frequency in the steady state.",
+   "questions": [
+    {
+     "id": "s7q1",
+     "kp": "k12",
+     "type": "number",
+     "prompt": "A 0.50 kg mass on a spring is lightly damped, with damping coefficient 0.10 kg/s. How long (in s) does it take for the amplitude of its oscillation to fall to half its initial value?",
+     "answer": "2*0.5*log(2)/0.1",
+     "tol": 0.01,
+     "why": "The envelope is \\( A_0e^{-bt/(2m)} \\). Setting it equal to \\( A_0/2 \\): \\( t = \\dfrac{2m\\ln2}{b} = \\dfrac{2(0.50)(0.693)}{0.10} = 6.93 \\) s. The energy falls to a quarter in the same time."
+    },
+    {
+     "id": "s7q2",
+     "kp": "k12",
+     "type": "mcq",
+     "prompt": "The shock absorbers of a car are badly worn, so that the damping of its suspension is far below the critical value. After the car goes over a bump, how does its body move?",
+     "options": [
+      "It bounces up and down several times with slowly decreasing amplitude",
+      "It returns to its rest height slowly, without bouncing",
+      "It returns to its rest height as fast as possible without overshooting",
+      "It bounces with constant amplitude until the next bump"
+     ],
+     "answer": 0,
+     "why": "Damping below the critical value \\( 2\\sqrt{mk} \\) is underdamping: oscillation at nearly the natural frequency inside a decaying envelope. The slow non-oscillatory return describes overdamping, and the fast one without overshoot critical damping, the design target. Constant amplitude would require zero damping."
+    }
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "t": "simple harmonic motion",
+   "d": "Motion satisfying \\( \\ddot x = -\\omega^2x \\): acceleration proportional and opposite to the displacement from equilibrium; solutions \\( x = A\\cos(\\omega t + \\phi) \\)."
+  },
+  {
+   "t": "linear restoring force",
+   "d": "A force proportional to the displacement from equilibrium and directed back toward it, \\( F = -kx \\)."
+  },
+  {
+   "t": "force constant",
+   "d": "The constant \\( k \\) in \\( F = -kx \\), in N/m; the stiffness of a spring."
+  },
+  {
+   "t": "amplitude",
+   "d": "The maximum displacement \\( A \\ge 0 \\) from equilibrium in SHM."
+  },
+  {
+   "t": "angular frequency",
+   "d": "The constant \\( \\omega \\) (rad/s) in \\( \\cos(\\omega t + \\phi) \\); \\( \\omega = \\sqrt{k/m} \\) for a spring, \\( \\omega = 2\\pi f \\)."
+  },
+  {
+   "t": "phase and phase constant",
+   "d": "The argument \\( \\omega t + \\phi \\) of the cosine is the phase; its value \\( \\phi \\) at \\( t = 0 \\) is the phase constant."
+  },
+  {
+   "t": "period",
+   "d": "The time for one complete cycle, \\( T = 2\\pi/\\omega \\)."
+  },
+  {
+   "t": "frequency",
+   "d": "The number of cycles per unit time, \\( f = 1/T = \\omega/(2\\pi) \\), in hertz."
+  },
+  {
+   "t": "isochronism",
+   "d": "Independence of the period from the amplitude, a property of oscillations under a linear restoring force."
+  },
+  {
+   "t": "reference circle",
+   "d": "A circle of radius A traversed at angular speed ω; the projection of the moving point on a diameter executes SHM."
+  },
+  {
+   "t": "simple pendulum",
+   "d": "A point mass on a massless inextensible string; for small angles \\( T = 2\\pi\\sqrt{L/g} \\)."
+  },
+  {
+   "t": "physical pendulum",
+   "d": "A rigid body swinging about a fixed axis not through its center of mass; for small angles \\( T = 2\\pi\\sqrt{I/(mgd)} \\)."
+  },
+  {
+   "t": "small-angle approximation",
+   "d": "Replacing \\( \\sin\\theta \\) by \\( \\theta \\) (radians), accurate to about 1% for \\( \\theta \\le 15^\\circ \\)."
+  },
+  {
+   "t": "effective force constant",
+   "d": "\\( k_{\\text{eff}} = U''(x_0) \\) at a stable equilibrium; it sets the frequency of small oscillations, \\( \\omega = \\sqrt{k_{\\text{eff}}/m} \\)."
+  },
+  {
+   "t": "damping coefficient",
+   "d": "The constant \\( b \\) in a velocity-proportional damping force \\( F = -b\\dot x \\), in kg/s."
+  },
+  {
+   "t": "underdamped, critically damped, overdamped",
+   "d": "Damping with \\( b < 2\\sqrt{mk} \\) (decaying oscillation), \\( b = 2\\sqrt{mk} \\) (fastest return without oscillation), \\( b > 2\\sqrt{mk} \\) (slow return without oscillation)."
+  },
+  {
+   "t": "resonance",
+   "d": "The large steady-state response of a driven oscillator when the driving frequency is near its natural frequency."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "term",
+   "front": "Define: simple harmonic motion",
+   "back": "Motion obeying \\( \\ddot x = -\\omega^2x \\): acceleration proportional and opposite to displacement from equilibrium.",
+   "kp": "k1"
+  },
+  {
+   "id": "c2",
+   "type": "formula",
+   "front": "Angular frequency, period and frequency of a mass on a spring",
+   "back": "\\( \\omega = \\sqrt{k/m} \\), \\( T = 2\\pi\\sqrt{m/k} \\), \\( f = \\omega/(2\\pi) \\)",
+   "kp": "k4"
+  },
+  {
+   "id": "c3",
+   "type": "formula",
+   "front": "General solution of the SHM equation (two forms)",
+   "back": "\\( x = A\\cos(\\omega t + \\phi) = C_1\\cos\\omega t + C_2\\sin\\omega t \\)",
+   "kp": "k2"
+  },
+  {
+   "id": "c4",
+   "type": "concept",
+   "front": "Why does the general solution of the SHM equation have exactly two constants?",
+   "back": "It is a second-order linear equation; by uniqueness, a solution is fixed by two initial conditions, x₀ and v₀.",
+   "kp": "k2"
+  },
+  {
+   "id": "c5",
+   "type": "formula",
+   "front": "Amplitude and phase constant from x₀ and v₀",
+   "back": "\\( A = \\sqrt{x_0^2 + (v_0/\\omega)^2} \\); \\( \\cos\\phi = x_0/A \\), \\( \\sin\\phi = -v_0/(\\omega A) \\)",
+   "kp": "k3"
+  },
+  {
+   "id": "c6",
+   "type": "concept",
+   "front": "Why is \\( \\phi = \\arctan(-v_0/(\\omega x_0)) \\) sometimes wrong?",
+   "back": "Arctan returns an angle in \\( (-\\pi/2, \\pi/2) \\); if \\( x_0 < 0 \\), add \\( \\pi \\).",
+   "kp": "k3"
+  },
+  {
+   "id": "c7",
+   "type": "concept",
+   "front": "Why is the period of a mass on a spring independent of amplitude?",
+   "back": "The equation \\( \\ddot x = -\\omega^2x \\) is linear: scaling x scales the motion without changing its timing.",
+   "kp": "k4"
+  },
+  {
+   "id": "c8",
+   "type": "formula",
+   "front": "Maximum speed and maximum acceleration in SHM",
+   "back": "\\( v_{\\max} = \\omega A \\) (at \\( x = 0 \\)); \\( a_{\\max} = \\omega^2A \\) (at \\( x = \\pm A \\))",
+   "kp": "k5"
+  },
+  {
+   "id": "c9",
+   "type": "formula",
+   "front": "Energy in SHM and speed as a function of position",
+   "back": "\\( E = \\tfrac12kA^2 \\); \\( v = \\pm\\omega\\sqrt{A^2 - x^2} \\)",
+   "kp": "k6"
+  },
+  {
+   "id": "c10",
+   "type": "problem",
+   "front": "Block–spring: \\( k = 160 \\) N/m, \\( m = 0.40 \\) kg, \\( A = 0.10 \\) m. Speed at \\( x = 0.060 \\) m?",
+   "back": "\\( \\omega = 20 \\) rad/s; \\( v = 20\\sqrt{0.01 - 0.0036} = 1.6 \\) m/s",
+   "kp": "k6",
+   "answer": "1.6",
+   "check": "number"
+  },
+  {
+   "id": "c11",
+   "type": "concept",
+   "front": "What does gravity do to a mass oscillating on a vertical spring?",
+   "back": "Shifts the equilibrium down by \\( mg/k \\); leaves \\( \\omega = \\sqrt{k/m} \\) unchanged.",
+   "kp": "k7"
+  },
+  {
+   "id": "c12",
+   "type": "formula",
+   "front": "Period of a vertical spring oscillator from its static stretch d",
+   "back": "\\( T = 2\\pi\\sqrt{d/g} \\)",
+   "kp": "k7"
+  },
+  {
+   "id": "c13",
+   "type": "concept",
+   "front": "How is SHM related to uniform circular motion?",
+   "back": "It is the projection on a diameter of a point moving uniformly on a circle of radius A at angular speed ω; the phase is the point's angle.",
+   "kp": "k8"
+  },
+  {
+   "id": "c14",
+   "type": "formula",
+   "front": "Period of a simple pendulum (small angles)",
+   "back": "\\( T = 2\\pi\\sqrt{L/g} \\), independent of mass",
+   "kp": "k9"
+  },
+  {
+   "id": "c15",
+   "type": "concept",
+   "front": "What approximation makes the pendulum simple harmonic, and how good is it?",
+   "back": "\\( \\sin\\theta \\approx \\theta \\) (radians); about 1% at 15°; the true period grows with amplitude, \\( T \\approx T_0(1 + \\theta_0^2/16) \\).",
+   "kp": "k9"
+  },
+  {
+   "id": "c16",
+   "type": "formula",
+   "front": "Period of a physical pendulum",
+   "back": "\\( T = 2\\pi\\sqrt{I/(mgd)} \\), \\( I \\) about the pivot, \\( d \\) pivot to center of mass",
+   "kp": "k10"
+  },
+  {
+   "id": "c17",
+   "type": "problem",
+   "front": "Uniform rod of length L pivoted at one end: period of small oscillations?",
+   "back": "\\( I = \\tfrac13mL^2 \\), \\( d = L/2 \\): \\( T = 2\\pi\\sqrt{2L/(3g)} \\)",
+   "kp": "k10",
+   "answer": "2*pi*sqrt(2*L/(3*g))",
+   "vars": "L, g",
+   "check": "expression"
+  },
+  {
+   "id": "c18",
+   "type": "formula",
+   "front": "Angular frequency of small oscillations about a minimum of U(x)",
+   "back": "\\( \\omega = \\sqrt{U''(x_0)/m} \\), requires \\( U''(x_0) > 0 \\)",
+   "kp": "k11"
+  },
+  {
+   "id": "c19",
+   "type": "formula",
+   "front": "Underdamped oscillator: solution",
+   "back": "\\( x = A_0e^{-bt/(2m)}\\cos(\\omega' t + \\phi) \\), \\( \\omega' = \\sqrt{k/m - b^2/(4m^2)} \\)",
+   "kp": "k12"
+  },
+  {
+   "id": "c20",
+   "type": "concept",
+   "front": "Critical damping: condition and behavior",
+   "back": "\\( b = 2\\sqrt{mk} \\); fastest return to equilibrium without oscillating.",
+   "kp": "k12"
+  },
+  {
+   "id": "c21",
+   "type": "concept",
+   "front": "At what frequency does a driven oscillator vibrate in the steady state, and when is its amplitude largest?",
+   "back": "At the driving frequency; largest when the driving frequency is near the natural frequency (resonance).",
+   "kp": "k12"
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k4",
+   "type": "number",
+   "prompt": "A 2.0 kg mass oscillates on a spring with force constant 800 N/m. What is its frequency, in Hz?",
+   "answer": "sqrt(800/2)/(2*pi)",
+   "tol": 0.01,
+   "why": "\\( \\omega = \\sqrt{800/2.0} = 20 \\) rad/s, so \\( f = \\omega/(2\\pi) = 3.18 \\) Hz."
+  },
+  {
+   "id": "p2",
+   "kp": "k5",
+   "type": "numbers",
+   "prompt": "An oscillator's position is \\( x(t) = (0.12\\text{ m})\\cos(4.0t + \\pi/3) \\), with \\( t \\) in s. Find its position (in m) and velocity (in m/s) at \\( t = 0 \\), in that order, separated by a comma.",
+   "answer": "0.12*cos(pi/3), -0.12*4*sin(pi/3)",
+   "tol": 0.01,
+   "why": "\\( x(0) = 0.12\\cos(\\pi/3) = 0.060 \\) m. \\( v = -A\\omega\\sin(\\omega t + \\phi) \\), so \\( v(0) = -(0.12)(4.0)\\sin(\\pi/3) = -0.416 \\) m/s. The positive phase constant means the oscillator is past its maximum and moving toward equilibrium."
+  },
+  {
+   "id": "p3",
+   "kp": "k6",
+   "type": "expression",
+   "prompt": "A block of mass \\( m \\) on a spring of force constant \\( k \\) oscillates with amplitude \\( A \\). Using energy conservation, find its speed when its displacement is \\( x \\). Enter it using `k`, `m`, `A` and `x`.",
+   "answer": "sqrt(k/m*(A^2 - x^2))",
+   "vars": "k, m, A, x",
+   "why": "\\( \\tfrac12mv^2 + \\tfrac12kx^2 = \\tfrac12kA^2 \\Rightarrow v = \\sqrt{\\dfrac km(A^2 - x^2)} \\)."
+  },
+  {
+   "id": "p4",
+   "kp": "k6",
+   "type": "number",
+   "prompt": "A block oscillates on a spring with amplitude 0.10 m. At what distance from equilibrium (in m) are its kinetic and potential energies equal?",
+   "answer": "0.1/sqrt(2)",
+   "tol": 0.01,
+   "why": "\\( U = \\tfrac12E \\Rightarrow \\tfrac12kx^2 = \\tfrac14kA^2 \\Rightarrow x = A/\\sqrt2 = 0.0707 \\) m. Not at \\( A/2 \\), where \\( U \\) is only a quarter of \\( E \\)."
+  },
+  {
+   "id": "p5",
+   "kp": "k8",
+   "type": "written",
+   "prompt": "Explain how simple harmonic motion can be viewed as the projection of uniform circular motion. Use the reference circle to obtain the velocity and acceleration of the oscillator, and explain why ω is called the angular frequency.",
+   "rubric": [
+    "A point moves on a circle of radius \\( A \\) at constant angular speed \\( \\omega \\); its angle is \\( \\omega t + \\phi \\) and its \\( x \\)-coordinate is \\( A\\cos(\\omega t + \\phi) \\).",
+    "The point's velocity has magnitude \\( \\omega A \\) tangent to the circle; its \\( x \\)-component is \\( -\\omega A\\sin(\\omega t + \\phi) \\).",
+    "Its centripetal acceleration \\( \\omega^2A \\) toward the center has \\( x \\)-component \\( -\\omega^2A\\cos(\\omega t + \\phi) = -\\omega^2x \\).",
+    "\\( \\omega \\) is literally the angular speed of the reference point, hence the name; the phase is its angle."
+   ],
+   "model": "Let a point \\( P \\) move counterclockwise around a circle of radius \\( A \\) centered at the origin with constant angular speed \\( \\omega \\), at angle \\( \\omega t + \\phi \\) at time \\( t \\). Its \\( x \\)-coordinate is \\( A\\cos(\\omega t + \\phi) \\), which is SHM. Its velocity has magnitude \\( \\omega A \\) and is tangent to the circle, pointing in the direction of increasing angle, i.e. along \\( (-\\sin, \\cos) \\); the \\( x \\)-component is \\( -\\omega A\\sin(\\omega t + \\phi) \\), the SHM velocity. Its acceleration is centripetal, of magnitude \\( \\omega^2A \\), directed toward the center, along \\( -(\\cos, \\sin) \\); the \\( x \\)-component is \\( -\\omega^2A\\cos(\\omega t + \\phi) = -\\omega^2x \\), the SHM acceleration. The constant \\( \\omega \\) in the oscillator's equation is thus the angular speed, in rad/s, of the associated reference point, and the phase is the angle of that point; this is why \\( \\omega \\) is called an angular frequency even though nothing in the oscillator itself rotates.",
+   "why": "The reference circle is a picture of the solution, not a claim that the oscillator moves in a circle."
+  },
+  {
+   "id": "p6",
+   "kp": "k9",
+   "type": "number",
+   "prompt": "A simple pendulum 1.00 m long is taken to the Moon, where \\( g = 1.62 \\) m/s². What is its period there, in s?",
+   "answer": "2*pi*sqrt(1/1.62)",
+   "tol": 0.01,
+   "why": "\\( T = 2\\pi\\sqrt{L/g} = 2\\pi\\sqrt{1.00/1.62} = 4.94 \\) s, compared with 2.01 s on Earth."
+  },
+  {
+   "id": "p7",
+   "kp": "k9",
+   "type": "mcq",
+   "prompt": "A pendulum clock that keeps correct time on the ground is placed in an elevator that accelerates upward at a constant rate. How does the clock behave during the acceleration?",
+   "options": [
+    "It runs fast, because the effective gravitational acceleration is \\( g + a \\), which shortens the period",
+    "It keeps correct time, because the period of a pendulum does not depend on the mass of the bob",
+    "It runs slow, because the effective gravitational acceleration is \\( g - a \\)",
+    "It keeps correct time, because the period depends only on the length of the pendulum"
+   ],
+   "answer": 0,
+   "why": "In the accelerating frame the bob behaves as if gravity were \\( g + a \\) (the string must supply the extra upward force). The period \\( 2\\pi\\sqrt{L/(g + a)} \\) is shorter, so the clock ticks more often and runs fast. The period does not depend on mass, but it does depend on \\( g \\)."
+  },
+  {
+   "id": "p8",
+   "kp": "k10",
+   "type": "number",
+   "prompt": "A thin hoop of radius 0.20 m hangs on a horizontal nail and swings in its own plane. What is its period for small oscillations, in s? Use \\( g = 9.80 \\) m/s².",
+   "answer": "2*pi*sqrt(2*0.2/9.8)",
+   "tol": 0.01,
+   "why": "About the nail, \\( I = MR^2 + MR^2 = 2MR^2 \\) (parallel-axis theorem) and \\( d = R \\). \\( T = 2\\pi\\sqrt{2MR^2/(MgR)} = 2\\pi\\sqrt{2R/g} = 2\\pi\\sqrt{0.40/9.80} = 1.27 \\) s: the same as a simple pendulum of length \\( 2R \\)."
+  },
+  {
+   "id": "p9",
+   "kp": "k7",
+   "type": "number",
+   "prompt": "A 0.50 kg mass hung from a vertical spring stretches it by 0.10 m. It is then pulled down a further 0.050 m and released. What is its maximum speed, in m/s? Use \\( g = 9.80 \\) m/s².",
+   "answer": "sqrt(9.8/0.1)*0.05",
+   "tol": 0.01,
+   "why": "\\( \\omega = \\sqrt{k/m} = \\sqrt{g/d} = \\sqrt{98} = 9.90 \\) rad/s. The amplitude about the loaded equilibrium is 0.050 m, so \\( v_{\\max} = \\omega A = 0.495 \\) m/s."
+  },
+  {
+   "id": "p10",
+   "kp": "k11",
+   "type": "number",
+   "prompt": "A 0.50 kg particle moves in the potential \\( U(x) = x^4 - 2x^2 \\) (J, with \\( x \\) in m). What is the period (in s) of small oscillations about the stable equilibrium at \\( x = 1 \\)?",
+   "answer": "2*pi/sqrt(8/0.5)",
+   "tol": 0.01,
+   "why": "\\( U''(x) = 12x^2 - 4 \\), so \\( U''(1) = 8 \\) J/m². \\( \\omega = \\sqrt{8/0.50} = 4.0 \\) rad/s and \\( T = 2\\pi/4.0 = 1.57 \\) s."
+  },
+  {
+   "id": "p11",
+   "kp": "k12",
+   "type": "written",
+   "prompt": "Describe the motion of an underdamped, a critically damped and an overdamped oscillator released from rest at a displacement from equilibrium. State the condition on the damping coefficient for each, and explain why a car suspension is designed to be close to critically damped.",
+   "rubric": [
+    "Underdamped (\\( b < 2\\sqrt{mk} \\)): oscillates through equilibrium with exponentially decaying amplitude.",
+    "Critically damped (\\( b = 2\\sqrt{mk} \\)): returns without oscillating, in the shortest time possible without overshoot.",
+    "Overdamped (\\( b > 2\\sqrt{mk} \\)): returns without oscillating but more slowly.",
+    "Suspension: near-critical damping lets the car settle quickly after a bump without repeated bouncing (underdamped) or a sluggish return (overdamped)."
+   ],
+   "model": "With a damping force \\( -b\\dot x \\), the behavior depends on \\( b \\) relative to \\( 2\\sqrt{mk} \\). If \\( b < 2\\sqrt{mk} \\) (underdamped), the oscillator passes back and forth through equilibrium at angular frequency \\( \\omega' = \\sqrt{k/m - b^2/(4m^2)} \\), slightly below the undamped value, with amplitude decaying as \\( e^{-bt/(2m)} \\). If \\( b = 2\\sqrt{mk} \\) (critically damped), it returns to equilibrium without crossing it, and does so faster than any overdamped system. If \\( b > 2\\sqrt{mk} \\) (overdamped), it also returns without oscillating, but slowly, since the strong damping resists the motion. A car suspension should bring the body back to its rest height quickly after a bump without a series of bounces: underdamping gives an uncomfortable bouncing ride and poor tire contact, overdamping a harsh, slow response. Near-critical damping is the compromise.",
+   "why": "The boundary \\( b = 2\\sqrt{mk} \\) is where \\( \\omega' \\) becomes zero."
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k2",
+   "type": "written",
+   "prompt": "Starting from Newton's second law for a block of mass \\( m \\) on a spring of force constant \\( k \\), derive the equation of simple harmonic motion, show that \\( x = A\\cos(\\omega t + \\phi) \\) is its general solution and determine \\( \\omega \\). Then express \\( A \\) in terms of the initial position and velocity, and explain why the period does not depend on the amplitude.",
+   "rubric": [
+    "\\( m\\ddot x = -kx \\Rightarrow \\ddot x = -(k/m)x \\).",
+    "Substitutes the trial solution, obtaining \\( -A\\omega^2\\cos(\\cdot) = -(k/m)A\\cos(\\cdot) \\), so \\( \\omega = \\sqrt{k/m} \\).",
+    "Argues generality: two free constants match any initial position and velocity, and uniqueness of solutions of the linear second-order equation.",
+    "\\( A = \\sqrt{x_0^2 + (v_0/\\omega)^2} \\) from \\( x_0 = A\\cos\\phi \\), \\( v_0 = -A\\omega\\sin\\phi \\).",
+    "\\( T = 2\\pi/\\omega = 2\\pi\\sqrt{m/k} \\) contains no \\( A \\); linearity means scaling the solution does not change its timing."
+   ],
+   "model": "The only horizontal force is the spring force \\( -kx \\), so \\( m\\ddot x = -kx \\), i.e. \\( \\ddot x = -(k/m)x \\). Try \\( x = A\\cos(\\omega t + \\phi) \\): then \\( \\ddot x = -A\\omega^2\\cos(\\omega t + \\phi) \\), and the equation requires \\( -A\\omega^2\\cos(\\omega t + \\phi) = -(k/m)A\\cos(\\omega t + \\phi) \\) for all \\( t \\), so \\( \\omega^2 = k/m \\), \\( \\omega = \\sqrt{k/m} \\). For any \\( A \\) and \\( \\phi \\) this is a solution. With \\( x_0 = A\\cos\\phi \\) and \\( v_0 = -A\\omega\\sin\\phi \\), the pair \\( (A, \\phi) \\) can be chosen to match any \\( (x_0, v_0) \\): \\( A = \\sqrt{x_0^2 + (v_0/\\omega)^2} \\), with \\( \\phi \\) fixed by the signs of \\( \\cos\\phi = x_0/A \\) and \\( \\sin\\phi = -v_0/(\\omega A) \\). The equation is linear and second order, so by the existence and uniqueness theorem each pair \\( (x_0, v_0) \\) determines exactly one solution; since our family contains a solution for every such pair, it contains all solutions, and is the general solution. The period \\( T = 2\\pi/\\omega = 2\\pi\\sqrt{m/k} \\) depends only on \\( m \\) and \\( k \\). Physically, the equation is linear: if \\( x(t) \\) is a solution, so is \\( cx(t) \\), with the same timing, so a larger amplitude produces a proportionally larger restoring force and the cycle takes the same time.",
+   "why": "Isochronism is a consequence of linearity, which is why it fails for the pendulum at large angles."
+  },
+  {
+   "id": "e2",
+   "kp": "k3",
+   "type": "numbers",
+   "prompt": "An oscillator with \\( \\omega = 10 \\) rad/s is at \\( x_0 = 0.020 \\) m with velocity \\( v_0 = -0.20 \\) m/s at \\( t = 0 \\). Writing \\( x = A\\cos(\\omega t + \\phi) \\) with \\( A > 0 \\) and \\( -\\pi < \\phi \\le \\pi \\), find \\( A \\) (in m) and \\( \\phi \\) (in rad), in that order, separated by a comma.",
+   "answer": "sqrt(0.02^2 + 0.02^2), pi/4",
+   "tol": 0.01,
+   "why": "\\( A = \\sqrt{0.020^2 + (0.20/10)^2} = 0.0283 \\) m. \\( \\cos\\phi = 0.020/0.0283 = 0.707 \\) and \\( \\sin\\phi = -v_0/(\\omega A) = 0.20/0.283 = 0.707 \\): first quadrant, \\( \\phi = \\pi/4 = 0.785 \\) rad. The oscillator is moving toward equilibrium, as the positive phase constant indicates."
+  },
+  {
+   "id": "e3",
+   "kp": "k10",
+   "type": "number",
+   "prompt": "A uniform meter stick (length 1.00 m) is to swing as a physical pendulum about a horizontal axis through a point a distance \\( d \\) from its center. Find the value of \\( d \\) (in m) that makes the period of small oscillations as short as possible.",
+   "answer": "1/sqrt(12)",
+   "tol": 0.01,
+   "why": "\\( T = 2\\pi\\sqrt{\\dfrac{I}{mgd}} \\) with \\( I = m\\left(\\tfrac{L^2}{12} + d^2\\right) \\), so \\( T^2 \\propto \\dfrac{L^2/12 + d^2}{d} = \\dfrac{L^2}{12d} + d \\). Its derivative \\( -\\dfrac{L^2}{12d^2} + 1 \\) vanishes at \\( d = L/\\sqrt{12} = 0.289 \\) m, and the second derivative is positive, so this is a minimum. The minimum period is \\( 2\\pi\\sqrt{2d/g} = 1.53 \\) s. As \\( d \\to 0 \\) the period grows without bound, since gravity's torque vanishes."
+  },
+  {
+   "id": "e4",
+   "kp": "k11",
+   "type": "expression",
+   "prompt": "A particle of mass \\( m \\) moves on the positive \\( x \\)-axis with potential energy \\( U(x) = U_0\\left(\\dfrac xa + \\dfrac ax\\right) \\), where \\( U_0 \\) and \\( a \\) are positive constants. Find the angular frequency of small oscillations about its stable equilibrium. Enter it using `U` (for \\( U_0 \\)), `m` and `a`.",
+   "answer": "sqrt(2*U/(m*a^2))",
+   "vars": "U, m, a",
+   "why": "\\( U'(x) = U_0\\left(\\dfrac1a - \\dfrac{a}{x^2}\\right) = 0 \\) at \\( x = a \\). \\( U''(x) = \\dfrac{2U_0a}{x^3} \\), so \\( U''(a) = \\dfrac{2U_0}{a^2} > 0 \\): stable. \\( \\omega = \\sqrt{U''(a)/m} = \\sqrt{\\dfrac{2U_0}{ma^2}} \\)."
+  },
+  {
+   "id": "e5",
+   "kp": "k9",
+   "type": "written",
+   "prompt": "Derive the equation of motion of a simple pendulum from the rotational second law. Explain exactly where the small-angle approximation enters, why the resulting motion is simple harmonic, which quantities the period depends on, and what happens to the period at larger amplitudes.",
+   "rubric": [
+    "Torque about the pivot: \\( -mgL\\sin\\theta \\) (tension has none); \\( I = mL^2 \\); so \\( \\ddot\\theta = -(g/L)\\sin\\theta \\).",
+    "Small-angle approximation \\( \\sin\\theta \\approx \\theta \\) (radians) makes the equation linear: \\( \\ddot\\theta = -(g/L)\\theta \\).",
+    "SHM with \\( \\omega = \\sqrt{g/L} \\), \\( T = 2\\pi\\sqrt{L/g} \\): independent of mass and (approximately) of amplitude.",
+    "At larger amplitudes \\( \\sin\\theta < \\theta \\), the restoring torque is weaker than the linear one, and the period is longer (\\( T \\approx T_0(1 + \\theta_0^2/16) \\))."
+   ],
+   "model": "Take torques about the pivot. The tension acts along the string, through the pivot, and has no torque. The weight \\( mg \\) acts at the bob, a distance \\( L \\) from the pivot, with lever arm \\( L\\sin\\theta \\); its torque is \\( -mgL\\sin\\theta \\), negative because it tends to decrease \\( \\theta \\). The moment of inertia of the point bob is \\( mL^2 \\), so \\( mL^2\\ddot\\theta = -mgL\\sin\\theta \\), i.e. \\( \\ddot\\theta = -(g/L)\\sin\\theta \\). This is nonlinear. For small angles, \\( \\sin\\theta = \\theta - \\theta^3/6 + \\cdots \\approx \\theta \\) (with \\( \\theta \\) in radians), and the equation becomes \\( \\ddot\\theta = -(g/L)\\theta \\), the SHM equation with \\( \\omega = \\sqrt{g/L} \\). Hence \\( T = 2\\pi\\sqrt{L/g} \\): independent of the mass (which cancels between the gravitational torque and the moment of inertia) and, within the approximation, of the amplitude. At larger amplitudes \\( \\sin\\theta < \\theta \\), so the true restoring torque is weaker than the linearized one and the pendulum takes longer to return: the period increases with amplitude, approximately \\( T_0(1 + \\theta_0^2/16) \\), about 0.8% longer at \\( 20^\\circ \\).",
+   "why": "Galileo's claim that the pendulum is isochronous is accurate only for small swings."
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "SHM equation",
+    "formula": "\\( \\ddot x = -\\omega^2x \\); spring: \\( \\omega = \\sqrt{k/m} \\)",
+    "when": "Any linear restoring force.",
+    "example": "0.50 kg, 200 N/m: \\( \\omega = 20 \\) rad/s, \\( T = 0.314 \\) s.",
+    "watch": "\\( \\omega = 2\\pi f \\); rad/s versus Hz."
+   },
+   {
+    "name": "General solution",
+    "formula": "\\( x = A\\cos(\\omega t + \\phi) \\)",
+    "when": "Writing the motion explicitly.",
+    "example": "\\( x = 0.050\\cos(20t - 0.927) \\) m.",
+    "watch": "Calculator in radians."
+   },
+   {
+    "name": "Initial conditions",
+    "formula": "\\( A = \\sqrt{x_0^2 + (v_0/\\omega)^2} \\); \\( \\cos\\phi = x_0/A \\), \\( \\sin\\phi = -v_0/(\\omega A) \\)",
+    "when": "Given position and velocity at one instant.",
+    "example": "\\( x_0 = -0.040 \\), \\( v_0 = -0.15 \\), \\( \\omega = 5.0 \\): \\( A = 0.050 \\), \\( \\phi = 2.50 \\) rad.",
+    "watch": "Check the quadrant of \\( \\phi \\)."
+   },
+   {
+    "name": "Velocity, acceleration, energy",
+    "formula": "\\( v_{\\max} = \\omega A \\), \\( a_{\\max} = \\omega^2A \\), \\( E = \\tfrac12kA^2 \\), \\( v = \\pm\\omega\\sqrt{A^2 - x^2} \\)",
+    "when": "Speeds and forces at given positions.",
+    "example": "\\( k = 160 \\), \\( m = 0.40 \\), \\( A = 0.10 \\): \\( v(0.06) = 1.6 \\) m/s.",
+    "watch": "Speed is maximal at equilibrium, acceleration at the ends."
+   },
+   {
+    "name": "Vertical spring",
+    "formula": "Equilibrium stretch \\( d = mg/k \\); \\( T = 2\\pi\\sqrt{d/g} \\)",
+    "when": "Mass hanging on a spring.",
+    "example": "d = 9.8 cm: T = 0.63 s.",
+    "watch": "Measure displacement from the loaded equilibrium."
+   },
+   {
+    "name": "Simple pendulum",
+    "formula": "\\( T = 2\\pi\\sqrt{L/g} \\) (small angles)",
+    "when": "Point bob on a light string.",
+    "example": "T = 2.00 s: L = 0.993 m.",
+    "watch": "Amplitude correction \\( 1 + \\theta_0^2/16 \\)."
+   },
+   {
+    "name": "Physical pendulum",
+    "formula": "\\( T = 2\\pi\\sqrt{I/(mgd)} \\)",
+    "when": "Rigid bodies swinging about a pivot.",
+    "example": "Rod about an end: \\( T = 2\\pi\\sqrt{2L/(3g)} \\).",
+    "watch": "I about the pivot, via the parallel-axis theorem."
+   },
+   {
+    "name": "Small oscillations",
+    "formula": "\\( \\omega = \\sqrt{U''(x_0)/m} \\)",
+    "when": "Any potential with a minimum.",
+    "example": "\\( U = x^4 - 2x^2 \\), \\( m = 0.50 \\): \\( \\omega = 4.0 \\) rad/s at \\( x = 1 \\).",
+    "watch": "Needs \\( U''(x_0) > 0 \\) and small amplitude."
+   },
+   {
+    "name": "Damping",
+    "formula": "\\( m\\ddot x + b\\dot x + kx = 0 \\); critical \\( b = 2\\sqrt{mk} \\); envelope \\( e^{-bt/(2m)} \\)",
+    "when": "Oscillations that die out.",
+    "example": "m = 0.50 kg, b = 0.10 kg/s: amplitude halves in 6.9 s.",
+    "watch": "Energy decays twice as fast (in exponent) as amplitude."
+   }
+  ],
+  "stuck": [
+   "Write Newton's second law (or the rotational second law) about equilibrium and put it in the form ẍ = −(constant)x; the constant is ω².",
+   "If the force is not exactly linear, expand it (or U) about equilibrium and keep the linear (quadratic) term.",
+   "For questions about speed at a position, use energy: ½mv² + ½kx² = ½kA². For questions about time, use x = A cos(ωt + φ).",
+   "Fix A and φ from the initial position and velocity, and check the quadrant of φ from the signs of cos φ and sin φ.",
+   "For a pendulum made of an extended body, compute I about the pivot with the parallel-axis theorem before using T = 2π√(I/(mgd))."
+  ]
+ }
+}
