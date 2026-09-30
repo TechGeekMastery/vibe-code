@@ -1,0 +1,704 @@
+{
+ "key": "mth-2-5",
+ "title": "Arc length and surface area",
+ "v": 1,
+ "scope": "Arc length of graphs y = f(x) and x = g(y) (definition by inscribed polygons, the integral formula, the arc length function and ds), exact evaluation and bounds, and the area of surfaces of revolution about the coordinate axes and other lines, including improper cases; arc length and surface area for parametric and polar curves are later topics.",
+ "sources": [
+  {
+   "title": "OpenStax, Calculus Volume 2, Section 2.4: Arc Length of a Curve and Surface Area",
+   "url": "https://openstax.org/books/calculus-volume-2/pages/2-4-arc-length-of-a-curve-and-surface-area"
+  },
+  {
+   "title": "Paul Dawkins, Paul's Online Math Notes, Calculus II: Arc Length",
+   "url": "https://tutorial.math.lamar.edu/classes/calcii/arclength.aspx"
+  },
+  {
+   "title": "Paul Dawkins, Paul's Online Math Notes, Calculus II: Arc Length and Surface Area Revisited",
+   "url": "https://tutorial.math.lamar.edu/classes/calcii/ArcLength_SurfaceArea.aspx"
+  },
+  {
+   "title": "OpenStax, Calculus Volume 2, Chapter 2 Key Concepts",
+   "url": "https://openstax.org/books/calculus-volume-2/pages/2-key-concepts"
+  }
+ ],
+ "pre": [
+  "mth-2-1",
+  "mth-2-3",
+  "mth-2-4",
+  "mth-1-12"
+ ],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Derive the arc length formula",
+   "d": "Define arc length as a limit of inscribed polygon lengths and derive the integral formula using the Mean Value Theorem, stating the smoothness hypothesis.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k2",
+   "t": "Compute arc lengths",
+   "d": "Evaluate arc-length integrals for y = f(x), recognising perfect-square integrands and using substitution or trigonometric substitution where needed.",
+   "type": "procedure"
+  },
+  {
+   "id": "k3",
+   "t": "Arc length with respect to y",
+   "d": "Compute the length of a curve x = g(y), and switch variables when dy/dx is unbounded or the curve is given as x in terms of y.",
+   "type": "skill"
+  },
+  {
+   "id": "k4",
+   "t": "The arc length function and ds",
+   "d": "Define s(x), state s'(x) = √(1 + f'(x)²), and use the differential ds² = dx² + dy².",
+   "type": "concept"
+  },
+  {
+   "id": "k5",
+   "t": "Non-elementary lengths and bounds",
+   "d": "Recognise arc-length integrals without elementary antiderivatives and bound them using inscribed polygons and bounds on the integrand.",
+   "type": "skill"
+  },
+  {
+   "id": "k6",
+   "t": "Derive the surface area formula",
+   "d": "Derive the lateral area of a frustum and use it to derive the surface-area integral for a surface of revolution.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k7",
+   "t": "Surface area about the x-axis",
+   "d": "Compute S = 2π∫ f(x)√(1 + f'(x)²) dx for a curve rotated about the x-axis.",
+   "type": "procedure"
+  },
+  {
+   "id": "k8",
+   "t": "Surface area about other axes",
+   "d": "Compute surface areas about the y-axis or other lines using S = ∫2π(radius) ds, in either variable.",
+   "type": "procedure"
+  },
+  {
+   "id": "k9",
+   "t": "Why ds, not dx",
+   "d": "Explain why surface area needs ds while volume can use dx, and analyse a solid with finite volume and infinite surface area.",
+   "type": "distinction"
+  }
+ ],
+ "intro": "The previous chapter measured areas and volumes by slicing. This chapter measures two quantities that are one dimension lower than the regions they bound: the **length** of a curve and the **area** of a curved surface. For a line segment or a circle, length is elementary geometry; for the graph of \\( y = x^{3/2} \\) or the cable of a suspension bridge, it is not even obvious what \"length\" means until it is defined.\n\nThe definition follows the pattern of the integral itself. Approximate the curve by inscribed polygons, whose lengths the distance formula gives, and take the limit as the polygon is refined. The Mean Value Theorem converts the polygon lengths into Riemann sums, and the limit is an integral. The same construction, applied to the bands swept out when each segment of the polygon is rotated about an axis, gives the area of a surface of revolution. Along the way it becomes clear why a slanted segment must be measured by its true length, and why that matters for surfaces although not for volumes.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "The length of a curve",
+   "kps": [
+    "k1",
+    "k2"
+   ],
+   "md": "This section defines the length of the graph of a function and derives a formula for it.\n\n**The definition.** Let \\( f \\) be defined on \\( [a, b] \\), and partition the interval by \\( a = x_{0} < x_{1} < \\cdots < x_{n} = b \\). Join the points \\( P_{i} = (x_{i}, f(x_{i})) \\) by line segments. The resulting **inscribed polygon** has length\n\\[ \\sum_{i=1}^{n}|P_{i-1}P_{i}| = \\sum_{i=1}^{n}\\sqrt{(\\Delta x_{i})^{2} + (\\Delta y_{i})^{2}}, \\qquad \\Delta y_{i} = f(x_{i}) - f(x_{i-1}). \\]\nAdding a point to the partition replaces one segment by two whose total length is at least as large, by the triangle inequality, so refinement never decreases the polygon's length. The **arc length** \\( L \\) of the curve is the limit of these lengths as the largest \\( \\Delta x_{i} \\) tends to \\( 0 \\), when the limit exists. In particular, \\( L \\) is at least the length of any inscribed polygon.\n\n**From polygons to an integral.** Suppose \\( f \\) is **smooth** on \\( [a, b] \\), meaning that \\( f' \\) exists and is continuous there. On each subinterval the Mean Value Theorem gives a point \\( x_{i}^{*} \\in (x_{i-1}, x_{i}) \\) with \\( \\Delta y_{i} = f'(x_{i}^{*})\\,\\Delta x_{i} \\). Hence\n\\[ |P_{i-1}P_{i}| = \\sqrt{(\\Delta x_{i})^{2} + [f'(x_{i}^{*})]^{2}(\\Delta x_{i})^{2}} = \\sqrt{1 + [f'(x_{i}^{*})]^{2}}\\;\\Delta x_{i}, \\]\nand the polygon's length is a Riemann sum for the continuous function \\( \\sqrt{1 + [f'(x)]^{2}} \\). As the partition is refined it converges to the integral.\n\n> **Arc length.** If \\( f' \\) is continuous on \\( [a, b] \\), the length of the curve \\( y = f(x) \\), \\( a \\le x \\le b \\), is \\[ L = \\int_{a}^{b}\\sqrt{1 + [f'(x)]^{2}}\\,dx. \\]\n\nThe graph illustrates the key step. Drag \\( a \\): the secant line of \\( y = x^{3/2} \\) through the points at \\( x = a \\) and \\( x = a + 1 \\) is drawn together with the tangent line parallel to it. The Mean Value Theorem guarantees that such a tangent touches the curve between the ends of the chord, and that is what allows each chord's slope to be replaced by a value of \\( f' \\).\n\n```plot\nx: -0.5, 5\ny: -0.5, 9\nslider: a, 0, 3, 1 | a\nf: x^1.5 | y = x^(3/2)\nf: ((a+1)^1.5 - a^1.5)*(x - a) + a^1.5 | secant through x = a and x = a + 1\nf: ((a+1)^1.5 - a^1.5)*(x - (2*((a+1)^1.5 - a^1.5)/3)^2) + (2*((a+1)^1.5 - a^1.5)/3)^3 | parallel tangent\npoint: a, a^1.5\n```\n\n**A check.** For the line \\( y = mx + c \\), \\( f' = m \\) and \\( L = \\int_{a}^{b}\\sqrt{1 + m^{2}}\\,dx = (b - a)\\sqrt{1 + m^{2}} \\), which is the distance formula between the endpoints.\n\n**Worked example.** Find the length of \\( y = x^{3/2} \\) for \\( 0 \\le x \\le 4 \\). Here \\( f'(x) = \\frac32x^{1/2} \\), continuous on \\( [0, 4] \\), and \\( 1 + [f'(x)]^{2} = 1 + \\frac94x \\). With \\( u = 1 + \\frac94x \\), \\( du = \\frac94dx \\):\n\\[ L = \\int_{0}^{4}\\Big(1 + \\frac94x\\Big)^{1/2}dx = \\frac49\\cdot\\frac23\\Big[\\Big(1 + \\frac94x\\Big)^{3/2}\\Big]_{0}^{4} = \\frac{8}{27}\\big(10^{3/2} - 1\\big) = \\frac{8}{27}\\big(10\\sqrt{10} - 1\\big) \\approx 9.07. \\]\nAs a check, the straight segment from \\( (0, 0) \\) to \\( (4, 8) \\) has length \\( \\sqrt{80} \\approx 8.94 \\), slightly less, as it must be.\n\n**The common mistakes.** Squaring \\( f \\) instead of \\( f' \\); writing \\( \\sqrt{1 + [f']^{2}} = 1 + f' \\), which is false because the square root does not distribute over a sum; and forgetting the hypothesis: if \\( f' \\) is unbounded at an endpoint, the integral is improper and must be handled as in the chapter on improper integrals.",
+   "questions": [
+    {
+     "id": "s1q1",
+     "kp": "k2",
+     "type": "number",
+     "prompt": "Find the length of \\( y = \\frac23x^{3/2} \\) for \\( 0 \\le x \\le 3 \\).",
+     "why": "\\( f'(x) = x^{1/2} \\), so \\( 1 + [f']^{2} = 1 + x \\). \\( L = \\int_{0}^{3}\\sqrt{1 + x}\\,dx = \\frac23\\Big[(1 + x)^{3/2}\\Big]_{0}^{3} = \\frac23(8 - 1) = \\frac{14}{3} \\).",
+     "answer": "14/3"
+    },
+    {
+     "id": "s1q2",
+     "kp": "k1",
+     "type": "written",
+     "prompt": "Starting from the definition of arc length as a limit of lengths of inscribed polygons, derive \\( L = \\int_{a}^{b}\\sqrt{1 + [f'(x)]^{2}}\\,dx \\). State exactly where the Mean Value Theorem is used and where the hypothesis that \\( f' \\) is continuous is needed.",
+     "why": "The distance formula gives each chord's length; the Mean Value Theorem rewrites the chord's slope as a derivative value, which turns the polygon's length into a Riemann sum.",
+     "rubric": [
+      "Writes the polygon length \\( \\sum\\sqrt{(\\Delta x_{i})^{2} + (\\Delta y_{i})^{2}} \\).",
+      "Uses the Mean Value Theorem on each \\( [x_{i-1}, x_{i}] \\) to write \\( \\Delta y_{i} = f'(x_{i}^{*})\\Delta x_{i} \\) (needs \\( f \\) continuous on the closed subinterval and differentiable inside).",
+      "Rewrites each term as \\( \\sqrt{1 + [f'(x_{i}^{*})]^{2}}\\,\\Delta x_{i} \\) and identifies a Riemann sum.",
+      "Uses continuity of \\( f' \\) to guarantee that \\( \\sqrt{1 + [f']^{2}} \\) is continuous, hence integrable, so the Riemann sums converge to the integral."
+     ],
+     "model": "Partition \\( [a, b] \\) by \\( a = x_{0} < \\cdots < x_{n} = b \\) and let \\( P_{i} = (x_{i}, f(x_{i})) \\). The inscribed polygon has length \\( \\sum_{i=1}^{n}\\sqrt{(\\Delta x_{i})^{2} + (\\Delta y_{i})^{2}} \\), with \\( \\Delta y_{i} = f(x_{i}) - f(x_{i-1}) \\), and the arc length is the limit of these lengths as \\( \\max\\Delta x_{i} \\to 0 \\). Since \\( f \\) is differentiable, it is continuous on each \\( [x_{i-1}, x_{i}] \\) and differentiable on its interior, so the Mean Value Theorem gives \\( x_{i}^{*} \\in (x_{i-1}, x_{i}) \\) with \\( \\Delta y_{i} = f'(x_{i}^{*})\\Delta x_{i} \\). Then each term equals \\( \\sqrt{1 + [f'(x_{i}^{*})]^{2}}\\,\\Delta x_{i} \\), and the polygon's length is a Riemann sum for \\( g(x) = \\sqrt{1 + [f'(x)]^{2}} \\). Because \\( f' \\) is continuous on \\( [a, b] \\), \\( g \\) is continuous there, hence integrable, and every sequence of Riemann sums with mesh tending to \\( 0 \\) converges to \\( \\int_{a}^{b}g(x)\\,dx \\), whatever sample points (here the \\( x_{i}^{*} \\)) are used. Therefore \\( L = \\int_{a}^{b}\\sqrt{1 + [f'(x)]^{2}}\\,dx \\)."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "Evaluating arc-length integrals",
+   "kps": [
+    "k2",
+    "k5"
+   ],
+   "md": "The arc-length integrand \\( \\sqrt{1 + [f']^{2}} \\) rarely has an elementary antiderivative. This section describes the cases that can be evaluated exactly and what to do with those that cannot.\n\n**Perfect squares.** Some curves are designed so that \\( 1 + [f']^{2} \\) is a perfect square. The pattern: if \\( f'(x) = A - B \\) with \\( 4AB = 1 \\), then \\( 1 + (A - B)^{2} = A^{2} + 2AB + B^{2} = (A + B)^{2} \\), since \\( 1 = 4AB \\).\n\n**Worked example 1.** Find the length of \\( y = \\frac{x^{4}}{8} + \\frac{1}{4x^{2}} \\), \\( 1 \\le x \\le 2 \\). Here \\( f'(x) = \\frac{x^{3}}{2} - \\frac{1}{2x^{3}} \\), with \\( A = \\frac{x^{3}}{2} \\), \\( B = \\frac{1}{2x^{3}} \\), \\( 4AB = 1 \\). So \\( \\sqrt{1 + [f']^{2}} = \\frac{x^{3}}{2} + \\frac{1}{2x^{3}} \\) and\n\\[ L = \\int_{1}^{2}\\Big(\\frac{x^{3}}{2} + \\frac{1}{2x^{3}}\\Big)dx = \\Big[\\frac{x^{4}}{8} - \\frac{1}{4x^{2}}\\Big]_{1}^{2} = \\Big(2 - \\frac{1}{16}\\Big) - \\Big(\\frac18 - \\frac14\\Big) = \\frac{33}{16}. \\]\n\n**Identities that do the same job.** For the **catenary** \\( y = \\cosh x \\), the shape of a hanging cable, \\( 1 + \\sinh^{2}x = \\cosh^{2}x \\), so the length over \\( [0, a] \\) is \\( \\int_{0}^{a}\\cosh x\\,dx = \\sinh a \\). For \\( y = \\ln(\\cos x) \\) on \\( [0, \\frac{\\pi}{4}] \\), \\( f' = -\\tan x \\) and \\( 1 + \\tan^{2}x = \\sec^{2}x \\), so\n\\[ L = \\int_{0}^{\\pi/4}\\sec x\\,dx = \\Big[\\ln|\\sec x + \\tan x|\\Big]_{0}^{\\pi/4} = \\ln\\big(\\sqrt2 + 1\\big) \\approx 0.881. \\]\n\n**Trigonometric substitution.** For the parabola \\( y = x^{2} \\) on \\( [0, 1] \\), \\( L = \\int_{0}^{1}\\sqrt{1 + 4x^{2}}\\,dx \\). The substitution \\( 2x = \\tan\\theta \\) leads to \\( \\frac12\\int\\sec^{3}\\theta\\,d\\theta \\), from the chapter on trigonometric integrals, and the result is\n\\[ \\int_{0}^{1}\\sqrt{1 + 4x^{2}}\\,dx = \\Big[\\frac{x}{2}\\sqrt{1 + 4x^{2}} + \\frac14\\ln\\big(2x + \\sqrt{1 + 4x^{2}}\\big)\\Big]_{0}^{1} = \\frac{\\sqrt5}{2} + \\frac14\\ln\\big(2 + \\sqrt5\\big) \\approx 1.479. \\]\nDifferentiating the bracket confirms the antiderivative.\n\n**When no antiderivative exists.** The length of one arch of \\( y = \\sin x \\) is \\( \\int_{0}^{\\pi}\\sqrt{1 + \\cos^{2}x}\\,dx \\). This is an **elliptic integral**: it is known that its antiderivative cannot be written in terms of elementary functions. The same is true of the circumference of an ellipse, which is where the name comes from. Such lengths are computed numerically; here \\( L \\approx 3.820 \\). Even without a numerical method, bounds are available. Since \\( 1 \\le \\sqrt{1 + \\cos^{2}x} \\le \\sqrt2 \\), with equality only at isolated points, \\( \\pi < L < \\pi\\sqrt2 \\approx 4.443 \\). A sharper lower bound comes from the definition: \\( L \\) is at least the length of the inscribed polygon through \\( (0, 0) \\), \\( (\\frac{\\pi}{2}, 1) \\), \\( (\\pi, 0) \\), which is \\( 2\\sqrt{1 + \\frac{\\pi^{2}}{4}} \\approx 3.724 \\).\n\n**The common mistakes.** Simplifying \\( \\sqrt{1 + [f']^{2}} \\) as if it were \\( 1 + |f'| \\); failing to look for a perfect square before starting a long computation; and dropping absolute values: \\( \\sqrt{(A + B)^{2}} = |A + B| \\), which equals \\( A + B \\) only when \\( A + B \\ge 0 \\), as it is in the examples above.",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k2",
+     "type": "number",
+     "prompt": "Find the length of \\( y = \\frac{x^{3}}{6} + \\frac{1}{2x} \\) for \\( 1 \\le x \\le 2 \\).",
+     "why": "\\( f'(x) = \\frac{x^{2}}{2} - \\frac{1}{2x^{2}} \\), with \\( 4\\cdot\\frac{x^{2}}{2}\\cdot\\frac{1}{2x^{2}} = 1 \\), so \\( \\sqrt{1 + [f']^{2}} = \\frac{x^{2}}{2} + \\frac{1}{2x^{2}} \\). \\( L = \\Big[\\frac{x^{3}}{6} - \\frac{1}{2x}\\Big]_{1}^{2} = \\Big(\\frac43 - \\frac14\\Big) - \\Big(\\frac16 - \\frac12\\Big) = \\frac{17}{12} \\).",
+     "answer": "17/12"
+    },
+    {
+     "id": "s2q2",
+     "kp": "k2",
+     "type": "number",
+     "prompt": "Find the length of \\( y = \\ln(\\cos x) \\) for \\( 0 \\le x \\le \\frac{\\pi}{3} \\).",
+     "why": "\\( f' = -\\tan x \\), \\( 1 + \\tan^{2}x = \\sec^{2}x \\), and \\( \\sec x > 0 \\) on the interval. \\( L = \\int_{0}^{\\pi/3}\\sec x\\,dx = \\ln(\\sec\\tfrac{\\pi}{3} + \\tan\\tfrac{\\pi}{3}) - \\ln 1 = \\ln(2 + \\sqrt3) \\approx 1.317 \\).",
+     "answer": "log(2 + sqrt(3))"
+    },
+    {
+     "id": "s2q3",
+     "kp": "k5",
+     "type": "written",
+     "prompt": "The length of \\( y = \\sin x \\), \\( 0 \\le x \\le \\pi \\), is \\( L = \\int_{0}^{\\pi}\\sqrt{1 + \\cos^{2}x}\\,dx \\), which has no elementary antiderivative. Without evaluating it, prove that \\( \\pi < L < \\pi\\sqrt2 \\), and explain why each inequality is strict.",
+     "why": "Bounds on the integrand integrate to bounds on the integral; strictness follows because the integrand is continuous and differs from the bound on a whole interval.",
+     "rubric": [
+      "Uses \\( 0 \\le \\cos^{2}x \\le 1 \\) to get \\( 1 \\le \\sqrt{1 + \\cos^{2}x} \\le \\sqrt2 \\).",
+      "Integrates the bounds over \\( [0, \\pi] \\) to get \\( \\pi \\le L \\le \\pi\\sqrt2 \\).",
+      "Strictness: \\( \\sqrt{1 + \\cos^{2}x} > 1 \\) except at \\( x = \\frac{\\pi}{2} \\), and \\( < \\sqrt2 \\) except at \\( 0, \\pi \\); a continuous function strictly above (below) the bound on an interval gives a strictly larger (smaller) integral.",
+      "Interprets: the lower bound is the length of the straight segment from \\( (0, 0) \\) to \\( (\\pi, 0) \\)."
+     ],
+     "model": "Since \\( 0 \\le \\cos^{2}x \\le 1 \\), \\( 1 \\le \\sqrt{1 + \\cos^{2}x} \\le \\sqrt2 \\) on \\( [0, \\pi] \\), so integrating gives \\( \\pi \\le L \\le \\pi\\sqrt2 \\). The lower bound is attained only if \\( \\cos^{2}x = 0 \\) throughout, but \\( \\cos^{2}x > 0 \\) except at \\( x = \\frac{\\pi}{2} \\); for example on \\( [0, \\frac{\\pi}{4}] \\) the integrand is at least \\( \\sqrt{3/2} > 1 \\), so \\( \\int_{0}^{\\pi}(\\sqrt{1 + \\cos^{2}x} - 1)\\,dx \\ge (\\sqrt{3/2} - 1)\\frac{\\pi}{4} > 0 \\), and \\( L > \\pi \\). Similarly \\( \\sqrt2 - \\sqrt{1 + \\cos^{2}x} \\) is continuous, nonnegative, and positive on an interval around \\( \\frac{\\pi}{2} \\), so its integral is positive and \\( L < \\pi\\sqrt2 \\approx 4.443 \\). The lower bound \\( \\pi \\) is the length of the segment joining the endpoints \\( (0, 0) \\) and \\( (\\pi, 0) \\): a curve is never shorter than the chord joining its ends."
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "Arc length in y and the arc length function",
+   "kps": [
+    "k3",
+    "k4"
+   ],
+   "md": "This section adds two tools: measuring length with \\( y \\) as the variable, and the arc length function, which records length along a curve as it accumulates.\n\n**Arc length in \\( y \\).** If a curve is given as \\( x = g(y) \\), \\( c \\le y \\le d \\), with \\( g' \\) continuous, the same derivation with the roles of \\( x \\) and \\( y \\) exchanged gives\n\\[ L = \\int_{c}^{d}\\sqrt{1 + [g'(y)]^{2}}\\,dy. \\]\nUse it when the curve is naturally described as \\( x \\) in terms of \\( y \\), or when \\( \\frac{dy}{dx} \\) is unbounded.\n\n**Worked example 1.** Find the length of \\( y = x^{2/3} \\) from \\( (0, 0) \\) to \\( (8, 4) \\). In \\( x \\), \\( f'(x) = \\frac23x^{-1/3} \\) is unbounded at \\( x = 0 \\) (the curve has a vertical tangent there), so the \\( x \\)-integral is improper. In \\( y \\), the curve is \\( x = y^{3/2} \\), \\( 0 \\le y \\le 4 \\), with \\( g'(y) = \\frac32y^{1/2} \\) continuous:\n\\[ L = \\int_{0}^{4}\\sqrt{1 + \\frac94y}\\,dy = \\frac{8}{27}\\big(10\\sqrt{10} - 1\\big). \\]\nThis is the length found in the first section for \\( y = x^{3/2} \\), \\( 0 \\le x \\le 4 \\), as it should be: the two curves are reflections of each other in the line \\( y = x \\), and reflection preserves length.\n\n**The differential of arc length.** Both formulas are instances of one idea. For a small change along a smooth curve, the Pythagorean relation between the horizontal change, the vertical change and the length of the tangent segment is\n\\[ ds^{2} = dx^{2} + dy^{2}, \\qquad ds = \\sqrt{1 + \\Big(\\frac{dy}{dx}\\Big)^{2}}\\,dx = \\sqrt{1 + \\Big(\\frac{dx}{dy}\\Big)^{2}}\\,dy. \\]\nThe symbol \\( ds \\) is the **differential of arc length**, and \\( L = \\int ds \\) in whichever variable is convenient. The limits must match the variable: \\( x \\)-values with \\( dx \\), \\( y \\)-values with \\( dy \\).\n\n**The arc length function.** For a smooth curve \\( y = f(x) \\) and a fixed starting point \\( a \\), define\n\\[ s(x) = \\int_{a}^{x}\\sqrt{1 + [f'(t)]^{2}}\\,dt, \\]\nthe length of the curve from \\( (a, f(a)) \\) to \\( (x, f(x)) \\). By the Fundamental Theorem of Calculus,\n\\[ s'(x) = \\sqrt{1 + [f'(x)]^{2}} \\ge 1, \\]\nso \\( s \\) is increasing, and it grows at least as fast as \\( x \\): along the curve one always travels at least as far as the horizontal displacement, with equality only where the tangent is horizontal.\n\n**Worked example 2.** For \\( y = x^{3/2} \\) starting at \\( x = 0 \\),\n\\[ s(x) = \\int_{0}^{x}\\sqrt{1 + \\frac94t}\\,dt = \\frac{8}{27}\\Big[\\Big(1 + \\frac94x\\Big)^{3/2} - 1\\Big]. \\]\nFor instance \\( s(4) \\) recovers the length found earlier. Because \\( s \\) is increasing, it can be inverted: the point at a prescribed distance \\( \\ell \\) along the curve is found by solving \\( s(x) = \\ell \\). This is how a curve is parametrised by arc length, a construction used later for parametric curves.\n\n**The common mistakes.** Mixing variables, such as integrating \\( \\sqrt{1 + (dx/dy)^{2}} \\) against \\( x \\)-limits; forgetting the chain of reasoning that makes \\( s'(x) \\) equal to the integrand (the Fundamental Theorem, which requires the integrand to be continuous); and using the \\( x \\)-formula across a vertical tangent without recognising the resulting improper integral.",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k3",
+     "type": "number",
+     "prompt": "Find the length of the curve \\( x = \\frac{y^{2}}{4} - \\frac{\\ln y}{2} \\), \\( 1 \\le y \\le e \\).",
+     "why": "\\( \\frac{dx}{dy} = \\frac y2 - \\frac{1}{2y} \\), and \\( 4\\cdot\\frac y2\\cdot\\frac{1}{2y} = 1 \\), so \\( \\sqrt{1 + (dx/dy)^{2}} = \\frac y2 + \\frac{1}{2y} \\). \\( L = \\Big[\\frac{y^{2}}{4} + \\frac{\\ln y}{2}\\Big]_{1}^{e} = \\frac{e^{2}}{4} + \\frac12 - \\frac14 = \\frac{e^{2} + 1}{4} \\approx 2.097 \\).",
+     "answer": "(exp(2) + 1)/4"
+    },
+    {
+     "id": "s3q2",
+     "kp": "k4",
+     "type": "expression",
+     "prompt": "Find the arc length function \\( s(x) \\) of \\( y = \\frac23x^{3/2} \\) with starting point \\( x = 0 \\), valid for \\( x \\ge 0 \\).",
+     "why": "\\( s(x) = \\int_{0}^{x}\\sqrt{1 + [f'(t)]^{2}}\\,dt = \\int_{0}^{x}\\sqrt{1 + t}\\,dt = \\frac23\\big[(1 + x)^{3/2} - 1\\big] \\). Check: \\( s'(x) = \\sqrt{1 + x} \\), and \\( s(3) = \\frac{14}{3} \\), the length found earlier.",
+     "answer": "2/3*((1 + x)^(3/2) - 1)",
+     "vars": "x"
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "Surface area of a surface of revolution",
+   "kps": [
+    "k6",
+    "k7"
+   ],
+   "md": "A **surface of revolution** is swept out when a curve is rotated about an axis. This section defines its area by the same strategy as arc length: rotate the inscribed polygon instead of the curve, compute the area of what it sweeps out, and take the limit.\n\n**The frustum.** A line segment rotated about an axis in its plane, not crossing the axis, sweeps out the lateral surface of a **frustum** of a cone (a cone with its top cut off by a plane parallel to the base). Its area can be derived from the cone. A cone of base radius \\( r \\) and **slant height** \\( \\ell \\), cut along a slant line and unrolled, is a sector of a disk of radius \\( \\ell \\) whose arc has length \\( 2\\pi r \\); so its lateral area is \\( \\frac12\\ell\\cdot2\\pi r = \\pi r\\ell \\). A frustum with radii \\( r_{1} < r_{2} \\) and slant height \\( \\ell \\) is a cone of slant height \\( \\ell_{2} \\) minus a similar cone of slant height \\( \\ell_{1} \\), with \\( \\ell = \\ell_{2} - \\ell_{1} \\) and \\( \\frac{r_{1}}{\\ell_{1}} = \\frac{r_{2}}{\\ell_{2}} \\), i.e. \\( r_{1}\\ell_{2} = r_{2}\\ell_{1} \\). Its area is\n\\[ \\pi r_{2}\\ell_{2} - \\pi r_{1}\\ell_{1} = \\pi(r_{1} + r_{2})(\\ell_{2} - \\ell_{1}) = 2\\pi\\,\\bar r\\,\\ell, \\qquad \\bar r = \\frac{r_{1} + r_{2}}{2}, \\]\nwhere the middle equality holds because the cross terms \\( r_{1}\\ell_{2} - r_{2}\\ell_{1} \\) cancel. So a frustum's lateral area is the circumference at its average radius times its slant height.\n\n**The integral.** Let \\( f \\ge 0 \\) with \\( f' \\) continuous on \\( [a, b] \\), and rotate the curve \\( y = f(x) \\) about the \\( x \\)-axis. The \\( i \\)-th segment of an inscribed polygon sweeps a frustum with radii \\( f(x_{i-1}) \\) and \\( f(x_{i}) \\) and slant height \\( \\sqrt{1 + [f'(x_{i}^{*})]^{2}}\\,\\Delta x_{i} \\) (by the Mean Value Theorem, as before). Its area is\n\\[ 2\\pi\\cdot\\frac{f(x_{i-1}) + f(x_{i})}{2}\\cdot\\sqrt{1 + [f'(x_{i}^{*})]^{2}}\\,\\Delta x_{i}. \\]\nAs the partition is refined, the average radius differs from \\( f(x_{i}^{*}) \\) by an amount that tends to \\( 0 \\) uniformly, because \\( f \\) is continuous, and the sum tends to an integral.\n\n> **Surface area (rotation about the \\( x \\)-axis).** If \\( f \\ge 0 \\) and \\( f' \\) is continuous on \\( [a, b] \\), the area of the surface obtained by rotating \\( y = f(x) \\), \\( a \\le x \\le b \\), about the \\( x \\)-axis is \\[ S = \\int_{a}^{b}2\\pi f(x)\\sqrt{1 + [f'(x)]^{2}}\\,dx = \\int 2\\pi y\\,ds. \\]\n\nRead the integrand as (circumference of the circle traced by a point of the curve) times (length of a small piece of the curve).\n\n**Worked example 1: the sphere.** For \\( f(x) = \\sqrt{r^{2} - x^{2}} \\), \\( f'(x) = \\frac{-x}{\\sqrt{r^{2}-x^{2}}} \\) and \\( 1 + [f']^{2} = \\frac{r^{2}}{r^{2} - x^{2}} \\), so \\( f(x)\\sqrt{1 + [f']^{2}} = r \\). The endpoints \\( x = \\pm r \\) make \\( f' \\) unbounded, but the product is the constant \\( r \\), and the limiting integral is ordinary:\n\\[ S = \\int_{-r}^{r}2\\pi r\\,dx = 4\\pi r^{2}. \\]\nThe same computation over \\( [c, c + h] \\subseteq [-r, r] \\) gives \\( 2\\pi rh \\): a zone of a sphere between parallel planes a distance \\( h \\) apart has area depending only on \\( h \\), a result known to Archimedes.\n\n**Worked example 2.** Rotate \\( y = \\sqrt{x} \\), \\( 0 \\le x \\le 2 \\), about the \\( x \\)-axis. Here \\( 1 + [f']^{2} = 1 + \\frac{1}{4x} \\), and \\( \\sqrt{x}\\sqrt{1 + \\frac{1}{4x}} = \\sqrt{x + \\frac14} \\). So\n\\[ S = 2\\pi\\int_{0}^{2}\\Big(x + \\frac14\\Big)^{1/2}dx = \\frac{4\\pi}{3}\\Big[\\Big(\\frac94\\Big)^{3/2} - \\Big(\\frac14\\Big)^{3/2}\\Big] = \\frac{4\\pi}{3}\\cdot\\frac{26}{8} = \\frac{13\\pi}{3}. \\]\n\n**The common mistakes.** Omitting the factor \\( 2\\pi \\) or the radius \\( f(x) \\); using \\( dx \\) in place of \\( ds \\) (the next section shows why that is wrong); and failing to simplify the product \\( f\\sqrt{1 + [f']^{2}} \\) before integrating, which is often where the difficulty disappears.",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k7",
+     "type": "number",
+     "prompt": "Find the area of the surface obtained by rotating \\( y = x^{3} \\), \\( 0 \\le x \\le 1 \\), about the \\( x \\)-axis.",
+     "why": "\\( S = \\int_{0}^{1}2\\pi x^{3}\\sqrt{1 + 9x^{4}}\\,dx \\). With \\( u = 1 + 9x^{4} \\), \\( du = 36x^{3}dx \\): \\( S = \\frac{2\\pi}{36}\\int_{1}^{10}u^{1/2}du = \\frac{\\pi}{18}\\cdot\\frac23\\big(10^{3/2} - 1\\big) = \\frac{\\pi}{27}\\big(10\\sqrt{10} - 1\\big) \\approx 3.563 \\).",
+     "answer": "pi/27*(10*sqrt(10) - 1)"
+    },
+    {
+     "id": "s4q2",
+     "kp": "k6",
+     "type": "written",
+     "prompt": "Derive the lateral area \\( 2\\pi\\bar r\\ell \\) of a frustum of a cone with radii \\( r_{1} < r_{2} \\) and slant height \\( \\ell \\), starting from the lateral area \\( \\pi r\\ell \\) of a cone. Then explain how this formula leads to \\( S = \\int_{a}^{b}2\\pi f(x)\\sqrt{1 + [f'(x)]^{2}}\\,dx \\).",
+     "why": "The frustum is a difference of two similar cones; similarity makes the cross terms cancel. Rotating each chord of an inscribed polygon gives a frustum, and the sum of their areas is (in the limit) a Riemann sum.",
+     "rubric": [
+      "Writes the frustum as a cone of slant height \\( \\ell_{2} \\) minus a similar cone of slant height \\( \\ell_{1} \\), with \\( \\ell = \\ell_{2} - \\ell_{1} \\) and \\( r_{1}\\ell_{2} = r_{2}\\ell_{1} \\).",
+      "Computes \\( \\pi r_{2}\\ell_{2} - \\pi r_{1}\\ell_{1} = \\pi(r_{1} + r_{2})\\ell = 2\\pi\\bar r\\ell \\), showing the cancellation.",
+      "Applies it to the chord over \\( [x_{i-1}, x_{i}] \\): radii \\( f(x_{i-1}), f(x_{i}) \\), slant height \\( \\sqrt{1 + [f'(x_{i}^{*})]^{2}}\\Delta x_{i} \\) by the Mean Value Theorem.",
+      "Takes the limit: the average radius tends to \\( f \\) at the sample point (continuity of \\( f \\)), and the sum becomes \\( \\int_{a}^{b}2\\pi f\\sqrt{1 + [f']^{2}}\\,dx \\)."
+     ],
+     "model": "Extend the frustum to a full cone. The small cone removed has base radius \\( r_{1} \\) and slant height \\( \\ell_{1} \\); the full cone has \\( r_{2} \\) and \\( \\ell_{2} = \\ell_{1} + \\ell \\). The cones are similar, so \\( \\frac{r_{1}}{\\ell_{1}} = \\frac{r_{2}}{\\ell_{2}} \\), i.e. \\( r_{1}\\ell_{2} = r_{2}\\ell_{1} \\). The frustum's lateral area is \\( \\pi r_{2}\\ell_{2} - \\pi r_{1}\\ell_{1} \\). Now \\( \\pi(r_{1} + r_{2})(\\ell_{2} - \\ell_{1}) = \\pi(r_{2}\\ell_{2} - r_{1}\\ell_{1}) + \\pi(r_{1}\\ell_{2} - r_{2}\\ell_{1}) = \\pi(r_{2}\\ell_{2} - r_{1}\\ell_{1}) \\), since the last bracket is zero. So the area is \\( \\pi(r_{1} + r_{2})\\ell = 2\\pi\\bar r\\ell \\). For the surface, take an inscribed polygon of \\( y = f(x) \\) with \\( f \\ge 0 \\), \\( f' \\) continuous. Rotating the chord over \\( [x_{i-1}, x_{i}] \\) about the \\( x \\)-axis gives a frustum with radii \\( f(x_{i-1}), f(x_{i}) \\) and slant height equal to the chord's length, \\( \\sqrt{1 + [f'(x_{i}^{*})]^{2}}\\,\\Delta x_{i} \\) by the Mean Value Theorem. Its area is \\( 2\\pi\\frac{f(x_{i-1}) + f(x_{i})}{2}\\sqrt{1 + [f'(x_{i}^{*})]^{2}}\\,\\Delta x_{i} \\). As the mesh tends to \\( 0 \\), the average radius differs from \\( f(x_{i}^{*}) \\) by at most the oscillation of \\( f \\) on the subinterval, which tends to \\( 0 \\) uniformly by continuity; so the sum has the same limit as the Riemann sum \\( \\sum 2\\pi f(x_{i}^{*})\\sqrt{1 + [f'(x_{i}^{*})]^{2}}\\,\\Delta x_{i} \\), namely \\( \\int_{a}^{b}2\\pi f(x)\\sqrt{1 + [f'(x)]^{2}}\\,dx \\)."
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "Other axes, and why ds is essential",
+   "kps": [
+    "k8",
+    "k9"
+   ],
+   "md": "This section extends the surface-area formula to other axes, explains why the arc-length element is essential for surfaces although not for volumes, and examines a solid whose volume is finite but whose surface area is not.\n\n**The general form.** A point of the curve at distance \\( \\rho \\) from the axis travels a circle of circumference \\( 2\\pi\\rho \\), so in every case\n\\[ S = \\int 2\\pi\\,(\\text{radius})\\,ds, \\]\nwith \\( ds \\) written in the variable of integration. Rotating \\( y = f(x) \\), \\( 0 \\le a \\le x \\le b \\), about the \\( y \\)-axis gives radius \\( x \\):\n\\[ S = \\int_{a}^{b}2\\pi x\\sqrt{1 + [f'(x)]^{2}}\\,dx. \\]\nFor a curve \\( x = g(y) \\ge 0 \\) rotated about the \\( y \\)-axis, \\( S = \\int_{c}^{d}2\\pi g(y)\\sqrt{1 + [g'(y)]^{2}}\\,dy \\). About a line such as \\( y = k \\), the radius is \\( |f(x) - k| \\).\n\n**Worked example 1: a paraboloid.** Rotate \\( y = x^{2} \\), \\( 0 \\le x \\le 1 \\), about the \\( y \\)-axis:\n\\[ S = \\int_{0}^{1}2\\pi x\\sqrt{1 + 4x^{2}}\\,dx = 2\\pi\\cdot\\frac18\\cdot\\frac23\\Big[(1 + 4x^{2})^{3/2}\\Big]_{0}^{1} = \\frac{\\pi}{6}\\big(5\\sqrt5 - 1\\big) \\approx 5.33. \\]\nThe factor \\( x \\) supplied by the radius makes the substitution \\( u = 1 + 4x^{2} \\) work.\n\n**A check with the cone.** Rotate \\( x = \\frac{r}{h}y \\), \\( 0 \\le y \\le h \\), about the \\( y \\)-axis; this is a cone of base radius \\( r \\) and height \\( h \\). Then \\( \\sqrt{1 + (r/h)^{2}} = \\frac{\\ell}{h} \\) with \\( \\ell = \\sqrt{r^{2} + h^{2}} \\), and\n\\[ S = \\int_{0}^{h}2\\pi\\frac{r}{h}y\\cdot\\frac{\\ell}{h}\\,dy = \\pi r\\ell, \\]\nthe lateral area of the cone.\n\n**Why \\( ds \\) and not \\( dx \\).** For volumes, approximating each slab by a cylinder (ignoring the slope of the boundary) is harmless: the error in each slab is of order \\( (\\Delta x)^{2} \\), and the total error tends to \\( 0 \\). For surfaces it is not. A band approximated by a cylinder of width \\( \\Delta x \\) has area \\( 2\\pi f\\Delta x \\), while the true band is slanted with width about \\( \\sqrt{1 + [f']^{2}}\\,\\Delta x \\); the ratio does not tend to \\( 1 \\) as \\( \\Delta x \\to 0 \\) unless \\( f' = 0 \\). For the cone, \\( \\int_{0}^{h}2\\pi\\frac{r}{h}y\\,dy = \\pi rh \\), which is wrong by the factor \\( \\frac{h}{\\ell} \\).\n\n**Finite volume, infinite area.** Rotate \\( y = \\frac1x \\), \\( x \\ge 1 \\), about the \\( x \\)-axis. The resulting solid, called **Gabriel's horn**, has volume\n\\[ V = \\pi\\int_{1}^{\\infty}\\frac{dx}{x^{2}} = \\pi, \\]\nbut its surface area is\n\\[ S = 2\\pi\\int_{1}^{\\infty}\\frac1x\\sqrt{1 + \\frac{1}{x^{4}}}\\,dx \\ge 2\\pi\\int_{1}^{\\infty}\\frac{dx}{x} = \\infty, \\]\nby the comparison theorem for improper integrals. The volume integrand decays like \\( x^{-2} \\) and the area integrand like \\( x^{-1} \\), and the \\( p \\)-integral test separates them. Nothing is contradictory here: volume and area are different measures, and the cross-sections shrink fast enough for the first to converge but not the second.\n\n**The common mistakes.** Using \\( f(x) \\) as the radius for rotation about the \\( y \\)-axis (the radius is the distance to the axis, \\( x \\)); replacing \\( ds \\) by \\( dx \\); and concluding from a finite volume that the surface area must be finite.",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k8",
+     "type": "number",
+     "prompt": "Find the area of the surface obtained by rotating \\( y = \\frac{x^{2}}{2} \\), \\( 0 \\le x \\le 2\\sqrt2 \\), about the \\( y \\)-axis.",
+     "why": "Radius \\( x \\), \\( f' = x \\): \\( S = \\int_{0}^{2\\sqrt2}2\\pi x\\sqrt{1 + x^{2}}\\,dx = 2\\pi\\cdot\\frac13\\Big[(1 + x^{2})^{3/2}\\Big]_{0}^{2\\sqrt2} = \\frac{2\\pi}{3}(27 - 1) = \\frac{52\\pi}{3} \\approx 54.45 \\).",
+     "answer": "52*pi/3"
+    },
+    {
+     "id": "s5q2",
+     "kp": "k9",
+     "type": "written",
+     "prompt": "Let \\( R \\) be the region under \\( y = \\frac1x \\) for \\( x \\ge 1 \\), rotated about the \\( x \\)-axis. Show that the solid has finite volume and that its surface has infinite area. Identify which result about improper integrals decides each case.",
+     "why": "The volume integrand is \\( \\pi/x^{2} \\) (a convergent \\( p \\)-integral); the area integrand is at least \\( 2\\pi/x \\) (a divergent \\( p \\)-integral), and comparison transfers the divergence.",
+     "rubric": [
+      "Volume by disks: \\( \\pi\\int_{1}^{\\infty}x^{-2}dx = \\pi\\lim_{t\\to\\infty}(1 - \\frac1t) = \\pi \\).",
+      "Area: \\( S = 2\\pi\\int_{1}^{\\infty}\\frac1x\\sqrt{1 + x^{-4}}\\,dx \\).",
+      "Bounds \\( \\frac1x\\sqrt{1 + x^{-4}} \\ge \\frac1x > 0 \\) and uses divergence of \\( \\int_{1}^{\\infty}\\frac{dx}{x} \\) (\\( p = 1 \\)) with the comparison theorem.",
+      "Names the results: the \\( p \\)-integral criterion (\\( p = 2 > 1 \\) converges; \\( p = 1 \\) diverges) and the comparison theorem."
+     ],
+     "model": "Volume: the cross-section at \\( x \\) is a disk of radius \\( \\frac1x \\), so \\( V = \\pi\\int_{1}^{\\infty}\\frac{dx}{x^{2}} = \\pi\\lim_{t\\to\\infty}\\Big(1 - \\frac1t\\Big) = \\pi \\), finite; this is the \\( p \\)-integral with \\( p = 2 > 1 \\). Surface area: with \\( f(x) = \\frac1x \\), \\( f'(x) = -\\frac{1}{x^{2}} \\), so \\( S = \\int_{1}^{\\infty}2\\pi\\frac1x\\sqrt{1 + \\frac{1}{x^{4}}}\\,dx \\). For \\( x \\ge 1 \\), \\( \\sqrt{1 + x^{-4}} \\ge 1 \\), so the integrand is at least \\( \\frac{2\\pi}{x} > 0 \\). Since \\( \\int_{1}^{\\infty}\\frac{dx}{x} \\) diverges (\\( p = 1 \\)), the comparison theorem (a nonnegative integrand above one with a divergent integral) shows that \\( S \\) diverges: the surface area is infinite. The \\( p \\)-integral criterion decides the volume, and the comparison theorem with the \\( p = 1 \\) integral decides the area."
+    },
+    {
+     "id": "s5q3",
+     "kp": "k9",
+     "type": "mcq",
+     "prompt": "Which integral gives the area of the surface obtained by rotating \\( y = \\sqrt{x} \\), \\( 0 \\le x \\le 4 \\), about the \\( x \\)-axis?",
+     "why": "Surface area is \\( \\int 2\\pi(\\text{radius})\\,ds \\); the radius for the \\( x \\)-axis is \\( y = \\sqrt x \\), and \\( ds = \\sqrt{1 + \\frac{1}{4x}}\\,dx \\). That is option B (value \\( \\frac{\\pi}{6}(17\\sqrt{17} - 1) \\)). Option A uses \\( dx \\) in place of \\( ds \\), treating each band as a cylinder. Option C is the volume of the solid (disks). Option D uses the radius for rotation about the \\( y \\)-axis.",
+     "options": [
+      "\\( \\int_{0}^{4}2\\pi\\sqrt{x}\\,dx \\)",
+      "\\( \\int_{0}^{4}2\\pi\\sqrt{x}\\sqrt{1 + \\frac{1}{4x}}\\,dx \\)",
+      "\\( \\int_{0}^{4}\\pi x\\,dx \\)",
+      "\\( \\int_{0}^{4}2\\pi x\\sqrt{1 + \\frac{1}{4x}}\\,dx \\)"
+     ],
+     "answer": 1
+    }
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "t": "arc length",
+   "d": "The limit of the lengths of inscribed polygons as the partition is refined; for smooth \\( f \\) it equals \\( \\int_{a}^{b}\\sqrt{1 + [f'(x)]^{2}}\\,dx \\).",
+   "ex": "\\( y = x^{3/2} \\), \\( 0 \\le x \\le 4 \\): \\( \\frac{8}{27}(10\\sqrt{10} - 1) \\)."
+  },
+  {
+   "t": "smooth function",
+   "d": "A function whose derivative exists and is continuous on the interval (continuously differentiable); the hypothesis of the arc length and surface area formulas.",
+   "ex": "\\( x^{2/3} \\) is not smooth on \\( [0, 8] \\): its derivative is unbounded at 0."
+  },
+  {
+   "t": "inscribed polygon",
+   "d": "The broken line joining successive points of a curve at the points of a partition; refining the partition never decreases its length.",
+   "ex": "Through \\( (0, 0) \\), \\( (\\frac{\\pi}{2}, 1) \\), \\( (\\pi, 0) \\) on \\( y = \\sin x \\)."
+  },
+  {
+   "t": "arc length function",
+   "d": "\\( s(x) = \\int_{a}^{x}\\sqrt{1 + [f'(t)]^{2}}\\,dt \\), the length of the curve from \\( x = a \\) to \\( x \\); \\( s'(x) = \\sqrt{1 + [f'(x)]^{2}} \\).",
+   "ex": "For \\( y = \\frac23x^{3/2} \\): \\( s(x) = \\frac23[(1+x)^{3/2} - 1] \\)."
+  },
+  {
+   "t": "differential of arc length",
+   "d": "\\( ds = \\sqrt{dx^{2} + dy^{2}} \\), written as \\( \\sqrt{1 + (dy/dx)^{2}}\\,dx \\) or \\( \\sqrt{1 + (dx/dy)^{2}}\\,dy \\).",
+   "ex": "\\( L = \\int ds \\), \\( S = \\int 2\\pi\\rho\\,ds \\)."
+  },
+  {
+   "t": "surface of revolution",
+   "d": "The surface swept out by a curve rotated about an axis in its plane.",
+   "ex": "A sphere is the surface of revolution of a semicircle about its diameter."
+  },
+  {
+   "t": "frustum",
+   "d": "The part of a cone between its base and a plane parallel to the base; its lateral area is \\( 2\\pi\\bar r\\ell = \\pi(r_{1} + r_{2})\\ell \\).",
+   "ex": "Swept out by a line segment rotated about an axis it does not cross."
+  },
+  {
+   "t": "slant height",
+   "d": "The distance along the lateral surface of a cone or frustum from the base circle to the top, measured along a generating line.",
+   "ex": "A cone of radius \\( r \\), height \\( h \\): \\( \\ell = \\sqrt{r^{2} + h^{2}} \\)."
+  },
+  {
+   "t": "elliptic integral",
+   "d": "An integral of a type that includes the arc length of an ellipse; in general its antiderivative is not an elementary function, so values are computed numerically.",
+   "ex": "\\( \\int_{0}^{\\pi}\\sqrt{1 + \\cos^{2}x}\\,dx \\approx 3.820 \\)."
+  },
+  {
+   "t": "Gabriel's horn",
+   "d": "The solid obtained by rotating \\( y = 1/x \\), \\( x \\ge 1 \\), about the \\( x \\)-axis; its volume is \\( \\pi \\) but its surface area is infinite.",
+   "ex": "Volume: a p-integral with p = 2; area: comparison with p = 1."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "formula",
+   "front": "Arc length of \\( y = f(x) \\), \\( a \\le x \\le b \\)",
+   "back": "\\( L = \\int_{a}^{b}\\sqrt{1 + [f'(x)]^{2}}\\,dx \\) (\\( f' \\) continuous)",
+   "kp": "k1"
+  },
+  {
+   "id": "c2",
+   "type": "formula",
+   "front": "Arc length of \\( x = g(y) \\), \\( c \\le y \\le d \\)",
+   "back": "\\( L = \\int_{c}^{d}\\sqrt{1 + [g'(y)]^{2}}\\,dy \\)",
+   "kp": "k3"
+  },
+  {
+   "id": "c3",
+   "type": "formula",
+   "front": "Differential of arc length",
+   "back": "\\( ds = \\sqrt{dx^{2} + dy^{2}} = \\sqrt{1 + (dy/dx)^{2}}\\,dx \\)",
+   "kp": "k4"
+  },
+  {
+   "id": "c4",
+   "type": "formula",
+   "front": "Arc length function and its derivative",
+   "back": "\\( s(x) = \\int_{a}^{x}\\sqrt{1 + [f'(t)]^{2}}\\,dt \\), \\( s'(x) = \\sqrt{1 + [f'(x)]^{2}} \\)",
+   "kp": "k4"
+  },
+  {
+   "id": "c5",
+   "type": "concept",
+   "front": "Where is the Mean Value Theorem used in deriving the arc length formula?",
+   "back": "To replace each chord's slope \\( \\Delta y_{i}/\\Delta x_{i} \\) by \\( f'(x_{i}^{*}) \\), turning the polygon's length into a Riemann sum.",
+   "kp": "k1"
+  },
+  {
+   "id": "c6",
+   "type": "concept",
+   "front": "Why does refining a partition never decrease the length of an inscribed polygon?",
+   "back": "One chord is replaced by two chords with the same endpoints, and by the triangle inequality their total length is at least as large.",
+   "kp": "k1"
+  },
+  {
+   "id": "c7",
+   "type": "concept",
+   "front": "When is \\( 1 + [f']^{2} \\) a perfect square?",
+   "back": "When \\( f' = A - B \\) with \\( 4AB = 1 \\); then \\( 1 + (A - B)^{2} = (A + B)^{2} \\).",
+   "kp": "k2"
+  },
+  {
+   "id": "c8",
+   "type": "problem",
+   "front": "Length of the catenary \\( y = \\cosh x \\), \\( 0 \\le x \\le a \\)",
+   "back": "\\( \\int_{0}^{a}\\cosh x\\,dx = \\sinh a \\), since \\( 1 + \\sinh^{2}x = \\cosh^{2}x \\)",
+   "kp": "k2",
+   "answer": "sinh(a)",
+   "vars": "a",
+   "check": "expression"
+  },
+  {
+   "id": "c9",
+   "type": "problem",
+   "front": "Length of \\( y = \\frac23x^{3/2} \\), \\( 0 \\le x \\le 3 \\)",
+   "back": "\\( \\int_{0}^{3}\\sqrt{1 + x}\\,dx = \\frac{14}{3} \\)",
+   "kp": "k2",
+   "answer": "14/3",
+   "check": "number"
+  },
+  {
+   "id": "c10",
+   "type": "problem",
+   "front": "Length of \\( y = \\ln(\\cos x) \\), \\( 0 \\le x \\le \\frac{\\pi}{4} \\)",
+   "back": "\\( \\int_{0}^{\\pi/4}\\sec x\\,dx = \\ln(\\sqrt2 + 1) \\)",
+   "kp": "k2",
+   "answer": "log(sqrt(2) + 1)",
+   "check": "number"
+  },
+  {
+   "id": "c11",
+   "type": "concept",
+   "front": "Why can \\( \\int_{0}^{\\pi}\\sqrt{1 + \\cos^{2}x}\\,dx \\) not be evaluated by the Fundamental Theorem in closed form?",
+   "back": "It is an elliptic integral: its antiderivative is not an elementary function. It is computed numerically or bounded.",
+   "kp": "k5"
+  },
+  {
+   "id": "c12",
+   "type": "formula",
+   "front": "Lateral area of a cone (radius r, slant height ℓ)",
+   "back": "\\( \\pi r\\ell \\)",
+   "kp": "k6"
+  },
+  {
+   "id": "c13",
+   "type": "formula",
+   "front": "Lateral area of a frustum (radii \\( r_{1}, r_{2} \\), slant height \\( \\ell \\))",
+   "back": "\\( \\pi(r_{1} + r_{2})\\ell = 2\\pi\\bar r\\ell \\)",
+   "kp": "k6"
+  },
+  {
+   "id": "c14",
+   "type": "formula",
+   "front": "Surface area, rotation about the x-axis",
+   "back": "\\( S = \\int_{a}^{b}2\\pi f(x)\\sqrt{1 + [f'(x)]^{2}}\\,dx \\)",
+   "kp": "k7"
+  },
+  {
+   "id": "c15",
+   "type": "formula",
+   "front": "Surface area, rotating \\( y = f(x) \\), \\( x \\ge 0 \\), about the y-axis",
+   "back": "\\( S = \\int_{a}^{b}2\\pi x\\sqrt{1 + [f'(x)]^{2}}\\,dx \\)",
+   "kp": "k8"
+  },
+  {
+   "id": "c16",
+   "type": "problem",
+   "front": "Surface area of a sphere of radius \\( r \\) by integration",
+   "back": "\\( f\\sqrt{1 + [f']^{2}} = r \\) for \\( f = \\sqrt{r^{2} - x^{2}} \\), so \\( S = \\int_{-r}^{r}2\\pi r\\,dx = 4\\pi r^{2} \\)",
+   "kp": "k7",
+   "answer": "4*pi*r^2",
+   "vars": "r",
+   "check": "expression"
+  },
+  {
+   "id": "c17",
+   "type": "concept",
+   "front": "Why must surface area use \\( ds \\), while volume can use \\( dx \\)?",
+   "back": "A slanted band's area is about \\( 2\\pi f\\sqrt{1 + f'^{2}}\\,\\Delta x \\); replacing it by \\( 2\\pi f\\Delta x \\) is wrong by a factor that does not tend to 1. For volume the error per slab is of order \\( (\\Delta x)^{2} \\) and vanishes in the limit.",
+   "kp": "k9"
+  },
+  {
+   "id": "c18",
+   "type": "concept",
+   "front": "Gabriel's horn: volume and surface area?",
+   "back": "Rotating \\( y = 1/x \\), \\( x \\ge 1 \\): volume \\( \\pi \\) (\\( p = 2 \\)); surface area infinite (at least \\( 2\\pi\\int_{1}^{\\infty}dx/x \\)).",
+   "kp": "k9"
+  },
+  {
+   "id": "c19",
+   "type": "concept",
+   "front": "When is it better to compute arc length in y?",
+   "back": "When the curve is given as x = g(y), or when dy/dx is unbounded (a vertical tangent) so that the x-integral is improper.",
+   "kp": "k3"
+  },
+  {
+   "id": "c20",
+   "type": "concept",
+   "front": "Area of a zone of a sphere of radius r between parallel planes a distance h apart",
+   "back": "\\( 2\\pi rh \\), independent of where the zone lies (Archimedes).",
+   "kp": "k7"
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k2",
+   "type": "number",
+   "prompt": "Find the length of the catenary \\( y = \\cosh x \\) for \\( -1 \\le x \\le 1 \\).",
+   "why": "\\( 1 + \\sinh^{2}x = \\cosh^{2}x \\) and \\( \\cosh x > 0 \\), so \\( L = \\int_{-1}^{1}\\cosh x\\,dx = 2\\sinh 1 = e - e^{-1} \\approx 2.350 \\).",
+   "answer": "2*sinh(1)"
+  },
+  {
+   "id": "p2",
+   "kp": "k2",
+   "type": "number",
+   "prompt": "Find the exact length of the parabola \\( y = x^{2} \\) for \\( 0 \\le x \\le 1 \\).",
+   "why": "\\( L = \\int_{0}^{1}\\sqrt{1 + 4x^{2}}\\,dx \\). With \\( 2x = \\tan\\theta \\) this becomes \\( \\frac12\\int\\sec^{3}\\theta\\,d\\theta \\); returning to \\( x \\), an antiderivative is \\( \\frac x2\\sqrt{1 + 4x^{2}} + \\frac14\\ln(2x + \\sqrt{1 + 4x^{2}}) \\). So \\( L = \\frac{\\sqrt5}{2} + \\frac14\\ln(2 + \\sqrt5) \\approx 1.479 \\).",
+   "answer": "sqrt(5)/2 + log(2 + sqrt(5))/4"
+  },
+  {
+   "id": "p3",
+   "kp": "k2",
+   "type": "number",
+   "prompt": "Find the length of \\( y = \\frac{x^{2}}{2} - \\frac{\\ln x}{4} \\) for \\( 1 \\le x \\le 2 \\).",
+   "why": "\\( f' = x - \\frac{1}{4x} \\), and \\( 4\\cdot x\\cdot\\frac{1}{4x} = 1 \\), so \\( \\sqrt{1 + [f']^{2}} = x + \\frac{1}{4x} \\). \\( L = \\Big[\\frac{x^{2}}{2} + \\frac{\\ln x}{4}\\Big]_{1}^{2} = 2 + \\frac{\\ln 2}{4} - \\frac12 = \\frac32 + \\frac{\\ln 2}{4} \\approx 1.673 \\).",
+   "answer": "3/2 + log(2)/4"
+  },
+  {
+   "id": "p4",
+   "kp": "k1",
+   "type": "written",
+   "prompt": "Compute the circumference of a circle of radius \\( r \\) with the arc length formula applied to \\( y = \\sqrt{r^{2} - x^{2}} \\), \\( -r \\le x \\le r \\). Explain why the hypothesis of the arc length theorem fails at the endpoints and how the computation is nevertheless justified.",
+   "why": "The derivative is unbounded at \\( x = \\pm r \\) (vertical tangents), so the integral is improper; it converges, and applying the formula on \\( [-t, t] \\) and letting \\( t \\to r \\) justifies the value.",
+   "rubric": [
+    "Computes \\( 1 + [f']^{2} = \\frac{r^{2}}{r^{2} - x^{2}} \\), so the integrand is \\( \\frac{r}{\\sqrt{r^{2} - x^{2}}} \\).",
+    "Notes \\( f'(x) = \\frac{-x}{\\sqrt{r^{2} - x^{2}}} \\) is unbounded as \\( x \\to \\pm r \\), so \\( f' \\) is not continuous on \\( [-r, r] \\) and the integral is improper.",
+    "Justifies: on \\( [-t, t] \\) with \\( t < r \\) the theorem applies, and the lengths of these arcs tend to the length of the semicircle as \\( t \\to r \\).",
+    "Evaluates \\( \\lim_{t\\to r^{-}}r[\\arcsin\\frac xr]_{-t}^{t} = r\\pi \\), so the circumference is \\( 2\\pi r \\)."
+   ],
+   "model": "For \\( f(x) = \\sqrt{r^{2} - x^{2}} \\), \\( f'(x) = \\frac{-x}{\\sqrt{r^{2}-x^{2}}} \\) and \\( 1 + [f'(x)]^{2} = \\frac{r^{2}}{r^{2} - x^{2}} \\), so the integrand is \\( \\frac{r}{\\sqrt{r^{2} - x^{2}}} \\). The theorem requires \\( f' \\) continuous on the closed interval, but \\( f' \\) is unbounded as \\( x \\to \\pm r \\), where the semicircle has vertical tangents; the integral is improper at both ends. For \\( 0 < t < r \\), \\( f' \\) is continuous on \\( [-t, t] \\), so the length of that arc is \\( \\int_{-t}^{t}\\frac{r\\,dx}{\\sqrt{r^{2}-x^{2}}} = 2r\\arcsin\\frac tr \\). As \\( t \\to r^{-} \\) these arcs exhaust the semicircle and their lengths tend to \\( 2r\\arcsin 1 = \\pi r \\), which is the value of the convergent improper integral. The semicircle has length \\( \\pi r \\), and the full circle \\( 2\\pi r \\)."
+  },
+  {
+   "id": "p5",
+   "kp": "k7",
+   "type": "number",
+   "prompt": "The arc of \\( y = \\sqrt{4 - x^{2}} \\) for \\( 0 \\le x \\le 1 \\) is rotated about the \\( x \\)-axis. Find the area of the resulting surface (a zone of a sphere).",
+   "why": "For \\( f = \\sqrt{4 - x^{2}} \\), \\( f\\sqrt{1 + [f']^{2}} = 2 \\) (the radius). \\( S = \\int_{0}^{1}2\\pi\\cdot2\\,dx = 4\\pi \\), which is \\( 2\\pi rh \\) with \\( r = 2 \\), \\( h = 1 \\).",
+   "answer": "4*pi"
+  },
+  {
+   "id": "p6",
+   "kp": "k8",
+   "type": "number",
+   "prompt": "The curve \\( y = 1 - x^{2} \\), \\( 0 \\le x \\le 1 \\), is rotated about the \\( y \\)-axis. Find the area of the resulting surface.",
+   "why": "Radius \\( x \\), \\( f' = -2x \\): \\( S = \\int_{0}^{1}2\\pi x\\sqrt{1 + 4x^{2}}\\,dx = \\frac{\\pi}{6}\\Big[(1 + 4x^{2})^{3/2}\\Big]_{0}^{1} = \\frac{\\pi}{6}(5\\sqrt5 - 1) \\approx 5.330 \\).",
+   "answer": "pi/6*(5*sqrt(5) - 1)"
+  },
+  {
+   "id": "p7",
+   "kp": "k9",
+   "type": "written",
+   "prompt": "A student computes the lateral area of a cone of base radius \\( r \\) and height \\( h \\) by rotating \\( x = \\frac rhy \\), \\( 0 \\le y \\le h \\), about the \\( y \\)-axis and integrating \\( \\int_{0}^{h}2\\pi x\\,dy \\). Find the student's answer, compare it with the correct area, and explain precisely why the method fails for surfaces although the analogous method (disks) works for volumes.",
+   "why": "Using \\( dy \\) instead of \\( ds \\) measures each band by its height instead of its slant width; the ratio of the two is \\( \\ell/h \\), which does not tend to 1.",
+   "rubric": [
+    "Student's answer: \\( \\int_{0}^{h}2\\pi\\frac rhy\\,dy = \\pi rh \\).",
+    "Correct answer: \\( \\int_{0}^{h}2\\pi\\frac rhy\\sqrt{1 + (r/h)^{2}}\\,dy = \\pi r\\ell \\), \\( \\ell = \\sqrt{r^{2} + h^{2}} \\); they differ by the factor \\( \\ell/h \\).",
+    "Explains that each band is slanted with width \\( \\sqrt{1 + (dx/dy)^{2}}\\,\\Delta y \\), not \\( \\Delta y \\); the relative error does not shrink as \\( \\Delta y \\to 0 \\).",
+    "Explains that for volumes, the error of a cylinder approximation per slab is of order \\( (\\Delta y)^{2} \\), so the total error tends to 0."
+   ],
+   "model": "The student obtains \\( \\int_{0}^{h}2\\pi\\frac rhy\\,dy = \\frac{2\\pi r}{h}\\cdot\\frac{h^{2}}{2} = \\pi rh \\). The correct area uses \\( ds = \\sqrt{1 + (dx/dy)^{2}}\\,dy = \\frac{\\ell}{h}\\,dy \\) with \\( \\ell = \\sqrt{r^{2} + h^{2}} \\): \\( S = \\int_{0}^{h}2\\pi\\frac rhy\\cdot\\frac{\\ell}{h}\\,dy = \\pi r\\ell \\). The student's answer is too small by the factor \\( \\frac h\\ell \\). The reason: a thin band of the surface between heights \\( y \\) and \\( y + \\Delta y \\) is a slanted strip whose width is the length of the corresponding piece of the generating line, \\( \\frac{\\ell}{h}\\Delta y \\), not \\( \\Delta y \\). Replacing it by a vertical cylinder of width \\( \\Delta y \\) changes each band's area by the fixed factor \\( \\frac{h}{\\ell} \\), and this relative error does not decrease as \\( \\Delta y \\to 0 \\), so it survives in the limit. For volume, replacing a slab by a cylinder changes its volume only by the thin wedge at the slanted edge, whose volume is of order \\( (\\Delta y)^{2} \\); summed over about \\( 1/\\Delta y \\) slabs, the total error is of order \\( \\Delta y \\) and tends to 0."
+  },
+  {
+   "id": "p8",
+   "kp": "k4",
+   "type": "expression",
+   "prompt": "Find the arc length function \\( s(x) \\) of \\( y = \\ln(\\cos x) \\) starting at \\( x = 0 \\), for \\( 0 \\le x < \\frac{\\pi}{2} \\).",
+   "why": "\\( s(x) = \\int_{0}^{x}\\sqrt{1 + \\tan^{2}t}\\,dt = \\int_{0}^{x}\\sec t\\,dt = \\ln(\\sec x + \\tan x) \\), since \\( \\sec t > 0 \\) and \\( \\sec 0 + \\tan 0 = 1 \\). Check: \\( s'(x) = \\sec x = \\sqrt{1 + [f'(x)]^{2}} \\).",
+   "answer": "log(1/cos(x) + tan(x))",
+   "vars": "x"
+  },
+  {
+   "id": "p9",
+   "kp": "k7",
+   "type": "number",
+   "prompt": "The curve \\( y = 2\\sqrt{x} \\), \\( 1 \\le x \\le 2 \\), is rotated about the \\( x \\)-axis. Find the area of the surface.",
+   "why": "\\( f' = x^{-1/2} \\), so \\( f\\sqrt{1 + [f']^{2}} = 2\\sqrt x\\sqrt{1 + \\frac1x} = 2\\sqrt{x + 1} \\). \\( S = \\int_{1}^{2}4\\pi\\sqrt{x + 1}\\,dx = \\frac{8\\pi}{3}\\Big[(x + 1)^{3/2}\\Big]_{1}^{2} = \\frac{8\\pi}{3}\\big(3\\sqrt3 - 2\\sqrt2\\big) \\approx 19.84 \\).",
+   "answer": "8*pi/3*(3*sqrt(3) - 2*sqrt(2))"
+  },
+  {
+   "id": "p10",
+   "kp": "k3",
+   "type": "written",
+   "prompt": "Find the length of \\( y = x^{2/3} \\) from \\( (0, 0) \\) to \\( (1, 1) \\). Explain why integrating with respect to \\( x \\) leads to an improper integral and why integrating with respect to \\( y \\) does not.",
+   "why": "The curve has a vertical tangent at the origin, so \\( dy/dx \\) is unbounded there, while \\( dx/dy \\) is continuous.",
+   "rubric": [
+    "Notes \\( \\frac{dy}{dx} = \\frac23x^{-1/3} \\) is unbounded as \\( x \\to 0^{+} \\), so the \\( x \\)-integrand is unbounded (improper integral).",
+    "Rewrites the curve as \\( x = y^{3/2} \\), \\( 0 \\le y \\le 1 \\), with \\( \\frac{dx}{dy} = \\frac32y^{1/2} \\) continuous.",
+    "Computes \\( L = \\int_{0}^{1}\\sqrt{1 + \\frac94y}\\,dy = \\frac{8}{27}\\Big[\\Big(\\frac{13}{4}\\Big)^{3/2} - 1\\Big] \\).",
+    "Simplifies to \\( \\frac{13\\sqrt{13} - 8}{27} \\approx 1.440 \\)."
+   ],
+   "model": "In \\( x \\), \\( \\frac{dy}{dx} = \\frac23x^{-1/3} \\), which is unbounded as \\( x \\to 0^{+} \\): the curve has a vertical tangent at the origin, so \\( \\sqrt{1 + (dy/dx)^{2}} \\) is unbounded near 0 and the \\( x \\)-integral is improper. In \\( y \\), the curve is \\( x = y^{3/2} \\), \\( 0 \\le y \\le 1 \\), and \\( \\frac{dx}{dy} = \\frac32y^{1/2} \\) is continuous on \\( [0, 1] \\), so the ordinary formula applies: \\( L = \\int_{0}^{1}\\sqrt{1 + \\frac94y}\\,dy = \\frac49\\cdot\\frac23\\Big[\\Big(1 + \\frac94y\\Big)^{3/2}\\Big]_{0}^{1} = \\frac{8}{27}\\Big[\\frac{13\\sqrt{13}}{8} - 1\\Big] = \\frac{13\\sqrt{13} - 8}{27} \\approx 1.440 \\). As a check, the chord from \\( (0,0) \\) to \\( (1,1) \\) has length \\( \\sqrt2 \\approx 1.414 \\), slightly less."
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k2",
+   "type": "number",
+   "prompt": "Find the length of \\( y = \\frac{x^{3}}{3} + \\frac{1}{4x} \\) for \\( 1 \\le x \\le 3 \\).",
+   "why": "\\( f' = x^{2} - \\frac{1}{4x^{2}} \\), with \\( 4\\cdot x^{2}\\cdot\\frac{1}{4x^{2}} = 1 \\), so \\( \\sqrt{1 + [f']^{2}} = x^{2} + \\frac{1}{4x^{2}} \\). \\( L = \\Big[\\frac{x^{3}}{3} - \\frac{1}{4x}\\Big]_{1}^{3} = \\Big(9 - \\frac{1}{12}\\Big) - \\Big(\\frac13 - \\frac14\\Big) = \\frac{53}{6} \\approx 8.833 \\).",
+   "answer": "53/6"
+  },
+  {
+   "id": "e2",
+   "kp": "k7",
+   "type": "number",
+   "prompt": "The catenary \\( y = \\cosh x \\), \\( 0 \\le x \\le 1 \\), is rotated about the \\( x \\)-axis. Find the area of the surface.",
+   "why": "\\( \\sqrt{1 + \\sinh^{2}x} = \\cosh x \\), so \\( S = \\int_{0}^{1}2\\pi\\cosh^{2}x\\,dx = \\pi\\int_{0}^{1}(1 + \\cosh 2x)\\,dx = \\pi\\Big(1 + \\frac{\\sinh 2}{2}\\Big) \\approx 8.839 \\), using \\( \\cosh^{2}x = \\frac{1 + \\cosh 2x}{2} \\).",
+   "answer": "pi*(1 + sinh(2)/2)"
+  },
+  {
+   "id": "e3",
+   "kp": "k6",
+   "type": "written",
+   "prompt": "Derive the surface-area formula \\( S = \\int_{a}^{b}2\\pi f(x)\\sqrt{1 + [f'(x)]^{2}}\\,dx \\) for rotation about the \\( x \\)-axis, stating the hypotheses on \\( f \\), and verify it on the cone obtained by rotating \\( y = \\frac rhx \\), \\( 0 \\le x \\le h \\).",
+   "why": "Frustums from an inscribed polygon, the Mean Value Theorem for the slant heights, and a limit of Riemann sums; the cone check confirms the factor \\( \\sqrt{1 + [f']^{2}} \\).",
+   "rubric": [
+    "Hypotheses: \\( f \\ge 0 \\) and \\( f' \\) continuous on \\( [a, b] \\).",
+    "Frustum area \\( 2\\pi\\bar r\\ell \\) applied to each chord: radii \\( f(x_{i-1}), f(x_{i}) \\), slant height \\( \\sqrt{1 + [f'(x_{i}^{*})]^{2}}\\Delta x_{i} \\) (Mean Value Theorem).",
+    "Limit: average radius tends to \\( f(x_{i}^{*}) \\), giving a Riemann sum for \\( 2\\pi f\\sqrt{1 + [f']^{2}} \\).",
+    "Cone: \\( \\int_{0}^{h}2\\pi\\frac rhx\\sqrt{1 + \\frac{r^{2}}{h^{2}}}\\,dx = \\pi r\\sqrt{r^{2} + h^{2}} = \\pi r\\ell \\)."
+   ],
+   "model": "Assume \\( f \\ge 0 \\) with \\( f' \\) continuous on \\( [a, b] \\). Partition \\( [a, b] \\) and join the points \\( (x_{i}, f(x_{i})) \\). Rotating the chord over \\( [x_{i-1}, x_{i}] \\) about the \\( x \\)-axis gives a frustum with radii \\( f(x_{i-1}) \\), \\( f(x_{i}) \\) and slant height equal to the chord's length, which by the Mean Value Theorem is \\( \\sqrt{1 + [f'(x_{i}^{*})]^{2}}\\,\\Delta x_{i} \\) for some \\( x_{i}^{*} \\) in the subinterval. A frustum's lateral area is \\( 2\\pi\\bar r\\ell \\), so the rotated polygon has area \\( \\sum_{i}2\\pi\\frac{f(x_{i-1}) + f(x_{i})}{2}\\sqrt{1 + [f'(x_{i}^{*})]^{2}}\\,\\Delta x_{i} \\). By continuity of \\( f \\), \\( \\frac{f(x_{i-1}) + f(x_{i})}{2} - f(x_{i}^{*}) \\to 0 \\) uniformly as the mesh tends to 0, so this sum has the same limit as the Riemann sum \\( \\sum 2\\pi f(x_{i}^{*})\\sqrt{1 + [f'(x_{i}^{*})]^{2}}\\,\\Delta x_{i} \\), which is \\( \\int_{a}^{b}2\\pi f(x)\\sqrt{1 + [f'(x)]^{2}}\\,dx \\) because the integrand is continuous. This limit is the surface area. Check on the cone: \\( f(x) = \\frac rhx \\), \\( f' = \\frac rh \\), \\( \\sqrt{1 + \\frac{r^{2}}{h^{2}}} = \\frac{\\ell}{h} \\) with \\( \\ell = \\sqrt{r^{2} + h^{2}} \\). Then \\( S = \\int_{0}^{h}2\\pi\\frac rhx\\cdot\\frac{\\ell}{h}\\,dx = \\frac{2\\pi r\\ell}{h^{2}}\\cdot\\frac{h^{2}}{2} = \\pi r\\ell \\), the lateral area of the cone."
+  },
+  {
+   "id": "e4",
+   "kp": "k8",
+   "type": "number",
+   "prompt": "A torus is obtained by rotating the circle \\( (x - 2)^{2} + y^{2} = 1 \\) about the \\( y \\)-axis. Find its surface area. (Treat the outer half \\( x = 2 + \\sqrt{1 - y^{2}} \\) and the inner half \\( x = 2 - \\sqrt{1 - y^{2}} \\) separately.)",
+   "why": "For either half, \\( \\frac{dx}{dy} = \\mp\\frac{y}{\\sqrt{1 - y^{2}}} \\) and \\( \\sqrt{1 + (dx/dy)^{2}} = \\frac{1}{\\sqrt{1 - y^{2}}} \\). Outer: \\( 2\\pi\\int_{-1}^{1}\\frac{2 + \\sqrt{1-y^{2}}}{\\sqrt{1-y^{2}}}dy = 2\\pi(2\\pi + 2) \\). Inner: \\( 2\\pi\\int_{-1}^{1}\\frac{2 - \\sqrt{1-y^{2}}}{\\sqrt{1-y^{2}}}dy = 2\\pi(2\\pi - 2) \\). (Both are convergent improper integrals, using \\( \\int_{-1}^{1}\\frac{dy}{\\sqrt{1-y^{2}}} = \\pi \\).) Total \\( 8\\pi^{2} \\approx 78.96 \\), which is (circumference of the circle) times (distance travelled by its centre), \\( 2\\pi\\cdot 2\\pi\\cdot2 \\).",
+   "answer": "8*pi^2"
+  },
+  {
+   "id": "e5",
+   "kp": "k5",
+   "type": "written",
+   "prompt": "Let \\( L \\) be the length of \\( y = \\sin x \\), \\( 0 \\le x \\le \\pi \\). Using only the definition of arc length and bounds on the integrand, prove that \\( 2\\sqrt{1 + \\frac{\\pi^{2}}{4}} \\le L < \\pi\\sqrt2 \\). Explain why the lower bound follows from the definition rather than from the integral.",
+   "why": "Any inscribed polygon is a lower bound, because refinement never decreases polygon length and \\( L \\) is the limit; the upper bound comes from \\( \\sqrt{1 + \\cos^{2}x} \\le \\sqrt2 \\).",
+   "rubric": [
+    "Takes the inscribed polygon through \\( (0, 0) \\), \\( (\\frac{\\pi}{2}, 1) \\), \\( (\\pi, 0) \\), of length \\( 2\\sqrt{\\frac{\\pi^{2}}{4} + 1} \\).",
+    "Argues \\( L \\ge \\) that length: refining any partition does not decrease polygon length (triangle inequality), and \\( L \\) is the limit of polygon lengths of refinements.",
+    "Upper bound: \\( \\sqrt{1 + \\cos^{2}x} \\le \\sqrt2 \\) with strict inequality on an interval, so \\( L < \\pi\\sqrt2 \\).",
+    "Numerical sense: \\( 3.724 \\le L < 4.443 \\) (true value about 3.820)."
+   ],
+   "model": "The polygon inscribed through \\( (0, 0) \\), \\( (\\frac{\\pi}{2}, 1) \\), \\( (\\pi, 0) \\) consists of two segments each of length \\( \\sqrt{(\\frac{\\pi}{2})^{2} + 1^{2}} \\), so its length is \\( 2\\sqrt{1 + \\frac{\\pi^{2}}{4}} \\approx 3.724 \\). Every refinement of the partition \\( \\{0, \\frac{\\pi}{2}, \\pi\\} \\) produces a polygon at least this long, since inserting a point replaces a chord by two chords with the same endpoints, whose total length is at least the chord's by the triangle inequality. Arc length is the limit of polygon lengths as the mesh tends to zero, and the limit can be computed along refinements of this partition, so \\( L \\ge 2\\sqrt{1 + \\frac{\\pi^{2}}{4}} \\). This bound uses the definition, not the integral formula: it compares \\( L \\) with a specific polygon, which the integral does not display. For the upper bound, \\( L = \\int_{0}^{\\pi}\\sqrt{1 + \\cos^{2}x}\\,dx \\) and \\( \\sqrt{1 + \\cos^{2}x} \\le \\sqrt2 \\), with strict inequality on an interval around \\( \\frac{\\pi}{2} \\); since the integrand is continuous, \\( L < \\pi\\sqrt2 \\approx 4.443 \\)."
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "Arc length in x",
+    "formula": "\\( L = \\int_{a}^{b}\\sqrt{1 + [f'(x)]^{2}}\\,dx \\)",
+    "when": "Curve \\( y = f(x) \\) with \\( f' \\) continuous.",
+    "example": "\\( y = \\frac23x^{3/2} \\), \\( [0, 3] \\): \\( \\frac{14}{3} \\)",
+    "watch": "\\( \\sqrt{1 + f'^{2}} \\ne 1 + f' \\)."
+   },
+   {
+    "name": "Arc length in y",
+    "formula": "\\( L = \\int_{c}^{d}\\sqrt{1 + [g'(y)]^{2}}\\,dy \\)",
+    "when": "Curve given as x = g(y), or a vertical tangent in x.",
+    "example": "\\( y = x^{2/3} \\) from \\( (0,0) \\) to \\( (8,4) \\): use \\( x = y^{3/2} \\)",
+    "watch": "Limits must be y-values."
+   },
+   {
+    "name": "Arc length element",
+    "formula": "\\( ds = \\sqrt{dx^{2} + dy^{2}} \\)",
+    "when": "Setting up length or surface area in either variable.",
+    "example": "\\( L = \\int ds \\), \\( S = \\int 2\\pi\\rho\\,ds \\)",
+    "watch": "Write ds in the variable of integration."
+   },
+   {
+    "name": "Perfect-square test",
+    "formula": "\\( f' = A - B \\), \\( 4AB = 1 \\Rightarrow \\sqrt{1 + f'^{2}} = A + B \\)",
+    "when": "Curves like \\( \\frac{x^{3}}{6} + \\frac{1}{2x} \\) or \\( \\frac{x^{2}}{2} - \\frac{\\ln x}{4} \\).",
+    "example": "\\( \\frac{x^{4}}{8} + \\frac{1}{4x^{2}} \\) on \\( [1, 2] \\): \\( \\frac{33}{16} \\)",
+    "watch": "Check \\( A + B \\ge 0 \\) before dropping the absolute value."
+   },
+   {
+    "name": "Identities",
+    "formula": "\\( 1 + \\sinh^{2} = \\cosh^{2} \\), \\( 1 + \\tan^{2} = \\sec^{2} \\)",
+    "when": "\\( y = \\cosh x \\), \\( y = \\ln\\cos x \\).",
+    "example": "\\( y = \\cosh x \\), \\( [0, a] \\): \\( \\sinh a \\)",
+    "watch": "Keep track of signs of sec and cosh on the interval."
+   },
+   {
+    "name": "Frustum",
+    "formula": "\\( A = 2\\pi\\bar r\\ell = \\pi(r_{1} + r_{2})\\ell \\)",
+    "when": "The building block of surface area.",
+    "example": "Cone (\\( r_{1} = 0 \\)): \\( \\pi r\\ell \\)",
+    "watch": "\\( \\ell \\) is the slant height, not the vertical height."
+   },
+   {
+    "name": "Surface area about the x-axis",
+    "formula": "\\( S = \\int_{a}^{b}2\\pi f(x)\\sqrt{1 + [f'(x)]^{2}}\\,dx \\)",
+    "when": "\\( f \\ge 0 \\), \\( f' \\) continuous.",
+    "example": "Sphere: \\( f\\sqrt{1 + f'^{2}} = r \\), \\( S = 4\\pi r^{2} \\)",
+    "watch": "Simplify the product before integrating."
+   },
+   {
+    "name": "Surface area, other axes",
+    "formula": "\\( S = \\int 2\\pi(\\text{radius})\\,ds \\)",
+    "when": "Rotation about the y-axis or a line y = k, x = k.",
+    "example": "\\( y = x^{2} \\), \\( [0, 1] \\), about the y-axis: \\( \\frac{\\pi}{6}(5\\sqrt5 - 1) \\)",
+    "watch": "Radius is the distance to the axis."
+   },
+   {
+    "name": "Infinite surfaces",
+    "formula": "Compare \\( \\int 2\\pi\\rho\\,ds \\) with a \\( p \\)-integral",
+    "when": "The curve extends to infinity.",
+    "example": "\\( y = 1/x \\), \\( x \\ge 1 \\): \\( V = \\pi \\), \\( S = \\infty \\)",
+    "watch": "Finite volume does not imply finite area."
+   }
+  ],
+  "stuck": [
+   "Compute \\( 1 + [f']^{2} \\) and simplify it fully before anything else; look for a perfect square or a Pythagorean identity.",
+   "If the derivative is unbounded somewhere on the interval, switch to the other variable or treat the integral as improper.",
+   "If no antiderivative appears, try the substitution suggested by the radius factor (surface area) or a trigonometric substitution (for \\( \\sqrt{1 + k^{2}x^{2}} \\)).",
+   "If the integral is genuinely non-elementary, bound it: an inscribed polygon from below, the maximum of the integrand from above.",
+   "Check the answer against a chord (length) or a simple cylinder or cone (area): the curve is never shorter than its chord."
+  ]
+ }
+}

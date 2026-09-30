@@ -826,7 +826,7 @@
   "stuck": [
    "Convert every rotational quantity to radians and rad/s before substituting into a formula.",
    "List which of \\( t \\), \\( \\omega \\), \\( \\alpha \\), \\( \\Delta\\theta \\) you know and want, and pick the constant-\\( \\alpha \\) equation that omits the remaining one; if \\( \\alpha \\) varies, integrate.",
-   "For a moment of inertia, sketch the axis, pick mass elements at a single distance from it, and write dm in terms of a density before integrating; then check the answer against a known limit.",
+   "For a moment of inertia, sketch the axis, pick mass elements at a single distance from it, and write \\( dm \\) in terms of a density before integrating; then check the answer against a known limit.",
    "In a statics problem, draw every force at its point of application, put each weight at its center of mass, and take torques about the point where the most unknown forces act.",
    "For each torque, find the lever arm by dropping a perpendicular from the pivot to the line of action, then assign a sign by the sense of rotation it would produce."
   ]

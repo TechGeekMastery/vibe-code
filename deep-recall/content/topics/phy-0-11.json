@@ -142,7 +142,7 @@
      "rubric": [
       "Differentiates twice: \\( \\ddot x = -\\omega^2(C_1\\cos\\omega t + C_2\\sin\\omega t) = -\\omega^2x \\).",
       "Initial conditions: \\( x(0) = C_1 = x_0 \\), \\( \\dot x(0) = \\omega C_2 = v_0 \\), so \\( C_2 = v_0/\\omega \\).",
-      "Appeals to existence and uniqueness for a linear second-order equation: given x₀ and v₀ there is exactly one solution.",
+      "Appeals to existence and uniqueness for a linear second-order equation: given \\( x_0 \\) and \\( v_0 \\) there is exactly one solution.",
       "Since the family matches any initial data, the unique solution with those data is in the family; so it is the general solution."
      ],
      "model": "Differentiate: \\( \\dot x = -C_1\\omega\\sin\\omega t + C_2\\omega\\cos\\omega t \\) and \\( \\ddot x = -C_1\\omega^2\\cos\\omega t - C_2\\omega^2\\sin\\omega t = -\\omega^2x \\), so the equation holds for any constants. At \\( t = 0 \\): \\( x(0) = C_1 \\) and \\( \\dot x(0) = C_2\\omega \\), so choosing \\( C_1 = x_0 \\) and \\( C_2 = v_0/\\omega \\) matches any prescribed initial position and velocity. The equation \\( \\ddot x + \\omega^2x = 0 \\) is linear, second order, with constant coefficients; by the existence and uniqueness theorem it has exactly one solution for each pair \\( (x_0, v_0) \\). Given any solution, take its \\( x_0 \\) and \\( v_0 \\): the member of the family with \\( C_1 = x_0 \\), \\( C_2 = v_0/\\omega \\) is a solution with the same initial data, so by uniqueness it is that solution. Hence every solution has the stated form.",
@@ -157,7 +157,7 @@
     "k3",
     "k4"
    ],
-   "md": "The general solution contains two constants. This section shows how the way the oscillator is started determines them, and establishes the most distinctive property of simple harmonic motion: its period does not depend on its amplitude.\n\n**From initial conditions to \\( A \\) and \\( \\phi \\).** Suppose that at \\( t = 0 \\) the displacement is \\( x_0 \\) and the velocity \\( v_0 \\). From \\( x = A\\cos(\\omega t + \\phi) \\) and \\( v = -A\\omega\\sin(\\omega t + \\phi) \\),\n\\[ x_0 = A\\cos\\phi, \\qquad v_0 = -A\\omega\\sin\\phi. \\]\nSquaring and adding the equations \\( \\cos\\phi = x_0/A \\) and \\( \\sin\\phi = -v_0/(\\omega A) \\) gives\n\\[ A = \\sqrt{x_0^2 + \\left(\\frac{v_0}{\\omega}\\right)^2}. \\]\nThe phase constant is fixed by the pair of values \\( \\cos\\phi = x_0/A \\) and \\( \\sin\\phi = -v_0/(\\omega A) \\). Dividing gives \\( \\tan\\phi = -v_0/(\\omega x_0) \\), but the tangent does not determine the quadrant: \\( \\arctan \\) returns an angle in \\( (-\\pi/2, \\pi/2) \\), which is correct only when \\( x_0 > 0 \\). If \\( x_0 < 0 \\), add \\( \\pi \\). Always check the signs of \\( \\cos\\phi \\) and \\( \\sin\\phi \\).\n\n*Worked example.* The block of the previous section (\\( \\omega = 20 \\) rad/s) is at \\( x_0 = 0.030 \\) m moving with \\( v_0 = +0.80 \\) m/s at \\( t = 0 \\). Then \\( A = \\sqrt{0.030^2 + 0.040^2} = 0.050 \\) m, \\( \\cos\\phi = 0.60 \\) and \\( \\sin\\phi = -0.80 \\), so \\( \\phi \\) is in the fourth quadrant: \\( \\phi = -0.927 \\) rad (\\( -53.1^\\circ \\)). Thus \\( x(t) = (0.050\\text{ m})\\cos(20t - 0.927) \\). Check: \\( x(0) = 0.050(0.60) = 0.030 \\) m and \\( v(0) = -(0.050)(20)\\sin(-0.927) = +0.80 \\) m/s.\n\n**Isochronism.** The period \\( T = 2\\pi\\sqrt{m/k} \\) contains no reference to \\( A \\): a spring oscillator takes the same time for a large swing as for a small one. The reason is that a larger displacement produces a proportionally larger restoring force, so the motion is simply scaled up; the equation \\( \\ddot x = -\\omega^2x \\) is unchanged when \\( x \\) is multiplied by a constant. This property, called **isochronism**, belongs to linear restoring forces only. With a force such as \\( -kx^3 \\), doubling the amplitude changes the period.\n\nIn the plot, the black reference curve is \\( \\cos 2t \\), with time on the horizontal axis. Drag \\( a \\) (the amplitude) and \\( p \\) (the phase constant): the curve stretches vertically and slides horizontally, but the spacing of its peaks, the period \\( \\pi \\) s, never changes.\n\n```plot\nx: 0, 8\ny: -2.2, 2.2\nslider: a, 0.2, 2, 1.5\nslider: p, -3.14, 3.14, 1\nf: cos(2*x) | reference, A = 1, φ = 0\nf: a*cos(2*x + p) | A cos(2t + φ)\nhline: 0\n```\n\nA positive \\( \\phi \\) shifts the curve to the left, earlier in time, by \\( \\phi/\\omega \\); the oscillation is ahead in phase.\n\n**Common mistakes.** Taking \\( \\phi = \\arctan(-v_0/(\\omega x_0)) \\) without checking the quadrant; mixing the phase \\( \\omega t + \\phi \\) with the phase constant \\( \\phi \\); and believing that a larger amplitude, with its larger speeds, must shorten or lengthen the period.",
+   "md": "The general solution contains two constants. This section shows how the way the oscillator is started determines them, and establishes the most distinctive property of simple harmonic motion: its period does not depend on its amplitude.\n\n**From initial conditions to \\( A \\) and \\( \\phi \\).** Suppose that at \\( t = 0 \\) the displacement is \\( x_0 \\) and the velocity \\( v_0 \\). From \\( x = A\\cos(\\omega t + \\phi) \\) and \\( v = -A\\omega\\sin(\\omega t + \\phi) \\),\n\\[ x_0 = A\\cos\\phi, \\qquad v_0 = -A\\omega\\sin\\phi. \\]\nSquaring and adding the equations \\( \\cos\\phi = x_0/A \\) and \\( \\sin\\phi = -v_0/(\\omega A) \\) gives\n\\[ A = \\sqrt{x_0^2 + \\left(\\frac{v_0}{\\omega}\\right)^2}. \\]\nThe phase constant is fixed by the pair of values \\( \\cos\\phi = x_0/A \\) and \\( \\sin\\phi = -v_0/(\\omega A) \\). Dividing gives \\( \\tan\\phi = -v_0/(\\omega x_0) \\), but the tangent does not determine the quadrant: \\( \\arctan \\) returns an angle in \\( (-\\pi/2, \\pi/2) \\), which is correct only when \\( x_0 > 0 \\). If \\( x_0 < 0 \\), add or subtract \\( \\pi \\); if \\( x_0 = 0 \\), \\( \\phi = -\\pi/2 \\) when \\( v_0 > 0 \\) and \\( +\\pi/2 \\) when \\( v_0 < 0 \\). Always check the signs of \\( \\cos\\phi \\) and \\( \\sin\\phi \\).\n\n*Worked example.* The block of the previous section (\\( \\omega = 20 \\) rad/s) is at \\( x_0 = 0.030 \\) m moving with \\( v_0 = +0.80 \\) m/s at \\( t = 0 \\). Then \\( A = \\sqrt{0.030^2 + 0.040^2} = 0.050 \\) m, \\( \\cos\\phi = 0.60 \\) and \\( \\sin\\phi = -0.80 \\), so \\( \\phi \\) is in the fourth quadrant: \\( \\phi = -0.927 \\) rad (\\( -53.1^\\circ \\)). Thus \\( x(t) = (0.050\\text{ m})\\cos(20t - 0.927) \\). Check: \\( x(0) = 0.050(0.60) = 0.030 \\) m and \\( v(0) = -(0.050)(20)\\sin(-0.927) = +0.80 \\) m/s.\n\n**Isochronism.** The period \\( T = 2\\pi\\sqrt{m/k} \\) contains no reference to \\( A \\): a spring oscillator takes the same time for a large swing as for a small one. The reason is that a larger displacement produces a proportionally larger restoring force, so the motion is simply scaled up; the equation \\( \\ddot x = -\\omega^2x \\) is unchanged when \\( x \\) is multiplied by a constant. This property, called **isochronism**, belongs to linear restoring forces only. With a force such as \\( -kx^3 \\), doubling the amplitude changes the period.\n\nIn the plot, with time on the horizontal axis, the reference curve is \\( \\cos 2t \\). Drag \\( a \\) (the amplitude) and \\( p \\) (the phase constant): the curve stretches vertically and slides horizontally, but the spacing of its peaks, the period \\( \\pi \\) s, never changes.\n\n```plot\nx: 0, 8\ny: -2.2, 2.2\nslider: a, 0.2, 2, 1.5\nslider: p, -3.14, 3.14, 1\nf: cos(2*x) | reference, A = 1, φ = 0\nf: a*cos(2*x + p) | A cos(2t + φ)\nhline: 0\n```\n\nA positive \\( \\phi \\) shifts the curve to the left, earlier in time, by \\( \\phi/\\omega \\); the oscillation is ahead in phase.\n\n**Common mistakes.** Taking \\( \\phi = \\arctan(-v_0/(\\omega x_0)) \\) without checking the quadrant; mixing the phase \\( \\omega t + \\phi \\) with the phase constant \\( \\phi \\); and believing that a larger amplitude, with its larger speeds, must shorten or lengthen the period.",
    "questions": [
     {
      "id": "s2q1",
@@ -263,7 +263,7 @@
     "k9",
     "k10"
    ],
-   "md": "The pendulum was the first precise timekeeper and remains a standard way to measure \\( g \\). Its restoring force is not exactly linear, so its motion is simple harmonic only approximately. This section derives the equation of motion, makes the small-angle approximation explicit, and extends the result to rigid bodies.\n\n**The simple pendulum.** A **simple pendulum** is a point mass \\( m \\) on a massless, inextensible string of length \\( L \\). Let \\( \\theta \\) be the angle from the vertical, in radians. About the pivot, the tension has no torque, and gravity's torque is \\( -mgL\\sin\\theta \\) (negative because it acts to reduce \\( \\theta \\)). With \\( I = mL^2 \\), the rotational second law gives\n\\[ mL^2\\ddot\\theta = -mgL\\sin\\theta \\quad\\Longrightarrow\\quad \\ddot\\theta = -\\frac gL\\sin\\theta. \\]\nThis is not the SHM equation, because \\( \\sin\\theta \\) is not proportional to \\( \\theta \\). But \\( \\sin\\theta = \\theta - \\theta^3/6 + \\cdots \\), so for small angles \\( \\sin\\theta \\approx \\theta \\) and\n\\[ \\ddot\\theta \\approx -\\frac gL\\,\\theta, \\qquad \\omega = \\sqrt{\\frac gL}, \\qquad T = 2\\pi\\sqrt{\\frac Lg}. \\]\nThe period is independent of the mass (which cancels) and, in this approximation, of the amplitude.\n\n*How good is the approximation?* At \\( 15^\\circ \\), \\( \\theta \\) exceeds \\( \\sin\\theta \\) by about 1%, and the true period is longer than \\( 2\\pi\\sqrt{L/g} \\) by about 0.4%. The exact period has the expansion \\( T = 2\\pi\\sqrt{L/g}\\left(1 + \\tfrac1{16}\\theta_0^2 + \\cdots\\right) \\) in the angular amplitude \\( \\theta_0 \\); at \\( 20^\\circ \\) the correction is 0.8%. Large swings take longer, so the pendulum is isochronous only approximately.\n\n*Worked example.* A pendulum whose period is 2.00 s (each swing lasting one second) needs \\( L = gT^2/(4\\pi^2) = (9.80)(4.00)/(4\\pi^2) = 0.993 \\) m.\n\n**The physical pendulum.** A **physical pendulum** is any rigid body swinging about a fixed horizontal axis through a point other than its center of mass. Let \\( d \\) be the distance from the pivot to the center of mass, and \\( I \\) the moment of inertia about the pivot. Gravity, acting at the center of mass, has torque \\( -mgd\\sin\\theta \\), so\n\\[ I\\ddot\\theta = -mgd\\sin\\theta \\approx -mgd\\,\\theta, \\qquad \\omega = \\sqrt{\\frac{mgd}{I}}, \\qquad T = 2\\pi\\sqrt{\\frac{I}{mgd}}. \\]\nThe simple pendulum is the special case \\( I = mL^2 \\), \\( d = L \\).\n\n*Worked example.* A uniform rod of length \\( L \\) swinging about one end has \\( I = \\tfrac13mL^2 \\) and \\( d = L/2 \\), so \\( T = 2\\pi\\sqrt{2L/(3g)} \\): it swings like a simple pendulum of length \\( \\tfrac23L \\), faster than a simple pendulum of the full length, because part of its mass is close to the pivot. For \\( L = 1.00 \\) m, \\( T = 1.64 \\) s.\n\n**Common mistakes.** Using the moment of inertia about the center of mass instead of about the pivot (use the parallel-axis theorem); measuring \\( L \\) to the top of the bob rather than to its center; applying \\( T = 2\\pi\\sqrt{L/g} \\) to large amplitudes; and computing \\( \\sin\\theta \\approx \\theta \\) with \\( \\theta \\) in degrees.",
+   "md": "The pendulum was the first precise timekeeper and remains a standard way to measure \\( g \\). Its restoring force is not exactly linear, so its motion is simple harmonic only approximately. This section derives the equation of motion, makes the small-angle approximation explicit, and extends the result to rigid bodies.\n\n**The simple pendulum.** A **simple pendulum** is a point mass \\( m \\) on a massless, inextensible string of length \\( L \\). Let \\( \\theta \\) be the angle from the vertical, in radians. About the pivot, the tension has no torque, and gravity's torque is \\( -mgL\\sin\\theta \\) (negative because it acts to reduce \\( \\theta \\)). With \\( I = mL^2 \\), the rotational second law gives\n\\[ mL^2\\ddot\\theta = -mgL\\sin\\theta \\quad\\Longrightarrow\\quad \\ddot\\theta = -\\frac gL\\sin\\theta. \\]\nThis is not the SHM equation, because \\( \\sin\\theta \\) is not proportional to \\( \\theta \\). But \\( \\sin\\theta = \\theta - \\theta^3/6 + \\cdots \\), so for small angles we may use the **small-angle approximation** \\( \\sin\\theta \\approx \\theta \\), and\n\\[ \\ddot\\theta \\approx -\\frac gL\\,\\theta, \\qquad \\omega = \\sqrt{\\frac gL}, \\qquad T = 2\\pi\\sqrt{\\frac Lg}. \\]\nThe period is independent of the mass (which cancels) and, in this approximation, of the amplitude.\n\n*How good is the approximation?* At \\( 15^\\circ \\), \\( \\theta \\) exceeds \\( \\sin\\theta \\) by about 1%, and the true period is longer than \\( 2\\pi\\sqrt{L/g} \\) by about 0.4%. The exact period has the expansion \\( T = 2\\pi\\sqrt{L/g}\\left(1 + \\tfrac1{16}\\theta_0^2 + \\cdots\\right) \\) in the angular amplitude \\( \\theta_0 \\); at \\( 20^\\circ \\) the correction is 0.8%. Large swings take longer, so the pendulum is isochronous only approximately.\n\n*Worked example.* A pendulum whose period is 2.00 s (each swing lasting one second) needs \\( L = gT^2/(4\\pi^2) = (9.80)(4.00)/(4\\pi^2) = 0.993 \\) m.\n\n**The physical pendulum.** A **physical pendulum** is any rigid body swinging about a fixed horizontal axis through a point other than its center of mass. Let \\( d \\) be the distance from the pivot to the center of mass, and \\( I \\) the moment of inertia about the pivot. Gravity, acting at the center of mass, has torque \\( -mgd\\sin\\theta \\), so\n\\[ I\\ddot\\theta = -mgd\\sin\\theta \\approx -mgd\\,\\theta, \\qquad \\omega = \\sqrt{\\frac{mgd}{I}}, \\qquad T = 2\\pi\\sqrt{\\frac{I}{mgd}}. \\]\nThe simple pendulum is the special case \\( I = mL^2 \\), \\( d = L \\).\n\n*Worked example.* A uniform rod of length \\( L \\) swinging about one end has \\( I = \\tfrac13mL^2 \\) and \\( d = L/2 \\), so \\( T = 2\\pi\\sqrt{2L/(3g)} \\): it swings like a simple pendulum of length \\( \\tfrac23L \\), faster than a simple pendulum of the full length, because part of its mass is close to the pivot. For \\( L = 1.00 \\) m, \\( T = 1.64 \\) s.\n\n**Common mistakes.** Using the moment of inertia about the center of mass instead of about the pivot (use the parallel-axis theorem); measuring \\( L \\) to the top of the bob rather than to its center; applying \\( T = 2\\pi\\sqrt{L/g} \\) to large amplitudes; and computing \\( \\sin\\theta \\approx \\theta \\) with \\( \\theta \\) in degrees.",
    "questions": [
     {
      "id": "s5q1",
@@ -323,7 +323,7 @@
       "Failures: large amplitudes (higher-order terms matter, period depends on amplitude); \\( U''(x_0) = 0 \\) (no quadratic term, not SHM); \\( U''(x_0) < 0 \\) (unstable, no oscillation)."
      ],
      "model": "At an equilibrium \\( x_0 \\), \\( U'(x_0) = 0 \\). Expanding by Taylor's theorem, \\( U(x) = U(x_0) + \\tfrac12U''(x_0)(x - x_0)^2 + O((x - x_0)^3) \\). For small displacements the quadratic term dominates, so the potential energy is that of a spring with \\( k_{\\text{eff}} = U''(x_0) \\), and the force \\( -dU/dx \\approx -U''(x_0)(x - x_0) \\) is a linear restoring force if \\( U''(x_0) > 0 \\). The motion is then SHM with \\( \\omega = \\sqrt{U''(x_0)/m} \\). The conclusion fails (1) for large amplitudes, when the cubic and higher terms are not negligible and the period becomes amplitude-dependent, as for a pendulum swinging through large angles; (2) when \\( U''(x_0) = 0 \\), as for \\( U = cx^4 \\), where the restoring force is cubic even for tiny displacements; and (3) when \\( U''(x_0) < 0 \\), where the equilibrium is unstable and there is no oscillation.",
-     "why": "The word almost refers to the degenerate case U''(x₀) = 0; generic smooth potentials have a nonzero second derivative at a minimum."
+     "why": "The word almost refers to the degenerate case \\( U^{\\prime\\prime}(x_0) = 0 \\); generic smooth potentials have a nonzero second derivative at a minimum."
     }
    ]
   },
@@ -400,7 +400,7 @@
   },
   {
    "t": "reference circle",
-   "d": "A circle of radius A traversed at angular speed ω; the projection of the moving point on a diameter executes SHM."
+   "d": "A circle of radius \\( A \\) traversed at angular speed \\( \\omega \\); the projection of the moving point on a diameter executes SHM."
   },
   {
    "t": "simple pendulum",
@@ -457,13 +457,13 @@
    "id": "c4",
    "type": "concept",
    "front": "Why does the general solution of the SHM equation have exactly two constants?",
-   "back": "It is a second-order linear equation; by uniqueness, a solution is fixed by two initial conditions, x₀ and v₀.",
+   "back": "It is a second-order linear equation; by uniqueness, a solution is fixed by two initial conditions, \\( x_0 \\) and \\( v_0 \\).",
    "kp": "k2"
   },
   {
    "id": "c5",
    "type": "formula",
-   "front": "Amplitude and phase constant from x₀ and v₀",
+   "front": "Amplitude and phase constant from \\( x_0 \\) and \\( v_0 \\)",
    "back": "\\( A = \\sqrt{x_0^2 + (v_0/\\omega)^2} \\); \\( \\cos\\phi = x_0/A \\), \\( \\sin\\phi = -v_0/(\\omega A) \\)",
    "kp": "k3"
   },
@@ -522,7 +522,7 @@
    "id": "c13",
    "type": "concept",
    "front": "How is SHM related to uniform circular motion?",
-   "back": "It is the projection on a diameter of a point moving uniformly on a circle of radius A at angular speed ω; the phase is the point's angle.",
+   "back": "It is the projection on a diameter of a point moving uniformly on a circle of radius \\( A \\) at angular speed \\( \\omega \\); the phase is the point\\'s angle.",
    "kp": "k8"
   },
   {
@@ -626,7 +626,7 @@
    "id": "p5",
    "kp": "k8",
    "type": "written",
-   "prompt": "Explain how simple harmonic motion can be viewed as the projection of uniform circular motion. Use the reference circle to obtain the velocity and acceleration of the oscillator, and explain why ω is called the angular frequency.",
+   "prompt": "Explain how simple harmonic motion can be viewed as the projection of uniform circular motion. Use the reference circle to obtain the velocity and acceleration of the oscillator, and explain why \\( \\omega \\) is called the angular frequency.",
    "rubric": [
     "A point moves on a circle of radius \\( A \\) at constant angular speed \\( \\omega \\); its angle is \\( \\omega t + \\phi \\) and its \\( x \\)-coordinate is \\( A\\cos(\\omega t + \\phi) \\).",
     "The point's velocity has magnitude \\( \\omega A \\) tangent to the circle; its \\( x \\)-component is \\( -\\omega A\\sin(\\omega t + \\phi) \\).",
@@ -793,14 +793,14 @@
     "name": "Vertical spring",
     "formula": "Equilibrium stretch \\( d = mg/k \\); \\( T = 2\\pi\\sqrt{d/g} \\)",
     "when": "Mass hanging on a spring.",
-    "example": "d = 9.8 cm: T = 0.63 s.",
+    "example": "\\( d = 9.8 \\) cm: \\( T = 0.63 \\) s.",
     "watch": "Measure displacement from the loaded equilibrium."
    },
    {
     "name": "Simple pendulum",
     "formula": "\\( T = 2\\pi\\sqrt{L/g} \\) (small angles)",
     "when": "Point bob on a light string.",
-    "example": "T = 2.00 s: L = 0.993 m.",
+    "example": "\\( T = 2.00 \\) s: \\( L = 0.993 \\) m.",
     "watch": "Amplitude correction \\( 1 + \\theta_0^2/16 \\)."
    },
    {
@@ -808,7 +808,7 @@
     "formula": "\\( T = 2\\pi\\sqrt{I/(mgd)} \\)",
     "when": "Rigid bodies swinging about a pivot.",
     "example": "Rod about an end: \\( T = 2\\pi\\sqrt{2L/(3g)} \\).",
-    "watch": "I about the pivot, via the parallel-axis theorem."
+    "watch": "\\( I \\) about the pivot, via the parallel-axis theorem."
    },
    {
     "name": "Small oscillations",
@@ -821,16 +821,16 @@
     "name": "Damping",
     "formula": "\\( m\\ddot x + b\\dot x + kx = 0 \\); critical \\( b = 2\\sqrt{mk} \\); envelope \\( e^{-bt/(2m)} \\)",
     "when": "Oscillations that die out.",
-    "example": "m = 0.50 kg, b = 0.10 kg/s: amplitude halves in 6.9 s.",
-    "watch": "Energy decays twice as fast (in exponent) as amplitude."
+    "example": "\\( m = 0.50 \\) kg, \\( b = 0.10 \\) kg/s: amplitude halves in 6.9 s.",
+    "watch": "Energy decays as \\( e^{-bt/m} \\), twice as fast as the amplitude."
    }
   ],
   "stuck": [
-   "Write Newton's second law (or the rotational second law) about equilibrium and put it in the form ẍ = −(constant)x; the constant is ω².",
+   "Write Newton\\'s second law (or the rotational second law) about equilibrium and put it in the form \\( \\ddot x = -(\\text{constant})\\,x \\); the constant is \\( \\omega^2 \\).",
    "If the force is not exactly linear, expand it (or U) about equilibrium and keep the linear (quadratic) term.",
-   "For questions about speed at a position, use energy: ½mv² + ½kx² = ½kA². For questions about time, use x = A cos(ωt + φ).",
-   "Fix A and φ from the initial position and velocity, and check the quadrant of φ from the signs of cos φ and sin φ.",
-   "For a pendulum made of an extended body, compute I about the pivot with the parallel-axis theorem before using T = 2π√(I/(mgd))."
+   "For questions about speed at a position, use energy: \\( \\tfrac12mv^2 + \\tfrac12kx^2 = \\tfrac12kA^2 \\). For questions about time, use \\( x = A\\cos(\\omega t + \\phi) \\).",
+   "Fix \\( A \\) and \\( \\phi \\) from the initial position and velocity, and check the quadrant of \\( \\phi \\) from the signs of \\( \\cos\\phi \\) and \\( \\sin\\phi \\).",
+   "For a pendulum made of an extended body, compute \\( I \\) about the pivot with the parallel-axis theorem before using \\( T = 2\\pi\\sqrt{I/(mgd)} \\)."
   ]
  }
 }
