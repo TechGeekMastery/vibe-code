@@ -1,0 +1,932 @@
+{
+ "key": "mth-6-8",
+ "title": "Modular arithmetic and primes",
+ "v": 1,
+ "scope": "The division algorithm, greatest common divisors, the Euclidean algorithm and Bézout's identity, Euclid's lemma and uniqueness of prime factorization, congruences and modular arithmetic, inverses and linear congruences, the Chinese remainder theorem, and the theorems of Fermat and Euler; the infinitude of primes and the existence of factorizations were proved in earlier topics, and quadratic residues, primitive roots and cryptographic protocols are out of scope.",
+ "sources": [
+  {
+   "title": "T. Judson, Abstract Algebra: Theory and Applications, §2.2 The Division Algorithm (LibreTexts)",
+   "url": "https://math.libretexts.org/Bookshelves/Abstract_and_Geometric_Algebra/Abstract_Algebra:_Theory_and_Applications_(Judson)/02:_The_Integers/2.02:_The_Division_Algorithm"
+  },
+  {
+   "title": "E. Lehman, F. T. Leighton, A. R. Meyer, Mathematics for Computer Science (MIT, 2015), Chapter 9: Number Theory",
+   "url": "https://people.csail.mit.edu/meyer/mcs.pdf"
+  },
+  {
+   "title": "R. Hammack, Book of Proof, 3rd ed., §5.2 Congruence of Integers and §10.4 The Fundamental Theorem of Arithmetic",
+   "url": "https://richardhammack.github.io/BookOfProof/"
+  },
+  {
+   "title": "University of Southampton MATH1001 notes: 5.4 Linear congruences; 6.2 Fermat's little theorem",
+   "url": "https://www.southampton.ac.uk/~wright/1001/linear-congruences.html"
+  },
+  {
+   "title": "F. Lemmermeyer, Number Theory notes, Chapter 7: The Theorem of Euler–Fermat (Bilkent University)",
+   "url": "http://www.fen.bilkent.edu.tr/~franz/nt/ch7.pdf"
+  }
+ ],
+ "pre": [
+  "mth-6-1",
+  "mth-6-2",
+  "mth-6-3",
+  "mth-6-4"
+ ],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Division algorithm",
+   "d": "State and prove existence and uniqueness of quotient and remainder, including for negative dividends.",
+   "type": "fact"
+  },
+  {
+   "id": "k2",
+   "t": "gcd and the Euclidean algorithm",
+   "d": "Compute gcd(a, b) by the Euclidean algorithm and prove gcd(a, b) = gcd(b, r).",
+   "type": "procedure"
+  },
+  {
+   "id": "k3",
+   "t": "Bézout's identity",
+   "d": "Prove that gcd(a, b) is the least positive integer combination of a and b, and find the coefficients by back-substitution.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k4",
+   "t": "Euclid's lemma and primality",
+   "d": "Prove that a prime dividing a product divides a factor, and test primality using divisors up to √n.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k5",
+   "t": "Fundamental theorem of arithmetic",
+   "d": "Prove uniqueness of prime factorization and use factorizations for divisors, gcd and lcm.",
+   "type": "fact"
+  },
+  {
+   "id": "k6",
+   "t": "Congruence and its arithmetic",
+   "d": "Use a ≡ b (mod n), its equivalence with equal remainders, and its compatibility with addition, multiplication and powers.",
+   "type": "concept"
+  },
+  {
+   "id": "k7",
+   "t": "Computing with congruences",
+   "d": "Reduce large powers modulo n, find last digits, and justify divisibility tests.",
+   "type": "procedure"
+  },
+  {
+   "id": "k8",
+   "t": "Inverses and linear congruences",
+   "d": "Decide when a is invertible modulo n, compute inverses, and solve ax ≡ b (mod n) with the correct number of solutions.",
+   "type": "skill"
+  },
+  {
+   "id": "k9",
+   "t": "Chinese remainder theorem",
+   "d": "Solve systems of congruences with pairwise coprime moduli and prove existence and uniqueness modulo the product.",
+   "type": "skill"
+  },
+  {
+   "id": "k10",
+   "t": "Fermat's little theorem",
+   "d": "Prove a^(p−1) ≡ 1 (mod p) for p ∤ a and use it to reduce exponents.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k11",
+   "t": "Euler's φ and Euler's theorem",
+   "d": "Compute φ(n) from the factorization of n and apply a^φ(n) ≡ 1 (mod n) for gcd(a, n) = 1.",
+   "type": "skill"
+  }
+ ],
+ "intro": "Number theory studies the integers, and two tools organize most of its elementary part. The first is division with remainder, which measures how far an integer is from being divisible by another. The second is arithmetic **modulo** \\( n \\), in which integers with the same remainder are treated as equal: the arithmetic of clocks, of last digits, of check digits in account numbers, and of modern public-key cryptography.\n\nThe primes are the multiplicative building blocks of the integers. Earlier topics proved that there are infinitely many and that every integer greater than 1 is a product of primes. That such a factorization is *unique* is less obvious, and its proof needs a chain of ideas developed here in order: the division algorithm, greatest common divisors and the Euclidean algorithm, Bézout's identity, and Euclid's lemma. The same chain then supplies inverses modulo \\( n \\), which make it possible to solve congruences, to combine information modulo several numbers by the Chinese remainder theorem, and to prove the theorems of Fermat and Euler on powers.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "The division algorithm",
+   "kps": [
+    "k1"
+   ],
+   "md": "Divisibility is all or nothing: \\( 7 \\mid 2023 \\) holds and \\( 7 \\mid 2026 \\) fails. The division algorithm refines this by measuring *how far* an integer is from a multiple of another, and it justifies the case splits by remainder used since the proof-techniques topic.\n\n> **Division algorithm.** Let \\( a \\) and \\( n \\) be integers with \\( n \\ge 1 \\). There exist unique integers \\( q \\) and \\( r \\) such that\n\\[ a = qn + r \\quad\\text{and}\\quad 0 \\le r < n. \\]\n> \\( q \\) is the **quotient** and \\( r \\) the **remainder**; we write \\( r = a \\bmod n \\).\n\n*Proof of existence.* Let \\( S = \\{ a - kn : k \\in \\mathbb{Z},\\ a - kn \\ge 0 \\} \\). It is nonempty: for \\( k = -|a| \\), \\( a + |a|n \\ge a + |a| \\ge 0 \\). By the well-ordering principle \\( S \\) has a least element \\( r = a - qn \\ge 0 \\). If \\( r \\ge n \\), then \\( r - n = a - (q+1)n \\) would be a smaller element of \\( S \\); so \\( 0 \\le r < n \\).\n\n*Proof of uniqueness.* Suppose \\( a = qn + r = q'n + r' \\) with \\( 0 \\le r, r' < n \\). Then \\( n(q - q') = r' - r \\), and \\( -n < r' - r < n \\). The only multiple of \\( n \\) strictly between \\( -n \\) and \\( n \\) is 0, so \\( r = r' \\) and then \\( q = q' \\). \\( \\blacksquare \\)\n\n**Worked example 1.** \\( 2026 = 289 \\cdot 7 + 3 \\), so \\( 2026 \\bmod 7 = 3 \\). For a negative dividend the remainder is still required to lie in \\( \\{0, \\dots, n-1\\} \\): \\( -100 = (-15) \\cdot 7 + 5 \\), so \\( -100 \\bmod 7 = 5 \\), not \\( -2 \\). In general \\( q = \\lfloor a/n \\rfloor \\).\n\nTwo consequences are used constantly. First, \\( n \\mid a \\) if and only if \\( a \\bmod n = 0 \\). Second, every integer has *exactly one* of the forms \\( nk, nk + 1, \\dots, nk + (n - 1) \\); this is what makes a case split by remainder exhaustive and its cases mutually exclusive.\n\n**Worked example 2 (cases by remainder).** Every prime \\( p > 3 \\) has the form \\( 6k + 1 \\) or \\( 6k + 5 \\). Write \\( p = 6k + r \\) with \\( 0 \\le r \\le 5 \\). If \\( r = 0, 2, 4 \\), then \\( p = 2(3k + r/2) \\) is even and greater than 2, so not prime. If \\( r = 3 \\), then \\( p = 3(2k + 1) \\) is a multiple of 3 greater than 3. Only \\( r = 1 \\) and \\( r = 5 \\) remain. (The converse fails: \\( 25 = 6 \\cdot 4 + 1 \\).)\n\nRecall from the proof-techniques topic that divisibility is transitive and that a common divisor of \\( a \\) and \\( b \\) divides every integer combination \\( ax + by \\). These two facts, with the division algorithm, drive everything in the next section.\n\n**The common mistakes.** Giving a negative remainder for a negative dividend; forgetting that the remainder must be less than \\( n \\), not at most \\( n \\); and treating the forms \\( 6k + 1 \\), \\( 6k + 5 \\) as a characterization of primes rather than a necessary condition.",
+   "questions": [
+    {
+     "id": "s1q1",
+     "kp": "k1",
+     "type": "number",
+     "prompt": "Find the remainder \\( r \\) with \\( 0 \\le r < 8 \\) when \\( -53 \\) is divided by \\( 8 \\).",
+     "answer": "3",
+     "why": "\\( -53 = (-7) \\cdot 8 + 3 \\), since \\( -56 + 3 = -53 \\). The quotient is \\( \\lfloor -53/8 \\rfloor = -7 \\), and the remainder is 3 (not \\( -5 \\))."
+    },
+    {
+     "id": "s1q2",
+     "kp": "k1",
+     "type": "written",
+     "prompt": "Prove that the square of every integer leaves remainder 0 or 1 on division by 4. Deduce that no integer of the form \\( 4k + 3 \\) is a sum of two squares of integers.",
+     "rubric": [
+      "Case n = 2m: n² = 4m², remainder 0",
+      "Case n = 2m + 1: n² = 4(m² + m) + 1, remainder 1",
+      "A sum of two squares is 4s + (r₁ + r₂) with r₁, r₂ ∈ {0, 1}, so its remainder is 0, 1 or 2",
+      "By uniqueness of the remainder it is never 3, so 4k + 3 is not a sum of two squares"
+     ],
+     "model": "*Squares.* Every integer is even or odd. If \\( n = 2m \\), then \\( n^{2} = 4m^{2} \\), remainder 0. If \\( n = 2m + 1 \\), then \\( n^{2} = 4m^{2} + 4m + 1 = 4(m^{2} + m) + 1 \\), remainder 1.\n\n*Sums of two squares.* Let \\( x^{2} = 4s + r_{1} \\) and \\( y^{2} = 4t + r_{2} \\) with \\( r_{1}, r_{2} \\in \\{0, 1\\} \\). Then \\( x^{2} + y^{2} = 4(s + t) + (r_{1} + r_{2}) \\) with \\( r_{1} + r_{2} \\in \\{0, 1, 2\\} \\), and this is the division-algorithm form, so the remainder of \\( x^{2} + y^{2} \\) is 0, 1 or 2. By uniqueness of the remainder it is never 3, so no integer \\( 4k + 3 \\) equals \\( x^{2} + y^{2} \\). \\( \\blacksquare \\)",
+     "why": "Uniqueness in the division algorithm is what turns \"can be written with remainder \\( r_{1} + r_{2} \\)\" into \"cannot have remainder 3\"."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "Greatest common divisors and the Euclidean algorithm",
+   "kps": [
+    "k2",
+    "k3"
+   ],
+   "md": "The greatest common divisor measures what two integers have in common multiplicatively. This section gives the ancient and still optimal method for computing it, and proves the identity, named after Bézout, on which the rest of the topic depends.\n\n> For integers \\( a, b \\), not both 0, the **greatest common divisor** \\( \\gcd(a, b) \\) is the largest integer that divides both. They are **relatively prime** (coprime) if \\( \\gcd(a, b) = 1 \\).\n\nNote \\( \\gcd(a, 0) = |a| \\) for \\( a \\ne 0 \\), and \\( \\gcd(a, b) = \\gcd(|a|, |b|) \\).\n\n> **Lemma.** If \\( a = qb + r \\), then \\( a, b \\) and \\( b, r \\) have exactly the same common divisors; hence \\( \\gcd(a, b) = \\gcd(b, r) \\).\n\n*Proof.* If \\( d \\mid a \\) and \\( d \\mid b \\), then \\( d \\mid a - qb = r \\). If \\( d \\mid b \\) and \\( d \\mid r \\), then \\( d \\mid qb + r = a \\). \\( \\blacksquare \\)\n\n**The Euclidean algorithm.** To compute \\( \\gcd(a, b) \\) with \\( a \\ge b > 0 \\), divide \\( a \\) by \\( b \\), then \\( b \\) by the remainder, and so on, each time dividing the previous divisor by the previous remainder. The remainders strictly decrease and are nonnegative, so a remainder 0 is reached; by the lemma, the last nonzero remainder is the gcd.\n\n**Worked example 1.** \\( \\gcd(252, 198) \\):\n\\[ 252 = 1 \\cdot 198 + 54, \\quad 198 = 3 \\cdot 54 + 36, \\quad 54 = 1 \\cdot 36 + 18, \\quad 36 = 2 \\cdot 18 + 0. \\]\nSo \\( \\gcd(252, 198) = \\gcd(198, 54) = \\gcd(54, 36) = \\gcd(36, 18) = 18 \\).\n\n> **Bézout's identity.** Let \\( a, b \\) be integers, not both 0. Then \\( \\gcd(a, b) \\) is the least positive integer of the form \\( ax + by \\) with \\( x, y \\in \\mathbb{Z} \\). In particular there are integers \\( x, y \\) with \\( ax + by = \\gcd(a, b) \\).\n\n*Proof.* The set \\( S = \\{ ax + by : x, y \\in \\mathbb{Z},\\ ax + by > 0 \\} \\) contains \\( a^{2} + b^{2} > 0 \\), so by well-ordering it has a least element \\( d = ax_{0} + by_{0} \\). Divide: \\( a = qd + r \\) with \\( 0 \\le r < d \\). Then \\( r = a - q(ax_{0} + by_{0}) = a(1 - qx_{0}) + b(-qy_{0}) \\) is an integer combination; if \\( r > 0 \\) it would be an element of \\( S \\) smaller than \\( d \\). So \\( r = 0 \\) and \\( d \\mid a \\); likewise \\( d \\mid b \\). Conversely, every common divisor \\( c \\) of \\( a \\) and \\( b \\) divides \\( ax_{0} + by_{0} = d \\), so \\( c \\le |c| \\le d \\). Hence \\( d \\) is the greatest common divisor. \\( \\blacksquare \\)\n\nThe proof also shows that every common divisor of \\( a \\) and \\( b \\) divides \\( \\gcd(a, b) \\), and that the integer combinations of \\( a \\) and \\( b \\) are exactly the multiples of \\( \\gcd(a, b) \\).\n\n**Finding the coefficients (extended Euclidean algorithm).** Run the algorithm backwards, expressing each remainder through the earlier ones. From worked example 1:\n\\[ 18 = 54 - 36 = 54 - (198 - 3 \\cdot 54) = 4 \\cdot 54 - 198 = 4(252 - 198) - 198 = 4 \\cdot 252 - 5 \\cdot 198. \\]\nCheck: \\( 1008 - 990 = 18 \\). The coefficients are not unique: \\( (4 + 11t) \\cdot 252 - (5 + 14t) \\cdot 198 = 18 \\) for every integer \\( t \\), since \\( 11 \\cdot 252 = 14 \\cdot 198 \\).\n\n**The common mistakes.** Taking the last quotient, or the zero remainder, instead of the last nonzero remainder; sign errors in back-substitution (always check the final combination numerically); and believing the Bézout coefficients are unique.",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k2",
+     "type": "number",
+     "prompt": "Use the Euclidean algorithm to compute \\( \\gcd(1071, 462) \\).",
+     "answer": "21",
+     "why": "\\( 1071 = 2 \\cdot 462 + 147 \\); \\( 462 = 3 \\cdot 147 + 21 \\); \\( 147 = 7 \\cdot 21 + 0 \\). The last nonzero remainder is 21."
+    },
+    {
+     "id": "s2q2",
+     "kp": "k3",
+     "type": "written",
+     "prompt": "Find integers \\( x, y \\) with \\( 1071x + 462y = 21 \\) by back-substitution in the Euclidean algorithm, and verify your answer. Then write down a second pair \\( (x, y) \\).",
+     "rubric": [
+      "Divisions: 1071 = 2·462 + 147, 462 = 3·147 + 21",
+      "Back-substitution: 21 = 462 − 3·147 = 462 − 3(1071 − 2·462) = 7·462 − 3·1071",
+      "States x = −3, y = 7 and verifies 3234 − 3213 = 21",
+      "Second pair from adding (22, −51) (since 1071/21 = 51, 462/21 = 22), e.g. x = 19, y = −44"
+     ],
+     "model": "From \\( 1071 = 2 \\cdot 462 + 147 \\) and \\( 462 = 3 \\cdot 147 + 21 \\):\n\\[ 21 = 462 - 3 \\cdot 147 = 462 - 3(1071 - 2 \\cdot 462) = 7 \\cdot 462 - 3 \\cdot 1071. \\]\nSo \\( x = -3 \\), \\( y = 7 \\). Check: \\( 7 \\cdot 462 = 3234 \\), \\( 3 \\cdot 1071 = 3213 \\), and \\( 3234 - 3213 = 21 \\).\n\nSince \\( 1071 \\cdot 22 = 462 \\cdot 51 \\) (both equal 23562), adding \\( 22 \\) to \\( x \\) and subtracting 51 from \\( y \\) preserves the value: \\( x = 19 \\), \\( y = -44 \\) gives \\( 1071 \\cdot 19 - 462 \\cdot 44 = 20349 - 20328 = 21 \\).",
+     "why": "All solutions are \\( x = -3 + 22t \\), \\( y = 7 - 51t \\), where \\( 22 = 462/21 \\) and \\( 51 = 1071/21 \\)."
+    },
+    {
+     "id": "s2q3",
+     "kp": "k3",
+     "type": "written",
+     "prompt": "Let \\( d = \\gcd(a, b) \\) with \\( a, b \\) not both 0. Prove that \\( \\gcd\\!\\left(\\frac{a}{d}, \\frac{b}{d}\\right) = 1 \\).",
+     "rubric": [
+      "a/d and b/d are integers since d divides a and b",
+      "Bézout: ax + by = d for some integers x, y",
+      "Divides by d: (a/d)x + (b/d)y = 1",
+      "Any common divisor of a/d and b/d divides 1, so the gcd is 1"
+     ],
+     "model": "*Proof.* Since \\( d \\mid a \\) and \\( d \\mid b \\), the numbers \\( a' = a/d \\) and \\( b' = b/d \\) are integers, not both 0. By Bézout's identity there are integers \\( x, y \\) with \\( ax + by = d \\). Dividing by \\( d \\), \\( a'x + b'y = 1 \\). Any common divisor of \\( a' \\) and \\( b' \\) divides \\( a'x + b'y = 1 \\), so it is \\( \\pm 1 \\). Hence \\( \\gcd(a', b') = 1 \\). \\( \\blacksquare \\)",
+     "why": "An integer combination equal to 1 certifies coprimality; this is the form in which Bézout's identity is most often used."
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "Primes and the fundamental theorem of arithmetic",
+   "kps": [
+    "k4",
+    "k5"
+   ],
+   "md": "The proof-techniques topic showed that there are infinitely many primes, and the induction topic that every integer \\( n \\ge 2 \\) is a product of primes. This section proves the property of primes that makes the factorization unique, and draws the consequences.\n\n**Testing primality.** If \\( n > 1 \\) is composite, it has a prime divisor \\( p \\le \\sqrt{n} \\). Indeed \\( n = ab \\) with \\( 1 < a \\le b < n \\); then \\( a^{2} \\le ab = n \\), so \\( a \\le \\sqrt{n} \\), and any prime divisor of \\( a \\) is at most \\( a \\) and divides \\( n \\). So to test \\( n \\), it suffices to try the primes up to \\( \\sqrt{n} \\). For \\( n = 211 \\), \\( \\sqrt{211} \\approx 14.5 \\), and none of \\( 2, 3, 5, 7, 11, 13 \\) divides 211, so 211 is prime. For \\( n = 221 \\), the trial reaches \\( 13 \\mid 221 = 13 \\cdot 17 \\).\n\n> **Euclid's lemma.** If \\( p \\) is prime and \\( p \\mid ab \\), then \\( p \\mid a \\) or \\( p \\mid b \\).\n\n*Proof.* Suppose \\( p \\mid ab \\) and \\( p \\nmid a \\). The only positive divisors of \\( p \\) are 1 and \\( p \\), and \\( p \\) does not divide \\( a \\), so \\( \\gcd(p, a) = 1 \\). By Bézout, \\( px + ay = 1 \\) for some integers \\( x, y \\). Multiplying by \\( b \\): \\( pbx + (ab)y = b \\). Both terms on the left are divisible by \\( p \\), so \\( p \\mid b \\). \\( \\blacksquare \\)\n\nThe same argument proves the **generalized form**: if \\( n \\mid ab \\) and \\( \\gcd(n, a) = 1 \\), then \\( n \\mid b \\). By induction on the number of factors, a prime dividing \\( a_{1}a_{2}\\cdots a_{k} \\) divides some \\( a_{i} \\). Primality is essential: \\( 6 \\mid 4 \\cdot 9 \\), but \\( 6 \\nmid 4 \\) and \\( 6 \\nmid 9 \\).\n\n> **Fundamental theorem of arithmetic.** Every integer \\( n \\ge 2 \\) can be written as a product of primes, and this factorization is unique apart from the order of the factors.\n\n*Proof of uniqueness.* By strong induction on \\( n \\). Suppose \\( n = p_{1}p_{2}\\cdots p_{r} = q_{1}q_{2}\\cdots q_{s} \\) with all \\( p_{i}, q_{j} \\) prime. Since \\( p_{1} \\mid q_{1}\\cdots q_{s} \\), Euclid's lemma gives \\( p_{1} \\mid q_{j} \\) for some \\( j \\); as \\( q_{j} \\) is prime and \\( p_{1} > 1 \\), \\( p_{1} = q_{j} \\). Reorder so that \\( j = 1 \\) and cancel: \\( n/p_{1} = p_{2}\\cdots p_{r} = q_{2}\\cdots q_{s} \\). If \\( n/p_{1} = 1 \\), both remaining products are empty, so \\( r = s = 1 \\). Otherwise \\( 2 \\le n/p_{1} < n \\), and by the inductive hypothesis the two factorizations of \\( n/p_{1} \\) agree up to order; hence so do those of \\( n \\). \\( \\blacksquare \\)\n\n(This is why 1 is not called prime: otherwise \\( 6 = 2 \\cdot 3 = 1 \\cdot 2 \\cdot 3 \\) would be two factorizations.)\n\n**Using factorizations.** Grouping equal primes gives the **canonical form** \\( n = p_{1}^{a_{1}} \\cdots p_{k}^{a_{k}} \\) with \\( p_{1} < \\cdots < p_{k} \\). A positive divisor of \\( n \\) is exactly a number \\( p_{1}^{b_{1}}\\cdots p_{k}^{b_{k}} \\) with \\( 0 \\le b_{i} \\le a_{i} \\), so \\( n \\) has \\( (a_{1} + 1)\\cdots(a_{k} + 1) \\) positive divisors (product rule). For \\( a, b \\ge 1 \\), \\( \\gcd \\) takes the minimum exponent of each prime and \\( \\operatorname{lcm} \\) the maximum.\n\n**Worked example.** \\( 360 = 2^{3} \\cdot 3^{2} \\cdot 5 \\) has \\( 4 \\cdot 3 \\cdot 2 = 24 \\) divisors. With \\( 84 = 2^{2} \\cdot 3 \\cdot 7 \\): \\( \\gcd(360, 84) = 2^{2} \\cdot 3 = 12 \\) and \\( \\operatorname{lcm}(360, 84) = 2^{3} \\cdot 3^{2} \\cdot 5 \\cdot 7 = 2520 \\). Since \\( \\min + \\max = \\) sum of the two exponents, \\( \\gcd(a, b)\\operatorname{lcm}(a, b) = ab \\): here \\( 12 \\cdot 2520 = 30240 = 360 \\cdot 84 \\).\n\n**The common mistakes.** Applying Euclid's lemma with a composite divisor; stopping trial division before \\( \\sqrt{n} \\), or continuing needlessly beyond it; and forgetting that uniqueness is only up to order.",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k4",
+     "type": "written",
+     "prompt": "Let \\( p \\) be prime. (a) Prove that if \\( p \\mid a^{2} \\), then \\( p \\mid a \\). (b) Deduce that \\( \\sqrt{p} \\) is irrational.",
+     "rubric": [
+      "(a) Applies Euclid's lemma to p | a·a: p | a or p | a",
+      "(b) Assumes √p = a/b in lowest terms, so a² = pb²",
+      "p | a², so p | a; writing a = pc gives b² = pc², so p | b",
+      "Contradiction with lowest terms (p is a common factor)"
+     ],
+     "model": "(a) \\( a^{2} = a \\cdot a \\), so by Euclid's lemma \\( p \\mid a \\) or \\( p \\mid a \\); either way \\( p \\mid a \\).\n\n(b) Suppose, for contradiction, \\( \\sqrt{p} = \\frac{a}{b} \\) with positive integers \\( a, b \\) having no common divisor greater than 1 (lowest terms, justified by well-ordering). Then \\( a^{2} = pb^{2} \\), so \\( p \\mid a^{2} \\) and by (a) \\( p \\mid a \\); write \\( a = pc \\). Then \\( p^{2}c^{2} = pb^{2} \\), so \\( b^{2} = pc^{2} \\), hence \\( p \\mid b^{2} \\) and \\( p \\mid b \\). Now \\( p > 1 \\) divides both \\( a \\) and \\( b \\), a contradiction. So \\( \\sqrt{p} \\) is irrational. \\( \\blacksquare \\)",
+     "why": "This generalizes the proofs for \\( \\sqrt{2} \\) and \\( \\sqrt{3} \\) in the proof-techniques topic: Euclid's lemma replaces the case analysis by remainders."
+    },
+    {
+     "id": "s3q2",
+     "kp": "k5",
+     "type": "number",
+     "prompt": "How many positive divisors does \\( 7200 \\) have?",
+     "answer": "54",
+     "why": "\\( 7200 = 72 \\cdot 100 = 2^{3} 3^{2} \\cdot 2^{2} 5^{2} = 2^{5} \\cdot 3^{2} \\cdot 5^{2} \\). The number of divisors is \\( (5 + 1)(2 + 1)(2 + 1) = 54 \\)."
+    },
+    {
+     "id": "s3q3",
+     "kp": "k4",
+     "type": "mcq",
+     "prompt": "Which of the following statements is true for all integers \\( a, b, n \\) with \\( n \\ge 2 \\)?",
+     "options": [
+      "If \\( n \\mid ab \\), then \\( n \\mid a \\) or \\( n \\mid b \\).",
+      "If \\( n \\mid ab \\) and \\( \\gcd(n, a) = 1 \\), then \\( n \\mid b \\).",
+      "If \\( n \\) is prime and \\( n \\mid a + b \\), then \\( n \\mid a \\) or \\( n \\mid b \\).",
+      "If \\( n \\) is prime and \\( n \\mid ab \\), then \\( n \\mid a \\) and \\( n \\mid b \\)."
+     ],
+     "answer": 1,
+     "why": "The second is the generalized Euclid lemma: from \\( nx + ay = 1 \\), \\( b = nbx + (ab)y \\) is divisible by \\( n \\). The first needs \\( n \\) prime (\\( 6 \\mid 4 \\cdot 9 \\)). The third confuses sums with products (\\( 2 \\mid 1 + 1 \\)). The fourth demands both factors (\\( 2 \\mid 2 \\cdot 3 \\) but \\( 2 \\nmid 3 \\))."
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "Congruences and modular arithmetic",
+   "kps": [
+    "k6",
+    "k7"
+   ],
+   "md": "Many questions about integers depend only on remainders: whether a number is even, what its last digit is, whether it is divisible by 9. Congruence notation, introduced in the sets topic as an example of an equivalence relation, turns such remainder reasoning into an algebra with its own rules. This section establishes those rules and their limits.\n\nRecall: for an integer \\( n \\ge 1 \\), \\( a \\equiv b \\pmod{n} \\) means \\( n \\mid (a - b) \\). It is an equivalence relation on \\( \\mathbb{Z} \\).\n\n> **Theorem.** \\( a \\equiv b \\pmod{n} \\) if and only if \\( a \\) and \\( b \\) have the same remainder on division by \\( n \\).\n\n*Proof.* Write \\( a = qn + r \\) and \\( b = q'n + r' \\) with \\( 0 \\le r, r' < n \\). Then \\( a - b = (q - q')n + (r - r') \\), so \\( n \\mid (a - b) \\) if and only if \\( n \\mid (r - r') \\). Since \\( -n < r - r' < n \\), this happens exactly when \\( r = r' \\). \\( \\blacksquare \\)\n\nSo there are exactly \\( n \\) congruence classes, \\( [0], [1], \\dots, [n-1] \\), and every integer is congruent to exactly one of \\( 0, 1, \\dots, n - 1 \\). The set of classes is denoted \\( \\mathbb{Z}_{n} \\) (also \\( \\mathbb{Z}/n\\mathbb{Z} \\)).\n\n> **Theorem (compatibility).** If \\( a \\equiv b \\) and \\( c \\equiv d \\pmod{n} \\), then \\( a + c \\equiv b + d \\), \\( a - c \\equiv b - d \\) and \\( ac \\equiv bd \\pmod{n} \\). Consequently \\( a^{k} \\equiv b^{k} \\pmod{n} \\) for every integer \\( k \\ge 1 \\).\n\n*Proof.* \\( (a + c) - (b + d) = (a - b) + (c - d) \\), a sum of multiples of \\( n \\); subtraction is similar. For products, \\( ac - bd = a(c - d) + d(a - b) \\), again a combination of multiples of \\( n \\). The statement for powers follows by induction on \\( k \\), since \\( a^{k+1} = a^{k} \\cdot a \\). \\( \\blacksquare \\)\n\nThis theorem says that the operations \\( [a] + [c] = [a + c] \\) and \\( [a][c] = [ac] \\) on \\( \\mathbb{Z}_{n} \\) are well-defined: the result does not depend on which representatives are chosen. In a computation modulo \\( n \\) you may therefore replace any number by anything congruent to it, at any stage.\n\n**Worked example 1.** The last digit of \\( 3^{2026} \\) is \\( 3^{2026} \\bmod 10 \\). Since \\( 3^{4} = 81 \\equiv 1 \\pmod{10} \\) and \\( 2026 = 4 \\cdot 506 + 2 \\),\n\\[ 3^{2026} = \\left(3^{4}\\right)^{506} \\cdot 3^{2} \\equiv 1^{506} \\cdot 9 = 9 \\pmod{10}. \\]\n\n**Worked example 2 (repeated squaring).** To compute \\( 3^{45} \\bmod 7 \\), square repeatedly, reducing each time: \\( 3^{1} \\equiv 3 \\), \\( 3^{2} \\equiv 2 \\), \\( 3^{4} \\equiv 4 \\), \\( 3^{8} \\equiv 2 \\), \\( 3^{16} \\equiv 4 \\), \\( 3^{32} \\equiv 2 \\). Since \\( 45 = 32 + 8 + 4 + 1 \\), \\( 3^{45} \\equiv 2 \\cdot 2 \\cdot 4 \\cdot 3 = 48 \\equiv 6 \\pmod{7} \\). This method needs about \\( 2\\log_{2} k \\) multiplications for exponent \\( k \\), which makes huge powers computable.\n\n**Worked example 3 (divisibility by 9 and 11).** Let \\( n = d_{m}10^{m} + \\cdots + d_{1}10 + d_{0} \\). Since \\( 10 \\equiv 1 \\pmod{9} \\), \\( n \\equiv d_{m} + \\cdots + d_{1} + d_{0} \\pmod{9} \\): a number is divisible by 9 exactly when its digit sum is. Since \\( 10 \\equiv -1 \\pmod{11} \\), \\( n \\equiv d_{0} - d_{1} + d_{2} - \\cdots \\pmod{11} \\). For \\( 918082 \\): \\( 2 - 8 + 0 - 8 + 1 - 9 = -22 \\), so \\( 11 \\mid 918082 \\).\n\n**What is not allowed.** Division is not compatible in general: \\( 2 \\cdot 3 \\equiv 2 \\cdot 8 \\pmod{10} \\), but \\( 3 \\not\\equiv 8 \\pmod{10} \\). Cancelling a factor \\( c \\) is valid when \\( \\gcd(c, n) = 1 \\), as the next section shows. Exponents may not be reduced modulo \\( n \\): \\( 10 \\equiv 0 \\pmod{5} \\), but \\( 2^{10} = 1024 \\equiv 4 \\) while \\( 2^{0} = 1 \\pmod{5} \\). (Exponents can be reduced by other means, using Fermat's and Euler's theorems in the last section.)\n\n**The common mistakes.** Cancelling a common factor that is not coprime to the modulus; reducing an exponent modulo \\( n \\); and forgetting to reduce intermediate results, which lets the numbers grow uncontrollably.",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k7",
+     "type": "number",
+     "prompt": "Find the last two digits of \\( 7^{2026} \\); that is, compute \\( 7^{2026} \\bmod 100 \\).",
+     "answer": "49",
+     "why": "\\( 7^{2} = 49 \\) and \\( 7^{4} = 2401 \\equiv 1 \\pmod{100} \\). Since \\( 2026 = 4 \\cdot 506 + 2 \\), \\( 7^{2026} \\equiv 1^{506} \\cdot 49 = 49 \\pmod{100} \\)."
+    },
+    {
+     "id": "s4q2",
+     "kp": "k6",
+     "type": "written",
+     "prompt": "(a) Prove by induction on \\( k \\ge 1 \\) that if \\( a \\equiv b \\pmod{n} \\), then \\( a^{k} \\equiv b^{k} \\pmod{n} \\), using the compatibility of congruence with multiplication. (b) Show by an explicit example that \\( k \\equiv l \\pmod{n} \\) does not imply \\( a^{k} \\equiv a^{l} \\pmod{n} \\).",
+     "rubric": [
+      "(a) Base k = 1 is the hypothesis",
+      "(a) Step: from a^k ≡ b^k and a ≡ b, multiplication gives a^{k+1} ≡ b^{k+1}",
+      "(b) A concrete counterexample, e.g. n = 5, a = 2, k = 10, l = 0: 1024 ≡ 4 but 1 ≡ 1",
+      "(b) Verifies both the hypothesis k ≡ l and the failure of the conclusion"
+     ],
+     "model": "(a) *Base case.* For \\( k = 1 \\), \\( a^{1} \\equiv b^{1} \\) is the hypothesis. *Inductive step.* Assume \\( a^{k} \\equiv b^{k} \\pmod{n} \\). Together with \\( a \\equiv b \\pmod{n} \\), compatibility with multiplication gives \\( a^{k} \\cdot a \\equiv b^{k} \\cdot b \\), i.e. \\( a^{k+1} \\equiv b^{k+1} \\pmod{n} \\). By induction the claim holds for all \\( k \\ge 1 \\).\n\n(b) Take \\( n = 5 \\), \\( a = 2 \\), \\( k = 10 \\), \\( l = 0 \\). Then \\( 10 \\equiv 0 \\pmod{5} \\), but \\( 2^{10} = 1024 = 5 \\cdot 204 + 4 \\equiv 4 \\pmod{5} \\), whereas \\( 2^{0} = 1 \\). Since \\( 4 \\not\\equiv 1 \\pmod{5} \\), the conclusion fails.",
+     "why": "Bases may be reduced modulo \\( n \\); exponents may not. The correct modulus for exponents, when \\( \\gcd(a, n) = 1 \\), is \\( \\varphi(n) \\), by Euler's theorem."
+    },
+    {
+     "id": "s4q3",
+     "kp": "k7",
+     "type": "written",
+     "prompt": "Prove that a positive integer is divisible by 11 if and only if the alternating sum of its digits, \\( d_{0} - d_{1} + d_{2} - \\cdots \\) (starting from the units digit), is divisible by 11.",
+     "rubric": [
+      "Writes n = Σ d_i 10^i",
+      "10 ≡ −1 (mod 11), so 10^i ≡ (−1)^i (compatibility with powers)",
+      "Hence n ≡ Σ (−1)^i d_i (mod 11) (compatibility with sums and products)",
+      "n and the alternating sum have the same remainder, so one is divisible by 11 iff the other is"
+     ],
+     "model": "*Proof.* Write \\( n = \\sum_{i=0}^{m} d_{i}10^{i} \\). Since \\( 10 \\equiv -1 \\pmod{11} \\), compatibility with powers gives \\( 10^{i} \\equiv (-1)^{i} \\pmod{11} \\), and compatibility with products and sums gives\n\\[ n \\equiv \\sum_{i=0}^{m} d_{i}(-1)^{i} = d_{0} - d_{1} + d_{2} - \\cdots \\pmod{11}. \\]\nCongruent integers have the same remainder, so \\( 11 \\mid n \\) if and only if \\( 11 \\) divides the alternating sum. \\( \\blacksquare \\)",
+     "why": "Every divisibility test for a base-10 digit expansion comes from the residue of 10 (or of a power of 10) modulo the divisor."
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "Inverses and linear congruences",
+   "kps": [
+    "k8"
+   ],
+   "md": "The previous section showed that congruences cannot in general be divided. This section identifies exactly when division is possible, by means of inverses, and uses this to solve linear congruences completely.\n\n> An integer \\( x \\) is an **inverse of \\( a \\) modulo \\( n \\)** if \\( ax \\equiv 1 \\pmod{n} \\).\n\n> **Theorem.** \\( a \\) has an inverse modulo \\( n \\) if and only if \\( \\gcd(a, n) = 1 \\). The inverse is then unique modulo \\( n \\).\n\n*Proof.* \\( ax \\equiv 1 \\pmod{n} \\) means \\( ax - 1 = -ny \\) for some integer \\( y \\), that is, \\( ax + ny = 1 \\). If such \\( x, y \\) exist, every common divisor of \\( a \\) and \\( n \\) divides 1, so \\( \\gcd(a, n) = 1 \\). Conversely, if \\( \\gcd(a, n) = 1 \\), Bézout's identity supplies \\( x, y \\) with \\( ax + ny = 1 \\). For uniqueness, if \\( ax \\equiv 1 \\) and \\( ax' \\equiv 1 \\), then \\( x \\equiv x(ax') = (xa)x' \\equiv x' \\pmod{n} \\). \\( \\blacksquare \\)\n\n**Cancellation.** If \\( \\gcd(c, n) = 1 \\) and \\( ac \\equiv bc \\pmod{n} \\), then multiplying by an inverse of \\( c \\) gives \\( a \\equiv b \\pmod{n} \\). In particular, when \\( p \\) is prime every class \\( [a] \\ne [0] \\) in \\( \\mathbb{Z}_{p} \\) is invertible.\n\n**Worked example 1.** The inverse of 17 modulo 43. The Euclidean algorithm gives \\( 43 = 2 \\cdot 17 + 9 \\), \\( 17 = 1 \\cdot 9 + 8 \\), \\( 9 = 1 \\cdot 8 + 1 \\). Back-substituting,\n\\[ 1 = 9 - 8 = 9 - (17 - 9) = 2 \\cdot 9 - 17 = 2(43 - 2 \\cdot 17) - 17 = 2 \\cdot 43 - 5 \\cdot 17. \\]\nSo \\( 17 \\cdot (-5) \\equiv 1 \\pmod{43} \\), and the inverse is \\( -5 \\equiv 38 \\). Check: \\( 17 \\cdot 38 = 646 = 15 \\cdot 43 + 1 \\).\n\n> **Theorem (linear congruences).** Let \\( d = \\gcd(a, n) \\). The congruence \\( ax \\equiv b \\pmod{n} \\) has a solution if and only if \\( d \\mid b \\). In that case it has exactly \\( d \\) solutions modulo \\( n \\): if \\( x_{0} \\) is one solution, they are \\( x_{0} + k\\frac{n}{d} \\) for \\( k = 0, 1, \\dots, d - 1 \\).\n\n*Proof.* A solution \\( x \\) gives \\( ax - b = ny \\) for some \\( y \\), so \\( b = ax - ny \\) is an integer combination of \\( a \\) and \\( n \\), hence a multiple of \\( d \\). Conversely, suppose \\( d \\mid b \\), and write \\( a = da' \\), \\( b = db' \\), \\( n = dn' \\). Then \\( n \\mid (ax - b) \\) if and only if \\( n' \\mid (a'x - b') \\), so the congruence is equivalent to \\( a'x \\equiv b' \\pmod{n'} \\). Since \\( \\gcd(a', n') = 1 \\) (the gcd exercise of the earlier section), \\( a' \\) has an inverse modulo \\( n' \\), and the solutions are exactly the integers in one class \\( x_{0} + n'\\mathbb{Z} \\). That class contains exactly \\( d \\) residues modulo \\( n = dn' \\), namely \\( x_{0}, x_{0} + n', \\dots, x_{0} + (d - 1)n' \\). \\( \\blacksquare \\)\n\n**Worked example 2.** Solve \\( 12x \\equiv 18 \\pmod{30} \\). Here \\( d = \\gcd(12, 30) = 6 \\) and \\( 6 \\mid 18 \\), so there are 6 solutions modulo 30. Dividing by 6: \\( 2x \\equiv 3 \\pmod{5} \\). The inverse of 2 modulo 5 is 3, so \\( x \\equiv 9 \\equiv 4 \\pmod{5} \\). The solutions modulo 30 are \\( 4, 9, 14, 19, 24, 29 \\). Check one: \\( 12 \\cdot 4 = 48 = 30 + 18 \\).\n\n**Worked example 3.** \\( 6x \\equiv 4 \\pmod{9} \\) has no solution: \\( \\gcd(6, 9) = 3 \\) and \\( 3 \\nmid 4 \\). (Indeed \\( 6x \\) is always a multiple of 3, and so is \\( 6x - 9k \\), which can never equal 4.)\n\n**The common mistakes.** Dividing a congruence by a common factor of \\( a \\) and \\( b \\) without dividing the modulus as well; reporting a single solution modulo \\( n \\) when \\( d > 1 \\); and forgetting to check \\( d \\mid b \\) before solving.",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k8",
+     "type": "number",
+     "prompt": "Find the inverse of 11 modulo 26, as an integer between 0 and 25.",
+     "answer": "19",
+     "why": "\\( 26 = 2 \\cdot 11 + 4 \\), \\( 11 = 2 \\cdot 4 + 3 \\), \\( 4 = 1 \\cdot 3 + 1 \\). Back-substituting: \\( 1 = 4 - 3 = 4 - (11 - 2 \\cdot 4) = 3 \\cdot 4 - 11 = 3(26 - 2 \\cdot 11) - 11 = 3 \\cdot 26 - 7 \\cdot 11 \\). So the inverse is \\( -7 \\equiv 19 \\); check \\( 11 \\cdot 19 = 209 = 8 \\cdot 26 + 1 \\)."
+    },
+    {
+     "id": "s5q2",
+     "kp": "k8",
+     "type": "numbers",
+     "prompt": "Find all solutions of \\( 9x \\equiv 21 \\pmod{30} \\) in \\( \\{0, 1, \\dots, 29\\} \\).",
+     "answer": "9, 19, 29",
+     "why": "\\( d = \\gcd(9, 30) = 3 \\) divides 21, so there are 3 solutions. Divide by 3: \\( 3x \\equiv 7 \\pmod{10} \\). The inverse of 3 modulo 10 is 7, so \\( x \\equiv 49 \\equiv 9 \\pmod{10} \\). Modulo 30: \\( 9, 19, 29 \\). Check: \\( 9 \\cdot 9 = 81 = 2 \\cdot 30 + 21 \\)."
+    },
+    {
+     "id": "s5q3",
+     "kp": "k8",
+     "type": "written",
+     "prompt": "Prove the cancellation law: if \\( \\gcd(c, n) = 1 \\) and \\( ac \\equiv bc \\pmod{n} \\), then \\( a \\equiv b \\pmod{n} \\). Give an example showing that the hypothesis \\( \\gcd(c, n) = 1 \\) cannot be dropped, and state the correct conclusion in your example.",
+     "rubric": [
+      "gcd(c, n) = 1 gives an inverse c′ with cc′ ≡ 1 (mod n)",
+      "Multiplies ac ≡ bc by c′: a ≡ a(cc′) = (ac)c′ ≡ (bc)c′ ≡ b",
+      "Counterexample, e.g. 2·3 ≡ 2·8 (mod 10) with 3 ≢ 8",
+      "Correct conclusion: a ≡ b (mod n/gcd(c, n)), e.g. 3 ≡ 8 (mod 5)"
+     ],
+     "model": "*Proof.* Since \\( \\gcd(c, n) = 1 \\), \\( c \\) has an inverse \\( c' \\) modulo \\( n \\): \\( cc' \\equiv 1 \\). Multiplying \\( ac \\equiv bc \\) by \\( c' \\) and using compatibility,\n\\[ a \\equiv a(cc') = (ac)c' \\equiv (bc)c' = b(cc') \\equiv b \\pmod{n}. \\; \\blacksquare \\]\n\n*Example.* \\( 2 \\cdot 3 = 6 \\) and \\( 2 \\cdot 8 = 16 \\) are congruent modulo 10, but \\( 3 \\not\\equiv 8 \\pmod{10} \\); here \\( \\gcd(2, 10) = 2 \\). What does follow is \\( 10 \\mid 2(3 - 8) \\), hence \\( 5 \\mid (3 - 8) \\): \\( 3 \\equiv 8 \\pmod{5} \\). In general \\( ac \\equiv bc \\pmod{n} \\) implies \\( a \\equiv b \\pmod{n/\\gcd(c, n)} \\).",
+     "why": "Cancelling \\( c \\) is multiplying by its inverse, which exists exactly when \\( c \\) is coprime to the modulus."
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "title": "The Chinese remainder theorem",
+   "kps": [
+    "k9"
+   ],
+   "md": "Suppose the remainders of an unknown integer are known modulo several numbers: can the integer be recovered? A problem of this kind appears in the Chinese mathematical text *Sunzi Suanjing* (roughly 3rd to 5th century): find a number that leaves remainder 2 when divided by 3, remainder 3 when divided by 5, and remainder 2 when divided by 7. This section shows that such a system always has a solution when the moduli are pairwise coprime, and that the solution is unique modulo their product.\n\n> **Chinese remainder theorem.** Let \\( m_{1}, \\dots, m_{k} \\) be positive integers that are pairwise coprime (\\( \\gcd(m_{i}, m_{j}) = 1 \\) for \\( i \\ne j \\)), and let \\( M = m_{1}m_{2}\\cdots m_{k} \\). For any integers \\( b_{1}, \\dots, b_{k} \\), the system\n\\[ x \\equiv b_{1} \\pmod{m_{1}}, \\quad \\dots, \\quad x \\equiv b_{k} \\pmod{m_{k}} \\]\n> has a solution, and any two solutions are congruent modulo \\( M \\).\n\n*Proof of existence.* Let \\( M_{i} = M/m_{i} \\), the product of the other moduli. No prime divides both \\( m_{i} \\) and \\( M_{i} \\): by Euclid's lemma it would divide some \\( m_{j} \\) with \\( j \\ne i \\), contradicting \\( \\gcd(m_{i}, m_{j}) = 1 \\). So \\( \\gcd(M_{i}, m_{i}) = 1 \\), and there is \\( y_{i} \\) with \\( M_{i}y_{i} \\equiv 1 \\pmod{m_{i}} \\). Put\n\\[ x = b_{1}M_{1}y_{1} + b_{2}M_{2}y_{2} + \\cdots + b_{k}M_{k}y_{k}. \\]\nFor each \\( i \\), every term with \\( j \\ne i \\) contains the factor \\( m_{i} \\) (inside \\( M_{j} \\)), so \\( x \\equiv b_{i}M_{i}y_{i} \\equiv b_{i} \\pmod{m_{i}} \\).\n\n*Proof of uniqueness.* If \\( x \\) and \\( x' \\) are solutions, each \\( m_{i} \\) divides \\( x - x' \\). If \\( m \\mid c \\), \\( m' \\mid c \\) and \\( \\gcd(m, m') = 1 \\), then \\( mm' \\mid c \\): write \\( c = mt \\); then \\( m' \\mid mt \\), so \\( m' \\mid t \\) by the generalized Euclid lemma. Applying this repeatedly (\\( m_{1}m_{2} \\) is coprime to \\( m_{3} \\), and so on) gives \\( M \\mid (x - x') \\). \\( \\blacksquare \\)\n\n**Worked example 1 (Sunzi's problem).** \\( x \\equiv 2 \\pmod{3} \\), \\( x \\equiv 3 \\pmod{5} \\), \\( x \\equiv 2 \\pmod{7} \\); \\( M = 105 \\).\n- \\( M_{1} = 35 \\equiv 2 \\pmod{3} \\), inverse \\( y_{1} = 2 \\) (\\( 2 \\cdot 2 = 4 \\equiv 1 \\));\n- \\( M_{2} = 21 \\equiv 1 \\pmod{5} \\), \\( y_{2} = 1 \\);\n- \\( M_{3} = 15 \\equiv 1 \\pmod{7} \\), \\( y_{3} = 1 \\).\n\nThen \\( x = 2 \\cdot 35 \\cdot 2 + 3 \\cdot 21 \\cdot 1 + 2 \\cdot 15 \\cdot 1 = 140 + 63 + 30 = 233 \\equiv 23 \\pmod{105} \\). Check: \\( 23 = 7 \\cdot 3 + 2 = 4 \\cdot 5 + 3 = 3 \\cdot 7 + 2 \\).\n\n**Worked example 2 (successive substitution).** The same system can be solved one congruence at a time. From the first, \\( x = 2 + 3t \\). The second requires \\( 2 + 3t \\equiv 3 \\pmod{5} \\), i.e. \\( 3t \\equiv 1 \\), so \\( t \\equiv 2 \\pmod{5} \\), \\( t = 2 + 5s \\), and \\( x = 8 + 15s \\). The third requires \\( 8 + 15s \\equiv 2 \\pmod{7} \\), i.e. \\( 1 + s \\equiv 2 \\), so \\( s \\equiv 1 \\pmod{7} \\), and \\( x = 23 + 105u \\). This method is often faster by hand and does not require the inverses of the \\( M_{i} \\).\n\n**When the moduli are not coprime.** The system \\( x \\equiv 1 \\pmod{4} \\), \\( x \\equiv 2 \\pmod{6} \\) has no solution: the first forces \\( x \\) odd, the second \\( x \\) even. In general, a system of two congruences is solvable exactly when \\( b_{1} \\equiv b_{2} \\pmod{\\gcd(m_{1}, m_{2})} \\), and the solution is then unique modulo \\( \\operatorname{lcm}(m_{1}, m_{2}) \\) (stated here without proof).\n\n**The common mistakes.** Applying the theorem without checking that the moduli are pairwise coprime; computing the inverse of \\( M_{i} \\) modulo \\( M \\) instead of modulo \\( m_{i} \\); and giving one solution without stating that the full solution set is a single class modulo \\( M \\).",
+   "questions": [
+    {
+     "id": "s6q1",
+     "kp": "k9",
+     "type": "number",
+     "prompt": "Find the smallest positive integer \\( x \\) with \\( x \\equiv 1 \\pmod{4} \\), \\( x \\equiv 2 \\pmod{5} \\) and \\( x \\equiv 3 \\pmod{7} \\).",
+     "answer": "17",
+     "why": "Successive substitution: \\( x = 1 + 4t \\); \\( 1 + 4t \\equiv 2 \\pmod{5} \\) gives \\( 4t \\equiv 1 \\), \\( t \\equiv 4 \\pmod{5} \\), so \\( x = 17 + 20s \\); \\( 17 + 20s \\equiv 3 \\pmod{7} \\) gives \\( 3 + 6s \\equiv 3 \\), \\( s \\equiv 0 \\pmod{7} \\). So \\( x \\equiv 17 \\pmod{140} \\), and the smallest positive solution is 17."
+    },
+    {
+     "id": "s6q2",
+     "kp": "k9",
+     "type": "written",
+     "prompt": "Solve \\( x \\equiv 3 \\pmod{8} \\), \\( x \\equiv 5 \\pmod{9} \\) using the constructive formula \\( x = b_{1}M_{1}y_{1} + b_{2}M_{2}y_{2} \\) from the proof. Show each inverse, verify the answer, and describe the complete set of solutions.",
+     "rubric": [
+      "Checks gcd(8, 9) = 1; M = 72, M₁ = 9, M₂ = 8",
+      "y₁: 9 ≡ 1 (mod 8), so y₁ = 1; y₂: 8 ≡ −1 (mod 9), so y₂ = −1 (or 8)",
+      "x = 3·9·1 + 5·8·8 = 347 ≡ 59 (mod 72) (or 27 − 40 = −13 ≡ 59)",
+      "Verifies 59 = 7·8 + 3 = 6·9 + 5 and states the solutions are exactly x ≡ 59 (mod 72)"
+     ],
+     "model": "The moduli are coprime, \\( M = 72 \\), \\( M_{1} = 9 \\), \\( M_{2} = 8 \\).\n\n- \\( M_{1} = 9 \\equiv 1 \\pmod{8} \\), so \\( y_{1} = 1 \\).\n- \\( M_{2} = 8 \\equiv -1 \\pmod{9} \\), so \\( y_{2} = -1 \\equiv 8 \\) (check: \\( 8 \\cdot 8 = 64 = 7 \\cdot 9 + 1 \\)).\n\nThen \\( x = 3 \\cdot 9 \\cdot 1 + 5 \\cdot 8 \\cdot 8 = 27 + 320 = 347 \\equiv 347 - 4 \\cdot 72 = 59 \\pmod{72} \\).\n\nCheck: \\( 59 = 7 \\cdot 8 + 3 \\) and \\( 59 = 6 \\cdot 9 + 5 \\). By the uniqueness part of the theorem, the solutions are exactly the integers \\( x \\equiv 59 \\pmod{72} \\), i.e. \\( x = 59 + 72u \\), \\( u \\in \\mathbb{Z} \\).",
+     "why": "The terms \\( b_{i}M_{i}y_{i} \\) behave like basis vectors: each is \\( \\equiv b_{i} \\) modulo its own modulus and \\( \\equiv 0 \\) modulo the others."
+    }
+   ]
+  },
+  {
+   "id": "s7",
+   "title": "Fermat's and Euler's theorems",
+   "kps": [
+    "k10",
+    "k11"
+   ],
+   "md": "The powers of an integer modulo \\( n \\) eventually repeat, since there are only \\( n \\) classes. This section proves the two classical theorems that say exactly when a power returns to 1, which is what allows exponents to be reduced legitimately, and which underlies the RSA cryptosystem.\n\n> **Fermat's little theorem.** If \\( p \\) is prime and \\( p \\nmid a \\), then \\( a^{p-1} \\equiv 1 \\pmod{p} \\). Consequently \\( a^{p} \\equiv a \\pmod{p} \\) for every integer \\( a \\).\n\n*Proof.* Consider the \\( p - 1 \\) numbers \\( a, 2a, \\dots, (p-1)a \\). None is divisible by \\( p \\), by Euclid's lemma, since \\( p \\nmid a \\) and \\( p \\nmid i \\) for \\( 1 \\le i \\le p - 1 \\). No two are congruent: if \\( ia \\equiv ja \\pmod{p} \\), cancelling \\( a \\) (coprime to \\( p \\)) gives \\( i \\equiv j \\), so \\( i = j \\). Hence their remainders are \\( 1, 2, \\dots, p - 1 \\) in some order, and multiplying all of them,\n\\[ a \\cdot 2a \\cdots (p-1)a \\equiv 1 \\cdot 2 \\cdots (p-1), \\quad\\text{i.e.}\\quad a^{p-1}(p-1)! \\equiv (p-1)! \\pmod{p}. \\]\nSince \\( (p-1)! \\) is coprime to \\( p \\), it can be cancelled: \\( a^{p-1} \\equiv 1 \\pmod{p} \\). Multiplying by \\( a \\) gives \\( a^{p} \\equiv a \\), which also holds trivially when \\( p \\mid a \\). \\( \\blacksquare \\)\n\n**Reducing exponents.** If \\( p \\nmid a \\) and \\( k \\equiv l \\pmod{p-1} \\), then \\( a^{k} \\equiv a^{l} \\pmod{p} \\), since \\( a^{(p-1)t} \\equiv 1 \\). For example, \\( 3^{100} \\bmod 7 \\): \\( 100 = 6 \\cdot 16 + 4 \\), so \\( 3^{100} \\equiv 3^{4} = 81 \\equiv 4 \\pmod{7} \\).\n\n**A test for compositeness.** If \\( a^{n-1} \\not\\equiv 1 \\pmod{n} \\) for some \\( a \\) with \\( \\gcd(a, n) = 1 \\), then \\( n \\) is not prime. For \\( n = 15 \\): \\( 2^{14} = 16384 \\equiv 4 \\pmod{15} \\), so 15 is composite, without any factor having been found. The converse of Fermat's theorem is false: \\( 341 = 11 \\cdot 31 \\) is composite, yet \\( 2^{340} \\equiv 1 \\pmod{341} \\).\n\n**Euler's generalization.** For a composite modulus, the role of \\( p - 1 \\) is played by the number of classes coprime to \\( n \\).\n\n> **Euler's \\( \\varphi \\)-function.** For \\( n \\ge 1 \\), \\( \\varphi(n) \\) is the number of integers in \\( \\{1, 2, \\dots, n\\} \\) coprime to \\( n \\).\n\nFor a prime, \\( \\varphi(p) = p - 1 \\). For a prime power, the integers in \\( \\{1, \\dots, p^{k}\\} \\) not coprime to \\( p^{k} \\) are the \\( p^{k-1} \\) multiples of \\( p \\), so \\( \\varphi(p^{k}) = p^{k} - p^{k-1} \\). Moreover \\( \\varphi(mn) = \\varphi(m)\\varphi(n) \\) when \\( \\gcd(m, n) = 1 \\): by the Chinese remainder theorem, residues modulo \\( mn \\) correspond to pairs of residues modulo \\( m \\) and \\( n \\), and a residue is coprime to \\( mn \\) exactly when both components are coprime to their moduli. Together these give\n\\[ \\varphi(n) = n \\prod_{p \\mid n} \\left(1 - \\frac{1}{p}\\right), \\]\nthe product over the distinct primes dividing \\( n \\). For example \\( \\varphi(360) = 360 \\cdot \\frac{1}{2} \\cdot \\frac{2}{3} \\cdot \\frac{4}{5} = 96 \\), agreeing with the inclusion–exclusion count in the topic on pigeonhole and inclusion–exclusion.\n\n> **Euler's theorem.** If \\( \\gcd(a, n) = 1 \\), then \\( a^{\\varphi(n)} \\equiv 1 \\pmod{n} \\).\n\nThe proof is Fermat's with one change: replace \\( 1, \\dots, p - 1 \\) by the \\( \\varphi(n) \\) integers \\( r_{1}, \\dots, r_{\\varphi(n)} \\) in \\( \\{1, \\dots, n\\} \\) coprime to \\( n \\). The products \\( ar_{1}, \\dots, ar_{\\varphi(n)} \\) are again coprime to \\( n \\) and pairwise incongruent, so they are a rearrangement of the \\( r_{i} \\) modulo \\( n \\); multiply and cancel \\( r_{1}\\cdots r_{\\varphi(n)} \\).\n\n**Worked example.** The last two digits of \\( 3^{2026} \\). Here \\( \\gcd(3, 100) = 1 \\) and \\( \\varphi(100) = 100 \\cdot \\frac{1}{2} \\cdot \\frac{4}{5} = 40 \\). Since \\( 2026 = 40 \\cdot 50 + 26 \\), \\( 3^{2026} \\equiv 3^{26} \\pmod{100} \\). By repeated squaring, \\( 3^{5} = 243 \\equiv 43 \\), \\( 3^{10} \\equiv 43^{2} = 1849 \\equiv 49 \\), \\( 3^{20} \\equiv 49^{2} = 2401 \\equiv 1 \\), so \\( 3^{26} = 3^{20} \\cdot 3^{5} \\cdot 3 \\equiv 43 \\cdot 3 = 129 \\equiv 29 \\). The last two digits are 29.\n\n**The common mistakes.** Applying Fermat's theorem when \\( p \\mid a \\); reducing the exponent modulo \\( p \\) instead of \\( p - 1 \\); using \\( \\varphi(n) = n - 1 \\) for composite \\( n \\); and applying Euler's theorem without checking \\( \\gcd(a, n) = 1 \\).",
+   "questions": [
+    {
+     "id": "s7q1",
+     "kp": "k10",
+     "type": "number",
+     "prompt": "Compute \\( 2^{100} \\bmod 13 \\).",
+     "answer": "3",
+     "why": "By Fermat, \\( 2^{12} \\equiv 1 \\pmod{13} \\). Since \\( 100 = 12 \\cdot 8 + 4 \\), \\( 2^{100} \\equiv 2^{4} = 16 \\equiv 3 \\pmod{13} \\)."
+    },
+    {
+     "id": "s7q2",
+     "kp": "k11",
+     "type": "number",
+     "prompt": "Compute \\( \\varphi(1000) \\).",
+     "answer": "400",
+     "why": "\\( 1000 = 2^{3} \\cdot 5^{3} \\), so \\( \\varphi(1000) = 1000\\left(1 - \\frac{1}{2}\\right)\\left(1 - \\frac{1}{5}\\right) = 1000 \\cdot \\frac{1}{2} \\cdot \\frac{4}{5} = 400 \\). Equivalently \\( \\varphi(8)\\varphi(125) = 4 \\cdot 100 \\)."
+    },
+    {
+     "id": "s7q3",
+     "kp": "k10",
+     "type": "written",
+     "prompt": "Let \\( p \\) be prime and \\( p \\nmid a \\). Prove that \\( a^{p-2} \\) is an inverse of \\( a \\) modulo \\( p \\). Use this to find the inverse of 3 modulo 11, and verify it.",
+     "rubric": [
+      "a · a^{p−2} = a^{p−1} ≡ 1 (mod p) by Fermat's little theorem",
+      "So a^{p−2} is an inverse (unique mod p)",
+      "Computes 3⁹ mod 11, e.g. 3⁵ = 243 ≡ 1 so 3⁹ ≡ 3⁴ = 81 ≡ 4",
+      "Verifies 3 · 4 = 12 ≡ 1 (mod 11)"
+     ],
+     "model": "*Proof.* By Fermat's little theorem, \\( a \\cdot a^{p-2} = a^{p-1} \\equiv 1 \\pmod{p} \\). So \\( a^{p-2} \\) is an inverse of \\( a \\) modulo \\( p \\) (and, inverses being unique modulo \\( p \\), it is congruent to any other inverse). \\( \\blacksquare \\)\n\nFor \\( a = 3 \\), \\( p = 11 \\): the inverse is \\( 3^{9} \\bmod 11 \\). Since \\( 3^{5} = 243 = 22 \\cdot 11 + 1 \\equiv 1 \\), \\( 3^{9} = 3^{5} \\cdot 3^{4} \\equiv 81 = 7 \\cdot 11 + 4 \\equiv 4 \\pmod{11} \\). Check: \\( 3 \\cdot 4 = 12 \\equiv 1 \\pmod{11} \\).",
+     "why": "This gives a second way to compute inverses modulo a prime, by fast exponentiation instead of the extended Euclidean algorithm."
+    }
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "t": "division algorithm",
+   "d": "For \\( n \\ge 1 \\), each integer \\( a \\) is uniquely \\( a = qn + r \\) with \\( 0 \\le r < n \\)."
+  },
+  {
+   "t": "quotient, remainder",
+   "d": "The integers \\( q \\) and \\( r \\) of the division algorithm; \\( r = a \\bmod n \\), \\( q = \\lfloor a/n \\rfloor \\)."
+  },
+  {
+   "t": "greatest common divisor",
+   "d": "\\( \\gcd(a, b) \\), the largest integer dividing both \\( a \\) and \\( b \\) (not both 0)."
+  },
+  {
+   "t": "relatively prime (coprime)",
+   "d": "Integers with \\( \\gcd(a, b) = 1 \\)."
+  },
+  {
+   "t": "Euclidean algorithm",
+   "d": "Repeated division \\( a = qb + r \\), replacing \\( (a, b) \\) by \\( (b, r) \\); the last nonzero remainder is \\( \\gcd(a, b) \\)."
+  },
+  {
+   "t": "Bézout's identity",
+   "d": "\\( \\gcd(a, b) = ax + by \\) for some integers \\( x, y \\); it is the least positive such combination."
+  },
+  {
+   "t": "Euclid's lemma",
+   "d": "If \\( p \\) is prime and \\( p \\mid ab \\), then \\( p \\mid a \\) or \\( p \\mid b \\)."
+  },
+  {
+   "t": "fundamental theorem of arithmetic",
+   "d": "Every integer \\( n \\ge 2 \\) is a product of primes, uniquely up to the order of the factors."
+  },
+  {
+   "t": "canonical factorization",
+   "d": "\\( n = p_{1}^{a_{1}} \\cdots p_{k}^{a_{k}} \\) with distinct primes \\( p_{1} < \\cdots < p_{k} \\) and exponents \\( a_{i} \\ge 1 \\)."
+  },
+  {
+   "t": "least common multiple",
+   "d": "\\( \\operatorname{lcm}(a, b) \\), the smallest positive common multiple of \\( a \\) and \\( b \\); \\( \\gcd(a,b)\\operatorname{lcm}(a,b) = ab \\) for positive \\( a, b \\)."
+  },
+  {
+   "t": "congruence modulo n",
+   "d": "\\( a \\equiv b \\pmod{n} \\) iff \\( n \\mid (a - b) \\) iff \\( a, b \\) have the same remainder on division by \\( n \\)."
+  },
+  {
+   "t": "residue class, Z_n",
+   "d": "The class \\( [a] \\) of integers congruent to \\( a \\) modulo \\( n \\); \\( \\mathbb{Z}_{n} \\) is the set of the \\( n \\) classes, with well-defined addition and multiplication."
+  },
+  {
+   "t": "inverse modulo n",
+   "d": "An integer \\( x \\) with \\( ax \\equiv 1 \\pmod{n} \\); it exists iff \\( \\gcd(a, n) = 1 \\) and is unique modulo \\( n \\)."
+  },
+  {
+   "t": "linear congruence",
+   "d": "\\( ax \\equiv b \\pmod{n} \\); solvable iff \\( d = \\gcd(a, n) \\) divides \\( b \\), with then \\( d \\) solutions modulo \\( n \\)."
+  },
+  {
+   "t": "Chinese remainder theorem",
+   "d": "For pairwise coprime moduli \\( m_{1}, \\dots, m_{k} \\), the system \\( x \\equiv b_{i} \\pmod{m_{i}} \\) has a solution, unique modulo \\( m_{1}\\cdots m_{k} \\)."
+  },
+  {
+   "t": "Fermat's little theorem",
+   "d": "If \\( p \\) is prime and \\( p \\nmid a \\), then \\( a^{p-1} \\equiv 1 \\pmod{p} \\); for all \\( a \\), \\( a^{p} \\equiv a \\pmod{p} \\)."
+  },
+  {
+   "t": "Euler's phi function",
+   "d": "\\( \\varphi(n) \\), the number of integers in \\( \\{1, \\dots, n\\} \\) coprime to \\( n \\); \\( \\varphi(n) = n\\prod_{p \\mid n}(1 - 1/p) \\)."
+  },
+  {
+   "t": "Euler's theorem",
+   "d": "If \\( \\gcd(a, n) = 1 \\), then \\( a^{\\varphi(n)} \\equiv 1 \\pmod{n} \\)."
+  },
+  {
+   "t": "repeated squaring",
+   "d": "Computing \\( a^{k} \\bmod n \\) by squaring \\( a \\) repeatedly modulo \\( n \\) and multiplying the powers \\( a^{2^{i}} \\) given by the binary digits of \\( k \\)."
+  },
+  {
+   "t": "Fermat pseudoprime",
+   "d": "A composite \\( n \\) with \\( a^{n-1} \\equiv 1 \\pmod{n} \\) for some base \\( a \\); for example \\( 341 \\) for \\( a = 2 \\)."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "formula",
+   "front": "Division algorithm",
+   "back": "For \\( n \\ge 1 \\): unique \\( q, r \\) with \\( a = qn + r \\), \\( 0 \\le r < n \\).",
+   "kp": "k1"
+  },
+  {
+   "id": "c2",
+   "type": "problem",
+   "front": "\\( -100 \\bmod 7 \\)",
+   "back": "\\( 5 \\), since \\( -100 = (-15) \\cdot 7 + 5 \\).",
+   "kp": "k1",
+   "answer": "5",
+   "check": "number"
+  },
+  {
+   "id": "c3",
+   "type": "concept",
+   "front": "Key lemma of the Euclidean algorithm",
+   "back": "If \\( a = qb + r \\), then \\( \\gcd(a, b) = \\gcd(b, r) \\) (same common divisors).",
+   "kp": "k2"
+  },
+  {
+   "id": "c4",
+   "type": "problem",
+   "front": "\\( \\gcd(252, 198) \\)",
+   "back": "18 (remainders 54, 36, 18, 0).",
+   "kp": "k2",
+   "answer": "18",
+   "check": "number"
+  },
+  {
+   "id": "c5",
+   "type": "formula",
+   "front": "Bézout's identity",
+   "back": "\\( \\gcd(a, b) = ax + by \\) for some integers \\( x, y \\); it is the least positive such combination.",
+   "kp": "k3"
+  },
+  {
+   "id": "c6",
+   "type": "concept",
+   "front": "How does Euclid's lemma follow from Bézout?",
+   "back": "If \\( p \\nmid a \\), then \\( px + ay = 1 \\); multiply by \\( b \\): \\( pbx + aby = b \\), and \\( p \\) divides both terms.",
+   "kp": "k4"
+  },
+  {
+   "id": "c7",
+   "type": "concept",
+   "front": "Why is trial division up to \\( \\sqrt{n} \\) enough?",
+   "back": "A composite \\( n = ab \\) with \\( a \\le b \\) has \\( a \\le \\sqrt{n} \\), and a prime factor of \\( a \\) divides \\( n \\).",
+   "kp": "k4"
+  },
+  {
+   "id": "c8",
+   "type": "concept",
+   "front": "Where is Euclid's lemma used in the uniqueness of factorization?",
+   "back": "\\( p_{1} \\mid q_{1}\\cdots q_{s} \\) forces \\( p_{1} = q_{j} \\) for some \\( j \\); cancel and induct.",
+   "kp": "k5"
+  },
+  {
+   "id": "c9",
+   "type": "formula",
+   "front": "Number of positive divisors of \\( p_{1}^{a_{1}}\\cdots p_{k}^{a_{k}} \\)",
+   "back": "\\( (a_{1} + 1)\\cdots(a_{k} + 1) \\)",
+   "kp": "k5"
+  },
+  {
+   "id": "c10",
+   "type": "concept",
+   "front": "Three equivalent meanings of \\( a \\equiv b \\pmod{n} \\)",
+   "back": "\\( n \\mid (a - b) \\); \\( a = b + kn \\); \\( a \\) and \\( b \\) have the same remainder mod \\( n \\).",
+   "kp": "k6"
+  },
+  {
+   "id": "c11",
+   "type": "concept",
+   "front": "Which operations respect congruence mod n, and which do not?",
+   "back": "Addition, subtraction, multiplication and powers (with fixed exponent) do; division and reducing exponents mod n do not.",
+   "kp": "k6"
+  },
+  {
+   "id": "c12",
+   "type": "problem",
+   "front": "Last digit of \\( 3^{2026} \\)",
+   "back": "9: \\( 3^{4} \\equiv 1 \\pmod{10} \\), \\( 2026 \\equiv 2 \\pmod 4 \\).",
+   "kp": "k7",
+   "answer": "9",
+   "check": "number"
+  },
+  {
+   "id": "c13",
+   "type": "concept",
+   "front": "Divisibility tests for 9 and 11",
+   "back": "\\( 10 \\equiv 1 \\pmod 9 \\): digit sum; \\( 10 \\equiv -1 \\pmod{11} \\): alternating digit sum.",
+   "kp": "k7"
+  },
+  {
+   "id": "c14",
+   "type": "concept",
+   "front": "When does \\( a \\) have an inverse modulo \\( n \\)?",
+   "back": "Exactly when \\( \\gcd(a, n) = 1 \\).",
+   "kp": "k8"
+  },
+  {
+   "id": "c15",
+   "type": "concept",
+   "front": "Solvability and number of solutions of \\( ax \\equiv b \\pmod{n} \\)",
+   "back": "Solvable iff \\( d = \\gcd(a, n) \\mid b \\); then exactly \\( d \\) solutions mod \\( n \\), spaced \\( n/d \\) apart.",
+   "kp": "k8"
+  },
+  {
+   "id": "c16",
+   "type": "problem",
+   "front": "Inverse of 17 modulo 43",
+   "back": "38, since \\( 2 \\cdot 43 - 5 \\cdot 17 = 1 \\) and \\( -5 \\equiv 38 \\).",
+   "kp": "k8",
+   "answer": "38",
+   "check": "number"
+  },
+  {
+   "id": "c17",
+   "type": "concept",
+   "front": "Chinese remainder theorem",
+   "back": "Pairwise coprime \\( m_{i} \\): \\( x \\equiv b_{i} \\pmod{m_{i}} \\) has a solution, unique modulo \\( m_{1}\\cdots m_{k} \\).",
+   "kp": "k9"
+  },
+  {
+   "id": "c18",
+   "type": "problem",
+   "front": "Least positive \\( x \\) with \\( x \\equiv 2 \\pmod 3 \\), \\( x \\equiv 3 \\pmod 5 \\), \\( x \\equiv 2 \\pmod 7 \\)",
+   "back": "23 (unique modulo 105).",
+   "kp": "k9",
+   "answer": "23",
+   "check": "number"
+  },
+  {
+   "id": "c19",
+   "type": "formula",
+   "front": "Fermat's little theorem",
+   "back": "\\( p \\) prime, \\( p \\nmid a \\): \\( a^{p-1} \\equiv 1 \\pmod{p} \\).",
+   "kp": "k10"
+  },
+  {
+   "id": "c20",
+   "type": "concept",
+   "front": "Key step in the proof of Fermat's little theorem",
+   "back": "\\( a, 2a, \\dots, (p-1)a \\) are a rearrangement of \\( 1, \\dots, p-1 \\) mod \\( p \\); multiply and cancel \\( (p-1)! \\).",
+   "kp": "k10"
+  },
+  {
+   "id": "c21",
+   "type": "formula",
+   "front": "\\( \\varphi(n) \\) from the factorization of \\( n \\)",
+   "back": "\\( \\varphi(n) = n\\prod_{p \\mid n}\\left(1 - \\frac{1}{p}\\right) \\)",
+   "kp": "k11"
+  },
+  {
+   "id": "c22",
+   "type": "formula",
+   "front": "Euler's theorem",
+   "back": "\\( \\gcd(a, n) = 1 \\Rightarrow a^{\\varphi(n)} \\equiv 1 \\pmod{n} \\).",
+   "kp": "k11"
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k1",
+   "type": "written",
+   "prompt": "Prove that among any three consecutive integers \\( n, n + 1, n + 2 \\), exactly one is divisible by 3.",
+   "rubric": [
+    "Division algorithm: n = 3q + r with r ∈ {0, 1, 2}",
+    "Identifies which of the three is divisible in each case (r = 0: n; r = 2: n + 1; r = 1: n + 2)",
+    "Shows the other two are not divisible, using uniqueness of remainders",
+    "Concludes exactly one"
+   ],
+   "model": "*Proof.* By the division algorithm, \\( n = 3q + r \\) with \\( r \\in \\{0, 1, 2\\} \\). Then \\( n + 1 = 3q + (r + 1) \\) and \\( n + 2 = 3q + (r + 2) \\). The remainders of \\( n, n + 1, n + 2 \\) on division by 3 are therefore \\( r \\), \\( r + 1 \\), \\( r + 2 \\) reduced to \\( \\{0, 1, 2\\} \\), which are \\( 0, 1, 2 \\) in some order:\n- \\( r = 0 \\): remainders \\( 0, 1, 2 \\);\n- \\( r = 1 \\): remainders \\( 1, 2, 0 \\) (since \\( n + 2 = 3(q + 1) \\));\n- \\( r = 2 \\): remainders \\( 2, 0, 1 \\) (since \\( n + 1 = 3(q + 1) \\), \\( n + 2 = 3(q + 1) + 1 \\)).\n\nBy uniqueness of the remainder, an integer is divisible by 3 exactly when its remainder is 0, which happens for exactly one of the three. \\( \\blacksquare \\)",
+   "why": "\"Exactly one\" needs the uniqueness half of the division algorithm, not only existence."
+  },
+  {
+   "id": "p2",
+   "kp": "k2",
+   "type": "number",
+   "prompt": "Compute \\( \\gcd(2024, 748) \\) with the Euclidean algorithm.",
+   "answer": "44",
+   "why": "\\( 2024 = 2 \\cdot 748 + 528 \\); \\( 748 = 1 \\cdot 528 + 220 \\); \\( 528 = 2 \\cdot 220 + 88 \\); \\( 220 = 2 \\cdot 88 + 44 \\); \\( 88 = 2 \\cdot 44 \\). The gcd is 44."
+  },
+  {
+   "id": "p3",
+   "kp": "k3",
+   "type": "written",
+   "prompt": "Find all integer solutions of \\( 15x + 21y = 39 \\). Prove that your list contains every solution.",
+   "rubric": [
+    "gcd(15, 21) = 3 divides 39, so solutions exist; divide to get 5x + 7y = 13",
+    "Particular solution, e.g. x = 4, y = −1",
+    "If (x, y) is any solution, 5(x − 4) = −7(y + 1), so 7 | 5(x − 4) and, as gcd(5, 7) = 1, 7 | x − 4",
+    "General solution x = 4 + 7t, y = −1 − 5t, t ∈ ℤ, and checks these all work"
+   ],
+   "model": "Since \\( \\gcd(15, 21) = 3 \\) and \\( 3 \\mid 39 \\), dividing by 3 gives the equivalent equation \\( 5x + 7y = 13 \\). A particular solution is \\( x = 4 \\), \\( y = -1 \\) (\\( 20 - 7 = 13 \\)).\n\nLet \\( (x, y) \\) be any solution. Subtracting \\( 5 \\cdot 4 + 7 \\cdot (-1) = 13 \\) gives \\( 5(x - 4) = -7(y + 1) \\). So \\( 7 \\mid 5(x - 4) \\), and since \\( \\gcd(7, 5) = 1 \\), the generalized Euclid lemma gives \\( 7 \\mid (x - 4) \\): \\( x = 4 + 7t \\). Substituting, \\( 35t = -7(y + 1) \\), so \\( y = -1 - 5t \\).\n\nConversely, \\( 5(4 + 7t) + 7(-1 - 5t) = 20 + 35t - 7 - 35t = 13 \\) for every integer \\( t \\). So the solutions are exactly \\( (x, y) = (4 + 7t, -1 - 5t) \\), \\( t \\in \\mathbb{Z} \\).",
+   "why": "A linear Diophantine equation \\( ax + by = c \\) is solvable iff \\( \\gcd(a, b) \\mid c \\); consecutive solutions differ by \\( \\left(\\frac{b}{d}, -\\frac{a}{d}\\right) \\)."
+  },
+  {
+   "id": "p4",
+   "kp": "k4",
+   "type": "written",
+   "prompt": "Prove by induction on \\( k \\ge 1 \\) that if a prime \\( p \\) divides \\( a_{1}a_{2}\\cdots a_{k} \\), then \\( p \\mid a_{i} \\) for some \\( i \\).",
+   "rubric": [
+    "Base k = 1: immediate",
+    "Step: write a₁⋯a_{k+1} = (a₁⋯a_k)·a_{k+1}",
+    "Euclid's lemma: p | a₁⋯a_k or p | a_{k+1}",
+    "In the first case the inductive hypothesis gives p | a_i for some i ≤ k"
+   ],
+   "model": "*Base case.* \\( k = 1 \\): \\( p \\mid a_{1} \\) is the hypothesis.\n\n*Inductive step.* Assume the statement for products of \\( k \\) factors, and let \\( p \\mid a_{1}\\cdots a_{k}a_{k+1} = (a_{1}\\cdots a_{k}) \\cdot a_{k+1} \\). By Euclid's lemma, \\( p \\mid a_{1}\\cdots a_{k} \\) or \\( p \\mid a_{k+1} \\). In the first case, the inductive hypothesis gives \\( p \\mid a_{i} \\) for some \\( i \\le k \\); in the second, \\( i = k + 1 \\) works. By induction the statement holds for all \\( k \\ge 1 \\). \\( \\blacksquare \\)",
+   "why": "This extended form is what the uniqueness proof of prime factorization actually uses."
+  },
+  {
+   "id": "p5",
+   "kp": "k5",
+   "type": "written",
+   "prompt": "Use the fundamental theorem of arithmetic to prove that there are no positive integers \\( a, b \\) with \\( a^{2} = 2b^{2} \\).",
+   "rubric": [
+    "Let the exponent of 2 in the factorizations of a and b be s and t",
+    "Exponent of 2 in a² is 2s (even)",
+    "Exponent of 2 in 2b² is 2t + 1 (odd)",
+    "Uniqueness of factorization forces the exponents to be equal; contradiction"
+   ],
+   "model": "*Proof.* Suppose \\( a^{2} = 2b^{2} \\) with \\( a, b \\ge 1 \\). Let \\( 2^{s} \\) and \\( 2^{t} \\) be the exact powers of 2 in the prime factorizations of \\( a \\) and \\( b \\) (\\( s, t \\ge 0 \\)). Then the factorization of \\( a^{2} \\) contains 2 exactly \\( 2s \\) times, and that of \\( 2b^{2} \\) exactly \\( 2t + 1 \\) times. By uniqueness of prime factorization, \\( 2s = 2t + 1 \\), which is impossible since the left side is even and the right side odd. \\( \\blacksquare \\)\n\n(This is another proof that \\( \\sqrt{2} \\) is irrational: \\( \\sqrt{2} = a/b \\) would give \\( a^{2} = 2b^{2} \\).)",
+   "why": "Comparing exponents of a single prime on the two sides of an equation is a standard use of unique factorization."
+  },
+  {
+   "id": "p6",
+   "kp": "k5",
+   "type": "number",
+   "prompt": "Compute \\( \\operatorname{lcm}(360, 84) \\) from the prime factorizations.",
+   "answer": "2520",
+   "why": "\\( 360 = 2^{3} \\cdot 3^{2} \\cdot 5 \\), \\( 84 = 2^{2} \\cdot 3 \\cdot 7 \\). Taking maximum exponents: \\( 2^{3} \\cdot 3^{2} \\cdot 5 \\cdot 7 = 2520 \\). Check: \\( \\gcd \\cdot \\operatorname{lcm} = 12 \\cdot 2520 = 30240 = 360 \\cdot 84 \\)."
+  },
+  {
+   "id": "p7",
+   "kp": "k6",
+   "type": "written",
+   "prompt": "Prove that \\( n^{3} \\equiv n \\pmod{6} \\) for every integer \\( n \\), by checking residues modulo 6 and explaining why checking residues suffices.",
+   "rubric": [
+    "Every n is congruent to exactly one r ∈ {0, 1, 2, 3, 4, 5} (mod 6)",
+    "Compatibility with powers: n ≡ r implies n³ − n ≡ r³ − r (mod 6)",
+    "Checks r³ − r = 0, 0, 6, 24, 60, 120, all divisible by 6",
+    "Concludes n³ ≡ n (mod 6) for all n"
+   ],
+   "model": "*Proof.* Every integer \\( n \\) is congruent modulo 6 to exactly one \\( r \\in \\{0, 1, 2, 3, 4, 5\\} \\). By compatibility of congruence with multiplication and subtraction, \\( n \\equiv r \\) implies \\( n^{3} - n \\equiv r^{3} - r \\pmod{6} \\). So it suffices to check the six residues:\n\\[ r^{3} - r = 0,\\ 0,\\ 6,\\ 24,\\ 60,\\ 120 \\quad (r = 0, \\dots, 5), \\]\neach divisible by 6. Hence \\( n^{3} - n \\equiv 0 \\), i.e. \\( n^{3} \\equiv n \\pmod{6} \\), for every integer \\( n \\). \\( \\blacksquare \\)",
+   "why": "A polynomial congruence modulo \\( n \\) needs to be checked only on one representative of each class, because polynomials with integer coefficients respect congruence."
+  },
+  {
+   "id": "p8",
+   "kp": "k8",
+   "type": "numbers",
+   "prompt": "Find all solutions of \\( 14x \\equiv 21 \\pmod{35} \\) in \\( \\{0, 1, \\dots, 34\\} \\).",
+   "answer": "4, 9, 14, 19, 24, 29, 34",
+   "why": "\\( d = \\gcd(14, 35) = 7 \\) divides 21, so there are 7 solutions. Dividing by 7: \\( 2x \\equiv 3 \\pmod{5} \\), so \\( x \\equiv 3 \\cdot 3 = 9 \\equiv 4 \\pmod{5} \\). Modulo 35: \\( 4, 9, 14, 19, 24, 29, 34 \\)."
+  },
+  {
+   "id": "p9",
+   "kp": "k9",
+   "type": "written",
+   "prompt": "The moduli 6 and 10 are not coprime. (a) Show that \\( x \\equiv 1 \\pmod{6} \\), \\( x \\equiv 4 \\pmod{10} \\) has no solution. (b) Solve \\( x \\equiv 1 \\pmod{6} \\), \\( x \\equiv 7 \\pmod{10} \\), and state modulo what number the solution is unique.",
+   "rubric": [
+    "(a) Reduces both congruences mod 2: x odd and x even; contradiction",
+    "(b) Substitution x = 1 + 6t, 1 + 6t ≡ 7 (mod 10), 6t ≡ 6, t ≡ 1 (mod 5)",
+    "x = 7 + 30s, so x ≡ 7 (mod 30)",
+    "Uniqueness modulo lcm(6, 10) = 30, not 60"
+   ],
+   "model": "(a) Any solution would satisfy \\( x \\equiv 1 \\pmod{2} \\) (since \\( 2 \\mid 6 \\)) and \\( x \\equiv 4 \\equiv 0 \\pmod{2} \\) (since \\( 2 \\mid 10 \\)): odd and even at once. So there is no solution.\n\n(b) From the first congruence, \\( x = 1 + 6t \\). The second requires \\( 1 + 6t \\equiv 7 \\pmod{10} \\), i.e. \\( 6t \\equiv 6 \\pmod{10} \\). Here \\( \\gcd(6, 10) = 2 \\mid 6 \\); dividing, \\( 3t \\equiv 3 \\pmod{5} \\), so \\( t \\equiv 1 \\pmod{5} \\), \\( t = 1 + 5s \\), and \\( x = 7 + 30s \\). The solutions are exactly \\( x \\equiv 7 \\pmod{30} \\); they are unique modulo \\( \\operatorname{lcm}(6, 10) = 30 \\), not modulo \\( 6 \\cdot 10 = 60 \\).",
+   "why": "With common factor \\( g = \\gcd(m_{1}, m_{2}) \\), the congruences must agree modulo \\( g \\), and the solution is determined only modulo the lcm."
+  },
+  {
+   "id": "p10",
+   "kp": "k10",
+   "type": "mcq",
+   "prompt": "What is \\( 2^{100} \\bmod 7 \\)?",
+   "options": [
+    "\\( 4 \\), since \\( 100 \\equiv 2 \\pmod{7} \\) and \\( 2^{2} = 4 \\)",
+    "\\( 1 \\), since Fermat's theorem gives \\( a^{k} \\equiv 1 \\) for large exponents",
+    "\\( 2 \\)",
+    "\\( 16 \\), since \\( 100 \\equiv 4 \\pmod{6} \\) and \\( 2^{4} = 16 \\)"
+   ],
+   "answer": 2,
+   "why": "By Fermat, \\( 2^{6} \\equiv 1 \\pmod{7} \\), so exponents may be reduced modulo 6: \\( 100 = 6 \\cdot 16 + 4 \\), and \\( 2^{100} \\equiv 2^{4} = 16 \\equiv 2 \\pmod{7} \\). The first option reduces the exponent modulo 7 instead of 6; the second misreads Fermat's theorem, which gives 1 only for exponents divisible by \\( p - 1 \\); the fourth forgets the final reduction of 16 modulo 7."
+  },
+  {
+   "id": "p11",
+   "kp": "k11",
+   "type": "written",
+   "prompt": "Prove that \\( \\varphi(p^{k}) = p^{k} - p^{k-1} \\) for a prime \\( p \\) and \\( k \\ge 1 \\), and use this with multiplicativity to compute \\( \\varphi(720) \\).",
+   "rubric": [
+    "An integer is coprime to p^k iff it is not divisible by p (the only prime factor of p^k)",
+    "The multiples of p in {1, …, p^k} are p, 2p, …, p^{k−1}·p: p^{k−1} of them",
+    "φ(p^k) = p^k − p^{k−1}",
+    "720 = 2⁴·3²·5: φ = 8·6·4 = 192"
+   ],
+   "model": "*Proof.* The only prime dividing \\( p^{k} \\) is \\( p \\), so an integer \\( m \\) has \\( \\gcd(m, p^{k}) > 1 \\) exactly when \\( p \\mid m \\) (a common divisor greater than 1 would have a prime factor, which must be \\( p \\)). The multiples of \\( p \\) in \\( \\{1, \\dots, p^{k}\\} \\) are \\( p, 2p, \\dots, p^{k-1}p \\), which number \\( p^{k-1} \\). So \\( \\varphi(p^{k}) = p^{k} - p^{k-1} \\). \\( \\blacksquare \\)\n\n*Computation.* \\( 720 = 2^{4} \\cdot 3^{2} \\cdot 5 \\), and the three prime powers are pairwise coprime, so\n\\[ \\varphi(720) = \\varphi(16)\\varphi(9)\\varphi(5) = (16 - 8)(9 - 3)(5 - 1) = 8 \\cdot 6 \\cdot 4 = 192. \\]",
+   "why": "The same result follows from \\( \\varphi(n) = n\\prod(1 - 1/p) = 720 \\cdot \\frac{1}{2} \\cdot \\frac{2}{3} \\cdot \\frac{4}{5} = 192 \\)."
+  },
+  {
+   "id": "p12",
+   "kp": "k7",
+   "type": "number",
+   "prompt": "Compute \\( 5^{123} \\bmod 17 \\), using Fermat's theorem to reduce the exponent and repeated squaring for the rest.",
+   "answer": "11",
+   "why": "By Fermat, \\( 5^{16} \\equiv 1 \\pmod{17} \\); \\( 123 = 16 \\cdot 7 + 11 \\), so \\( 5^{123} \\equiv 5^{11} \\). Squaring: \\( 5^{2} = 25 \\equiv 8 \\), \\( 5^{4} \\equiv 64 \\equiv 13 \\), \\( 5^{8} \\equiv 169 \\equiv 16 \\). Since \\( 11 = 8 + 2 + 1 \\), \\( 5^{11} \\equiv 16 \\cdot 8 \\cdot 5 = 640 = 37 \\cdot 17 + 11 \\equiv 11 \\)."
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k1",
+   "type": "written",
+   "prompt": "Prove the division algorithm: for integers \\( a \\) and \\( n \\ge 1 \\) there are unique integers \\( q, r \\) with \\( a = qn + r \\) and \\( 0 \\le r < n \\). Indicate where the well-ordering principle is used.",
+   "rubric": [
+    "Defines S = {a − kn ≥ 0 : k ∈ ℤ} and shows it is nonempty (k = −|a|)",
+    "Well-ordering gives a least element r = a − qn ≥ 0",
+    "If r ≥ n then r − n ∈ S is smaller; so r < n",
+    "Uniqueness: n(q − q′) = r′ − r with |r′ − r| < n forces r = r′, q = q′"
+   ],
+   "model": "*Existence.* Let \\( S = \\{ a - kn : k \\in \\mathbb{Z},\\ a - kn \\ge 0 \\} \\). Taking \\( k = -|a| \\) gives \\( a + |a|n \\ge a + |a| \\ge 0 \\) (as \\( n \\ge 1 \\)), so \\( S \\) is a nonempty set of nonnegative integers. By the **well-ordering principle** it has a least element \\( r = a - qn \\), and \\( r \\ge 0 \\). If \\( r \\ge n \\), then \\( r - n = a - (q + 1)n \\ge 0 \\) would be an element of \\( S \\) smaller than \\( r \\), a contradiction. So \\( 0 \\le r < n \\) and \\( a = qn + r \\).\n\n*Uniqueness.* If \\( a = qn + r = q'n + r' \\) with \\( 0 \\le r, r' < n \\), then \\( n(q - q') = r' - r \\) and \\( -n < r' - r < n \\). A multiple of \\( n \\) strictly between \\( -n \\) and \\( n \\) is 0, so \\( r = r' \\), and then \\( nq = nq' \\) gives \\( q = q' \\). \\( \\blacksquare \\)",
+   "why": "The remainder is the least element of a set of nonnegative integers; minimality is what forces \\( r < n \\)."
+  },
+  {
+   "id": "e2",
+   "kp": "k3",
+   "type": "written",
+   "prompt": "Prove Bézout's identity in the strong form: for integers \\( a, b \\), not both 0, the least positive integer of the form \\( ax + by \\) (\\( x, y \\in \\mathbb{Z} \\)) is \\( \\gcd(a, b) \\).",
+   "rubric": [
+    "The set of positive combinations is nonempty (a² + b² > 0); let d = ax₀ + by₀ be least (well-ordering)",
+    "Division a = qd + r; r is a combination; minimality forces r = 0, so d | a; likewise d | b",
+    "Any common divisor c of a and b divides d",
+    "Hence c ≤ d, so d = gcd(a, b)"
+   ],
+   "model": "*Proof.* Let \\( S = \\{ ax + by : x, y \\in \\mathbb{Z},\\ ax + by > 0 \\} \\). It contains \\( a \\cdot a + b \\cdot b > 0 \\), so by well-ordering it has a least element \\( d = ax_{0} + by_{0} \\).\n\n*\\( d \\) is a common divisor.* Divide: \\( a = qd + r \\) with \\( 0 \\le r < d \\). Then \\( r = a - q(ax_{0} + by_{0}) = a(1 - qx_{0}) + b(-qy_{0}) \\) is an integer combination of \\( a \\) and \\( b \\). If \\( r > 0 \\), then \\( r \\in S \\) and \\( r < d \\), contradicting minimality; so \\( r = 0 \\) and \\( d \\mid a \\). The same argument with \\( b \\) gives \\( d \\mid b \\).\n\n*\\( d \\) is the greatest.* If \\( c \\mid a \\) and \\( c \\mid b \\), then \\( c \\mid ax_{0} + by_{0} = d \\), and since \\( d > 0 \\), \\( c \\le |c| \\le d \\).\n\nHence \\( d = \\gcd(a, b) \\). \\( \\blacksquare \\)",
+   "why": "The same well-ordering pattern proves the division algorithm; here it is applied to the set of positive combinations."
+  },
+  {
+   "id": "e3",
+   "kp": "k5",
+   "type": "written",
+   "prompt": "Prove Euclid's lemma (if \\( p \\) is prime and \\( p \\mid ab \\), then \\( p \\mid a \\) or \\( p \\mid b \\)), and use it to prove that the prime factorization of every integer \\( n \\ge 2 \\) is unique up to order. You may use the extension of Euclid's lemma to products of several factors.",
+   "rubric": [
+    "Euclid's lemma: if p ∤ a then gcd(p, a) = 1, Bézout px + ay = 1, multiply by b",
+    "Uniqueness by strong induction on n: two factorizations p₁⋯p_r = q₁⋯q_s",
+    "p₁ divides some q_j, hence p₁ = q_j (both prime); cancel",
+    "Applies the inductive hypothesis to n/p₁ (or notes n/p₁ = 1 forces both products empty)"
+   ],
+   "model": "*Euclid's lemma.* Suppose \\( p \\mid ab \\) and \\( p \\nmid a \\). The positive divisors of \\( p \\) are 1 and \\( p \\), and \\( p \\nmid a \\), so \\( \\gcd(p, a) = 1 \\). By Bézout, \\( px + ay = 1 \\) for some integers \\( x, y \\). Then \\( b = pbx + (ab)y \\), and \\( p \\) divides both terms, so \\( p \\mid b \\).\n\n*Uniqueness of factorization.* By strong induction on \\( n \\ge 2 \\): assume every integer \\( m \\) with \\( 2 \\le m < n \\) has a unique factorization, and suppose \\( n = p_{1}\\cdots p_{r} = q_{1}\\cdots q_{s} \\) with all factors prime. Since \\( p_{1} \\mid q_{1}\\cdots q_{s} \\), Euclid's lemma (for several factors) gives \\( p_{1} \\mid q_{j} \\) for some \\( j \\); as \\( q_{j} \\) is prime and \\( p_{1} > 1 \\), \\( p_{1} = q_{j} \\). Reorder the \\( q \\)'s so that \\( j = 1 \\), and cancel: \\( m = n/p_{1} = p_{2}\\cdots p_{r} = q_{2}\\cdots q_{s} \\). If \\( m = 1 \\), both products are empty (a nonempty product of primes exceeds 1), so \\( r = s = 1 \\) and the factorizations agree. If \\( m \\ge 2 \\), then \\( m < n \\), and by the inductive hypothesis \\( p_{2}, \\dots, p_{r} \\) are \\( q_{2}, \\dots, q_{s} \\) in some order. Hence the two factorizations of \\( n \\) agree up to order. \\( \\blacksquare \\)",
+   "why": "Existence of factorizations needs only strong induction; uniqueness needs Euclid's lemma, and so ultimately Bézout's identity."
+  },
+  {
+   "id": "e4",
+   "kp": "k9",
+   "type": "written",
+   "prompt": "Let \\( m, n \\) be coprime positive integers. Prove that for all integers \\( b, c \\) the system \\( x \\equiv b \\pmod{m} \\), \\( x \\equiv c \\pmod{n} \\) has a solution, and that any two solutions are congruent modulo \\( mn \\).",
+   "rubric": [
+    "Bézout: mu + nv = 1",
+    "Constructs x = b·nv + c·mu (or equivalent) and verifies both congruences (nv ≡ 1 mod m, mu ≡ 1 mod n)",
+    "Uniqueness: m | x − x′ and n | x − x′",
+    "Writes x − x′ = mt, uses the generalized Euclid lemma (n | mt, gcd(n, m) = 1 ⇒ n | t) to get mn | x − x′"
+   ],
+   "model": "*Existence.* Since \\( \\gcd(m, n) = 1 \\), Bézout gives integers \\( u, v \\) with \\( mu + nv = 1 \\). Then \\( nv \\equiv 1 \\pmod{m} \\) and \\( mu \\equiv 1 \\pmod{n} \\). Let \\( x = b\\,nv + c\\,mu \\). Modulo \\( m \\), the second term vanishes and \\( x \\equiv b \\cdot 1 = b \\). Modulo \\( n \\), the first term vanishes and \\( x \\equiv c \\). So \\( x \\) is a solution.\n\n*Uniqueness.* If \\( x \\) and \\( x' \\) are solutions, then \\( m \\mid (x - x') \\) and \\( n \\mid (x - x') \\). Write \\( x - x' = mt \\). Then \\( n \\mid mt \\), and \\( \\gcd(n, m) = 1 \\), so by the generalized Euclid lemma \\( n \\mid t \\), say \\( t = ns \\). Hence \\( x - x' = mns \\), i.e. \\( x \\equiv x' \\pmod{mn} \\). Conversely every \\( x' \\equiv x \\pmod{mn} \\) is a solution. \\( \\blacksquare \\)",
+   "why": "The Bézout coefficients give the constructive formula directly: \\( nv \\) and \\( mu \\) are the \"basis\" elements \\( \\equiv 1, 0 \\) and \\( \\equiv 0, 1 \\)."
+  },
+  {
+   "id": "e5",
+   "kp": "k10",
+   "type": "written",
+   "prompt": "Let \\( p \\) be prime. (a) Prove that \\( p \\mid \\binom{p}{k} \\) for \\( 0 < k < p \\). (b) Prove by induction on \\( a \\ge 0 \\) that \\( a^{p} \\equiv a \\pmod{p} \\). (c) Deduce Fermat's little theorem.",
+   "rubric": [
+    "(a) k!(p − k)!·C(p, k) = p!; p divides the right side but not k!(p − k)! (all factors < p), so by Euclid's lemma p | C(p, k)",
+    "(b) Base 0^p = 0; step (a + 1)^p = Σ C(p, k)a^k ≡ a^p + 1 by (a) and the binomial theorem",
+    "(b) With the hypothesis, (a + 1)^p ≡ a + 1",
+    "(b) extends to negative a via a nonnegative representative; (c) for p ∤ a, cancels a (coprime to p) from a·a^{p−1} ≡ a"
+   ],
+   "model": "(a) From \\( \\binom{p}{k} = \\frac{p!}{k!\\,(p-k)!} \\), \\( k!\\,(p-k)!\\binom{p}{k} = p! \\), so \\( p \\) divides the left side. For \\( 0 < k < p \\), every factor of \\( k! \\) and of \\( (p - k)! \\) is a positive integer less than \\( p \\), hence not divisible by \\( p \\); by Euclid's lemma (for several factors) \\( p \\nmid k!\\,(p-k)! \\). Applying Euclid's lemma to the product \\( k!\\,(p-k)! \\cdot \\binom{p}{k} \\) gives \\( p \\mid \\binom{p}{k} \\).\n\n(b) *Base case.* \\( 0^{p} = 0 \\). *Inductive step.* Assume \\( a^{p} \\equiv a \\pmod{p} \\). By the binomial theorem and (a),\n\\[ (a + 1)^{p} = \\sum_{k=0}^{p} \\binom{p}{k}a^{k} \\equiv a^{p} + 1 \\equiv a + 1 \\pmod{p}, \\]\nsince every term with \\( 0 < k < p \\) is divisible by \\( p \\). By induction, \\( a^{p} \\equiv a \\) for all \\( a \\ge 0 \\). For negative \\( a \\), choose \\( a' \\ge 0 \\) with \\( a' \\equiv a \\pmod{p} \\); then \\( a^{p} \\equiv a'^{p} \\equiv a' \\equiv a \\).\n\n(c) If \\( p \\nmid a \\), then \\( \\gcd(a, p) = 1 \\), so \\( a \\) can be cancelled from \\( a \\cdot a^{p-1} \\equiv a \\cdot 1 \\pmod{p} \\), giving \\( a^{p-1} \\equiv 1 \\pmod{p} \\). \\( \\blacksquare \\)",
+   "why": "This proof uses induction and the binomial theorem instead of the rearrangement argument; both are standard."
+  },
+  {
+   "id": "e6",
+   "kp": "k8",
+   "type": "numbers",
+   "prompt": "Find all solutions of \\( 21x \\equiv 14 \\pmod{91} \\) in \\( \\{0, 1, \\dots, 90\\} \\).",
+   "answer": "5, 18, 31, 44, 57, 70, 83",
+   "why": "\\( d = \\gcd(21, 91) = 7 \\) divides 14, so there are 7 solutions. Dividing by 7: \\( 3x \\equiv 2 \\pmod{13} \\). The inverse of 3 modulo 13 is 9 (\\( 27 = 2 \\cdot 13 + 1 \\)), so \\( x \\equiv 18 \\equiv 5 \\pmod{13} \\). Modulo 91: \\( 5, 18, 31, 44, 57, 70, 83 \\)."
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "Division algorithm",
+    "formula": "\\( a = qn + r \\), \\( 0 \\le r < n \\), unique",
+    "when": "Case splits by remainder; defining a mod n.",
+    "example": "\\( -100 = (-15) \\cdot 7 + 5 \\).",
+    "watch": "Remainders are never negative."
+   },
+   {
+    "name": "Euclidean algorithm",
+    "formula": "\\( \\gcd(a, b) = \\gcd(b, a \\bmod b) \\)",
+    "when": "Computing gcds.",
+    "example": "\\( 252, 198 \\to 198, 54 \\to 54, 36 \\to 36, 18 \\to 18 \\).",
+    "watch": "The answer is the last nonzero remainder."
+   },
+   {
+    "name": "Bézout / extended Euclid",
+    "formula": "\\( ax + by = \\gcd(a, b) \\)",
+    "when": "Inverses, Diophantine equations, proving coprimality consequences.",
+    "example": "\\( 18 = 4 \\cdot 252 - 5 \\cdot 198 \\).",
+    "watch": "Check the combination numerically; coefficients are not unique."
+   },
+   {
+    "name": "Euclid's lemma",
+    "formula": "\\( p \\mid ab \\Rightarrow p \\mid a \\) or \\( p \\mid b \\); \\( n \\mid ab,\\ \\gcd(n,a) = 1 \\Rightarrow n \\mid b \\)",
+    "when": "Any argument about prime divisors of products.",
+    "example": "\\( p \\mid a^{2} \\Rightarrow p \\mid a \\).",
+    "watch": "False for composite divisors without coprimality: \\( 6 \\mid 4 \\cdot 9 \\)."
+   },
+   {
+    "name": "Congruence arithmetic",
+    "formula": "\\( a \\equiv b,\\ c \\equiv d \\Rightarrow a \\pm c \\equiv b \\pm d,\\ ac \\equiv bd,\\ a^{k} \\equiv b^{k} \\)",
+    "when": "Reducing computations modulo n.",
+    "example": "\\( 3^{2026} \\equiv (3^{4})^{506} 3^{2} \\equiv 9 \\pmod{10} \\).",
+    "watch": "No division without coprimality; no reducing exponents mod n."
+   },
+   {
+    "name": "Inverse and linear congruence",
+    "formula": "\\( ax \\equiv b \\pmod n \\) solvable iff \\( d = \\gcd(a,n) \\mid b \\); \\( d \\) solutions",
+    "when": "Solving for x modulo n.",
+    "example": "\\( 12x \\equiv 18 \\pmod{30} \\Rightarrow 2x \\equiv 3 \\pmod 5 \\Rightarrow x \\equiv 4 \\pmod 5 \\).",
+    "watch": "Divide the modulus too when dividing by d."
+   },
+   {
+    "name": "Chinese remainder theorem",
+    "formula": "\\( x = \\sum b_{i}M_{i}y_{i} \\), \\( M_{i}y_{i} \\equiv 1 \\pmod{m_{i}} \\)",
+    "when": "Systems with pairwise coprime moduli.",
+    "example": "\\( x \\equiv 2, 3, 2 \\pmod{3, 5, 7} \\Rightarrow x \\equiv 23 \\pmod{105} \\).",
+    "watch": "Check coprimality; the answer is a class modulo the product."
+   },
+   {
+    "name": "Fermat / Euler",
+    "formula": "\\( a^{p-1} \\equiv 1 \\pmod p \\) (\\( p \\nmid a \\)); \\( a^{\\varphi(n)} \\equiv 1 \\pmod n \\) (\\( \\gcd(a,n) = 1 \\))",
+    "when": "Reducing huge exponents.",
+    "example": "\\( 3^{2026} \\equiv 3^{26} \\equiv 29 \\pmod{100} \\), since \\( \\varphi(100) = 40 \\).",
+    "watch": "Reduce exponents modulo \\( p - 1 \\) or \\( \\varphi(n) \\), never modulo \\( n \\)."
+   }
+  ],
+  "stuck": [
+   "Translate every divisibility or congruence statement into an equation with an integer unknown: n | m means m = nk.",
+   "If a statement is about remainders, split into the n cases given by the division algorithm, or compute a table of residues.",
+   "If you need a gcd to appear, reach for Bézout: write gcd(a, b) = ax + by and multiply through.",
+   "Before dividing or cancelling in a congruence, check that the factor is coprime to the modulus.",
+   "For a large power, first reduce the base, then reduce the exponent using Fermat or Euler (checking coprimality), then finish by repeated squaring."
+  ]
+ }
+}

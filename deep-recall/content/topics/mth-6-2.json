@@ -228,7 +228,7 @@
      "id": "s4q1",
      "kp": "k6",
      "type": "written",
-     "prompt": "A student argues: \\\"Assume \\( 3 \\mid (4^{k} + 1) \\), say \\( 4^{k} + 1 = 3m \\). Then \\( 4^{k+1} + 1 = 4(4^{k} + 1) - 3 = 3(4m - 1) \\). Hence by induction \\( 3 \\mid (4^{n} + 1) \\) for all \\( n \\ge 1 \\).\\\" (a) Is the inductive step valid? (b) Where does the proof fail? (c) Is \\( 3 \\mid (4^{n} + 1) \\) true for any \\( n \\ge 0 \\)? Justify (c) using a result proved in this topic.",
+     "prompt": "A student argues: \"Assume \\( 3 \\mid (4^{k} + 1) \\), say \\( 4^{k} + 1 = 3m \\). Then \\( 4^{k+1} + 1 = 4(4^{k} + 1) - 3 = 3(4m - 1) \\). Hence by induction \\( 3 \\mid (4^{n} + 1) \\) for all \\( n \\ge 1 \\).\" (a) Is the inductive step valid? (b) Where does the proof fail? (c) Is \\( 3 \\mid (4^{n} + 1) \\) true for any \\( n \\ge 0 \\)? Justify (c) using a result proved in this topic.",
      "rubric": [
       "(a) The inductive step is algebraically valid: 4(4^k + 1) − 3 = 4^{k+1} + 1 and 12m − 3 = 3(4m − 1)",
       "(b) No base case was checked, and it fails: 4¹ + 1 = 5 is not divisible by 3",
@@ -242,7 +242,7 @@
      "id": "s4q2",
      "kp": "k6",
      "type": "written",
-     "prompt": "Consider the claim: \\\"for every \\( n \\ge 2 \\), any \\( n \\) distinct lines in the plane, no two of which are parallel, all pass through one common point\\\". The \\\"proof\\\": base case \\( n = 2 \\): two non-parallel lines meet in a point. Inductive step: given lines \\( \\ell_{1}, \\dots, \\ell_{k+1} \\), the lines \\( \\ell_{1}, \\dots, \\ell_{k} \\) pass through a common point \\( P \\), and \\( \\ell_{2}, \\dots, \\ell_{k+1} \\) pass through a common point \\( Q \\); both \\( P \\) and \\( Q \\) lie on each of \\( \\ell_{2}, \\dots, \\ell_{k} \\), hence \\( P = Q \\) and all \\( k + 1 \\) lines pass through it. Find the exact value of \\( k \\) at which the inductive step fails, and explain why it fails there and nowhere else.",
+     "prompt": "Consider the claim: \"for every \\( n \\ge 2 \\), any \\( n \\) distinct lines in the plane, no two of which are parallel, all pass through one common point\". The \"proof\": base case \\( n = 2 \\): two non-parallel lines meet in a point. Inductive step: given lines \\( \\ell_{1}, \\dots, \\ell_{k+1} \\), the lines \\( \\ell_{1}, \\dots, \\ell_{k} \\) pass through a common point \\( P \\), and \\( \\ell_{2}, \\dots, \\ell_{k+1} \\) pass through a common point \\( Q \\); both \\( P \\) and \\( Q \\) lie on each of \\( \\ell_{2}, \\dots, \\ell_{k} \\), hence \\( P = Q \\) and all \\( k + 1 \\) lines pass through it. Find the exact value of \\( k \\) at which the inductive step fails, and explain why it fails there and nowhere else.",
      "rubric": [
       "Identifies the failure at k = 2 (the step from 2 lines to 3 lines)",
       "At k = 2 the common family ℓ₂, …, ℓ_k is the single line ℓ₂; two points on one line need not coincide",
@@ -414,7 +414,7 @@
    "id": "c4",
    "type": "concept",
    "front": "Give a false statement whose inductive step is valid.",
-   "back": "\\\"\\( n^{2} + n \\) is odd\\\": if \\( k^{2} + k \\) is odd, so is \\( (k^{2} + k) + 2(k+1) \\). The base \\( 1^{2} + 1 = 2 \\) fails.",
+   "back": "\"\\( n^{2} + n \\) is odd\": if \\( k^{2} + k \\) is odd, so is \\( (k^{2} + k) + 2(k+1) \\). The base \\( 1^{2} + 1 = 2 \\) fails.",
    "kp": "k6"
   },
   {
@@ -479,7 +479,7 @@
    "id": "c13",
    "type": "concept",
    "front": "How is strong induction derived from ordinary induction?",
-   "back": "Apply ordinary induction to \\( Q(n) \\): \\\"\\( P(a), \\dots, P(n) \\) all hold\\\".",
+   "back": "Apply ordinary induction to \\( Q(n) \\): \"\\( P(a), \\dots, P(n) \\) all hold\".",
    "kp": "k7"
   },
   {
@@ -605,7 +605,7 @@
    "id": "p6",
    "kp": "k8",
    "type": "written",
-   "prompt": "Find the error in the following \\\"proof\\\" that \\( 2^{n} = 1 \\) for every integer \\( n \\ge 0 \\). *Strong induction.* Base: \\( 2^{0} = 1 \\). Step: let \\( k \\ge 0 \\) and assume \\( 2^{j} = 1 \\) for all \\( 0 \\le j \\le k \\). Then \\( 2^{k+1} = \\frac{2^{k} \\cdot 2^{k}}{2^{k-1}} = \\frac{1 \\cdot 1}{1} = 1 \\).",
+   "prompt": "Find the error in the following \"proof\" that \\( 2^{n} = 1 \\) for every integer \\( n \\ge 0 \\). *Strong induction.* Base: \\( 2^{0} = 1 \\). Step: let \\( k \\ge 0 \\) and assume \\( 2^{j} = 1 \\) for all \\( 0 \\le j \\le k \\). Then \\( 2^{k+1} = \\frac{2^{k} \\cdot 2^{k}}{2^{k-1}} = \\frac{1 \\cdot 1}{1} = 1 \\).",
    "rubric": [
     "The algebraic identity 2^{k+1} = 2^k·2^k / 2^{k−1} is correct",
     "The step uses the hypothesis at j = k − 1",
@@ -727,7 +727,7 @@
     "Weaker bound: step would need ((2k + 1)/(2k + 2))² ≤ 3k/(3k + 3), which is false (after expansion it is equivalent to 3k + 3 ≤ 0); a stronger hypothesis is needed"
    ],
    "model": "*Base case.* \\( a_{1} = \\frac{1}{2} = \\frac{1}{\\sqrt{4}} \\).\n\n*Inductive step.* Let \\( k \\ge 1 \\) and assume \\( a_{k} \\le \\frac{1}{\\sqrt{3k+1}} \\). Then \\( a_{k+1} = a_{k} \\cdot \\frac{2k+1}{2k+2} \\le \\frac{1}{\\sqrt{3k+1}} \\cdot \\frac{2k+1}{2k+2} \\), so it suffices that\n\\[ \\frac{2k+1}{(2k+2)\\sqrt{3k+1}} \\le \\frac{1}{\\sqrt{3k+4}}, \\quad\\text{i.e.}\\quad (2k+1)^{2}(3k+4) \\le (2k+2)^{2}(3k+1), \\]\nafter squaring and clearing positive denominators. Expanding, the left side is \\( 12k^{3} + 28k^{2} + 19k + 4 \\) and the right side is \\( 12k^{3} + 28k^{2} + 20k + 4 \\); they differ by \\( k \\ge 0 \\). So \\( a_{k+1} \\le \\frac{1}{\\sqrt{3(k+1)+1}} \\), and by induction the bound holds for all \\( n \\ge 1 \\). \\( \\blacksquare \\)\n\n*The weaker bound.* With the hypothesis \\( a_{k} \\le \\frac{1}{\\sqrt{3k}} \\), the step would need \\( (2k+1)^{2}(3k+3) \\le (2k+2)^{2} \\cdot 3k \\). The left side is \\( 12k^{3} + 24k^{2} + 15k + 3 \\) and the right side is \\( 12k^{3} + 24k^{2} + 12k \\), so the needed inequality is \\( 3k + 3 \\le 0 \\), false for every \\( k \\ge 1 \\). The weaker hypothesis does not supply enough to reach the next case, although the weaker statement is true (it follows from the stronger one, since \\( \\sqrt{3n} < \\sqrt{3n+1} \\)). This is strengthening the inductive hypothesis.",
-   "why": "The \\\"+1\\\" in \\( 3n + 1 \\) builds in exactly the margin the inductive step consumes; the difference of the two sides of the key inequality is \\( k \\)."
+   "why": "The \"+1\" in \\( 3n + 1 \\) builds in exactly the margin the inductive step consumes; the difference of the two sides of the key inequality is \\( k \\)."
   },
   {
    "id": "e4",
@@ -747,7 +747,7 @@
    "id": "e5",
    "kp": "k6",
    "type": "written",
-   "prompt": "Claim: for every \\( n \\ge 1 \\), \\( 1 + 2 + \\cdots + n = \\frac{1}{2}\\left(n + \\frac{1}{2}\\right)^{2} \\). (a) Show that the inductive step \\\"if the claim holds for \\( k \\) then it holds for \\( k + 1 \\)\\\" is valid. (b) Determine for which \\( n \\) the claim is true, and explain what this shows about induction.",
+   "prompt": "Claim: for every \\( n \\ge 1 \\), \\( 1 + 2 + \\cdots + n = \\frac{1}{2}\\left(n + \\frac{1}{2}\\right)^{2} \\). (a) Show that the inductive step \"if the claim holds for \\( k \\) then it holds for \\( k + 1 \\)\" is valid. (b) Determine for which \\( n \\) the claim is true, and explain what this shows about induction.",
    "rubric": [
     "(a) Adds k + 1 to (k + 1/2)²/2 and obtains (k² + 3k + 9/4)/2 = (k + 3/2)²/2",
     "(b) The base case fails: at n = 1, (3/2)²/2 = 9/8 ≠ 1",

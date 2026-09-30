@@ -186,7 +186,7 @@
       "\\( P(14, 5) - P(8, 5) \\)"
      ],
      "answer": 1,
-     "why": "The complement of \\\"at least one man\\\" is \\\"all women\\\", so the count is \\( \\binom{14}{5} - \\binom{8}{5} = 1946 \\). The first option counts a committee with \\( j \\) men \\( j \\) times (once for each choice of the \\\"guaranteed\\\" man), giving 4290. The third counts committees with exactly one man. The fourth counts ordered selections, although a committee is unordered."
+     "why": "The complement of \"at least one man\" is \"all women\", so the count is \\( \\binom{14}{5} - \\binom{8}{5} = 1946 \\). The first option counts a committee with \\( j \\) men \\( j \\) times (once for each choice of the \"guaranteed\" man), giving 4290. The third counts committees with exactly one man. The fourth counts ordered selections, although a committee is unordered."
     },
     {
      "id": "s3q3",
@@ -705,7 +705,7 @@
    "id": "e1",
    "kp": "k2",
    "type": "written",
-   "prompt": "Consider strings of length 5 over the 26-letter alphabet, with the vowels A, E, I, O, U. (a) How many contain at least one vowel? (b) How many contain exactly two vowels (repetition allowed)? Justify each step by naming the rule used.",
+   "prompt": "Consider strings of length 5 over the 26-letter alphabet, whose vowels are A, E, I, O, U. (a) How many contain at least one vowel? (b) How many contain exactly two vowels (repetition allowed)? Justify each step by naming the rule used.",
    "rubric": [
     "(a) Complement: 26⁵ − 21⁵ = 11881376 − 4084101 = 7797275",
     "(b) Choose the 2 vowel positions: C(5, 2) = 10",
@@ -713,7 +713,7 @@
     "Product rule: 10 · 25 · 9261 = 2315250"
    ],
    "model": "(a) By the product rule there are \\( 26^{5} = 11{,}881{,}376 \\) strings and \\( 21^{5} = 4{,}084{,}101 \\) strings with no vowel (21 consonants). By the complement rule, \\( 26^{5} - 21^{5} = 7{,}797{,}275 \\) strings contain at least one vowel.\n\n(b) Choose which 2 of the 5 positions hold vowels: \\( \\binom{5}{2} = 10 \\) ways. Fill those positions with vowels, \\( 5^{2} = 25 \\) ways, and the other 3 with consonants, \\( 21^{3} = 9261 \\) ways. By the product rule, \\( 10 \\cdot 25 \\cdot 9261 = 2{,}315{,}250 \\).",
-   "why": "\\\"At least one\\\" is handled by the complement; \\\"exactly \\( j \\)\\\" by choosing the positions first and then filling them."
+   "why": "\"At least one\" is handled by the complement; \"exactly \\( j \\)\" by choosing the positions first and then filling them."
   },
   {
    "id": "e2",

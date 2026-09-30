@@ -324,7 +324,7 @@
       "Not transitive: 1 R 0 and 0 R −1 but 1·(−1) = −1 < 0"
      ],
      "model": "*Reflexive:* \\( a \\cdot a = a^{2} \\ge 0 \\) for every integer \\( a \\).\n\n*Symmetric:* if \\( ab \\ge 0 \\), then \\( ba = ab \\ge 0 \\).\n\n*Not antisymmetric:* \\( 1 \\cdot 2 = 2 \\ge 0 \\), so \\( 1 \\mathrel{R} 2 \\) and \\( 2 \\mathrel{R} 1 \\), yet \\( 1 \\ne 2 \\).\n\n*Not transitive:* \\( 1 \\cdot 0 = 0 \\ge 0 \\) and \\( 0 \\cdot (-1) = 0 \\ge 0 \\), so \\( 1 \\mathrel{R} 0 \\) and \\( 0 \\mathrel{R} (-1) \\); but \\( 1 \\cdot (-1) = -1 < 0 \\), so \\( 1 \\mathrel{R} (-1) \\) fails.",
-     "why": "On the nonzero integers, \\( ab > 0 \\) means \\\"same sign\\\" and is transitive; the element 0, related to everything, breaks transitivity."
+     "why": "On the nonzero integers, \\( ab > 0 \\) means \"same sign\" and is transitive; the element 0, related to everything, breaks transitivity."
     },
     {
      "id": "s6q2",

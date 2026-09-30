@@ -152,7 +152,7 @@
       "Nothing yet: they may or may not be isomorphic, and further invariants or an explicit isomorphism are needed."
      ],
      "answer": 3,
-     "why": "Equal invariants are consistent with both outcomes: \\( C_{6} \\) and two disjoint triangles share all three but are not isomorphic, while two different labellings of \\( C_{6} \\) share them and are isomorphic. The second option confuses \\\"not yet proved isomorphic\\\" with \\\"not isomorphic\\\". The third is false: \\( K_{3,3} \\) and the prism graph (two triangles joined by three disjoint edges) are both connected, 3-regular, with 6 vertices and 9 edges, yet not isomorphic, since only the prism contains a triangle. The number of components is one more invariant, not a complete test."
+     "why": "Equal invariants are consistent with both outcomes: \\( C_{6} \\) and two disjoint triangles share all three but are not isomorphic, while two different labellings of \\( C_{6} \\) share them and are isomorphic. The second option confuses \"not yet proved isomorphic\" with \"not isomorphic\". The third is false: \\( K_{3,3} \\) and the prism graph (two triangles joined by three disjoint edges) are both connected, 3-regular, with 6 vertices and 9 edges, yet not isomorphic, since only the prism contains a triangle. The number of components is one more invariant, not a complete test."
     },
     {
      "id": "s2q3",
@@ -214,7 +214,7 @@
      "id": "s4q1",
      "kp": "k6",
      "type": "written",
-     "prompt": "Prove that the hypercube \\( Q_{n} \\) is bipartite for every \\( n \\ge 1 \\) by exhibiting the two parts, and deduce the length of every cycle in \\( Q_{n} \\) has the same parity. Which parity?",
+     "prompt": "Prove that the hypercube \\( Q_{n} \\) is bipartite for every \\( n \\ge 1 \\) by exhibiting the two parts, and deduce what can be said about the length of every cycle in \\( Q_{n} \\).",
      "rubric": [
       "X = strings with an even number of 1s, Y = strings with an odd number of 1s",
       "Adjacent strings differ in exactly one position, so their numbers of 1s differ by exactly 1",
@@ -660,7 +660,7 @@
    "id": "p5",
    "kp": "k5",
    "type": "written",
-   "prompt": "On the vertex set of a graph, define \\( u \\sim v \\) if there is a walk from \\( u \\) to \\( v \\). Prove that \\( \\sim \\) is an equivalence relation. Why would defining \\( u \\approx v \\) by \\\"there is a path from \\( u \\) to \\( v \\)\\\" require an extra argument for transitivity, and what supplies it?",
+   "prompt": "On the vertex set of a graph, define \\( u \\sim v \\) if there is a walk from \\( u \\) to \\( v \\). Prove that \\( \\sim \\) is an equivalence relation. Why would defining \\( u \\approx v \\) by \"there is a path from \\( u \\) to \\( v \\)\" require an extra argument for transitivity, and what supplies it?",
    "rubric": [
     "Reflexive: the walk of length 0",
     "Symmetric: reverse the walk",
