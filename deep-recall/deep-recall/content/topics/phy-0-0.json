@@ -1,0 +1,685 @@
+{
+ "key": "phy-0-0",
+ "title": "One-dimensional kinematics",
+ "v": 1,
+ "scope": "Motion of a particle along a straight line: position, displacement, velocity and acceleration as derivatives, recovering motion by integration, the constant-acceleration equations, free fall and meeting problems; forces (why things accelerate) and motion in two dimensions are out of scope.",
+ "sources": [
+  {
+   "title": "OpenStax University Physics Vol. 1, 3.2 Instantaneous Velocity and Speed",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/3-2-instantaneous-velocity-and-speed"
+  },
+  {
+   "title": "OpenStax University Physics Vol. 1, 3.4 Motion with Constant Acceleration",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/3-4-motion-with-constant-acceleration"
+  },
+  {
+   "title": "OpenStax University Physics Vol. 1, 3.5 Free Fall",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/3-5-free-fall"
+  },
+  {
+   "title": "OpenStax University Physics Vol. 1, 3.6 Finding Velocity and Displacement from Acceleration",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/3-6-finding-velocity-and-displacement-from-acceleration"
+  },
+  {
+   "title": "MIT 8.01 (TEAL), W01D3 Kinematics and One-Dimensional Motion: Non-Constant Acceleration",
+   "url": "https://web.mit.edu/8.01t/www/materials/Presentations/Presentation_W01D3.pdf"
+  }
+ ],
+ "pre": [],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Position, displacement, distance",
+   "d": "Set up a coordinate axis and distinguish position, displacement (signed) and distance traveled (never negative).",
+   "type": "distinction"
+  },
+  {
+   "id": "k2",
+   "t": "Average velocity versus average speed",
+   "d": "Compute average velocity and average speed for a trip and explain when they differ.",
+   "type": "distinction"
+  },
+  {
+   "id": "k3",
+   "t": "Instantaneous velocity as a derivative",
+   "d": "Define velocity as dx/dt, differentiate a position function, and read velocity as the slope of an x-t graph.",
+   "type": "concept"
+  },
+  {
+   "id": "k4",
+   "t": "Acceleration; speeding up versus slowing down",
+   "d": "Compute a = dv/dt and decide from the signs of v and a whether the speed is increasing or decreasing.",
+   "type": "concept"
+  },
+  {
+   "id": "k5",
+   "t": "Velocity and position by integration",
+   "d": "Integrate a(t) and v(t), fixing constants with initial conditions.",
+   "type": "procedure"
+  },
+  {
+   "id": "k6",
+   "t": "Slopes and areas on motion graphs",
+   "d": "Read slopes and signed areas on x-t, v-t and a-t graphs; compute distance as the integral of |v|.",
+   "type": "skill"
+  },
+  {
+   "id": "k7",
+   "t": "Deriving the constant-acceleration equations",
+   "d": "Derive the four constant-acceleration relations from a = dv/dt and v = dx/dt.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k8",
+   "t": "Solving constant-acceleration problems",
+   "d": "Choose the equation that contains the knowns and the unknown and solve with consistent signs.",
+   "type": "skill"
+  },
+  {
+   "id": "k9",
+   "t": "Free fall with a sign convention",
+   "d": "Treat free fall as constant acceleration of magnitude g toward Earth with an explicit choice of positive direction.",
+   "type": "procedure"
+  },
+  {
+   "id": "k10",
+   "t": "Two-object meeting problems",
+   "d": "Write each object's position in one coordinate system and a common clock, then equate positions.",
+   "type": "skill"
+  }
+ ],
+ "intro": "Mechanics begins with a narrower question than \"why do things move\": given a body moving along a straight line, how do we describe exactly where it is at every instant, how fast its position changes, and how fast that rate itself changes? This descriptive part of mechanics is called **kinematics**. It matters because every later law is stated in its language. Newton's second law says that force determines acceleration, so until acceleration is a precise quantity the law has no content.\n\nThe tool that makes the description precise is calculus. Velocity is the derivative of position with respect to time, acceleration is the derivative of velocity, and the reverse questions (where will the body be, given how it accelerates) are answered by integration with initial conditions. In this chapter you will build these definitions, learn to read them off graphs as slopes and areas, derive the familiar constant-acceleration equations as a special case, and apply them to free fall and to problems in which two bodies must meet.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "Position, displacement, and average velocity",
+   "kps": [
+    "k1",
+    "k2"
+   ],
+   "md": "This section answers the first question of kinematics: how do we attach numbers to \"where\" and \"how far\" for a body moving on a line, in a way that keeps track of direction?\n\n**Coordinate axis and position.** Choose a straight line along which the motion happens, pick a point on it as the origin, and choose one direction as positive. The **position** of the particle is its signed coordinate \\( x \\) on this axis, measured in meters. Because the particle moves, position is a function of time, \\( x(t) \\). The choice of origin and positive direction is yours; physical conclusions never depend on it, but every sign in the solution does, so state it at the start of every problem.\n\n**Displacement.** Between times \\( t_1 \\) and \\( t_2 \\) the **displacement** is\n\\[ \\Delta x = x(t_2) - x(t_1). \\]\nIt is signed: positive if the net change is in the positive direction. Displacement depends only on the endpoints, not on the route.\n\n**Distance traveled.** The **distance traveled** is the total length of path covered, counting every segment as positive. If the particle reverses direction, distance exceeds \\( |\\Delta x| \\). Distance is never negative.\n\n**Average velocity and average speed.** Over the interval \\( \\Delta t = t_2 - t_1 \\),\n\\[ v_{\\text{avg}} = \\frac{\\Delta x}{\\Delta t}, \\qquad \\text{average speed} = \\frac{\\text{distance traveled}}{\\Delta t}. \\]\nAverage velocity is signed and carries the direction of the net displacement; average speed is non-negative. Since distance is at least \\( |\\Delta x| \\), average speed is always at least \\( |v_{\\text{avg}}| \\), with equality exactly when the particle never reverses during the interval.\n\nGeometrically, \\( v_{\\text{avg}} \\) is the slope of the **secant line** joining the two points \\( (t_1, x(t_1)) \\) and \\( (t_2, x(t_2)) \\) on the graph of position against time.\n\n**Worked example.** A runner on a straight track starts at \\( x = 2.0 \\) m, runs to \\( x = 50.0 \\) m in 8.0 s, then turns and jogs back to \\( x = 30.0 \\) m in a further 4.0 s. Take the positive direction as the direction of the first leg.\n\n1. Displacement: \\( \\Delta x = 30.0 - 2.0 = 28.0 \\) m.\n2. Distance: the first leg covers \\( 50.0 - 2.0 = 48.0 \\) m, the second \\( 50.0 - 30.0 = 20.0 \\) m, so the distance is \\( 68.0 \\) m.\n3. Total time: \\( \\Delta t = 12.0 \\) s.\n4. Average velocity: \\( v_{\\text{avg}} = 28.0/12.0 = 2.33 \\) m/s, in the positive direction.\n5. Average speed: \\( 68.0/12.0 = 5.67 \\) m/s.\n\nThe two differ because the runner reversed direction; the 20.0 m jogged back counts toward distance but cancels part of the displacement.\n\n**Common mistake.** Averaging the velocities of the separate legs. The runner's leg velocities are \\( 48.0/8.0 = 6.0 \\) m/s and \\( -20.0/4.0 = -5.0 \\) m/s; their arithmetic mean, \\( 0.5 \\) m/s, is not the average velocity. The definition divides the total displacement by the total time, which weights each leg by how long it lasted. The simple mean of velocities agrees with this only when the legs last equal times.\n\nA second, related mistake is to treat \"average velocity zero\" as \"the body did not move\". A round trip has zero displacement and so zero average velocity, while the distance traveled and the average speed are positive.",
+   "questions": [
+    {
+     "id": "s1q1",
+     "kp": "k2",
+     "type": "number",
+     "prompt": "A car on a straight road drives 12.0 km east in 10.0 min, then 4.0 km west in 5.0 min. Taking east as positive, find its average velocity over the whole 15.0 min, in km/h.",
+     "answer": "32",
+     "tol": 0.005,
+     "why": "Displacement: \\( 12.0 - 4.0 = 8.0 \\) km east. Total time: 15.0 min \\( = 0.250 \\) h. Average velocity \\( = 8.0/0.250 = 32 \\) km/h east. (The average speed is \\( 16.0/0.250 = 64 \\) km/h.)"
+    },
+    {
+     "id": "s1q2",
+     "kp": "k1",
+     "type": "written",
+     "prompt": "Prove that for any motion on a line, the average speed over an interval is at least the magnitude of the average velocity, and state precisely when equality holds.",
+     "rubric": [
+      "Writes distance as the sum (or integral) of lengths of the pieces of the path",
+      "Uses the triangle inequality: the magnitude of a sum of signed displacements is at most the sum of their magnitudes",
+      "Divides by the same positive time interval to compare the averages",
+      "Equality exactly when the particle does not reverse direction (all pieces have the same sign)"
+     ],
+     "model": "Split the interval into pieces on which the particle moves in one direction, with signed displacements \\( d_1, \\dots, d_n \\). Then \\( \\Delta x = \\sum d_i \\) and the distance is \\( D = \\sum |d_i| \\). By the triangle inequality \\( |\\Delta x| = |\\sum d_i| \\le \\sum |d_i| = D \\). Dividing by \\( \\Delta t > 0 \\) gives \\( |v_{\\text{avg}}| \\le D/\\Delta t \\), the average speed. Equality in the triangle inequality holds exactly when all nonzero \\( d_i \\) have the same sign, that is, when the particle never reverses direction during the interval. (In integral form: \\( |\\int v\\,dt| \\le \\int |v|\\,dt \\).)",
+     "why": "The whole content is the triangle inequality applied to the signed pieces of the trip; reversal is the only way cancellation, and hence strict inequality, can occur."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "Instantaneous velocity and acceleration as derivatives",
+   "kps": [
+    "k3",
+    "k4"
+   ],
+   "md": "Average velocity describes a whole interval. The speedometer, however, reports a value at an instant. This section makes \"velocity at an instant\" precise and then does the same for the rate of change of velocity.\n\n**Instantaneous velocity.** Shrink the interval: the average velocity over \\( [t, t + \\Delta t] \\) is \\( \\big(x(t+\\Delta t) - x(t)\\big)/\\Delta t \\). The **instantaneous velocity** is its limit,\n\\[ v(t) = \\lim_{\\Delta t \\to 0} \\frac{x(t + \\Delta t) - x(t)}{\\Delta t} = \\frac{dx}{dt}. \\]\nThis is exactly the derivative from calculus, so the secant slope of the previous section becomes the slope of the **tangent line** to the \\( x \\)-\\( t \\) graph. The **speed** is \\( |v(t)| \\), the magnitude of the velocity. Velocity is signed and says which way the particle moves; speed does not.\n\n**Acceleration.** Applying the same construction to velocity gives the **acceleration**,\n\\[ a(t) = \\frac{dv}{dt} = \\frac{d^2x}{dt^2}, \\]\nmeasured in m/s². Acceleration is the slope of the \\( v \\)-\\( t \\) graph.\n\n**Speeding up or slowing down.** The sign of \\( a \\) alone does not tell you whether the particle is getting faster. Differentiate the square of the speed: \\( \\frac{d}{dt}(v^2) = 2v\\,\\frac{dv}{dt} = 2va \\). So the speed increases when \\( v \\) and \\( a \\) have the same sign and decreases when they have opposite signs. A negative acceleration with a negative velocity means speeding up in the negative direction.\n\n**Worked example.** A particle moves according to \\( x(t) = t^3 - 6t^2 + 9t \\), with \\( x \\) in meters and \\( t \\) in seconds (the coefficients carry the units needed to make each term meters).\n\n1. Velocity: \\( v(t) = 3t^2 - 12t + 9 = 3(t-1)(t-3) \\) m/s.\n2. Acceleration: \\( a(t) = 6t - 12 \\) m/s².\n3. The particle is momentarily at rest when \\( v = 0 \\): at \\( t = 1 \\) s (where \\( x = 4 \\) m) and \\( t = 3 \\) s (where \\( x = 0 \\)). Between these times \\( v < 0 \\), so it moves in the negative direction.\n4. At \\( t = 2 \\) s: \\( v = -3 \\) m/s and \\( a = 0 \\). For \\( 1 < t < 2 \\), \\( v < 0 \\) and \\( a < 0 \\): speeding up. For \\( 2 < t < 3 \\), \\( v < 0 \\) and \\( a > 0 \\): slowing down.\n\nIn the plot below the horizontal axis is time \\( t \\) and the vertical axis is position \\( x \\). Drag \\( s \\) to move the tangent line along the curve and watch its slope: it is positive before \\( t = 1 \\), zero at the peak and trough, and steepest downward at \\( t = 2 \\), where the velocity is most negative.\n\n```plot\nx: 0, 4\ny: -2, 6\nxlabel: t (s)\nylabel: x (m)\nf: x^3 - 6*x^2 + 9*x | position x(t)\nslider: s, 0, 4, 0.5 | instant s\nf: (3*s^2 - 12*s + 9)*(x - s) + s^3 - 6*s^2 + 9*s | tangent at t = s\npoint: s, s^3 - 6*s^2 + 9*s\n```\n\n**Common mistake.** Reading \"negative acceleration\" as \"deceleration\". Deceleration means the speed is decreasing, which requires \\( v \\) and \\( a \\) to have opposite signs. On \\( 1 < t < 2 \\) above, the acceleration is negative and the particle is speeding up. The second common mistake is to conclude that \\( a = 0 \\) whenever \\( v = 0 \\); at \\( t = 1 \\) the particle is at rest but \\( a = -6 \\) m/s², which is why it does not stay at rest.",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k3",
+     "type": "expression",
+     "prompt": "A particle's position is \\( x(t) = 2t^3 - 5t^2 + 4 \\) (SI units). Give its acceleration \\( a(t) \\) as an expression in \\( t \\).",
+     "answer": "12*t - 10",
+     "vars": "t",
+     "why": "\\( v = dx/dt = 6t^2 - 10t \\), then \\( a = dv/dt = 12t - 10 \\) m/s²."
+    },
+    {
+     "id": "s2q2",
+     "kp": "k4",
+     "type": "mcq",
+     "prompt": "At some instant a particle on the \\( x \\)-axis has \\( v = -4.0 \\) m/s and \\( a = +2.0 \\) m/s². Which statement is correct at that instant?",
+     "options": [
+      "It is speeding up, because the acceleration is positive.",
+      "It is moving in the \\( -x \\) direction and its speed is decreasing.",
+      "It is moving in the \\( +x \\) direction, because the acceleration points that way.",
+      "Its speed is constant, because the signs of \\( v \\) and \\( a \\) cancel."
+     ],
+     "answer": 1,
+     "why": "The direction of motion is the sign of \\( v \\), so it moves toward \\( -x \\). The speed changes at the rate given by \\( \\frac{d}{dt}(v^2) = 2va = 2(-4.0)(2.0) < 0 \\), so the speed decreases. The acceleration's direction is not the direction of motion, and a positive \\( a \\) means speeding up only when \\( v > 0 \\)."
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "Recovering motion from acceleration: integrals and areas",
+   "kps": [
+    "k5",
+    "k6"
+   ],
+   "md": "In practice the arrow of inference usually runs the other way. Newton's laws (next chapters) will tell you the acceleration; you then want velocity and position. This section reverses differentiation.\n\n**Velocity from acceleration.** Since \\( dv/dt = a \\), the Fundamental Theorem of Calculus gives\n\\[ v(t) = v_0 + \\int_0^t a(t')\\,dt', \\qquad x(t) = x_0 + \\int_0^t v(t')\\,dt', \\]\nwhere \\( v_0 = v(0) \\) and \\( x_0 = x(0) \\) are the **initial conditions**. The dummy variable \\( t' \\) keeps the upper limit distinct from the integration variable. Knowing \\( a(t) \\) alone does not determine the motion: two particles with the same acceleration but different starting velocities follow different paths. You always need one initial condition per integration.\n\n**Worked example.** A car starts from rest at \\( x = 0 \\) and for \\( 0 \\le t \\le 6.0 \\) s has \\( a(t) = 3.0 - 0.50t \\) (in m/s², with \\( t \\) in s).\n\n1. \\( v(t) = 0 + \\int_0^t (3.0 - 0.50t')\\,dt' = 3.0t - 0.25t^2 \\) m/s.\n2. \\( v(6.0) = 18 - 9.0 = 9.0 \\) m/s.\n3. \\( x(t) = \\int_0^t (3.0t' - 0.25t'^2)\\,dt' = 1.5t^2 - t^3/12 \\) m.\n4. \\( x(6.0) = 54 - 18 = 36 \\) m.\n\nNote that you could not have used \"distance equals average acceleration times time squared\" formulas here; the acceleration changes with time.\n\n**The graphical meaning.** The definite integral is signed area. Hence:\n- the signed area under the \\( a \\)-\\( t \\) graph over an interval is the change in velocity;\n- the signed area under the \\( v \\)-\\( t \\) graph is the displacement.\n\nArea below the axis counts negatively. That is exactly right for displacement, but it means the \\( v \\)-\\( t \\) area does not give distance when the particle reverses. The distance traveled is\n\\[ D = \\int_{t_1}^{t_2} |v(t)|\\,dt, \\]\ncomputed in practice by finding where \\( v = 0 \\), splitting the interval there, and adding the absolute values of the pieces.\n\n**Worked example (distance versus displacement).** Let \\( v(t) = t^2 - 4t + 3 = (t-1)(t-3) \\) m/s on \\( 0 \\le t \\le 4 \\) s. The signed area is\n\\[ \\int_0^4 (t^2 - 4t + 3)\\,dt = \\Big[\\tfrac{t^3}{3} - 2t^2 + 3t\\Big]_0^4 = \\tfrac{4}{3} \\text{ m}. \\]\nSplitting at the zeros: \\( \\int_0^1 v\\,dt = \\tfrac43 \\), \\( \\int_1^3 v\\,dt = -\\tfrac43 \\), \\( \\int_3^4 v\\,dt = \\tfrac43 \\). So the displacement is \\( \\tfrac43 \\) m but the distance is \\( \\tfrac43 + \\tfrac43 + \\tfrac43 = 4 \\) m.\n\nIn the plot the horizontal axis is \\( t \\) and the vertical axis is \\( v \\). The shaded region between 1 and 3 lies below the axis; in the displacement it cancels one of the two positive lobes, while the distance counts all three lobes.\n\n```plot\nx: 0, 4.2\ny: -1.5, 3.5\nxlabel: t (s)\nylabel: v (m/s)\nf: x^2 - 4*x + 3 | v(t)\nshade: x^2 - 4*x + 3, 0, 4 | signed area = displacement\n```\n\n**Common mistake.** Forgetting the constant. Writing \\( v = \\int a\\,dt = 3.0t - 0.25t^2 \\) is right above only because the car started from rest. If it had started at 5.0 m/s, every later velocity would be 5.0 m/s larger, and every position would change by \\( 5.0t \\). An indefinite integral is a family of functions; the initial condition picks the member that describes this particle.",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k5",
+     "type": "number",
+     "prompt": "A particle has acceleration \\( a(t) = (6.0\\ \\text{m/s}^3)\\,t \\), with \\( v(0) = -3.0 \\) m/s and \\( x(0) = 2.0 \\) m. Find its position at \\( t = 2.0 \\) s, in meters.",
+     "answer": "4",
+     "tol": 0.005,
+     "why": "\\( v(t) = -3.0 + \\int_0^t 6t'\\,dt' = 3t^2 - 3 \\). \\( x(t) = 2.0 + \\int_0^t (3t'^2 - 3)\\,dt' = t^3 - 3t + 2 \\). At \\( t = 2 \\): \\( 8 - 6 + 2 = 4.0 \\) m."
+    },
+    {
+     "id": "s3q2",
+     "kp": "k6",
+     "type": "number",
+     "prompt": "For the particle in the previous question, find the total distance it travels between \\( t = 0 \\) and \\( t = 2.0 \\) s, in meters.",
+     "answer": "6",
+     "tol": 0.005,
+     "why": "\\( v = 3t^2 - 3 \\) vanishes at \\( t = 1 \\) s. Positions: \\( x(0) = 2 \\), \\( x(1) = 1 - 3 + 2 = 0 \\), \\( x(2) = 4 \\). The particle moves 2 m in the negative direction, then 4 m in the positive direction: distance \\( 6.0 \\) m, although the displacement is only \\( +2.0 \\) m."
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "Motion with constant acceleration",
+   "kps": [
+    "k7",
+    "k8"
+   ],
+   "md": "Many situations (a car braking steadily, a body falling near Earth's surface without air resistance) have an acceleration that is constant to good accuracy. In that case the integrals of the previous section can be done once and for all, giving a small set of equations that relate \\( x \\), \\( v \\), \\( a \\) and \\( t \\). This section derives them, so that you know exactly when they hold.\n\n**Derivation.** Let \\( a \\) be constant, with \\( x(0) = x_0 \\) and \\( v(0) = v_0 \\).\n\n1. Integrate the acceleration: \\( v(t) = v_0 + \\int_0^t a\\,dt' \\), so\n\\[ v = v_0 + at. \\qquad (1) \\]\n2. Integrate the velocity: \\( x(t) = x_0 + \\int_0^t (v_0 + at')\\,dt' \\), so\n\\[ x = x_0 + v_0 t + \\tfrac12 a t^2. \\qquad (2) \\]\n3. Eliminate \\( t \\): from (1), \\( t = (v - v_0)/a \\). Substituting into (2) and simplifying gives\n\\[ v^2 = v_0^2 + 2a(x - x_0). \\qquad (3) \\]\n4. Eliminate \\( a \\): from (1), \\( at = v - v_0 \\); then (2) becomes \\( x - x_0 = v_0 t + \\tfrac12 (v - v_0)t \\), that is,\n\\[ x - x_0 = \\tfrac12 (v_0 + v)\\,t. \\qquad (4) \\]\n\nEquation (4) says that for constant acceleration the average velocity is the mean of the initial and final velocities, because \\( v(t) \\) is linear in \\( t \\). For non-constant acceleration this is false in general.\n\n**Choosing an equation.** Each equation omits exactly one of the five quantities \\( \\Delta x, v_0, v, a, t \\): (1) omits \\( \\Delta x \\), (2) omits \\( v \\), (3) omits \\( t \\), (4) omits \\( a \\). List what is known and what is asked; the equation that omits the quantity you neither know nor want is the one to use. Fix a positive direction first and give every vector quantity its sign.\n\n**Worked example.** A car moving at 25.0 m/s brakes with constant acceleration of magnitude 6.00 m/s². How far does it travel while stopping, and how long does it take? What is the stopping distance if the driver first takes 0.80 s to react?\n\n1. Positive direction: the car's motion. So \\( v_0 = +25.0 \\) m/s, \\( a = -6.00 \\) m/s², \\( v = 0 \\).\n2. Distance, time not needed: use (3). \\( 0 = 25.0^2 + 2(-6.00)\\Delta x \\), so \\( \\Delta x = 625/12.0 = 52.1 \\) m.\n3. Time: use (1). \\( 0 = 25.0 - 6.00t \\), so \\( t = 4.17 \\) s.\n4. During the reaction time the car moves at constant speed: \\( 25.0 \\times 0.80 = 20.0 \\) m. Total: \\( 72.1 \\) m.\n\nThe stopping distance scales as \\( v_0^2 \\): doubling the speed quadruples the braking distance, while the reaction distance only doubles.\n\n**Common mistakes.** First, using these equations when \\( a \\) varies. If \\( a(t) = 6t \\), no single value of \\( a \\) makes (2) correct; you must integrate. Second, sign errors: writing \\( a = +6.00 \\) m/s² for a braking car in a coordinate system where the motion is positive gives \\( \\Delta x = -52.1 \\) m, a nonsensical answer that is the signal to recheck signs. Third, in (3), a negative \\( v^2 \\) on the right side means the body never reaches that position; for example, a car braking from 25.0 m/s never reaches 60 m beyond its starting point.",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k8",
+     "type": "number",
+     "prompt": "A train starts from rest and accelerates uniformly at 2.50 m/s². How far, in meters, has it traveled when its speed reaches 20.0 m/s?",
+     "answer": "80",
+     "tol": 0.005,
+     "why": "Time is neither given nor asked, so use \\( v^2 = v_0^2 + 2a\\Delta x \\): \\( 20.0^2 = 0 + 2(2.50)\\Delta x \\), so \\( \\Delta x = 400/5.00 = 80.0 \\) m."
+    },
+    {
+     "id": "s4q2",
+     "kp": "k8",
+     "type": "expression",
+     "prompt": "A vehicle moving at speed \\( v_0 \\) brakes with constant deceleration of magnitude \\( b \\). Give its stopping distance in terms of \\( v_0 \\) and \\( b \\).",
+     "answer": "v0^2/(2*b)",
+     "vars": "v0 b",
+     "why": "With the motion positive, \\( a = -b \\) and final \\( v = 0 \\): \\( 0 = v_0^2 - 2b\\,\\Delta x \\), so \\( \\Delta x = v_0^2/(2b) \\)."
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "Free fall and problems with two moving objects",
+   "kps": [
+    "k9",
+    "k10"
+   ],
+   "md": "The most important constant-acceleration motion is **free fall**: motion under gravity alone, with air resistance neglected. This section applies the previous equations to it and then to problems in which two bodies must be at the same place at the same time.\n\n**Free fall.** Near Earth's surface, every body moving under gravity alone has the same downward acceleration of magnitude \\( g \\), independent of its mass; we use \\( g = 9.80 \\) m/s². (The measured value varies from about 9.78 to 9.83 m/s² with latitude and altitude.) If you choose the \\( y \\)-axis pointing up, then \\( a_y = -g \\) throughout the flight, whether the body is rising, at the top, or falling. The equations of the previous section become\n\\[ v_y = v_{0y} - gt, \\qquad y = y_0 + v_{0y}t - \\tfrac12 g t^2, \\qquad v_y^2 = v_{0y}^2 - 2g(y - y_0). \\]\nHere \\( g \\) is a positive number; the minus signs come from the choice \"up is positive\".\n\n**Worked example.** A ball is thrown straight up at 15.0 m/s from the edge of a cliff 20.0 m above the ground below; it misses the edge on the way down. Take up as positive with \\( y_0 = 0 \\) at the launch point, and \\( g = 9.80 \\) m/s².\n\n1. Maximum height above launch: at the top \\( v_y = 0 \\), so \\( 0 = 15.0^2 - 2(9.80)y_{\\max} \\), giving \\( y_{\\max} = 225/19.6 = 11.5 \\) m.\n2. Time to reach the ground, where \\( y = -20.0 \\) m: \\( -20.0 = 15.0t - 4.90t^2 \\), so \\( 4.90t^2 - 15.0t - 20.0 = 0 \\). The quadratic formula gives \\( t = \\big(15.0 + \\sqrt{225 + 392}\\big)/9.80 = 4.07 \\) s; the other root is negative and describes a fictitious earlier time before launch.\n3. Velocity on arrival: \\( v_y = 15.0 - 9.80(4.07) = -24.8 \\) m/s. As a check, \\( v_y^2 = 225 + 2(9.80)(20.0) = 617 \\), and \\( \\sqrt{617} = 24.8 \\).\n\n**Two moving objects.** To find where and when two bodies meet, write both positions in the same coordinate system as functions of the same clock, then set them equal. For example: a car passes a stationary police car at a constant 24.0 m/s; at that instant the police car starts from rest with constant acceleration 4.00 m/s². With the origin at the police car and \\( t = 0 \\) at the passing moment, \\( x_{\\text{car}} = 24.0t \\) and \\( x_{\\text{police}} = 2.00t^2 \\). Setting them equal gives \\( t(2.00t - 24.0) = 0 \\): \\( t = 0 \\) (the passing moment) or \\( t = 12.0 \\) s, at \\( x = 288 \\) m. The police car is then moving at \\( 4.00 \\times 12.0 = 48.0 \\) m/s, twice the car's speed, which is what equation (4) predicts: equal displacements in equal times require equal average velocities, and the police car's average is \\( (0 + 48.0)/2 = 24.0 \\) m/s.\n\nThe plot shows both positions against time (horizontal axis \\( t \\)); the curves cross where the police car catches up.\n\n```plot\nx: 0, 15\ny: 0, 400\nxlabel: t (s)\nylabel: x (m)\nf: 24*x | car, constant velocity\nf: 2*x^2 | police car, constant acceleration\npoint: 12, 288\n```\n\n**Common mistakes.** Saying the acceleration is zero at the top of the flight: the velocity is zero there, but \\( a_y = -g \\) at every instant, which is why the ball comes back down. Using \\( a = +9.80 \\) m/s² with up positive: this silently treats gravity as pointing up. In two-object problems, using different origins or different starting times for the two bodies without converting to a common one.",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k9",
+     "type": "number",
+     "prompt": "A ball is thrown straight up at 12.0 m/s. Using \\( g = 9.80 \\) m/s² and neglecting air resistance, how long, in seconds, until it returns to the launch height?",
+     "answer": "2*12/9.8",
+     "tol": 0.005,
+     "why": "Up positive: \\( 0 = 12.0t - 4.90t^2 \\), so \\( t = 0 \\) or \\( t = 12.0/4.90 = 2.45 \\) s. Equivalently, the rise takes \\( v_0/g = 1.22 \\) s and the fall takes the same time."
+    },
+    {
+     "id": "s5q2",
+     "kp": "k10",
+     "type": "number",
+     "prompt": "A car passes a stationary police car at a constant 35.0 m/s. At that instant the police car starts from rest with constant acceleration 5.00 m/s². After how many seconds does it catch the car?",
+     "answer": "14",
+     "tol": 0.005,
+     "why": "Common origin and clock: \\( x_{\\text{car}} = 35.0t \\), \\( x_{\\text{police}} = 2.50t^2 \\). Equal when \\( t(2.50t - 35.0) = 0 \\), so \\( t = 14.0 \\) s (at \\( x = 490 \\) m)."
+    }
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "t": "kinematics",
+   "d": "The description of motion (position, velocity, acceleration as functions of time) without reference to its causes."
+  },
+  {
+   "t": "position",
+   "d": "The signed coordinate x of a particle on a chosen axis, relative to a chosen origin; a function of time x(t)."
+  },
+  {
+   "t": "displacement",
+   "d": "The change in position over an interval, Δx = x(t₂) − x(t₁); signed and independent of the route."
+  },
+  {
+   "t": "distance traveled",
+   "d": "The total length of path covered over an interval, counting every segment as positive; equals the integral of |v| dt."
+  },
+  {
+   "t": "average velocity",
+   "d": "Displacement divided by elapsed time, Δx/Δt; the slope of the secant line on an x-t graph."
+  },
+  {
+   "t": "average speed",
+   "d": "Distance traveled divided by elapsed time; never negative and at least the magnitude of the average velocity."
+  },
+  {
+   "t": "instantaneous velocity",
+   "d": "The derivative v = dx/dt; the slope of the tangent line to the x-t graph."
+  },
+  {
+   "t": "speed",
+   "d": "The magnitude |v| of the instantaneous velocity."
+  },
+  {
+   "t": "acceleration",
+   "d": "The derivative a = dv/dt = d²x/dt²; the slope of the v-t graph.",
+   "ex": "Negative acceleration is not the same as slowing down; the speed decreases only when v and a have opposite signs."
+  },
+  {
+   "t": "initial conditions",
+   "d": "The values of position and velocity at a reference time (usually t = 0) that fix the constants of integration."
+  },
+  {
+   "t": "free fall",
+   "d": "Motion under gravity alone, air resistance neglected; near Earth's surface the acceleration is g ≈ 9.80 m/s² downward for every body."
+  },
+  {
+   "t": "secant line",
+   "d": "The line through two points of a graph; on an x-t graph its slope is the average velocity over the interval."
+  },
+  {
+   "t": "tangent line",
+   "d": "The line that touches a graph at a point with the graph's slope there; on an x-t graph its slope is the instantaneous velocity."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "term",
+   "front": "Define: displacement",
+   "back": "\\( \\Delta x = x(t_2) - x(t_1) \\), the signed change in position; depends only on the endpoints.",
+   "kp": "k1"
+  },
+  {
+   "id": "c2",
+   "type": "concept",
+   "front": "When is the distance traveled larger than the magnitude of the displacement?",
+   "back": "Exactly when the particle reverses direction during the interval.",
+   "kp": "k1"
+  },
+  {
+   "id": "c3",
+   "type": "formula",
+   "front": "Average velocity and average speed",
+   "back": "\\( v_{\\text{avg}} = \\Delta x/\\Delta t \\); average speed \\( = D/\\Delta t \\), where \\( D \\) is distance traveled.",
+   "kp": "k2"
+  },
+  {
+   "id": "c4",
+   "type": "formula",
+   "front": "Instantaneous velocity (definition)",
+   "back": "\\( v(t) = \\lim_{\\Delta t\\to 0} \\frac{x(t+\\Delta t)-x(t)}{\\Delta t} = \\frac{dx}{dt} \\)",
+   "kp": "k3"
+  },
+  {
+   "id": "c5",
+   "type": "problem",
+   "front": "\\( x(t) = 3\\sin(2t) \\). Find \\( v(t) \\).",
+   "back": "\\( v = 6\\cos(2t) \\), by the chain rule.",
+   "answer": "6*cos(2*t)",
+   "vars": "t",
+   "check": "expression",
+   "kp": "k3"
+  },
+  {
+   "id": "c6",
+   "type": "concept",
+   "front": "How do you tell from v and a whether a particle is speeding up?",
+   "back": "Speeding up when \\( v \\) and \\( a \\) have the same sign, slowing down when opposite, since \\( \\frac{d}{dt}v^2 = 2va \\).",
+   "kp": "k4"
+  },
+  {
+   "id": "c7",
+   "type": "concept",
+   "front": "A particle is momentarily at rest. Must its acceleration be zero?",
+   "back": "No. v = 0 at an instant says nothing about dv/dt; a thrown ball at its peak has a = −g.",
+   "kp": "k4"
+  },
+  {
+   "id": "c8",
+   "type": "formula",
+   "front": "Velocity and position from acceleration",
+   "back": "\\( v(t) = v_0 + \\int_0^t a\\,dt' \\), \\( x(t) = x_0 + \\int_0^t v\\,dt' \\)",
+   "kp": "k5"
+  },
+  {
+   "id": "c9",
+   "type": "concept",
+   "front": "Why do you need initial conditions to get x(t) from a(t)?",
+   "back": "Each integration determines the function only up to an additive constant; one known value (v₀, then x₀) fixes each constant.",
+   "kp": "k5"
+  },
+  {
+   "id": "c10",
+   "type": "concept",
+   "front": "What does the signed area under a v-t graph represent? Under an a-t graph?",
+   "back": "Under v-t: the displacement. Under a-t: the change in velocity.",
+   "kp": "k6"
+  },
+  {
+   "id": "c11",
+   "type": "formula",
+   "front": "Distance traveled from velocity",
+   "back": "\\( D = \\int_{t_1}^{t_2} |v(t)|\\,dt \\) (split where \\( v = 0 \\)).",
+   "kp": "k6"
+  },
+  {
+   "id": "c12",
+   "type": "formula",
+   "front": "Constant acceleration: velocity and position versus time",
+   "back": "\\( v = v_0 + at \\), \\( x = x_0 + v_0 t + \\tfrac12 a t^2 \\)",
+   "kp": "k7"
+  },
+  {
+   "id": "c13",
+   "type": "formula",
+   "front": "Constant acceleration: the equation without time",
+   "back": "\\( v^2 = v_0^2 + 2a(x - x_0) \\)",
+   "kp": "k7"
+  },
+  {
+   "id": "c14",
+   "type": "concept",
+   "front": "When is average velocity equal to (v₀ + v)/2?",
+   "back": "When the acceleration is constant (v linear in t); not in general.",
+   "kp": "k7"
+  },
+  {
+   "id": "c15",
+   "type": "problem",
+   "front": "Car at 30.0 m/s stops in 45.0 m with constant deceleration. Magnitude of acceleration (m/s²)?",
+   "back": "\\( 0 = 30.0^2 - 2a(45.0) \\Rightarrow a = 10.0 \\) m/s².",
+   "answer": "10",
+   "check": "number",
+   "kp": "k8"
+  },
+  {
+   "id": "c16",
+   "type": "problem",
+   "front": "Time for a ball launched straight up at \\( v_0 \\) to reach its peak",
+   "back": "\\( t = v_0/g \\), from \\( 0 = v_0 - gt \\).",
+   "answer": "v0/g",
+   "vars": "v0 g",
+   "check": "expression",
+   "kp": "k9"
+  },
+  {
+   "id": "c17",
+   "type": "formula",
+   "front": "Maximum height of a body thrown up at v₀",
+   "back": "\\( h = v_0^2/(2g) \\)",
+   "kp": "k9"
+  },
+  {
+   "id": "c18",
+   "type": "concept",
+   "front": "Method for when and where two moving bodies meet",
+   "back": "Write both positions in one coordinate system on one clock, set them equal, solve for t, discard nonphysical roots.",
+   "kp": "k10"
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k2",
+   "type": "number",
+   "prompt": "A particle has \\( x(t) = 3t^2 - 2t \\) (meters, seconds). Find its average velocity between \\( t = 1.0 \\) s and \\( t = 3.0 \\) s, in m/s.",
+   "answer": "10",
+   "tol": 0.005,
+   "why": "\\( x(3) = 27 - 6 = 21 \\) m, \\( x(1) = 1 \\) m. \\( v_{\\text{avg}} = (21 - 1)/2.0 = 10 \\) m/s. (This equals \\( v(2) \\), since \\( x \\) is quadratic.)"
+  },
+  {
+   "id": "p2",
+   "kp": "k5",
+   "type": "expression",
+   "prompt": "A particle has \\( a(t) = 6t - 2 \\) (SI units), \\( v(0) = 1 \\) m/s and \\( x(0) = 0 \\). Give \\( x(t) \\).",
+   "answer": "t^3 - t^2 + t",
+   "vars": "t",
+   "why": "\\( v = 1 + \\int_0^t (6t' - 2)\\,dt' = 3t^2 - 2t + 1 \\). \\( x = 0 + \\int_0^t (3t'^2 - 2t' + 1)\\,dt' = t^3 - t^2 + t \\)."
+  },
+  {
+   "id": "p3",
+   "kp": "k6",
+   "type": "written",
+   "prompt": "Explain, using the Fundamental Theorem of Calculus, why the signed area under a \\( v \\)-\\( t \\) graph between \\( t_1 \\) and \\( t_2 \\) equals the displacement, and why it does not in general equal the distance traveled.",
+   "rubric": [
+    "Identifies x as an antiderivative of v because dx/dt = v",
+    "Applies the FTC: the integral of v from t₁ to t₂ equals x(t₂) − x(t₁) = Δx",
+    "Notes that intervals where v < 0 contribute negative area",
+    "Distance requires the integral of |v|, which differs when v changes sign"
+   ],
+   "model": "Since \\( v = dx/dt \\), the position \\( x(t) \\) is an antiderivative of \\( v(t) \\). The Fundamental Theorem of Calculus then gives \\( \\int_{t_1}^{t_2} v\\,dt = x(t_2) - x(t_1) = \\Delta x \\), and the definite integral is the signed area. On any subinterval where \\( v < 0 \\) the particle moves in the negative direction, and that area is counted negatively, cancelling some of the positive area. Distance counts all motion as positive, so it equals \\( \\int |v|\\,dt \\); the two agree only if \\( v \\) does not change sign on the interval.",
+   "why": "The key is that 'area' in the FTC is signed; physics wants signs for displacement and absolute values for distance."
+  },
+  {
+   "id": "p4",
+   "kp": "k8",
+   "type": "number",
+   "prompt": "A car traveling at 30.0 m/s stops in 45.0 m with constant acceleration. Find the magnitude of its acceleration, in m/s².",
+   "answer": "10",
+   "tol": 0.005,
+   "why": "\\( 0 = 30.0^2 + 2a(45.0) \\Rightarrow a = -900/90.0 = -10.0 \\) m/s²; magnitude 10.0 m/s²."
+  },
+  {
+   "id": "p5",
+   "kp": "k9",
+   "type": "number",
+   "prompt": "A rock is thrown straight down at 5.00 m/s from a height of 40.0 m. Using \\( g = 9.80 \\) m/s², find its speed just before it hits the ground, in m/s.",
+   "answer": "sqrt(25 + 2*9.8*40)",
+   "tol": 0.005,
+   "why": "Down positive: \\( v^2 = 5.00^2 + 2(9.80)(40.0) = 809 \\), so \\( v = 28.4 \\) m/s."
+  },
+  {
+   "id": "p6",
+   "kp": "k7",
+   "type": "written",
+   "prompt": "A student is given \\( x(t) = t^3 \\) (SI units) and asked for the position at \\( t = 2 \\) s of a second particle that starts from rest at the origin with the same acceleration function. The student computes \\( a(2) = 12 \\) m/s² and then \\( x = \\tfrac12 (12)(2)^2 = 24 \\) m. Identify the error and give the correct result.",
+   "rubric": [
+    "States that x = x₀ + v₀t + ½at² requires constant acceleration",
+    "Notes that a(t) = 6t varies, so a(2) is not the acceleration throughout",
+    "Integrates twice with v(0) = 0, x(0) = 0 to get x = t³",
+    "Gives x(2) = 8 m"
+   ],
+   "model": "The constant-acceleration equation \\( x = x_0 + v_0 t + \\tfrac12 a t^2 \\) was derived by integrating a constant \\( a \\). Here \\( a(t) = 6t \\) varies from 0 to 12 m/s² over the interval, so using its final value overstates the acceleration at all earlier times. Integrate instead: \\( v = \\int_0^t 6t'\\,dt' = 3t^2 \\), \\( x = \\int_0^t 3t'^2\\,dt' = t^3 \\), so \\( x(2) = 8 \\) m, one third of the student's answer.",
+   "why": "Always check the hypothesis of a formula before using it; the constant-acceleration equations are special cases of the integrals, not general laws."
+  },
+  {
+   "id": "p7",
+   "kp": "k9",
+   "type": "mcq",
+   "prompt": "A ball is thrown straight up and is momentarily at rest at the top of its path. Taking up as positive and neglecting air resistance, which describes its acceleration at the top?",
+   "options": [
+    "Zero, because the velocity is zero there.",
+    "\\( -g \\), the same as at every other point of the flight.",
+    "\\( +g \\), because the ball is about to reverse direction.",
+    "Undefined, because the velocity changes sign there."
+   ],
+   "answer": 1,
+   "why": "Gravity acts throughout, so \\( a_y = -g \\) at every instant. The velocity passes through zero while still changing at the rate \\( -9.80 \\) m/s²; if the acceleration were zero there, the ball would remain at rest. The velocity is differentiable at the top, so the acceleration is defined."
+  },
+  {
+   "id": "p8",
+   "kp": "k10",
+   "type": "number",
+   "prompt": "Ball A is thrown straight up from the ground at 20.0 m/s. At the same instant ball B is dropped from rest 30.0 m directly above A's launch point. Using \\( g = 9.80 \\) m/s², at what height above the ground do they meet, in meters?",
+   "answer": "30 - 4.9*1.5^2",
+   "tol": 0.005,
+   "why": "Up positive, origin at the ground: \\( y_A = 20.0t - 4.90t^2 \\), \\( y_B = 30.0 - 4.90t^2 \\). Equal when \\( 20.0t = 30.0 \\), \\( t = 1.50 \\) s. Height \\( 30.0 - 4.90(1.50)^2 = 19.0 \\) m. The \\( g \\) terms cancel because both balls share the same acceleration."
+  },
+  {
+   "id": "p9",
+   "kp": "k6",
+   "type": "number",
+   "prompt": "A particle has \\( v(t) = 2t - 4 \\) m/s. Find the distance it travels between \\( t = 0 \\) and \\( t = 5.0 \\) s, in meters.",
+   "answer": "13",
+   "tol": 0.005,
+   "why": "\\( v = 0 \\) at \\( t = 2 \\). \\( \\int_0^2 |2t - 4|\\,dt = 4 \\) m and \\( \\int_2^5 (2t - 4)\\,dt = 9 \\) m, so the distance is 13 m (the displacement is \\( -4 + 9 = 5 \\) m)."
+  },
+  {
+   "id": "p10",
+   "kp": "k4",
+   "type": "written",
+   "prompt": "Prove that a particle's speed is increasing at an instant when \\( v \\) and \\( a \\) have the same sign and decreasing when they have opposite signs.",
+   "rubric": [
+    "Works with v² (or |v|) to avoid the non-differentiability of |v| at 0",
+    "Computes d(v²)/dt = 2v dv/dt = 2va by the chain rule",
+    "Concludes: positive product means speed² and hence speed (nonnegative) increases; negative means decreases"
+   ],
+   "model": "Speed is \\( |v| \\), and \\( |v| \\) increases exactly when \\( v^2 = |v|^2 \\) increases, because squaring is increasing on nonnegative numbers. By the chain rule \\( \\frac{d}{dt}(v^2) = 2v\\frac{dv}{dt} = 2va \\). If \\( v \\) and \\( a \\) have the same sign, \\( 2va > 0 \\) and the speed increases; if opposite signs, \\( 2va < 0 \\) and it decreases.",
+   "why": "This removes the misconception that 'negative acceleration' means 'slowing down'."
+  },
+  {
+   "id": "p11",
+   "kp": "k3",
+   "type": "number",
+   "prompt": "A particle has \\( x(t) = 4.0t - 1.5t^2 \\) (meters, seconds). At what time, in seconds, is it momentarily at rest?",
+   "answer": "4/3",
+   "tol": 0.005,
+   "why": "\\( v = 4.0 - 3.0t = 0 \\) at \\( t = 1.33 \\) s."
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k4",
+   "type": "number",
+   "prompt": "A particle moves with \\( x(t) = 2.0t^3 - 9.0t^2 + 12t \\) (meters, seconds). Find its acceleration, in m/s², at the first instant after \\( t = 0 \\) at which it is at rest.",
+   "answer": "-6",
+   "tol": 0.005,
+   "why": "\\( v = 6t^2 - 18t + 12 = 6(t-1)(t-2) \\), first zero at \\( t = 1.0 \\) s. \\( a = 12t - 18 = -6.0 \\) m/s² there."
+  },
+  {
+   "id": "e2",
+   "kp": "k6",
+   "type": "number",
+   "prompt": "A particle has \\( a(t) = (2.0\\ \\text{m/s}^3)\\,t \\) and \\( v(0) = -4.0 \\) m/s. Find the total distance it travels from \\( t = 0 \\) to \\( t = 3.0 \\) s, in meters.",
+   "answer": "23/3",
+   "tol": 0.005,
+   "why": "\\( v = t^2 - 4 \\), zero at \\( t = 2 \\). With \\( x(0) = 0 \\): \\( x = t^3/3 - 4t \\), \\( x(2) = -16/3 \\), \\( x(3) = -3 \\). Distance \\( = 16/3 + (-3 + 16/3) = 23/3 = 7.67 \\) m."
+  },
+  {
+   "id": "e3",
+   "kp": "k7",
+   "type": "written",
+   "prompt": "Starting only from \\( a = dv/dt \\) and \\( v = dx/dt \\) with \\( a \\) constant, derive \\( v^2 = v_0^2 + 2a(x - x_0) \\). Then state which assumption would fail for a body whose acceleration depends on time, and whether the result would still hold.",
+   "rubric": [
+    "Integrates to get v = v₀ + at and x = x₀ + v₀t + ½at²",
+    "Eliminates t correctly (or uses a = v dv/dx and integrates in x)",
+    "Arrives at v² = v₀² + 2a(x − x₀) with correct algebra",
+    "States that the derivation needs a constant; with time-dependent a the relation fails in general"
+   ],
+   "model": "With \\( a \\) constant, \\( v = v_0 + at \\) and \\( x = x_0 + v_0 t + \\tfrac12 a t^2 \\). From the first, \\( t = (v - v_0)/a \\) (for \\( a \\ne 0 \\)). Substitute: \\( x - x_0 = \\frac{v_0(v - v_0)}{a} + \\frac{(v - v_0)^2}{2a} = \\frac{(v - v_0)(v + v_0)}{2a} = \\frac{v^2 - v_0^2}{2a} \\), so \\( v^2 = v_0^2 + 2a(x - x_0) \\). (Alternatively \\( a = \\frac{dv}{dt} = \\frac{dv}{dx}\\frac{dx}{dt} = v\\frac{dv}{dx} \\), so \\( \\int_{v_0}^{v} v\\,dv = \\int_{x_0}^{x} a\\,dx \\), which gives the result when \\( a \\) is constant.) Both routes pull \\( a \\) out of an integral as a constant. If \\( a \\) depends on time, \\( v \\) is not linear in \\( t \\) and the relation fails in general; the correct replacement is \\( \\tfrac12 v^2 - \\tfrac12 v_0^2 = \\int_{x_0}^{x} a\\,dx \\), which is useful only if \\( a \\) is known as a function of position.",
+   "why": "The chain-rule form \\( a = v\\,dv/dx \\) is the seed of the work-energy theorem in a later chapter."
+  },
+  {
+   "id": "e4",
+   "kp": "k9",
+   "type": "written",
+   "prompt": "A ball is thrown up at 10.0 m/s from a roof 15.0 m high. A proposed solution for the time to reach the ground reads: 'Take up as positive, so \\( a = +9.80 \\) m/s². Then \\( -15.0 = 10.0t + 4.90t^2 \\).' The student then finds no positive root. Identify every error, correct the setup, and find the time with \\( g = 9.80 \\) m/s².",
+   "rubric": [
+    "Identifies that with up positive the acceleration must be −9.80 m/s²",
+    "Writes −15.0 = 10.0t − 4.90t²",
+    "Solves the quadratic and discards the negative root",
+    "Gets t ≈ 3.05 s"
+   ],
+   "model": "With up positive, gravity points in the negative direction, so \\( a = -9.80 \\) m/s²; the student made gravity point up, which is why no positive time reaches \\( y = -15.0 \\) m (the ball would accelerate upward forever). Correct equation: \\( -15.0 = 10.0t - 4.90t^2 \\), i.e. \\( 4.90t^2 - 10.0t - 15.0 = 0 \\). Then \\( t = \\frac{10.0 + \\sqrt{100 + 294}}{9.80} = \\frac{10.0 + 19.85}{9.80} = 3.05 \\) s. The other root is negative and is rejected.",
+   "why": "When an equation has no physical solution, the first suspect is a sign inconsistent with the chosen axis."
+  },
+  {
+   "id": "e5",
+   "kp": "k10",
+   "type": "number",
+   "prompt": "A car passes a stationary police car at a constant 30.0 m/s. The police car waits 2.00 s, then accelerates from rest at 6.00 m/s². How long after the car passed does the police car catch it, in seconds?",
+   "answer": "7 + sqrt(45)",
+   "tol": 0.005,
+   "why": "Common clock from the passing moment: \\( x_{\\text{car}} = 30.0t \\); for \\( t \\ge 2.00 \\) s, \\( x_{\\text{police}} = 3.00(t - 2.00)^2 \\). Equate: \\( 3t^2 - 12t + 12 = 30t \\), so \\( 3t^2 - 42t + 12 = 0 \\), or \\( t^2 - 14t + 4 = 0 \\). Then \\( t = 7 \\pm \\sqrt{45} \\). The smaller root, 0.29 s, is before the police car starts moving, where its position formula does not apply, so it is rejected; the answer is \\( t = 7 + \\sqrt{45} = 13.7 \\) s."
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "Velocity and acceleration as derivatives",
+    "formula": "\\( v = \\frac{dx}{dt},\\ a = \\frac{dv}{dt} = \\frac{d^2x}{dt^2} \\)",
+    "when": "Position (or velocity) is given as a function of time.",
+    "example": "\\( x = t^3 - 6t^2 + 9t \\Rightarrow v = 3t^2 - 12t + 9,\\ a = 6t - 12 \\)",
+    "watch": "Velocity zero does not imply acceleration zero."
+   },
+   {
+    "name": "Integrate with initial conditions",
+    "formula": "\\( v = v_0 + \\int_0^t a\\,dt',\\ x = x_0 + \\int_0^t v\\,dt' \\)",
+    "when": "Acceleration is known and varies with time.",
+    "example": "\\( a = 6t,\\ v_0 = -3,\\ x_0 = 2 \\Rightarrow x = t^3 - 3t + 2 \\)",
+    "watch": "Never drop the constants v₀ and x₀."
+   },
+   {
+    "name": "Distance versus displacement",
+    "formula": "\\( \\Delta x = \\int v\\,dt,\\ D = \\int |v|\\,dt \\)",
+    "when": "Asked for distance and v may change sign.",
+    "example": "\\( v = 2t - 4 \\) on [0, 5]: \\( \\Delta x = 5 \\) m, \\( D = 13 \\) m",
+    "watch": "Split the interval at every zero of v."
+   },
+   {
+    "name": "Speeding up test",
+    "formula": "\\( \\frac{d}{dt}v^2 = 2va \\)",
+    "when": "Deciding whether speed increases.",
+    "example": "\\( v = -3,\\ a = -2 \\Rightarrow \\) speeding up",
+    "watch": "The sign of a alone does not decide it."
+   },
+   {
+    "name": "Constant acceleration, with time",
+    "formula": "\\( v = v_0 + at,\\ x = x_0 + v_0t + \\tfrac12at^2 \\)",
+    "when": "a constant; time given or asked.",
+    "example": "\\( v_0 = 25,\\ a = -6 \\Rightarrow t_{\\text{stop}} = 4.17 \\) s",
+    "watch": "Only for constant a."
+   },
+   {
+    "name": "Constant acceleration, without time",
+    "formula": "\\( v^2 = v_0^2 + 2a(x - x_0) \\)",
+    "when": "a constant; time neither given nor asked.",
+    "example": "stopping distance \\( v_0^2/(2b) \\)",
+    "watch": "Negative right side: the position is never reached."
+   },
+   {
+    "name": "Constant acceleration, without a",
+    "formula": "\\( x - x_0 = \\tfrac12(v_0 + v)t \\)",
+    "when": "a constant but unknown and not asked.",
+    "example": "from rest to 48 m/s in 12 s: 288 m",
+    "watch": "Mean of v₀ and v is the average velocity only for constant a."
+   },
+   {
+    "name": "Free fall, up positive",
+    "formula": "\\( a_y = -g,\\ g = 9.80\\ \\text{m/s}^2 \\)",
+    "when": "Motion under gravity alone near Earth.",
+    "example": "\\( h_{\\max} = v_0^2/(2g) \\)",
+    "watch": "a = −g also at the top of the flight."
+   }
+  ],
+  "stuck": [
+   "Draw the axis, mark the origin and the positive direction, and write the sign of every given vector quantity.",
+   "Ask whether the acceleration is constant. If not, integrate; the constant-a equations do not apply.",
+   "List the five quantities Δx, v₀, v, a, t; pick the equation that omits the one you neither know nor need.",
+   "For distance, find where v = 0 first and split the interval there.",
+   "For two bodies, put both positions on one axis and one clock, then set them equal.",
+   "If a root is negative or a square root is of a negative number, recheck signs before accepting 'no solution'."
+  ]
+ }
+}

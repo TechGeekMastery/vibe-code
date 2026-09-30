@@ -1,0 +1,787 @@
+{
+ "key": "mth-6-6",
+ "title": "Recurrence relations",
+ "v": 1,
+ "scope": "Setting up recurrences for counting problems, unrolling and induction, linear homogeneous recurrences with constant coefficients (distinct and repeated real roots), nonhomogeneous recurrences with polynomial and exponential forcing, and divide-and-conquer recurrences with the master theorem; generating functions, complex-root solutions in detail and the Akra–Bazzi theorem are out of scope.",
+ "sources": [
+  {
+   "title": "Lehman, Leighton, Meyer, Mathematics for Computer Science (MIT 6.042J, Fall 2010), Chapter 10: Recurrences",
+   "url": "https://ocw.mit.edu/courses/6-042j-mathematics-for-computer-science-fall-2010/18b5495f7408055f9679e3afebb108ab_MIT6_042JF10_chap10.pdf"
+  },
+  {
+   "title": "Harvard Math 55, Recurrence Relations notes (following Rosen, Discrete Mathematics, Sections 8.1–8.2)",
+   "url": "https://people.math.harvard.edu/~cmwang/teaching/55/3-21sol.pdf"
+  },
+  {
+   "title": "Oscar Levin, Discrete Mathematics: An Open Introduction (3rd ed.), 2.4 Solving Recurrence Relations",
+   "url": "https://discrete.openmathbooks.org/dmoi3/sec_recurrence.html"
+  }
+ ],
+ "pre": [
+  "mth-6-2",
+  "mth-6-4"
+ ],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Recurrence, initial conditions, uniqueness",
+   "d": "Define a recurrence relation and its order, and explain by induction why initial conditions determine a unique solution.",
+   "type": "concept"
+  },
+  {
+   "id": "k2",
+   "t": "Modeling with recurrences",
+   "d": "Derive a recurrence for a counting problem by conditioning on the first or last step, with justified initial conditions.",
+   "type": "skill"
+  },
+  {
+   "id": "k3",
+   "t": "Unrolling and proving closed forms",
+   "d": "Iterate a first-order recurrence to guess a closed form and prove it by induction.",
+   "type": "procedure"
+  },
+  {
+   "id": "k4",
+   "t": "Linear homogeneous recurrences and superposition",
+   "d": "Recognize linear homogeneous recurrences with constant coefficients, form the characteristic equation, and prove linear combinations of solutions are solutions.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k5",
+   "t": "Distinct characteristic roots",
+   "d": "Solve second-order recurrences with distinct roots and fit constants to initial conditions.",
+   "type": "procedure"
+  },
+  {
+   "id": "k6",
+   "t": "Repeated characteristic roots",
+   "d": "Solve recurrences with a repeated root using the extra solution n r^n, and prove it is a solution.",
+   "type": "procedure"
+  },
+  {
+   "id": "k7",
+   "t": "Nonhomogeneous structure theorem",
+   "d": "Explain why every solution of a linear nonhomogeneous recurrence is one particular solution plus a homogeneous solution.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k8",
+   "t": "Choosing a particular solution",
+   "d": "Choose the trial form for polynomial and exponential forcing terms, including the case where the base is a characteristic root.",
+   "type": "procedure"
+  },
+  {
+   "id": "k9",
+   "t": "Divide-and-conquer recurrences",
+   "d": "Solve T(n) = aT(n/b) + f(n) exactly for powers of b by substitution, and state the master theorem for f(n) of polynomial size.",
+   "type": "procedure"
+  }
+ ],
+ "intro": "Many counting problems do not yield to a direct formula, but they do have a self-similar structure: an object of size \\(n\\) decomposes into a first step followed by an object of size \\(n-1\\) or \\(n-2\\). Counting binary strings with no two consecutive zeros, tiling a strip with dominoes, or measuring the running time of an algorithm that calls itself on half its input all lead to an equation that expresses the \\(n\\)-th term of a sequence through earlier terms. Such an equation is a recurrence relation.\n\nA recurrence determines the sequence, but it does not directly tell you how the sequence grows or what its hundredth term is without computing the ninety-nine before it. The central task of this chapter is to pass from a recurrence to a **closed form**, an explicit formula in \\(n\\), and to prove that the formula is correct. For the most important class, linear recurrences with constant coefficients, there is a complete method, and its structure closely parallels the theory of linear differential equations.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "Recurrences, initial conditions and modeling",
+   "kps": [
+    "k1",
+    "k2"
+   ],
+   "md": "This section fixes the vocabulary and answers two preliminary questions: when does a recurrence determine a sequence, and how is a recurrence obtained from a counting problem?\n\n> A **recurrence relation** for a sequence \\((a_n)\\) is an equation that expresses \\(a_n\\), for all \\(n\\) beyond some index, in terms of earlier terms \\(a_0, \\dots, a_{n-1}\\) (and possibly \\(n\\)). A **solution** is any sequence satisfying it. **Initial conditions** specify the first terms.\n\nThe recurrence \\(a_n = a_{n-1} + a_{n-2}\\) has **order** 2: \\(a_n\\) depends on the previous two terms. On its own it has infinitely many solutions (the Fibonacci numbers, the Lucas numbers, the zero sequence). With the two initial conditions \\(a_0 = 0\\), \\(a_1 = 1\\) it has exactly one.\n\n**Why initial conditions determine the solution.** Suppose \\((a_n)\\) and \\((b_n)\\) both satisfy an order-\\(k\\) recurrence of the form \\(a_n = F(n, a_{n-1}, \\dots, a_{n-k})\\) for \\(n \\ge k\\), and agree on \\(a_0, \\dots, a_{k-1}\\). We show \\(a_n = b_n\\) for all \\(n\\) by strong induction. The base cases \\(n < k\\) are the given initial conditions. For \\(n \\ge k\\), assume \\(a_j = b_j\\) for all \\(j < n\\). Then \\(a_n = F(n, a_{n-1}, \\dots, a_{n-k}) = F(n, b_{n-1}, \\dots, b_{n-k}) = b_n\\). So an order-\\(k\\) recurrence needs exactly \\(k\\) consecutive initial values to pin down a solution. This uniqueness fact is used repeatedly below: once a formula is shown to satisfy the recurrence and the initial conditions, it *is* the sequence.\n\n**Modeling.** To find a recurrence for a count, classify the objects of size \\(n\\) by how they begin (or end), and recognize each class as a smaller instance of the same problem.\n\n**Worked example 1 (Tower of Hanoi).** Let \\(H_n\\) be the least number of moves needed to transfer \\(n\\) disks between pegs, never placing a disk on a smaller one. To move the largest disk, the other \\(n-1\\) must all be on the third peg; that takes \\(H_{n-1}\\) moves. Then the largest disk moves once, and the \\(n-1\\) disks move back onto it, another \\(H_{n-1}\\) moves. So \\(H_n = 2H_{n-1} + 1\\) with \\(H_1 = 1\\). (The argument shows \\(2H_{n-1}+1\\) moves suffice and that at least that many are needed, since the largest disk must move at least once, and before its first move and after its last move the other \\(n-1\\) disks must be moved entirely.)\n\n**Worked example 2.** Let \\(a_n\\) be the number of binary strings of length \\(n\\) with no two consecutive 0s. Classify such a string by its last symbol.\n\n- If it ends in 1, the first \\(n-1\\) symbols form any valid string of length \\(n-1\\): \\(a_{n-1}\\) strings.\n- If it ends in 0, the symbol before must be 1 (for \\(n \\ge 2\\)), so it ends in 10, and the first \\(n-2\\) symbols form any valid string: \\(a_{n-2}\\) strings.\n\nThe two cases are disjoint and exhaustive, so \\(a_n = a_{n-1} + a_{n-2}\\) for \\(n \\ge 3\\). Initial conditions: \\(a_1 = 2\\) (0 and 1) and \\(a_2 = 3\\) (01, 10, 11). Hence \\(a_3 = 5\\), \\(a_4 = 8\\), \\(a_5 = 13\\).\n\n**Common mistake.** Writing a recurrence without checking that the cases are disjoint and exhaustive, or that each case really is a smaller instance *of the same problem*. In Example 2, appending 0 to an arbitrary valid string of length \\(n-1\\) does not always give a valid string (it fails if that string ends in 0); the fix is to append 10 to a string of length \\(n-2\\). The second common error is giving too few initial conditions, or giving them at indices where the recurrence has not yet become valid.",
+   "questions": [
+    {
+     "id": "s1q1",
+     "kp": "k2",
+     "type": "written",
+     "prompt": "Let \\(t_n\\) be the number of ways to tile a \\(2 \\times n\\) rectangle with \\(1 \\times 2\\) dominoes (each domino may be placed horizontally or vertically). Derive a recurrence for \\(t_n\\) with initial conditions, justifying that your cases are disjoint and exhaustive.",
+     "rubric": [
+      "Classifies tilings by how the leftmost column is covered.",
+      "Case 1: a vertical domino covers the leftmost column, leaving a 2 × (n-1) tiling: t_{n-1}.",
+      "Case 2: otherwise the top-left cell is covered by a horizontal domino, which forces a second horizontal domino below it, leaving a 2 × (n-2) tiling: t_{n-2}.",
+      "Gives t_n = t_{n-1} + t_{n-2} for n ≥ 3 with t_1 = 1, t_2 = 2 (or t_0 = 1, t_1 = 1)."
+     ],
+     "model": "Consider the leftmost column. Either it is covered by one vertical domino, or the top-left cell is covered by a horizontal domino occupying the first two columns of the top row. In the second case the bottom-left cell cannot be covered by a vertical domino (its top partner is taken), so it is covered by a horizontal domino occupying the first two columns of the bottom row. These two cases are disjoint (the top-left cell is covered by a vertical domino in one and a horizontal one in the other) and exhaustive. In the first case the rest is a tiling of a \\(2 \\times (n-1)\\) rectangle; in the second, of a \\(2 \\times (n-2)\\) rectangle. Hence \\(t_n = t_{n-1} + t_{n-2}\\) for \\(n \\ge 3\\), with \\(t_1 = 1\\) (one vertical domino) and \\(t_2 = 2\\) (two vertical or two horizontal).",
+     "why": "The same recurrence as for binary strings with no two consecutive 0s, with shifted initial conditions: \\(t_n = F_{n+1}\\) in Fibonacci numbering \\(F_1 = F_2 = 1\\)."
+    },
+    {
+     "id": "s1q2",
+     "kp": "k2",
+     "type": "number",
+     "prompt": "Using the recurrence from this section, how many binary strings of length 8 have no two consecutive 0s?",
+     "answer": "55",
+     "why": "With \\(a_1 = 2\\), \\(a_2 = 3\\) and \\(a_n = a_{n-1} + a_{n-2}\\): \\(a_3 = 5, a_4 = 8, a_5 = 13, a_6 = 21, a_7 = 34, a_8 = 55\\)."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "Unrolling first-order recurrences and proving the result",
+   "kps": [
+    "k3"
+   ],
+   "md": "A recurrence answers \"what is \\(a_n\\) given the earlier terms,\" but you usually want \\(a_n\\) as an explicit function of \\(n\\). For first-order recurrences the most direct method is to **unroll** (iterate) the recurrence until a pattern appears, then **prove** the resulting formula by induction. This section develops that method.\n\n**Worked example 1 (Hanoi).** Unroll \\(H_n = 2H_{n-1} + 1\\):\n\\[ H_n = 2H_{n-1} + 1 = 2(2H_{n-2} + 1) + 1 = 2^2 H_{n-2} + 2 + 1 = 2^3 H_{n-3} + 2^2 + 2 + 1. \\]\nAfter \\(j\\) steps, \\(H_n = 2^j H_{n-j} + (2^{j-1} + \\dots + 2 + 1)\\). Take \\(j = n-1\\) and use \\(H_1 = 1\\):\n\\[ H_n = 2^{n-1} + 2^{n-2} + \\dots + 1 = 2^n - 1, \\]\nby the geometric sum.\n\nUnrolling \"after \\(j\\) steps\" is a pattern observed, not proved. The proof is by induction. *Claim:* \\(H_n = 2^n - 1\\) for \\(n \\ge 1\\). *Base:* \\(H_1 = 1 = 2^1 - 1\\). *Step:* if \\(H_{n-1} = 2^{n-1} - 1\\), then \\(H_n = 2(2^{n-1} - 1) + 1 = 2^n - 1\\). \\(\\blacksquare\\)\n\nThis proof has the same shape for every closed-form claim: check the initial conditions, then check that the formula satisfies the recurrence. By the uniqueness argument of the previous section, those two checks are all that is needed.\n\n**The general first-order linear recurrence.** Consider \\(a_n = r a_{n-1} + d\\) with \\(r \\ne 1\\). Unrolling gives\n\\[ a_n = r^n a_0 + d(1 + r + \\dots + r^{n-1}) = r^n a_0 + d\\,\\frac{r^n - 1}{r - 1}. \\]\nA cleaner route: look for a constant solution \\(c = rc + d\\), namely \\(c = d/(1-r)\\). Then \\(b_n = a_n - c\\) satisfies \\(b_n = r b_{n-1}\\), so \\(b_n = r^n b_0\\), and\n\\[ a_n = c + r^n(a_0 - c). \\]\nThis \"shift by a fixed point\" is a first glimpse of the particular-plus-homogeneous structure developed later.\n\n**Worked example 2.** Solve \\(a_n = 3a_{n-1} + 2\\), \\(a_0 = 1\\). The fixed point satisfies \\(c = 3c + 2\\), so \\(c = -1\\). Then \\(a_n + 1 = 3^n(a_0 + 1) = 2 \\cdot 3^n\\), giving \\(a_n = 2 \\cdot 3^n - 1\\). Check: \\(a_1 = 5\\) from the recurrence and \\(2 \\cdot 3 - 1 = 5\\) from the formula.\n\n**Telescoping.** When \\(r = 1\\), the recurrence \\(a_n = a_{n-1} + f(n)\\) unrolls into a sum:\n\\[ a_n = a_0 + \\sum_{k=1}^{n} f(k). \\]\nFor example, \\(n\\) lines in the plane in general position (no two parallel, no three through a point) divide it into \\(L_n\\) regions, where the \\(n\\)-th line crosses the previous \\(n-1\\) lines at \\(n-1\\) distinct points, is cut into \\(n\\) pieces, and each piece splits one region in two. So \\(L_n = L_{n-1} + n\\), \\(L_0 = 1\\), and \\(L_n = 1 + \\sum_{k=1}^n k = 1 + \\tfrac{n(n+1)}{2}\\).\n\n**Common mistake.** Stopping at the unrolled pattern \"\\(2^j H_{n-j} + \\dots\\)\" and treating it as proved; the ellipsis hides an induction. Another frequent slip is an off-by-one error when choosing how far to unroll: unrolling to \\(H_0\\) when the initial condition given is \\(H_1\\), or summing the geometric series with the wrong number of terms. Always check the final formula against the first two or three computed terms.",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k3",
+     "type": "expression",
+     "prompt": "Find a closed form for \\(a_n\\) where \\(a_0 = 1\\) and \\(a_n = 3a_{n-1} + 2\\) for \\(n \\ge 1\\). Enter it in terms of \\(n\\).",
+     "answer": "2*3^n - 1",
+     "vars": "n",
+     "why": "The fixed point is \\(c = -1\\) (solve \\(c = 3c + 2\\)). Then \\(a_n + 1 = 3(a_{n-1} + 1)\\), so \\(a_n + 1 = 3^n(a_0 + 1) = 2\\cdot 3^n\\), and \\(a_n = 2\\cdot 3^n - 1\\). Check: \\(a_1 = 5, a_2 = 17\\) both from the recurrence and the formula."
+    },
+    {
+     "id": "s2q2",
+     "kp": "k3",
+     "type": "written",
+     "prompt": "Let \\(L_0 = 1\\) and \\(L_n = L_{n-1} + n\\) for \\(n \\ge 1\\). Prove by induction that \\(L_n = 1 + \\frac{n(n+1)}{2}\\) for all \\(n \\ge 0\\). Then explain why a proof of this form (check initial condition, check recurrence) is enough to establish a closed form for any first-order recurrence.",
+     "rubric": [
+      "Base case: L_0 = 1 = 1 + 0.",
+      "Inductive step: assumes L_{n-1} = 1 + (n-1)n/2 and computes L_n = 1 + (n-1)n/2 + n = 1 + n(n+1)/2 with correct algebra.",
+      "Concludes the formula holds for all n ≥ 0.",
+      "Explains that a first-order recurrence with one initial value has a unique solution, so any formula meeting both checks equals the sequence."
+     ],
+     "model": "*Base case:* \\(L_0 = 1 = 1 + \\frac{0 \\cdot 1}{2}\\). *Inductive step:* let \\(n \\ge 1\\) and assume \\(L_{n-1} = 1 + \\frac{(n-1)n}{2}\\). Then\n\\[ L_n = L_{n-1} + n = 1 + \\frac{(n-1)n}{2} + n = 1 + \\frac{n^2 - n + 2n}{2} = 1 + \\frac{n(n+1)}{2}. \\]\nBy induction the formula holds for all \\(n \\ge 0\\).\n\nWhy this suffices in general: a first-order recurrence together with one initial value determines a unique sequence (by induction, each term is forced by the previous one). The induction above shows the formula's sequence satisfies the same initial value and the same recurrence, so it is that unique sequence.",
+     "why": "For an order-\\(k\\) recurrence the same reasoning uses strong induction and \\(k\\) initial values."
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "Linear homogeneous recurrences: the characteristic equation",
+   "kps": [
+    "k4",
+    "k5"
+   ],
+   "md": "Unrolling becomes unmanageable for recurrences of order 2 or more: \\(a_n = a_{n-1} + a_{n-2}\\) branches at every step. This section develops a method that solves a whole class of such recurrences exactly, by exploiting linearity.\n\n> A **linear homogeneous recurrence of order \\(k\\) with constant coefficients** has the form\n\\[ a_n = c_1 a_{n-1} + c_2 a_{n-2} + \\dots + c_k a_{n-k}, \\qquad c_k \\ne 0, \\]\nwhere \\(c_1, \\dots, c_k\\) are constants. **Linear**: the earlier terms appear to the first power, not multiplied together. **Homogeneous**: there is no term that is free of the \\(a_j\\). **Constant coefficients**: the \\(c_i\\) do not depend on \\(n\\).\n\n**Superposition.** If \\((s_n)\\) and \\((t_n)\\) are solutions, so is \\(\\alpha s_n + \\beta t_n\\) for any constants \\(\\alpha, \\beta\\): substituting gives \\(\\alpha s_n + \\beta t_n = \\alpha\\sum c_i s_{n-i} + \\beta\\sum c_i t_{n-i} = \\sum c_i(\\alpha s_{n-i} + \\beta t_{n-i})\\). So the solutions form a vector space, and the task is to find enough basic solutions.\n\n**The characteristic equation.** Try a geometric sequence \\(a_n = r^n\\) with \\(r \\ne 0\\). Substituting and dividing by \\(r^{n-k}\\):\n\\[ r^k = c_1 r^{k-1} + c_2 r^{k-2} + \\dots + c_k. \\]\nThis polynomial equation is the **characteristic equation**, and its roots are the **characteristic roots**. So \\(r^n\\) solves the recurrence exactly when \\(r\\) is a characteristic root.\n\n> **Theorem (distinct roots, order 2).** Suppose \\(r^2 = c_1 r + c_2\\) has two distinct roots \\(r_1 \\ne r_2\\). Then every solution of \\(a_n = c_1 a_{n-1} + c_2 a_{n-2}\\) has the form \\(a_n = \\alpha r_1^n + \\beta r_2^n\\) for unique constants \\(\\alpha, \\beta\\).\n\n**Proof.** By superposition, every sequence \\(\\alpha r_1^n + \\beta r_2^n\\) is a solution. Conversely, let \\((a_n)\\) be any solution. Choose \\(\\alpha, \\beta\\) with\n\\[ \\alpha + \\beta = a_0, \\qquad \\alpha r_1 + \\beta r_2 = a_1. \\]\nThe determinant of this system is \\(r_2 - r_1 \\ne 0\\), so it has a unique solution. Then \\(\\alpha r_1^n + \\beta r_2^n\\) and \\(a_n\\) satisfy the same order-2 recurrence and the same two initial conditions, so they are equal for all \\(n\\) by uniqueness. \\(\\blacksquare\\)\n\nThe hypothesis \\(r_1 \\ne r_2\\) is exactly what makes the system solvable for every choice of \\(a_0, a_1\\). The same theorem holds for order \\(k\\) with \\(k\\) distinct roots; the system is then a Vandermonde system, whose determinant is nonzero for distinct roots.\n\n**Worked example 1.** Solve \\(a_n = 5a_{n-1} - 6a_{n-2}\\), \\(a_0 = 1\\), \\(a_1 = 4\\). Characteristic equation: \\(r^2 - 5r + 6 = 0\\), so \\(r = 2, 3\\). General solution \\(a_n = \\alpha 2^n + \\beta 3^n\\). Initial conditions: \\(\\alpha + \\beta = 1\\), \\(2\\alpha + 3\\beta = 4\\). Subtracting twice the first from the second, \\(\\beta = 2\\), so \\(\\alpha = -1\\):\n\\[ a_n = 2 \\cdot 3^n - 2^n. \\]\nCheck: \\(a_2 = 5 \\cdot 4 - 6 \\cdot 1 = 14\\) and \\(2 \\cdot 9 - 4 = 14\\).\n\n**Worked example 2 (Fibonacci).** \\(F_n = F_{n-1} + F_{n-2}\\), \\(F_0 = 0\\), \\(F_1 = 1\\). The roots of \\(r^2 = r + 1\\) are \\(\\varphi = \\frac{1+\\sqrt5}{2}\\) and \\(\\psi = \\frac{1-\\sqrt5}{2}\\). From \\(\\alpha + \\beta = 0\\) and \\(\\alpha\\varphi + \\beta\\psi = 1\\): \\(\\alpha(\\varphi - \\psi) = 1\\), and \\(\\varphi - \\psi = \\sqrt5\\), so\n\\[ F_n = \\frac{\\varphi^n - \\psi^n}{\\sqrt5} \\qquad \\text{(Binet's formula)}. \\]\nSince \\(|\\psi| < 1\\), the term \\(\\psi^n/\\sqrt5\\) tends to 0, so \\(F_n\\) grows like \\(\\varphi^n/\\sqrt5\\); the root of largest absolute value dominates the growth.\n\n**Common mistake.** Writing the characteristic equation with the wrong signs: from \\(a_n = 5a_{n-1} - 6a_{n-2}\\), the equation is \\(r^2 - 5r + 6 = 0\\), not \\(r^2 + 5r - 6 = 0\\). Move every term to one side, keeping the sign each coefficient had on the right. Another error is fitting constants using \\(a_1, a_2\\) while writing the solution in the form \\(\\alpha r_1^n + \\beta r_2^n\\) and substituting \\(n = 0, 1\\); the indices in the equations must match the indices of the given values.",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k5",
+     "type": "expression",
+     "prompt": "Solve \\(a_n = a_{n-1} + 6a_{n-2}\\) with \\(a_0 = 2\\), \\(a_1 = 1\\). Enter \\(a_n\\) in terms of \\(n\\).",
+     "answer": "3^n + (-2)^n",
+     "vars": "n",
+     "why": "Characteristic equation \\(r^2 - r - 6 = 0\\), roots \\(3\\) and \\(-2\\). From \\(\\alpha + \\beta = 2\\) and \\(3\\alpha - 2\\beta = 1\\): adding twice the first to the second gives \\(5\\alpha = 5\\), so \\(\\alpha = 1\\), \\(\\beta = 1\\). Hence \\(a_n = 3^n + (-2)^n\\). Check: \\(a_2 = 1 + 12 = 13 = 9 + 4\\)."
+    },
+    {
+     "id": "s3q2",
+     "kp": "k4",
+     "type": "written",
+     "prompt": "Prove that if \\((s_n)\\) and \\((t_n)\\) both satisfy \\(a_n = c_1 a_{n-1} + c_2 a_{n-2}\\), then so does \\(\\alpha s_n + \\beta t_n\\). Then give an example showing this fails for the recurrence \\(a_n = a_{n-1} + 1\\), and explain which hypothesis is missing.",
+     "rubric": [
+      "Substitutes αs_n + βt_n and uses the recurrence for each sequence to obtain c_1(αs_{n-1} + βt_{n-1}) + c_2(αs_{n-2} + βt_{n-2}).",
+      "Concludes the combination satisfies the recurrence.",
+      "Gives a concrete counterexample for a_n = a_{n-1} + 1, for instance s_n = t_n = n and α = β = 1 (2n fails since 2n ≠ 2(n-1) + 1).",
+      "Identifies the missing hypothesis: the recurrence is not homogeneous (the constant term 1)."
+     ],
+     "model": "For \\(n \\ge 2\\),\n\\[ \\alpha s_n + \\beta t_n = \\alpha(c_1 s_{n-1} + c_2 s_{n-2}) + \\beta(c_1 t_{n-1} + c_2 t_{n-2}) = c_1(\\alpha s_{n-1} + \\beta t_{n-1}) + c_2(\\alpha s_{n-2} + \\beta t_{n-2}), \\]\nso \\(\\alpha s_n + \\beta t_n\\) satisfies the recurrence.\n\nFor \\(a_n = a_{n-1} + 1\\), the sequence \\(s_n = n\\) is a solution, but \\(2s_n = 2n\\) is not: \\(2(n-1) + 1 = 2n - 1 \\ne 2n\\). The recurrence is not homogeneous: the constant term 1 is not multiplied by any \\(a_j\\), so scaling a solution also scales that term's contribution on the left but not on the right.",
+     "why": "Superposition requires both linearity and homogeneity. For nonhomogeneous recurrences the difference of two solutions is a homogeneous solution, which is the basis of the method in a later section."
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "Repeated characteristic roots",
+   "kps": [
+    "k6"
+   ],
+   "md": "The distinct-roots theorem needs two different roots to fit two initial conditions. When the characteristic equation has a **repeated root**, such as \\(r^2 - 6r + 9 = (r-3)^2\\), the formula \\(\\alpha 3^n + \\beta 3^n = (\\alpha + \\beta)3^n\\) has effectively one constant, and cannot fit arbitrary \\(a_0, a_1\\). This section supplies the missing solution.\n\n> **Theorem (repeated root, order 2).** If \\(r^2 = c_1 r + c_2\\) has a single root \\(r_0\\) of multiplicity 2, then every solution of \\(a_n = c_1 a_{n-1} + c_2 a_{n-2}\\) has the form\n\\[ a_n = (\\alpha + \\beta n)\\, r_0^n. \\]\n\n**Why \\(n r_0^n\\) is a solution.** Since the characteristic polynomial is \\((r - r_0)^2 = r^2 - 2r_0 r + r_0^2\\), comparing with \\(r^2 - c_1 r - c_2\\) gives \\(c_1 = 2r_0\\) and \\(c_2 = -r_0^2\\). (Note \\(r_0 \\ne 0\\) because \\(c_2 \\ne 0\\).) Substitute \\(a_n = n r_0^n\\) into the right side:\n\\[ c_1 (n-1) r_0^{n-1} + c_2 (n-2) r_0^{n-2} = 2(n-1) r_0^{n} - (n-2) r_0^{n} = (2n - 2 - n + 2)\\, r_0^n = n r_0^n. \\]\nSo \\(n r_0^n\\) satisfies the recurrence. By superposition, so does \\((\\alpha + \\beta n) r_0^n\\). To fit initial conditions, solve \\(\\alpha = a_0\\) and \\((\\alpha + \\beta) r_0 = a_1\\), which always has a unique solution because \\(r_0 \\ne 0\\). By uniqueness, every solution has this form. \\(\\blacksquare\\)\n\nA way to remember the extra factor of \\(n\\): a double root of a polynomial \\(p\\) is also a root of \\(p'\\), and the factor \\(n\\) is the discrete analogue of the factor \\(t\\) in the solution \\(t e^{\\lambda t}\\) of a differential equation with a repeated characteristic root.\n\n**Worked example.** Solve \\(a_n = 6a_{n-1} - 9a_{n-2}\\), \\(a_0 = 1\\), \\(a_1 = 6\\). Characteristic equation \\(r^2 - 6r + 9 = (r-3)^2 = 0\\), so \\(r_0 = 3\\) is a double root. General solution \\(a_n = (\\alpha + \\beta n)3^n\\). From \\(a_0 = 1\\): \\(\\alpha = 1\\). From \\(a_1 = 6\\): \\(3(1 + \\beta) = 6\\), so \\(\\beta = 1\\). Hence\n\\[ a_n = (n + 1)\\,3^n. \\]\nCheck: \\(a_2 = 6 \\cdot 6 - 9 \\cdot 1 = 27\\) and \\(3 \\cdot 9 = 27\\).\n\n**Higher order.** In general, a root \\(r_0\\) of multiplicity \\(m\\) contributes the \\(m\\) solutions \\(r_0^n, n r_0^n, \\dots, n^{m-1}r_0^n\\), and the general solution is the sum of the contributions of all roots, with one constant per root counted with multiplicity: \\(k\\) constants in total for an order-\\(k\\) recurrence. Complex roots are handled by the same formulas; for a real recurrence they come in conjugate pairs, and the resulting real solutions involve \\(\\rho^n\\cos(n\\theta)\\) and \\(\\rho^n \\sin(n\\theta)\\). This chapter works with real roots.\n\n**Common mistake.** Writing \\(\\alpha r_0^n + \\beta r_0^n\\) and then finding the initial conditions inconsistent, or writing \\(\\beta r_0^{n}\\cdot n^2\\) instead of \\(\\beta n r_0^n\\). The number of independent solutions must equal the order of the recurrence; a multiplicity-2 root supplies two by including the factor \\(n\\) once. A subtler slip is using \\(\\alpha + \\beta n\\) when the roots are distinct but close; the repeated-root form applies only when the root is exactly repeated.",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k6",
+     "type": "expression",
+     "prompt": "Solve \\(a_n = 4a_{n-1} - 4a_{n-2}\\) with \\(a_0 = 2\\), \\(a_1 = 2\\). Enter \\(a_n\\) in terms of \\(n\\).",
+     "answer": "(2 - n)*2^n",
+     "vars": "n",
+     "why": "Characteristic equation \\(r^2 - 4r + 4 = (r-2)^2\\): double root \\(2\\). General solution \\((\\alpha + \\beta n)2^n\\). \\(a_0 = 2\\) gives \\(\\alpha = 2\\); \\(a_1 = 2\\) gives \\(2(2 + \\beta) = 2\\), so \\(\\beta = -1\\). Hence \\(a_n = (2 - n)2^n\\). Check: \\(a_2 = 4\\cdot 2 - 4\\cdot 2 = 0\\), and \\((2-2)\\cdot 4 = 0\\)."
+    },
+    {
+     "id": "s4q2",
+     "kp": "k6",
+     "type": "written",
+     "prompt": "Suppose the characteristic equation of \\(a_n = c_1 a_{n-1} + c_2 a_{n-2}\\) has a double root \\(r_0\\). Prove that \\(a_n = n r_0^n\\) satisfies the recurrence, and explain why the general solution cannot be \\(\\alpha r_0^n\\) alone.",
+     "rubric": [
+      "Uses the double root to express the coefficients: c_1 = 2r_0 and c_2 = -r_0^2.",
+      "Substitutes n r_0^n and simplifies c_1(n-1)r_0^{n-1} + c_2(n-2)r_0^{n-2} to n r_0^n.",
+      "Explains that an order-2 recurrence needs two free constants to match two arbitrary initial values.",
+      "Shows αr_0^n alone forces a_1 = r_0 a_0, so it cannot match, for example, a_0 = 0, a_1 = 1."
+     ],
+     "model": "The characteristic polynomial is \\(r^2 - c_1 r - c_2 = (r - r_0)^2 = r^2 - 2r_0 r + r_0^2\\), so \\(c_1 = 2r_0\\) and \\(c_2 = -r_0^2\\). Then\n\\[ c_1(n-1)r_0^{n-1} + c_2(n-2)r_0^{n-2} = 2(n-1)r_0^n - (n-2)r_0^n = n r_0^n, \\]\nso \\(n r_0^n\\) is a solution.\n\nThe family \\(\\alpha r_0^n\\) always has \\(a_1 = r_0 a_0\\). But an order-2 recurrence admits any pair of initial values, for example \\(a_0 = 0, a_1 = 1\\), which no \\(\\alpha r_0^n\\) matches (it would need \\(\\alpha = 0\\) and \\(\\alpha r_0 = 1\\)). A second, independent solution is needed; \\(n r_0^n\\) supplies it, and \\((\\alpha + \\beta n)r_0^n\\) fits any initial values.",
+     "why": "Independence of \\(r_0^n\\) and \\(n r_0^n\\) is exactly the solvability of \\(\\alpha = a_0\\), \\((\\alpha + \\beta)r_0 = a_1\\) for every \\(a_0, a_1\\), which holds because \\(r_0 \\ne 0\\)."
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "Nonhomogeneous recurrences",
+   "kps": [
+    "k7",
+    "k8"
+   ],
+   "md": "Many recurrences that arise in practice have an extra term that does not involve the sequence: Hanoi's \\(+1\\), the \\(+n\\) in the line-counting problem, a \\(+3^n\\) from some external input. This section extends the characteristic-root method to such recurrences.\n\n> A **linear nonhomogeneous recurrence with constant coefficients** has the form\n\\[ a_n = c_1 a_{n-1} + \\dots + c_k a_{n-k} + F(n), \\]\nwhere \\(F\\) is not identically zero. Dropping \\(F(n)\\) gives the **associated homogeneous recurrence**.\n\n> **Structure theorem.** If \\((p_n)\\) is any one solution (a **particular solution**), then every solution has the form \\(a_n = p_n + h_n\\), where \\((h_n)\\) solves the associated homogeneous recurrence.\n\n**Proof.** If \\(a_n\\) and \\(p_n\\) both solve the nonhomogeneous recurrence, subtracting the two equations cancels \\(F(n)\\) and shows that \\(h_n = a_n - p_n\\) satisfies the homogeneous recurrence. Conversely \\(p_n + h_n\\) is a solution for any homogeneous solution \\(h_n\\), by the same subtraction read backwards. \\(\\blacksquare\\)\n\nSo the method has four steps: (1) solve the homogeneous recurrence, keeping constants free; (2) find one particular solution; (3) add them; (4) only then fit the constants to the initial conditions. Fitting the constants before adding the particular solution is a common and fatal error.\n\n**Choosing a trial form.** The particular solution is found by guessing a form with undetermined coefficients and solving for them. For forcing terms that are polynomials times exponentials, the rule is:\n\n> If \\(F(n) = (b_d n^d + \\dots + b_1 n + b_0)\\, s^n\\), try \\(p_n = n^m (A_d n^d + \\dots + A_0)\\, s^n\\), where \\(m\\) is the multiplicity of \\(s\\) as a characteristic root (\\(m = 0\\) if \\(s\\) is not a root).\n\nA polynomial forcing term is the case \\(s = 1\\), so if 1 is a characteristic root the polynomial guess must be multiplied by \\(n\\).\n\n**Worked example 1.** Solve \\(a_n = 3a_{n-1} + 2n\\), \\(a_0 = 1\\). Homogeneous: \\(h_n = \\alpha 3^n\\). Forcing \\(2n\\) is a degree-1 polynomial with \\(s = 1\\), not a root, so try \\(p_n = An + B\\):\n\\[ An + B = 3(A(n-1) + B) + 2n = (3A + 2)n + (3B - 3A). \\]\nMatching coefficients: \\(A = 3A + 2\\), so \\(A = -1\\); \\(B = 3B - 3A\\), so \\(B = \\tfrac{3A}{2} = -\\tfrac32\\). General solution \\(a_n = \\alpha 3^n - n - \\tfrac32\\). From \\(a_0 = 1\\): \\(\\alpha = \\tfrac52\\). Hence\n\\[ a_n = \\tfrac52\\, 3^n - n - \\tfrac32. \\]\nCheck: \\(a_1 = 3 + 2 = 5\\) and \\(\\tfrac{15}{2} - 1 - \\tfrac32 = 5\\).\n\n**Worked example 2 (the base is a root).** Solve \\(a_n = 2a_{n-1} + 2^n\\), \\(a_0 = 1\\). The homogeneous solution is \\(\\alpha 2^n\\). The naive trial \\(C 2^n\\) fails: substituting gives \\(C 2^n = C 2^n + 2^n\\), that is, \\(0 = 2^n\\). The reason is that \\(C2^n\\) already solves the homogeneous recurrence, so it produces zero on the left minus the right and can never produce \\(2^n\\). Since 2 is a root of multiplicity 1, try \\(p_n = Cn2^n\\):\n\\[ Cn2^n = 2C(n-1)2^{n-1} + 2^n = C(n-1)2^n + 2^n, \\]\nso \\(Cn = Cn - C + 1\\), and \\(C = 1\\). General solution \\(a_n = \\alpha 2^n + n2^n\\); \\(a_0 = 1\\) gives \\(\\alpha = 1\\), so \\(a_n = (n+1)2^n\\).\n\n**Common mistake.** Using the trial \\(C s^n\\) when \\(s\\) is a characteristic root; the resulting contradiction (\\(0 = s^n\\)) is the signal to multiply by \\(n\\). The other error, already mentioned, is fitting initial conditions to the homogeneous part alone and then adding the particular solution, which changes the initial values.",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k8",
+     "type": "expression",
+     "prompt": "Solve \\(a_n = 2a_{n-1} + 3^n\\) with \\(a_0 = 0\\). Enter \\(a_n\\) in terms of \\(n\\).",
+     "answer": "3^(n+1) - 3*2^n",
+     "vars": "n",
+     "why": "Homogeneous solution \\(\\alpha 2^n\\). Since 3 is not a characteristic root, try \\(C3^n\\): \\(C3^n = 2C3^{n-1} + 3^n\\); dividing by \\(3^{n-1}\\), \\(3C = 2C + 3\\), so \\(C = 3\\) and \\(p_n = 3^{n+1}\\). General: \\(\\alpha 2^n + 3^{n+1}\\); \\(a_0 = 0\\) gives \\(\\alpha = -3\\). So \\(a_n = 3^{n+1} - 3\\cdot 2^n\\). Check: \\(a_1 = 3\\) and \\(9 - 6 = 3\\)."
+    },
+    {
+     "id": "s5q2",
+     "kp": "k7",
+     "type": "written",
+     "prompt": "Prove that if \\(p_n\\) is a particular solution of \\(a_n = c_1 a_{n-1} + c_2 a_{n-2} + F(n)\\), then every solution has the form \\(p_n + h_n\\) with \\(h_n\\) a solution of the associated homogeneous recurrence. Then explain why the constants must be fitted to the initial conditions after adding \\(p_n\\), not before.",
+     "rubric": [
+      "Lets a_n be any solution and defines h_n = a_n - p_n.",
+      "Subtracts the two recurrences to show F(n) cancels and h_n satisfies the homogeneous recurrence.",
+      "Concludes a_n = p_n + h_n (and notes conversely any such sum is a solution).",
+      "Explains that the initial values a_0, a_1 belong to the full solution; fitting h_n alone to them gives h_0 = a_0, making p_0 + h_0 ≠ a_0 in general."
+     ],
+     "model": "Let \\(a_n\\) be any solution and set \\(h_n = a_n - p_n\\). For \\(n \\ge 2\\),\n\\[ h_n = (c_1 a_{n-1} + c_2 a_{n-2} + F(n)) - (c_1 p_{n-1} + c_2 p_{n-2} + F(n)) = c_1 h_{n-1} + c_2 h_{n-2}, \\]\nso \\(h_n\\) solves the homogeneous recurrence and \\(a_n = p_n + h_n\\). Conversely, adding a homogeneous solution to \\(p_n\\) gives a solution by the same computation.\n\nThe initial conditions describe \\(a_n = p_n + h_n\\), not \\(h_n\\). If you choose the constants so that \\(h_0 = a_0\\) and \\(h_1 = a_1\\) and then add \\(p_n\\), the result has initial values \\(a_0 + p_0\\) and \\(a_1 + p_1\\), which are wrong unless \\(p_0 = p_1 = 0\\). The constants must be solved from \\(p_0 + h_0 = a_0\\) and \\(p_1 + h_1 = a_1\\).",
+     "why": "This is the same structure as for linear differential equations: general solution equals particular plus complementary, with constants fitted last."
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "title": "Divide-and-conquer recurrences",
+   "kps": [
+    "k9"
+   ],
+   "md": "Recursive algorithms that split a problem into pieces of a fraction of the original size lead to recurrences of a different shape: the index is divided, not decreased. This section solves them exactly when \\(n\\) is a power of the splitting factor, and states the standard asymptotic result.\n\nA **divide-and-conquer recurrence** has the form\n\\[ T(n) = a\\,T(n/b) + f(n), \\]\nwhere the problem of size \\(n\\) is split into \\(a\\) subproblems of size \\(n/b\\), and \\(f(n)\\) is the cost of splitting and combining. **Merge sort** is the model example: split a list into halves, sort each recursively, then merge the two sorted halves using at most \\(n - 1\\) comparisons.\n\n**Reduction to a linear recurrence.** Restrict to \\(n = b^k\\) and set \\(s_k = T(b^k)\\). Then \\(T(n/b) = T(b^{k-1}) = s_{k-1}\\), and the recurrence becomes\n\\[ s_k = a\\,s_{k-1} + f(b^k), \\]\na first-order linear recurrence in \\(k\\), which the earlier sections solve.\n\n**Worked example 1.** Solve \\(T(n) = 2T(n/2) + n\\), \\(T(1) = 0\\), for \\(n = 2^k\\). With \\(s_k = T(2^k)\\): \\(s_k = 2s_{k-1} + 2^k\\), \\(s_0 = 0\\). This is the resonant case from the previous section (the base 2 is a characteristic root), so try \\(Ck2^k\\): \\(Ck2^k = 2C(k-1)2^{k-1} + 2^k\\) gives \\(C = 1\\). General solution \\(s_k = \\alpha 2^k + k 2^k\\); \\(s_0 = 0\\) gives \\(\\alpha = 0\\). So \\(s_k = k 2^k\\), and substituting \\(k = \\log_2 n\\):\n\\[ T(n) = n\\log_2 n. \\]\nUnrolling gives the same answer and shows where it comes from: each of the \\(\\log_2 n\\) levels of the recursion does total work \\(n\\).\n\n**Worked example 2.** Solve \\(T(n) = 4T(n/2) + n\\), \\(T(1) = 1\\), for \\(n = 2^k\\). Then \\(s_k = 4s_{k-1} + 2^k\\), \\(s_0 = 1\\). The base 2 is not a root (the root is 4), so try \\(C2^k\\): \\(C = 2C + 1\\), \\(C = -1\\). General solution \\(s_k = \\alpha 4^k - 2^k\\); \\(s_0 = 1\\) gives \\(\\alpha = 2\\). Since \\(4^k = n^2\\) and \\(2^k = n\\),\n\\[ T(n) = 2n^2 - n. \\]\nHere the recursion does more work at the bottom levels than at the top, and the leaves dominate.\n\n**The master theorem.** For growth rates, the following standard result (stated here without proof) covers the common case of polynomial-size \\(f\\).\n\n> **Master theorem.** Let \\(T(n) = aT(n/b) + cn^d\\) with \\(a \\ge 1\\), \\(b > 1\\), \\(c > 0\\), \\(d \\ge 0\\), and \\(T\\) increasing. Then\n\\[ T(n) \\in \\begin{cases} \\Theta(n^d) & a < b^d, \\\\ \\Theta(n^d \\log n) & a = b^d, \\\\ \\Theta(n^{\\log_b a}) & a > b^d. \\end{cases} \\]\n\nExample 1 is the middle case (\\(a = 2 = 2^1\\)), giving \\(\\Theta(n\\log n)\\); Example 2 is the last (\\(4 > 2^1\\)), giving \\(\\Theta(n^{\\log_2 4}) = \\Theta(n^2)\\). The comparison of \\(a\\) with \\(b^d\\) is a comparison of how fast the number of subproblems grows against how fast the per-level cost shrinks.\n\n**Common mistake.** Treating \\(T(n/2)\\) as if it were \\(T(n-2)\\) or \\(T(n-1)\\) and applying the characteristic equation in the variable \\(n\\); the substitution \\(n = b^k\\) is what turns division into subtraction of 1 in the index. A second error is converting back incorrectly: \\(4^k = (2^k)^2 = n^2\\), and in general \\(a^k = a^{\\log_b n} = n^{\\log_b a}\\).",
+   "questions": [
+    {
+     "id": "s6q1",
+     "kp": "k9",
+     "type": "expression",
+     "prompt": "Solve \\(T(n) = 3T(n/2) + n\\) with \\(T(1) = 1\\) for \\(n = 2^k\\), giving the answer as a function of \\(k\\).",
+     "answer": "3^(k+1) - 2^(k+1)",
+     "vars": "k",
+     "why": "With \\(s_k = T(2^k)\\): \\(s_k = 3s_{k-1} + 2^k\\), \\(s_0 = 1\\). Trial \\(C2^k\\): \\(C2^k = 3C2^{k-1} + 2^k\\), so \\(C = \\tfrac32 C + 1\\), \\(C = -2\\). General \\(s_k = \\alpha 3^k - 2\\cdot 2^k\\); \\(s_0 = 1\\) gives \\(\\alpha = 3\\). So \\(T(2^k) = 3^{k+1} - 2^{k+1}\\), that is, \\(T(n) = 3n^{\\log_2 3} - 2n\\). Check: \\(T(2) = 3 + 2 = 5 = 9 - 4\\)."
+    },
+    {
+     "id": "s6q2",
+     "kp": "k9",
+     "type": "written",
+     "prompt": "Solve \\(T(n) = 2T(n/2) + n\\), \\(T(1) = 0\\), exactly for \\(n = 2^k\\), by substituting \\(s_k = T(2^k)\\). Show the particular-solution step explicitly and explain why the trial \\(C 2^k\\) fails.",
+     "rubric": [
+      "Rewrites the recurrence as s_k = 2s_{k-1} + 2^k with s_0 = 0.",
+      "Explains that C2^k solves the homogeneous recurrence s_k = 2s_{k-1}, so substituting gives 0 = 2^k.",
+      "Uses the trial Ck2^k and finds C = 1.",
+      "Fits s_0 = 0 to get s_k = k2^k and converts to T(n) = n log_2 n."
+     ],
+     "model": "For \\(n = 2^k\\), \\(T(n/2) = T(2^{k-1})\\), so \\(s_k = 2s_{k-1} + 2^k\\) with \\(s_0 = T(1) = 0\\). The homogeneous solution is \\(\\alpha 2^k\\). The trial \\(C2^k\\) fails because it already satisfies \\(s_k = 2s_{k-1}\\): substituting gives \\(C2^k = C2^k + 2^k\\), i.e. \\(0 = 2^k\\). Since 2 is a characteristic root of multiplicity 1, try \\(Ck2^k\\): \\(Ck2^k = 2C(k-1)2^{k-1} + 2^k = C(k-1)2^k + 2^k\\), so \\(C = 1\\). The general solution is \\(s_k = \\alpha 2^k + k2^k\\), and \\(s_0 = 0\\) forces \\(\\alpha = 0\\). Therefore \\(T(2^k) = k2^k\\), i.e. \\(T(n) = n\\log_2 n\\).",
+     "why": "This is the exact form of the \\(\\Theta(n \\log n)\\) bound for merge sort's recurrence (with \\(n\\) in place of \\(n-1\\) comparisons at each merge)."
+    }
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "t": "recurrence relation",
+   "d": "An equation expressing \\(a_n\\), for all \\(n\\) past some index, in terms of earlier terms of the sequence (and possibly \\(n\\))."
+  },
+  {
+   "t": "order (of a recurrence)",
+   "d": "The number \\(k\\) such that \\(a_n\\) depends on \\(a_{n-1}, \\dots, a_{n-k}\\) with \\(a_{n-k}\\) actually appearing."
+  },
+  {
+   "t": "initial conditions",
+   "d": "Specified values of the first terms; an order-\\(k\\) recurrence needs \\(k\\) consecutive values to determine a unique solution."
+  },
+  {
+   "t": "closed form",
+   "d": "An explicit formula for \\(a_n\\) as a function of \\(n\\), not referring to earlier terms."
+  },
+  {
+   "t": "unrolling (iteration)",
+   "d": "Repeatedly substituting a recurrence into itself to expose a pattern, which must then be proved, usually by induction."
+  },
+  {
+   "t": "linear homogeneous recurrence with constant coefficients",
+   "d": "\\(a_n = c_1 a_{n-1} + \\dots + c_k a_{n-k}\\) with constants \\(c_i\\), \\(c_k \\ne 0\\)."
+  },
+  {
+   "t": "characteristic equation",
+   "d": "For \\(a_n = c_1 a_{n-1} + \\dots + c_k a_{n-k}\\), the equation \\(r^k = c_1 r^{k-1} + \\dots + c_k\\); \\(r^n\\) is a solution exactly when \\(r\\) is a root."
+  },
+  {
+   "t": "characteristic root",
+   "d": "A root of the characteristic equation."
+  },
+  {
+   "t": "superposition",
+   "d": "For a linear homogeneous recurrence, any linear combination of solutions is a solution."
+  },
+  {
+   "t": "particular solution",
+   "d": "Any one solution of a nonhomogeneous recurrence, found without regard to initial conditions."
+  },
+  {
+   "t": "associated homogeneous recurrence",
+   "d": "The recurrence obtained by deleting the forcing term \\(F(n)\\) from a linear nonhomogeneous recurrence."
+  },
+  {
+   "t": "Binet's formula",
+   "d": "\\(F_n = (\\varphi^n - \\psi^n)/\\sqrt5\\) with \\(\\varphi, \\psi = (1 \\pm \\sqrt5)/2\\), for \\(F_0 = 0, F_1 = 1\\)."
+  },
+  {
+   "t": "divide-and-conquer recurrence",
+   "d": "A recurrence \\(T(n) = aT(n/b) + f(n)\\) describing a problem split into \\(a\\) subproblems of size \\(n/b\\) with combining cost \\(f(n)\\)."
+  },
+  {
+   "t": "master theorem",
+   "d": "For \\(T(n) = aT(n/b) + cn^d\\): \\(\\Theta(n^d)\\) if \\(a < b^d\\), \\(\\Theta(n^d\\log n)\\) if \\(a = b^d\\), \\(\\Theta(n^{\\log_b a})\\) if \\(a > b^d\\)."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "concept",
+   "front": "How many initial conditions determine a solution of an order-k recurrence, and why?",
+   "back": "\\(k\\) consecutive values; by strong induction each later term is forced by the \\(k\\) before it.",
+   "kp": "k1"
+  },
+  {
+   "id": "c2",
+   "type": "formula",
+   "front": "Tower of Hanoi recurrence and solution",
+   "back": "\\(H_n = 2H_{n-1} + 1\\), \\(H_1 = 1\\); \\(H_n = 2^n - 1\\).",
+   "kp": "k2"
+  },
+  {
+   "id": "c3",
+   "type": "formula",
+   "front": "Recurrence for binary strings of length n with no two consecutive 0s",
+   "back": "\\(a_n = a_{n-1} + a_{n-2}\\), \\(a_1 = 2\\), \\(a_2 = 3\\) (condition on the last symbol: ends in 1 or in 10).",
+   "kp": "k2"
+  },
+  {
+   "id": "c4",
+   "type": "formula",
+   "front": "Closed form of \\(a_n = r a_{n-1} + d\\), \\(r \\ne 1\\)",
+   "back": "\\(a_n = c + r^n(a_0 - c)\\) with fixed point \\(c = d/(1-r)\\).",
+   "kp": "k3"
+  },
+  {
+   "id": "c5",
+   "type": "concept",
+   "front": "What must be done after unrolling a recurrence to a guessed formula?",
+   "back": "Prove it, normally by induction: check the initial condition(s) and that the formula satisfies the recurrence.",
+   "kp": "k3"
+  },
+  {
+   "id": "c6",
+   "type": "formula",
+   "front": "Characteristic equation of \\(a_n = c_1 a_{n-1} + c_2 a_{n-2}\\)",
+   "back": "\\(r^2 - c_1 r - c_2 = 0\\)",
+   "kp": "k4"
+  },
+  {
+   "id": "c7",
+   "type": "concept",
+   "front": "Why do solutions of a linear homogeneous recurrence form a vector space?",
+   "back": "Substituting a linear combination distributes over the recurrence (superposition); this needs linearity and no forcing term.",
+   "kp": "k4"
+  },
+  {
+   "id": "c8",
+   "type": "formula",
+   "front": "General solution, distinct roots \\(r_1 \\ne r_2\\)",
+   "back": "\\(a_n = \\alpha r_1^n + \\beta r_2^n\\)",
+   "kp": "k5"
+  },
+  {
+   "id": "c9",
+   "type": "concept",
+   "front": "Why does the distinct-roots theorem need r1 ≠ r2?",
+   "back": "The system \\(\\alpha + \\beta = a_0\\), \\(\\alpha r_1 + \\beta r_2 = a_1\\) has determinant \\(r_2 - r_1\\), which must be nonzero to fit every initial pair.",
+   "kp": "k5"
+  },
+  {
+   "id": "c10",
+   "type": "formula",
+   "front": "Binet's formula",
+   "back": "\\(F_n = \\dfrac{\\varphi^n - \\psi^n}{\\sqrt5}\\), \\(\\varphi = \\tfrac{1+\\sqrt5}{2}\\), \\(\\psi = \\tfrac{1-\\sqrt5}{2}\\)",
+   "kp": "k5"
+  },
+  {
+   "id": "c11",
+   "type": "problem",
+   "front": "Solve \\(a_n = 5a_{n-1} - 6a_{n-2}\\), \\(a_0 = 1\\), \\(a_1 = 4\\).",
+   "back": "Roots 2, 3; \\(a_n = 2\\cdot 3^n - 2^n\\).",
+   "kp": "k5",
+   "answer": "2*3^n - 2^n",
+   "vars": "n",
+   "check": "expression"
+  },
+  {
+   "id": "c12",
+   "type": "formula",
+   "front": "General solution with a double root \\(r_0\\)",
+   "back": "\\(a_n = (\\alpha + \\beta n) r_0^n\\)",
+   "kp": "k6"
+  },
+  {
+   "id": "c13",
+   "type": "problem",
+   "front": "Solve \\(a_n = 6a_{n-1} - 9a_{n-2}\\), \\(a_0 = 1\\), \\(a_1 = 6\\).",
+   "back": "Double root 3; \\(a_n = (n+1)3^n\\).",
+   "kp": "k6",
+   "answer": "(n+1)*3^n",
+   "vars": "n",
+   "check": "expression"
+  },
+  {
+   "id": "c14",
+   "type": "concept",
+   "front": "Structure of the general solution of a linear nonhomogeneous recurrence",
+   "back": "One particular solution plus the general solution of the associated homogeneous recurrence; fit constants last.",
+   "kp": "k7"
+  },
+  {
+   "id": "c15",
+   "type": "formula",
+   "front": "Trial particular solution for \\(F(n) = (\\text{degree-}d\\text{ polynomial})\\cdot s^n\\)",
+   "back": "\\(n^m(A_d n^d + \\dots + A_0)s^n\\), \\(m\\) = multiplicity of \\(s\\) as a characteristic root.",
+   "kp": "k8"
+  },
+  {
+   "id": "c16",
+   "type": "concept",
+   "front": "Why does the trial \\(C2^n\\) fail for \\(a_n = 2a_{n-1} + 2^n\\)?",
+   "back": "\\(C2^n\\) solves the homogeneous recurrence, so substitution gives \\(0 = 2^n\\); use \\(Cn2^n\\).",
+   "kp": "k8"
+  },
+  {
+   "id": "c17",
+   "type": "concept",
+   "front": "How is \\(T(n) = aT(n/b) + f(n)\\) solved exactly for \\(n = b^k\\)?",
+   "back": "Set \\(s_k = T(b^k)\\): \\(s_k = as_{k-1} + f(b^k)\\), a first-order linear recurrence in \\(k\\).",
+   "kp": "k9"
+  },
+  {
+   "id": "c18",
+   "type": "formula",
+   "front": "Master theorem for T(n) = aT(n/b) + cn^d",
+   "back": "\\(\\Theta(n^d)\\) if \\(a<b^d\\); \\(\\Theta(n^d\\log n)\\) if \\(a=b^d\\); \\(\\Theta(n^{\\log_b a})\\) if \\(a>b^d\\).",
+   "kp": "k9"
+  },
+  {
+   "id": "c19",
+   "type": "problem",
+   "front": "\\(T(n) = 2T(n/2) + n\\), \\(T(1) = 0\\), \\(n = 2^k\\)",
+   "back": "\\(T(n) = n\\log_2 n\\) (from \\(s_k = 2s_{k-1} + 2^k\\), resonant case).",
+   "kp": "k9",
+   "answer": "n*log2(n)",
+   "vars": "n",
+   "check": "expression"
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k2",
+   "type": "written",
+   "prompt": "Let \\(c_n\\) be the number of ways to climb a staircase of \\(n\\) steps if each move climbs either 1 or 2 steps (order matters). Derive a recurrence with initial conditions, justify it, and compute \\(c_{10}\\).",
+   "rubric": [
+    "Conditions on the last (or first) move: 1 step or 2 steps.",
+    "Explains the cases are disjoint and exhaustive and give c_{n-1} and c_{n-2} ways.",
+    "Gives initial conditions c_1 = 1, c_2 = 2.",
+    "Computes c_10 = 89."
+   ],
+   "model": "Classify a climb of \\(n\\) steps by its last move. If the last move is 1 step, the earlier moves form a climb of \\(n-1\\) steps (\\(c_{n-1}\\) ways); if it is 2 steps, the earlier moves form a climb of \\(n-2\\) steps (\\(c_{n-2}\\) ways). Every climb has exactly one last move, so the cases are disjoint and exhaustive: \\(c_n = c_{n-1} + c_{n-2}\\) for \\(n \\ge 3\\), with \\(c_1 = 1\\) and \\(c_2 = 2\\). Then \\(c_3 = 3, c_4 = 5, c_5 = 8, c_6 = 13, c_7 = 21, c_8 = 34, c_9 = 55, c_{10} = 89\\).",
+   "why": "Structurally identical to domino tilings of a \\(2 \\times n\\) strip: a vertical domino is a 1-step move and a pair of horizontal dominoes a 2-step move."
+  },
+  {
+   "id": "p2",
+   "kp": "k2",
+   "type": "number",
+   "prompt": "Let \\(a_n\\) be the number of strings of length \\(n\\) over the alphabet \\(\\{0, 1, 2\\}\\) with no two consecutive 0s. It satisfies \\(a_n = 2a_{n-1} + 2a_{n-2}\\) with \\(a_1 = 3\\), \\(a_2 = 8\\). Compute \\(a_5\\).",
+   "answer": "164",
+   "why": "A valid string ends in 1 or 2 (\\(2a_{n-1}\\) ways) or in a 0 preceded by 1 or 2 (\\(2a_{n-2}\\) ways). \\(a_3 = 2 \\cdot 8 + 2 \\cdot 3 = 22\\), \\(a_4 = 2\\cdot 22 + 2 \\cdot 8 = 60\\), \\(a_5 = 2 \\cdot 60 + 2 \\cdot 22 = 164\\)."
+  },
+  {
+   "id": "p3",
+   "kp": "k3",
+   "type": "expression",
+   "prompt": "Find a closed form for \\(a_n\\) where \\(a_0 = 5\\) and \\(a_n = \\tfrac12 a_{n-1} + 3\\) for \\(n \\ge 1\\).",
+   "answer": "6 - (1/2)^n",
+   "vars": "n",
+   "why": "Fixed point: \\(c = \\tfrac12 c + 3\\), so \\(c = 6\\). Then \\(a_n - 6 = (\\tfrac12)^n(a_0 - 6) = -(\\tfrac12)^n\\), so \\(a_n = 6 - (\\tfrac12)^n\\). Check: \\(a_1 = 2.5 + 3 = 5.5 = 6 - 0.5\\)."
+  },
+  {
+   "id": "p4",
+   "kp": "k4",
+   "type": "written",
+   "prompt": "Explain why the recurrence \\(a_n = n\\,a_{n-1}\\) cannot be solved by the characteristic-equation method, and why \\(a_n = a_{n-1}^2\\) cannot either. What does each violate?",
+   "rubric": [
+    "Identifies that a_n = n a_{n-1} has a coefficient depending on n (not constant coefficients).",
+    "Notes that r^n substituted gives r = n, which is not a fixed number, so no characteristic root exists.",
+    "Identifies that a_n = a_{n-1}^2 is not linear (a term appears squared), so superposition fails.",
+    "Gives a concrete reason or check for the failure (e.g., a_n = n! for the first; for the second, doubling a solution does not give a solution)."
+   ],
+   "model": "The method rests on substituting \\(a_n = r^n\\) for a fixed number \\(r\\) and on superposition. For \\(a_n = n a_{n-1}\\), the coefficient \\(n\\) is not constant: substituting \\(r^n\\) gives \\(r^n = n r^{n-1}\\), i.e. \\(r = n\\), which no fixed \\(r\\) satisfies for all \\(n\\). Its solutions are \\(a_n = a_0\\, n!\\) (writing \\(n!\\) for the factorial), not combinations of geometric sequences. For \\(a_n = a_{n-1}^2\\), the recurrence is not linear. Superposition fails: \\(a_n = 2^{2^n}\\) is a solution, but \\(2a_n\\) is not, since \\((2a_{n-1})^2 = 4a_{n-1}^2 \\ne 2a_{n-1}^2\\).",
+   "why": "Both hypotheses in \"linear with constant coefficients\" are used: linearity for superposition, constant coefficients for the geometric trial solution."
+  },
+  {
+   "id": "p5",
+   "kp": "k5",
+   "type": "expression",
+   "prompt": "Solve \\(a_n = 7a_{n-1} - 10a_{n-2}\\) with \\(a_0 = 2\\), \\(a_1 = 1\\).",
+   "answer": "3*2^n - 5^n",
+   "vars": "n",
+   "why": "Characteristic equation \\(r^2 - 7r + 10 = 0\\), roots 2 and 5. From \\(\\alpha + \\beta = 2\\), \\(2\\alpha + 5\\beta = 1\\): \\(3\\beta = 1 - 4 = -3\\), \\(\\beta = -1\\), \\(\\alpha = 3\\). So \\(a_n = 3\\cdot 2^n - 5^n\\). Check: \\(a_2 = 7 - 20 = -13 = 12 - 25\\)."
+  },
+  {
+   "id": "p6",
+   "kp": "k5",
+   "type": "written",
+   "prompt": "Use Binet's formula \\(F_n = (\\varphi^n - \\psi^n)/\\sqrt5\\) to prove that \\(F_n\\) is the integer nearest to \\(\\varphi^n/\\sqrt5\\) for all \\(n \\ge 0\\).",
+   "rubric": [
+    "Writes F_n - φ^n/√5 = -ψ^n/√5.",
+    "Computes |ψ| = (√5 - 1)/2 < 1, so |ψ^n| ≤ 1 for n ≥ 0.",
+    "Concludes |F_n - φ^n/√5| ≤ 1/√5 < 1/2.",
+    "Uses that F_n is an integer to conclude it is the nearest integer."
+   ],
+   "model": "From Binet's formula, \\(F_n - \\varphi^n/\\sqrt5 = -\\psi^n/\\sqrt5\\). Since \\(\\psi = (1 - \\sqrt5)/2 \\approx -0.618\\), we have \\(|\\psi| < 1\\), so \\(|\\psi|^n \\le 1\\) for \\(n \\ge 0\\). Therefore \\(|F_n - \\varphi^n/\\sqrt5| \\le 1/\\sqrt5 \\approx 0.447 < \\tfrac12\\). Since \\(F_n\\) is an integer within less than \\(\\tfrac12\\) of \\(\\varphi^n/\\sqrt5\\), it is the integer nearest to that number.",
+   "why": "This makes precise the statement that the dominant root controls growth."
+  },
+  {
+   "id": "p7",
+   "kp": "k6",
+   "type": "expression",
+   "prompt": "Solve \\(a_n = -2a_{n-1} - a_{n-2}\\) with \\(a_0 = 1\\), \\(a_1 = 1\\).",
+   "answer": "(1 - 2*n)*(-1)^n",
+   "vars": "n",
+   "why": "Characteristic equation \\(r^2 + 2r + 1 = (r+1)^2\\): double root \\(-1\\). General \\((\\alpha + \\beta n)(-1)^n\\). \\(a_0 = 1\\): \\(\\alpha = 1\\). \\(a_1 = 1\\): \\(-(1 + \\beta) = 1\\), \\(\\beta = -2\\). So \\(a_n = (1 - 2n)(-1)^n\\). Check: \\(a_2 = -2 - 1 = -3 = (1 - 4)\\cdot 1\\)."
+  },
+  {
+   "id": "p8",
+   "kp": "k8",
+   "type": "written",
+   "prompt": "For each recurrence, state the form of the trial particular solution you would use, with a reason (do not solve): (a) \\(a_n = 4a_{n-1} + n^2\\); (b) \\(a_n = 5a_{n-1} - 6a_{n-2} + 3^n\\); (c) \\(a_n = 2a_{n-1} - a_{n-2} + 1\\).",
+   "rubric": [
+    "(a) An^2 + Bn + C, since the forcing term is a degree-2 polynomial and 1 is not a root (the root is 4).",
+    "(b) Cn3^n, since 3 is a simple root of r^2 - 5r + 6.",
+    "(c) Cn^2, since the forcing term is a constant (s = 1) and 1 is a double root of r^2 - 2r + 1.",
+    "Justifies each using the multiplicity rule rather than guessing."
+   ],
+   "model": "(a) The forcing term is a degree-2 polynomial times \\(1^n\\); the characteristic root is 4, so 1 is not a root and the trial is \\(An^2 + Bn + C\\).\n(b) The forcing term is \\(3^n\\); the characteristic equation \\(r^2 - 5r + 6 = 0\\) has roots 2 and 3, so 3 is a root of multiplicity 1 and the trial is \\(Cn3^n\\).\n(c) The forcing term is the constant \\(1 = 1\\cdot 1^n\\); the characteristic equation \\(r^2 - 2r + 1 = (r-1)^2\\) has 1 as a double root, so the trial is \\(n^2 \\cdot C = Cn^2\\).",
+   "why": "In (c), \\(a_n = C\\) and \\(a_n = Cn\\) both solve the homogeneous recurrence, so neither can produce the constant 1; \\(Cn^2\\) gives \\(C(n^2 - 2(n-1)^2 + (n-2)^2) = 2C\\), so \\(C = \\tfrac12\\)."
+  },
+  {
+   "id": "p9",
+   "kp": "k8",
+   "type": "expression",
+   "prompt": "Solve \\(a_n = a_{n-1} + 2n - 1\\) with \\(a_0 = 0\\).",
+   "answer": "n^2",
+   "vars": "n",
+   "why": "The characteristic root is 1, and the forcing term \\(2n - 1\\) is a polynomial times \\(1^n\\), so multiply the degree-1 trial by \\(n\\): \\(p_n = An^2 + Bn\\). Substituting: \\(An^2 + Bn = A(n-1)^2 + B(n-1) + 2n - 1\\), so \\(0 = -2An + A - B + 2n - 1\\): \\(A = 1\\), \\(B = 0\\). General solution \\(n^2 + \\alpha\\); \\(a_0 = 0\\) gives \\(\\alpha = 0\\). So \\(a_n = n^2\\): the sum of the first \\(n\\) odd numbers."
+  },
+  {
+   "id": "p10",
+   "kp": "k9",
+   "type": "number",
+   "prompt": "Let \\(T(1) = 1\\) and \\(T(n) = T(n/2) + 1\\) for \\(n\\) a power of 2 greater than 1 (the recurrence for binary search). Compute \\(T(1024)\\).",
+   "answer": "11",
+   "why": "With \\(s_k = T(2^k)\\), \\(s_k = s_{k-1} + 1\\), \\(s_0 = 1\\), so \\(s_k = k + 1\\) and \\(T(n) = \\log_2 n + 1\\). Since \\(1024 = 2^{10}\\), \\(T(1024) = 11\\)."
+  },
+  {
+   "id": "p11",
+   "kp": "k9",
+   "type": "mcq",
+   "prompt": "An algorithm satisfies \\(T(n) = 8T(n/2) + n^2\\). Which growth rate does the master theorem give?",
+   "options": [
+    "\\(\\Theta(n^2)\\)",
+    "\\(\\Theta(n^2 \\log n)\\)",
+    "\\(\\Theta(n^3)\\)",
+    "\\(\\Theta(n^8)\\)"
+   ],
+   "answer": 2,
+   "why": "Here \\(a = 8\\), \\(b = 2\\), \\(d = 2\\), and \\(b^d = 4 < 8 = a\\), so \\(T(n) \\in \\Theta(n^{\\log_2 8}) = \\Theta(n^3)\\). Choosing \\(\\Theta(n^2)\\) takes the combining cost as dominant; \\(\\Theta(n^2\\log n)\\) applies only when \\(a = b^d\\); \\(\\Theta(n^8)\\) confuses the number of subproblems with the exponent (the exponent is \\(\\log_b a\\))."
+  },
+  {
+   "id": "p12",
+   "kp": "k1",
+   "type": "written",
+   "prompt": "The recurrence \\(a_n = a_{n-1} + a_{n-2}\\) (for \\(n \\ge 2\\)) is given together with the single condition \\(a_0 = 1\\). Show that this does not determine the sequence by exhibiting two different solutions, and then prove that adding the condition \\(a_1 = 1\\) makes the solution unique.",
+   "rubric": [
+    "Gives two distinct solutions with a_0 = 1, e.g. a_1 = 1 (1, 1, 2, 3, 5, ...) and a_1 = 2 (1, 2, 3, 5, 8, ...).",
+    "Supposes two sequences satisfy the recurrence and both a_0 = a_1 = 1.",
+    "Uses strong induction: agreement at n-1 and n-2 forces agreement at n.",
+    "Concludes the sequences agree for all n, so the solution is unique."
+   ],
+   "model": "With \\(a_0 = 1\\), choosing \\(a_1 = 1\\) gives \\(1, 1, 2, 3, 5, 8, \\dots\\) and choosing \\(a_1 = 2\\) gives \\(1, 2, 3, 5, 8, 13, \\dots\\). Both satisfy the recurrence, and they differ at \\(n = 1\\), so one initial condition does not determine the sequence.\n\nNow suppose \\((a_n)\\) and \\((b_n)\\) both satisfy the recurrence and \\(a_0 = b_0 = 1\\), \\(a_1 = b_1 = 1\\). We prove \\(a_n = b_n\\) for all \\(n\\) by strong induction. The cases \\(n = 0, 1\\) are given. For \\(n \\ge 2\\), assume \\(a_j = b_j\\) for all \\(j < n\\). Then \\(a_n = a_{n-1} + a_{n-2} = b_{n-1} + b_{n-2} = b_n\\). Hence the sequences are equal.",
+   "why": "An order-2 recurrence has a two-parameter family of solutions; two initial values select one member."
+  },
+  {
+   "id": "p13",
+   "kp": "k2",
+   "type": "written",
+   "prompt": "In a variant of the Tower of Hanoi with pegs A, B, C in a row, a disk may move only between adjacent pegs (A and B, or B and C). Let \\(T_n\\) be the number of moves used by the natural recursive strategy to move \\(n\\) disks from A to C. Explain the strategy, derive \\(T_n = 3T_{n-1} + 2\\) with \\(T_1 = 2\\), and solve the recurrence.",
+   "rubric": [
+    "Explains that the largest disk must travel A to B to C, and that at each of its moves the other n-1 disks must be on the peg it is not using.",
+    "Counts: move n-1 disks A to C, largest A to B, n-1 disks C to A, largest B to C, n-1 disks A to C, giving 3T_{n-1} + 2.",
+    "Gives T_1 = 2 (A to B to C).",
+    "Solves T_n = 3^n - 1 (fixed point -1) and checks a small case."
+   ],
+   "model": "The largest disk must go from A to B and then from B to C. When it moves between A and B, the other \\(n-1\\) disks must all be on C; when it moves between B and C, they must all be on A. So the strategy is: move the \\(n-1\\) smaller disks from A to C (\\(T_{n-1}\\) moves), move the largest from A to B (1), move the \\(n-1\\) disks from C back to A (\\(T_{n-1}\\), by symmetry the same count), move the largest from B to C (1), and move the \\(n-1\\) disks from A to C (\\(T_{n-1}\\)). Hence \\(T_n = 3T_{n-1} + 2\\), with \\(T_1 = 2\\).\n\nSolving: the fixed point satisfies \\(c = 3c + 2\\), so \\(c = -1\\), and \\(T_n + 1 = 3(T_{n-1} + 1)\\). Then \\(T_n + 1 = 3^{n-1}(T_1 + 1) = 3^n\\), so \\(T_n = 3^n - 1\\). Check: \\(T_2 = 3\\cdot 2 + 2 = 8 = 9 - 1\\).",
+   "why": "The count \\(3^n - 1\\) equals the number of legal configurations minus one: the strategy passes through every one of the \\(3^n\\) arrangements exactly once."
+  },
+  {
+   "id": "p14",
+   "kp": "k7",
+   "type": "written",
+   "prompt": "A student solves \\(a_n = 3a_{n-1} + 4\\), \\(a_0 = 0\\), as follows: \"The homogeneous solution is \\(\\alpha 3^n\\); with \\(a_0 = 0\\) we get \\(\\alpha = 0\\). A particular solution is \\(-2\\). So \\(a_n = -2\\).\" Identify the error, explain why it produces a wrong answer, and give the correct solution with a check.",
+   "rubric": [
+    "Identifies that the constant was fitted to the homogeneous part before adding the particular solution.",
+    "Shows the student's answer fails the initial condition (a_0 would be -2, not 0) or the recurrence check a_1 = 4.",
+    "Fits α in α3^n - 2 to a_0 = 0, getting α = 2.",
+    "Gives a_n = 2·3^n - 2 and checks a_1 = 4."
+   ],
+   "model": "The error is fitting \\(\\alpha\\) to the initial condition using the homogeneous solution alone. The initial condition describes the full solution \\(a_n = \\alpha 3^n - 2\\), not \\(\\alpha 3^n\\). The student's answer \\(a_n = -2\\) satisfies the recurrence but has \\(a_0 = -2 \\ne 0\\). Correctly: \\(a_0 = \\alpha - 2 = 0\\), so \\(\\alpha = 2\\) and \\(a_n = 2\\cdot 3^n - 2\\). Check: from the recurrence \\(a_1 = 3\\cdot 0 + 4 = 4\\), and \\(2 \\cdot 3 - 2 = 4\\).",
+   "why": "Constants are always fitted last, to the sum of particular and homogeneous parts."
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k5",
+   "type": "written",
+   "prompt": "State and prove the distinct-roots theorem for second-order linear homogeneous recurrences with constant coefficients, including the step that every solution (not just some) has the stated form.",
+   "rubric": [
+    "States: if r^2 = c_1 r + c_2 has distinct roots r_1, r_2, every solution of a_n = c_1 a_{n-1} + c_2 a_{n-2} is α r_1^n + β r_2^n.",
+    "Shows r^n is a solution when r is a characteristic root, and uses superposition for combinations.",
+    "Solves for α, β from a_0, a_1, citing determinant r_2 - r_1 ≠ 0.",
+    "Invokes uniqueness (same recurrence and initial conditions, by induction) to conclude any solution equals the combination."
+   ],
+   "model": "**Theorem.** If \\(r^2 = c_1 r + c_2\\) has distinct roots \\(r_1, r_2\\), then \\((a_n)\\) satisfies \\(a_n = c_1 a_{n-1} + c_2 a_{n-2}\\) for \\(n \\ge 2\\) if and only if \\(a_n = \\alpha r_1^n + \\beta r_2^n\\) for some constants \\(\\alpha, \\beta\\).\n\n**Proof.** If \\(r\\) is a root, then \\(c_1 r^{n-1} + c_2 r^{n-2} = r^{n-2}(c_1 r + c_2) = r^{n-2}r^2 = r^n\\), so \\(r^n\\) is a solution. By superposition (substitute and regroup), \\(\\alpha r_1^n + \\beta r_2^n\\) is a solution for all \\(\\alpha, \\beta\\).\n\nConversely, let \\((a_n)\\) be a solution. The system \\(\\alpha + \\beta = a_0\\), \\(\\alpha r_1 + \\beta r_2 = a_1\\) has determinant \\(r_2 - r_1 \\ne 0\\), so it has a solution \\((\\alpha, \\beta)\\). Let \\(b_n = \\alpha r_1^n + \\beta r_2^n\\). Then \\(b_0 = a_0\\), \\(b_1 = a_1\\), and both sequences satisfy the recurrence. By strong induction, \\(a_n = b_n\\) for all \\(n\\): if they agree at \\(n-1\\) and \\(n-2\\), then \\(a_n = c_1 a_{n-1} + c_2 a_{n-2} = c_1 b_{n-1} + c_2 b_{n-2} = b_n\\). Hence every solution has the stated form.",
+   "why": "The \"every solution\" direction is where the hypothesis \\(r_1 \\ne r_2\\) and the uniqueness argument are needed; the \"is a solution\" direction uses only superposition."
+  },
+  {
+   "id": "e2",
+   "kp": "k8",
+   "type": "expression",
+   "prompt": "Solve \\(a_n = 5a_{n-1} - 6a_{n-2} + 2^n\\) with \\(a_0 = 0\\), \\(a_1 = 0\\).",
+   "answer": "-(2*n + 4)*2^n + 4*3^n",
+   "vars": "n",
+   "why": "Homogeneous roots 2 and 3. Since \\(2\\) is a simple root, try \\(p_n = Cn2^n\\): \\(Cn2^n = 5C(n-1)2^{n-1} - 6C(n-2)2^{n-2} + 2^n\\). Divide by \\(2^{n-2}\\): \\(4Cn = 10C(n-1) - 6C(n-2) + 4 = 4Cn + 2C + 4\\), so \\(C = -2\\). General: \\(a_n = \\alpha 2^n + \\beta 3^n - 2n2^n\\). \\(a_0 = 0\\): \\(\\alpha + \\beta = 0\\). \\(a_1 = 0\\): \\(2\\alpha + 3\\beta - 4 = 0\\). So \\(\\beta = 4\\), \\(\\alpha = -4\\): \\(a_n = 4\\cdot 3^n - 4\\cdot 2^n - 2n2^n = 4\\cdot 3^n - (2n + 4)2^n\\). Check: \\(a_2 = 0 - 0 + 4 = 4\\) and \\(36 - 32 = 4\\)."
+  },
+  {
+   "id": "e3",
+   "kp": "k3",
+   "type": "written",
+   "prompt": "The number of regions \\(L_n\\) into which \\(n\\) lines in general position (no two parallel, no three concurrent) divide the plane satisfies \\(L_0 = 1\\). Derive the recurrence \\(L_n = L_{n-1} + n\\), justifying each step geometrically, and solve it.",
+   "rubric": [
+    "Observes the n-th line meets each of the previous n-1 lines in exactly one point, and these points are distinct.",
+    "Concludes the n-th line is divided into n pieces (segments and rays).",
+    "Explains that each piece splits exactly one existing region into two, adding n regions.",
+    "Solves L_n = 1 + n(n+1)/2 by telescoping (and confirms with a small case)."
+   ],
+   "model": "Suppose \\(n - 1\\) lines in general position are drawn, forming \\(L_{n-1}\\) regions, and add an \\(n\\)-th line in general position. It is not parallel to any earlier line, so it meets each of them exactly once; no three lines are concurrent, so these \\(n - 1\\) intersection points are distinct. They cut the new line into \\(n\\) pieces: \\(n - 2\\) segments and 2 rays. Each piece lies inside one existing region and divides it into two, and different pieces lie in different regions (they are separated by earlier lines). So the number of regions increases by exactly \\(n\\): \\(L_n = L_{n-1} + n\\). Telescoping, \\(L_n = L_0 + \\sum_{k=1}^n k = 1 + \\frac{n(n+1)}{2}\\). Check: \\(L_1 = 2\\), \\(L_2 = 4\\), \\(L_3 = 7\\).",
+   "why": "The proof of the closed form from the recurrence is the induction shown in the section on unrolling."
+  },
+  {
+   "id": "e4",
+   "kp": "k9",
+   "type": "expression",
+   "prompt": "Solve \\(T(n) = 4T(n/2) + n\\) with \\(T(1) = 1\\) exactly for \\(n\\) a power of 2. Give \\(T(n)\\) in terms of \\(n\\).",
+   "answer": "2*n^2 - n",
+   "vars": "n",
+   "why": "With \\(s_k = T(2^k)\\): \\(s_k = 4s_{k-1} + 2^k\\), \\(s_0 = 1\\). Trial \\(C2^k\\): \\(C = 2C + 1\\), \\(C = -1\\). General \\(s_k = \\alpha 4^k - 2^k\\); \\(s_0 = 1\\): \\(\\alpha = 2\\). Since \\(4^k = n^2\\) and \\(2^k = n\\), \\(T(n) = 2n^2 - n\\). Check: \\(T(2) = 4 + 2 = 6 = 8 - 2\\)."
+  },
+  {
+   "id": "e5",
+   "kp": "k6",
+   "type": "written",
+   "prompt": "The sequence defined by \\(a_0 = 1\\), \\(a_1 = 4\\), \\(a_n = 4a_{n-1} - 4a_{n-2}\\) has closed form \\(a_n = (n+1)2^n\\). Prove this closed form by strong induction, without using the characteristic-root theorem.",
+   "rubric": [
+    "Checks both base cases a_0 = 1 and a_1 = 4.",
+    "States the strong inductive hypothesis for n-1 and n-2 (n ≥ 2).",
+    "Computes 4n2^{n-1} - 4(n-1)2^{n-2} = 2n2^n - (n-1)2^n = (n+1)2^n correctly.",
+    "Concludes for all n ≥ 0."
+   ],
+   "model": "*Base cases:* \\(a_0 = 1 = (0+1)2^0\\) and \\(a_1 = 4 = (1+1)2^1\\). *Inductive step:* let \\(n \\ge 2\\) and assume \\(a_{n-1} = n2^{n-1}\\) and \\(a_{n-2} = (n-1)2^{n-2}\\). Then\n\\[ a_n = 4n2^{n-1} - 4(n-1)2^{n-2} = 2n\\cdot 2^n - (n-1)2^n = (n+1)2^n. \\]\nBy strong induction, \\(a_n = (n+1)2^n\\) for all \\(n \\ge 0\\).",
+   "why": "Two base cases are needed because the step uses the two previous terms."
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "Uniqueness",
+    "formula": "Order \\(k\\) recurrence + \\(k\\) consecutive initial values \\(\\Rightarrow\\) unique solution",
+    "when": "Justifying that a formula which satisfies the recurrence and initial values is the answer.",
+    "example": "Checking \\(H_n = 2^n - 1\\) needs only \\(H_1\\) and the recurrence.",
+    "watch": "Give as many initial values as the order, at indices where the recurrence has not yet started."
+   },
+   {
+    "name": "First-order linear",
+    "formula": "\\(a_n = ra_{n-1} + d \\Rightarrow a_n = c + r^n(a_0 - c)\\), \\(c = \\tfrac{d}{1-r}\\)",
+    "when": "\\(r \\ne 1\\).",
+    "example": "\\(a_n = 3a_{n-1} + 2\\), \\(a_0 = 1\\): \\(2\\cdot 3^n - 1\\).",
+    "watch": "If \\(r = 1\\), telescope instead: \\(a_n = a_0 + \\sum f(k)\\)."
+   },
+   {
+    "name": "Characteristic equation",
+    "formula": "\\(a_n = c_1a_{n-1} + c_2a_{n-2} \\to r^2 - c_1 r - c_2 = 0\\)",
+    "when": "Linear, homogeneous, constant coefficients.",
+    "example": "\\(a_n = 5a_{n-1} - 6a_{n-2} \\to r^2 - 5r + 6\\).",
+    "watch": "Signs flip when moving terms to the left."
+   },
+   {
+    "name": "Distinct roots",
+    "formula": "\\(a_n = \\alpha r_1^n + \\beta r_2^n\\)",
+    "when": "\\(r_1 \\ne r_2\\).",
+    "example": "Roots 3, \\(-2\\), \\(a_0 = 2, a_1 = 1\\): \\(3^n + (-2)^n\\).",
+    "watch": "Fit the constants using the indices actually given."
+   },
+   {
+    "name": "Repeated root",
+    "formula": "\\(a_n = (\\alpha + \\beta n)r_0^n\\)",
+    "when": "Double root; multiplicity m gives factors up to n^(m-1).",
+    "example": "\\((r-3)^2\\), \\(a_0 = 1, a_1 = 6\\): \\((n+1)3^n\\).",
+    "watch": "Not \\(\\alpha r_0^n + \\beta r_0^n\\)."
+   },
+   {
+    "name": "Particular + homogeneous",
+    "formula": "\\(a_n = p_n + h_n\\)",
+    "when": "Linear recurrences with a forcing term.",
+    "example": "\\(a_n = 3a_{n-1} + 2n\\): \\(\\alpha 3^n - n - \\tfrac32\\).",
+    "watch": "Fit constants after adding \\(p_n\\)."
+   },
+   {
+    "name": "Trial form",
+    "formula": "\\(F(n) = P_d(n)s^n \\Rightarrow p_n = n^m Q_d(n) s^n\\)",
+    "when": "Forcing term a polynomial times an exponential; \\(m\\) = multiplicity of \\(s\\) as a root.",
+    "example": "\\(a_n = 2a_{n-1} + 2^n\\): try \\(Cn2^n\\), get \\((n+1)2^n\\).",
+    "watch": "A contradiction like 0 = s^n means s is a root: multiply by n."
+   },
+   {
+    "name": "Divide and conquer",
+    "formula": "\\(T(n) = aT(n/b) + f(n)\\), \\(s_k = T(b^k)\\): \\(s_k = as_{k-1} + f(b^k)\\)",
+    "when": "Exact solution for \\(n\\) a power of \\(b\\).",
+    "example": "\\(2T(n/2) + n\\), \\(T(1)=0\\): \\(n\\log_2 n\\).",
+    "watch": "Convert back with \\(a^k = n^{\\log_b a}\\)."
+   },
+   {
+    "name": "Master theorem",
+    "formula": "\\(aT(n/b) + cn^d\\): compare \\(a\\) with \\(b^d\\)",
+    "when": "Asymptotic growth only.",
+    "example": "\\(8T(n/2) + n^2\\): \\(\\Theta(n^3)\\).",
+    "watch": "Equality \\(a = b^d\\) gives the extra \\(\\log n\\)."
+   }
+  ],
+  "stuck": [
+   "Compute the first five or six terms by hand; they reveal the pattern and later check the closed form.",
+   "For a counting recurrence, condition on the first or last step and make sure each case is a smaller instance of the same problem.",
+   "Classify the recurrence: first-order, linear homogeneous, linear nonhomogeneous, or divide-and-conquer; each has its own method.",
+   "If a trial particular solution leads to an impossible equation, the base of the forcing term is a characteristic root; multiply the trial by n.",
+   "After finding a closed form, verify it against two computed terms and, if asked for proof, run the induction: initial values plus recurrence."
+  ]
+ }
+}

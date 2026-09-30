@@ -1,0 +1,938 @@
+{
+ "key": "mth-6-0",
+ "title": "Logic and truth tables",
+ "v": 1,
+ "scope": "Propositional logic (connectives, truth tables, equivalence, laws, negation), predicate logic with nested quantifiers and their negation, and validity of arguments; proof methods themselves are left to the next topic.",
+ "sources": [
+  {
+   "title": "R. Hammack, Book of Proof, 3rd ed., Chapter 2 (Logic)",
+   "url": "https://richardhammack.github.io/BookOfProof/"
+  },
+  {
+   "title": "T. Sundstrom, Mathematical Reasoning: Writing and Proof, Chapter 2 (Logical Reasoning), GVSU ScholarWorks",
+   "url": "https://scholarworks.gvsu.edu/cgi/viewcontent.cgi?filename=2&article=1007&context=books&type=additional"
+  },
+  {
+   "title": "B. Ikenaga, Truth Tables, Tautologies, and Logical Equivalences (Millersville University notes)",
+   "url": "https://sites.millersville.edu/bikenaga/math-proof/truth-tables/truth-tables.pdf"
+  },
+  {
+   "title": "D. Velleman, How to Prove It, 3rd ed., Chapters 1–2 (Sentential and Quantificational Logic), Cambridge University Press",
+   "url": "https://assets.cambridge.org/97805216/75994/frontmatter/9780521675994_frontmatter.pdf"
+  }
+ ],
+ "pre": [],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Recognize statements",
+   "d": "Decide whether a sentence is a statement, distinguishing unknown truth value from no truth value.",
+   "type": "concept"
+  },
+  {
+   "id": "k2",
+   "t": "Negation, conjunction, disjunction",
+   "d": "Give the truth tables of ¬, ∧, ∨ (inclusive), and translate English 'and/but/or/neither' correctly.",
+   "type": "fact"
+  },
+  {
+   "id": "k3",
+   "t": "Conditional and vacuous truth",
+   "d": "State the truth table of P → Q and justify the rows with false hypothesis.",
+   "type": "concept"
+  },
+  {
+   "id": "k4",
+   "t": "English forms of the conditional",
+   "d": "Translate 'only if', 'necessary', 'sufficient', 'whenever' into P → Q with the correct direction.",
+   "type": "skill"
+  },
+  {
+   "id": "k5",
+   "t": "Converse, inverse, contrapositive",
+   "d": "Form the three related conditionals and know which are equivalent to the original.",
+   "type": "distinction"
+  },
+  {
+   "id": "k6",
+   "t": "The biconditional",
+   "d": "Use P ↔ Q, its truth table, and its decomposition into two conditionals.",
+   "type": "concept"
+  },
+  {
+   "id": "k7",
+   "t": "Constructing truth tables",
+   "d": "Build a complete 2ⁿ-row truth table systematically, subformula by subformula.",
+   "type": "procedure"
+  },
+  {
+   "id": "k8",
+   "t": "Tautology, contradiction, equivalence",
+   "d": "Classify formulas and decide equivalence or non-equivalence using tables or a falsifying row.",
+   "type": "concept"
+  },
+  {
+   "id": "k9",
+   "t": "Laws of logic and negation",
+   "d": "Apply De Morgan, distributive, conditional-as-disjunction and negated-conditional laws to transform and negate formulas.",
+   "type": "procedure"
+  },
+  {
+   "id": "k10",
+   "t": "Predicates and nested quantifiers",
+   "d": "Read, write and evaluate quantified statements, including restricted and nested quantifiers where order matters.",
+   "type": "concept"
+  },
+  {
+   "id": "k11",
+   "t": "Negating quantified statements",
+   "d": "Push a negation through several quantifiers and a quantifier-free matrix correctly.",
+   "type": "procedure"
+  },
+  {
+   "id": "k12",
+   "t": "Valid arguments and inference rules",
+   "d": "Test validity, apply modus ponens/tollens and related rules, and recognize the two classic fallacies.",
+   "type": "skill"
+  }
+ ],
+ "intro": "Every proof you will write is a chain of claims, each of which must follow from earlier ones. Whether a step really follows is often invisible in ordinary English: \"if\", \"only if\", \"or\" and \"not all\" are used loosely in conversation, and a loose reading of any one of them is enough to turn a valid argument into an invalid one. Mathematics therefore needs a precise account of how the truth of a compound claim depends on the truth of its parts, and a mechanical test for when two claims say the same thing.\n\n**Propositional logic** supplies that account for claims built from \"and\", \"or\", \"not\", \"if…then\" and \"if and only if\"; **predicate logic** extends it to claims about \"all\" and \"some\". This chapter develops both far enough to do three jobs you will need constantly in the rest of the course: read a theorem's logical form correctly, write the exact negation of a statement, and check whether an argument is valid.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "Statements and the basic connectives",
+   "kps": [
+    "k1",
+    "k2"
+   ],
+   "md": "This section answers a basic question: what kind of sentence can be the subject of a proof, and how are complicated claims built from simpler ones so that their truth can be computed?\n\n> A **statement** (or **proposition**) is a declarative sentence that is either true or false, but not both.\n\n\"7 is prime\" is a statement (true). \"\\( 2^{10} < 1000 \\)\" is a statement (false, since \\( 2^{10} = 1024 \\)). \"Every even integer greater than 2 is a sum of two primes\" (Goldbach's conjecture) is a statement even though nobody currently knows its truth value: what matters is that it has one. By contrast, \"Is 7 prime?\" is a question, \"Prove the theorem\" is a command, and \"\\( x + 1 = 5 \\)\" is not yet a statement, because its truth depends on the value of \\( x \\). Sentences of that last kind are handled in the section on quantifiers.\n\nWe abbreviate statements by letters \\( P, Q, R, \\dots \\), called **propositional variables**, and combine them with **logical connectives**. The three basic ones are:\n\n- **Negation** \\( \\neg P \\) (\"not \\( P \\)\"): true exactly when \\( P \\) is false. (Hammack's *Book of Proof* writes \\( \\sim P \\).)\n- **Conjunction** \\( P \\wedge Q \\) (\"\\( P \\) and \\( Q \\)\"): true exactly when both \\( P \\) and \\( Q \\) are true.\n- **Disjunction** \\( P \\vee Q \\) (\"\\( P \\) or \\( Q \\)\"): true exactly when at least one of \\( P, Q \\) is true.\n\nThese definitions are recorded in a **truth table**, which lists every possible assignment of truth values to the variables and the resulting value of the compound statement:\n\n| \\( P \\) | \\( Q \\) | \\( \\neg P \\) | \\( P \\wedge Q \\) | \\( P \\vee Q \\) |\n|---|---|---|---|---|\n| T | T | F | T | T |\n| T | F | F | F | T |\n| F | T | T | F | T |\n| F | F | T | F | F |\n\nTwo features deserve emphasis. First, the mathematical \"or\" is **inclusive**: \\( P \\vee Q \\) is true when both parts are true. The **exclusive or**, \"one or the other but not both\", is a different connective, and when mathematicians mean it they say so explicitly. Second, each connective is **truth-functional**: the truth value of the compound depends only on the truth values of its parts, not on what the parts are about. That is what makes truth tables possible.\n\nSeveral English words translate to the same connective. \"But\", \"although\" and \"whereas\" all become \\( \\wedge \\): \"\\( 6 \\) is even but not prime\" is \\( P \\wedge \\neg Q \\). \"Neither \\( P \\) nor \\( Q \\)\" means \\( \\neg P \\wedge \\neg Q \\).\n\n**Worked example.** Let \\( P \\): \"6 is even\" (true) and \\( Q \\): \"6 is prime\" (false). Evaluate \\( \\neg (P \\wedge Q) \\) and \\( \\neg P \\wedge \\neg Q \\).\n\n1. \\( P \\wedge Q \\) is T \\( \\wedge \\) F, which is F. So \\( \\neg (P \\wedge Q) \\) is \\( \\neg \\)F, which is T. In words: \"6 is not both even and prime\" is true.\n2. \\( \\neg P \\) is F and \\( \\neg Q \\) is T, so \\( \\neg P \\wedge \\neg Q \\) is F \\( \\wedge \\) T, which is F. In words: \"6 is neither even nor prime\" is false.\n\nThe two formulas received different truth values from the same assignment, so they do not say the same thing.\n\n**The common mistake** is to \"distribute\" a negation across a connective without changing the connective, reading \"not both \\( P \\) and \\( Q \\)\" as \"not \\( P \\) and not \\( Q \\)\". The worked example is a single assignment that refutes this. The correct rule (De Morgan's law, proved later) changes \\( \\wedge \\) to \\( \\vee \\): \"not both\" means \"at least one fails\". A second common mistake is treating an unknown truth value as no truth value. A statement need not be *known*; it must be *definite*.",
+   "questions": [
+    {
+     "id": "s1q1",
+     "kp": "k1",
+     "type": "written",
+     "prompt": "For each sentence, decide whether it is a statement. If it is, give its truth value when that value is known; if it is not, explain precisely what prevents it from being one.\n\n(a) \\( 3^{4} = 81 \\). (b) \\( x^{2} - 4 = 0 \\). (c) There are infinitely many primes \\( p \\) for which \\( p + 2 \\) is also prime. (d) Find all real solutions of \\( x^{2} = 2 \\).",
+     "rubric": [
+      "(a) statement, true",
+      "(b) not a statement: truth depends on the free variable x (an open sentence)",
+      "(c) statement with unknown truth value (twin prime conjecture); being unknown does not disqualify it",
+      "(d) not a statement: it is a command/instruction, not a declarative sentence"
+     ],
+     "model": "(a) A statement; it is true, since \\( 3^{4} = 81 \\).\n\n(b) Not a statement. It contains the variable \\( x \\) with no value assigned and no quantifier, so it is true for \\( x = \\pm 2 \\) and false otherwise. It is an open sentence.\n\n(c) A statement. It is a declarative sentence that is either true or false; which one is not currently known (it is the twin prime conjecture), but a statement only needs to have a definite truth value, not a known one.\n\n(d) Not a statement. It is an instruction; it asserts nothing that could be true or false.",
+     "why": "The test is whether the sentence is declarative and has a definite truth value. Open sentences fail because the truth value depends on a variable; commands and questions fail because they assert nothing. Unknown truth value is not a failure."
+    },
+    {
+     "id": "s1q2",
+     "kp": "k2",
+     "type": "written",
+     "prompt": "Let \\( P \\): \"\\( 15 \\) is divisible by \\( 3 \\)\" and \\( Q \\): \"\\( 15 \\) is divisible by \\( 5 \\)\". Translate \"15 is divisible by 3 or by 5, but not by both\" into symbols using only \\( \\neg, \\wedge, \\vee \\), and determine its truth value, showing each step. Then explain why \"15 is divisible by 3 or by 5\" alone, read mathematically, has a different truth value.",
+     "rubric": [
+      "Correct symbolization (P ∨ Q) ∧ ¬(P ∧ Q)",
+      "Evaluates P and Q both true, so P ∨ Q is T, P ∧ Q is T, ¬(P ∧ Q) is F",
+      "Concludes the exclusive claim is false",
+      "Explains that mathematical 'or' is inclusive so P ∨ Q is true"
+     ],
+     "model": "The sentence is \\( (P \\vee Q) \\wedge \\neg (P \\wedge Q) \\). Both \\( P \\) and \\( Q \\) are true, since \\( 15 = 3 \\cdot 5 \\). Then \\( P \\vee Q \\) is T, \\( P \\wedge Q \\) is T, so \\( \\neg (P \\wedge Q) \\) is F, and the conjunction T \\( \\wedge \\) F is F. The sentence is false.\n\n\"15 is divisible by 3 or by 5\" alone is \\( P \\vee Q \\), which is true: the mathematical \"or\" is inclusive, so it is true when both disjuncts are true. The phrase \"but not by both\" is what turns it into an exclusive or, and that extra conjunct is exactly what fails here.",
+     "why": "Exclusive or must be built explicitly: \\( (P \\vee Q) \\wedge \\neg (P \\wedge Q) \\). With both parts true, the inclusive disjunction is true but the exclusive one is false."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "The conditional and the biconditional",
+   "kps": [
+    "k3",
+    "k4",
+    "k5",
+    "k6"
+   ],
+   "md": "Almost every theorem has the form \"if (hypotheses) then (conclusion)\". This section fixes exactly what such a sentence asserts, and how to recognise the same logical form behind several different English phrasings.\n\n> The **conditional** \\( P \\to Q \\) (\"if \\( P \\) then \\( Q \\)\") is false when \\( P \\) is true and \\( Q \\) is false, and true in every other case. \\( P \\) is the **hypothesis** (or **antecedent**); \\( Q \\) is the **conclusion** (or **consequent**).\n\n| \\( P \\) | \\( Q \\) | \\( P \\to Q \\) |\n|---|---|---|\n| T | T | T |\n| T | F | F |\n| F | T | T |\n| F | F | T |\n\n(*Book of Proof* writes \\( P \\Rightarrow Q \\).) The first two rows are uncontroversial. The last two, where the hypothesis is false, need justification. Consider the theorem \"for every integer \\( n \\), if \\( n \\) is divisible by 4 then \\( n \\) is even\". We certainly want this to be true, which means the conditional must be true for *every* integer \\( n \\). For \\( n = 6 \\), the hypothesis is false and the conclusion true (row 3); for \\( n = 3 \\), both are false (row 4). If either of those rows were F, the theorem would be false. So the truth table is forced on us by how mathematicians use conditionals inside general statements. A conditional whose hypothesis is false is said to be **vacuously true**: it makes no claim about that case.\n\n**English forms.** All of the following mean \\( P \\to Q \\):\n\n- if \\( P \\), then \\( Q \\); \\( Q \\) if \\( P \\); \\( Q \\) whenever \\( P \\); \\( P \\) implies \\( Q \\);\n- \\( P \\) **only if** \\( Q \\);\n- \\( P \\) is **sufficient** for \\( Q \\); \\( Q \\) is **necessary** for \\( P \\).\n\n\"Only if\" is the one that causes trouble. \"\\( P \\) only if \\( Q \\)\" says that \\( P \\) cannot happen without \\( Q \\), that is, whenever \\( P \\) holds, \\( Q \\) holds. The word \"if\" in \"only if\" does *not* mark the hypothesis. Similarly, a necessary condition is what the conclusion supplies: if \\( P \\to Q \\), then \\( Q \\) is necessary for \\( P \\) because \\( P \\) cannot be true without it.\n\n**Related conditionals.** From \\( P \\to Q \\) we form:\n\n- the **converse** \\( Q \\to P \\);\n- the **inverse** \\( \\neg P \\to \\neg Q \\);\n- the **contrapositive** \\( \\neg Q \\to \\neg P \\).\n\nThe contrapositive always has the same truth value as the original (verified by truth table in the next section); the converse need not. For \"if \\( n \\) is divisible by 4 then \\( n \\) is even\", the statement is true, the contrapositive \"if \\( n \\) is odd then \\( n \\) is not divisible by 4\" is true, but the converse \"if \\( n \\) is even then \\( n \\) is divisible by 4\" is false (take \\( n = 2 \\)).\n\n> The **biconditional** \\( P \\leftrightarrow Q \\) (\"\\( P \\) if and only if \\( Q \\)\", abbreviated \"\\( P \\) iff \\( Q \\)\") is true when \\( P \\) and \\( Q \\) have the same truth value, and false otherwise.\n\n\"\\( P \\) if and only if \\( Q \\)\" is literally \"\\( P \\) if \\( Q \\)\" (that is, \\( Q \\to P \\)) together with \"\\( P \\) only if \\( Q \\)\" (that is, \\( P \\to Q \\)). So \\( P \\leftrightarrow Q \\) says the same as \\( (P \\to Q) \\wedge (Q \\to P) \\), and \"\\( Q \\) is necessary and sufficient for \\( P \\)\" is another way to say it. A proof of an \"iff\" theorem therefore consists of two proofs, one for each direction.\n\n**Worked example.** Rewrite \"a real number \\( x \\) satisfies \\( x^{2} = x \\) only if \\( x = 1 \\)\" in if-then form and decide its truth.\n\n1. \"\\( P \\) only if \\( Q \\)\" is \\( P \\to Q \\), with \\( P \\): \\( x^{2} = x \\) and \\( Q \\): \\( x = 1 \\). So: \"if \\( x^{2} = x \\), then \\( x = 1 \\)\".\n2. The hypothesis \\( x^{2} = x \\) means \\( x(x - 1) = 0 \\), so \\( x = 0 \\) or \\( x = 1 \\). At \\( x = 0 \\) the hypothesis is true and the conclusion false, so the claim (read as \"for all real \\( x \\)\") is false.\n3. Its converse, \"if \\( x = 1 \\) then \\( x^{2} = x \\)\", is true.\n\n**The common mistakes** are assuming a conditional's converse (the most frequent logical error in proofs) and reading \"\\( P \\) only if \\( Q \\)\" as \\( Q \\to P \\).",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k5",
+     "type": "written",
+     "prompt": "Consider the theorem \"If a function \\( f \\) is differentiable at \\( a \\), then \\( f \\) is continuous at \\( a \\).\" State its converse, inverse and contrapositive. For each, decide whether it is true for all functions \\( f \\) and all \\( a \\), justifying any \"false\" with a specific counterexample.",
+     "rubric": [
+      "Converse: if f is continuous at a then f is differentiable at a; false",
+      "Counterexample such as f(x) = |x| at a = 0 (continuous, not differentiable)",
+      "Inverse: if f is not differentiable at a then f is not continuous at a; false by the same counterexample",
+      "Contrapositive: if f is not continuous at a then f is not differentiable at a; true because it is equivalent to the theorem"
+     ],
+     "model": "Converse: \"If \\( f \\) is continuous at \\( a \\), then \\( f \\) is differentiable at \\( a \\).\" False: \\( f(x) = \\lvert x \\rvert \\) is continuous at \\( 0 \\) but not differentiable there (the difference quotient has one-sided limits \\( 1 \\) and \\( -1 \\)).\n\nInverse: \"If \\( f \\) is not differentiable at \\( a \\), then \\( f \\) is not continuous at \\( a \\).\" False, by the same example: \\( \\lvert x \\rvert \\) is not differentiable at \\( 0 \\) yet is continuous there. (The inverse is the contrapositive of the converse, so it must fail whenever the converse does.)\n\nContrapositive: \"If \\( f \\) is not continuous at \\( a \\), then \\( f \\) is not differentiable at \\( a \\).\" True, because a contrapositive always has the same truth value as the original conditional, and the original is a theorem of calculus.",
+     "why": "The contrapositive \\( \\neg Q \\to \\neg P \\) is equivalent to \\( P \\to Q \\); the converse \\( Q \\to P \\) and inverse \\( \\neg P \\to \\neg Q \\) are equivalent to each other but not to the original. One counterexample, \\( \\lvert x \\rvert \\) at \\( 0 \\), kills both the converse and the inverse."
+    },
+    {
+     "id": "s2q2",
+     "kp": "k4",
+     "type": "mcq",
+     "prompt": "Let \\( P \\): \"\\( n \\) is divisible by 6\" and \\( Q \\): \"\\( n \\) is even\". Which formula expresses \"\\( Q \\) is necessary for \\( P \\)\"?",
+     "options": [
+      "\\( Q \\to P \\)",
+      "\\( P \\to Q \\)",
+      "\\( P \\leftrightarrow Q \\)",
+      "\\( \\neg P \\to \\neg Q \\)"
+     ],
+     "answer": 1,
+     "why": "\"\\( Q \\) is necessary for \\( P \\)\" means \\( P \\) cannot hold without \\( Q \\): whenever \\( P \\) is true, \\( Q \\) is true. That is \\( P \\to Q \\) (and here it is true: a multiple of 6 is even). Choosing \\( Q \\to P \\) reads the sentence left to right; choosing \\( P \\leftrightarrow Q \\) confuses \"necessary\" with \"necessary and sufficient\"; \\( \\neg P \\to \\neg Q \\) is the inverse, which is equivalent to the converse \\( Q \\to P \\), not to \\( P \\to Q \\)."
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "Truth tables, tautologies and logical equivalence",
+   "kps": [
+    "k7",
+    "k8"
+   ],
+   "md": "Once compound statements can be built, we need a reliable method for two questions: is a given formula true under every assignment, and do two formulas always agree? A complete truth table answers both mechanically.\n\n**Building a truth table.** A formula with \\( n \\) distinct propositional variables has \\( 2^{n} \\) possible assignments, since each variable independently takes one of two values. List them systematically: in the first column, the top half T and the bottom half F; in the next, alternate in blocks of a quarter; and so on until the last column alternates T, F. Then add one column for each subformula, working from the innermost parentheses outward, so that every entry is computed from entries already in the table. The last column, for the **main connective**, gives the value of the whole formula.\n\n> A **tautology** is a formula that is true under every assignment of truth values. A **contradiction** is a formula that is false under every assignment. A formula that is neither is a **contingency**.\n>\n> Two formulas \\( A \\) and \\( B \\) are **logically equivalent**, written \\( A \\equiv B \\), if they have the same truth value under every assignment. Equivalently, \\( A \\leftrightarrow B \\) is a tautology.\n\nNote that \\( \\equiv \\) is not a connective inside a formula; it is a claim *about* two formulas. \\( P \\vee \\neg P \\) is a tautology, and \\( P \\wedge \\neg P \\) is a contradiction.\n\n**Worked example (equivalence).** Show that \\( (P \\vee Q) \\to R \\equiv (P \\to R) \\wedge (Q \\to R) \\). There are 3 variables, so \\( 2^{3} = 8 \\) rows.\n\n| \\( P \\) | \\( Q \\) | \\( R \\) | \\( P \\vee Q \\) | \\( (P \\vee Q) \\to R \\) | \\( P \\to R \\) | \\( Q \\to R \\) | \\( (P \\to R) \\wedge (Q \\to R) \\) |\n|---|---|---|---|---|---|---|---|\n| T | T | T | T | T | T | T | T |\n| T | T | F | T | F | F | F | F |\n| T | F | T | T | T | T | T | T |\n| T | F | F | T | F | F | T | F |\n| F | T | T | T | T | T | T | T |\n| F | T | F | T | F | T | F | F |\n| F | F | T | F | T | T | T | T |\n| F | F | F | F | T | T | T | T |\n\nColumns 5 and 8 agree in all eight rows, so the formulas are equivalent. This equivalence is the logical basis of **proof by cases**: to prove \"if \\( P \\) or \\( Q \\), then \\( R \\)\", prove \\( P \\to R \\) and \\( Q \\to R \\) separately.\n\n**Worked example (contrapositive).** A four-row table for \\( P \\to Q \\) and \\( \\neg Q \\to \\neg P \\):\n\n| \\( P \\) | \\( Q \\) | \\( \\neg Q \\) | \\( \\neg P \\) | \\( P \\to Q \\) | \\( \\neg Q \\to \\neg P \\) |\n|---|---|---|---|---|---|\n| T | T | F | F | T | T |\n| T | F | T | F | F | F |\n| F | T | F | T | T | T |\n| F | F | T | T | T | T |\n\nThe last two columns agree, so \\( P \\to Q \\equiv \\neg Q \\to \\neg P \\). This is the justification for proof by contraposition in the next chapter.\n\n**Proving non-equivalence.** To show two formulas are *not* equivalent, a single row suffices. For example, \\( (P \\to Q) \\to R \\) and \\( P \\to (Q \\to R) \\) differ at \\( P = \\) F, \\( Q = \\) T, \\( R = \\) F: the first is \\( (\\text{F} \\to \\text{T}) \\to \\text{F} \\), that is T \\( \\to \\) F, which is F; the second is F \\( \\to (\\cdots) \\), which is T. So \\( \\to \\) is not associative, and the parentheses in a conditional matter.\n\n**The common mistakes** are an incomplete table (fewer than \\( 2^{n} \\) rows, often from listing assignments unsystematically) and concluding equivalence from agreement on a few rows. Agreement must hold in every row; disagreement in one row settles non-equivalence.",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k8",
+     "type": "written",
+     "prompt": "Decide whether \\( (P \\to Q) \\vee (Q \\to P) \\) is a tautology, a contradiction, or a contingency. Justify with a complete truth table, and then explain in one or two sentences why the result holds without the table.",
+     "rubric": [
+      "Complete 4-row table with correct columns for P → Q, Q → P and the disjunction",
+      "Final column all T, so it is a tautology",
+      "Explanation: if Q is true, P → Q is true; if Q is false, Q → P is true (vacuously); so one disjunct is always true"
+     ],
+     "model": "| \\( P \\) | \\( Q \\) | \\( P \\to Q \\) | \\( Q \\to P \\) | \\( (P \\to Q) \\vee (Q \\to P) \\) |\n|---|---|---|---|---|\n| T | T | T | T | T |\n| T | F | F | T | T |\n| F | T | T | F | T |\n| F | F | T | T | T |\n\nEvery row is T, so the formula is a tautology. Without the table: if \\( Q \\) is true, then \\( P \\to Q \\) is true because its conclusion is true; if \\( Q \\) is false, then \\( Q \\to P \\) is true because its hypothesis is false. Either way one disjunct is true.",
+     "why": "Only one row makes a conditional false (true hypothesis, false conclusion), and the two conditionals cannot both be in that row, since that would need \\( Q \\) both false and true."
+    },
+    {
+     "id": "s3q2",
+     "kp": "k8",
+     "type": "written",
+     "prompt": "A student claims \\( \\neg (P \\to Q) \\equiv \\neg P \\to \\neg Q \\). Refute the claim by exhibiting a specific assignment of truth values and computing both sides. Then state the formula that \\( \\neg (P \\to Q) \\) actually is equivalent to.",
+     "rubric": [
+      "Gives an assignment where the sides differ: P = T, Q = T or P = F, Q = F",
+      "Computes both sides correctly at that assignment",
+      "States ¬(P → Q) ≡ P ∧ ¬Q"
+     ],
+     "model": "Take \\( P = \\) F, \\( Q = \\) F. Then \\( P \\to Q \\) is T, so \\( \\neg (P \\to Q) \\) is F. On the right, \\( \\neg P \\) is T and \\( \\neg Q \\) is T, so \\( \\neg P \\to \\neg Q \\) is T. The two sides differ, so they are not equivalent. In fact \\( \\neg (P \\to Q) \\equiv P \\wedge \\neg Q \\): the only way a conditional is false is for its hypothesis to be true and its conclusion false.",
+     "why": "One disagreeing row disproves equivalence. The sides differ in exactly two rows: \\( P = Q = \\) T (left F, right T, since \\( \\neg P \\) is F) and \\( P = Q = \\) F (left F, right T). In the other two rows they happen to agree, which is why checking only one or two rows can mislead."
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "Laws of logic and negating compound statements",
+   "kps": [
+    "k9"
+   ],
+   "md": "Truth tables grow as \\( 2^{n} \\), and they tell you *that* two formulas are equivalent without helping you transform one into the other. In proofs you constantly need to rewrite a statement into a more useful form, above all to write its negation. This section collects the standard equivalences, each checkable by a truth table, and uses them as algebraic rules.\n\n> **Laws of logic.** For all formulas \\( P, Q, R \\):\n>\n> - Double negation: \\( \\neg \\neg P \\equiv P \\).\n> - Commutative: \\( P \\wedge Q \\equiv Q \\wedge P \\); \\( P \\vee Q \\equiv Q \\vee P \\).\n> - Associative: \\( (P \\wedge Q) \\wedge R \\equiv P \\wedge (Q \\wedge R) \\); likewise for \\( \\vee \\).\n> - Distributive: \\( P \\wedge (Q \\vee R) \\equiv (P \\wedge Q) \\vee (P \\wedge R) \\); \\( P \\vee (Q \\wedge R) \\equiv (P \\vee Q) \\wedge (P \\vee R) \\).\n> - **De Morgan's laws**: \\( \\neg (P \\wedge Q) \\equiv \\neg P \\vee \\neg Q \\); \\( \\neg (P \\vee Q) \\equiv \\neg P \\wedge \\neg Q \\).\n> - Conditional as disjunction: \\( P \\to Q \\equiv \\neg P \\vee Q \\).\n> - Contrapositive: \\( P \\to Q \\equiv \\neg Q \\to \\neg P \\).\n> - Biconditional: \\( P \\leftrightarrow Q \\equiv (P \\to Q) \\wedge (Q \\to P) \\).\n\nAlso useful are the facts that \\( P \\wedge \\neg P \\) is a contradiction and \\( P \\vee \\neg P \\) a tautology, and that for any \\( Q \\), a disjunction with a contradiction, \\( Q \\vee (P \\wedge \\neg P) \\), is equivalent to \\( Q \\).\n\nWhy De Morgan's laws hold is worth seeing directly. \\( P \\wedge Q \\) fails exactly when at least one of \\( P, Q \\) fails, which is \\( \\neg P \\vee \\neg Q \\). \\( P \\vee Q \\) fails exactly when both fail, which is \\( \\neg P \\wedge \\neg Q \\). A negation passes inward and swaps \\( \\wedge \\) with \\( \\vee \\).\n\nA substitution principle makes the laws usable: if a subformula is replaced by an equivalent one, the whole formula stays equivalent, because truth values are computed from parts.\n\n**Worked example 1 (negating a conditional).**\n\\[ \\neg (P \\to Q) \\equiv \\neg (\\neg P \\vee Q) \\equiv \\neg \\neg P \\wedge \\neg Q \\equiv P \\wedge \\neg Q, \\]\nusing conditional-as-disjunction, De Morgan, then double negation. So the negation of \"if the series converges, then its terms tend to \\( 0 \\)\" is \"the series converges **and** its terms do not tend to \\( 0 \\)\". The negation of a conditional is a conjunction, not another conditional.\n\n**Worked example 2 (simplification).** Simplify \\( \\neg \\big( P \\vee (\\neg P \\wedge Q) \\big) \\).\n\\[ \\begin{aligned} \\neg \\big( P \\vee (\\neg P \\wedge Q) \\big) &\\equiv \\neg P \\wedge \\neg (\\neg P \\wedge Q) && \\text{De Morgan} \\\\ &\\equiv \\neg P \\wedge (P \\vee \\neg Q) && \\text{De Morgan, double negation} \\\\ &\\equiv (\\neg P \\wedge P) \\vee (\\neg P \\wedge \\neg Q) && \\text{distributive} \\\\ &\\equiv \\neg P \\wedge \\neg Q && \\text{contradiction dropped.} \\end{aligned} \\]\n\n**Worked example 3 (a form used in proofs).** A conclusion of the form \"\\( Q \\) or \\( R \\)\" is often proved by assuming \\( Q \\) fails and deriving \\( R \\). The justification:\n\\[ P \\to (Q \\vee R) \\equiv \\neg P \\vee Q \\vee R \\equiv \\neg (P \\wedge \\neg Q) \\vee R \\equiv (P \\wedge \\neg Q) \\to R. \\]\nSimilarly, \\( (P \\wedge Q) \\to R \\equiv P \\to (Q \\to R) \\), so a two-part hypothesis may be assumed one part at a time.\n\n**The common mistakes.** The most damaging is writing \\( \\neg (P \\to Q) \\) as \\( P \\to \\neg Q \\). These are not equivalent: when \\( P \\) is false, \\( P \\to \\neg Q \\) is true while \\( P \\wedge \\neg Q \\) is false. The second is applying De Morgan without swapping the connective, as warned in the first section. A useful habit: after negating, ask what situation would make the original false, and check that your negation describes exactly that situation.",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k9",
+     "type": "written",
+     "prompt": "Using the laws of logic (not a truth table), prove that \\( P \\to (Q \\vee R) \\equiv (P \\wedge \\neg Q) \\to R \\). Name the law used at each step.",
+     "rubric": [
+      "Rewrites P → (Q ∨ R) as ¬P ∨ (Q ∨ R) (conditional as disjunction)",
+      "Regroups to (¬P ∨ Q) ∨ R (associativity)",
+      "Rewrites ¬P ∨ Q as ¬(P ∧ ¬Q) (De Morgan with double negation)",
+      "Converts ¬(P ∧ ¬Q) ∨ R back to (P ∧ ¬Q) → R (conditional as disjunction)"
+     ],
+     "model": "\\[ \\begin{aligned} P \\to (Q \\vee R) &\\equiv \\neg P \\vee (Q \\vee R) && \\text{conditional as disjunction} \\\\ &\\equiv (\\neg P \\vee Q) \\vee R && \\text{associative} \\\\ &\\equiv (\\neg P \\vee \\neg \\neg Q) \\vee R && \\text{double negation} \\\\ &\\equiv \\neg (P \\wedge \\neg Q) \\vee R && \\text{De Morgan} \\\\ &\\equiv (P \\wedge \\neg Q) \\to R && \\text{conditional as disjunction.} \\end{aligned} \\]",
+     "why": "The strategy is to convert every conditional into a disjunction, rearrange, and convert back. This equivalence is why \"assume \\( P \\) and not \\( Q \\); derive \\( R \\)\" proves \"if \\( P \\) then \\( Q \\) or \\( R \\)\"."
+    },
+    {
+     "id": "s4q2",
+     "kp": "k9",
+     "type": "written",
+     "prompt": "Write the negation of \"If \\( n^{2} \\) is odd, then \\( n \\) is odd\" (for a fixed integer \\( n \\)) as an English sentence without the phrase \"it is not the case that\". Then explain why \"If \\( n^{2} \\) is odd, then \\( n \\) is even\" is not the negation, identifying an assignment of truth values on which the two differ.",
+     "rubric": [
+      "Negation: n² is odd and n is not odd (n is even)",
+      "Justifies via ¬(P → Q) ≡ P ∧ ¬Q",
+      "Explains P → ¬Q differs from P ∧ ¬Q when P is false: the conditional is (vacuously) true while the conjunction is false",
+      "Could illustrate with n = 2: n² odd is false"
+     ],
+     "model": "With \\( P \\): \"\\( n^{2} \\) is odd\" and \\( Q \\): \"\\( n \\) is odd\", the negation of \\( P \\to Q \\) is \\( P \\wedge \\neg Q \\): \"\\( n^{2} \\) is odd and \\( n \\) is even.\"\n\nThe sentence \"If \\( n^{2} \\) is odd, then \\( n \\) is even\" is \\( P \\to \\neg Q \\). When \\( P \\) is false (for example \\( n = 2 \\), where \\( n^{2} = 4 \\) is even), \\( P \\to \\neg Q \\) is vacuously true, but \\( P \\wedge \\neg Q \\) is false. A negation must have the opposite truth value to the original in every case; \\( P \\to \\neg Q \\) and the original \\( P \\to Q \\) are both true whenever \\( P \\) is false, so \\( P \\to \\neg Q \\) cannot be the negation.",
+     "why": "A conditional is false only when its hypothesis is true and conclusion false, so its negation asserts exactly that: a conjunction."
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "Predicates and quantifiers",
+   "kps": [
+    "k10"
+   ],
+   "md": "Propositional logic treats \"\\( x^{2} \\ge 0 \\)\" as an indivisible block, but nearly every theorem is about *all* numbers of some kind, or asserts that *some* object exists. This section introduces the language needed to state such claims precisely.\n\n> An **open sentence** (or **predicate**) \\( P(x) \\) is a sentence containing a variable \\( x \\) that becomes a statement whenever a specific object from a stated set, the **domain** (or **universe of discourse**), is substituted for \\( x \\).\n\n\"\\( x^{2} = 4 \\)\" with domain \\( \\mathbb{R} \\) is an open sentence: \\( P(2) \\) is true, \\( P(3) \\) is false. There are two ways to turn it into a statement without choosing a value: quantify it.\n\n> The **universal quantifier**: \\( \\forall x\\, P(x) \\) (\"for all \\( x \\), \\( P(x) \\)\") is true if \\( P(a) \\) is true for every \\( a \\) in the domain, and false otherwise.\n>\n> The **existential quantifier**: \\( \\exists x\\, P(x) \\) (\"there exists \\( x \\) such that \\( P(x) \\)\") is true if \\( P(a) \\) is true for at least one \\( a \\) in the domain, and false otherwise.\n\nA variable governed by a quantifier is **bound**; one that is not is **free**. A formula with no free variables is a statement.\n\n**The domain is part of the meaning.** \\( \\exists x\\, (x^{2} = 2) \\) is true with domain \\( \\mathbb{R} \\) (take \\( x = \\sqrt{2} \\)) and false with domain \\( \\mathbb{Q} \\). When the domain is not the whole universe under discussion, we write **restricted quantifiers**:\n\\[ \\forall x \\in A\\ P(x) \\ \\text{ means } \\ \\forall x\\, (x \\in A \\to P(x)), \\qquad \\exists x \\in A\\ P(x) \\ \\text{ means } \\ \\exists x\\, (x \\in A \\wedge P(x)). \\]\nThe connectives differ, and for a reason: a universal claim restricted to \\( A \\) says nothing about objects outside \\( A \\) (vacuously true there), while an existential claim needs a witness that is in \\( A \\) *and* has the property. Writing \\( \\exists x\\, (x \\in A \\to P(x)) \\) is a classic error: it is true as soon as some object lies outside \\( A \\).\n\n**How to establish or refute each.** To prove \\( \\forall x\\, P(x) \\), you must argue about an arbitrary element; checking examples proves nothing. To refute it, one **counterexample** (an \\( a \\) with \\( P(a) \\) false) suffices. To prove \\( \\exists x\\, P(x) \\), one witness suffices; to refute it, you must show \\( P(a) \\) fails for every \\( a \\).\n\n**Hidden quantifiers.** English often leaves quantifiers implicit. \"The square of a real number is nonnegative\" is \\( \\forall x \\in \\mathbb{R}\\ (x^{2} \\ge 0) \\). \"If \\( n \\) is divisible by 4, then \\( n \\) is even\", stated as a theorem, carries an implicit \\( \\forall n \\in \\mathbb{Z} \\).\n\n**Nested quantifiers.** Many definitions use several quantifiers, and their **order matters**. Over the domain \\( \\mathbb{Z} \\), compare\n\\[ \\forall x\\, \\exists y\\, (x + y = 0) \\qquad \\text{and} \\qquad \\exists y\\, \\forall x\\, (x + y = 0). \\]\n\n1. The first says: for each integer \\( x \\), some integer \\( y \\) satisfies \\( x + y = 0 \\). Given \\( x \\), take \\( y = -x \\). True. Note that \\( y \\) is chosen *after* \\( x \\) and may depend on it.\n2. The second says: a single integer \\( y \\) works for every \\( x \\) simultaneously. If such \\( y \\) existed, then \\( x = 0 \\) gives \\( y = 0 \\), and \\( x = 1 \\) gives \\( 1 + y = 1 \\neq 0 \\). False.\n\nRead nested quantifiers left to right as a game: each \\( \\forall \\) is a choice made by an opponent, each \\( \\exists \\) is your reply, and later choices may depend on all earlier ones. Quantifiers of the same kind may be swapped freely: \\( \\forall x\\, \\forall y \\) means the same as \\( \\forall y\\, \\forall x \\).\n\n**The common mistakes** are swapping \\( \\forall \\exists \\) to \\( \\exists \\forall \\) (which usually strengthens the claim enormously), and ignoring the domain.",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k10",
+     "type": "written",
+     "prompt": "With domain \\( \\mathbb{R} \\), determine the truth value of each statement and justify it: (a) \\( \\exists x\\, \\forall y\\, (xy = y) \\); (b) \\( \\forall x\\, \\exists y\\, (xy = 1) \\); (c) \\( \\forall x\\, \\exists y\\, (y^{2} = x) \\).",
+     "rubric": [
+      "(a) true, witness x = 1 works for every y",
+      "(b) false, counterexample x = 0: 0·y = 0 ≠ 1 for every y",
+      "(c) false, counterexample x = −1 (no real square root)",
+      "Justifications match the quantifier structure: witness for ∃, counterexample for failed ∀"
+     ],
+     "model": "(a) True. Take \\( x = 1 \\); then for every real \\( y \\), \\( 1 \\cdot y = y \\). One witness \\( x \\) that works for all \\( y \\) is exactly what \\( \\exists x\\, \\forall y \\) demands.\n\n(b) False. For \\( x = 0 \\), every \\( y \\) gives \\( 0 \\cdot y = 0 \\neq 1 \\), so no \\( y \\) exists. One value of \\( x \\) for which the inner existential fails refutes the universal claim.\n\n(c) False. For \\( x = -1 \\), no real \\( y \\) satisfies \\( y^{2} = -1 \\), since \\( y^{2} \\ge 0 \\) for every real \\( y \\).",
+     "why": "A \\( \\forall \\) statement is refuted by one counterexample value; an \\( \\exists \\) statement is proved by one witness. In (b) and (c) the counterexample is a value of \\( x \\) for which the inner \"there exists \\( y \\)\" fails."
+    },
+    {
+     "id": "s5q2",
+     "kp": "k10",
+     "type": "written",
+     "prompt": "Translate \"Every positive real number has a real square root\" into symbols, using restricted quantifiers where appropriate. Then write the unrestricted form, explaining why the universal restriction becomes \\( \\to \\) while an existential restriction becomes \\( \\wedge \\).",
+     "rubric": [
+      "Symbolic form ∀x ∈ ℝ (x > 0 → ∃y ∈ ℝ (y² = x)) or equivalent",
+      "Unrestricted form ∀x (x ∈ ℝ ∧ x > 0 → ∃y (y ∈ ℝ ∧ y² = x)) or equivalent",
+      "Explains universal restriction uses → because objects outside the restriction must not be required to satisfy the property",
+      "Explains existential restriction uses ∧ because the witness must both lie in the set and have the property"
+     ],
+     "model": "\\( \\forall x \\in \\mathbb{R}\\ \\big( x > 0 \\to \\exists y \\in \\mathbb{R}\\ (y^{2} = x) \\big) \\).\n\nUnrestricted, over a universe containing all real numbers and possibly other objects:\n\\[ \\forall x\\, \\big( (x \\in \\mathbb{R} \\wedge x > 0) \\to \\exists y\\, (y \\in \\mathbb{R} \\wedge y^{2} = x) \\big). \\]\n\nThe universal claim is about the positive reals only; for any \\( x \\) that is not a positive real it should say nothing, and a conditional with a false hypothesis is vacuously true, so \\( \\to \\) gives exactly that. The existential claim asserts that a witness \\( y \\) exists which is both real and a square root of \\( x \\); both must hold of the same \\( y \\), so \\( \\wedge \\) is required. Using \\( \\to \\) there would make the claim true as soon as some non-real object existed.",
+     "why": "\\( \\forall x \\in A\\ P(x) \\) abbreviates \\( \\forall x\\, (x \\in A \\to P(x)) \\); \\( \\exists x \\in A\\ P(x) \\) abbreviates \\( \\exists x\\, (x \\in A \\wedge P(x)) \\)."
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "title": "Negating quantified statements",
+   "kps": [
+    "k11"
+   ],
+   "md": "Proof by contradiction begins by assuming the negation of what you want; disproving a claim means proving its negation. Both require writing negations of quantified statements correctly, often with three or four nested quantifiers. This section gives a mechanical procedure.\n\n> **Negation of quantifiers.** For any open sentence \\( P(x) \\):\n> \\[ \\neg \\forall x\\, P(x) \\equiv \\exists x\\, \\neg P(x), \\qquad \\neg \\exists x\\, P(x) \\equiv \\forall x\\, \\neg P(x). \\]\n\nThe reasoning is direct. \"Not every \\( x \\) has property \\( P \\)\" means some \\( x \\) lacks it; this is exactly what a counterexample is. \"No \\( x \\) has property \\( P \\)\" means every \\( x \\) lacks it. These are De Morgan's laws in quantified form: \\( \\forall \\) behaves like a (possibly infinite) conjunction over the domain and \\( \\exists \\) like a disjunction.\n\nFor restricted quantifiers, the restriction stays unchanged:\n\\[ \\neg \\forall x \\in A\\ P(x) \\equiv \\exists x \\in A\\ \\neg P(x), \\qquad \\neg \\exists x \\in A\\ P(x) \\equiv \\forall x \\in A\\ \\neg P(x). \\]\nTo see this, expand: \\( \\neg \\forall x\\, (x \\in A \\to P(x)) \\equiv \\exists x\\, \\neg (x \\in A \\to P(x)) \\equiv \\exists x\\, (x \\in A \\wedge \\neg P(x)) \\).\n\n**Procedure.** Move the negation inward from left to right. Each time it passes a quantifier, switch \\( \\forall \\) and \\( \\exists \\), leaving the restriction alone. When it reaches the quantifier-free part, negate that using the propositional laws (De Morgan; \\( \\neg (A \\to B) \\equiv A \\wedge \\neg B \\); \\( \\neg (a < b) \\equiv a \\ge b \\)).\n\n**Worked example.** A sequence \\( (a_{n}) \\) converges to \\( L \\) if\n\\[ \\forall \\varepsilon > 0\\ \\exists N \\in \\mathbb{N}\\ \\forall n \\ge N\\ \\ \\lvert a_{n} - L \\rvert < \\varepsilon. \\]\nNegate it to obtain the definition of \"\\( (a_{n}) \\) does not converge to \\( L \\)\".\n\n1. \\( \\neg \\forall \\varepsilon > 0 \\cdots \\) becomes \\( \\exists \\varepsilon > 0\\ \\neg (\\cdots) \\).\n2. \\( \\neg \\exists N \\in \\mathbb{N} \\cdots \\) becomes \\( \\forall N \\in \\mathbb{N}\\ \\neg (\\cdots) \\).\n3. \\( \\neg \\forall n \\ge N \\cdots \\) becomes \\( \\exists n \\ge N\\ \\neg (\\cdots) \\).\n4. \\( \\neg \\big( \\lvert a_{n} - L \\rvert < \\varepsilon \\big) \\) becomes \\( \\lvert a_{n} - L \\rvert \\ge \\varepsilon \\).\n\nResult:\n\\[ \\exists \\varepsilon > 0\\ \\forall N \\in \\mathbb{N}\\ \\exists n \\ge N\\ \\ \\lvert a_{n} - L \\rvert \\ge \\varepsilon. \\]\nIn words: there is a tolerance \\( \\varepsilon \\) such that, however far out you go, some later term is at least \\( \\varepsilon \\) away from \\( L \\). Notice that the restrictions \\( \\varepsilon > 0 \\) and \\( n \\ge N \\) were not negated. Negating \\( \\varepsilon > 0 \\) to \\( \\varepsilon \\le 0 \\) would produce a statement about nonpositive tolerances, which is meaningless for the purpose.\n\n**Worked example (with a conditional inside).** Negate \"every prime greater than 2 is odd\": \\( \\forall p\\, \\big( (p \\text{ prime} \\wedge p > 2) \\to p \\text{ odd} \\big) \\). The negation is \\( \\exists p\\, \\big( p \\text{ prime} \\wedge p > 2 \\wedge p \\text{ even} \\big) \\): \"some prime greater than 2 is even\". The conditional became a conjunction, as it must.\n\n**The common mistakes**: turning \"not all\" into \"none\" (\\( \\neg \\forall x\\, P(x) \\) is not \\( \\forall x\\, \\neg P(x) \\)); negating the restriction on a quantified variable; forgetting to switch every quantifier; and leaving a conditional inside the negation as a conditional.",
+   "questions": [
+    {
+     "id": "s6q1",
+     "kp": "k11",
+     "type": "written",
+     "prompt": "A function \\( f \\) is continuous at \\( a \\) if\n\\[ \\forall \\varepsilon > 0\\ \\exists \\delta > 0\\ \\forall x\\ \\big( \\lvert x - a \\rvert < \\delta \\to \\lvert f(x) - f(a) \\rvert < \\varepsilon \\big). \\]\nWrite the negation with the \\( \\neg \\) pushed all the way in, showing each step, and then state it in an English sentence.",
+     "rubric": [
+      "Quantifiers switched correctly: ∃ε > 0 ∀δ > 0 ∃x",
+      "Restrictions ε > 0 and δ > 0 kept, not negated",
+      "Inner conditional negated to a conjunction: |x − a| < δ ∧ |f(x) − f(a)| ≥ ε",
+      "Accurate English reading"
+     ],
+     "model": "\\[ \\begin{aligned} &\\neg \\forall \\varepsilon > 0\\ \\exists \\delta > 0\\ \\forall x\\ (A \\to B) \\\\ &\\equiv \\exists \\varepsilon > 0\\ \\neg \\exists \\delta > 0\\ \\forall x\\ (A \\to B) \\\\ &\\equiv \\exists \\varepsilon > 0\\ \\forall \\delta > 0\\ \\neg \\forall x\\ (A \\to B) \\\\ &\\equiv \\exists \\varepsilon > 0\\ \\forall \\delta > 0\\ \\exists x\\ \\neg (A \\to B) \\\\ &\\equiv \\exists \\varepsilon > 0\\ \\forall \\delta > 0\\ \\exists x\\ \\big( \\lvert x - a \\rvert < \\delta \\wedge \\lvert f(x) - f(a) \\rvert \\ge \\varepsilon \\big). \\end{aligned} \\]\nIn words: there is some \\( \\varepsilon > 0 \\) such that for every \\( \\delta > 0 \\), some \\( x \\) within \\( \\delta \\) of \\( a \\) has \\( f(x) \\) at least \\( \\varepsilon \\) away from \\( f(a) \\).",
+     "why": "Each quantifier switches as the negation passes it; restrictions stay; the conditional \\( A \\to B \\) negates to \\( A \\wedge \\neg B \\); and \\( \\neg (\\lvert \\cdot \\rvert < \\varepsilon) \\) is \\( \\lvert \\cdot \\rvert \\ge \\varepsilon \\)."
+    },
+    {
+     "id": "s6q2",
+     "kp": "k11",
+     "type": "written",
+     "prompt": "Consider the claim \"For every integer \\( n \\), if \\( n^{2} \\) is even then \\( n \\) is even.\" Write its negation symbolically and in English. Explain what a person would have to produce in order to disprove the claim, and whether producing it is possible.",
+     "rubric": [
+      "Negation: ∃n ∈ ℤ (n² even ∧ n odd)",
+      "English: some integer has an even square but is itself odd",
+      "Disproof requires a single counterexample: an odd integer with even square",
+      "Not possible: the square of an odd integer 2k+1 is 4k²+4k+1, which is odd, so the claim is true"
+     ],
+     "model": "Negation: \\( \\exists n \\in \\mathbb{Z}\\ (n^{2} \\text{ even} \\wedge n \\text{ odd}) \\): \"there is an odd integer whose square is even.\"\n\nTo disprove the original claim, one must prove this negation, which means exhibiting a single odd integer \\( n \\) with \\( n^{2} \\) even. No such integer exists: if \\( n = 2k + 1 \\), then \\( n^{2} = 4k^{2} + 4k + 1 = 2(2k^{2} + 2k) + 1 \\), which is odd. So the negation is false and the original claim is true.",
+     "why": "\\( \\neg \\forall n\\, (P(n) \\to Q(n)) \\equiv \\exists n\\, (P(n) \\wedge \\neg Q(n)) \\): the negation of a universal conditional is the existence of a counterexample."
+    }
+   ]
+  },
+  {
+   "id": "s7",
+   "title": "Valid arguments and rules of inference",
+   "kps": [
+    "k12"
+   ],
+   "md": "A proof is a sequence of inferences. This section makes precise when an inference is logically acceptable, and names the patterns you will use (and the ones you must avoid).\n\n> An **argument** consists of statements called **premises** and a statement called the **conclusion**. The argument is **valid** if, under every assignment of truth values to the variables that makes all the premises true, the conclusion is also true. Equivalently, the conditional \\( (\\text{premise}_{1} \\wedge \\cdots \\wedge \\text{premise}_{k}) \\to \\text{conclusion} \\) is a tautology.\n\nValidity is about form, not content. A valid argument with a false premise may have a false conclusion; an argument is **sound** if it is valid *and* its premises are true, and only then is its conclusion guaranteed true. To test validity with a truth table, look only at the rows where every premise is T. The argument is valid exactly when the conclusion is T in all such rows. A single row with all premises T and the conclusion F shows the argument is **invalid**.\n\n**Standard valid forms (rules of inference).**\n\n| Name | Premises | Conclusion |\n|---|---|---|\n| **Modus ponens** | \\( P \\to Q \\), \\( P \\) | \\( Q \\) |\n| **Modus tollens** | \\( P \\to Q \\), \\( \\neg Q \\) | \\( \\neg P \\) |\n| Hypothetical syllogism | \\( P \\to Q \\), \\( Q \\to R \\) | \\( P \\to R \\) |\n| Disjunctive syllogism | \\( P \\vee Q \\), \\( \\neg P \\) | \\( Q \\) |\n| Proof by cases | \\( P \\vee Q \\), \\( P \\to R \\), \\( Q \\to R \\) | \\( R \\) |\n\nModus tollens is the contrapositive at work: from \\( P \\to Q \\) we have \\( \\neg Q \\to \\neg P \\), and modus ponens applies.\n\n**Two fallacies.** These look similar to valid forms and are invalid:\n\n- **Affirming the consequent**: \\( P \\to Q \\), \\( Q \\), therefore \\( P \\). The row \\( P = \\) F, \\( Q = \\) T makes both premises true and the conclusion false.\n- **Denying the antecedent**: \\( P \\to Q \\), \\( \\neg P \\), therefore \\( \\neg Q \\). The same row refutes it.\n\nBoth are the error of assuming the converse.\n\n**Worked example.** Decide whether the argument with premises \\( P \\to Q \\), \\( Q \\to R \\), \\( \\neg R \\) and conclusion \\( \\neg P \\) is valid.\n\n1. Chain method: from \\( Q \\to R \\) and \\( \\neg R \\), modus tollens gives \\( \\neg Q \\). From \\( P \\to Q \\) and \\( \\neg Q \\), modus tollens gives \\( \\neg P \\). Each step is valid, so the argument is valid.\n2. Truth-table check: the premises are all true only when \\( R \\) is F (third premise), then \\( Q \\) must be F (else \\( Q \\to R \\) fails), then \\( P \\) must be F (else \\( P \\to Q \\) fails). The only such row has \\( P \\) false, so the conclusion \\( \\neg P \\) holds.\n\n**Quantified forms.** The rules extend to predicates. **Universal instantiation** lets you apply \\( \\forall x\\, P(x) \\) to any particular element \\( a \\), giving \\( P(a) \\); combined with modus ponens: from \\( \\forall x\\, (P(x) \\to Q(x)) \\) and \\( P(a) \\), conclude \\( Q(a) \\). This is what happens every time you apply a theorem to a specific case.\n\n**The common mistake** in proofs is affirming the consequent in disguise: proving that the desired conclusion implies something true, and then claiming the conclusion. For instance, \"if \\( \\sqrt{2} + \\sqrt{3} < 4 \\) then (squaring) \\( 5 + 2\\sqrt{6} < 16 \\), which is true, so the inequality holds\" is invalid as written; the reasoning must run from known facts to the conclusion, or each step must be reversible and the reversal stated.",
+   "questions": [
+    {
+     "id": "s7q1",
+     "kp": "k12",
+     "type": "written",
+     "prompt": "Assess the argument: \"If \\( f \\) is differentiable at \\( 0 \\), then \\( f \\) is continuous at \\( 0 \\). The function \\( f \\) is continuous at \\( 0 \\). Therefore \\( f \\) is differentiable at \\( 0 \\).\" Name its form, state whether it is valid, and support your verdict both with a truth-value assignment and with a concrete function.",
+     "rubric": [
+      "Identifies form as P → Q, Q ∴ P (affirming the consequent)",
+      "States it is invalid",
+      "Gives the assignment P = F, Q = T making both premises true and conclusion false",
+      "Concrete counterexample such as f(x) = |x|: continuous but not differentiable at 0"
+     ],
+     "model": "With \\( P \\): \"\\( f \\) is differentiable at \\( 0 \\)\" and \\( Q \\): \"\\( f \\) is continuous at \\( 0 \\)\", the argument is \\( P \\to Q \\), \\( Q \\), therefore \\( P \\): affirming the consequent. It is invalid. Under the assignment \\( P = \\) F, \\( Q = \\) T, both premises are true (the conditional is vacuously true) and the conclusion \\( P \\) is false. Concretely, \\( f(x) = \\lvert x \\rvert \\) is continuous at \\( 0 \\), the conditional premise is a true theorem, and yet \\( f \\) is not differentiable at \\( 0 \\).",
+     "why": "An argument is invalid if some assignment makes all premises true and the conclusion false. Affirming the consequent treats \\( P \\to Q \\) as if it were \\( Q \\to P \\)."
+    },
+    {
+     "id": "s7q2",
+     "kp": "k12",
+     "type": "written",
+     "prompt": "Show that the argument with premises \\( P \\vee Q \\), \\( P \\to R \\), \\( Q \\to R \\) and conclusion \\( R \\) is valid, without writing out all eight rows: suppose an assignment makes all premises true and the conclusion false, and derive a contradiction. Then decide whether the argument with premises \\( P \\vee Q \\), \\( P \\to R \\) and conclusion \\( R \\) is valid.",
+     "rubric": [
+      "Assumes R false and all premises true",
+      "Derives P false from P → R and Q false from Q → R",
+      "Notes P ∨ Q is then false, contradicting the premise, so the argument is valid",
+      "Second argument invalid: assignment P = F, Q = T, R = F makes premises true and conclusion false"
+     ],
+     "model": "Suppose some assignment makes \\( P \\vee Q \\), \\( P \\to R \\), \\( Q \\to R \\) true and \\( R \\) false. Since \\( P \\to R \\) is true and \\( R \\) is false, \\( P \\) must be false; likewise \\( Q \\to R \\) true and \\( R \\) false force \\( Q \\) false. Then \\( P \\vee Q \\) is false, contradicting the first premise. So no such assignment exists and the argument is valid (it is proof by cases).\n\nDropping the premise \\( Q \\to R \\) breaks it: at \\( P = \\) F, \\( Q = \\) T, \\( R = \\) F, the premises \\( P \\vee Q \\) (T) and \\( P \\to R \\) (vacuously T) are true while \\( R \\) is false. So that argument is invalid.",
+     "why": "Searching for a bad row (premises true, conclusion false) is often faster than a full table: either the search yields a contradiction (valid) or it finds the row (invalid)."
+    }
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "t": "statement (proposition)",
+   "d": "A declarative sentence that is either true or false, but not both.",
+   "ex": "Goldbach's conjecture is a statement even though its truth value is unknown."
+  },
+  {
+   "t": "truth table",
+   "d": "A table listing every assignment of truth values to the variables of a formula (\\( 2^{n} \\) rows for \\( n \\) variables) together with the resulting truth value of the formula and its subformulas."
+  },
+  {
+   "t": "negation",
+   "d": "\\( \\neg P \\): true exactly when \\( P \\) is false."
+  },
+  {
+   "t": "conjunction",
+   "d": "\\( P \\wedge Q \\): true exactly when both \\( P \\) and \\( Q \\) are true."
+  },
+  {
+   "t": "disjunction",
+   "d": "\\( P \\vee Q \\): true exactly when at least one of \\( P, Q \\) is true (inclusive or)."
+  },
+  {
+   "t": "conditional",
+   "d": "\\( P \\to Q \\): false exactly when \\( P \\) is true and \\( Q \\) is false; \\( P \\) is the hypothesis (antecedent), \\( Q \\) the conclusion (consequent)."
+  },
+  {
+   "t": "vacuous truth",
+   "d": "A conditional whose hypothesis is false is true regardless of its conclusion."
+  },
+  {
+   "t": "biconditional",
+   "d": "\\( P \\leftrightarrow Q \\): true exactly when \\( P \\) and \\( Q \\) have the same truth value; equivalent to \\( (P \\to Q) \\wedge (Q \\to P) \\)."
+  },
+  {
+   "t": "necessary condition",
+   "d": "In \\( P \\to Q \\), \\( Q \\) is necessary for \\( P \\): \\( P \\) cannot hold without \\( Q \\)."
+  },
+  {
+   "t": "sufficient condition",
+   "d": "In \\( P \\to Q \\), \\( P \\) is sufficient for \\( Q \\): \\( P \\) holding guarantees \\( Q \\)."
+  },
+  {
+   "t": "converse",
+   "d": "The converse of \\( P \\to Q \\) is \\( Q \\to P \\); not equivalent to the original."
+  },
+  {
+   "t": "inverse",
+   "d": "The inverse of \\( P \\to Q \\) is \\( \\neg P \\to \\neg Q \\); equivalent to the converse, not to the original."
+  },
+  {
+   "t": "contrapositive",
+   "d": "The contrapositive of \\( P \\to Q \\) is \\( \\neg Q \\to \\neg P \\); logically equivalent to the original."
+  },
+  {
+   "t": "tautology",
+   "d": "A formula true under every assignment of truth values."
+  },
+  {
+   "t": "contradiction",
+   "d": "A formula false under every assignment of truth values."
+  },
+  {
+   "t": "contingency",
+   "d": "A formula that is true under some assignments and false under others."
+  },
+  {
+   "t": "logical equivalence",
+   "d": "\\( A \\equiv B \\): \\( A \\) and \\( B \\) have the same truth value under every assignment; equivalently \\( A \\leftrightarrow B \\) is a tautology."
+  },
+  {
+   "t": "De Morgan's laws",
+   "d": "\\( \\neg (P \\wedge Q) \\equiv \\neg P \\vee \\neg Q \\) and \\( \\neg (P \\vee Q) \\equiv \\neg P \\wedge \\neg Q \\)."
+  },
+  {
+   "t": "open sentence (predicate)",
+   "d": "A sentence \\( P(x) \\) with a free variable that becomes a statement when a value from the domain is substituted."
+  },
+  {
+   "t": "domain (universe of discourse)",
+   "d": "The set of objects a variable ranges over; truth values of quantified statements depend on it."
+  },
+  {
+   "t": "universal quantifier",
+   "d": "\\( \\forall x\\, P(x) \\): true when \\( P(a) \\) holds for every \\( a \\) in the domain."
+  },
+  {
+   "t": "existential quantifier",
+   "d": "\\( \\exists x\\, P(x) \\): true when \\( P(a) \\) holds for at least one \\( a \\) in the domain."
+  },
+  {
+   "t": "counterexample",
+   "d": "An element \\( a \\) of the domain for which \\( P(a) \\) is false, refuting \\( \\forall x\\, P(x) \\)."
+  },
+  {
+   "t": "valid argument",
+   "d": "An argument in which every assignment making all premises true also makes the conclusion true."
+  },
+  {
+   "t": "sound argument",
+   "d": "A valid argument whose premises are all true."
+  },
+  {
+   "t": "modus ponens",
+   "d": "From \\( P \\to Q \\) and \\( P \\), infer \\( Q \\)."
+  },
+  {
+   "t": "modus tollens",
+   "d": "From \\( P \\to Q \\) and \\( \\neg Q \\), infer \\( \\neg P \\)."
+  },
+  {
+   "t": "affirming the consequent",
+   "d": "The invalid inference from \\( P \\to Q \\) and \\( Q \\) to \\( P \\)."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "term",
+   "front": "Define: statement (proposition)",
+   "back": "A declarative sentence that is either true or false, but not both.",
+   "kp": "k1"
+  },
+  {
+   "id": "c2",
+   "type": "concept",
+   "front": "Is the mathematical \\( P \\vee Q \\) true when both \\( P \\) and \\( Q \\) are true?",
+   "back": "Yes. Mathematical 'or' is inclusive; exclusive or must be written explicitly.",
+   "kp": "k2"
+  },
+  {
+   "id": "c3",
+   "type": "concept",
+   "front": "In which single row is \\( P \\to Q \\) false?",
+   "back": "\\( P \\) true and \\( Q \\) false.",
+   "kp": "k3"
+  },
+  {
+   "id": "c4",
+   "type": "concept",
+   "front": "Why is \\( P \\to Q \\) declared true when \\( P \\) is false?",
+   "back": "So that universal theorems \\( \\forall n\\,(P(n) \\to Q(n)) \\) are true at instances where the hypothesis fails; the conditional makes no claim there (vacuous truth).",
+   "kp": "k3"
+  },
+  {
+   "id": "c5",
+   "type": "concept",
+   "front": "Symbolize '\\( P \\) only if \\( Q \\)'.",
+   "back": "\\( P \\to Q \\).",
+   "kp": "k4"
+  },
+  {
+   "id": "c6",
+   "type": "concept",
+   "front": "Symbolize '\\( Q \\) is necessary for \\( P \\)'.",
+   "back": "\\( P \\to Q \\).",
+   "kp": "k4"
+  },
+  {
+   "id": "c7",
+   "type": "formula",
+   "front": "Contrapositive of \\( P \\to Q \\)",
+   "back": "\\( \\neg Q \\to \\neg P \\) (equivalent to the original)",
+   "kp": "k5"
+  },
+  {
+   "id": "c8",
+   "type": "concept",
+   "front": "Which of the converse and inverse of a conditional are equivalent to each other?",
+   "back": "Both: converse \\( Q \\to P \\) and inverse \\( \\neg P \\to \\neg Q \\) are equivalent to each other (each is the other's contrapositive), but not to the original.",
+   "kp": "k5"
+  },
+  {
+   "id": "c9",
+   "type": "formula",
+   "front": "\\( P \\leftrightarrow Q \\) in terms of conditionals",
+   "back": "\\( (P \\to Q) \\wedge (Q \\to P) \\)",
+   "kp": "k6"
+  },
+  {
+   "id": "c10",
+   "type": "concept",
+   "front": "How many rows does a truth table with \\( n \\) variables have?",
+   "back": "\\( 2^{n} \\)",
+   "kp": "k7"
+  },
+  {
+   "id": "c11",
+   "type": "term",
+   "front": "Define: logically equivalent formulas",
+   "back": "Formulas with the same truth value under every assignment; equivalently, their biconditional is a tautology.",
+   "kp": "k8"
+  },
+  {
+   "id": "c12",
+   "type": "concept",
+   "front": "What is needed to show two formulas are NOT equivalent?",
+   "back": "One assignment of truth values under which they differ.",
+   "kp": "k8"
+  },
+  {
+   "id": "c13",
+   "type": "formula",
+   "front": "De Morgan's laws",
+   "back": "\\( \\neg (P \\wedge Q) \\equiv \\neg P \\vee \\neg Q \\); \\( \\neg (P \\vee Q) \\equiv \\neg P \\wedge \\neg Q \\)",
+   "kp": "k9"
+  },
+  {
+   "id": "c14",
+   "type": "formula",
+   "front": "Negation of \\( P \\to Q \\)",
+   "back": "\\( P \\wedge \\neg Q \\)",
+   "kp": "k9"
+  },
+  {
+   "id": "c15",
+   "type": "formula",
+   "front": "\\( P \\to Q \\) as a disjunction",
+   "back": "\\( \\neg P \\vee Q \\)",
+   "kp": "k9"
+  },
+  {
+   "id": "c16",
+   "type": "formula",
+   "front": "Restricted quantifiers \\( \\forall x \\in A\\ P(x) \\) and \\( \\exists x \\in A\\ P(x) \\) unpacked",
+   "back": "\\( \\forall x\\,(x \\in A \\to P(x)) \\) and \\( \\exists x\\,(x \\in A \\wedge P(x)) \\)",
+   "kp": "k10"
+  },
+  {
+   "id": "c17",
+   "type": "concept",
+   "front": "Over \\( \\mathbb{Z} \\), which is true: \\( \\forall x\\,\\exists y\\,(x + y = 0) \\) or \\( \\exists y\\,\\forall x\\,(x + y = 0) \\)?",
+   "back": "Only the first (\\( y = -x \\) may depend on \\( x \\)); no single \\( y \\) works for all \\( x \\).",
+   "kp": "k10"
+  },
+  {
+   "id": "c18",
+   "type": "formula",
+   "front": "Negation of quantifiers",
+   "back": "\\( \\neg \\forall x\\,P(x) \\equiv \\exists x\\,\\neg P(x) \\); \\( \\neg \\exists x\\,P(x) \\equiv \\forall x\\,\\neg P(x) \\)",
+   "kp": "k11"
+  },
+  {
+   "id": "c19",
+   "type": "concept",
+   "front": "When negating \\( \\forall \\varepsilon > 0 \\ldots \\), what happens to the restriction \\( \\varepsilon > 0 \\)?",
+   "back": "Nothing: it becomes \\( \\exists \\varepsilon > 0 \\ldots \\); only the quantifier switches.",
+   "kp": "k11"
+  },
+  {
+   "id": "c20",
+   "type": "term",
+   "front": "Define: valid argument",
+   "back": "Every assignment that makes all premises true also makes the conclusion true.",
+   "kp": "k12"
+  },
+  {
+   "id": "c21",
+   "type": "formula",
+   "front": "Modus tollens",
+   "back": "From \\( P \\to Q \\) and \\( \\neg Q \\), infer \\( \\neg P \\).",
+   "kp": "k12"
+  },
+  {
+   "id": "c22",
+   "type": "concept",
+   "front": "Why is 'from \\( P \\to Q \\) and \\( Q \\), infer \\( P \\)' invalid?",
+   "back": "Row \\( P = \\) F, \\( Q = \\) T makes both premises true and the conclusion false (affirming the consequent).",
+   "kp": "k12"
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k7",
+   "type": "written",
+   "prompt": "Construct a complete truth table to decide whether \\( P \\leftrightarrow \\neg Q \\) and \\( \\neg (P \\leftrightarrow Q) \\) are logically equivalent. State how many rows are needed and why.",
+   "rubric": [
+    "Four rows because there are 2 variables (2² assignments)",
+    "Correct columns for ¬Q, P ↔ ¬Q, P ↔ Q, ¬(P ↔ Q)",
+    "Final columns agree in every row: F, T, T, F",
+    "Concludes they are equivalent"
+   ],
+   "model": "Two variables give \\( 2^{2} = 4 \\) rows.\n\n| \\( P \\) | \\( Q \\) | \\( \\neg Q \\) | \\( P \\leftrightarrow \\neg Q \\) | \\( P \\leftrightarrow Q \\) | \\( \\neg (P \\leftrightarrow Q) \\) |\n|---|---|---|---|---|---|\n| T | T | F | F | T | F |\n| T | F | T | T | F | T |\n| F | T | F | T | F | T |\n| F | F | T | F | T | F |\n\nThe fourth and sixth columns agree in every row, so the formulas are equivalent. Both say that \\( P \\) and \\( Q \\) have different truth values (exclusive or).",
+   "why": "Equivalence requires agreement in all \\( 2^{n} \\) rows."
+  },
+  {
+   "id": "p2",
+   "kp": "k6",
+   "type": "written",
+   "prompt": "Express \\( P \\leftrightarrow Q \\) using only \\( \\neg \\), \\( \\wedge \\), \\( \\vee \\), and justify your answer by describing exactly when each side is true.",
+   "rubric": [
+    "Answer (P ∧ Q) ∨ (¬P ∧ ¬Q) (or an equivalent such as (¬P ∨ Q) ∧ (P ∨ ¬Q))",
+    "P ↔ Q true exactly when P, Q have the same value",
+    "The disjunction is true exactly in the TT and FF rows",
+    "Concludes the two agree in every row"
+   ],
+   "model": "\\( P \\leftrightarrow Q \\equiv (P \\wedge Q) \\vee (\\neg P \\wedge \\neg Q) \\). The biconditional is true exactly when \\( P \\) and \\( Q \\) are both true or both false. The first disjunct is true exactly in the row where both are true, the second exactly in the row where both are false, so the disjunction is true in exactly those two rows and false in the other two, matching \\( P \\leftrightarrow Q \\). (Alternatively, from \\( (P \\to Q) \\wedge (Q \\to P) \\) and conditional-as-disjunction: \\( (\\neg P \\vee Q) \\wedge (\\neg Q \\vee P) \\).)",
+   "why": "Describe the true rows of the target and write one conjunction for each; their disjunction is an equivalent formula (disjunctive normal form)."
+  },
+  {
+   "id": "p3",
+   "kp": "k4",
+   "type": "written",
+   "prompt": "Rewrite \"You may enroll in MHF 3302 only if you have passed MAC 2311\" as an if-then sentence. Then write its contrapositive and its converse in English, and say which of the two is equivalent to the original.",
+   "rubric": [
+    "If-then form: if you may enroll in MHF 3302, then you have passed MAC 2311",
+    "Contrapositive: if you have not passed MAC 2311, then you may not enroll",
+    "Converse: if you have passed MAC 2311, then you may enroll",
+    "Only the contrapositive is equivalent to the original"
+   ],
+   "model": "\"\\( P \\) only if \\( Q \\)\" is \\( P \\to Q \\): \"If you may enroll in MHF 3302, then you have passed MAC 2311.\"\n\nContrapositive: \"If you have not passed MAC 2311, then you may not enroll in MHF 3302.\" This is equivalent to the original.\n\nConverse: \"If you have passed MAC 2311, then you may enroll in MHF 3302.\" This is not equivalent: the original states a necessary condition for enrolling, not a sufficient one; there could be other requirements.",
+   "why": "\"Only if\" introduces the conclusion (the necessary condition), not the hypothesis."
+  },
+  {
+   "id": "p4",
+   "kp": "k3",
+   "type": "written",
+   "prompt": "Explain why the sentence \"If \\( 2 + 2 = 5 \\), then every prime is even\" is true under the mathematical definition of the conditional, and explain why mathematics adopts that definition, using a general theorem of the form \\( \\forall n\\, (P(n) \\to Q(n)) \\) as your illustration.",
+   "rubric": [
+    "Hypothesis is false, so the conditional is (vacuously) true by the truth table",
+    "A universal conditional theorem must be true at every n, including those where P(n) is false",
+    "Concrete illustration, e.g. 'if n is divisible by 4 then n is even' at n = 3 or n = 6",
+    "Concludes the F-hypothesis rows must be T for such theorems to be true"
+   ],
+   "model": "The hypothesis \\( 2 + 2 = 5 \\) is false, and a conditional with a false hypothesis is true by definition (vacuous truth), whatever the conclusion.\n\nThe reason for the definition: take the theorem \"for every integer \\( n \\), if \\( n \\) is divisible by 4 then \\( n \\) is even\". For it to be true, the conditional must be true for every integer. At \\( n = 6 \\) the hypothesis is false and conclusion true; at \\( n = 3 \\) both are false. If a conditional with a false hypothesis were declared false, this obviously correct theorem would be false. So the rows with false hypothesis must be true: a conditional only makes a claim about cases where its hypothesis holds.",
+   "why": "The truth table of \\( \\to \\) is forced by the requirement that universal conditionals behave correctly across all instances."
+  },
+  {
+   "id": "p5",
+   "kp": "k11",
+   "type": "written",
+   "prompt": "Let the domain of \\( x \\) be \\( \\mathbb{R} \\) and of \\( n \\) be \\( \\mathbb{N} \\). Negate \\( \\forall x\\, \\exists n\\ (n > x) \\), pushing the negation all the way in. State which of the original and its negation is true, with a reason.",
+   "rubric": [
+    "Negation: ∃x ∀n (n ≤ x)",
+    "Both quantifiers switched and > becomes ≤",
+    "Original is true: for any real x, a natural number larger than x exists (e.g. ⌊x⌋ + 1 when x ≥ 0, or 1 when x < 0; Archimedean property)",
+    "Therefore the negation (a real upper bound for ℕ) is false"
+   ],
+   "model": "\\( \\neg \\forall x\\, \\exists n\\ (n > x) \\equiv \\exists x\\, \\forall n\\ (n \\le x) \\): \"some real number is greater than or equal to every natural number.\"\n\nThe original is true (the Archimedean property): given real \\( x \\), if \\( x < 1 \\) take \\( n = 1 \\); otherwise take \\( n = \\lfloor x \\rfloor + 1 \\), which is a natural number greater than \\( x \\). Hence the negation, which says \\( \\mathbb{N} \\) is bounded above in \\( \\mathbb{R} \\), is false.",
+   "why": "Exactly one of a statement and its negation is true."
+  },
+  {
+   "id": "p6",
+   "kp": "k9",
+   "type": "written",
+   "prompt": "Is \\( (P \\wedge Q) \\to R \\) logically equivalent to \\( (P \\to R) \\vee (Q \\to R) \\)? Decide using the laws of logic, and state the result in words.",
+   "rubric": [
+    "Converts left side to ¬(P ∧ Q) ∨ R",
+    "De Morgan: ¬P ∨ ¬Q ∨ R",
+    "Rewrites right side as (¬P ∨ R) ∨ (¬Q ∨ R) ≡ ¬P ∨ ¬Q ∨ R (idempotence/commutativity/associativity)",
+    "Concludes they are equivalent, with interpretation"
+   ],
+   "model": "\\[ (P \\wedge Q) \\to R \\equiv \\neg (P \\wedge Q) \\vee R \\equiv \\neg P \\vee \\neg Q \\vee R. \\]\n\\[ (P \\to R) \\vee (Q \\to R) \\equiv (\\neg P \\vee R) \\vee (\\neg Q \\vee R) \\equiv \\neg P \\vee \\neg Q \\vee (R \\vee R) \\equiv \\neg P \\vee \\neg Q \\vee R. \\]\nThey are equivalent. In words: \"\\( P \\) and \\( Q \\) together imply \\( R \\)\" says the same as \"\\( P \\) alone implies \\( R \\), or \\( Q \\) alone implies \\( R \\)\". This is surprising at first, because it compares with \\( (P \\vee Q) \\to R \\equiv (P \\to R) \\wedge (Q \\to R) \\), where the connectives swap the other way.",
+   "why": "Converting every conditional to a disjunction reduces both sides to \\( \\neg P \\vee \\neg Q \\vee R \\). A brute-force table over 8 rows confirms it."
+  },
+  {
+   "id": "p7",
+   "kp": "k11",
+   "type": "mcq",
+   "prompt": "Which sentence is the negation of \"Every student passed some exam\"?",
+   "options": [
+    "Some student passed no exam.",
+    "No student passed any exam.",
+    "Some student failed some exam.",
+    "Every student failed some exam."
+   ],
+   "answer": 0,
+   "why": "The original is \\( \\forall s\\, \\exists e\\ \\text{Passed}(s, e) \\). Its negation is \\( \\exists s\\, \\forall e\\ \\neg \\text{Passed}(s, e) \\): some student passed no exam. \"No student passed any exam\" turns \"not all\" into \"none\". \"Some student failed some exam\" switches only the first quantifier. \"Every student failed some exam\" negates only the inner part."
+  },
+  {
+   "id": "p8",
+   "kp": "k12",
+   "type": "written",
+   "prompt": "Decide whether the argument with premises \\( P \\to Q \\), \\( \\neg Q \\vee R \\), \\( \\neg R \\) and conclusion \\( \\neg P \\) is valid. Justify by naming the rules of inference you use, or by exhibiting a bad row.",
+   "rubric": [
+    "Rewrites ¬Q ∨ R as Q → R (or uses disjunctive syllogism)",
+    "From ¬R and ¬Q ∨ R derives ¬Q",
+    "From P → Q and ¬Q derives ¬P by modus tollens",
+    "Concludes valid"
+   ],
+   "model": "From \\( \\neg Q \\vee R \\) and \\( \\neg R \\), disjunctive syllogism gives \\( \\neg Q \\). From \\( P \\to Q \\) and \\( \\neg Q \\), modus tollens gives \\( \\neg P \\). Every step is a valid rule, so the argument is valid. (Checking all 8 rows confirms that whenever the three premises are true, \\( P \\) is false.)",
+   "why": "\\( \\neg Q \\vee R \\equiv Q \\to R \\), so this is the chain \\( P \\to Q \\to R \\) with \\( \\neg R \\), and modus tollens runs backward along the chain."
+  },
+  {
+   "id": "p9",
+   "kp": "k7",
+   "type": "number",
+   "prompt": "How many rows does a complete truth table need for the formula \\( \\big( (P \\to Q) \\wedge (R \\vee \\neg S) \\big) \\leftrightarrow (T \\wedge P) \\)?",
+   "answer": "32",
+   "why": "The distinct variables are \\( P, Q, R, S, T \\): five of them. Each can be T or F independently, so there are \\( 2^{5} = 32 \\) assignments. Repeated occurrences of \\( P \\) do not add rows."
+  },
+  {
+   "id": "p10",
+   "kp": "k10",
+   "type": "written",
+   "prompt": "Over the domain \\( \\mathbb{Z} \\), decide the truth of \\( \\forall x\\, \\exists y\\, (x < y) \\) and \\( \\exists y\\, \\forall x\\, (x < y) \\). Explain precisely how swapping the quantifiers changes what is asserted.",
+   "rubric": [
+    "First true: for each x take y = x + 1",
+    "Second false: any proposed y fails at x = y (y < y is false)",
+    "Explains in ∀x∃y, y may depend on x; in ∃y∀x, a single y must work for all x",
+    "Notes ∃y∀x implies ∀x∃y but not conversely"
+   ],
+   "model": "\\( \\forall x\\, \\exists y\\, (x < y) \\) is true: given any integer \\( x \\), \\( y = x + 1 \\) works.\n\n\\( \\exists y\\, \\forall x\\, (x < y) \\) is false: it would require one integer \\( y \\) greater than every integer, but taking \\( x = y \\) gives \\( y < y \\), which is false.\n\nIn \\( \\forall x\\, \\exists y \\), the witness \\( y \\) is chosen after \\( x \\) and may depend on it. In \\( \\exists y\\, \\forall x \\), a single \\( y \\) must be fixed first and must work for all \\( x \\) simultaneously. The second form implies the first, but not conversely; here the first is true and the second false.",
+   "why": "Order of mixed quantifiers encodes dependence: \\( \\exists \\) after \\( \\forall \\) may depend on the \\( \\forall \\) variable."
+  },
+  {
+   "id": "p11",
+   "kp": "k5",
+   "type": "written",
+   "prompt": "Prove, by a truth table or by the laws of logic, that the converse and the inverse of \\( P \\to Q \\) are logically equivalent to each other. Then explain why this means a proof of the inverse is not a proof of the original statement.",
+   "rubric": [
+    "Converse Q → P and inverse ¬P → ¬Q",
+    "Shows equivalence: ¬P → ¬Q is the contrapositive of Q → P (or table)",
+    "Notes converse is not equivalent to the original (row P = F, Q = T)",
+    "Concludes proving the inverse proves the converse, not the original"
+   ],
+   "model": "The converse is \\( Q \\to P \\); the inverse is \\( \\neg P \\to \\neg Q \\). The contrapositive of \\( Q \\to P \\) is \\( \\neg P \\to \\neg Q \\), and every conditional is equivalent to its contrapositive, so the converse and inverse are equivalent.\n\nThe converse is not equivalent to the original: at \\( P = \\) F, \\( Q = \\) T, \\( P \\to Q \\) is T but \\( Q \\to P \\) is F. So proving the inverse establishes the converse, which may be true while the original is false, or vice versa. It says nothing about \\( P \\to Q \\).",
+   "why": "The four related conditionals fall into two equivalence classes: {original, contrapositive} and {converse, inverse}."
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k8",
+   "type": "written",
+   "prompt": "Prove that \\( \\big( (P \\to Q) \\wedge (Q \\to R) \\big) \\to (P \\to R) \\) is a tautology. You may either give a complete truth table or argue by assuming the formula is false under some assignment and deriving a contradiction.",
+   "rubric": [
+    "If using the contradiction method: formula false requires hypothesis T and P → R F",
+    "P → R false forces P = T, R = F",
+    "Then P → Q true forces Q = T, and Q → R true forces R = T, contradicting R = F",
+    "Concludes no falsifying assignment exists, so it is a tautology (or a correct 8-row table with final column all T)"
+   ],
+   "model": "Suppose some assignment makes the formula false. A conditional is false only when its hypothesis is true and conclusion false, so \\( (P \\to Q) \\wedge (Q \\to R) \\) is T and \\( P \\to R \\) is F. From \\( P \\to R \\) false: \\( P = \\) T and \\( R = \\) F. From \\( P \\to Q \\) true and \\( P = \\) T: \\( Q = \\) T. From \\( Q \\to R \\) true and \\( Q = \\) T: \\( R = \\) T. This contradicts \\( R = \\) F. So no assignment makes the formula false, and it is a tautology.",
+   "why": "This is hypothetical syllogism, the rule that lets you chain implications."
+  },
+  {
+   "id": "e2",
+   "kp": "k9",
+   "type": "written",
+   "prompt": "Using the laws of logic (naming each), prove that \\( \\neg (P \\leftrightarrow Q) \\equiv (P \\wedge \\neg Q) \\vee (\\neg P \\wedge Q) \\).",
+   "rubric": [
+    "Rewrites P ↔ Q as (P → Q) ∧ (Q → P)",
+    "Applies De Morgan to get ¬(P → Q) ∨ ¬(Q → P)",
+    "Uses ¬(A → B) ≡ A ∧ ¬B on each disjunct",
+    "Arrives at (P ∧ ¬Q) ∨ (Q ∧ ¬P), commuting as needed"
+   ],
+   "model": "\\[ \\begin{aligned} \\neg (P \\leftrightarrow Q) &\\equiv \\neg \\big( (P \\to Q) \\wedge (Q \\to P) \\big) && \\text{biconditional} \\\\ &\\equiv \\neg (P \\to Q) \\vee \\neg (Q \\to P) && \\text{De Morgan} \\\\ &\\equiv (P \\wedge \\neg Q) \\vee (Q \\wedge \\neg P) && \\text{negated conditional, twice} \\\\ &\\equiv (P \\wedge \\neg Q) \\vee (\\neg P \\wedge Q) && \\text{commutative.} \\end{aligned} \\]\nHere \"negated conditional\" is \\( \\neg (A \\to B) \\equiv A \\wedge \\neg B \\), itself derived from conditional-as-disjunction, De Morgan and double negation.",
+   "why": "The negation of \"same truth value\" is \"exactly one is true\"."
+  },
+  {
+   "id": "e3",
+   "kp": "k11",
+   "type": "written",
+   "prompt": "A function \\( f : \\mathbb{R} \\to \\mathbb{R} \\) is **bounded** if \\( \\exists M > 0\\ \\forall x \\in \\mathbb{R}\\ \\ \\lvert f(x) \\rvert \\le M \\). Write the negation with the negation pushed all the way in, and use it to prove that \\( f(x) = x \\) is not bounded.",
+   "rubric": [
+    "Negation: ∀M > 0 ∃x ∈ ℝ |f(x)| > M",
+    "Restrictions M > 0 and x ∈ ℝ unchanged; ≤ becomes >",
+    "Proof takes an arbitrary M > 0 and exhibits x depending on M, e.g. x = M + 1",
+    "Checks |x| = M + 1 > M"
+   ],
+   "model": "\\( \\neg \\exists M > 0\\ \\forall x \\in \\mathbb{R}\\ \\lvert f(x) \\rvert \\le M \\equiv \\forall M > 0\\ \\exists x \\in \\mathbb{R}\\ \\lvert f(x) \\rvert > M \\).\n\nFor \\( f(x) = x \\): let \\( M > 0 \\) be arbitrary. Take \\( x = M + 1 \\). Then \\( \\lvert f(x) \\rvert = M + 1 > M \\). Since \\( M \\) was arbitrary, the negation holds, so \\( f \\) is not bounded.",
+   "why": "The negation's structure dictates the proof: \"for every \\( M \\)\" means start with an arbitrary \\( M \\); \"there exists \\( x \\)\" means construct \\( x \\), which may depend on \\( M \\)."
+  },
+  {
+   "id": "e4",
+   "kp": "k4",
+   "type": "written",
+   "prompt": "With domain \\( \\mathbb{R} \\), consider \"\\( x^{2} > 4 \\) only if \\( x > 2 \\).\" Write it in if-then form, and give the truth value (as a statement about all real \\( x \\)) of the statement, its converse, and its contrapositive, with a justification or counterexample for each.",
+   "rubric": [
+    "If-then form: for all real x, if x² > 4 then x > 2",
+    "Statement false: counterexample x = −3",
+    "Converse (if x > 2 then x² > 4) true: x > 2 > 0 gives x² > 4",
+    "Contrapositive (if x ≤ 2 then x² ≤ 4) false, same counterexample x = −3, consistent with equivalence"
+   ],
+   "model": "If-then form: \"For every real \\( x \\), if \\( x^{2} > 4 \\), then \\( x > 2 \\).\"\n\nStatement: false. At \\( x = -3 \\), \\( x^{2} = 9 > 4 \\) but \\( x > 2 \\) fails.\n\nConverse: \"If \\( x > 2 \\), then \\( x^{2} > 4 \\).\" True: if \\( x > 2 \\), then multiplying \\( x > 2 \\) by the positive number \\( x \\) gives \\( x^{2} > 2x > 4 \\).\n\nContrapositive: \"If \\( x \\le 2 \\), then \\( x^{2} \\le 4 \\).\" False, with the same counterexample \\( x = -3 \\): \\( -3 \\le 2 \\) but \\( 9 > 4 \\). This agrees with the fact that a conditional and its contrapositive always share a truth value.",
+   "why": "\"\\( P \\) only if \\( Q \\)\" is \\( P \\to Q \\). A counterexample to a universal conditional is a single value making the hypothesis true and the conclusion false."
+  },
+  {
+   "id": "e5",
+   "kp": "k12",
+   "type": "written",
+   "prompt": "Determine whether the argument with premises \\( P \\vee Q \\) and \\( P \\to R \\) and conclusion \\( R \\) is valid. If it is invalid, give every assignment of truth values that shows this. Then state one additional premise that would make it valid, and name the resulting rule.",
+   "rubric": [
+    "Declares the argument invalid",
+    "Finds the unique bad row P = F, Q = T, R = F",
+    "Verifies premises true and conclusion false in that row",
+    "Adds Q → R, giving proof by cases (or another correct fix such as ¬Q)"
+   ],
+   "model": "Invalid. Search for rows with \\( R = \\) F and both premises true. \\( P \\to R \\) true with \\( R = \\) F forces \\( P = \\) F. Then \\( P \\vee Q \\) true forces \\( Q = \\) T. So the only bad row is \\( P = \\) F, \\( Q = \\) T, \\( R = \\) F, where \\( P \\vee Q \\) is T, \\( P \\to R \\) is T (vacuously) and \\( R \\) is F.\n\nAdding the premise \\( Q \\to R \\) makes it valid: premises \\( P \\vee Q \\), \\( P \\to R \\), \\( Q \\to R \\) with conclusion \\( R \\) is proof by cases. (Adding \\( \\neg Q \\) also works, via disjunctive syllogism and modus ponens.)",
+   "why": "Systematic search for a falsifying row either finds all of them or shows none exists. Here exactly one row falsifies the argument, and \\( Q \\to R \\) is exactly the premise that rules it out."
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "Conditional truth table",
+    "formula": "\\( P \\to Q \\) is false only when \\( P \\) is T and \\( Q \\) is F",
+    "when": "Evaluating any if-then statement, especially with a false hypothesis.",
+    "example": "\\( (2 + 2 = 5) \\to Q \\) is true for any \\( Q \\).",
+    "watch": "A false hypothesis makes the conditional true, not undefined."
+   },
+   {
+    "name": "Only if / necessary / sufficient",
+    "formula": "'\\( P \\) only if \\( Q \\)', '\\( Q \\) necessary for \\( P \\)', '\\( P \\) sufficient for \\( Q \\)' all mean \\( P \\to Q \\)",
+    "when": "Translating English theorem statements.",
+    "example": "'Differentiable only if continuous' is differentiable \\( \\to \\) continuous.",
+    "watch": "The 'if' in 'only if' does not mark the hypothesis."
+   },
+   {
+    "name": "Contrapositive",
+    "formula": "\\( P \\to Q \\equiv \\neg Q \\to \\neg P \\)",
+    "when": "Rewriting a conditional into a more convenient equivalent form.",
+    "example": "'If \\( n^{2} \\) even then \\( n \\) even' is equivalent to 'if \\( n \\) odd then \\( n^{2} \\) odd'.",
+    "watch": "The converse \\( Q \to P \\) is not equivalent."
+   },
+   {
+    "name": "De Morgan",
+    "formula": "\\( \\neg (P \\wedge Q) \\equiv \\neg P \\vee \\neg Q \\), \\( \\neg (P \\vee Q) \\equiv \\neg P \\wedge \\neg Q \\)",
+    "when": "Negating 'and' or 'or'.",
+    "example": "Not (even and prime) \\( \\equiv \\) odd or not prime.",
+    "watch": "The connective must swap."
+   },
+   {
+    "name": "Negated conditional",
+    "formula": "\\( \\neg (P \\to Q) \\equiv P \\wedge \\neg Q \\)",
+    "when": "Negating an if-then, e.g. to set up a proof by contradiction or a counterexample.",
+    "example": "Not (if converges then terms \\( \\to 0 \\)) \\( \\equiv \\) converges and terms do not \\( \\to 0 \\).",
+    "watch": "It is a conjunction, never \\( P \\to \\neg Q \\)."
+   },
+   {
+    "name": "Conditional as disjunction",
+    "formula": "\\( P \\to Q \\equiv \\neg P \\vee Q \\)",
+    "when": "Simplifying formulas algebraically.",
+    "example": "\\( (P \\wedge Q) \\to R \\equiv \\neg P \\vee \\neg Q \\vee R \\).",
+    "watch": "Convert all conditionals first, simplify, then convert back."
+   },
+   {
+    "name": "Quantifier negation",
+    "formula": "\\( \\neg \\forall x\\,P(x) \\equiv \\exists x\\,\\neg P(x) \\), \\( \\neg \\exists x\\,P(x) \\equiv \\forall x\\,\\neg P(x) \\)",
+    "when": "Negating any quantified statement, left to right.",
+    "example": "\\( \\neg \\forall \\varepsilon > 0\\,\\exists N \\ldots \\equiv \\exists \\varepsilon > 0\\,\\forall N\\,\\neg \\ldots \\)",
+    "watch": "Restrictions like ε > 0 are not negated."
+   },
+   {
+    "name": "Restricted quantifiers",
+    "formula": "\\( \\forall x \\in A\\,P(x) \\equiv \\forall x\\,(x \\in A \\to P(x)) \\); \\( \\exists x \\in A\\,P(x) \\equiv \\exists x\\,(x \\in A \\wedge P(x)) \\)",
+    "when": "Translating between restricted and unrestricted forms.",
+    "example": "'Some prime is even': \\( \\exists p\\,(p \\text{ prime} \\wedge p \\text{ even}) \\).",
+    "watch": "Never \\( \\exists x\\,(x \\in A \\to P(x)) \\)."
+   },
+   {
+    "name": "Validity test",
+    "formula": "Valid iff no assignment makes all premises T and the conclusion F",
+    "when": "Checking any argument or proof step.",
+    "example": "\\( P \\to Q, Q \\therefore P \\) fails at \\( P = \\) F, \\( Q = \\) T.",
+    "watch": "Validity is about form; a valid argument can have a false conclusion if a premise is false."
+   }
+  ],
+  "stuck": [
+   "To test a claimed equivalence quickly, hunt for one row where the two sides differ; if the search fails in every case, the formulas are equivalent.",
+   "Before negating, ask: what exact situation makes the original false? Your negation must describe exactly that.",
+   "Convert every conditional to a disjunction, simplify with De Morgan and distributivity, then convert back.",
+   "For nested quantifiers, read left to right as a game: ∀ is the opponent's choice, ∃ is your reply, and your reply may depend on earlier choices.",
+   "To check an argument, assume the conclusion false and all premises true, and propagate forced values until you reach a contradiction or a bad row."
+  ]
+ }
+}

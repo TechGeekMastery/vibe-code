@@ -1,0 +1,718 @@
+{
+ "key": "mth-2-6",
+ "title": "Sequences",
+ "v": 1,
+ "scope": "Infinite sequences of real numbers: definition, limits (epsilon-N), computing limits, monotone and bounded sequences, the monotone convergence theorem; infinite series are left to the next topic.",
+ "sources": [
+  {
+   "title": "OpenStax, Calculus Volume 2, Section 5.1: Sequences",
+   "url": "https://openstax.org/books/calculus-volume-2/pages/5-1-sequences"
+  },
+  {
+   "title": "Paul's Online Math Notes, Calculus II: Sequences",
+   "url": "https://tutorial.math.lamar.edu/Classes/CalcII/Sequences.aspx"
+  },
+  {
+   "title": "Paul's Online Math Notes, Calculus II: More on Sequences",
+   "url": "https://tutorial.math.lamar.edu/Classes/CalcII/MoreSequences.aspx"
+  },
+  {
+   "title": "MIT OCW 18.100B Real Analysis, Lecture 5: Monotone Convergence Theorem",
+   "url": "https://ocw.mit.edu/courses/18-100b-real-analysis-spring-2025/mit18_100b_s25_lec05.pdf"
+  }
+ ],
+ "pre": [
+  "mth-2-3"
+ ],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Sequences: explicit and recursive descriptions",
+   "d": "Read and write a sequence as a function of the index, from an explicit formula or a recurrence, and keep a_{n+1} distinct from a_n + 1.",
+   "type": "concept"
+  },
+  {
+   "id": "k2",
+   "t": "Epsilon-N definition of a sequence limit",
+   "d": "State the precise definition of convergence and use it to prove a specific limit by producing N from epsilon.",
+   "type": "concept"
+  },
+  {
+   "id": "k3",
+   "t": "Limits via functions of a real variable",
+   "d": "Compute a sequence limit through f(x) with f(n) = a_n, including L'Hôpital, and explain why the theorem only runs one way.",
+   "type": "procedure"
+  },
+  {
+   "id": "k4",
+   "t": "Limit laws and the squeeze theorem",
+   "d": "Apply the algebraic limit laws, the squeeze theorem and the absolute value theorem, checking their hypotheses.",
+   "type": "procedure"
+  },
+  {
+   "id": "k5",
+   "t": "Geometric sequences r^n",
+   "d": "State for which r the sequence r^n converges, to what, and justify each case.",
+   "type": "fact"
+  },
+  {
+   "id": "k6",
+   "t": "Continuous functions of convergent sequences",
+   "d": "Use continuity to move a limit inside a function, as in n^{1/n} = e^{(ln n)/n}.",
+   "type": "procedure"
+  },
+  {
+   "id": "k7",
+   "t": "Monotonicity and boundedness",
+   "d": "Define monotone and bounded sequences and verify them by the difference, ratio, or derivative method.",
+   "type": "skill"
+  },
+  {
+   "id": "k8",
+   "t": "Monotone convergence theorem and recursions",
+   "d": "State the monotone convergence theorem, explain its reliance on completeness, and use it with induction to find the limit of a recursive sequence.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k9",
+   "t": "Growth-rate hierarchy",
+   "d": "Order ln n, n^p, b^n, n! and n^n by growth and justify comparisons.",
+   "type": "fact"
+  },
+  {
+   "id": "k10",
+   "t": "Proving divergence with subsequences",
+   "d": "Show a sequence diverges by exhibiting subsequences with different limits or by unboundedness.",
+   "type": "distinction"
+  }
+ ],
+ "intro": "Many quantities in mathematics are not obtained in one step but approached through a process that produces better and better approximations: the decimal truncations 1, 1.4, 1.41, 1.414, … of \\(\\sqrt 2\\), the iterates of Newton's method, and, most importantly for the rest of this course, the running totals of an infinite sum. Each such process produces an ordered list of numbers, and the question is always the same: does the list settle down to a definite value, and if so, which one?\n\nCalculus I answered this for a function \\(f(x)\\) as the real variable \\(x\\) grows without bound. This chapter adapts that answer to lists indexed by the positive integers, makes the phrase \"settles down\" precise, and develops the tools used to decide it: the limit laws, the squeeze theorem, and the monotone convergence theorem. Every later result about infinite series rests on these.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "Sequences and the meaning of convergence",
+   "kps": [
+    "k1",
+    "k2"
+   ],
+   "md": "This section answers two questions: what exactly a sequence is, and what it means for a sequence to have a limit. Everything else in the chapter depends on the second answer.\n\n> **Definition.** A **sequence** is a function whose domain is the set of positive integers (or the integers \\(n \\ge n_0\\) for some starting index \\(n_0\\)). Its value at \\(n\\) is written \\(a_n\\) and called the \\(n\\)th **term**; \\(n\\) is the **index**. The sequence as a whole is written \\(\\{a_n\\}\\) or \\(\\{a_n\\}_{n=1}^{\\infty}\\).\n\nA sequence is usually specified in one of two ways. An **explicit formula** gives \\(a_n\\) directly in terms of \\(n\\); for example \\(a_n = \\frac{3n+1}{n+2}\\) has first terms \\(\\frac43, \\frac74, 2, \\frac{13}{6}, \\dots\\). A **recurrence relation** gives each term from earlier ones, together with starting value(s), as in \\(a_1 = 1,\\ a_{n+1} = \\sqrt{2 + a_n}\\). To find \\(a_{10}\\) from a recurrence you must first compute \\(a_1, \\dots, a_9\\); this is why later sections need theorems that can decide convergence without an explicit formula.\n\nRead the notation carefully: \\(a_{n+1}\\) is the term that follows \\(a_n\\), whereas \\(a_n + 1\\) is one more than \\(a_n\\). If \\(a_n = n^2\\), then \\(a_{n+1} = (n+1)^2 = n^2 + 2n + 1\\), not \\(n^2 + 1\\).\n\n**Convergence.** Informally, \\(a_n \\to L\\) means that the terms eventually stay as close to \\(L\\) as we wish. The precise statement turns \"as close as we wish\" into a tolerance \\(\\varepsilon\\) and \"eventually\" into a threshold index \\(N\\).\n\n> **Definition (limit of a sequence).** \\(\\lim_{n\\to\\infty} a_n = L\\) means: for every \\(\\varepsilon > 0\\) there is an integer \\(N\\) such that \\(|a_n - L| < \\varepsilon\\) for every \\(n \\ge N\\).\n\nIf such a real number \\(L\\) exists, the sequence is **convergent**; otherwise it is **divergent**. The order of the quantifiers matters. The tolerance \\(\\varepsilon\\) is chosen first and arbitrarily; the threshold \\(N\\) is then allowed to depend on it, and a smaller tolerance usually forces a later threshold.\n\n**Worked example.** Prove that \\(a_n = \\frac{3n+1}{n+2}\\) converges to 3.\n\nBegin by computing the distance to the proposed limit:\n\\[ |a_n - 3| = \\left|\\frac{3n+1 - 3(n+2)}{n+2}\\right| = \\frac{5}{n+2}. \\]\nLet \\(\\varepsilon > 0\\) be given. The inequality \\(\\frac{5}{n+2} < \\varepsilon\\) is equivalent to \\(n > \\frac{5}{\\varepsilon} - 2\\). Choose any integer \\(N > \\frac{5}{\\varepsilon} - 2\\). Then every \\(n \\ge N\\) also satisfies \\(n > \\frac5\\varepsilon - 2\\), so \\(|a_n - 3| < \\varepsilon\\). This proves the limit. Concretely, for \\(\\varepsilon = 0.01\\) the condition is \\(n > 498\\), so \\(N = 499\\) works.\n\nIn the graph, the terms sit on the curve \\(y = \\frac{3x+1}{x+2}\\), and the two outer horizontal lines mark the band from \\(3 - \\varepsilon\\) to \\(3 + \\varepsilon\\). Drag \\(\\varepsilon\\) toward 0 and watch the first index whose point lies inside the band, and stays inside, move to the right. Convergence means that for every setting of the slider, however small, such an index exists.\n\n```plot\nx: 0, 25\ny: 1, 4\nf: (3*x+1)/(x+2) | y = (3x+1)/(x+2)\nslider: c, 0.05, 1, 0.5 | ε\nhline: 3 | L = 3\nhline: 3 + c | L + ε\nhline: 3 - c | L − ε\npoint: 1, 4/3\npoint: 2, 7/4\npoint: 3, 2\npoint: 4, 13/6\npoint: 6, 19/8\npoint: 8, 5/2\npoint: 12, 37/14\npoint: 18, 55/20\npoint: 24, 73/26\n```\n\nA sequence can diverge in different ways. It **diverges to infinity**, written \\(a_n \\to \\infty\\), if for every number \\(M\\) there is an \\(N\\) with \\(a_n > M\\) for all \\(n \\ge N\\); \\(a_n = \\sqrt n\\) is an example. This is still divergence, since \\(\\infty\\) is not a real number. A sequence may also oscillate without settling, like \\(a_n = (-1)^n\\).\n\n**Common mistake.** Concluding that a sequence converges because consecutive terms get closer together. For \\(a_n = \\sqrt n\\) we have \\(a_{n+1} - a_n = \\frac{1}{\\sqrt{n+1} + \\sqrt n} \\to 0\\), yet \\(a_n \\to \\infty\\). The definition demands closeness to one fixed number \\(L\\), not closeness of neighbouring terms to each other.",
+   "questions": [
+    {
+     "id": "s1q0",
+     "kp": "k1",
+     "type": "expression",
+     "prompt": "Let \\(a_n = n^2 + 3n\\). Write \\(a_{n+1} - a_n\\) as a simplified expression in \\(n\\).",
+     "answer": "2*n + 4",
+     "vars": "n",
+     "why": "\\(a_{n+1} = (n+1)^2 + 3(n+1) = n^2 + 5n + 4\\). Subtracting \\(a_n = n^2 + 3n\\) gives \\(2n + 4\\). The common error is to compute \\(a_n + 1\\) instead of \\(a_{n+1}\\), which would give the constant 1."
+    },
+    {
+     "id": "s1q1",
+     "kp": "k2",
+     "type": "written",
+     "prompt": "Using only the \\(\\varepsilon\\)–\\(N\\) definition, prove that \\(\\lim_{n\\to\\infty} \\frac{2n-1}{n+4} = 2\\). Your proof must say how \\(N\\) is chosen from \\(\\varepsilon\\).",
+     "rubric": [
+      "Computes \\(|a_n - 2| = \\frac{9}{n+4}\\) correctly.",
+      "Solves \\(\\frac{9}{n+4} < \\varepsilon\\) to get \\(n > \\frac9\\varepsilon - 4\\).",
+      "Chooses an integer \\(N > \\frac9\\varepsilon - 4\\) explicitly in terms of \\(\\varepsilon\\).",
+      "Verifies that every \\(n \\ge N\\) satisfies \\(|a_n - 2| < \\varepsilon\\), with \\(\\varepsilon\\) arbitrary."
+     ],
+     "model": "Let \\(\\varepsilon > 0\\). For every \\(n\\), \\(|a_n - 2| = \\left|\\frac{2n - 1 - 2n - 8}{n+4}\\right| = \\frac{9}{n+4}\\). Choose an integer \\(N > \\frac{9}{\\varepsilon} - 4\\). If \\(n \\ge N\\), then \\(n + 4 > \\frac9\\varepsilon\\), so \\(\\frac{9}{n+4} < \\varepsilon\\), that is \\(|a_n - 2| < \\varepsilon\\). Since \\(\\varepsilon > 0\\) was arbitrary, \\(a_n \\to 2\\).",
+     "why": "The whole proof hinges on simplifying \\(|a_n - L|\\) to something visibly decreasing in \\(n\\): here \\(\\frac{9}{n+4}\\). Solving \\(\\frac{9}{n+4} < \\varepsilon\\) for \\(n\\) tells you how large \\(N\\) must be. Any integer larger than \\(\\frac9\\varepsilon - 4\\) works; there is no need for the smallest one."
+    },
+    {
+     "id": "s1q2",
+     "kp": "k2",
+     "type": "number",
+     "prompt": "For \\(a_n = \\frac{3n+1}{n+2}\\) and \\(\\varepsilon = 0.001\\), find the smallest integer \\(N\\) such that \\(|a_n - 3| < \\varepsilon\\) for every \\(n \\ge N\\).",
+     "answer": "4999",
+     "why": "\\(|a_n - 3| = \\frac{5}{n+2}\\), which decreases in \\(n\\). The inequality \\(\\frac{5}{n+2} < 0.001\\) means \\(n + 2 > 5000\\), so \\(n > 4998\\). At \\(n = 4998\\) the distance is exactly \\(0.001\\), which is not less than \\(\\varepsilon\\); at \\(n = 4999\\) it is \\(\\frac{5}{5001} < 0.001\\). So \\(N = 4999\\)."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "Computing limits through functions of a real variable",
+   "kps": [
+    "k3",
+    "k4",
+    "k9"
+   ],
+   "md": "The definition tells us what a limit is, but it is a laborious way to find one. This section connects sequence limits to the limits at infinity of Calculus I, so that algebra, L'Hôpital's rule and known growth rates become available.\n\n> **Theorem (sequences from functions).** Suppose \\(f\\) is defined on \\([1, \\infty)\\), \\(a_n = f(n)\\) for every positive integer \\(n\\), and \\(\\lim_{x\\to\\infty} f(x) = L\\). Then \\(\\lim_{n\\to\\infty} a_n = L\\).\n\nThe reason is short. The hypothesis says that for every \\(\\varepsilon > 0\\) there is a real number \\(M\\) with \\(|f(x) - L| < \\varepsilon\\) for all real \\(x > M\\). In particular this holds at every integer \\(n > M\\), which is precisely the sequence definition. The same argument works when \\(L = \\infty\\) or \\(L = -\\infty\\).\n\nThe theorem runs one way only. If \\(\\lim_{x\\to\\infty} f(x)\\) does not exist, the sequence may still converge, because the integers can avoid the misbehaviour of \\(f\\). The standard example is \\(f(x) = \\sin(\\pi x)\\): the function oscillates forever, but \\(a_n = \\sin(\\pi n) = 0\\) for every \\(n\\), so \\(a_n \\to 0\\).\n\n**Limit laws.** If \\(a_n \\to A\\) and \\(b_n \\to B\\) with \\(A, B\\) real, then \\(a_n \\pm b_n \\to A \\pm B\\), \\(c\\,a_n \\to cA\\), \\(a_n b_n \\to AB\\), and \\(\\frac{a_n}{b_n} \\to \\frac AB\\) provided \\(B \\ne 0\\). They are proved exactly as for functions. They apply only when the separate limits exist as real numbers; forms such as \\(\\infty - \\infty\\) or \\(\\frac{\\infty}{\\infty}\\) must first be rewritten.\n\n**Worked example 1.** Find \\(\\lim_{n\\to\\infty} \\frac{4n^2 - n}{3n^2 + 5}\\). Divide numerator and denominator by \\(n^2\\): \\(\\frac{4 - 1/n}{3 + 5/n^2}\\). Since \\(\\frac1n \\to 0\\) and \\(\\frac{1}{n^2} \\to 0\\), the quotient law gives \\(\\frac43\\).\n\n**Worked example 2.** Find \\(\\lim_{n\\to\\infty} \\frac{\\ln n}{n}\\). The sequence is \\(f(n)\\) for \\(f(x) = \\frac{\\ln x}{x}\\), which is of the form \\(\\frac{\\infty}{\\infty}\\). L'Hôpital's rule gives\n\\[ \\lim_{x\\to\\infty}\\frac{\\ln x}{x} = \\lim_{x\\to\\infty}\\frac{1/x}{1} = 0, \\]\nso \\(\\frac{\\ln n}{n} \\to 0\\) by the theorem. Notice the order: we passed to the real variable \\(x\\) before differentiating. A derivative with respect to \\(n\\) makes no sense for a function defined only at integers.\n\n**Worked example 3.** Find \\(\\lim_{n\\to\\infty}\\left(1 + \\frac{2}{n}\\right)^n\\), an indeterminate form \\(1^\\infty\\). Let \\(f(x) = \\left(1 + \\frac2x\\right)^x\\). Then\n\\[ \\ln f(x) = x \\ln\\!\\left(1 + \\tfrac2x\\right) = \\frac{\\ln(1 + 2/x)}{1/x}, \\]\na \\(\\frac00\\) form. By L'Hôpital's rule,\n\\[ \\lim_{x\\to\\infty}\\frac{\\frac{1}{1 + 2/x}\\cdot\\left(-\\frac{2}{x^2}\\right)}{-\\frac{1}{x^2}} = \\lim_{x\\to\\infty}\\frac{2}{1 + 2/x} = 2. \\]\nBecause the exponential function is continuous, \\(f(x) = e^{\\ln f(x)} \\to e^2\\), hence \\(a_n \\to e^2\\). The same computation shows \\(\\left(1 + \\frac cn\\right)^n \\to e^c\\) for every constant \\(c\\).\n\n**Growth rates.** Repeated use of L'Hôpital's rule, together with the ratio arguments of the next two sections, establishes the ordering\n\\[ \\ln n \\ll n^p \\ll b^n \\ll n! \\ll n^n \\qquad (p > 0,\\ b > 1), \\]\nwhere \\(u_n \\ll v_n\\) means \\(\\frac{u_n}{v_n} \\to 0\\). For instance \\(\\frac{n^2}{e^n} \\to 0\\) after two applications of L'Hôpital's rule to \\(\\frac{x^2}{e^x}\\). The ordering lets you identify the dominant term of a quotient quickly, but in written work each comparison you rely on should be justified.\n\n**Common mistakes.** First, concluding that a sequence diverges because the corresponding function has no limit, as \\(\\sin(\\pi n)\\) shows. Second, applying L'Hôpital's rule to expressions containing \\(n!\\): the factorial is defined only at integers, so there is nothing to differentiate. Such limits are handled with the squeeze theorem or with the ratio of consecutive terms, both developed below.",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k3",
+     "type": "number",
+     "prompt": "Compute \\(\\lim_{n\\to\\infty}\\left(1 + \\frac{3}{n}\\right)^{2n}\\). Give the exact value.",
+     "answer": "e^6",
+     "why": "Let \\(f(x) = (1 + 3/x)^{2x}\\). Then \\(\\ln f(x) = 2x\\ln(1 + 3/x) = 2\\cdot\\frac{\\ln(1 + 3/x)}{1/x}\\). The quotient is a \\(\\frac00\\) form whose limit, by L'Hôpital's rule, is \\(\\lim \\frac{3}{1 + 3/x} = 3\\). So \\(\\ln f(x) \\to 6\\) and, by continuity of the exponential, the limit is \\(e^6\\)."
+    },
+    {
+     "id": "s2q2",
+     "kp": "k3",
+     "type": "written",
+     "prompt": "A student argues: \\\"\\(\\lim_{x\\to\\infty}\\sin(\\pi x)\\) does not exist, so by the theorem on sequences from functions, the sequence \\(a_n = \\sin(\\pi n)\\) diverges.\\\" Identify precisely what is wrong with this argument, and determine whether \\(\\{a_n\\}\\) converges.",
+     "rubric": [
+      "States the theorem's direction: a function limit implies the sequence limit, not the converse.",
+      "Explains that the integers can avoid the oscillation of \\(f\\), so no conclusion follows from the function having no limit.",
+      "Computes \\(\\sin(\\pi n) = 0\\) for every integer \\(n\\) and concludes \\(a_n \\to 0\\)."
+     ],
+     "model": "The theorem says: if \\(f(n) = a_n\\) and \\(\\lim_{x\\to\\infty} f(x) = L\\), then \\(a_n \\to L\\). It has nothing to say when \\(\\lim_{x\\to\\infty} f(x)\\) fails to exist, because the behaviour of \\(f\\) between the integers is irrelevant to the sequence. The student used the converse, which is false. Here \\(\\sin(\\pi n) = 0\\) for every integer \\(n\\), so \\(a_n\\) is the constant sequence 0 and converges to 0.",
+     "why": "The sequence only samples \\(f\\) at integers. \\(\\sin(\\pi x)\\) oscillates between \\(-1\\) and \\(1\\), but every sample lands on a zero of the sine function."
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "The squeeze theorem, geometric sequences, continuity and divergence",
+   "kps": [
+    "k4",
+    "k5",
+    "k6",
+    "k10"
+   ],
+   "md": "Many sequences, such as \\(\\frac{\\cos n}{n}\\) or \\(\\frac{n!}{n^n}\\), have no convenient real-variable counterpart to which L'Hôpital's rule applies. This section gives tools that work directly with the terms, settles the behaviour of the geometric sequence \\(r^n\\), and shows how to prove that a sequence diverges.\n\n> **Squeeze theorem.** If \\(b_n \\le a_n \\le c_n\\) for all \\(n\\) beyond some index, and \\(\\lim b_n = \\lim c_n = L\\), then \\(\\lim a_n = L\\).\n\nGiven \\(\\varepsilon > 0\\), beyond some index both \\(b_n\\) and \\(c_n\\) lie within \\(\\varepsilon\\) of \\(L\\); since \\(a_n\\) is trapped between them, so does \\(a_n\\).\n\n*Example.* Since \\(-1 \\le \\cos n \\le 1\\), we have \\(-\\frac1n \\le \\frac{\\cos n}{n} \\le \\frac1n\\). Both bounds tend to 0, so \\(\\frac{\\cos n}{n} \\to 0\\).\n\n*Example.* Write \\(\\frac{n!}{n^n}\\) as a product of \\(n\\) fractions: \\(\\frac{n!}{n^n} = \\frac1n\\cdot\\frac2n\\cdots\\frac nn\\). Every factor after the first is at most 1, so \\(0 < \\frac{n!}{n^n} \\le \\frac1n\\), and the squeeze theorem gives the limit 0.\n\n> **Absolute value theorem.** If \\(|a_n| \\to 0\\), then \\(a_n \\to 0\\).\n\nProof: \\(-|a_n| \\le a_n \\le |a_n|\\), and squeeze. This handles alternating signs: \\(\\left|\\frac{(-1)^n}{n}\\right| = \\frac1n \\to 0\\), so \\(\\frac{(-1)^n}{n} \\to 0\\). The theorem is special to the limit 0. The sequence \\(|(-1)^n| = 1\\) converges to 1, but \\((-1)^n\\) diverges.\n\n**Geometric sequences.** For a constant \\(r\\), the sequence \\(\\{r^n\\}\\) converges exactly when \\(-1 < r \\le 1\\), with\n\\[ \\lim_{n\\to\\infty} r^n = \\begin{cases} 0, & |r| < 1,\\\\ 1, & r = 1. \\end{cases} \\]\nFor \\(0 < |r| < 1\\), write \\(|r|^n = e^{n\\ln|r|}\\); since \\(\\ln|r| < 0\\), the exponent tends to \\(-\\infty\\), so \\(|r|^n \\to 0\\), and the absolute value theorem gives \\(r^n \\to 0\\) (the case \\(r = 0\\) is trivial). For \\(r = 1\\) the sequence is constant. For \\(r = -1\\) it alternates between \\(-1\\) and \\(1\\). For \\(|r| > 1\\), \\(|r|^n = e^{n\\ln|r|} \\to \\infty\\), so the terms are unbounded: \\(r^n \\to \\infty\\) if \\(r > 1\\), and for \\(r < -1\\) the terms alternate in sign with growing size. In the graph, drag \\(r\\) slowly across \\(-1\\) and across \\(1\\) and watch the points collapse onto the axis, freeze, alternate, or escape the window.\n\n```plot\nx: 0, 11\ny: -2, 2\nslider: r, -1.3, 1.3, 0.8 | r\nhline: 0\npoint: 1, r\npoint: 2, r^2\npoint: 3, r^3\npoint: 4, r^4\npoint: 5, r^5\npoint: 6, r^6\npoint: 7, r^7\npoint: 8, r^8\npoint: 9, r^9\npoint: 10, r^10\n```\n\n**Continuous functions.** If \\(a_n \\to L\\) and \\(g\\) is continuous at \\(L\\), then \\(g(a_n) \\to g(L)\\). For example, \\(\\frac{\\pi n}{3n+1} \\to \\frac\\pi3\\), so \\(\\cos\\!\\left(\\frac{\\pi n}{3n+1}\\right) \\to \\cos\\frac\\pi3 = \\frac12\\). Similarly \\(n^{1/n} = e^{(\\ln n)/n}\\); the exponent tends to 0 by the previous section, so \\(n^{1/n} \\to e^0 = 1\\).\n\n**Proving divergence.** A **subsequence** of \\(\\{a_n\\}\\) is a sequence \\(a_{n_1}, a_{n_2}, a_{n_3}, \\dots\\) with \\(n_1 < n_2 < n_3 < \\cdots\\): infinitely many terms kept in their original order. If \\(a_n \\to L\\), then every subsequence converges to \\(L\\), since the threshold that works for the whole sequence works for any subsequence. Taking the contrapositive: if two subsequences have different limits, or some subsequence is unbounded, the sequence diverges.\n\n*Worked example.* Consider \\(a_n = \\frac{(-1)^n n}{n+1}\\). The even-indexed terms are \\(a_{2k} = \\frac{2k}{2k+1} \\to 1\\), and the odd-indexed terms are \\(a_{2k+1} = -\\frac{2k+1}{2k+2} \\to -1\\). Two subsequences have different limits, so \\(\\{a_n\\}\\) diverges. In the other direction, if the even and odd subsequences both converge to the same \\(L\\), the whole sequence converges to \\(L\\).\n\n**Common mistake.** Applying the absolute value theorem with a nonzero limit. From \\(|a_n| \\to 1\\) you cannot conclude \\(a_n \\to 1\\); the example above has \\(|a_n| \\to 1\\) and diverges.",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k4",
+     "type": "written",
+     "prompt": "Prove that \\(\\lim_{n\\to\\infty}\\frac{\\cos(n^2)}{\\sqrt n} = 0\\). State the inequality you use and name the theorem that finishes the argument.",
+     "rubric": [
+      "States \\(-1 \\le \\cos(n^2) \\le 1\\) and divides by \\(\\sqrt n > 0\\) to get \\(-\\frac{1}{\\sqrt n} \\le a_n \\le \\frac{1}{\\sqrt n}\\).",
+      "Shows \\(\\frac{1}{\\sqrt n} \\to 0\\) (and so \\(-\\frac{1}{\\sqrt n} \\to 0\\)).",
+      "Invokes the squeeze theorem to conclude the limit is 0."
+     ],
+     "model": "For every \\(n \\ge 1\\), \\(-1 \\le \\cos(n^2) \\le 1\\); dividing by \\(\\sqrt n > 0\\) preserves the inequalities, so \\(-\\frac{1}{\\sqrt n} \\le \\frac{\\cos(n^2)}{\\sqrt n} \\le \\frac{1}{\\sqrt n}\\). Both bounds tend to 0 because \\(\\sqrt n \\to \\infty\\). By the squeeze theorem the sequence converges to 0.",
+     "why": "The numerator is bounded and the denominator grows without bound; the squeeze theorem turns that intuition into a proof. L'Hôpital's rule is useless here because \\(\\cos(x^2)\\) has no limit."
+    },
+    {
+     "id": "s3q2",
+     "kp": "k6",
+     "type": "number",
+     "prompt": "Compute \\(\\lim_{n\\to\\infty}\\left[\\ln(2n^2 + 1) - \\ln(n^2 + 5)\\right]\\).",
+     "answer": "log(2)",
+     "why": "The difference is \\(\\ln\\frac{2n^2 + 1}{n^2 + 5}\\). The inner sequence tends to 2 (divide by \\(n^2\\)), and \\(\\ln\\) is continuous at 2, so the limit is \\(\\ln 2\\). Note that the two separate logarithms both diverge to \\(\\infty\\), so the difference law cannot be applied before combining them."
+    },
+    {
+     "id": "s3q3",
+     "kp": "k10",
+     "type": "written",
+     "prompt": "Prove that \\(a_n = \\cos\\left(\\frac{n\\pi}{2}\\right)\\) diverges.",
+     "rubric": [
+      "Identifies a subsequence with limit 1, e.g. \\(a_{4k} = \\cos(2k\\pi) = 1\\).",
+      "Identifies a subsequence with a different limit, e.g. \\(a_{4k+2} = \\cos((2k+1)\\pi) = -1\\) (or the odd terms, which are 0).",
+      "States that a convergent sequence has all subsequences converging to the same limit, so \\(\\{a_n\\}\\) diverges."
+     ],
+     "model": "If \\(a_n\\) converged to some \\(L\\), every subsequence would also converge to \\(L\\). But \\(a_{4k} = \\cos(2k\\pi) = 1\\) for every \\(k\\), so that subsequence converges to 1, while \\(a_{4k+2} = \\cos((2k+1)\\pi) = -1\\), so that subsequence converges to \\(-1\\). Since \\(1 \\ne -1\\), the sequence diverges.",
+     "why": "The terms cycle through \\(0, -1, 0, 1, \\dots\\). Choosing two index patterns that land on different values is the cleanest divergence proof."
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "Monotone and bounded sequences",
+   "kps": [
+    "k7"
+   ],
+   "md": "The tools so far require either a formula to take a limit of or a good guess for the limit. A sequence defined by a recurrence usually offers neither. The next section proves convergence from two qualitative properties instead; this section defines those properties and shows how to verify them.\n\n> **Definitions.** A sequence is **increasing** if \\(a_n < a_{n+1}\\) for all \\(n\\), and **nondecreasing** if \\(a_n \\le a_{n+1}\\) for all \\(n\\); **decreasing** and **nonincreasing** are defined with the inequalities reversed. It is **monotone** if it is nondecreasing or nonincreasing. It is **bounded above** if there is a number \\(M\\) with \\(a_n \\le M\\) for all \\(n\\), **bounded below** if there is \\(m\\) with \\(m \\le a_n\\) for all \\(n\\), and **bounded** if both hold.\n\nTextbooks differ on whether \"increasing\" is strict; Stewart and OpenStax use the strict inequality. Nothing below depends on strictness.\n\nThere are three standard ways to test monotonicity.\n\n1. **Difference:** determine the sign of \\(a_{n+1} - a_n\\).\n2. **Ratio** (for positive terms): compare \\(\\frac{a_{n+1}}{a_n}\\) with 1.\n3. **Derivative:** if \\(a_n = f(n)\\) and \\(f'(x) \\le 0\\) for \\(x \\ge 1\\), then \\(f\\) is nonincreasing on \\([1,\\infty)\\), so its values at the integers are nonincreasing (similarly for \\(f' \\ge 0\\)).\n\n**Worked example 1 (derivative).** Let \\(a_n = \\frac{n}{n^2 + 1}\\) and \\(f(x) = \\frac{x}{x^2+1}\\). By the quotient rule, \\(f'(x) = \\frac{(x^2+1) - 2x^2}{(x^2+1)^2} = \\frac{1 - x^2}{(x^2+1)^2}\\), which is negative for \\(x > 1\\). So \\(\\{a_n\\}\\) is decreasing. It is bounded: \\(0 < a_n \\le a_1 = \\frac12\\).\n\n**Worked example 2 (ratio).** Let \\(a_n = \\frac{2^n}{n!}\\). Then\n\\[ \\frac{a_{n+1}}{a_n} = \\frac{2^{n+1}}{(n+1)!}\\cdot\\frac{n!}{2^n} = \\frac{2}{n+1}. \\]\nThis is at most 1 for every \\(n \\ge 1\\), with equality at \\(n = 1\\) (indeed \\(a_1 = a_2 = 2\\)), so the sequence is nonincreasing, and strictly decreasing from \\(n = 2\\) on. It is bounded below by 0 and above by 2. The ratio method suits factorials and powers because they cancel so cleanly.\n\n**Worked example 3 (difference).** Let \\(s_n = \\sum_{k=1}^{n}\\frac{1}{k^2}\\). Then \\(s_{n+1} - s_n = \\frac{1}{(n+1)^2} > 0\\), so \\(\\{s_n\\}\\) is increasing. For an upper bound, note that for \\(k \\ge 2\\), \\(\\frac{1}{k^2} < \\frac{1}{k(k-1)} = \\frac{1}{k-1} - \\frac1k\\). Summing from \\(k = 2\\) to \\(n\\), the right side telescopes to \\(1 - \\frac1n\\), so \\(s_n < 1 + 1 - \\frac1n < 2\\). This sequence of running totals is our first infinite series; the next chapter builds on exactly this reasoning.\n\n**Convergent sequences are bounded.** Suppose \\(a_n \\to L\\). Taking \\(\\varepsilon = 1\\) in the definition, there is \\(N\\) with \\(|a_n - L| < 1\\), hence \\(|a_n| < |L| + 1\\), for all \\(n \\ge N\\). The finitely many terms \\(a_1, \\dots, a_{N-1}\\) have a largest absolute value. The larger of these two numbers bounds every \\(|a_n|\\). The contrapositive is a divergence test: an unbounded sequence diverges. The converse is false: \\((-1)^n\\) is bounded and divergent.\n\n**Eventually monotone.** Convergence depends only on the tail of a sequence, so it is enough for a sequence to be monotone from some index onward. For \\(a_n = \\frac{n}{n^2 + 4}\\), the terms \\(0.2,\\ 0.25,\\ 0.23,\\ 0.2, \\dots\\) rise and then fall: the sequence is not monotone, but it is decreasing from \\(n = 2\\) on, since \\(f'(x) = \\frac{4 - x^2}{(x^2+4)^2} < 0\\) for \\(x > 2\\).\n\n**Common mistakes.** Declaring a sequence monotone after checking a few terms, which proves nothing about the rest; and assuming that bounded implies convergent. Boundedness is necessary for convergence, not sufficient.",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k7",
+     "type": "written",
+     "prompt": "Let \\(a_n = \\frac{n}{n^2 + 4}\\). Is \\(\\{a_n\\}\\) monotone? Is it eventually monotone? Is it bounded? Justify each answer.",
+     "rubric": [
+      "Computes early terms \\(a_1 = 0.2 < a_2 = 0.25 > a_3 \\approx 0.231\\) showing the sequence is not monotone.",
+      "Uses \\(f'(x) = \\frac{4 - x^2}{(x^2+4)^2}\\) to show it is decreasing for \\(n \\ge 2\\) (eventually monotone).",
+      "Gives explicit bounds, e.g. \\(0 < a_n \\le \\frac14\\)."
+     ],
+     "model": "\\(a_1 = \\frac15\\), \\(a_2 = \\frac14\\), \\(a_3 = \\frac{3}{13} \\approx 0.231\\). The sequence rises then falls, so it is not monotone. With \\(f(x) = \\frac{x}{x^2+4}\\), \\(f'(x) = \\frac{4 - x^2}{(x^2+4)^2} < 0\\) for \\(x > 2\\), so \\(a_2 > a_3 > a_4 > \\cdots\\): it is eventually decreasing. All terms are positive, and the maximum is \\(a_2 = \\frac14\\), so \\(0 < a_n \\le \\frac14\\): the sequence is bounded.",
+     "why": "Monotonicity is a property of all consecutive pairs; a single increase followed by decreases rules it out. Eventual monotonicity is what convergence arguments actually need."
+    },
+    {
+     "id": "s4q2",
+     "kp": "k7",
+     "type": "mcq",
+     "prompt": "Which one of the following statements about real sequences is true?",
+     "options": [
+      "Every bounded sequence converges.",
+      "Every convergent sequence is bounded.",
+      "Every monotone sequence converges.",
+      "Every convergent sequence is eventually monotone."
+     ],
+     "answer": 1,
+     "why": "A convergent sequence is bounded: beyond some \\(N\\) the terms are within 1 of the limit, and there are only finitely many earlier terms. The others fail: \\((-1)^n\\) is bounded but divergent; \\(a_n = n\\) is monotone but divergent; \\(\\frac{(-1)^n}{n}\\) converges to 0 but alternates in sign forever, so it is never monotone."
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "The monotone convergence theorem and recursive sequences",
+   "kps": [
+    "k8"
+   ],
+   "md": "This section proves convergence without knowing the limit in advance, which is exactly what recursively defined sequences require, and then shows how the recurrence itself identifies the limit.\n\n> **Monotone convergence theorem.** Every bounded monotone sequence of real numbers converges. More precisely, a nondecreasing sequence that is bounded above converges to the least upper bound of its terms, and a nonincreasing sequence that is bounded below converges to the greatest lower bound of its terms.\n\n**Why it is true.** The proof rests on the **completeness** of the real numbers: every nonempty set of real numbers that is bounded above has a least upper bound (a supremum). Let \\(\\{a_n\\}\\) be nondecreasing and bounded above, and let \\(S\\) be the least upper bound of \\(\\{a_1, a_2, \\dots\\}\\). Given \\(\\varepsilon > 0\\), the number \\(S - \\varepsilon\\) is not an upper bound, so some term satisfies \\(a_N > S - \\varepsilon\\). Because the sequence is nondecreasing, \\(S - \\varepsilon < a_N \\le a_n \\le S\\) for all \\(n \\ge N\\), so \\(|a_n - S| < \\varepsilon\\). Completeness is part of the axioms for the real numbers in most courses (in others it is proved from a construction of the reals). It fails in the rational numbers: the truncations \\(1, 1.4, 1.41, 1.414, \\dots\\) are rational, increasing and bounded by 2, but their limit \\(\\sqrt 2\\) is not rational. The theorem is a statement that the real line has no gaps.\n\n**Procedure for a recursively defined sequence** \\(a_{n+1} = g(a_n)\\):\n\n1. Prove the sequence is monotone, usually by induction.\n2. Prove it is bounded in the appropriate direction, usually by induction.\n3. Conclude from the monotone convergence theorem that \\(L = \\lim a_n\\) exists.\n4. Pass to the limit in the recurrence. Since \\(\\{a_{n+1}\\}\\) is a subsequence of \\(\\{a_n\\}\\), it also tends to \\(L\\); if \\(g\\) is continuous, \\(g(a_n) \\to g(L)\\). Hence \\(L = g(L)\\). Solve, and choose the root consistent with the bounds.\n\n**Worked example.** Let \\(a_1 = 1\\) and \\(a_{n+1} = \\sqrt{2 + a_n}\\).\n\n*Bounded above by 2.* \\(a_1 = 1 < 2\\). If \\(a_n < 2\\), then \\(a_{n+1} = \\sqrt{2 + a_n} < \\sqrt 4 = 2\\). By induction, \\(a_n < 2\\) for all \\(n\\).\n\n*Increasing.* \\(a_2 = \\sqrt3 > 1 = a_1\\). If \\(a_{n+1} > a_n\\), then \\(2 + a_{n+1} > 2 + a_n\\), and since the square root is an increasing function, \\(a_{n+2} > a_{n+1}\\). By induction the sequence is increasing.\n\n*Limit.* By the monotone convergence theorem, \\(a_n \\to L\\) for some \\(L\\). Passing to the limit, \\(L = \\sqrt{2 + L}\\), so \\(L^2 - L - 2 = 0\\), that is \\((L - 2)(L + 1) = 0\\). All terms are at least 1, so \\(L \\ge 1\\), and therefore \\(L = 2\\).\n\nThe graph shows the curve \\(y = \\sqrt{2 + x}\\), the line \\(y = x\\), and the points \\((a_n, a_{n+1})\\) for the first few steps. A limit must satisfy \\(L = \\sqrt{2+L}\\), which is where the curve meets the line. Drag the starting value \\(a_1\\): below 2 the points climb toward the intersection; above 2 they descend toward it. In both cases the sequence is monotone and bounded.\n\n```plot\nx: 0, 6\ny: 0, 4\nslider: c, 0, 6, 1 | a₁\nf: sqrt(2 + x) | y = √(2 + x)\nf: x | y = x\npoint: c, sqrt(2 + c)\npoint: sqrt(2 + c), sqrt(2 + sqrt(2 + c))\npoint: sqrt(2 + sqrt(2 + c)), sqrt(2 + sqrt(2 + sqrt(2 + c)))\npoint: sqrt(2 + sqrt(2 + sqrt(2 + c))), sqrt(2 + sqrt(2 + sqrt(2 + sqrt(2 + c))))\n```\n\n**Why step 3 cannot be skipped.** Let \\(a_1 = 1\\) and \\(a_{n+1} = 2a_n + 1\\). If we assumed a limit existed, \\(L = 2L + 1\\) would give \\(L = -1\\), which is absurd for a sequence of positive terms. In fact \\(a_n = 2^n - 1 \\to \\infty\\). The equation \\(L = g(L)\\) only says what the limit must be if there is one; existence has to be proved separately.\n\n**Common mistakes.** Solving \\(L = g(L)\\) without first proving convergence; keeping both roots of the limit equation instead of using the bounds to reject one; and verifying monotonicity for a few terms instead of by induction.",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k8",
+     "type": "written",
+     "prompt": "Let \\(a_1 = 1\\) and \\(a_{n+1} = \\sqrt{6 + a_n}\\). Prove that \\(\\{a_n\\}\\) converges and find its limit.",
+     "rubric": [
+      "Proves by induction that \\(a_n < 3\\) for all \\(n\\).",
+      "Proves by induction that the sequence is increasing.",
+      "Invokes the monotone convergence theorem to conclude a limit \\(L\\) exists.",
+      "Solves \\(L = \\sqrt{6 + L}\\), gets \\(L = 3\\) or \\(L = -2\\), and rejects \\(-2\\) using positivity."
+     ],
+     "model": "*Bounded:* \\(a_1 = 1 < 3\\); if \\(a_n < 3\\) then \\(a_{n+1} = \\sqrt{6 + a_n} < \\sqrt 9 = 3\\). *Increasing:* \\(a_2 = \\sqrt 7 > 1 = a_1\\); if \\(a_{n+1} > a_n\\) then \\(6 + a_{n+1} > 6 + a_n\\), and taking square roots, \\(a_{n+2} > a_{n+1}\\). By induction the sequence is increasing and bounded above by 3, so by the monotone convergence theorem it converges to some \\(L\\). Letting \\(n\\to\\infty\\) in the recurrence (the square root is continuous), \\(L = \\sqrt{6 + L}\\), so \\(L^2 - L - 6 = 0\\), \\((L - 3)(L + 2) = 0\\). Since \\(a_n \\ge 1\\) for all \\(n\\), \\(L \\ge 1\\), so \\(L = 3\\).",
+     "why": "The structure is always: monotone, bounded, therefore convergent, then identify the limit from the recurrence. The first terms \\(1, 2.646, 2.940, 2.990, \\dots\\) agree with the answer 3."
+    },
+    {
+     "id": "s5q2",
+     "kp": "k8",
+     "type": "written",
+     "prompt": "A student writes: \\\"Let \\(a_1 = 1\\) and \\(a_{n+1} = 2a_n + 1\\). Taking limits, \\(L = 2L + 1\\), so \\(\\lim a_n = -1\\).\\\" Explain exactly which step is invalid and what actually happens to the sequence.",
+     "rubric": [
+      "Identifies that taking limits in the recurrence presupposes that the limit exists.",
+      "Notes that no monotone-and-bounded (or other) convergence argument was given.",
+      "Shows the sequence diverges, e.g. \\(a_n = 2^n - 1\\) or by induction \\(a_n \\ge n\\), so it is unbounded."
+     ],
+     "model": "Writing \\(L = 2L + 1\\) assumes that \\(a_n \\to L\\) for some real \\(L\\); the equation only tells us what the limit would have to be if it existed. Here no limit exists: the terms are \\(1, 3, 7, 15, \\dots\\), and by induction \\(a_n = 2^n - 1\\) (true for \\(n = 1\\), and \\(2(2^n - 1) + 1 = 2^{n+1} - 1\\)). The sequence is unbounded, so it diverges to \\(\\infty\\). The value \\(-1\\) is a fixed point of \\(g(x) = 2x + 1\\), but the iteration moves away from it.",
+     "why": "Existence must be established first, typically by the monotone convergence theorem. Positive terms could never converge to \\(-1\\) in any case, which is a quick sign the reasoning broke."
+    }
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "t": "sequence",
+   "d": "A function whose domain is the positive integers (or all integers from some starting index on); its values \\(a_n\\) are the terms.",
+   "ex": "\\(a_n = \\frac{1}{n}\\) gives \\(1, \\frac12, \\frac13, \\dots\\)"
+  },
+  {
+   "t": "term",
+   "d": "The value \\(a_n\\) of a sequence at a particular index \\(n\\)."
+  },
+  {
+   "t": "index",
+   "d": "The integer variable \\(n\\) that labels the terms of a sequence."
+  },
+  {
+   "t": "explicit formula",
+   "d": "A rule giving the \\(n\\)th term directly as a function of \\(n\\).",
+   "ex": "\\(a_n = \\frac{3n+1}{n+2}\\)"
+  },
+  {
+   "t": "recurrence relation",
+   "d": "A rule giving each term in terms of earlier terms, together with initial value(s).",
+   "ex": "\\(a_1 = 1,\\ a_{n+1} = \\sqrt{2 + a_n}\\)"
+  },
+  {
+   "t": "limit of a sequence",
+   "d": "\\(L\\) is the limit of \\(\\{a_n\\}\\) if for every \\(\\varepsilon > 0\\) there is an integer \\(N\\) with \\(|a_n - L| < \\varepsilon\\) for all \\(n \\ge N\\)."
+  },
+  {
+   "t": "convergent sequence",
+   "d": "A sequence that has a limit which is a real number."
+  },
+  {
+   "t": "divergent sequence",
+   "d": "A sequence that does not converge to any real number, including one that diverges to \\(\\pm\\infty\\)."
+  },
+  {
+   "t": "diverges to infinity",
+   "d": "For every \\(M\\) there is \\(N\\) such that \\(a_n > M\\) for all \\(n \\ge N\\); written \\(a_n \\to \\infty\\). This is a kind of divergence."
+  },
+  {
+   "t": "subsequence",
+   "d": "A sequence \\(a_{n_1}, a_{n_2}, \\dots\\) formed from infinitely many terms of \\(\\{a_n\\}\\) in their original order, \\(n_1 < n_2 < \\cdots\\)."
+  },
+  {
+   "t": "monotone",
+   "d": "Either nondecreasing (\\(a_n \\le a_{n+1}\\) for all \\(n\\)) or nonincreasing (\\(a_n \\ge a_{n+1}\\) for all \\(n\\))."
+  },
+  {
+   "t": "bounded",
+   "d": "There are numbers \\(m\\) and \\(M\\) with \\(m \\le a_n \\le M\\) for all \\(n\\) (bounded below and bounded above)."
+  },
+  {
+   "t": "squeeze theorem",
+   "d": "If \\(b_n \\le a_n \\le c_n\\) eventually and \\(b_n\\) and \\(c_n\\) both tend to \\(L\\), then \\(a_n \\to L\\)."
+  },
+  {
+   "t": "monotone convergence theorem",
+   "d": "Every bounded monotone sequence of real numbers converges (to the supremum of its terms if nondecreasing, the infimum if nonincreasing)."
+  },
+  {
+   "t": "completeness",
+   "d": "The property of the real numbers that every nonempty set bounded above has a least upper bound; the rationals lack it.",
+   "ex": "The basis of the monotone convergence theorem."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "term",
+   "front": "Define: the limit of a sequence, \\(\\lim_{n\\to\\infty} a_n = L\\)",
+   "back": "For every \\(\\varepsilon > 0\\) there is an integer \\(N\\) such that \\(|a_n - L| < \\varepsilon\\) for all \\(n \\ge N\\).",
+   "kp": "k2"
+  },
+  {
+   "id": "c2",
+   "type": "concept",
+   "front": "If \\(a_n = n^2\\), what is \\(a_{n+1}\\)?",
+   "back": "\\((n+1)^2 = n^2 + 2n + 1\\), not \\(n^2 + 1\\). The shift happens inside the subscript.",
+   "kp": "k1"
+  },
+  {
+   "id": "c3",
+   "type": "concept",
+   "front": "If \\(f(n) = a_n\\) and \\(\\lim_{x\\to\\infty} f(x)\\) does not exist, what can you conclude about \\(\\{a_n\\}\\)?",
+   "back": "Nothing. The theorem only runs from function limit to sequence limit; e.g. \\(\\sin(\\pi n) = 0\\) converges.",
+   "kp": "k3"
+  },
+  {
+   "id": "c4",
+   "type": "formula",
+   "front": "\\(\\lim_{n\\to\\infty}\\left(1 + \\frac{c}{n}\\right)^n\\)",
+   "back": "\\(e^{c}\\)",
+   "kp": "k3"
+  },
+  {
+   "id": "c5",
+   "type": "formula",
+   "front": "Limit of \\(r^n\\) (all cases)",
+   "back": "\\(0\\) if \\(|r| < 1\\); \\(1\\) if \\(r = 1\\); diverges if \\(r \\le -1\\) or \\(r > 1\\).",
+   "kp": "k5"
+  },
+  {
+   "id": "c6",
+   "type": "term",
+   "front": "State the squeeze theorem for sequences.",
+   "back": "If \\(b_n \\le a_n \\le c_n\\) for all large \\(n\\) and \\(b_n \\to L\\), \\(c_n \\to L\\), then \\(a_n \\to L\\).",
+   "kp": "k4"
+  },
+  {
+   "id": "c7",
+   "type": "concept",
+   "front": "Absolute value theorem: statement and its limitation",
+   "back": "If \\(|a_n| \\to 0\\) then \\(a_n \\to 0\\). It works only for the limit 0: \\(|(-1)^n| \\to 1\\) but \\((-1)^n\\) diverges.",
+   "kp": "k4"
+  },
+  {
+   "id": "c8",
+   "type": "concept",
+   "front": "How do you compute \\(\\lim n^{1/n}\\)?",
+   "back": "\\(n^{1/n} = e^{(\\ln n)/n}\\); the exponent tends to 0, and by continuity of \\(e^x\\) the limit is 1.",
+   "kp": "k6"
+  },
+  {
+   "id": "c9",
+   "type": "concept",
+   "front": "Growth order of \\(\\ln n,\\ n^p,\\ b^n,\\ n!,\\ n^n\\) (\\(p > 0,\\ b > 1\\))",
+   "back": "\\(\\ln n \\ll n^p \\ll b^n \\ll n! \\ll n^n\\), where \\(u_n \\ll v_n\\) means \\(u_n / v_n \\to 0\\).",
+   "kp": "k9"
+  },
+  {
+   "id": "c10",
+   "type": "concept",
+   "front": "Three ways to show a sequence is monotone",
+   "back": "Sign of \\(a_{n+1} - a_n\\); compare \\(a_{n+1}/a_n\\) with 1 (positive terms); sign of \\(f'(x)\\) where \\(f(n) = a_n\\).",
+   "kp": "k7"
+  },
+  {
+   "id": "c11",
+   "type": "term",
+   "front": "State the monotone convergence theorem.",
+   "back": "Every bounded monotone sequence of real numbers converges.",
+   "kp": "k8"
+  },
+  {
+   "id": "c12",
+   "type": "concept",
+   "front": "Why is the monotone convergence theorem false in the rational numbers?",
+   "back": "The rationals are not complete: \\(1, 1.4, 1.41, \\dots\\) is increasing and bounded, but its limit \\(\\sqrt2\\) is not rational.",
+   "kp": "k8"
+  },
+  {
+   "id": "c13",
+   "type": "concept",
+   "front": "Four steps to find the limit of \\(a_{n+1} = g(a_n)\\)",
+   "back": "Prove monotone; prove bounded; conclude a limit \\(L\\) exists (MCT); solve \\(L = g(L)\\) and pick the root consistent with the bounds.",
+   "kp": "k8"
+  },
+  {
+   "id": "c14",
+   "type": "concept",
+   "front": "How do subsequences prove divergence?",
+   "back": "If \\(a_n \\to L\\), every subsequence tends to \\(L\\). Two subsequences with different limits (or an unbounded one) force divergence.",
+   "kp": "k10"
+  },
+  {
+   "id": "c15",
+   "type": "concept",
+   "front": "Is every convergent sequence bounded? Is every bounded sequence convergent?",
+   "back": "Yes; no. Convergent implies bounded, but \\((-1)^n\\) is bounded and divergent.",
+   "kp": "k7"
+  },
+  {
+   "id": "c16",
+   "type": "problem",
+   "front": "\\(\\lim_{n\\to\\infty}\\frac{n!}{n^n}\\)",
+   "back": "0. Write it as \\(\\frac1n\\cdot\\frac2n\\cdots\\frac nn \\le \\frac1n\\) and squeeze.",
+   "kp": "k4",
+   "answer": "0",
+   "check": "number"
+  },
+  {
+   "id": "c17",
+   "type": "problem",
+   "front": "\\(\\lim_{n\\to\\infty}\\frac{\\ln n}{n}\\)",
+   "back": "0, by L'Hôpital's rule applied to \\(\\frac{\\ln x}{x}\\): \\(\\frac{1/x}{1} \\to 0\\).",
+   "kp": "k3",
+   "answer": "0",
+   "check": "number"
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k4",
+   "type": "number",
+   "prompt": "Compute \\(\\lim_{n\\to\\infty}\\frac{5n^3 - n}{2n^3 + 7n^2}\\).",
+   "answer": "5/2",
+   "why": "Divide by \\(n^3\\): \\(\\frac{5 - 1/n^2}{2 + 7/n} \\to \\frac52\\) by the limit laws."
+  },
+  {
+   "id": "p2",
+   "kp": "k3",
+   "type": "number",
+   "prompt": "Compute \\(\\lim_{n\\to\\infty} n\\left(e^{1/n} - 1\\right)\\).",
+   "answer": "1",
+   "why": "With \\(f(x) = x(e^{1/x} - 1) = \\frac{e^{1/x} - 1}{1/x}\\), a \\(\\frac00\\) form. L'Hôpital: \\(\\frac{e^{1/x}\\cdot(-1/x^2)}{-1/x^2} = e^{1/x} \\to 1\\). Equivalently, substitute \\(u = 1/x \\to 0^+\\) to get \\(\\frac{e^u - 1}{u} \\to 1\\), the derivative of \\(e^u\\) at 0."
+  },
+  {
+   "id": "p3",
+   "kp": "k3",
+   "type": "number",
+   "prompt": "Compute \\(\\lim_{n\\to\\infty}\\left(1 - \\frac1n\\right)^n\\).",
+   "answer": "e^(-1)",
+   "why": "This is \\(\\left(1 + \\frac cn\\right)^n\\) with \\(c = -1\\), whose limit is \\(e^c = e^{-1}\\). Directly: \\(x\\ln(1 - 1/x) = \\frac{\\ln(1 - 1/x)}{1/x} \\to -1\\) by L'Hôpital."
+  },
+  {
+   "id": "p4",
+   "kp": "k5",
+   "type": "number",
+   "prompt": "Compute \\(\\lim_{n\\to\\infty}\\frac{3^n + 2^n}{3^{n+1}}\\).",
+   "answer": "1/3",
+   "why": "Divide numerator and denominator by \\(3^n\\): \\(\\frac{1 + (2/3)^n}{3}\\). Since \\(\\left|\\frac23\\right| < 1\\), \\((2/3)^n \\to 0\\), so the limit is \\(\\frac13\\)."
+  },
+  {
+   "id": "p5",
+   "kp": "k4",
+   "type": "number",
+   "prompt": "Compute \\(\\lim_{n\\to\\infty}\\left(\\sqrt{n^2 + 3n} - n\\right)\\).",
+   "answer": "3/2",
+   "why": "This is \\(\\infty - \\infty\\). Multiply by the conjugate: \\(\\frac{(n^2 + 3n) - n^2}{\\sqrt{n^2+3n} + n} = \\frac{3n}{\\sqrt{n^2 + 3n} + n} = \\frac{3}{\\sqrt{1 + 3/n} + 1} \\to \\frac32\\)."
+  },
+  {
+   "id": "p6",
+   "kp": "k4",
+   "type": "written",
+   "prompt": "Prove that \\(\\lim_{n\\to\\infty}\\frac{(-2)^n}{n!} = 0\\). Explain why L'Hôpital's rule is not the right tool.",
+   "rubric": [
+    "Reduces to \\(|a_n| = \\frac{2^n}{n!}\\) and cites the absolute value theorem.",
+    "Bounds \\(\\frac{2^n}{n!}\\), e.g. \\(\\frac{2^n}{n!} = \\frac21\\cdot\\frac22\\cdot\\frac23\\cdots\\frac2n \\le 2\\left(\\frac23\\right)^{n-2}\\) for \\(n \\ge 2\\).",
+    "Concludes via the squeeze theorem and \\(\\left(\\frac23\\right)^{n} \\to 0\\).",
+    "Notes that \\(n!\\) is defined only at integers, so there is no function to differentiate."
+   ],
+   "model": "By the absolute value theorem it suffices to show \\(\\frac{2^n}{n!} \\to 0\\). For \\(n \\ge 2\\), \\(\\frac{2^n}{n!} = \\frac21\\cdot\\frac22\\cdot\\frac23\\cdots\\frac2n\\). The first two factors multiply to 2, and each of the remaining \\(n - 2\\) factors is at most \\(\\frac23\\). So \\(0 < \\frac{2^n}{n!} \\le 2\\left(\\frac23\\right)^{n-2}\\), and the right side tends to 0 because \\(\\left|\\frac23\\right| < 1\\). By the squeeze theorem \\(\\frac{2^n}{n!} \\to 0\\), hence \\(\\frac{(-2)^n}{n!} \\to 0\\). L'Hôpital's rule requires a differentiable function of a real variable; \\(n!\\) has no such elementary extension in this course, so the product-of-factors argument is used instead.",
+   "why": "Writing a factorial quotient as a product of simple fractions is the standard way to bound it."
+  },
+  {
+   "id": "p7",
+   "kp": "k8",
+   "type": "number",
+   "prompt": "Let \\(a_1 = 1\\) and \\(a_{n+1} = 3 - \\frac{1}{a_n}\\). One can show by induction that \\(1 \\le a_n < 3\\) and that the sequence is increasing. Given this, find \\(\\lim a_n\\) exactly.",
+   "answer": "(3 + sqrt(5))/2",
+   "why": "The monotone convergence theorem gives a limit \\(L\\), and \\(L \\ge 1\\). Passing to the limit, \\(L = 3 - \\frac1L\\), so \\(L^2 - 3L + 1 = 0\\) and \\(L = \\frac{3 \\pm \\sqrt5}{2}\\). The root \\(\\frac{3 - \\sqrt5}{2} \\approx 0.38\\) is less than 1, so \\(L = \\frac{3 + \\sqrt5}{2} \\approx 2.618\\). The terms \\(1, 2, 2.5, 2.6, 2.615, \\dots\\) agree."
+  },
+  {
+   "id": "p8",
+   "kp": "k9",
+   "type": "written",
+   "prompt": "Arrange \\(\\ln n,\\ n^{50},\\ 1.001^n,\\ n!\\) in increasing order of growth, and prove rigorously that \\(\\frac{n^{50}}{1.001^n} \\to 0\\).",
+   "rubric": [
+    "Gives the order \\(\\ln n \\ll n^{50} \\ll 1.001^n \\ll n!\\).",
+    "Passes to \\(f(x) = \\frac{x^{50}}{1.001^x}\\) (an \\(\\frac\\infty\\infty\\) form).",
+    "Applies L'Hôpital's rule 50 times (or argues inductively) reaching \\(\\frac{50!}{(\\ln 1.001)^{50}\\,1.001^x} \\to 0\\).",
+    "Concludes the sequence limit via the theorem on sequences from functions."
+   ],
+   "model": "The order is \\(\\ln n \\ll n^{50} \\ll 1.001^n \\ll n!\\). For the comparison, let \\(f(x) = \\frac{x^{50}}{1.001^x}\\). Each application of L'Hôpital's rule lowers the power of \\(x\\) in the numerator by one and multiplies the denominator by \\(\\ln 1.001 > 0\\); each intermediate quotient is still \\(\\frac\\infty\\infty\\) until the power reaches 0. After 50 applications the quotient is \\(\\frac{50!}{(\\ln 1.001)^{50}\\,1.001^x}\\), which tends to 0 because \\(1.001^x \\to \\infty\\). Hence \\(f(x) \\to 0\\) and so \\(\\frac{n^{50}}{1.001^n} \\to 0\\).",
+   "why": "An exponential with any base above 1 eventually dominates any fixed power, though for these values the takeover happens only at very large \\(n\\) (tens of thousands); that is irrelevant to the limit."
+  },
+  {
+   "id": "p9",
+   "kp": "k2",
+   "type": "written",
+   "prompt": "Write the negation of \\\"\\(\\lim_{n\\to\\infty} a_n = L\\)\\\" in \\(\\varepsilon\\)–\\(N\\) form, and use it to prove that \\(a_n = (-1)^n\\) does not converge to 1.",
+   "rubric": [
+    "Negation: there exists \\(\\varepsilon > 0\\) such that for every \\(N\\) there is \\(n \\ge N\\) with \\(|a_n - L| \\ge \\varepsilon\\).",
+    "Chooses a specific \\(\\varepsilon\\), e.g. \\(\\varepsilon = 1\\).",
+    "For arbitrary \\(N\\), exhibits an odd \\(n \\ge N\\) where \\(|a_n - 1| = 2 \\ge \\varepsilon\\)."
+   ],
+   "model": "\\(a_n \\not\\to L\\) means: there exists \\(\\varepsilon > 0\\) such that for every integer \\(N\\) there is some \\(n \\ge N\\) with \\(|a_n - L| \\ge \\varepsilon\\). For \\(a_n = (-1)^n\\) and \\(L = 1\\), take \\(\\varepsilon = 1\\). Given any \\(N\\), choose an odd \\(n \\ge N\\) (for example \\(2N + 1\\)). Then \\(|a_n - 1| = |-1 - 1| = 2 \\ge 1\\). So the sequence does not converge to 1.",
+   "why": "Negating swaps each quantifier: \\\"for every \\(\\varepsilon\\)\\\" becomes \\\"there exists \\(\\varepsilon\\)\\\", and \\\"there is \\(N\\) such that all \\(n \\ge N\\)\\\" becomes \\\"every \\(N\\) has some \\(n \\ge N\\)\\\"."
+  },
+  {
+   "id": "p10",
+   "kp": "k6",
+   "type": "number",
+   "prompt": "Compute \\(\\lim_{n\\to\\infty} n^{1/n}\\).",
+   "answer": "1",
+   "why": "Write \\(n^{1/n} = e^{(\\ln n)/n}\\). The exponent tends to 0 (L'Hôpital on \\(\\frac{\\ln x}{x}\\)), and \\(e^x\\) is continuous at 0, so the limit is \\(e^0 = 1\\)."
+  },
+  {
+   "id": "p11",
+   "kp": "k5",
+   "type": "written",
+   "prompt": "For which real numbers \\(r\\) does \\(\\{r^n\\}\\) converge? For each case give the limit or the reason for divergence.",
+   "rubric": [
+    "States convergence exactly for \\(-1 < r \\le 1\\).",
+    "Limit 0 for \\(|r| < 1\\), justified (e.g. \\(|r|^n = e^{n\\ln|r|} \\to 0\\) plus absolute value theorem).",
+    "Limit 1 for \\(r = 1\\); \\(r = -1\\) oscillates between \\(\\pm1\\).",
+    "For \\(|r| > 1\\), \\(|r|^n \\to \\infty\\), so the sequence is unbounded and diverges."
+   ],
+   "model": "If \\(|r| < 1\\) and \\(r \\ne 0\\), \\(|r|^n = e^{n\\ln|r|}\\) with \\(\\ln|r| < 0\\), so \\(|r|^n \\to 0\\), and by the absolute value theorem \\(r^n \\to 0\\); for \\(r = 0\\) every term is 0. If \\(r = 1\\), every term is 1. If \\(r = -1\\), the terms alternate between \\(-1\\) and \\(1\\): the even and odd subsequences have different limits, so it diverges. If \\(|r| > 1\\), \\(|r|^n = e^{n\\ln|r|} \\to \\infty\\), so the sequence is unbounded and diverges (to \\(\\infty\\) when \\(r > 1\\)). Thus \\(\\{r^n\\}\\) converges exactly for \\(-1 < r \\le 1\\).",
+   "why": "This fact reappears as the convergence criterion for geometric series, where the endpoint \\(r = 1\\) behaves differently."
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k8",
+   "type": "written",
+   "prompt": "Let \\(a_1 = 2\\) and \\(a_{n+1} = \\frac{a_n}{2} + \\frac{1}{a_n}\\). (a) Show that \\(a_{n+1} - \\sqrt2 = \\frac{(a_n - \\sqrt2)^2}{2a_n}\\) and deduce \\(a_n \\ge \\sqrt2\\) for all \\(n\\). (b) Show the sequence is nonincreasing. (c) Conclude that it converges and find the limit.",
+   "rubric": [
+    "Verifies the identity algebraically: \\(\\frac{a_n}{2} + \\frac1{a_n} - \\sqrt2 = \\frac{a_n^2 - 2\\sqrt2 a_n + 2}{2a_n}\\).",
+    "Deduces \\(a_{n+1} \\ge \\sqrt 2\\) (with \\(a_n > 0\\) by induction) and \\(a_1 = 2 \\ge \\sqrt2\\).",
+    "Shows \\(a_{n+1} - a_n = \\frac{2 - a_n^2}{2a_n} \\le 0\\) using \\(a_n \\ge \\sqrt2\\).",
+    "Applies the monotone convergence theorem, solves \\(L = \\frac L2 + \\frac1L\\) to get \\(L^2 = 2\\), and selects \\(L = \\sqrt2\\)."
+   ],
+   "model": "(a) \\(a_{n+1} - \\sqrt2 = \\frac{a_n^2 + 2 - 2\\sqrt2\\,a_n}{2a_n} = \\frac{(a_n - \\sqrt2)^2}{2a_n}\\). By induction all terms are positive (\\(a_1 = 2\\), and a positive \\(a_n\\) gives a positive \\(a_{n+1}\\)), so the right side is \\(\\ge 0\\) and \\(a_{n+1} \\ge \\sqrt2\\); also \\(a_1 = 2 \\ge \\sqrt2\\). (b) \\(a_{n+1} - a_n = \\frac1{a_n} - \\frac{a_n}{2} = \\frac{2 - a_n^2}{2a_n} \\le 0\\) because \\(a_n^2 \\ge 2\\). (c) The sequence is nonincreasing and bounded below by \\(\\sqrt2\\), so it converges to some \\(L \\ge \\sqrt2\\) by the monotone convergence theorem. Passing to the limit (the map \\(x \\mapsto \\frac x2 + \\frac1x\\) is continuous for \\(x > 0\\)), \\(L = \\frac L2 + \\frac1L\\), so \\(L^2 = 2\\), and \\(L = \\sqrt2\\).",
+   "why": "This is Newton's method for \\(x^2 - 2 = 0\\). The identity in (a) shows the error is squared at each step, which is why the terms \\(2, 1.5, 1.41667, 1.414216, \\dots\\) converge so quickly."
+  },
+  {
+   "id": "e2",
+   "kp": "k3",
+   "type": "number",
+   "prompt": "Compute \\(\\lim_{n\\to\\infty}\\left(1 + \\frac{1}{2n}\\right)^{3n}\\).",
+   "answer": "e^(3/2)",
+   "why": "\\(\\ln\\) of the term is \\(3n\\ln\\left(1 + \\frac1{2n}\\right) = \\frac{3}{2}\\cdot\\frac{\\ln(1 + 1/(2n))}{1/(2n)}\\). With \\(u = \\frac1{2x} \\to 0^+\\), \\(\\frac{\\ln(1+u)}{u} \\to 1\\), so the logarithm tends to \\(\\frac32\\) and the limit is \\(e^{3/2}\\)."
+  },
+  {
+   "id": "e3",
+   "kp": "k2",
+   "type": "written",
+   "prompt": "Prove directly from the \\(\\varepsilon\\)–\\(N\\) definition that \\(\\lim_{n\\to\\infty}\\frac{1}{\\sqrt n} = 0\\).",
+   "rubric": [
+    "Starts with arbitrary \\(\\varepsilon > 0\\).",
+    "Chooses an integer \\(N > \\frac{1}{\\varepsilon^2}\\).",
+    "Shows \\(n \\ge N\\) implies \\(\\sqrt n > \\frac1\\varepsilon\\), hence \\(\\left|\\frac1{\\sqrt n} - 0\\right| < \\varepsilon\\)."
+   ],
+   "model": "Let \\(\\varepsilon > 0\\). Choose an integer \\(N > \\frac{1}{\\varepsilon^2}\\). For \\(n \\ge N\\), \\(n > \\frac1{\\varepsilon^2}\\), so \\(\\sqrt n > \\frac1\\varepsilon\\) (the square root is increasing), hence \\(\\left|\\frac{1}{\\sqrt n} - 0\\right| = \\frac1{\\sqrt n} < \\varepsilon\\). Therefore \\(\\frac1{\\sqrt n} \\to 0\\).",
+   "why": "Work backwards from \\(\\frac{1}{\\sqrt n} < \\varepsilon\\) to \\(n > \\frac{1}{\\varepsilon^2}\\), then write the proof forwards."
+  },
+  {
+   "id": "e4",
+   "kp": "k10",
+   "type": "written",
+   "prompt": "True or false: \\\"If \\(\\lim_{n\\to\\infty}|a_n| = 3\\), then \\(\\{a_n\\}\\) converges to 3 or to \\(-3\\).\\\" Prove it or give a counterexample with justification.",
+   "rubric": [
+    "Answers false.",
+    "Gives a counterexample such as \\(a_n = 3(-1)^n\\) with \\(|a_n| = 3\\) for all \\(n\\).",
+    "Proves the counterexample diverges using subsequences with limits \\(3\\) and \\(-3\\)."
+   ],
+   "model": "False. Let \\(a_n = 3(-1)^n\\). Then \\(|a_n| = 3\\) for every \\(n\\), so \\(|a_n| \\to 3\\). But \\(a_{2k} = 3 \\to 3\\) and \\(a_{2k+1} = -3 \\to -3\\); two subsequences with different limits mean \\(\\{a_n\\}\\) diverges, so it converges neither to 3 nor to \\(-3\\).",
+   "why": "Only for the limit 0 does convergence of \\(|a_n|\\) force convergence of \\(a_n\\) (the absolute value theorem). What is true in general: if \\(a_n \\to L\\) then \\(|a_n| \\to |L|\\)."
+  },
+  {
+   "id": "e5",
+   "kp": "k6",
+   "type": "number",
+   "prompt": "Compute \\(\\lim_{n\\to\\infty}\\cos\\!\\left(\\frac{\\pi n}{3n + 1}\\right)\\).",
+   "answer": "1/2",
+   "why": "\\(\\frac{\\pi n}{3n+1} = \\frac{\\pi}{3 + 1/n} \\to \\frac\\pi3\\), and cosine is continuous, so the limit is \\(\\cos\\frac\\pi3 = \\frac12\\)."
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "Definition of the limit",
+    "formula": "\\(\\forall \\varepsilon > 0\\ \\exists N:\\ n \\ge N \\Rightarrow |a_n - L| < \\varepsilon\\)",
+    "when": "Proving a limit from first principles, or negating it to prove a limit fails.",
+    "example": "\\(\\left|\\frac{3n+1}{n+2} - 3\\right| = \\frac{5}{n+2} < \\varepsilon\\) once \\(n > \\frac5\\varepsilon - 2\\).",
+    "watch": "\\(N\\) may depend on \\(\\varepsilon\\), never on \\(n\\)."
+   },
+   {
+    "name": "Sequences from functions",
+    "formula": "If \\(f(n) = a_n\\) and \\(\\lim_{x\\to\\infty} f(x) = L\\), then \\(a_n \\to L\\).",
+    "when": "When the formula makes sense for real x, especially to use L'Hôpital's rule.",
+    "example": "\\(\\frac{\\ln n}{n} \\to 0\\) via \\(\\frac{1/x}{1}\\).",
+    "watch": "One direction only; never differentiate with respect to n, and not for factorials."
+   },
+   {
+    "name": "Squeeze theorem",
+    "formula": "\\(b_n \\le a_n \\le c_n\\), \\(b_n, c_n \\to L\\) \\(\\Rightarrow a_n \\to L\\)",
+    "when": "Bounded oscillating factors (sine, cosine, (−1)^n) or factorial products.",
+    "example": "\\(\\left|\\frac{\\cos n}{n}\\right| \\le \\frac1n\\)",
+    "watch": "Both bounds must have the same limit."
+   },
+   {
+    "name": "Absolute value theorem",
+    "formula": "\\(|a_n| \\to 0 \\Rightarrow a_n \\to 0\\)",
+    "when": "Alternating signs with terms shrinking to 0.",
+    "example": "\\(\\frac{(-1)^n}{n^2} \\to 0\\)",
+    "watch": "Only for the limit 0."
+   },
+   {
+    "name": "Geometric sequence",
+    "formula": "\\(r^n \\to 0\\) if \\(|r| < 1\\); \\(\\to 1\\) if \\(r = 1\\); diverges otherwise",
+    "when": "Any term with a constant raised to the power n.",
+    "example": "\\(\\frac{3^n + 2^n}{3^{n+1}} = \\frac{1 + (2/3)^n}{3} \\to \\frac13\\)",
+    "watch": "\\(r = -1\\) diverges."
+   },
+   {
+    "name": "Continuity",
+    "formula": "\\(a_n \\to L\\), \\(g\\) continuous at \\(L\\) \\(\\Rightarrow g(a_n) \\to g(L)\\)",
+    "when": "Limits inside logarithms, exponentials, trig functions, roots.",
+    "example": "\\(n^{1/n} = e^{(\\ln n)/n} \\to e^0 = 1\\)",
+    "watch": "Combine divergent pieces (like two logarithms) before moving the limit inside."
+   },
+   {
+    "name": "Monotone convergence theorem",
+    "formula": "Bounded and monotone implies convergent.",
+    "when": "Recursively defined sequences, or when the limit is unknown.",
+    "example": "\\(a_{n+1} = \\sqrt{2 + a_n}\\), \\(a_1 = 1\\): increasing, below 2, limit 2.",
+    "watch": "Prove existence before solving \\(L = g(L)\\)."
+   },
+   {
+    "name": "Divergence by subsequences",
+    "formula": "Two subsequences with different limits \\(\\Rightarrow\\) divergence",
+    "when": "Oscillating sequences.",
+    "example": "\\(\\frac{(-1)^n n}{n+1}\\): even terms tend to 1, odd to \\(-1\\).",
+    "watch": "Bounded does not mean convergent."
+   }
+  ],
+  "stuck": [
+   "Divide numerator and denominator by the fastest-growing term (highest power, largest exponential base).",
+   "For \\(1^\\infty\\), \\(0\\cdot\\infty\\) or \\(\\infty^0\\) forms, take the logarithm, find its limit, then exponentiate.",
+   "If a factor oscillates but is bounded, bound it and use the squeeze theorem.",
+   "For factorials, write the quotient as a product of fractions or look at \\(a_{n+1}/a_n\\).",
+   "For a recurrence, compute five terms to guess monotonicity and a bound, then prove both by induction.",
+   "To show divergence, look for two index patterns (even/odd, multiples of 4) giving different limits."
+  ]
+ }
+}

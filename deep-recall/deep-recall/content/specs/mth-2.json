@@ -1,0 +1,174 @@
+{
+ "subject": "Mathematics",
+ "sid": "mth",
+ "ui": 2,
+ "course": "Calculus II",
+ "blurb": "A full problem-solving track: algebra through calculus, linear algebra, differential equations, and proof.",
+ "kind": "program",
+ "code": null,
+ "topics": [
+  {
+   "key": "mth-2-0",
+   "title": "Integration by parts",
+   "reference": "AP Calculus BC; Stewart, Calculus"
+  },
+  {
+   "key": "mth-2-1",
+   "title": "Trigonometric integrals and substitution",
+   "reference": "AP Calculus BC; Stewart, Calculus"
+  },
+  {
+   "key": "mth-2-2",
+   "title": "Partial fractions",
+   "reference": "AP Calculus BC; Stewart, Calculus"
+  },
+  {
+   "key": "mth-2-3",
+   "title": "Improper integrals",
+   "reference": "AP Calculus BC; Stewart, Calculus"
+  },
+  {
+   "key": "mth-2-4",
+   "title": "Area between curves and volumes of revolution",
+   "reference": "AP Calculus BC; Stewart, Calculus"
+  },
+  {
+   "key": "mth-2-5",
+   "title": "Arc length and surface area",
+   "reference": "AP Calculus BC; Stewart, Calculus"
+  },
+  {
+   "key": "mth-2-6",
+   "title": "Sequences",
+   "reference": "AP Calculus BC; Stewart, Calculus"
+  },
+  {
+   "key": "mth-2-7",
+   "title": "Series convergence tests",
+   "reference": "AP Calculus BC; Stewart, Calculus"
+  },
+  {
+   "key": "mth-2-8",
+   "title": "Power series and radius of convergence",
+   "reference": "AP Calculus BC; Stewart, Calculus"
+  },
+  {
+   "key": "mth-2-9",
+   "title": "Taylor and Maclaurin series",
+   "reference": "AP Calculus BC; Stewart, Calculus"
+  },
+  {
+   "key": "mth-2-10",
+   "title": "Parametric equations",
+   "reference": "AP Calculus BC; Stewart, Calculus"
+  },
+  {
+   "key": "mth-2-11",
+   "title": "Polar coordinates",
+   "reference": "AP Calculus BC; Stewart, Calculus"
+  }
+ ],
+ "otherCourses": [
+  {
+   "course": "Algebra & Precalculus",
+   "topics": [
+    "Linear equations and inequalities",
+    "Quadratics and factoring",
+    "Polynomial and rational functions",
+    "Exponents and logarithms",
+    "Functions, inverses, and transformations",
+    "Trigonometric functions and the unit circle",
+    "Trigonometric identities and equations",
+    "Systems of equations",
+    "Arithmetic and geometric sequences",
+    "Complex numbers"
+   ]
+  },
+  {
+   "course": "Calculus I",
+   "topics": [
+    "Limits",
+    "Continuity",
+    "The definition of the derivative",
+    "Power, product, and quotient rules",
+    "The chain rule",
+    "Derivatives of trig, exponential, and log functions",
+    "Implicit differentiation",
+    "Related rates",
+    "Extrema and curve sketching",
+    "Optimization",
+    "L’Hôpital’s rule",
+    "Riemann sums and the definite integral",
+    "The fundamental theorem of calculus",
+    "u-substitution"
+   ]
+  },
+  {
+   "course": "Calculus III",
+   "topics": [
+    "Vectors, dot and cross products",
+    "Lines and planes in space",
+    "Vector-valued functions and motion",
+    "Partial derivatives",
+    "Gradients and directional derivatives",
+    "Multivariable optimization and Lagrange multipliers",
+    "Double integrals",
+    "Triple integrals and coordinate changes",
+    "Line integrals and conservative fields",
+    "Green’s theorem",
+    "Stokes’ theorem and the divergence theorem"
+   ]
+  },
+  {
+   "course": "Linear Algebra",
+   "topics": [
+    "Systems and row reduction",
+    "Matrix operations and inverses",
+    "Determinants",
+    "Vector spaces and subspaces",
+    "Span, independence, basis, and dimension",
+    "Linear transformations",
+    "Eigenvalues and eigenvectors",
+    "Diagonalization",
+    "Orthogonality and Gram–Schmidt",
+    "Least squares"
+   ]
+  },
+  {
+   "course": "Differential Equations",
+   "topics": [
+    "Separable equations",
+    "First-order linear equations",
+    "Exact equations",
+    "Second-order homogeneous linear equations",
+    "Undetermined coefficients",
+    "Variation of parameters",
+    "Laplace transforms",
+    "Systems of linear ODEs"
+   ]
+  },
+  {
+   "course": "Proof & Discrete Math",
+   "topics": [
+    "Logic and truth tables",
+    "Proof techniques",
+    "Mathematical induction",
+    "Sets, functions, and relations",
+    "Counting: permutations and combinations",
+    "Pigeonhole and inclusion–exclusion",
+    "Recurrence relations",
+    "Graph theory basics",
+    "Modular arithmetic and primes"
+   ]
+  },
+  {
+   "course": "Big Ideas",
+   "topics": [
+    "Infinity and cardinality",
+    "Epsilon–delta and the rigor of analysis",
+    "Group theory and symmetry",
+    "Gödel’s incompleteness theorems"
+   ]
+  }
+ ]
+}

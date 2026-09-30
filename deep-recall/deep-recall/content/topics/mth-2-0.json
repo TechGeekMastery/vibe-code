@@ -1,0 +1,704 @@
+{
+ "key": "mth-2-0",
+ "title": "Integration by parts",
+ "v": 1,
+ "scope": "The integration-by-parts formula for indefinite and definite integrals, choosing u and dv, repeated and tabular application, recurring integrals, and reduction formulas; trigonometric powers in general, trigonometric substitution and partial fractions are left to the following topics.",
+ "sources": [
+  {
+   "title": "OpenStax, Calculus Volume 2, Section 3.1: Integration by Parts",
+   "url": "https://openstax.org/books/calculus-volume-2/pages/3-1-integration-by-parts"
+  },
+  {
+   "title": "Paul Dawkins, Paul's Online Math Notes, Calculus II: Integration by Parts",
+   "url": "https://tutorial.math.lamar.edu/Classes/CalcII/IntegrationByParts.aspx"
+  },
+  {
+   "title": "MIT OpenCourseWare 18.01SC Single Variable Calculus, Session 76: Integration by Parts (reduction formulas)",
+   "url": "https://ocw.mit.edu/courses/18-01sc-single-variable-calculus-fall-2010/pages/unit-4-techniques-of-integration/part-b-partial-fractions-integration-by-parts-arc-length-and-surface-area/session-76-integration-by-parts"
+  }
+ ],
+ "pre": [
+  "mth-1-3",
+  "mth-1-12",
+  "mth-1-13"
+ ],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Derive parts from the product rule",
+   "d": "Derive the formula for integrating u dv from the product rule and explain what it exchanges for what.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k2",
+   "t": "Carry out one application of parts",
+   "d": "Identify u and dv, compute du and v, assemble uv minus the integral of v du, and check by differentiating.",
+   "type": "procedure"
+  },
+  {
+   "id": "k3",
+   "t": "Choose u and dv strategically",
+   "d": "Choose u and dv so that dv is integrable and the new integral is simpler; use LIATE as a heuristic and recognise when it fails.",
+   "type": "skill"
+  },
+  {
+   "id": "k4",
+   "t": "Integrate logarithms and inverse trig functions",
+   "d": "Integrate a lone logarithm or inverse trigonometric function by taking dv = dx.",
+   "type": "procedure"
+  },
+  {
+   "id": "k5",
+   "t": "Repeated parts and the tabular method",
+   "d": "Apply parts repeatedly to a polynomial times an exponential or sine/cosine, organising the work in a sign-alternating table.",
+   "type": "procedure"
+  },
+  {
+   "id": "k6",
+   "t": "Solve recurring integrals algebraically",
+   "d": "When the original integral reappears, solve the resulting equation for it, keeping the choice of u consistent.",
+   "type": "procedure"
+  },
+  {
+   "id": "k7",
+   "t": "Definite integrals by parts",
+   "d": "Evaluate definite integrals with the boundary term [uv] from a to b and the remaining definite integral.",
+   "type": "procedure"
+  },
+  {
+   "id": "k8",
+   "t": "Derive and apply reduction formulas",
+   "d": "Derive reduction formulas for integrals with an integer parameter and use them, including the Wallis integrals on [0, π/2].",
+   "type": "skill"
+  }
+ ],
+ "intro": "Substitution, the method you already know, reverses the chain rule: it succeeds when the integrand contains an inner function together with that inner function's derivative. Many integrands that arise in practice have a different shape. \\( \\int x\\cos x\\,dx \\), \\( \\int x^{2}e^{x}\\,dx \\), \\( \\int \\ln x\\,dx \\) and \\( \\int e^{x}\\sin x\\,dx \\) are products of factors that are not related by differentiation, and no substitution simplifies them.\n\nEvery differentiation rule gives an integration rule when read backwards. The rule that remains to be reversed is the product rule, and reversing it gives **integration by parts**. The method does not evaluate an integral outright. It replaces one integral by another, moving a derivative from one factor to the other, and it helps exactly when the new integral is easier than the old. This chapter derives the formula, develops the judgment for choosing how to split an integrand, and extends the method to repeated use, to integrals that reproduce themselves, to definite integrals, and to reduction formulas.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "The product rule read backwards",
+   "kps": [
+    "k1",
+    "k2"
+   ],
+   "md": "This section answers one question: what integration rule follows from the product rule, and what exactly does it accomplish?\n\nLet \\( f \\) and \\( g \\) be differentiable functions whose derivatives are continuous on an interval. The product rule states\n\\[ \\frac{d}{dx}\\big[f(x)g(x)\\big] = f'(x)g(x) + f(x)g'(x). \\]\nIntegrate both sides. The left side is the derivative of \\( fg \\), so its antiderivative is \\( fg \\) itself (up to a constant):\n\\[ f(x)g(x) = \\int f'(x)g(x)\\,dx + \\int f(x)g'(x)\\,dx. \\]\nSolve for the second integral:\n\\[ \\int f(x)g'(x)\\,dx = f(x)g(x) - \\int g(x)f'(x)\\,dx. \\]\nThe arbitrary constants have not disappeared; they are carried by the indefinite integrals on both sides and will reappear as a single \\( +C \\) at the end. The formula is usually written with the abbreviations \\( u = f(x) \\) and \\( v = g(x) \\), so that \\( du = f'(x)\\,dx \\) and \\( dv = g'(x)\\,dx \\).\n\n> **Integration by parts.** If \\( u \\) and \\( v \\) are differentiable functions of \\( x \\) with continuous derivatives, then \\[ \\int u\\,dv = uv - \\int v\\,du. \\]\n\nRead the formula as an exchange. On the left, \\( u \\) appears undifferentiated and \\( dv \\) must be integrated. On the right, \\( u \\) has been differentiated (giving \\( du \\)) and \\( dv \\) has been integrated (giving \\( v \\)). You gain something only if \\( \\int v\\,du \\) is easier than \\( \\int u\\,dv \\). The method is therefore a way of moving a derivative from one factor of a product onto the other.\n\n**Worked example.** Evaluate \\( \\int x\\cos x\\,dx \\).\n\n1. Split the integrand: \\( u = x \\) and \\( dv = \\cos x\\,dx \\).\n2. Differentiate \\( u \\) and integrate \\( dv \\): \\( du = dx \\) and \\( v = \\sin x \\).\n3. Apply the formula: \\[ \\int x\\cos x\\,dx = x\\sin x - \\int \\sin x\\,dx. \\]\n4. The new integral is elementary: \\( \\int \\sin x\\,dx = -\\cos x \\). Hence \\[ \\int x\\cos x\\,dx = x\\sin x + \\cos x + C. \\]\n5. Check by differentiating: \\( \\frac{d}{dx}(x\\sin x + \\cos x) = \\sin x + x\\cos x - \\sin x = x\\cos x \\).\n\nWhy may we take \\( v = \\sin x \\) rather than \\( v = \\sin x + K \\)? Carry the constant through: \\( x(\\sin x + K) - \\int(\\sin x + K)\\,dx = x\\sin x + Kx + \\cos x - Kx + C \\). The \\( Kx \\) terms cancel, and this cancellation happens for every integrand, because \\( uK - \\int K\\,du = uK - Ku \\). So the simplest antiderivative of \\( dv \\) can always be used for \\( v \\).\n\n**The common mistake.** Beginners sometimes integrate each factor separately and multiply, writing \\( \\int x\\cos x\\,dx = \\tfrac{x^{2}}{2}\\sin x \\). Differentiating that guess gives \\( x\\sin x + \\tfrac{x^{2}}{2}\\cos x \\), not \\( x\\cos x \\). The error is the belief that integration distributes over products; the product rule already shows that differentiation does not, since the derivative of a product has two terms. Integration by parts is the correct account of how integration interacts with a product. A second, smaller mistake is to forget that \\( dv \\) includes \\( dx \\): \\( v \\) is the antiderivative of everything assigned to \\( dv \\), including any constant factors.",
+   "questions": [
+    {
+     "id": "s1q1",
+     "kp": "k1",
+     "type": "written",
+     "prompt": "Starting from the product rule, derive the integration-by-parts formula \\( \\int u\\,dv = uv - \\int v\\,du \\). State the hypotheses you need on \\( u \\) and \\( v \\), and explain why no constant of integration is lost in the derivation.",
+     "why": "The derivation is the product rule integrated once. The only subtle point is the constant: \\( \\int v\\,du \\) is itself an indefinite integral, so it already carries an arbitrary constant, which is the \\( +C \\) written at the end.",
+     "rubric": [
+      "States the product rule for \\( (uv)' \\) with \\( u, v \\) differentiable with continuous derivatives (so the integrals exist).",
+      "Integrates both sides and identifies \\( \\int (uv)'\\,dx = uv \\) up to a constant.",
+      "Rearranges correctly to isolate \\( \\int u v'\\,dx \\) and rewrites with \\( du = u'dx, dv = v'dx \\).",
+      "Explains that the arbitrary constants are absorbed by the remaining indefinite integral and reappear as one \\( +C \\)."
+     ],
+     "model": "Let \\( u = f(x) \\), \\( v = g(x) \\) be differentiable with continuous derivatives on an interval, so that every integral below exists. The product rule gives \\( (fg)' = f'g + fg' \\). Integrating both sides, \\( fg = \\int f'g\\,dx + \\int fg'\\,dx \\), where the left side is an antiderivative of \\( (fg)' \\); any additive constant can be absorbed into either indefinite integral on the right, because each denotes a family of antiderivatives defined only up to a constant. Rearranging, \\( \\int fg'\\,dx = fg - \\int gf'\\,dx \\). With \\( du = f'(x)\\,dx \\) and \\( dv = g'(x)\\,dx \\) this is \\( \\int u\\,dv = uv - \\int v\\,du \\). Nothing is lost: when the remaining integral is finally evaluated, its arbitrary constant becomes the single \\( +C \\) of the answer."
+    },
+    {
+     "id": "s1q2",
+     "kp": "k2",
+     "type": "antiderivative",
+     "prompt": "Compute \\( \\int x\\sin(2x)\\,dx \\). State your \\( u \\) and \\( dv \\). Enter an antiderivative (the constant is not needed).",
+     "why": "Take \\( u = x \\), \\( dv = \\sin(2x)\\,dx \\), so \\( du = dx \\) and \\( v = -\\tfrac12\\cos(2x) \\). Then \\[ \\int x\\sin 2x\\,dx = -\\tfrac{x}{2}\\cos 2x + \\tfrac12\\int\\cos 2x\\,dx = -\\tfrac{x}{2}\\cos 2x + \\tfrac14\\sin 2x + C. \\] Check: the derivative is \\( -\\tfrac12\\cos 2x + x\\sin 2x + \\tfrac12\\cos 2x = x\\sin 2x \\).",
+     "answer": "-x*cos(2*x)/2 + sin(2*x)/4",
+     "vars": "x"
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "Choosing u and dv",
+   "kps": [
+    "k3",
+    "k4"
+   ],
+   "md": "The formula is valid for every split of the integrand, but most splits are useless. This section gives the criterion for a good choice and a heuristic that usually satisfies it.\n\nA choice of \\( u \\) and \\( dv \\) is good when two conditions hold:\n\n1. \\( dv \\) can be integrated, so that \\( v \\) is available;\n2. the new integral \\( \\int v\\,du \\) is simpler than the original.\n\nThe second condition depends on what differentiation and integration do to each kind of factor. Differentiation lowers the degree of a polynomial, turns \\( \\ln x \\) into the algebraic function \\( 1/x \\), and turns \\( \\arctan x \\) into \\( 1/(1+x^{2}) \\); these factors become simpler when differentiated, so they belong in \\( u \\). Exponentials and sines and cosines keep their form under both differentiation and integration, so they cost nothing in \\( dv \\). This is summarised by the **LIATE** heuristic: choose \\( u \\) to be the factor whose type appears first in the list Logarithmic, Inverse trigonometric, Algebraic, Trigonometric, Exponential, and let \\( dv \\) be the rest.\n\n**Worked example 1.** Evaluate \\( \\int x^{3}\\ln x\\,dx \\). LIATE puts the logarithm first, so \\( u = \\ln x \\), \\( dv = x^{3}\\,dx \\); then \\( du = \\tfrac{1}{x}\\,dx \\) and \\( v = \\tfrac{x^{4}}{4} \\). Hence\n\\[ \\int x^{3}\\ln x\\,dx = \\frac{x^{4}}{4}\\ln x - \\int \\frac{x^{4}}{4}\\cdot\\frac{1}{x}\\,dx = \\frac{x^{4}}{4}\\ln x - \\frac{x^{4}}{16} + C. \\]\nThe reversed choice \\( u = x^{3} \\), \\( dv = \\ln x\\,dx \\) would require the antiderivative of \\( \\ln x \\) before we have it, and it would raise the power of \\( x \\) in the new integral.\n\n**A lone logarithm or inverse trigonometric function.** An integrand with a single factor can still be split: take \\( dv = dx \\), so that \\( v = x \\). For \\( \\int \\ln x\\,dx \\), let \\( u = \\ln x \\), \\( dv = dx \\):\n\\[ \\int \\ln x\\,dx = x\\ln x - \\int x\\cdot\\frac{1}{x}\\,dx = x\\ln x - x + C. \\]\nFor \\( \\int \\arctan x\\,dx \\), let \\( u = \\arctan x \\), \\( dv = dx \\), so \\( du = \\frac{dx}{1+x^{2}} \\) and \\( v = x \\):\n\\[ \\int \\arctan x\\,dx = x\\arctan x - \\int \\frac{x}{1+x^{2}}\\,dx = x\\arctan x - \\tfrac12\\ln(1+x^{2}) + C, \\]\nwhere the last integral used the substitution \\( w = 1+x^{2} \\). No absolute value is needed because \\( 1+x^{2} > 0 \\). The same device handles \\( \\arcsin x \\), \\( \\ln(x^{2}+1) \\) and similar functions whose derivatives are algebraic.\n\n**Worked example 2: where LIATE misleads.** For \\( \\int x^{3}e^{x^{2}}\\,dx \\), LIATE suggests \\( u = x^{3} \\), \\( dv = e^{x^{2}}\\,dx \\). But \\( e^{x^{2}} \\) has no elementary antiderivative, so condition 1 fails. Instead, give \\( dv \\) exactly the factor that makes it integrable: \\( dv = x e^{x^{2}}\\,dx \\) and \\( u = x^{2} \\). Then \\( v = \\tfrac12 e^{x^{2}} \\) and \\( du = 2x\\,dx \\), so\n\\[ \\int x^{3}e^{x^{2}}\\,dx = \\tfrac12 x^{2}e^{x^{2}} - \\int x e^{x^{2}}\\,dx = \\tfrac12 x^{2}e^{x^{2}} - \\tfrac12 e^{x^{2}} + C. \\]\nLIATE is a rule of thumb derived from the two conditions above; when it conflicts with them, the conditions win.\n\n**The common mistake.** The typical error is to push ahead with a choice whose new integral is visibly worse, for example \\( u = e^{x} \\), \\( dv = x\\,dx \\) in \\( \\int xe^{x}\\,dx \\), which produces \\( \\int \\tfrac{x^{2}}{2}e^{x}\\,dx \\). A rising power of \\( x \\) is the signal to stop, return to the original integral, and exchange the roles of the factors.",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k3",
+     "type": "antiderivative",
+     "prompt": "Compute \\( \\int x^{2}\\ln x\\,dx \\) for \\( x > 0 \\). Enter an antiderivative.",
+     "why": "Take \\( u = \\ln x \\) (logarithmic, first in LIATE) and \\( dv = x^{2}\\,dx \\), so \\( du = dx/x \\) and \\( v = x^{3}/3 \\). Then \\[ \\int x^{2}\\ln x\\,dx = \\frac{x^{3}}{3}\\ln x - \\int \\frac{x^{2}}{3}\\,dx = \\frac{x^{3}}{3}\\ln x - \\frac{x^{3}}{9} + C. \\]",
+     "answer": "x^3*log(x)/3 - x^3/9",
+     "vars": "x"
+    },
+    {
+     "id": "s2q2",
+     "kp": "k3",
+     "type": "written",
+     "prompt": "A student evaluates \\( \\int x e^{x}\\,dx \\) with \\( u = e^{x} \\) and \\( dv = x\\,dx \\). Carry out this one step, explain precisely why the choice fails by the criterion for a good split, and then evaluate the integral with the correct choice.",
+     "why": "Parts moves a derivative from one factor to the other. You want the derivative to land on the factor it simplifies (the polynomial), not on the one it leaves unchanged (the exponential).",
+     "rubric": [
+      "Carries out the step: \\( \\tfrac{x^{2}}{2}e^{x} - \\int \\tfrac{x^{2}}{2}e^{x}\\,dx \\).",
+      "Explains that the new integral is harder: the power of \\( x \\) rose from 1 to 2 while \\( e^{x} \\) was unchanged.",
+      "Chooses \\( u = x \\), \\( dv = e^{x}dx \\) and justifies it (differentiating \\( x \\) removes it; \\( e^{x} \\) is unchanged by integration).",
+      "Obtains \\( xe^{x} - e^{x} + C \\)."
+     ],
+     "model": "With \\( u = e^{x} \\), \\( dv = x\\,dx \\) we get \\( du = e^{x}dx \\), \\( v = x^{2}/2 \\), so \\( \\int xe^{x}dx = \\tfrac{x^{2}}{2}e^{x} - \\int \\tfrac{x^{2}}{2}e^{x}dx \\). A good split must make the new integral simpler, but here the exponential factor is unchanged (it is its own derivative) while the polynomial factor was integrated, so its degree rose from 1 to 2: the new integral is strictly harder. The correct split is \\( u = x \\), \\( dv = e^{x}dx \\): differentiating \\( x \\) gives \\( 1 \\), and integrating \\( e^{x} \\) costs nothing. Then \\( \\int xe^{x}dx = xe^{x} - \\int e^{x}dx = xe^{x} - e^{x} + C = (x-1)e^{x} + C \\)."
+    },
+    {
+     "id": "s2q3",
+     "kp": "k4",
+     "type": "antiderivative",
+     "prompt": "Compute \\( \\int \\arcsin x\\,dx \\) on \\( -1 < x < 1 \\). Enter an antiderivative using `asin(x)`.",
+     "why": "Take \\( u = \\arcsin x \\), \\( dv = dx \\): \\( du = \\frac{dx}{\\sqrt{1-x^{2}}} \\), \\( v = x \\). Then \\( \\int \\arcsin x\\,dx = x\\arcsin x - \\int \\frac{x}{\\sqrt{1-x^{2}}}dx \\). With \\( w = 1 - x^{2} \\), \\( dw = -2x\\,dx \\), the last integral is \\( -\\tfrac12\\int w^{-1/2}dw = -\\sqrt{w} = -\\sqrt{1-x^{2}} \\). Therefore \\( \\int\\arcsin x\\,dx = x\\arcsin x + \\sqrt{1-x^{2}} + C \\).",
+     "answer": "x*asin(x) + sqrt(1 - x^2)",
+     "vars": "x"
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "Repeated integration by parts and the tabular method",
+   "kps": [
+    "k5"
+   ],
+   "md": "One application of parts lowers the degree of a polynomial factor by one. When the polynomial has degree \\( n \\) and the other factor is an exponential, sine or cosine, you therefore need \\( n \\) applications. This section shows how to do that reliably.\n\n**Worked example.** Evaluate \\( \\int x^{2}e^{x}\\,dx \\).\n\nFirst application: \\( u = x^{2} \\), \\( dv = e^{x}\\,dx \\), so \\( du = 2x\\,dx \\), \\( v = e^{x} \\):\n\\[ \\int x^{2}e^{x}\\,dx = x^{2}e^{x} - \\int 2x e^{x}\\,dx. \\]\nThe new integral has a polynomial of degree 1. Second application to it: \\( u = 2x \\), \\( dv = e^{x}\\,dx \\), so \\( du = 2\\,dx \\), \\( v = e^{x} \\):\n\\[ \\int 2xe^{x}\\,dx = 2xe^{x} - \\int 2e^{x}\\,dx = 2xe^{x} - 2e^{x}. \\]\nSubstitute back, keeping the minus sign in front of the whole second result:\n\\[ \\int x^{2}e^{x}\\,dx = x^{2}e^{x} - (2xe^{x} - 2e^{x}) + C = e^{x}(x^{2} - 2x + 2) + C. \\]\n\n**Why a table works.** Write \\( u_{0} = u \\) and let \\( u_{1}, u_{2}, \\dots \\) be its successive derivatives; let \\( v_{1} = v \\) and let \\( v_{2}, v_{3}, \\dots \\) be successive antiderivatives. One application gives \\( \\int u_{0}v_{1}' = u_{0}v_{1} - \\int u_{1}v_{1} \\). Applying parts to the new integral with \\( u_{1} \\) as the part to differentiate gives \\( u_{1}v_{2} - \\int u_{2}v_{2} \\), and so on. Each step contributes a product \\( u_{k}v_{k+1} \\) with sign \\( (-1)^{k} \\), and the process stops when some derivative \\( u_{k} \\) is zero. This bookkeeping is called **tabular integration**:\n\n- column D lists \\( u \\) and its derivatives down to \\( 0 \\);\n- column I lists \\( dv \\) (without \\( dx \\)) and its successive antiderivatives;\n- signs alternate \\( +, -, +, -, \\dots \\), starting with \\( + \\);\n- multiply each D entry by the I entry one row below it, attach the sign of the D row, and add.\n\n**Worked example with the table.** Evaluate \\( \\int x^{3}\\sin x\\,dx \\). The rows are:\n\n- \\( + \\): D \\( = x^{3} \\), I \\( = \\sin x \\)\n- \\( - \\): D \\( = 3x^{2} \\), I \\( = -\\cos x \\)\n- \\( + \\): D \\( = 6x \\), I \\( = -\\sin x \\)\n- \\( - \\): D \\( = 6 \\), I \\( = \\cos x \\)\n- \\( + \\): D \\( = 0 \\), I \\( = \\sin x \\)\n\nThe diagonal products are \\( +x^{3}(-\\cos x) \\), \\( -3x^{2}(-\\sin x) \\), \\( +6x(\\cos x) \\) and \\( -6(\\sin x) \\), so\n\\[ \\int x^{3}\\sin x\\,dx = -x^{3}\\cos x + 3x^{2}\\sin x + 6x\\cos x - 6\\sin x + C. \\]\nDifferentiating confirms it: the terms cancel in pairs except \\( x^{3}\\sin x \\).\n\nThe table terminates only when the D column reaches zero, that is, when \\( u \\) is a polynomial. It does not help with \\( \\int x^{3}\\ln x\\,dx \\) (there \\( \\ln x \\) must be \\( u \\), and one application suffices) or with \\( \\int e^{x}\\sin x\\,dx \\), where neither column ever reaches zero; that case is treated in the next section.\n\n**The common mistakes.** Most errors are sign errors: a minus sign in front of the second application that is not distributed over both of its terms, or a table whose signs do not alternate. The other frequent error is forgetting that the I column must contain genuine antiderivatives, including their signs and constant factors: for \\( e^{2x} \\) the entries are \\( e^{2x}, \\tfrac12 e^{2x}, \\tfrac14 e^{2x}, \\dots \\).",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k5",
+     "type": "antiderivative",
+     "prompt": "Compute \\( \\int x^{2}\\cos x\\,dx \\). Enter an antiderivative.",
+     "why": "Table: \\( + \\) D \\( x^{2} \\), I \\( \\cos x \\); \\( - \\) D \\( 2x \\), I \\( \\sin x \\); \\( + \\) D \\( 2 \\), I \\( -\\cos x \\); \\( - \\) D \\( 0 \\), I \\( -\\sin x \\). Diagonal products: \\( x^{2}\\sin x - 2x(-\\cos x) + 2(-\\sin x) \\), so \\[ \\int x^{2}\\cos x\\,dx = x^{2}\\sin x + 2x\\cos x - 2\\sin x + C. \\]",
+     "answer": "x^2*sin(x) + 2*x*cos(x) - 2*sin(x)",
+     "vars": "x"
+    },
+    {
+     "id": "s3q2",
+     "kp": "k5",
+     "type": "antiderivative",
+     "prompt": "Compute \\( \\int x^{2}e^{-x}\\,dx \\) by repeated parts or the tabular method. Enter an antiderivative.",
+     "why": "D column: \\( x^{2}, 2x, 2, 0 \\). I column: \\( e^{-x}, -e^{-x}, e^{-x}, -e^{-x} \\). Signs \\( +,-,+ \\). Products: \\( x^{2}(-e^{-x}) - 2x(e^{-x}) + 2(-e^{-x}) \\). So \\[ \\int x^{2}e^{-x}dx = -e^{-x}(x^{2} + 2x + 2) + C. \\] Note that every antiderivative of \\( e^{-x} \\) carries a sign change.",
+     "answer": "-exp(-x)*(x^2 + 2*x + 2)",
+     "vars": "x"
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "Integrals that reproduce themselves",
+   "kps": [
+    "k6"
+   ],
+   "md": "Some products never simplify: in \\( e^{x}\\sin x \\), differentiating or integrating either factor returns a factor of the same kind. Repeated parts does not terminate. This section shows that it does not need to, because after two applications the original integral reappears and can be solved for as an unknown.\n\n**Worked example.** Let \\( I = \\int e^{x}\\sin x\\,dx \\).\n\nFirst application: \\( u = \\sin x \\), \\( dv = e^{x}\\,dx \\), so \\( du = \\cos x\\,dx \\), \\( v = e^{x} \\):\n\\[ I = e^{x}\\sin x - \\int e^{x}\\cos x\\,dx. \\]\nSecond application, keeping the trigonometric factor as \\( u \\): \\( u = \\cos x \\), \\( dv = e^{x}\\,dx \\), so \\( du = -\\sin x\\,dx \\), \\( v = e^{x} \\):\n\\[ \\int e^{x}\\cos x\\,dx = e^{x}\\cos x + \\int e^{x}\\sin x\\,dx = e^{x}\\cos x + I. \\]\nSubstituting,\n\\[ I = e^{x}\\sin x - e^{x}\\cos x - I, \\]\nso \\( 2I = e^{x}(\\sin x - \\cos x) \\) and\n\\[ \\int e^{x}\\sin x\\,dx = \\tfrac12 e^{x}(\\sin x - \\cos x) + C. \\]\n\n**Why solving for \\( I \\) is legitimate.** An indefinite integral denotes a family of antiderivatives, so the equation \\( I = e^{x}\\sin x - e^{x}\\cos x - I \\) holds up to an additive constant. Solving it produces one antiderivative, \\( \\tfrac12 e^{x}(\\sin x - \\cos x) \\), and the constant is restored at the end. You can confirm the result by differentiating: \\( \\tfrac12 e^{x}(\\sin x - \\cos x) + \\tfrac12 e^{x}(\\cos x + \\sin x) = e^{x}\\sin x \\).\n\n**Consistency of the choice.** In the second application the trigonometric factor was again taken as \\( u \\). Suppose instead you chose \\( u = e^{x} \\), \\( dv = \\cos x\\,dx \\) for \\( \\int e^{x}\\cos x\\,dx \\). Then \\( \\int e^{x}\\cos x\\,dx = e^{x}\\sin x - \\int e^{x}\\sin x\\,dx \\), and substituting gives \\( I = e^{x}\\sin x - e^{x}\\sin x + I \\), that is, \\( I = I \\). The second step has simply undone the first. The coefficient of \\( I \\) on the right must differ from \\( 1 \\) for the equation to be solvable, and keeping the same type of factor as \\( u \\) in both steps is what ensures this.\n\n**The general pattern.** For constants \\( a, b \\) not both zero, the same two steps give\n\\[ \\int e^{ax}\\cos bx\\,dx = \\frac{e^{ax}(a\\cos bx + b\\sin bx)}{a^{2}+b^{2}} + C, \\qquad \\int e^{ax}\\sin bx\\,dx = \\frac{e^{ax}(a\\sin bx - b\\cos bx)}{a^{2}+b^{2}} + C. \\]\nIt is better to be able to derive these than to memorise them, but they are a useful check. The integral \\( \\int \\sec^{3}x\\,dx \\), met in the next topic, is solved by the same device.\n\n**The common mistakes.** Besides switching the roles of the factors, students often lose track of the sign in front of the reappearing integral (in the example it enters with a minus sign, which is why the \\( I \\) terms add to \\( 2I \\)), or they divide only part of the right-hand side by the coefficient of \\( I \\).",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k6",
+     "type": "antiderivative",
+     "prompt": "Compute \\( \\int e^{-x}\\cos x\\,dx \\) by applying parts twice and solving for the integral. Enter an antiderivative.",
+     "why": "Let \\( I = \\int e^{-x}\\cos x\\,dx \\). With \\( u = \\cos x \\), \\( dv = e^{-x}dx \\): \\( I = -e^{-x}\\cos x - \\int e^{-x}\\sin x\\,dx \\). With \\( u = \\sin x \\), \\( dv = e^{-x}dx \\): \\( \\int e^{-x}\\sin x\\,dx = -e^{-x}\\sin x + \\int e^{-x}\\cos x\\,dx = -e^{-x}\\sin x + I \\). So \\( I = -e^{-x}\\cos x + e^{-x}\\sin x - I \\), giving \\[ I = \\tfrac12 e^{-x}(\\sin x - \\cos x) + C. \\]",
+     "answer": "exp(-x)*(sin(x) - cos(x))/2",
+     "vars": "x"
+    },
+    {
+     "id": "s4q2",
+     "kp": "k6",
+     "type": "written",
+     "prompt": "In evaluating \\( I = \\int e^{x}\\cos x\\,dx \\), a student applies parts with \\( u = \\cos x \\), \\( dv = e^{x}dx \\), and then applies parts to the new integral with \\( u = e^{x} \\), \\( dv = \\sin x\\,dx \\). Show what equation results, explain why it gives no information, and explain why the step of solving for \\( I \\) is legitimate when the choice is made consistently.",
+     "why": "Recurring integrals are solved as linear equations in the unknown \\( I \\). The equation is useful only if \\( I \\) does not cancel, which is guaranteed by keeping the same kind of factor as \\( u \\).",
+     "rubric": [
+      "First step: \\( I = e^{x}\\cos x + \\int e^{x}\\sin x\\,dx \\).",
+      "Second (switched) step gives \\( \\int e^{x}\\sin x\\,dx = -e^{x}\\cos x + I \\), so \\( I = I \\): the step undoes the first.",
+      "States that the coefficient of \\( I \\) on the right must differ from 1, which consistent choice of the trigonometric factor as \\( u \\) ensures.",
+      "Explains that the equation holds up to a constant because \\( I \\) is a family of antiderivatives, and the constant is restored at the end."
+     ],
+     "model": "First step: \\( u = \\cos x \\), \\( du = -\\sin x\\,dx \\), \\( v = e^{x} \\), so \\( I = e^{x}\\cos x + \\int e^{x}\\sin x\\,dx \\). Switched second step: \\( u = e^{x} \\), \\( dv = \\sin x\\,dx \\), \\( du = e^{x}dx \\), \\( v = -\\cos x \\), so \\( \\int e^{x}\\sin x\\,dx = -e^{x}\\cos x + \\int e^{x}\\cos x\\,dx = -e^{x}\\cos x + I \\). Substituting, \\( I = e^{x}\\cos x - e^{x}\\cos x + I \\), i.e. \\( I = I \\). The second step moved the derivative back onto the factor it came from, reversing the first step, so the equation is an identity with no information. With a consistent choice (\\( u = \\sin x \\) in the second step) one gets \\( I = e^{x}\\cos x + e^{x}\\sin x - I \\), in which \\( I \\) appears with coefficient \\( -1 \\) on the right, so \\( 2I = e^{x}(\\sin x + \\cos x) \\). Solving is legitimate because the relation holds between antiderivatives up to an additive constant; solving it produces one antiderivative, and \\( +C \\) restores the family."
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "Definite integrals by parts",
+   "kps": [
+    "k7"
+   ],
+   "md": "When the integral has limits, you can either find an antiderivative by parts and evaluate it once at the end, or evaluate as you go. This section states the definite form and shows that the two approaches agree.\n\nApplying the Fundamental Theorem of Calculus to the product rule on \\( [a, b] \\) gives \\( \\int_{a}^{b}(uv)'\\,dx = u(b)v(b) - u(a)v(a) \\). Splitting \\( (uv)' = u'v + uv' \\) and rearranging:\n\n> **Integration by parts for definite integrals.** If \\( u' \\) and \\( v' \\) are continuous on \\( [a, b] \\), then \\[ \\int_{a}^{b} u\\,dv = \\Big[uv\\Big]_{a}^{b} - \\int_{a}^{b} v\\,du. \\]\n\nThe term \\( [uv]_{a}^{b} = u(b)v(b) - u(a)v(a) \\) is called the **boundary term**. Both remaining pieces are numbers, so no constant of integration appears.\n\n**Worked example 1.** Evaluate \\( \\int_{0}^{\\pi} x\\sin x\\,dx \\). Take \\( u = x \\), \\( dv = \\sin x\\,dx \\), so \\( du = dx \\) and \\( v = -\\cos x \\). Then\n\\[ \\int_{0}^{\\pi} x\\sin x\\,dx = \\Big[-x\\cos x\\Big]_{0}^{\\pi} + \\int_{0}^{\\pi}\\cos x\\,dx = (-\\pi\\cos\\pi - 0) + \\Big[\\sin x\\Big]_{0}^{\\pi} = \\pi + 0 = \\pi. \\]\nThe same calculation with a variable upper limit \\( b \\) gives \\( \\int_{0}^{b} x\\sin x\\,dx = \\sin b - b\\cos b \\). In the graph below, drag \\( b \\) and watch the shaded region: its signed area equals the height of the second curve where it meets the vertical line \\( x = b \\). The shaded area first grows, reaches \\( \\pi \\) at \\( b = \\pi \\), and then decreases once \\( x\\sin x \\) turns negative.\n\n```plot\nx: -0.5, 7\ny: -7, 4\nf: x*sin(x) | y = x sin x\nf: sin(x) - x*cos(x) | F(x) = sin x - x cos x\nshade: x*sin(x), 0, b | area from 0 to b\nslider: b, 0, 6.28, 3.14 | b\nvline: b\n```\n\n**Worked example 2.** Evaluate \\( \\int_{1}^{e}\\ln x\\,dx \\). With \\( u = \\ln x \\), \\( dv = dx \\): \\( du = dx/x \\), \\( v = x \\), so\n\\[ \\int_{1}^{e}\\ln x\\,dx = \\Big[x\\ln x\\Big]_{1}^{e} - \\int_{1}^{e} 1\\,dx = (e\\cdot 1 - 1\\cdot 0) - (e - 1) = 1. \\]\nEquivalently, the antiderivative \\( x\\ln x - x \\) from the previous section gives \\( (e - e) - (0 - 1) = 1 \\).\n\n**Choosing between the two approaches.** Evaluating as you go keeps numbers small and often makes a boundary term vanish early (in example 1 the value at \\( 0 \\) is zero). Finding the full antiderivative first is safer when several applications are needed, because you can check it by differentiation before substituting any limits.\n\n**The common mistakes.** The frequent errors are evaluating \\( uv \\) at the limits but leaving \\( \\int v\\,du \\) as an indefinite integral with a constant, which mixes a number with a function; losing the sign of \\( v \\) (here \\( v = -\\cos x \\), so the boundary term is \\( -x\\cos x \\)); and, when a substitution is used inside the second integral, forgetting to change its limits.",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k7",
+     "type": "number",
+     "prompt": "Evaluate \\( \\int_{0}^{1} x e^{2x}\\,dx \\) exactly.",
+     "why": "With \\( u = x \\), \\( dv = e^{2x}dx \\): \\( v = \\tfrac12 e^{2x} \\). Then \\[ \\int_{0}^{1}xe^{2x}dx = \\Big[\\tfrac{x}{2}e^{2x}\\Big]_{0}^{1} - \\tfrac12\\int_{0}^{1}e^{2x}dx = \\tfrac{e^{2}}{2} - \\tfrac14(e^{2} - 1) = \\tfrac{e^{2}+1}{4}. \\]",
+     "answer": "(exp(2) + 1)/4"
+    },
+    {
+     "id": "s5q2",
+     "kp": "k7",
+     "type": "number",
+     "prompt": "Evaluate \\( \\int_{0}^{\\pi/2} x^{2}\\cos x\\,dx \\) exactly.",
+     "why": "An antiderivative (from the tabular method) is \\( x^{2}\\sin x + 2x\\cos x - 2\\sin x \\). At \\( \\pi/2 \\): \\( \\tfrac{\\pi^{2}}{4} + 0 - 2 \\). At \\( 0 \\): \\( 0 \\). So the integral is \\( \\tfrac{\\pi^{2}}{4} - 2 \\approx 0.467 \\).",
+     "answer": "pi^2/4 - 2"
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "title": "Reduction formulas",
+   "kps": [
+    "k8"
+   ],
+   "md": "Some integrals depend on a positive integer \\( n \\): \\( \\int x^{n}e^{x}\\,dx \\), \\( \\int(\\ln x)^{n}\\,dx \\), \\( \\int\\sin^{n}x\\,dx \\). Rather than repeat parts \\( n \\) times for each \\( n \\), one application done in general expresses the integral with parameter \\( n \\) in terms of the same integral with a smaller parameter. Such an identity is a **reduction formula**. Applying it repeatedly reduces the parameter to a base case that can be integrated directly.\n\n**Example 1: powers of the logarithm.** Let \\( I_{n} = \\int(\\ln x)^{n}\\,dx \\). Take \\( u = (\\ln x)^{n} \\), \\( dv = dx \\), so \\( du = n(\\ln x)^{n-1}\\cdot\\frac{1}{x}\\,dx \\) and \\( v = x \\):\n\\[ I_{n} = x(\\ln x)^{n} - n\\int(\\ln x)^{n-1}\\,dx = x(\\ln x)^{n} - nI_{n-1}. \\]\nThe base case is \\( I_{0} = x \\). For \\( n = 2 \\): \\( I_{2} = x(\\ln x)^{2} - 2I_{1} \\) and \\( I_{1} = x\\ln x - x \\), so\n\\[ \\int(\\ln x)^{2}\\,dx = x(\\ln x)^{2} - 2x\\ln x + 2x + C. \\]\n\n**Example 2: powers of sine.** Let \\( I_{n} = \\int\\sin^{n}x\\,dx \\) with \\( n \\ge 2 \\). Split off one factor: \\( u = \\sin^{n-1}x \\), \\( dv = \\sin x\\,dx \\), so \\( du = (n-1)\\sin^{n-2}x\\cos x\\,dx \\) and \\( v = -\\cos x \\). Then\n\\[ I_{n} = -\\sin^{n-1}x\\cos x + (n-1)\\int\\sin^{n-2}x\\cos^{2}x\\,dx. \\]\nReplace \\( \\cos^{2}x \\) by \\( 1 - \\sin^{2}x \\):\n\\[ I_{n} = -\\sin^{n-1}x\\cos x + (n-1)I_{n-2} - (n-1)I_{n}. \\]\nThe original integral has reappeared, exactly as in the section on recurring integrals, so solve for it:\n\\[ \\int\\sin^{n}x\\,dx = -\\frac{1}{n}\\sin^{n-1}x\\cos x + \\frac{n-1}{n}\\int\\sin^{n-2}x\\,dx. \\]\nThe parameter drops by two each time, ending at \\( I_{0} = x \\) or \\( I_{1} = -\\cos x \\).\n\n**The definite version on \\( [0, \\pi/2] \\).** Let \\( J_{n} = \\int_{0}^{\\pi/2}\\sin^{n}x\\,dx \\). For \\( n \\ge 2 \\) the boundary term \\( \\big[-\\tfrac1n\\sin^{n-1}x\\cos x\\big]_{0}^{\\pi/2} \\) vanishes, since \\( \\cos(\\pi/2) = 0 \\) and \\( \\sin 0 = 0 \\). Hence\n\\[ J_{n} = \\frac{n-1}{n}J_{n-2}, \\qquad J_{0} = \\frac{\\pi}{2}, \\qquad J_{1} = 1. \\]\nThese are the **Wallis integrals**. For example,\n\\[ J_{4} = \\frac34\\cdot\\frac12\\cdot\\frac{\\pi}{2} = \\frac{3\\pi}{16}, \\qquad J_{5} = \\frac45\\cdot\\frac23\\cdot 1 = \\frac{8}{15}. \\]\nEven powers end at \\( J_{0} \\) and carry a factor \\( \\pi/2 \\); odd powers end at \\( J_{1} \\) and are rational. The same recursion holds for \\( \\int_{0}^{\\pi/2}\\cos^{n}x\\,dx \\), which has the same values (substitute \\( x = \\pi/2 - t \\)).\n\n**The common mistakes.** The factor \\( n \\) produced by differentiating \\( u \\) is easily dropped, and it is the whole content of the formula. In the sine formula, the boundary term vanishes only on intervals such as \\( [0, \\pi/2] \\) or \\( [0, \\pi] \\) and only for \\( n \\ge 2 \\); for \\( n = 1 \\) the factor \\( \\sin^{0}x = 1 \\) does not vanish at \\( 0 \\). Finally, check the base cases: \\( J_{0} \\) is the integral of \\( 1 \\), not \\( 0 \\).",
+   "questions": [
+    {
+     "id": "s6q1",
+     "kp": "k8",
+     "type": "number",
+     "prompt": "Use the Wallis recursion to evaluate \\( \\int_{0}^{\\pi/2}\\sin^{6}x\\,dx \\) exactly.",
+     "why": "\\( J_{6} = \\tfrac56 J_{4} = \\tfrac56\\cdot\\tfrac34\\cdot\\tfrac12\\cdot J_{0} = \\tfrac{15}{48}\\cdot\\tfrac{\\pi}{2} = \\tfrac{5\\pi}{32} \\).",
+     "answer": "5*pi/32"
+    },
+    {
+     "id": "s6q2",
+     "kp": "k8",
+     "type": "written",
+     "prompt": "Derive a reduction formula for \\( I_{n} = \\int x^{n}e^{x}\\,dx \\) (with \\( n \\ge 1 \\)) and use it to compute \\( \\int x^{3}e^{x}\\,dx \\). Show each reduction step.",
+     "why": "The reduction formula is one application of parts with \\( n \\) left general. Differentiating back the final answer gives \\( e^{x}(x^{3} - 3x^{2} + 6x - 6 + 3x^{2} - 6x + 6) = x^{3}e^{x} \\).",
+     "rubric": [
+      "Chooses \\( u = x^{n} \\), \\( dv = e^{x}dx \\) with \\( du = nx^{n-1}dx \\), \\( v = e^{x} \\).",
+      "States \\( I_{n} = x^{n}e^{x} - nI_{n-1} \\) with base case \\( I_{0} = e^{x} \\).",
+      "Applies it for \\( n = 3, 2, 1 \\) with correct coefficients.",
+      "Obtains \\( e^{x}(x^{3} - 3x^{2} + 6x - 6) + C \\)."
+     ],
+     "model": "With \\( u = x^{n} \\), \\( dv = e^{x}dx \\): \\( du = nx^{n-1}dx \\), \\( v = e^{x} \\), so \\( I_{n} = x^{n}e^{x} - n\\int x^{n-1}e^{x}dx = x^{n}e^{x} - nI_{n-1} \\), and \\( I_{0} = e^{x} \\). Then \\( I_{1} = xe^{x} - e^{x} \\); \\( I_{2} = x^{2}e^{x} - 2I_{1} = x^{2}e^{x} - 2xe^{x} + 2e^{x} \\); \\( I_{3} = x^{3}e^{x} - 3I_{2} = x^{3}e^{x} - 3x^{2}e^{x} + 6xe^{x} - 6e^{x} \\). Hence \\( \\int x^{3}e^{x}dx = e^{x}(x^{3} - 3x^{2} + 6x - 6) + C \\)."
+    }
+   ]
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k3",
+   "type": "antiderivative",
+   "prompt": "Compute \\( \\int x\\sec^{2}x\\,dx \\) on \\( -\\pi/2 < x < \\pi/2 \\). Enter an antiderivative (use `abs` where an absolute value is needed).",
+   "why": "Take \\( u = x \\), \\( dv = \\sec^{2}x\\,dx \\), so \\( v = \\tan x \\). Then \\( \\int x\\sec^{2}x\\,dx = x\\tan x - \\int\\tan x\\,dx = x\\tan x + \\ln|\\cos x| + C \\).",
+   "answer": "x*tan(x) + log(abs(cos(x)))",
+   "vars": "x"
+  },
+  {
+   "id": "p2",
+   "kp": "k3",
+   "type": "antiderivative",
+   "prompt": "Compute \\( \\int x\\arctan x\\,dx \\). Enter an antiderivative.",
+   "why": "Take \\( u = \\arctan x \\), \\( dv = x\\,dx \\): \\( du = \\frac{dx}{1+x^{2}} \\), \\( v = \\tfrac{x^{2}}{2} \\). Then \\( \\int x\\arctan x\\,dx = \\tfrac{x^{2}}{2}\\arctan x - \\tfrac12\\int\\frac{x^{2}}{1+x^{2}}dx \\). Since \\( \\frac{x^{2}}{1+x^{2}} = 1 - \\frac{1}{1+x^{2}} \\), the last integral is \\( x - \\arctan x \\). Result: \\( \\tfrac{x^{2}+1}{2}\\arctan x - \\tfrac{x}{2} + C \\).",
+   "answer": "(x^2 + 1)/2*atan(x) - x/2",
+   "vars": "x"
+  },
+  {
+   "id": "p3",
+   "kp": "k6",
+   "type": "antiderivative",
+   "prompt": "Compute \\( \\int \\sin(\\ln x)\\,dx \\) for \\( x > 0 \\). (Take \\( dv = dx \\) and expect the integral to recur.) Enter an antiderivative.",
+   "why": "Let \\( I = \\int\\sin(\\ln x)dx \\). With \\( u = \\sin(\\ln x) \\), \\( dv = dx \\): \\( I = x\\sin(\\ln x) - \\int\\cos(\\ln x)dx \\). With \\( u = \\cos(\\ln x) \\), \\( dv = dx \\): \\( \\int\\cos(\\ln x)dx = x\\cos(\\ln x) + I \\). So \\( I = x\\sin(\\ln x) - x\\cos(\\ln x) - I \\), and \\( I = \\tfrac{x}{2}\\big(\\sin(\\ln x) - \\cos(\\ln x)\\big) + C \\).",
+   "answer": "x/2*(sin(log(x)) - cos(log(x)))",
+   "vars": "x"
+  },
+  {
+   "id": "p4",
+   "kp": "k2",
+   "type": "antiderivative",
+   "prompt": "Compute \\( \\int \\cos x\\,\\ln(\\sin x)\\,dx \\) on \\( 0 < x < \\pi \\). (A substitution first may help.) Enter an antiderivative.",
+   "why": "Let \\( w = \\sin x \\), \\( dw = \\cos x\\,dx \\): the integral is \\( \\int\\ln w\\,dw = w\\ln w - w \\). So \\( \\int\\cos x\\ln(\\sin x)dx = \\sin x\\ln(\\sin x) - \\sin x + C \\).",
+   "answer": "sin(x)*log(sin(x)) - sin(x)",
+   "vars": "x"
+  },
+  {
+   "id": "p5",
+   "kp": "k4",
+   "type": "number",
+   "prompt": "Evaluate \\( \\int_{0}^{1}\\arctan x\\,dx \\) exactly.",
+   "why": "Using \\( \\int\\arctan x\\,dx = x\\arctan x - \\tfrac12\\ln(1+x^{2}) \\): at \\( 1 \\), \\( \\tfrac{\\pi}{4} - \\tfrac12\\ln 2 \\); at \\( 0 \\), \\( 0 \\). So the value is \\( \\tfrac{\\pi}{4} - \\tfrac{\\ln 2}{2} \\approx 0.4388 \\).",
+   "answer": "pi/4 - log(2)/2"
+  },
+  {
+   "id": "p6",
+   "kp": "k7",
+   "type": "number",
+   "prompt": "Evaluate \\( \\int_{1}^{e} x\\ln x\\,dx \\) exactly.",
+   "why": "With \\( u = \\ln x \\), \\( dv = x\\,dx \\): \\( \\int_{1}^{e}x\\ln x\\,dx = \\big[\\tfrac{x^{2}}{2}\\ln x\\big]_{1}^{e} - \\int_{1}^{e}\\tfrac{x}{2}dx = \\tfrac{e^{2}}{2} - \\tfrac14(e^{2} - 1) = \\tfrac{e^{2}+1}{4} \\).",
+   "answer": "(exp(2) + 1)/4"
+  },
+  {
+   "id": "p7",
+   "kp": "k5",
+   "type": "written",
+   "prompt": "Explain why the tabular method terminates for \\( \\int x^{4}e^{3x}\\,dx \\) but not for \\( \\int e^{3x}\\cos x\\,dx \\). Say how many nonzero rows the first table needs, and what you do instead in the second case.",
+   "why": "The table is a bookkeeping device for a process that must terminate; termination requires a polynomial in the differentiated column.",
+   "rubric": [
+    "The D column \\( x^{4}, 4x^{3}, 12x^{2}, 24x, 24 \\) reaches 0 on the sixth row, so there are five nonzero rows and five signed products.",
+    "In the second integral neither factor ever differentiates or integrates to zero; the columns cycle.",
+    "Instead apply parts twice (keeping the same type of factor as \\( u \\)) until the original integral recurs, then solve for it."
+   ],
+   "model": "Tabular integration is repeated parts with the polynomial as \\( u \\); each row differentiates \\( u \\) once, and the sum ends when a derivative is zero. For \\( x^{4} \\) the D column is \\( x^{4}, 4x^{3}, 12x^{2}, 24x, 24, 0 \\): five nonzero rows, giving five diagonal products with signs \\( +,-,+,-,+ \\). In \\( e^{3x}\\cos x \\) neither factor is a polynomial: derivatives of \\( \\cos x \\) cycle through \\( \\pm\\sin x, \\pm\\cos x \\) and antiderivatives of \\( e^{3x} \\) are multiples of \\( e^{3x} \\), so no entry is ever zero and the table never ends. Instead apply parts twice with the trigonometric factor as \\( u \\) both times; the original integral reappears with a coefficient different from 1, and you solve the resulting linear equation for it."
+  },
+  {
+   "id": "p8",
+   "kp": "k3",
+   "type": "mcq",
+   "prompt": "Which split is the productive one for \\( \\int x^{5}e^{x^{3}}\\,dx \\)?",
+   "why": "The factor \\( e^{x^{3}} \\) has no elementary antiderivative, so it cannot be \\( dv \\) alone; but \\( x^{2}e^{x^{3}} \\) integrates to \\( \\tfrac13 e^{x^{3}} \\). With \\( u = x^{3} \\), \\( dv = x^{2}e^{x^{3}}dx \\): \\( \\tfrac13x^{3}e^{x^{3}} - \\int x^{2}e^{x^{3}}dx = \\tfrac13 e^{x^{3}}(x^{3} - 1) + C \\). Option A follows LIATE literally and fails the integrability condition. Option C makes the new integral harder. Option D is wrong because \\( w = x^{3} \\) turns the integral into \\( \\tfrac13\\int we^{w}dw \\), which still requires parts.",
+   "options": [
+    "\\( u = x^{5} \\), \\( dv = e^{x^{3}}dx \\), since algebraic comes before exponential in LIATE",
+    "\\( u = x^{3} \\), \\( dv = x^{2}e^{x^{3}}dx \\)",
+    "\\( u = e^{x^{3}} \\), \\( dv = x^{5}dx \\)",
+    "No parts is needed: the substitution \\( w = x^{3} \\) alone produces an integral with no product in it"
+   ],
+   "answer": 1
+  },
+  {
+   "id": "p9",
+   "kp": "k6",
+   "type": "number",
+   "prompt": "Evaluate \\( \\int_{0}^{\\pi} e^{x}\\sin x\\,dx \\) exactly.",
+   "why": "An antiderivative is \\( \\tfrac12 e^{x}(\\sin x - \\cos x) \\). At \\( \\pi \\): \\( \\tfrac12 e^{\\pi}(0 + 1) \\). At \\( 0 \\): \\( \\tfrac12(0 - 1) \\). The value is \\( \\tfrac{e^{\\pi} + 1}{2} \\approx 12.07 \\).",
+   "answer": "(exp(pi) + 1)/2"
+  },
+  {
+   "id": "p10",
+   "kp": "k8",
+   "type": "written",
+   "prompt": "Let \\( J_{n} = \\int_{0}^{\\pi/2}\\sin^{n}x\\,dx \\). Prove that \\( J_{n} = \\frac{n-1}{n}J_{n-2} \\) for \\( n \\ge 2 \\), explaining exactly where the hypothesis \\( n \\ge 2 \\) is used.",
+   "why": "The proof combines a definite application of parts, a Pythagorean identity, and the recurring-integral device of solving for the unknown.",
+   "rubric": [
+    "Applies parts with \\( u = \\sin^{n-1}x \\), \\( dv = \\sin x\\,dx \\) on \\( [0, \\pi/2] \\).",
+    "Shows the boundary term \\( [-\\sin^{n-1}x\\cos x]_{0}^{\\pi/2} \\) is zero, using \\( \\cos(\\pi/2) = 0 \\) and \\( \\sin^{n-1}0 = 0 \\) (which needs \\( n - 1 \\ge 1 \\)).",
+    "Uses \\( \\cos^{2}x = 1 - \\sin^{2}x \\) to get \\( J_{n} = (n-1)J_{n-2} - (n-1)J_{n} \\).",
+    "Solves to \\( nJ_{n} = (n-1)J_{n-2} \\)."
+   ],
+   "model": "For \\( n \\ge 2 \\) put \\( u = \\sin^{n-1}x \\), \\( dv = \\sin x\\,dx \\), so \\( du = (n-1)\\sin^{n-2}x\\cos x\\,dx \\), \\( v = -\\cos x \\). Then \\( J_{n} = \\big[-\\sin^{n-1}x\\cos x\\big]_{0}^{\\pi/2} + (n-1)\\int_{0}^{\\pi/2}\\sin^{n-2}x\\cos^{2}x\\,dx \\). At \\( \\pi/2 \\) the boundary term is zero because \\( \\cos(\\pi/2) = 0 \\); at \\( 0 \\) it is zero because \\( \\sin^{n-1}0 = 0 \\), which requires \\( n - 1 \\ge 1 \\), i.e. \\( n \\ge 2 \\) (for \\( n = 1 \\) the factor would be \\( \\sin^{0}0 = 1 \\)). Also \\( \\sin^{n-2}x \\) must be defined as a power with nonnegative exponent. Replacing \\( \\cos^{2}x \\) by \\( 1 - \\sin^{2}x \\): \\( J_{n} = (n-1)J_{n-2} - (n-1)J_{n} \\). Adding \\( (n-1)J_{n} \\) to both sides gives \\( nJ_{n} = (n-1)J_{n-2} \\), so \\( J_{n} = \\frac{n-1}{n}J_{n-2} \\)."
+  },
+  {
+   "id": "p11",
+   "kp": "k3",
+   "type": "antiderivative",
+   "prompt": "Compute \\( \\int x^{3}\\cos(x^{2})\\,dx \\). Choose the split so that \\( dv \\) is integrable. Enter an antiderivative.",
+   "why": "Take \\( u = x^{2} \\), \\( dv = x\\cos(x^{2})dx \\): \\( du = 2x\\,dx \\), \\( v = \\tfrac12\\sin(x^{2}) \\). Then \\( \\int x^{3}\\cos(x^{2})dx = \\tfrac12x^{2}\\sin(x^{2}) - \\int x\\sin(x^{2})dx = \\tfrac12x^{2}\\sin(x^{2}) + \\tfrac12\\cos(x^{2}) + C \\).",
+   "answer": "x^2*sin(x^2)/2 + cos(x^2)/2",
+   "vars": "x"
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k5",
+   "type": "antiderivative",
+   "prompt": "Compute \\( \\int x^{2}\\sin(3x)\\,dx \\). Enter an antiderivative.",
+   "why": "Table: D \\( x^{2}, 2x, 2, 0 \\); I \\( \\sin 3x, -\\tfrac13\\cos 3x, -\\tfrac19\\sin 3x, \\tfrac1{27}\\cos 3x \\). Products with signs \\( +,-,+ \\): \\( -\\tfrac{x^{2}}{3}\\cos 3x + \\tfrac{2x}{9}\\sin 3x + \\tfrac{2}{27}\\cos 3x + C \\).",
+   "answer": "-x^2*cos(3*x)/3 + 2*x*sin(3*x)/9 + 2*cos(3*x)/27",
+   "vars": "x"
+  },
+  {
+   "id": "e2",
+   "kp": "k8",
+   "type": "number",
+   "prompt": "Evaluate \\( \\int_{1}^{e}(\\ln x)^{2}\\,dx \\) exactly.",
+   "why": "By the reduction formula, an antiderivative is \\( x(\\ln x)^{2} - 2x\\ln x + 2x \\). At \\( e \\): \\( e - 2e + 2e = e \\). At \\( 1 \\): \\( 0 - 0 + 2 = 2 \\). The value is \\( e - 2 \\approx 0.718 \\).",
+   "answer": "exp(1) - 2"
+  },
+  {
+   "id": "e3",
+   "kp": "k6",
+   "type": "antiderivative",
+   "prompt": "Compute \\( \\int e^{2x}\\sin x\\,dx \\). Enter an antiderivative.",
+   "why": "Let \\( I \\) be the integral. With \\( u = \\sin x \\), \\( dv = e^{2x}dx \\): \\( I = \\tfrac12e^{2x}\\sin x - \\tfrac12\\int e^{2x}\\cos x\\,dx \\). With \\( u = \\cos x \\): \\( \\int e^{2x}\\cos x\\,dx = \\tfrac12e^{2x}\\cos x + \\tfrac12 I \\). So \\( I = \\tfrac12e^{2x}\\sin x - \\tfrac14e^{2x}\\cos x - \\tfrac14 I \\), \\( \\tfrac54 I = \\tfrac14e^{2x}(2\\sin x - \\cos x) \\), and \\( I = \\tfrac15e^{2x}(2\\sin x - \\cos x) + C \\).",
+   "answer": "exp(2*x)*(2*sin(x) - cos(x))/5",
+   "vars": "x"
+  },
+  {
+   "id": "e4",
+   "kp": "k8",
+   "type": "written",
+   "prompt": "Derive the reduction formula \\( \\int\\cos^{n}x\\,dx = \\frac1n\\cos^{n-1}x\\sin x + \\frac{n-1}{n}\\int\\cos^{n-2}x\\,dx \\) for \\( n \\ge 2 \\), and use it to evaluate \\( \\int_{0}^{\\pi/2}\\cos^{4}x\\,dx \\).",
+   "why": "This mirrors the sine derivation. The value \\( 3\\pi/16 \\approx 0.589 \\) agrees with the sine case, as the substitution \\( x = \\pi/2 - t \\) predicts.",
+   "rubric": [
+    "Uses \\( u = \\cos^{n-1}x \\), \\( dv = \\cos x\\,dx \\), \\( du = -(n-1)\\cos^{n-2}x\\sin x\\,dx \\), \\( v = \\sin x \\).",
+    "Replaces \\( \\sin^{2}x \\) by \\( 1 - \\cos^{2}x \\) and solves for the recurring integral.",
+    "Notes the boundary term vanishes on \\( [0, \\pi/2] \\) for \\( n \\ge 2 \\).",
+    "Computes \\( \\tfrac34\\cdot\\tfrac12\\cdot\\tfrac{\\pi}{2} = \\tfrac{3\\pi}{16} \\)."
+   ],
+   "model": "Let \\( I_{n} = \\int\\cos^{n}x\\,dx \\). With \\( u = \\cos^{n-1}x \\), \\( dv = \\cos x\\,dx \\): \\( du = -(n-1)\\cos^{n-2}x\\sin x\\,dx \\), \\( v = \\sin x \\), so \\( I_{n} = \\cos^{n-1}x\\sin x + (n-1)\\int\\cos^{n-2}x\\sin^{2}x\\,dx = \\cos^{n-1}x\\sin x + (n-1)I_{n-2} - (n-1)I_{n} \\). Hence \\( nI_{n} = \\cos^{n-1}x\\sin x + (n-1)I_{n-2} \\), which is the formula. On \\( [0, \\pi/2] \\) the term \\( \\cos^{n-1}x\\sin x \\) is \\( 0 \\) at both ends when \\( n \\ge 2 \\) (\\( \\cos(\\pi/2) = 0 \\), \\( \\sin 0 = 0 \\)), so \\( \\int_{0}^{\\pi/2}\\cos^{n}x\\,dx = \\frac{n-1}{n}\\int_{0}^{\\pi/2}\\cos^{n-2}x\\,dx \\). Therefore \\( \\int_{0}^{\\pi/2}\\cos^{4}x\\,dx = \\tfrac34\\cdot\\tfrac12\\cdot\\int_{0}^{\\pi/2}1\\,dx = \\tfrac38\\cdot\\tfrac{\\pi}{2} = \\tfrac{3\\pi}{16} \\)."
+  },
+  {
+   "id": "e5",
+   "kp": "k1",
+   "type": "written",
+   "prompt": "Consider this argument. For \\( \\int\\frac{1}{x}\\,dx \\), take \\( u = \\frac1x \\), \\( dv = dx \\), so \\( du = -\\frac{1}{x^{2}}dx \\), \\( v = x \\). Then \\( \\int\\frac1x\\,dx = \\frac1x\\cdot x - \\int x\\left(-\\frac{1}{x^{2}}\\right)dx = 1 + \\int\\frac1x\\,dx \\). Subtracting \\( \\int\\frac1x\\,dx \\) from both sides gives \\( 0 = 1 \\). Identify the flaw precisely.",
+   "why": "Constants in indefinite integrals are not bookkeeping trivia: every recurring-integral computation depends on handling them correctly.",
+   "rubric": [
+    "Each computation step is correct; the formula was applied properly.",
+    "An indefinite integral denotes a family of antiderivatives defined only up to an additive constant.",
+    "The equation \\( \\int\\frac1x dx = 1 + \\int\\frac1x dx \\) says two antiderivative families coincide, which is true since they differ by a constant; it cannot be cancelled like a number.",
+    "With definite integrals the boundary term is \\( [1]_{a}^{b} = 0 \\), and no contradiction arises."
+   ],
+   "model": "The integration by parts is carried out correctly; the flaw is treating \\( \\int\\frac1x\\,dx \\) as a single function that can be subtracted from both sides. An indefinite integral stands for the set of all antiderivatives, \\( \\ln|x| + C \\), and the equation \\( \\int\\frac1x dx = 1 + \\int\\frac1x dx \\) is a true statement about these sets: adding the constant 1 to every antiderivative gives the same set. Cancelling the integrals as if they were numbers is invalid. If we instead fix limits, the boundary term becomes \\( \\big[\\tfrac1x\\cdot x\\big]_{a}^{b} = 1 - 1 = 0 \\), and the identity reads \\( \\int_{a}^{b}\\frac{dx}{x} = 0 + \\int_{a}^{b}\\frac{dx}{x} \\), which is consistent."
+  }
+ ],
+ "terms": [
+  {
+   "t": "integration by parts",
+   "d": "The rule \\( \\int u\\,dv = uv - \\int v\\,du \\), obtained by integrating the product rule; it exchanges one integral for another by moving a derivative from one factor of a product to the other.",
+   "ex": "\\( \\int x\\cos x\\,dx = x\\sin x - \\int\\sin x\\,dx \\)."
+  },
+  {
+   "t": "boundary term",
+   "d": "In the definite form of integration by parts, the term \\( [uv]_{a}^{b} = u(b)v(b) - u(a)v(a) \\).",
+   "ex": "In \\( \\int_{0}^{\\pi}x\\sin x\\,dx \\) it is \\( [-x\\cos x]_{0}^{\\pi} = \\pi \\)."
+  },
+  {
+   "t": "LIATE",
+   "d": "A heuristic for choosing \\( u \\): take the factor whose type comes first in Logarithmic, Inverse trigonometric, Algebraic, Trigonometric, Exponential. It is a rule of thumb, not a theorem.",
+   "ex": "It fails for \\( \\int x^{3}e^{x^{2}}dx \\), where \\( dv \\) must be \\( xe^{x^{2}}dx \\)."
+  },
+  {
+   "t": "tabular integration",
+   "d": "A layout for repeated integration by parts: a column of successive derivatives of \\( u \\), a column of successive antiderivatives of \\( dv \\), alternating signs, and diagonal products. It terminates when \\( u \\) is a polynomial.",
+   "ex": "\\( \\int x^{3}\\sin x\\,dx \\) needs four nonzero rows."
+  },
+  {
+   "t": "recurring integral",
+   "d": "An integral that reappears, with a coefficient other than 1, after one or more applications of integration by parts, so that it can be found by solving a linear equation. (Descriptive name; texts often just say the integral 'returns'.)",
+   "ex": "\\( \\int e^{x}\\sin x\\,dx \\)."
+  },
+  {
+   "t": "reduction formula",
+   "d": "An identity expressing an integral that depends on an integer parameter \\( n \\) in terms of the same integral with a smaller parameter, usually obtained by one application of integration by parts.",
+   "ex": "\\( \\int(\\ln x)^{n}dx = x(\\ln x)^{n} - n\\int(\\ln x)^{n-1}dx \\)."
+  },
+  {
+   "t": "Wallis integrals",
+   "d": "The integrals \\( J_{n} = \\int_{0}^{\\pi/2}\\sin^{n}x\\,dx \\) (equivalently with cosine), which satisfy \\( J_{n} = \\frac{n-1}{n}J_{n-2} \\) with \\( J_{0} = \\pi/2 \\) and \\( J_{1} = 1 \\).",
+   "ex": "\\( J_{4} = 3\\pi/16 \\), \\( J_{5} = 8/15 \\)."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "formula",
+   "front": "Integration by parts (indefinite)",
+   "back": "\\( \\int u\\,dv = uv - \\int v\\,du \\)",
+   "kp": "k1"
+  },
+  {
+   "id": "c2",
+   "type": "formula",
+   "front": "Integration by parts (definite)",
+   "back": "\\( \\int_{a}^{b}u\\,dv = [uv]_{a}^{b} - \\int_{a}^{b}v\\,du \\)",
+   "kp": "k7"
+  },
+  {
+   "id": "c3",
+   "type": "concept",
+   "front": "From which differentiation rule is integration by parts derived?",
+   "back": "The product rule, \\( (uv)' = u'v + uv' \\), integrated and rearranged.",
+   "kp": "k1"
+  },
+  {
+   "id": "c4",
+   "type": "concept",
+   "front": "What two conditions make a choice of \\( u \\) and \\( dv \\) a good one?",
+   "back": "\\( dv \\) must be integrable, and the new integral \\( \\int v\\,du \\) must be simpler than the original.",
+   "kp": "k3"
+  },
+  {
+   "id": "c5",
+   "type": "term",
+   "front": "Define: LIATE",
+   "back": "Heuristic order for choosing u: Logarithmic, Inverse trig, Algebraic, Trigonometric, Exponential; u is the type that appears first.",
+   "kp": "k3"
+  },
+  {
+   "id": "c6",
+   "type": "concept",
+   "front": "Why may the constant be omitted when computing \\( v \\) from \\( dv \\)?",
+   "back": "With \\( v + K \\) the extra terms are \\( uK - \\int K\\,du = uK - Ku = 0 \\); they always cancel.",
+   "kp": "k2"
+  },
+  {
+   "id": "c7",
+   "type": "problem",
+   "front": "\\( \\int\\ln x\\,dx \\)",
+   "back": "\\( x\\ln x - x + C \\) (take \\( u = \\ln x \\), \\( dv = dx \\)).",
+   "kp": "k4",
+   "answer": "x*log(x) - x",
+   "vars": "x",
+   "check": "antiderivative"
+  },
+  {
+   "id": "c8",
+   "type": "problem",
+   "front": "\\( \\int\\arctan x\\,dx \\)",
+   "back": "\\( x\\arctan x - \\tfrac12\\ln(1+x^{2}) + C \\) (take \\( u = \\arctan x \\), \\( dv = dx \\)).",
+   "kp": "k4",
+   "answer": "x*atan(x) - log(1 + x^2)/2",
+   "vars": "x",
+   "check": "antiderivative"
+  },
+  {
+   "id": "c9",
+   "type": "problem",
+   "front": "\\( \\int xe^{x}\\,dx \\)",
+   "back": "\\( (x - 1)e^{x} + C \\) (take \\( u = x \\), \\( dv = e^{x}dx \\)).",
+   "kp": "k2",
+   "answer": "(x - 1)*exp(x)",
+   "vars": "x",
+   "check": "antiderivative"
+  },
+  {
+   "id": "c10",
+   "type": "concept",
+   "front": "How many applications of parts does \\( \\int x^{n}e^{ax}\\,dx \\) need?",
+   "back": "\\( n \\): each application lowers the degree of the polynomial by one.",
+   "kp": "k5"
+  },
+  {
+   "id": "c11",
+   "type": "concept",
+   "front": "Tabular method: which entries are multiplied, and with what signs?",
+   "back": "Each derivative entry times the antiderivative entry one row below it; signs alternate +, −, +, … starting with +.",
+   "kp": "k5"
+  },
+  {
+   "id": "c12",
+   "type": "concept",
+   "front": "What do you do when \\( \\int e^{x}\\sin x\\,dx \\) reappears after two applications of parts?",
+   "back": "Treat it as an unknown \\( I \\) and solve the linear equation for \\( I \\), then add \\( C \\).",
+   "kp": "k6"
+  },
+  {
+   "id": "c13",
+   "type": "concept",
+   "front": "In a recurring integral, why must the second application keep the same type of factor as u?",
+   "back": "Switching roles undoes the first step and gives \\( I = I \\); the coefficient of \\( I \\) must differ from 1.",
+   "kp": "k6"
+  },
+  {
+   "id": "c14",
+   "type": "problem",
+   "front": "\\( \\int e^{x}\\sin x\\,dx \\)",
+   "back": "\\( \\tfrac12e^{x}(\\sin x - \\cos x) + C \\)",
+   "kp": "k6",
+   "answer": "exp(x)*(sin(x) - cos(x))/2",
+   "vars": "x",
+   "check": "antiderivative"
+  },
+  {
+   "id": "c15",
+   "type": "formula",
+   "front": "Reduction formula for \\( \\int(\\ln x)^{n}dx \\)",
+   "back": "\\( \\int(\\ln x)^{n}dx = x(\\ln x)^{n} - n\\int(\\ln x)^{n-1}dx \\)",
+   "kp": "k8"
+  },
+  {
+   "id": "c16",
+   "type": "formula",
+   "front": "Reduction formula for \\( \\int\\sin^{n}x\\,dx \\)",
+   "back": "\\( \\int\\sin^{n}x\\,dx = -\\frac1n\\sin^{n-1}x\\cos x + \\frac{n-1}{n}\\int\\sin^{n-2}x\\,dx \\)",
+   "kp": "k8"
+  },
+  {
+   "id": "c17",
+   "type": "formula",
+   "front": "Wallis recursion for \\( J_{n} = \\int_{0}^{\\pi/2}\\sin^{n}x\\,dx \\)",
+   "back": "\\( J_{n} = \\frac{n-1}{n}J_{n-2} \\), \\( J_{0} = \\frac{\\pi}{2} \\), \\( J_{1} = 1 \\)",
+   "kp": "k8"
+  },
+  {
+   "id": "c18",
+   "type": "problem",
+   "front": "\\( \\int_{0}^{\\pi}x\\sin x\\,dx \\)",
+   "back": "\\( \\pi \\): boundary term \\( [-x\\cos x]_{0}^{\\pi} = \\pi \\), and \\( \\int_{0}^{\\pi}\\cos x\\,dx = 0 \\).",
+   "kp": "k7",
+   "answer": "pi",
+   "check": "number"
+  },
+  {
+   "id": "c19",
+   "type": "concept",
+   "front": "Why is \\( \\int x\\cos x\\,dx \\ne \\left(\\int x\\,dx\\right)\\left(\\int\\cos x\\,dx\\right) \\)?",
+   "back": "Integration does not distribute over products, just as differentiation does not: the product rule has two terms.",
+   "kp": "k2"
+  },
+  {
+   "id": "c20",
+   "type": "problem",
+   "front": "\\( \\int_{0}^{\\pi/2}\\sin^{5}x\\,dx \\)",
+   "back": "\\( \\tfrac45\\cdot\\tfrac23\\cdot 1 = \\tfrac{8}{15} \\)",
+   "kp": "k8",
+   "answer": "8/15",
+   "check": "number"
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "Integration by parts",
+    "formula": "\\( \\int u\\,dv = uv - \\int v\\,du \\)",
+    "when": "The integrand is a product of factors not related by differentiation, so substitution does not apply.",
+    "example": "\\( \\int x\\cos x\\,dx = x\\sin x + \\cos x + C \\)",
+    "watch": "Gain only if the new integral is simpler; integrating each factor separately is wrong."
+   },
+   {
+    "name": "Definite form",
+    "formula": "\\( \\int_{a}^{b}u\\,dv = [uv]_{a}^{b} - \\int_{a}^{b}v\\,du \\)",
+    "when": "Limits are given.",
+    "example": "\\( \\int_{1}^{e}\\ln x\\,dx = [x\\ln x]_{1}^{e} - (e - 1) = 1 \\)",
+    "watch": "Keep the second integral definite; keep the sign of v."
+   },
+   {
+    "name": "Choosing u (LIATE)",
+    "formula": "u = first of Logarithmic, Inverse trig, Algebraic, Trigonometric, Exponential",
+    "when": "Deciding how to split a product.",
+    "example": "\\( \\int x^{3}\\ln x\\,dx \\): \\( u = \\ln x \\)",
+    "watch": "dv must be integrable: for \\( \\int x^{3}e^{x^{2}}dx \\) use \\( dv = xe^{x^{2}}dx \\)."
+   },
+   {
+    "name": "Lone log or inverse trig",
+    "formula": "\\( u = f(x) \\), \\( dv = dx \\), \\( v = x \\)",
+    "when": "A single factor whose derivative is algebraic.",
+    "example": "\\( \\int\\arctan x\\,dx = x\\arctan x - \\tfrac12\\ln(1+x^{2}) + C \\)",
+    "watch": "The leftover integral usually needs a substitution."
+   },
+   {
+    "name": "Tabular method",
+    "formula": "Derivatives of u down to 0; antiderivatives of dv; signs +, −, +, …; diagonal products",
+    "when": "u is a polynomial and dv is exponential, sine or cosine.",
+    "example": "\\( \\int x^{2}e^{x}dx = e^{x}(x^{2} - 2x + 2) + C \\)",
+    "watch": "Signs alternate; antiderivatives carry their constants (e.g. 1/2 for e^{2x})."
+   },
+   {
+    "name": "Recurring integral",
+    "formula": "\\( I = F(x) - kI \\Rightarrow I = \\frac{F(x)}{1+k} \\)",
+    "when": "Exponential times sine/cosine; sin(ln x); sec cubed.",
+    "example": "\\( \\int e^{x}\\sin x\\,dx = \\tfrac12e^{x}(\\sin x - \\cos x) + C \\)",
+    "watch": "Keep the same type of factor as u in both applications."
+   },
+   {
+    "name": "Reduction formula",
+    "formula": "\\( I_{n} \\) in terms of \\( I_{n-1} \\) or \\( I_{n-2} \\) from one application of parts",
+    "when": "Integrand depends on an integer power n.",
+    "example": "\\( \\int(\\ln x)^{n}dx = x(\\ln x)^{n} - nI_{n-1} \\)",
+    "watch": "Do not drop the factor n from differentiating the power."
+   },
+   {
+    "name": "Wallis integrals",
+    "formula": "\\( J_{n} = \\frac{n-1}{n}J_{n-2} \\), \\( J_{0} = \\frac{\\pi}{2} \\), \\( J_{1} = 1 \\)",
+    "when": "\\( \\int_{0}^{\\pi/2}\\sin^{n}x\\,dx \\) or the cosine version.",
+    "example": "\\( J_{4} = \\tfrac34\\cdot\\tfrac12\\cdot\\tfrac{\\pi}{2} = \\tfrac{3\\pi}{16} \\)",
+    "watch": "Boundary term vanishes only for \\( n \\ge 2 \\) on these limits."
+   }
+  ],
+  "stuck": [
+   "Check first whether a substitution alone works; parts is for products not related by differentiation.",
+   "If the new integral looks harder (a power went up), swap u and dv and start again.",
+   "If a factor has no obvious antiderivative (ln x, arctan x, e^{x^2}), it must be in u, or dv must include the extra factor that makes it integrable.",
+   "If the original integral comes back, stop and solve for it as an unknown.",
+   "Differentiate your final answer; the terms should cancel back to the integrand."
+  ]
+ }
+}

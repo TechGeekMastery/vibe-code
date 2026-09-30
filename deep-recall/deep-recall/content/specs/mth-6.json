@@ -1,0 +1,162 @@
+{
+ "subject": "Mathematics",
+ "sid": "mth",
+ "ui": 6,
+ "course": "Proof & Discrete Math",
+ "blurb": "A full problem-solving track: algebra through calculus, linear algebra, differential equations, and proof.",
+ "kind": "program",
+ "code": null,
+ "topics": [
+  {
+   "key": "mth-6-0",
+   "title": "Logic and truth tables",
+   "reference": "Velleman, How to Prove It; Rosen, Discrete Mathematics"
+  },
+  {
+   "key": "mth-6-1",
+   "title": "Proof techniques",
+   "reference": "Velleman, How to Prove It; Rosen, Discrete Mathematics"
+  },
+  {
+   "key": "mth-6-2",
+   "title": "Mathematical induction",
+   "reference": "Velleman, How to Prove It; Rosen, Discrete Mathematics"
+  },
+  {
+   "key": "mth-6-3",
+   "title": "Sets, functions, and relations",
+   "reference": "Velleman, How to Prove It; Rosen, Discrete Mathematics"
+  },
+  {
+   "key": "mth-6-4",
+   "title": "Counting: permutations and combinations",
+   "reference": "Velleman, How to Prove It; Rosen, Discrete Mathematics"
+  },
+  {
+   "key": "mth-6-5",
+   "title": "Pigeonhole and inclusion–exclusion",
+   "reference": "Velleman, How to Prove It; Rosen, Discrete Mathematics"
+  },
+  {
+   "key": "mth-6-6",
+   "title": "Recurrence relations",
+   "reference": "Velleman, How to Prove It; Rosen, Discrete Mathematics"
+  },
+  {
+   "key": "mth-6-7",
+   "title": "Graph theory basics",
+   "reference": "Velleman, How to Prove It; Rosen, Discrete Mathematics"
+  },
+  {
+   "key": "mth-6-8",
+   "title": "Modular arithmetic and primes",
+   "reference": "Velleman, How to Prove It; Rosen, Discrete Mathematics"
+  }
+ ],
+ "otherCourses": [
+  {
+   "course": "Algebra & Precalculus",
+   "topics": [
+    "Linear equations and inequalities",
+    "Quadratics and factoring",
+    "Polynomial and rational functions",
+    "Exponents and logarithms",
+    "Functions, inverses, and transformations",
+    "Trigonometric functions and the unit circle",
+    "Trigonometric identities and equations",
+    "Systems of equations",
+    "Arithmetic and geometric sequences",
+    "Complex numbers"
+   ]
+  },
+  {
+   "course": "Calculus I",
+   "topics": [
+    "Limits",
+    "Continuity",
+    "The definition of the derivative",
+    "Power, product, and quotient rules",
+    "The chain rule",
+    "Derivatives of trig, exponential, and log functions",
+    "Implicit differentiation",
+    "Related rates",
+    "Extrema and curve sketching",
+    "Optimization",
+    "L’Hôpital’s rule",
+    "Riemann sums and the definite integral",
+    "The fundamental theorem of calculus",
+    "u-substitution"
+   ]
+  },
+  {
+   "course": "Calculus II",
+   "topics": [
+    "Integration by parts",
+    "Trigonometric integrals and substitution",
+    "Partial fractions",
+    "Improper integrals",
+    "Area between curves and volumes of revolution",
+    "Arc length and surface area",
+    "Sequences",
+    "Series convergence tests",
+    "Power series and radius of convergence",
+    "Taylor and Maclaurin series",
+    "Parametric equations",
+    "Polar coordinates"
+   ]
+  },
+  {
+   "course": "Calculus III",
+   "topics": [
+    "Vectors, dot and cross products",
+    "Lines and planes in space",
+    "Vector-valued functions and motion",
+    "Partial derivatives",
+    "Gradients and directional derivatives",
+    "Multivariable optimization and Lagrange multipliers",
+    "Double integrals",
+    "Triple integrals and coordinate changes",
+    "Line integrals and conservative fields",
+    "Green’s theorem",
+    "Stokes’ theorem and the divergence theorem"
+   ]
+  },
+  {
+   "course": "Linear Algebra",
+   "topics": [
+    "Systems and row reduction",
+    "Matrix operations and inverses",
+    "Determinants",
+    "Vector spaces and subspaces",
+    "Span, independence, basis, and dimension",
+    "Linear transformations",
+    "Eigenvalues and eigenvectors",
+    "Diagonalization",
+    "Orthogonality and Gram–Schmidt",
+    "Least squares"
+   ]
+  },
+  {
+   "course": "Differential Equations",
+   "topics": [
+    "Separable equations",
+    "First-order linear equations",
+    "Exact equations",
+    "Second-order homogeneous linear equations",
+    "Undetermined coefficients",
+    "Variation of parameters",
+    "Laplace transforms",
+    "Systems of linear ODEs"
+   ]
+  },
+  {
+   "course": "Big Ideas",
+   "topics": [
+    "Infinity and cardinality",
+    "Epsilon–delta and the rigor of analysis",
+    "Group theory and symmetry",
+    "Gödel’s incompleteness theorems"
+   ]
+  }
+ ]
+}

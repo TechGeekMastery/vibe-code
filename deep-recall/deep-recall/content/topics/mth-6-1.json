@@ -1,0 +1,820 @@
+{
+ "key": "mth-6-1",
+ "title": "Proof techniques",
+ "v": 1,
+ "scope": "Direct, contrapositive, contradiction and case proofs, biconditional, existence, uniqueness and counterexample arguments on elementary number-theoretic and real-number statements; induction and set proofs are left to later topics.",
+ "sources": [
+  {
+   "title": "R. Hammack, Book of Proof, 3rd ed., Chapters 4–7",
+   "url": "https://richardhammack.github.io/BookOfProof/"
+  },
+  {
+   "title": "J. F. Nordstrom, Discrete Mathematics: An Active Approach, §4.5 Proof by Contradiction and Contrapositive (Runestone)",
+   "url": "https://runestone.academy/ns/books/published/DiscreteMathText/contradiction4-5.html"
+  },
+  {
+   "title": "D. Velleman, How to Prove It, 3rd ed., Chapter 3 (Proofs), Cambridge University Press",
+   "url": "https://assets.cambridge.org/97805216/75994/frontmatter/9780521675994_frontmatter.pdf"
+  }
+ ],
+ "pre": [
+  "mth-6-0"
+ ],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Definitions as proof tools",
+   "d": "State the definitions of even, odd, divides, prime, rational, and unfold them correctly as givens or goals.",
+   "type": "fact"
+  },
+  {
+   "id": "k2",
+   "t": "Givens, goals, arbitrary elements",
+   "d": "Set up a proof from the logical form of the statement: arbitrary elements for ∀, witnesses for ∃, assume hypothesis for →.",
+   "type": "procedure"
+  },
+  {
+   "id": "k3",
+   "t": "Direct proof",
+   "d": "Prove P → Q by assuming P and deducing Q, with correct variable handling.",
+   "type": "skill"
+  },
+  {
+   "id": "k4",
+   "t": "Proof by contrapositive",
+   "d": "Recognize when contraposition helps, state the contrapositive correctly, and prove it.",
+   "type": "skill"
+  },
+  {
+   "id": "k5",
+   "t": "Proof by contradiction",
+   "d": "Negate the statement correctly, derive a genuine contradiction, and distinguish the method from contraposition.",
+   "type": "skill"
+  },
+  {
+   "id": "k6",
+   "t": "Classic contradiction proofs",
+   "d": "Reproduce and adapt the irrationality of √2 and Euclid's proof of infinitely many primes.",
+   "type": "skill"
+  },
+  {
+   "id": "k7",
+   "t": "Proof by cases",
+   "d": "Split into exhaustive cases (parity, remainders, sign) and handle each; use WLOG only for genuinely symmetric cases.",
+   "type": "procedure"
+  },
+  {
+   "id": "k8",
+   "t": "Biconditional proofs",
+   "d": "Prove P ↔ Q by proving both directions, possibly by different methods.",
+   "type": "procedure"
+  },
+  {
+   "id": "k9",
+   "t": "Existence proofs",
+   "d": "Give constructive existence proofs and recognize non-constructive ones.",
+   "type": "distinction"
+  },
+  {
+   "id": "k10",
+   "t": "Uniqueness proofs",
+   "d": "Prove existence and uniqueness as two separate parts.",
+   "type": "procedure"
+  },
+  {
+   "id": "k11",
+   "t": "Disproof by counterexample",
+   "d": "Refute a universal claim with a verified counterexample satisfying the hypothesis.",
+   "type": "skill"
+  }
+ ],
+ "intro": "Checking a claim on many examples, however many, does not establish it. The polynomial \\( n^{2} + n + 41 \\) is prime for \\( n = 0, 1, 2, \\dots, 39 \\), and then \\( 40^{2} + 40 + 41 = 41^{2} \\). A **proof** is what closes that gap: a finite chain of statements, each justified by definitions, previously proved results or valid rules of inference, ending in the claim, so that the claim holds in *every* case covered by its hypotheses.\n\nThe logic of the previous topic tells you what a statement means and what counts as a valid inference; it does not tell you how to find a proof. This topic supplies the standard strategies: the direct proof, proof by contrapositive, proof by contradiction, proof by cases, proofs of biconditionals, existence and uniqueness proofs, and disproof by counterexample. Each is chosen by looking at the logical form of what you must prove, which is why the logic comes first.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "Definitions, givens and goals",
+   "kps": [
+    "k1",
+    "k2"
+   ],
+   "md": "Before any strategy can be applied, you must know exactly what you are allowed to assume and exactly what you must reach. This section sets up that framework: definitions as the raw material of proofs, and the logical form of the goal as the guide to structure.\n\n**Definitions are the tools.** A proof about even numbers cannot use a vague sense of \"evenness\"; it uses the definition. The definitions used throughout this course are:\n\n> An integer \\( n \\) is **even** if \\( n = 2k \\) for some integer \\( k \\); it is **odd** if \\( n = 2k + 1 \\) for some integer \\( k \\).\n>\n> For integers \\( a \\) and \\( b \\), \\( a \\) **divides** \\( b \\), written \\( a \\mid b \\), if \\( b = ac \\) for some integer \\( c \\).\n>\n> A natural number \\( p > 1 \\) is **prime** if its only positive divisors are \\( 1 \\) and \\( p \\); a natural number \\( n > 1 \\) that is not prime is **composite**.\n>\n> A real number \\( x \\) is **rational** if \\( x = \\frac{a}{b} \\) for some integers \\( a, b \\) with \\( b \\neq 0 \\); otherwise it is **irrational**.\n\nWe also use two basic facts about integers: every integer is either even or odd, and no integer is both. (Both follow from the division algorithm; the second is proved in the practice problems.) Two integers have the **same parity** if both are even or both are odd.\n\nNotice that every definition is an existential statement (\"for some integer \\( k \\)\"). This dictates how definitions enter a proof. When a definition is **given** (assumed), you may name the integer it provides: \"since \\( n \\) is even, \\( n = 2k \\) for some integer \\( k \\)\". When a definition is the **goal**, you must produce the integer: to show \\( m \\) is even, exhibit an integer \\( j \\) and verify \\( m = 2j \\).\n\n**Givens and goal.** At every stage of a proof there is a list of statements you may use (the givens) and one statement you must prove (the goal). The logical form of the goal tells you how to proceed (this is the approach of Velleman's *How to Prove It*):\n\n- Goal \\( P \\to Q \\): add \\( P \\) to the givens; the new goal is \\( Q \\).\n- Goal \\( \\forall x\\, P(x) \\): introduce an **arbitrary** element: \"let \\( x \\) be an arbitrary element of the domain\". Assume nothing about \\( x \\) beyond its membership in the domain, and prove \\( P(x) \\). Since \\( x \\) was arbitrary, the argument works for every element.\n- Goal \\( \\exists x\\, P(x) \\): find a specific **witness** \\( a \\) and prove \\( P(a) \\).\n- Goal \\( P \\wedge Q \\): prove \\( P \\) and prove \\( Q \\).\n\n**Worked example.** Prove: for all integers \\( m \\) and \\( n \\), if \\( m \\) is even then \\( mn \\) is even.\n\n1. Form: \\( \\forall m\\, \\forall n\\, (m \\text{ even} \\to mn \\text{ even}) \\). So: let \\( m \\) and \\( n \\) be arbitrary integers, and assume \\( m \\) is even. Goal: \\( mn \\) is even.\n2. Unfold the given: \\( m = 2k \\) for some integer \\( k \\).\n3. Unfold the goal: we need an integer \\( j \\) with \\( mn = 2j \\).\n4. Compute: \\( mn = (2k)n = 2(kn) \\). Take \\( j = kn \\), an integer because products of integers are integers.\n5. Hence \\( mn \\) is even. Since \\( m, n \\) were arbitrary, the statement holds for all integers.\n\nThe common mistakes at this stage are **proof by example** (checking \\( m = 4, n = 3 \\) proves only that instance) and treating a goal as a given (writing \"\\( mn = 2j \\)\" at the start, before \\( j \\) has been found). Write the proof so that each line is justified by the givens and lines above it.",
+   "questions": [
+    {
+     "id": "s1q1",
+     "kp": "k1",
+     "type": "written",
+     "prompt": "For the statement \"for all integers \\( a, b, c \\), if \\( a \\mid b \\) and \\( a \\mid c \\), then \\( a \\mid (b + c) \\)\": (a) list the givens and the goal after the proof has been set up; (b) say which definitions must be unfolded and whether each is used as a given (name the integer) or as a goal (produce the integer); (c) write the proof.",
+     "rubric": [
+      "(a) a, b, c arbitrary integers; givens a | b and a | c; goal a | (b + c)",
+      "(b) a | b and a | c are unfolded as givens: b = ak, c = al for integers k, l; the goal a | (b + c) requires producing an integer m with b + c = am",
+      "(c) computes b + c = ak + al = a(k + l) and takes m = k + l, an integer",
+      "Uses distinct letters for the two integers given by the hypotheses"
+     ],
+     "model": "(a) Let \\( a, b, c \\) be arbitrary integers. Givens: \\( a \\mid b \\) and \\( a \\mid c \\). Goal: \\( a \\mid (b + c) \\).\n\n(b) The hypotheses are given, so they supply integers: \\( b = ak \\) and \\( c = al \\) for some integers \\( k, l \\) (different letters, since there is no reason they are equal). The conclusion is a goal, so we must produce an integer \\( m \\) with \\( b + c = am \\).\n\n(c) *Proof.* Let \\( a, b, c \\) be integers with \\( a \\mid b \\) and \\( a \\mid c \\). Then \\( b = ak \\) and \\( c = al \\) for some integers \\( k, l \\). So \\( b + c = ak + al = a(k + l) \\). Since \\( k + l \\) is an integer, \\( a \\mid (b + c) \\). \\( \\blacksquare \\)",
+     "why": "Existential definitions are unpacked (named) when given and constructed when they are the goal."
+    },
+    {
+     "id": "s1q2",
+     "kp": "k2",
+     "type": "written",
+     "prompt": "A student \"proves\" that the sum of any two even integers is divisible by 4 as follows: \"\\( 2 + 2 = 4 \\), \\( 4 + 4 = 8 \\), \\( 6 + 2 = 8 \\), \\( 8 + 4 = 12 \\): all divisible by 4.\" Explain precisely what is wrong with this as a proof, and settle the claim.",
+     "rubric": [
+      "Checking examples does not prove a universal statement; the variables must be arbitrary",
+      "The claim is false",
+      "Gives a counterexample, e.g. 2 + 4 = 6, which is not divisible by 4",
+      "Notes that a universal claim is refuted by a single counterexample"
+     ],
+     "model": "A universal statement \"for all even \\( m, n \\), \\( 4 \\mid (m + n) \\)\" is not established by checking instances; a proof must treat \\( m \\) and \\( n \\) as arbitrary even integers. Here the claim is in fact false: \\( 2 + 4 = 6 \\), and \\( 4 \\nmid 6 \\). One counterexample refutes a universal claim. (What is true is that \\( m + n = 2k + 2l = 2(k + l) \\) is even.)",
+     "why": "Examples can suggest or refute a universal claim, but never prove it."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "Direct proof",
+   "kps": [
+    "k3"
+   ],
+   "md": "The simplest strategy for a conditional \\( P \\to Q \\) is to assume \\( P \\) and reason forward to \\( Q \\). This section describes the method and the discipline needed to carry it out.\n\n> **Direct proof** of \\( P \\to Q \\): assume \\( P \\); using definitions, known results and valid inferences, deduce \\( Q \\).\n\nThe justification is the truth table of the conditional: \\( P \\to Q \\) can fail only when \\( P \\) is true, so it suffices to show that \\( Q \\) is true in every situation where \\( P \\) is true. When the statement is universally quantified, as most theorems are, the variables are introduced as arbitrary first.\n\nA useful working habit is to do **scratch work** in two directions before writing. Forward: unpack the hypothesis into equations. Backward: unpack the conclusion into what you need to produce. The proof is found where the two meet, then written cleanly from hypothesis to conclusion.\n\n**Worked example 1.** Prove: if \\( m \\) and \\( n \\) are odd integers, then \\( m + n \\) is even.\n\n*Scratch.* Forward: \\( m = 2k + 1 \\), \\( n = 2l + 1 \\). Backward: need \\( m + n = 2j \\) for an integer \\( j \\).\n\n*Proof.* Suppose \\( m \\) and \\( n \\) are odd. Then \\( m = 2k + 1 \\) and \\( n = 2l + 1 \\) for some integers \\( k, l \\). Hence\n\\[ m + n = 2k + 2l + 2 = 2(k + l + 1). \\]\nSince \\( k + l + 1 \\) is an integer, \\( m + n \\) is even. \\( \\blacksquare \\)\n\nThe letters \\( k \\) and \\( l \\) must be different. Writing \\( m = 2k + 1 \\) and \\( n = 2k + 1 \\) silently assumes \\( m = n \\), and the resulting \"proof\" covers only that case. This is one of the most common errors in first proofs.\n\n**Worked example 2 (transitivity of divisibility).** Prove: for all integers \\( a, b, c \\), if \\( a \\mid b \\) and \\( b \\mid c \\), then \\( a \\mid c \\).\n\n*Proof.* Let \\( a, b, c \\) be integers with \\( a \\mid b \\) and \\( b \\mid c \\). Then \\( b = ak \\) and \\( c = bl \\) for some integers \\( k, l \\). Substituting the first equation into the second,\n\\[ c = (ak)l = a(kl). \\]\nSince \\( kl \\) is an integer, \\( a \\mid c \\). \\( \\blacksquare \\)\n\n**Worked example 3 (inequality).** Prove: for all real numbers \\( x \\) and \\( y \\), \\( x^{2} + y^{2} \\ge 2xy \\).\n\n*Scratch.* Rearranging the goal gives \\( x^{2} - 2xy + y^{2} \\ge 0 \\), that is, \\( (x - y)^{2} \\ge 0 \\), which is true. But this scratch runs from the goal to a known fact, which is the wrong direction for a proof (it would be affirming the consequent). Each step, however, is reversible, so we write it forward.\n\n*Proof.* Let \\( x, y \\in \\mathbb{R} \\). The square of a real number is nonnegative, so \\( (x - y)^{2} \\ge 0 \\). Expanding, \\( x^{2} - 2xy + y^{2} \\ge 0 \\). Adding \\( 2xy \\) to both sides gives \\( x^{2} + y^{2} \\ge 2xy \\). \\( \\blacksquare \\)\n\n**Writing conventions.** State what you are assuming; write in complete sentences, with symbols embedded in them; justify every step that is not routine algebra; mark the end with \\( \\blacksquare \\) or \"Q.E.D.\". A proof is written for a reader, not as a record of how you found it.\n\n**The common mistakes**: reusing a letter for integers that need not be equal; starting from the conclusion and deriving something true (valid only if every step reverses, and the write-up must then run forward); and using the claim itself as a step.",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k3",
+     "type": "written",
+     "prompt": "Give a direct proof that for all integers \\( a, b, c, x, y \\), if \\( a \\mid b \\) and \\( a \\mid c \\), then \\( a \\mid (bx + cy) \\). Indicate which assumptions introduce which integers.",
+     "rubric": [
+      "Sets up arbitrary integers and assumes a | b and a | c",
+      "Unfolds b = ak and c = al with distinct integers k, l",
+      "Computes bx + cy = akx + aly = a(kx + ly)",
+      "Concludes a | (bx + cy) since kx + ly is an integer"
+     ],
+     "model": "*Proof.* Let \\( a, b, c, x, y \\) be integers and suppose \\( a \\mid b \\) and \\( a \\mid c \\). By definition, \\( b = ak \\) and \\( c = al \\) for some integers \\( k, l \\). Then\n\\[ bx + cy = (ak)x + (al)y = a(kx + ly). \\]\nSince \\( k, l, x, y \\) are integers, so is \\( kx + ly \\). Therefore \\( a \\mid (bx + cy) \\). \\( \\blacksquare \\)",
+     "why": "This result, that a common divisor of \\( b \\) and \\( c \\) divides every integer combination \\( bx + cy \\), is used constantly in number theory."
+    },
+    {
+     "id": "s2q2",
+     "kp": "k3",
+     "type": "written",
+     "prompt": "A student writes: \"Let \\( m \\) and \\( n \\) be even. Then \\( m = 2k \\) and \\( n = 2k \\). So \\( mn = 4k^{2} \\), and hence \\( mn \\) is divisible by 4.\" Identify the error, explain why the argument proves less than claimed, and write a correct proof that the product of two even integers is divisible by 4.",
+     "rubric": [
+      "Error: the same letter k is used for both m and n, which assumes m = n",
+      "The argument therefore only covers products of an even number with itself",
+      "Correct proof: m = 2k, n = 2l with distinct letters",
+      "mn = 4kl, and kl is an integer, so 4 | mn"
+     ],
+     "model": "The error is writing both \\( m = 2k \\) and \\( n = 2k \\): the definition of evenness gives *some* integer for each, and there is no reason for them to be the same. Using one letter assumes \\( m = n \\), so the argument proves only that \\( 4 \\mid m^{2} \\) for even \\( m \\).\n\n*Correct proof.* Let \\( m, n \\) be even. Then \\( m = 2k \\) and \\( n = 2l \\) for some integers \\( k, l \\). So \\( mn = 4kl \\). Since \\( kl \\) is an integer, \\( 4 \\mid mn \\). \\( \\blacksquare \\)",
+     "why": "Each existential hypothesis gets its own fresh variable."
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "Proof by contrapositive",
+   "kps": [
+    "k4"
+   ],
+   "md": "Some conditionals resist a direct attack: assuming the hypothesis gives you little to work with, while the negation of the conclusion would give a great deal. This section shows how to exploit the logical equivalence of a conditional with its contrapositive.\n\n> **Proof by contrapositive** of \\( P \\to Q \\): assume \\( \\neg Q \\); deduce \\( \\neg P \\).\n\nSince \\( P \\to Q \\equiv \\neg Q \\to \\neg P \\) (a truth-table fact from the logic topic), a direct proof of \\( \\neg Q \\to \\neg P \\) is a proof of \\( P \\to Q \\). No new logic is involved; what changes is what you get to assume.\n\n**When to use it.** Look at the two sides. If the hypothesis \\( P \\) is complicated or does not unpack usefully, while \\( \\neg Q \\) gives a concrete equation, contraposition is often easier. A typical signal: the conclusion is \"\\( n \\) is even\" or \"\\( n \\) is odd\" and the hypothesis is a statement about \\( n^{2} \\) or some expression in \\( n \\). Assuming \"\\( n^{2} \\) is even\" gives \\( n^{2} = 2k \\), and there is no clean way to extract \\( n \\) from that. Assuming \"\\( n \\) is odd\" gives \\( n = 2k + 1 \\), which can be squared.\n\n**Worked example 1.** Prove: for every integer \\( n \\), if \\( n^{2} \\) is even, then \\( n \\) is even.\n\n*Why not directly?* From \\( n^{2} = 2k \\) we would want \\( n = \\sqrt{2k} \\), which leads nowhere: it is not even clear that it is an integer expression of the right form.\n\n*Proof.* We prove the contrapositive: if \\( n \\) is not even, then \\( n^{2} \\) is not even; that is, if \\( n \\) is odd then \\( n^{2} \\) is odd. Suppose \\( n \\) is odd, so \\( n = 2k + 1 \\) for some integer \\( k \\). Then\n\\[ n^{2} = 4k^{2} + 4k + 1 = 2(2k^{2} + 2k) + 1, \\]\nand \\( 2k^{2} + 2k \\) is an integer, so \\( n^{2} \\) is odd. By contraposition, if \\( n^{2} \\) is even then \\( n \\) is even. \\( \\blacksquare \\)\n\nThis lemma will be used in the next section to prove that \\( \\sqrt{2} \\) is irrational.\n\n**Worked example 2.** Prove: for every integer \\( x \\), if \\( x^{2} - 6x + 5 \\) is even, then \\( x \\) is odd.\n\n*Proof.* We prove the contrapositive: if \\( x \\) is even, then \\( x^{2} - 6x + 5 \\) is odd. Suppose \\( x = 2a \\) for an integer \\( a \\). Then\n\\[ x^{2} - 6x + 5 = 4a^{2} - 12a + 5 = 2(2a^{2} - 6a + 2) + 1, \\]\nand \\( 2a^{2} - 6a + 2 \\) is an integer, so \\( x^{2} - 6x + 5 \\) is odd. \\( \\blacksquare \\)\n\n**Writing it up.** Always announce the method (\"We prove the contrapositive…\") and state the contrapositive explicitly, so the reader knows what is being assumed and what is the goal. Negate carefully: using the logic topic, \"not even\" becomes \"odd\" (for integers), \"\\( a \\mid b \\)\" becomes \"\\( a \\nmid b \\)\", and \"\\( x > 0 \\)\" becomes \"\\( x \\le 0 \\)\". When the statement has several hypotheses or a compound conclusion, the negation follows De Morgan: the contrapositive of \\( P \\to (Q \\wedge R) \\) is \\( (\\neg Q \\vee \\neg R) \\to \\neg P \\), which usually splits into cases.\n\n**The common mistake** is to prove the converse \\( Q \\to P \\) or the inverse \\( \\neg P \\to \\neg Q \\) instead of the contrapositive. Both are logically different from the original. For worked example 1, the converse \"if \\( n \\) is even then \\( n^{2} \\) is even\" is true but proving it does not prove the lemma.",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k4",
+     "type": "written",
+     "prompt": "Prove, by contrapositive, that for every integer \\( n \\), if \\( 5n + 3 \\) is even, then \\( n \\) is odd. State the contrapositive explicitly before proving it.",
+     "rubric": [
+      "States the contrapositive: if n is even, then 5n + 3 is odd",
+      "Assumes n = 2k for an integer k",
+      "Computes 5n + 3 = 10k + 3 = 2(5k + 1) + 1",
+      "Concludes 5n + 3 is odd, hence the original by contraposition"
+     ],
+     "model": "Contrapositive: \"If \\( n \\) is even, then \\( 5n + 3 \\) is odd.\"\n\n*Proof.* Suppose \\( n \\) is even, so \\( n = 2k \\) for some integer \\( k \\). Then \\( 5n + 3 = 10k + 3 = 2(5k + 1) + 1 \\), and \\( 5k + 1 \\) is an integer, so \\( 5n + 3 \\) is odd. This proves the contrapositive, and hence the original statement. \\( \\blacksquare \\)",
+     "why": "A direct attack would start from \\( 5n + 3 = 2k \\) and need to solve for \\( n \\); the contrapositive gives a formula for \\( n \\) immediately."
+    },
+    {
+     "id": "s3q2",
+     "kp": "k4",
+     "type": "mcq",
+     "prompt": "To prove \"for every integer \\( n \\), if \\( n^{2} \\) is even then \\( n \\) is even\" by contrapositive, what do you assume and what do you show?",
+     "options": [
+      "Assume \\( n \\) is odd; show \\( n^{2} \\) is odd.",
+      "Assume \\( n^{2} \\) is odd; show \\( n \\) is odd.",
+      "Assume \\( n \\) is even; show \\( n^{2} \\) is even.",
+      "Assume \\( n^{2} \\) is even and \\( n \\) is odd; derive a contradiction."
+     ],
+     "answer": 0,
+     "why": "The contrapositive of \\( P \\to Q \\) is \\( \\neg Q \\to \\neg P \\): here \"if \\( n \\) is not even, then \\( n^{2} \\) is not even\", i.e. assume \\( n \\) odd, show \\( n^{2} \\) odd. The second option is the inverse; the third is the converse (true, but not the statement). The fourth is a valid proof by contradiction, but it is a different method, not the contrapositive."
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "Proof by contradiction",
+   "kps": [
+    "k5",
+    "k6"
+   ],
+   "md": "Some statements have no convenient hypothesis to work from at all, \"\\( \\sqrt{2} \\) is irrational\" for instance, or are negative claims (\"there is no largest prime\"). This section develops a strategy that manufactures a hypothesis: assume the statement is false and show that this is impossible.\n\n> **Proof by contradiction** of a statement \\( P \\): assume \\( \\neg P \\), and deduce a **contradiction**, a statement of the form \\( C \\wedge \\neg C \\). Conclude \\( P \\).\n\nThe logic: \\( \\neg P \\to (C \\wedge \\neg C) \\) is equivalent to \\( \\neg \\neg P \\vee (C \\wedge \\neg C) \\), which is equivalent to \\( P \\), because \\( C \\wedge \\neg C \\) is always false. So if \\( \\neg P \\) leads to a contradiction, \\( \\neg P \\) is false. For a conditional \\( P \\to Q \\), since \\( \\neg (P \\to Q) \\equiv P \\wedge \\neg Q \\), the method becomes: assume \\( P \\) and \\( \\neg Q \\), and derive a contradiction.\n\nThe contradiction need not be announced in advance; it is anything that clashes with a given, a known fact, or another derived statement. That freedom is the strength of the method (you assume more) and its danger (you may not know what you are aiming for).\n\n**Worked example 1.** Prove that \\( \\sqrt{2} \\) is irrational.\n\n*Proof.* Suppose, for contradiction, that \\( \\sqrt{2} \\) is rational. Then \\( \\sqrt{2} = \\frac{a}{b} \\) for integers \\( a, b \\) with \\( b \\neq 0 \\), and we may assume the fraction is in lowest terms: \\( a \\) and \\( b \\) are not both even (otherwise cancel a factor of 2, repeatedly if necessary). Squaring, \\( 2 = \\frac{a^{2}}{b^{2}} \\), so \\( a^{2} = 2b^{2} \\). Thus \\( a^{2} \\) is even, and by the lemma of the previous section, \\( a \\) is even: \\( a = 2c \\) for an integer \\( c \\). Substituting, \\( 4c^{2} = 2b^{2} \\), so \\( b^{2} = 2c^{2} \\) is even, and again by the lemma \\( b \\) is even. Now \\( a \\) and \\( b \\) are both even, contradicting the choice of lowest terms. Hence \\( \\sqrt{2} \\) is irrational. \\( \\blacksquare \\)\n\n**Worked example 2 (Euclid).** Prove that there are infinitely many primes. We use the fact that every natural number greater than 1 has a prime divisor (this will be proved by strong induction in the next topic).\n\n*Proof.* Suppose, for contradiction, that there are only finitely many primes, \\( p_{1}, p_{2}, \\dots, p_{k} \\). Let\n\\[ N = p_{1} p_{2} \\cdots p_{k} + 1. \\]\nSince \\( N > 1 \\), \\( N \\) has a prime divisor \\( q \\), and \\( q \\) must be one of the \\( p_{i} \\). Then \\( q \\mid p_{1} \\cdots p_{k} \\) and \\( q \\mid N \\), so \\( q \\) divides \\( N - p_{1} \\cdots p_{k} = 1 \\). But no prime divides 1, since primes exceed 1. This contradiction shows there are infinitely many primes. \\( \\blacksquare \\)\n\nNote what the proof does *not* claim: \\( N \\) need not itself be prime. For the first six primes, \\( 2 \\cdot 3 \\cdot 5 \\cdot 7 \\cdot 11 \\cdot 13 + 1 = 30031 = 59 \\cdot 509 \\).\n\n**Contradiction versus contrapositive.** For \\( P \\to Q \\), contraposition assumes \\( \\neg Q \\) and has a fixed target, \\( \\neg P \\). Contradiction assumes both \\( P \\) and \\( \\neg Q \\) and accepts any contradiction. If your contradiction proof ends by deriving \\( \\neg P \\) from \\( \\neg Q \\) alone, it was really a contrapositive proof and is clearer written that way.\n\n**The common mistakes**: negating the statement incorrectly at the start (use the negation rules from the logic topic); stopping at a statement that merely looks odd rather than an actual contradiction; and, in example 1, forgetting the lowest-terms assumption, without which \"both even\" is not a contradiction.",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k6",
+     "type": "written",
+     "prompt": "Prove that \\( \\sqrt{3} \\) is irrational. You will need the lemma \"if \\( 3 \\mid n^{2} \\) then \\( 3 \\mid n \\)\"; prove the lemma by contrapositive, considering the two possible remainders of a non-multiple of 3.",
+     "rubric": [
+      "Lemma by contrapositive: if 3 ∤ n then n = 3k + 1 or n = 3k + 2",
+      "Squares each: 9k² + 6k + 1 = 3(3k² + 2k) + 1 and 9k² + 12k + 4 = 3(3k² + 4k + 1) + 1, neither divisible by 3",
+      "Main proof: assume √3 = a/b in lowest terms, get a² = 3b², so 3 | a, a = 3c, then b² = 3c², so 3 | b",
+      "Contradiction with lowest terms (3 divides both)"
+     ],
+     "model": "*Lemma.* If \\( 3 \\nmid n \\), then \\( n = 3k + 1 \\) or \\( n = 3k + 2 \\) for some integer \\( k \\). In the first case \\( n^{2} = 9k^{2} + 6k + 1 = 3(3k^{2} + 2k) + 1 \\); in the second \\( n^{2} = 9k^{2} + 12k + 4 = 3(3k^{2} + 4k + 1) + 1 \\). Either way \\( n^{2} \\) leaves remainder 1 on division by 3, so \\( 3 \\nmid n^{2} \\). By contraposition, \\( 3 \\mid n^{2} \\) implies \\( 3 \\mid n \\).\n\n*Theorem.* Suppose, for contradiction, \\( \\sqrt{3} = \\frac{a}{b} \\) with integers \\( a, b \\), \\( b \\neq 0 \\), in lowest terms (no common factor of 3). Then \\( a^{2} = 3b^{2} \\), so \\( 3 \\mid a^{2} \\) and by the lemma \\( 3 \\mid a \\): \\( a = 3c \\). Then \\( 9c^{2} = 3b^{2} \\), so \\( b^{2} = 3c^{2} \\), hence \\( 3 \\mid b^{2} \\) and \\( 3 \\mid b \\). So 3 divides both \\( a \\) and \\( b \\), contradicting lowest terms. Hence \\( \\sqrt{3} \\) is irrational. \\( \\blacksquare \\)",
+     "why": "The structure is identical to the \\( \\sqrt{2} \\) proof, with the parity lemma replaced by a divisibility-by-3 lemma proved by cases on the remainder."
+    },
+    {
+     "id": "s4q2",
+     "kp": "k5",
+     "type": "written",
+     "prompt": "Prove by contradiction that there is no smallest positive rational number. Begin by writing the negation of the statement precisely.",
+     "rubric": [
+      "Correct negation: there exists a positive rational r such that r ≤ s for every positive rational s",
+      "Constructs r/2 and notes it is rational and positive",
+      "Observes r/2 < r, contradicting minimality",
+      "Concludes no smallest positive rational exists"
+     ],
+     "model": "The statement is \"there is no positive rational \\( r \\) such that \\( r \\le s \\) for every positive rational \\( s \\)\". Its negation: there exists a positive rational \\( r \\) with \\( r \\le s \\) for every positive rational \\( s \\).\n\n*Proof.* Suppose, for contradiction, that such an \\( r \\) exists; write \\( r = \\frac{a}{b} \\) with integers \\( a, b \\), \\( b \\neq 0 \\). Then \\( \\frac{r}{2} = \\frac{a}{2b} \\) is rational, and it is positive since \\( r > 0 \\). By the choice of \\( r \\), \\( r \\le \\frac{r}{2} \\). But \\( r > 0 \\) gives \\( \\frac{r}{2} < r \\). This is a contradiction, so no smallest positive rational exists. \\( \\blacksquare \\)",
+     "why": "Negative existence claims (\"there is no…\") are natural targets for contradiction: assuming existence hands you an object to work with."
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "Proof by cases and biconditional proofs",
+   "kps": [
+    "k7",
+    "k8"
+   ],
+   "md": "Two situations call for splitting a proof into parts: when the hypothesis naturally divides into possibilities that must be handled differently, and when the statement is a biconditional, which is two conditionals at once. This section treats both.\n\n> **Proof by cases.** To prove \\( Q \\), find statements \\( P_{1}, \\dots, P_{k} \\) such that \\( P_{1} \\vee \\cdots \\vee P_{k} \\) is known to be true (the cases are **exhaustive**), and prove \\( P_{i} \\to Q \\) for each \\( i \\).\n\nThis is the valid argument form \"\\( P \\vee R \\), \\( P \\to Q \\), \\( R \\to Q \\), therefore \\( Q \\)\" from the logic topic, extended to \\( k \\) cases. The cases need not be mutually exclusive, but they must cover every possibility. Common splits: \\( n \\) even or odd; the remainder of \\( n \\) on division by 3 is 0, 1 or 2; \\( x \\ge 0 \\) or \\( x < 0 \\).\n\n**Worked example 1.** Prove: for every integer \\( n \\), \\( n^{2} + 3n + 5 \\) is odd.\n\n*Proof.* Let \\( n \\) be an integer. Every integer is even or odd.\n\n*Case 1: \\( n \\) even*, \\( n = 2k \\). Then \\( n^{2} + 3n + 5 = 4k^{2} + 6k + 5 = 2(2k^{2} + 3k + 2) + 1 \\), which is odd.\n\n*Case 2: \\( n \\) odd*, \\( n = 2k + 1 \\). Then \\( n^{2} + 3n + 5 = 4k^{2} + 4k + 1 + 6k + 3 + 5 = 4k^{2} + 10k + 9 = 2(2k^{2} + 5k + 4) + 1 \\), which is odd.\n\nThe cases are exhaustive, so \\( n^{2} + 3n + 5 \\) is odd for every integer \\( n \\). \\( \\blacksquare \\)\n\n**Without loss of generality.** When two cases are symmetric (the same argument works after renaming), one may write \"**without loss of generality** (WLOG), assume \\( m \\) is even\" and treat one case, provided the symmetry is genuine. For example, to show that if \\( mn \\) is odd then both are odd, one may handle \"\\( m \\) even\" and note that \"\\( n \\) even\" is identical with the roles exchanged.\n\n> **Biconditional proofs.** To prove \\( P \\leftrightarrow Q \\), prove \\( P \\to Q \\) and \\( Q \\to P \\). Each direction may use a different method.\n\nLabel the directions clearly: \"(\\( \\Rightarrow \\))\" for \\( P \\to Q \\) and \"(\\( \\Leftarrow \\))\" for \\( Q \\to P \\). To prove that several statements \\( P_{1}, \\dots, P_{k} \\) are all equivalent, it suffices to prove a cycle \\( P_{1} \\to P_{2} \\to \\cdots \\to P_{k} \\to P_{1} \\).\n\n**Worked example 2.** Prove: for every integer \\( n \\), \\( n \\) is even if and only if \\( n^{2} \\) is even.\n\n*Proof.* (\\( \\Rightarrow \\)) Suppose \\( n \\) is even, \\( n = 2k \\). Then \\( n^{2} = 4k^{2} = 2(2k^{2}) \\) is even. (\\( \\Leftarrow \\)) This is the lemma proved by contrapositive in the section on contraposition: if \\( n \\) is odd, \\( n^{2} \\) is odd. Both directions hold. \\( \\blacksquare \\)\n\nThe example shows a direct proof in one direction and a contrapositive proof in the other; this mixing is normal.\n\n**The common mistakes**: omitting a case (for instance, forgetting negative numbers or zero when splitting by sign), using cases that do not cover all possibilities, claiming WLOG when the cases are not symmetric, and proving only one direction of a biconditional (usually the easier one).",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k7",
+     "type": "written",
+     "prompt": "Prove that for every integer \\( n \\), \\( 3 \\mid (n^{3} - n) \\). Use cases based on the remainder of \\( n \\) on division by 3, and state why your cases are exhaustive.",
+     "rubric": [
+      "Cases n = 3k, n = 3k + 1, n = 3k + 2, exhaustive by the division algorithm",
+      "Factors n³ − n = (n − 1)n(n + 1) or expands directly",
+      "Shows each case gives a multiple of 3 with the integer written explicitly",
+      "Concludes for all integers n"
+     ],
+     "model": "*Proof.* Let \\( n \\) be an integer. By the division algorithm, \\( n = 3k \\), \\( n = 3k + 1 \\) or \\( n = 3k + 2 \\) for some integer \\( k \\); these cases are exhaustive. Note \\( n^{3} - n = (n - 1)n(n + 1) \\).\n\n*Case \\( n = 3k \\):* \\( n^{3} - n = 3k\\,(3k - 1)(3k + 1) \\), a multiple of 3.\n\n*Case \\( n = 3k + 1 \\):* \\( n - 1 = 3k \\), so \\( n^{3} - n = 3k\\,(3k + 1)(3k + 2) \\), a multiple of 3.\n\n*Case \\( n = 3k + 2 \\):* \\( n + 1 = 3k + 3 = 3(k + 1) \\), so \\( n^{3} - n = (3k + 1)(3k + 2) \\cdot 3(k + 1) \\), a multiple of 3.\n\nIn every case \\( 3 \\mid (n^{3} - n) \\). \\( \\blacksquare \\)",
+     "why": "Among three consecutive integers one is a multiple of 3; the cases make that precise."
+    },
+    {
+     "id": "s5q2",
+     "kp": "k8",
+     "type": "written",
+     "prompt": "Prove that for every integer \\( n \\), \\( 6 \\mid n \\) if and only if \\( 2 \\mid n \\) and \\( 3 \\mid n \\). For the reverse direction, write \\( n = 2a = 3b \\) and determine the parity of \\( b \\).",
+     "rubric": [
+      "(⇒) n = 6c gives n = 2(3c) and n = 3(2c)",
+      "(⇐) from n = 2a = 3b deduces 3b is even",
+      "Shows b must be even (if b odd then 3b odd), so b = 2c",
+      "Concludes n = 6c, so 6 | n; both directions labeled"
+     ],
+     "model": "*Proof.* (\\( \\Rightarrow \\)) Suppose \\( 6 \\mid n \\), so \\( n = 6c \\) for an integer \\( c \\). Then \\( n = 2(3c) \\) and \\( n = 3(2c) \\), so \\( 2 \\mid n \\) and \\( 3 \\mid n \\).\n\n(\\( \\Leftarrow \\)) Suppose \\( 2 \\mid n \\) and \\( 3 \\mid n \\): \\( n = 2a \\) and \\( n = 3b \\) for integers \\( a, b \\). Then \\( 3b = 2a \\) is even. If \\( b \\) were odd, \\( b = 2m + 1 \\), then \\( 3b = 6m + 3 = 2(3m + 1) + 1 \\) would be odd; so \\( b \\) is even, \\( b = 2c \\). Hence \\( n = 3b = 6c \\), and \\( 6 \\mid n \\). \\( \\blacksquare \\)",
+     "why": "A biconditional needs both directions. The reverse direction here contains a small contrapositive argument (\\( b \\) odd implies \\( 3b \\) odd)."
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "title": "Existence, uniqueness and counterexamples",
+   "kps": [
+    "k9",
+    "k10",
+    "k11"
+   ],
+   "md": "Not every theorem is a conditional. Many assert that something exists, that exactly one such thing exists, or (when you are refuting a claim) that a universal statement fails. This section covers the strategies matched to those logical forms.\n\n**Existence.** To prove \\( \\exists x\\, P(x) \\), the most convincing method is a **constructive proof**: exhibit a specific \\( a \\) and verify \\( P(a) \\). For example, \"there is an integer that can be written as a sum of two positive cubes in two different ways\" is proved by \\( 1729 = 1^{3} + 12^{3} = 9^{3} + 10^{3} \\). A **non-constructive proof** establishes existence without identifying the object, often by contradiction or by cases.\n\n**Worked example 1 (non-constructive).** Prove: there exist irrational numbers \\( a, b \\) such that \\( a^{b} \\) is rational.\n\n*Proof.* Consider \\( \\sqrt{2}^{\\sqrt{2}} \\). It is either rational or irrational.\n\n*Case 1:* it is rational. Take \\( a = b = \\sqrt{2} \\), both irrational.\n\n*Case 2:* it is irrational. Take \\( a = \\sqrt{2}^{\\sqrt{2}} \\) and \\( b = \\sqrt{2} \\). Then \\( a^{b} = \\sqrt{2}^{\\sqrt{2} \\cdot \\sqrt{2}} = \\sqrt{2}^{2} = 2 \\), which is rational.\n\nIn either case suitable \\( a, b \\) exist. \\( \\blacksquare \\)\n\nThe proof does not tell us which case holds. (It is known, by the Gelfond–Schneider theorem, that \\( \\sqrt{2}^{\\sqrt{2}} \\) is irrational, but the proof above needs no such fact.)\n\n**Uniqueness.** \"There is a unique \\( x \\) such that \\( P(x) \\)\", written \\( \\exists! x\\, P(x) \\), means \\( \\exists x\\, P(x) \\) and at most one \\( x \\) satisfies \\( P \\). A proof has two parts:\n\n1. *Existence:* find \\( a \\) with \\( P(a) \\).\n2. *Uniqueness:* suppose \\( P(y) \\) and \\( P(z) \\) both hold, and prove \\( y = z \\). (Equivalently, suppose \\( P(y) \\) and show \\( y = a \\).)\n\n**Worked example 2.** Prove: for every integer \\( n \\), there is a unique integer \\( q \\) and a unique \\( r \\in \\{0, 1\\} \\) with \\( n = 2q + r \\).\n\n*Existence.* If \\( n \\) is even, \\( n = 2q + 0 \\); if odd, \\( n = 2q + 1 \\). Every integer is even or odd.\n\n*Uniqueness.* Suppose \\( n = 2q + r = 2q' + r' \\) with \\( r, r' \\in \\{0, 1\\} \\). Then \\( 2(q - q') = r' - r \\). The right side is \\( -1 \\), \\( 0 \\) or \\( 1 \\), and the left side is even, so \\( r' - r = 0 \\). Then \\( r = r' \\) and \\( 2(q - q') = 0 \\) gives \\( q = q' \\). \\( \\blacksquare \\)\n\nThis uniqueness also shows no integer is both even and odd.\n\n**Disproof by counterexample.** To show that a universal statement \\( \\forall x\\, P(x) \\) is false, prove its negation \\( \\exists x\\, \\neg P(x) \\): exhibit one \\( a \\) with \\( P(a) \\) false. Nothing more is needed, and checking a thousand agreeing cases is no defence against one counterexample.\n\n**Worked example 3.** Disprove: for every natural number \\( n \\), \\( n^{2} + n + 41 \\) is prime.\n\nAt \\( n = 40 \\): \\( 40^{2} + 40 + 41 = 1600 + 81 = 1681 = 41^{2} \\), which is composite. So the statement is false. (It holds for \\( n = 0, 1, \\dots, 39 \\), which is exactly why examples are not proofs.) A counterexample can also be found by reasoning rather than search: at \\( n = 41 \\), every term is a multiple of 41, so \\( 41 \\mid (41^{2} + 41 + 41) \\).\n\n**Prove or disprove.** When a problem says \"prove or disprove\", test small and extreme cases first (zero, one, negatives, equal values). If a counterexample appears, it settles the matter; if none appears, the pattern of why none appears often becomes the proof.\n\n**The common mistakes**: giving a \"counterexample\" that does not satisfy the hypothesis; proving only existence when uniqueness was also claimed; and, in a uniqueness proof, assuming \\( y \\neq z \\) and then deriving \\( y = z \\) without noticing that this is a contradiction proof which could be written directly.",
+   "questions": [
+    {
+     "id": "s6q1",
+     "kp": "k10",
+     "type": "written",
+     "prompt": "Prove that there is a unique positive integer \\( n \\) such that \\( n^{2} - 2n - 3 = 0 \\). Label the existence and uniqueness parts.",
+     "rubric": [
+      "Existence: n = 3 is a positive integer and 9 − 6 − 3 = 0",
+      "Uniqueness: suppose m is a positive integer with m² − 2m − 3 = 0",
+      "Factors (m − 3)(m + 1) = 0, so m = 3 or m = −1",
+      "Rules out m = −1 as not positive, concluding m = 3"
+     ],
+     "model": "*Existence.* \\( n = 3 \\) is a positive integer and \\( 3^{2} - 2 \\cdot 3 - 3 = 9 - 6 - 3 = 0 \\).\n\n*Uniqueness.* Suppose \\( m \\) is a positive integer with \\( m^{2} - 2m - 3 = 0 \\). Factoring, \\( (m - 3)(m + 1) = 0 \\), so \\( m = 3 \\) or \\( m = -1 \\). Since \\( m > 0 \\), \\( m \\ne -1 \\); hence \\( m = 3 \\). So every positive solution equals the one found. \\( \\blacksquare \\)",
+     "why": "Uniqueness is shown by taking an arbitrary solution and proving it equals the known one; here the positivity hypothesis eliminates the root \\( -1 \\)."
+    },
+    {
+     "id": "s6q2",
+     "kp": "k11",
+     "type": "written",
+     "prompt": "Prove or disprove: for every prime \\( p \\), the number \\( 2^{p} - 1 \\) is prime. Your answer must include a complete verification.",
+     "rubric": [
+      "Declares the statement false",
+      "Gives a specific counterexample p = 11 (smallest)",
+      "Verifies 2¹¹ − 1 = 2047 = 23 · 89 by multiplication",
+      "Notes that 11 is prime, so the counterexample satisfies the hypothesis"
+     ],
+     "model": "The statement is false. Take \\( p = 11 \\), which is prime. Then \\( 2^{11} - 1 = 2048 - 1 = 2047 \\), and \\( 23 \\cdot 89 = 2047 \\) (since \\( 23 \\cdot 89 = 23 \\cdot 90 - 23 = 2070 - 23 = 2047 \\)). So \\( 2^{11} - 1 \\) is composite. (For \\( p = 2, 3, 5, 7 \\) the numbers \\( 3, 7, 31, 127 \\) are prime, so \\( p = 11 \\) is the smallest counterexample.)",
+     "why": "A counterexample must satisfy the hypothesis (\\( p \\) prime) and violate the conclusion."
+    }
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "t": "proof",
+   "d": "A finite sequence of statements, each a hypothesis, definition, previously established result, or a valid inference from earlier lines, ending in the statement to be proved."
+  },
+  {
+   "t": "even / odd integer",
+   "d": "\\( n \\) is even if \\( n = 2k \\) for some integer \\( k \\); odd if \\( n = 2k + 1 \\) for some integer \\( k \\)."
+  },
+  {
+   "t": "divides",
+   "d": "\\( a \\mid b \\) means \\( b = ac \\) for some integer \\( c \\)."
+  },
+  {
+   "t": "prime",
+   "d": "A natural number \\( p > 1 \\) whose only positive divisors are 1 and \\( p \\)."
+  },
+  {
+   "t": "composite",
+   "d": "A natural number greater than 1 that is not prime."
+  },
+  {
+   "t": "rational / irrational",
+   "d": "\\( x \\) is rational if \\( x = a/b \\) for integers \\( a, b \\) with \\( b \\neq 0 \\); irrational otherwise."
+  },
+  {
+   "t": "parity",
+   "d": "The property of an integer being even or odd."
+  },
+  {
+   "t": "arbitrary element",
+   "d": "An element introduced with no assumptions beyond membership in the domain, so that what is proved about it holds for all elements; the method for proving \\( \\forall x\\, P(x) \\)."
+  },
+  {
+   "t": "direct proof",
+   "d": "Proof of \\( P \\to Q \\) by assuming \\( P \\) and deducing \\( Q \\)."
+  },
+  {
+   "t": "proof by contrapositive",
+   "d": "Proof of \\( P \\to Q \\) by assuming \\( \\neg Q \\) and deducing \\( \\neg P \\)."
+  },
+  {
+   "t": "proof by contradiction",
+   "d": "Proof of \\( P \\) by assuming \\( \\neg P \\) and deducing a statement of the form \\( C \\wedge \\neg C \\)."
+  },
+  {
+   "t": "proof by cases",
+   "d": "Proof of \\( Q \\) from exhaustive cases \\( P_{1} \\vee \\cdots \\vee P_{k} \\) by proving each \\( P_{i} \\to Q \\)."
+  },
+  {
+   "t": "without loss of generality (WLOG)",
+   "d": "A declaration that only one of several symmetric cases will be treated because the others follow by relabeling."
+  },
+  {
+   "t": "constructive proof",
+   "d": "An existence proof that exhibits a specific object with the required property."
+  },
+  {
+   "t": "non-constructive proof",
+   "d": "An existence proof that shows an object must exist without identifying it."
+  },
+  {
+   "t": "uniqueness",
+   "d": "\\( \\exists! x\\, P(x) \\): some \\( x \\) satisfies \\( P \\), and any two elements satisfying \\( P \\) are equal."
+  },
+  {
+   "t": "counterexample",
+   "d": "A specific element satisfying the hypothesis of a universal claim but not its conclusion, disproving the claim."
+  },
+  {
+   "t": "lemma",
+   "d": "A proved statement used mainly as a step toward a larger theorem."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "term",
+   "front": "Define: n is odd",
+   "back": "\\( n = 2k + 1 \\) for some integer \\( k \\).",
+   "kp": "k1"
+  },
+  {
+   "id": "c2",
+   "type": "term",
+   "front": "Define: \\( a \\mid b \\)",
+   "back": "\\( b = ac \\) for some integer \\( c \\).",
+   "kp": "k1"
+  },
+  {
+   "id": "c3",
+   "type": "term",
+   "front": "Define: rational number",
+   "back": "A real number \\( a/b \\) with \\( a, b \\) integers and \\( b \\neq 0 \\).",
+   "kp": "k1"
+  },
+  {
+   "id": "c4",
+   "type": "concept",
+   "front": "How do you begin a proof of \\( \\forall x\\, P(x) \\)?",
+   "back": "Let \\( x \\) be an arbitrary element of the domain; prove \\( P(x) \\) using nothing else about \\( x \\).",
+   "kp": "k2"
+  },
+  {
+   "id": "c5",
+   "type": "concept",
+   "front": "When a definition like 'n is even' is a given, what do you do? When it is the goal?",
+   "back": "Given: name the integer (\\( n = 2k \\)). Goal: produce an integer \\( j \\) and show \\( n = 2j \\).",
+   "kp": "k1"
+  },
+  {
+   "id": "c6",
+   "type": "concept",
+   "front": "Why must two odd integers be written with different letters, 2k + 1 and 2l + 1?",
+   "back": "Using the same letter assumes the integers are equal, so the proof covers only that special case.",
+   "kp": "k3"
+  },
+  {
+   "id": "c7",
+   "type": "concept",
+   "front": "Outline of a proof by contrapositive of \\( P \\to Q \\)",
+   "back": "Assume \\( \\neg Q \\); deduce \\( \\neg P \\).",
+   "kp": "k4"
+  },
+  {
+   "id": "c8",
+   "type": "concept",
+   "front": "Signal that contraposition may be easier than a direct proof",
+   "back": "The negated conclusion unpacks into a usable equation while the hypothesis does not (e.g. hypothesis about n², conclusion about n).",
+   "kp": "k4"
+  },
+  {
+   "id": "c9",
+   "type": "concept",
+   "front": "Outline of a proof by contradiction of \\( P \\to Q \\)",
+   "back": "Assume \\( P \\) and \\( \\neg Q \\); derive a contradiction \\( C \\wedge \\neg C \\).",
+   "kp": "k5"
+  },
+  {
+   "id": "c10",
+   "type": "concept",
+   "front": "In the proof that \\( \\sqrt{2} \\) is irrational, what is the contradiction?",
+   "back": "Writing \\( \\sqrt{2} = a/b \\) in lowest terms, one derives that \\( a \\) and \\( b \\) are both even.",
+   "kp": "k6"
+  },
+  {
+   "id": "c11",
+   "type": "concept",
+   "front": "In Euclid's proof, why does \\( N = p_{1} \\cdots p_{k} + 1 \\) lead to a contradiction?",
+   "back": "A prime divisor of \\( N \\) would be some \\( p_{i} \\), and would then divide \\( N - p_{1} \\cdots p_{k} = 1 \\).",
+   "kp": "k6"
+  },
+  {
+   "id": "c12",
+   "type": "concept",
+   "front": "Requirement on the cases in a proof by cases",
+   "back": "They must be exhaustive: their disjunction must be true. They need not be mutually exclusive.",
+   "kp": "k7"
+  },
+  {
+   "id": "c13",
+   "type": "concept",
+   "front": "What must a proof of \\( P \\leftrightarrow Q \\) contain?",
+   "back": "A proof of \\( P \\to Q \\) and a proof of \\( Q \\to P \\).",
+   "kp": "k8"
+  },
+  {
+   "id": "c14",
+   "type": "concept",
+   "front": "Two parts of an existence-and-uniqueness proof",
+   "back": "Existence: exhibit (or otherwise prove existence of) an object. Uniqueness: any two objects with the property are equal.",
+   "kp": "k10"
+  },
+  {
+   "id": "c15",
+   "type": "term",
+   "front": "Define: non-constructive existence proof",
+   "back": "A proof that an object exists which does not identify the object.",
+   "kp": "k9"
+  },
+  {
+   "id": "c16",
+   "type": "concept",
+   "front": "What disproves \\( \\forall x\\,(P(x) \\to Q(x)) \\)?",
+   "back": "One \\( a \\) with \\( P(a) \\) true and \\( Q(a) \\) false.",
+   "kp": "k11"
+  },
+  {
+   "id": "c17",
+   "type": "problem",
+   "front": "Smallest \\( n \\ge 0 \\) for which \\( n^{2} + n + 41 \\) is composite",
+   "back": "\\( n = 40 \\): \\( 1681 = 41^{2} \\).",
+   "kp": "k11",
+   "answer": "40",
+   "check": "number"
+  },
+  {
+   "id": "c18",
+   "type": "concept",
+   "front": "Why is 'start from the conclusion and derive something true' not a proof?",
+   "back": "It proves conclusion → truth; inferring the conclusion from that is affirming the consequent. Valid only if every step reverses and is written forward.",
+   "kp": "k2"
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k3",
+   "type": "written",
+   "prompt": "Give a direct proof that the product of two odd integers is odd.",
+   "rubric": [
+    "Assumes m = 2k + 1, n = 2l + 1 with distinct integers k, l",
+    "Computes mn = 4kl + 2k + 2l + 1",
+    "Writes mn = 2(2kl + k + l) + 1",
+    "Concludes mn is odd since 2kl + k + l is an integer"
+   ],
+   "model": "*Proof.* Let \\( m, n \\) be odd: \\( m = 2k + 1 \\), \\( n = 2l + 1 \\) for integers \\( k, l \\). Then \\( mn = 4kl + 2k + 2l + 1 = 2(2kl + k + l) + 1 \\). Since \\( 2kl + k + l \\) is an integer, \\( mn \\) is odd. \\( \\blacksquare \\)",
+   "why": "Unfold both hypotheses with separate variables, multiply, and regroup into the form \\( 2j + 1 \\)."
+  },
+  {
+   "id": "p2",
+   "kp": "k4",
+   "type": "written",
+   "prompt": "Prove that for every integer \\( x \\), if \\( x^{2} - 6x + 5 \\) is even, then \\( x \\) is odd, using a method different from the one in the section text: prove it by contradiction instead of by contrapositive. Then comment on which write-up is cleaner and why.",
+   "rubric": [
+    "Assumes x² − 6x + 5 even and x even (negation of conclusion)",
+    "With x = 2a shows x² − 6x + 5 = 2(2a² − 6a + 2) + 1 is odd",
+    "Contradiction: the number is both even and odd",
+    "Comments that the contrapositive version is cleaner because the hypothesis was never used except to contradict"
+   ],
+   "model": "*Proof.* Suppose, for contradiction, that \\( x^{2} - 6x + 5 \\) is even and \\( x \\) is not odd, so \\( x \\) is even: \\( x = 2a \\). Then \\( x^{2} - 6x + 5 = 4a^{2} - 12a + 5 = 2(2a^{2} - 6a + 2) + 1 \\), which is odd. So \\( x^{2} - 6x + 5 \\) is both even and odd, which is impossible. Hence \\( x \\) is odd. \\( \\blacksquare \\)\n\nThe contrapositive proof is cleaner: the contradiction argument used the hypothesis only at the very end, to clash with a conclusion that was derived from \\( \\neg Q \\) alone. That is exactly a proof of \\( \\neg Q \\to \\neg P \\) in disguise.",
+   "why": "If a contradiction proof reaches \\( \\neg P \\) from \\( \\neg Q \\) alone, rewrite it as a contrapositive proof."
+  },
+  {
+   "id": "p3",
+   "kp": "k5",
+   "type": "written",
+   "prompt": "Prove that there are no integers \\( a \\) and \\( b \\) such that \\( 18a + 6b = 1 \\).",
+   "rubric": [
+    "Assumes for contradiction integers a, b with 18a + 6b = 1",
+    "Factors 18a + 6b = 6(3a + b)",
+    "Deduces 6 | 1 or 1/6 = 3a + b is an integer",
+    "Contradiction since 1/6 is not an integer"
+   ],
+   "model": "*Proof.* Suppose, for contradiction, that integers \\( a, b \\) satisfy \\( 18a + 6b = 1 \\). Then \\( 6(3a + b) = 1 \\), so \\( 3a + b = \\frac{1}{6} \\). But \\( 3a + b \\) is an integer and \\( \\frac{1}{6} \\) is not. This contradiction shows no such integers exist. \\( \\blacksquare \\)",
+   "why": "Every integer combination of 18 and 6 is a multiple of 6, and 1 is not."
+  },
+  {
+   "id": "p4",
+   "kp": "k6",
+   "type": "written",
+   "prompt": "Prove that \\( \\log_{2} 3 \\) is irrational.",
+   "rubric": [
+    "Assumes log₂ 3 = a/b with integers, and notes log₂ 3 > 0 so a, b can be taken positive",
+    "Derives 2^{a/b} = 3, hence 2^a = 3^b",
+    "Observes 2^a is even (a ≥ 1) and 3^b is odd",
+    "Contradiction, so irrational"
+   ],
+   "model": "*Proof.* Suppose, for contradiction, that \\( \\log_{2} 3 = \\frac{a}{b} \\) for integers \\( a, b \\) with \\( b \\neq 0 \\). Since \\( 3 > 1 \\), \\( \\log_{2} 3 > 0 \\), so we may take \\( a, b > 0 \\). Then \\( 2^{a/b} = 3 \\), and raising to the power \\( b \\), \\( 2^{a} = 3^{b} \\). The left side is even because \\( a \\ge 1 \\); the right side is odd, being a product of odd numbers. An integer cannot be both, so this is a contradiction. Hence \\( \\log_{2} 3 \\) is irrational. \\( \\blacksquare \\)",
+   "why": "Clearing the fraction turns an irrationality claim into a statement about integers where parity gives the contradiction."
+  },
+  {
+   "id": "p5",
+   "kp": "k7",
+   "type": "written",
+   "prompt": "Prove that for every odd integer \\( n \\), \\( 8 \\mid (n^{2} - 1) \\).",
+   "rubric": [
+    "Writes n = 2k + 1 and computes n² − 1 = 4k² + 4k = 4k(k + 1)",
+    "Notes k(k + 1) is even (product of consecutive integers), justified by cases on the parity of k",
+    "Writes k(k + 1) = 2m",
+    "Concludes n² − 1 = 8m"
+   ],
+   "model": "*Proof.* Let \\( n = 2k + 1 \\). Then \\( n^{2} - 1 = 4k^{2} + 4k = 4k(k + 1) \\). We claim \\( k(k + 1) \\) is even. If \\( k \\) is even, \\( k = 2j \\) and \\( k(k + 1) = 2\\,j(k + 1) \\). If \\( k \\) is odd, \\( k + 1 = 2j \\) and \\( k(k + 1) = 2\\,kj \\). Either way \\( k(k + 1) = 2m \\) for an integer \\( m \\), so \\( n^{2} - 1 = 8m \\), and \\( 8 \\mid (n^{2} - 1) \\). \\( \\blacksquare \\)",
+   "why": "A direct computation reduces the problem to a small lemma proved by cases."
+  },
+  {
+   "id": "p6",
+   "kp": "k8",
+   "type": "written",
+   "prompt": "Prove that for every integer \\( n \\), \\( n \\) is even if and only if \\( 7n + 4 \\) is even. Use a direct proof in one direction and a contrapositive proof in the other.",
+   "rubric": [
+    "(⇒) direct: n = 2k gives 7n + 4 = 2(7k + 2)",
+    "(⇐) contrapositive: assume n odd, n = 2k + 1",
+    "Computes 7n + 4 = 14k + 11 = 2(7k + 5) + 1, odd",
+    "Both directions labeled and concluded"
+   ],
+   "model": "*Proof.* (\\( \\Rightarrow \\)) If \\( n = 2k \\), then \\( 7n + 4 = 14k + 4 = 2(7k + 2) \\), which is even.\n\n(\\( \\Leftarrow \\)) We prove the contrapositive: if \\( n \\) is odd, then \\( 7n + 4 \\) is odd. If \\( n = 2k + 1 \\), then \\( 7n + 4 = 14k + 11 = 2(7k + 5) + 1 \\), which is odd.\n\nBoth directions hold, so \\( n \\) is even iff \\( 7n + 4 \\) is even. \\( \\blacksquare \\)",
+   "why": "Each direction of a biconditional is a separate conditional, and each may use its own method."
+  },
+  {
+   "id": "p7",
+   "kp": "k11",
+   "type": "number",
+   "prompt": "The claim \"\\( n^{2} + n + 41 \\) is prime for every integer \\( n \\ge 0 \\)\" is false. What is the smallest counterexample \\( n \\)?",
+   "answer": "40",
+   "why": "Checking \\( n = 0, 1, \\dots, 39 \\) gives primes each time; at \\( n = 40 \\), \\( 1600 + 40 + 41 = 1681 = 41^{2} \\). (A computer check confirms all 40 earlier values are prime.)"
+  },
+  {
+   "id": "p8",
+   "kp": "k2",
+   "type": "written",
+   "prompt": "A student proves \"for all real \\( x \\), \\( x^{2} + 1 \\ge 2x \\)\" as follows: \"\\( x^{2} + 1 \\ge 2x \\). So \\( x^{2} - 2x + 1 \\ge 0 \\). So \\( (x - 1)^{2} \\ge 0 \\), which is true. Therefore \\( x^{2} + 1 \\ge 2x \\).\" Explain exactly what is logically wrong with the write-up, whether the claim is nevertheless true, and give a correct proof.",
+   "rubric": [
+    "Identifies that the argument assumes the conclusion and derives a true statement (affirming the consequent)",
+    "Notes that deriving a truth from a claim does not prove the claim",
+    "Observes each step is reversible, so the claim is true",
+    "Gives the forward proof from (x − 1)² ≥ 0"
+   ],
+   "model": "The write-up starts from the conclusion and derives a true statement. That establishes \"if \\( x^{2} + 1 \\ge 2x \\) then \\( (x - 1)^{2} \\ge 0 \\)\", and concluding the hypothesis from the truth of the conclusion is affirming the consequent. (From \\( 1 = 2 \\) one can derive the true \\( 0 \\cdot 1 = 0 \\cdot 2 \\).)\n\nThe claim is true, because each step is reversible. *Proof.* Let \\( x \\in \\mathbb{R} \\). Then \\( (x - 1)^{2} \\ge 0 \\), so \\( x^{2} - 2x + 1 \\ge 0 \\), so \\( x^{2} + 1 \\ge 2x \\). \\( \\blacksquare \\)",
+   "why": "Scratch work may run backward; the proof must run forward from known facts."
+  },
+  {
+   "id": "p9",
+   "kp": "k4",
+   "type": "mcq",
+   "prompt": "You want to prove \"for all integers \\( a, b \\), if \\( ab \\) is even then \\( a \\) is even or \\( b \\) is even\". What is the contrapositive you would prove?",
+   "options": [
+    "If \\( a \\) and \\( b \\) are both odd, then \\( ab \\) is odd.",
+    "If \\( a \\) is odd or \\( b \\) is odd, then \\( ab \\) is odd.",
+    "If \\( a \\) is even or \\( b \\) is even, then \\( ab \\) is even.",
+    "If \\( ab \\) is odd, then \\( a \\) and \\( b \\) are both odd."
+   ],
+   "answer": 0,
+   "why": "The negation of \"\\( a \\) even or \\( b \\) even\" is, by De Morgan, \"\\( a \\) odd and \\( b \\) odd\". So the contrapositive is \"if \\( a \\) and \\( b \\) are both odd, then \\( ab \\) is odd\". The second option negates the \"or\" without switching to \"and\" (and is false: \\( a = 1, b = 2 \\)). The third is the converse. The fourth is the inverse."
+  },
+  {
+   "id": "p10",
+   "kp": "k9",
+   "type": "written",
+   "prompt": "Explain the difference between a constructive and a non-constructive existence proof, and illustrate with the proof that there exist irrational \\( a, b \\) with \\( a^{b} \\) rational. Why is that proof non-constructive, and what would make it constructive?",
+   "rubric": [
+    "Constructive: exhibits a specific object and verifies it",
+    "Non-constructive: proves existence without identifying the object",
+    "The √2^√2 proof splits into cases without deciding which holds, so it does not identify a and b",
+    "A constructive version requires knowing whether √2^√2 is irrational (it is, by Gelfond–Schneider), giving a = √2^√2, b = √2"
+   ],
+   "model": "A constructive proof names a specific object and verifies the property; a non-constructive proof shows that an object must exist without saying which.\n\nIn the proof about \\( a^{b} \\), we consider \\( \\sqrt{2}^{\\sqrt{2}} \\): if it is rational, take \\( a = b = \\sqrt{2} \\); if irrational, take \\( a = \\sqrt{2}^{\\sqrt{2}} \\), \\( b = \\sqrt{2} \\), since then \\( a^{b} = \\sqrt{2}^{2} = 2 \\). One case must hold, so a pair exists, but the proof does not tell us which pair. To make it constructive we would need to decide the case; the Gelfond–Schneider theorem shows \\( \\sqrt{2}^{\\sqrt{2}} \\) is irrational, so \\( a = \\sqrt{2}^{\\sqrt{2}} \\), \\( b = \\sqrt{2} \\) works. (Another constructive example: \\( a = \\sqrt{2} \\), \\( b = \\log_{2} 9 \\), since \\( \\sqrt{2}^{\\log_{2} 9} = 2^{\\frac{1}{2}\\log_{2} 9} = 3 \\) and \\( \\log_{2} 9 = 2\\log_{2} 3 \\) is irrational.)",
+   "why": "Non-constructive proofs often proceed by cases or by contradiction and leave the witness undetermined."
+  },
+  {
+   "id": "p11",
+   "kp": "k5",
+   "type": "written",
+   "prompt": "Prove that no integer is both even and odd.",
+   "rubric": [
+    "Assumes for contradiction n = 2a and n = 2b + 1",
+    "Derives 2(a − b) = 1",
+    "Notes a − b = 1/2 is not an integer (or 1 is not even)",
+    "Concludes contradiction"
+   ],
+   "model": "*Proof.* Suppose, for contradiction, that some integer \\( n \\) is both even and odd: \\( n = 2a \\) and \\( n = 2b + 1 \\) for integers \\( a, b \\). Then \\( 2a = 2b + 1 \\), so \\( 2(a - b) = 1 \\) and \\( a - b = \\frac{1}{2} \\). But \\( a - b \\) is an integer and \\( \\frac{1}{2} \\) is not. Hence no integer is both even and odd. \\( \\blacksquare \\)",
+   "why": "This fact is what makes \"\\( n \\) is both even and odd\" a genuine contradiction in parity arguments."
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k6",
+   "type": "written",
+   "prompt": "Prove that there are infinitely many primes. You may use, without proof, that every integer greater than 1 has a prime divisor. Identify the proof method and the exact contradiction reached.",
+   "rubric": [
+    "Method: contradiction, assuming only finitely many primes p₁, …, p_k",
+    "Forms N = p₁p₂⋯p_k + 1 > 1 and takes a prime divisor q of N",
+    "q is some p_i, so q divides both N and p₁⋯p_k, hence q | 1",
+    "Contradiction: no prime divides 1 (primes exceed 1); does not claim N itself is prime"
+   ],
+   "model": "*Proof (by contradiction).* Suppose there are only finitely many primes, listed as \\( p_{1}, \\dots, p_{k} \\). Let \\( N = p_{1} p_{2} \\cdots p_{k} + 1 \\). Then \\( N > 1 \\), so \\( N \\) has a prime divisor \\( q \\). Since the list contains every prime, \\( q = p_{i} \\) for some \\( i \\), so \\( q \\mid p_{1} \\cdots p_{k} \\). As \\( q \\mid N \\) too, \\( q \\) divides \\( N - p_{1} \\cdots p_{k} = 1 \\). But \\( q > 1 \\), and no integer greater than 1 divides 1. This contradiction shows there are infinitely many primes. \\( \\blacksquare \\)",
+   "why": "The contradiction is \"\\( q \\mid 1 \\)\" with \\( q > 1 \\). The argument does not need \\( N \\) to be prime, and \\( N \\) often is not (\\( 30031 = 59 \\cdot 509 \\))."
+  },
+  {
+   "id": "e2",
+   "kp": "k6",
+   "type": "written",
+   "prompt": "Prove that \\( \\sqrt{6} \\) is irrational. You may use the lemma \"if \\( n^{2} \\) is even then \\( n \\) is even\".",
+   "rubric": [
+    "Assumes √6 = a/b in lowest terms and derives a² = 6b²",
+    "a² even, so a even, a = 2c, giving 4c² = 6b², i.e. 2c² = 3b²",
+    "3b² even forces b even (if b odd, 3b² odd)",
+    "Both a, b even contradicts lowest terms"
+   ],
+   "model": "*Proof.* Suppose, for contradiction, \\( \\sqrt{6} = \\frac{a}{b} \\) with integers \\( a, b \\), \\( b \\neq 0 \\), not both even (lowest terms). Then \\( a^{2} = 6b^{2} = 2(3b^{2}) \\) is even, so \\( a \\) is even: \\( a = 2c \\). Substituting, \\( 4c^{2} = 6b^{2} \\), so \\( 3b^{2} = 2c^{2} \\) is even. If \\( b \\) were odd, \\( b^{2} \\) would be odd and so \\( 3b^{2} \\) would be odd (a product of odd integers); hence \\( b \\) is even. Now \\( a \\) and \\( b \\) are both even, a contradiction. \\( \\blacksquare \\)",
+   "why": "The \\( \\sqrt{2} \\) template works with one extra parity step: \\( 3b^{2} \\) even forces \\( b \\) even."
+  },
+  {
+   "id": "e3",
+   "kp": "k11",
+   "type": "written",
+   "prompt": "Prove or disprove: for all integers \\( a \\) and \\( b \\), if \\( a \\mid b \\) and \\( b \\mid a \\), then \\( a = b \\).",
+   "rubric": [
+    "Declares the statement false",
+    "Counterexample a = 1, b = −1 (or a = 2, b = −2)",
+    "Verifies both divisibilities: −1 = 1·(−1) and 1 = (−1)(−1)",
+    "Notes a ≠ b; optionally that the true statement is a = ±b"
+   ],
+   "model": "The statement is false. Take \\( a = 1 \\), \\( b = -1 \\). Then \\( a \\mid b \\) because \\( -1 = 1 \\cdot (-1) \\), and \\( b \\mid a \\) because \\( 1 = (-1)(-1) \\). But \\( a \\neq b \\). (What is true is that \\( a = \\pm b \\); the statement becomes true if \\( a \\) and \\( b \\) are restricted to positive integers.)",
+   "why": "Test extreme and sign-changing cases first; negatives often break statements that are true for natural numbers."
+  },
+  {
+   "id": "e4",
+   "kp": "k7",
+   "type": "written",
+   "prompt": "Prove that for every integer \\( n \\), \\( n^{2} + n \\) is even, (a) by cases on the parity of \\( n \\), and (b) by a single direct argument that uses a factorization. Which proof generalizes more easily, and why?",
+   "rubric": [
+    "(a) Case n = 2k: n² + n = 2(2k² + k); case n = 2k + 1: n² + n = 4k² + 6k + 2 = 2(2k² + 3k + 1)",
+    "(b) n² + n = n(n + 1), a product of consecutive integers, one of which is even",
+    "Recognizes that (b) still implicitly relies on a parity case split unless justified",
+    "Reasoned comment on generalization, e.g. n(n + 1)(n + 2) divisible by 6 follows the factor-based idea"
+   ],
+   "model": "(a) *Case \\( n = 2k \\):* \\( n^{2} + n = 4k^{2} + 2k = 2(2k^{2} + k) \\). *Case \\( n = 2k + 1 \\):* \\( n^{2} + n = 4k^{2} + 4k + 1 + 2k + 1 = 4k^{2} + 6k + 2 = 2(2k^{2} + 3k + 1) \\). Both even; the cases are exhaustive.\n\n(b) \\( n^{2} + n = n(n + 1) \\). Of the consecutive integers \\( n \\) and \\( n + 1 \\), one is even (if \\( n \\) is odd, \\( n + 1 \\) is even), and a product with an even factor is even.\n\nThe factorization proof generalizes more easily: the same idea shows that a product of \\( k \\) consecutive integers is divisible by \\( k \\) (one of them is a multiple of \\( k \\)), e.g. \\( 3 \\mid n(n + 1)(n + 2) \\), whereas the expansion-by-cases approach grows messier with each new case. Note that (b) still rests on a small case split to justify \"one of two consecutive integers is even\".",
+   "why": "Both are valid; structural arguments (factor, then use a general fact) tend to extend further than computation."
+  },
+  {
+   "id": "e5",
+   "kp": "k10",
+   "type": "written",
+   "prompt": "Prove that for every real number \\( a \\neq 0 \\) and every real \\( b \\), the equation \\( ax + b = 0 \\) has exactly one real solution. Identify the existence and uniqueness parts, and point out where \\( a \\neq 0 \\) is used.",
+   "rubric": [
+    "Existence: x = −b/a, verified by substitution (uses a ≠ 0 to divide)",
+    "Uniqueness: suppose ax₁ + b = 0 and ax₂ + b = 0",
+    "Subtracts to get a(x₁ − x₂) = 0 and uses a ≠ 0 to conclude x₁ = x₂",
+    "Clearly labels both parts"
+   ],
+   "model": "*Existence.* Let \\( x = -\\frac{b}{a} \\), which is defined because \\( a \\neq 0 \\). Then \\( a\\left(-\\frac{b}{a}\\right) + b = -b + b = 0 \\).\n\n*Uniqueness.* Suppose \\( ax_{1} + b = 0 \\) and \\( ax_{2} + b = 0 \\). Subtracting, \\( a(x_{1} - x_{2}) = 0 \\). Since \\( a \\neq 0 \\), dividing by \\( a \\) gives \\( x_{1} - x_{2} = 0 \\), so \\( x_{1} = x_{2} \\). \\( \\blacksquare \\)\n\nThe hypothesis \\( a \\neq 0 \\) is used twice: to define the solution and to cancel \\( a \\) in the uniqueness step. (If \\( a = 0 \\), there is no solution when \\( b \\neq 0 \\) and every real is a solution when \\( b = 0 \\).)",
+   "why": "Existence and uniqueness are separate claims, each needing its own argument."
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "Unfold definitions",
+    "formula": "even: \\( n = 2k \\); odd: \\( n = 2k + 1 \\); \\( a \\mid b \\): \\( b = ac \\); rational: \\( x = a/b,\\ b \\neq 0 \\)",
+    "when": "At the start of every proof about integers or rationals.",
+    "example": "Given \\( a \\mid b \\): write \\( b = ak \\). Goal \\( a \\mid c \\): find \\( m \\) with \\( c = am \\).",
+    "watch": "Use a fresh letter for each hypothesis."
+   },
+   {
+    "name": "Direct proof",
+    "formula": "Assume \\( P \\); deduce \\( Q \\)",
+    "when": "The hypothesis unpacks into something you can compute with.",
+    "example": "\\( m, n \\) odd \\( \\Rightarrow m + n = 2(k + l + 1) \\).",
+    "watch": "Scratch work may run backward; the write-up must run forward."
+   },
+   {
+    "name": "Contrapositive",
+    "formula": "Assume \\( \\neg Q \\); deduce \\( \\neg P \\)",
+    "when": "The negated conclusion is more concrete than the hypothesis.",
+    "example": "\\( n^{2} \\) even \\( \\Rightarrow n \\) even: assume \\( n = 2k + 1 \\), get \\( n^{2} \\) odd.",
+    "watch": "Negate 'or' as 'and' (De Morgan); do not prove the converse."
+   },
+   {
+    "name": "Contradiction",
+    "formula": "Assume \\( \\neg P \\) (or \\( P \\wedge \\neg Q \\)); derive \\( C \\wedge \\neg C \\)",
+    "when": "Negative statements (irrational, no largest, infinitely many) or no usable hypothesis.",
+    "example": "\\( \\sqrt{2} = a/b \\) in lowest terms forces \\( a, b \\) both even.",
+    "watch": "The contradiction must be genuine; set up lowest terms or minimality before you need it."
+   },
+   {
+    "name": "Cases",
+    "formula": "\\( P_{1} \\vee \\cdots \\vee P_{k} \\), each \\( P_{i} \\to Q \\), therefore \\( Q \\)",
+    "when": "The hypothesis or domain splits naturally (parity, remainders, sign).",
+    "example": "\\( n = 3k, 3k + 1, 3k + 2 \\) for divisibility by 3.",
+    "watch": "Cases must be exhaustive; WLOG only for true symmetry."
+   },
+   {
+    "name": "Biconditional",
+    "formula": "Prove \\( P \\to Q \\) and \\( Q \\to P \\)",
+    "when": "Statements with 'if and only if' or 'necessary and sufficient'.",
+    "example": "\\( n \\) even iff \\( n^{2} \\) even: direct one way, contrapositive the other.",
+    "watch": "Both directions are required."
+   },
+   {
+    "name": "Existence and uniqueness",
+    "formula": "Exhibit \\( a \\) with \\( P(a) \\); then \\( P(y) \\wedge P(z) \\Rightarrow y = z \\)",
+    "when": "'There is a unique…'.",
+    "example": "\\( ax + b = 0 \\), \\( a \\neq 0 \\): \\( x = -b/a \\); \\( a(x_{1} - x_{2}) = 0 \\Rightarrow x_{1} = x_{2} \\).",
+    "watch": "Uniqueness is a separate proof."
+   },
+   {
+    "name": "Counterexample",
+    "formula": "\\( \\neg \\forall x\\,(P(x) \\to Q(x)) \\equiv \\exists x\\,(P(x) \\wedge \\neg Q(x)) \\)",
+    "when": "Disproving a universal claim.",
+    "example": "\\( 2^{11} - 1 = 23 \\cdot 89 \\) disproves '\\( 2^{p} - 1 \\) is always prime'.",
+    "watch": "The example must satisfy the hypothesis."
+   }
+  ],
+  "stuck": [
+   "Write down the logical form of the goal (∀, ∃, →, ↔, ∨) and let it choose the method.",
+   "Unfold every definition in both the hypothesis and the conclusion, then look for how to connect the equations.",
+   "If the hypothesis gives nothing to compute with, try the contrapositive; if the statement is negative ('no', 'not', 'irrational', 'infinitely many'), try contradiction.",
+   "Test small, zero, negative and equal values; a counterexample or the reason none exists often appears.",
+   "If an expression's parity or remainder matters, split into cases by parity or by remainder mod the relevant number."
+  ]
+ }
+}

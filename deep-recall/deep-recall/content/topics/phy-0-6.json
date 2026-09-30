@@ -1,0 +1,733 @@
+{
+ "key": "phy-0-6",
+ "title": "Potential energy and energy conservation",
+ "v": 1,
+ "scope": "Conservative and nonconservative forces, potential energy (uniform gravity, springs, general 1D), F = -dU/dx and the gradient, conservation of mechanical energy, nonconservative work, energy diagrams and stability; inverse-square gravitational potential energy is deferred to Gravitation and orbits, and power to Work and kinetic energy.",
+ "sources": [
+  {
+   "title": "OpenStax University Physics Volume 1, Ch. 8 (Potential Energy and Conservation of Energy), sections 8.1–8.4",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/8-introduction"
+  },
+  {
+   "title": "OpenStax University Physics Volume 1, 8.2 Conservative and Non-Conservative Forces",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/8-2-conservative-and-non-conservative-forces"
+  },
+  {
+   "title": "OpenStax University Physics Volume 1, 8.4 Potential Energy Diagrams and Stability",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/8-4-potential-energy-diagrams-and-stability"
+  },
+  {
+   "title": "MIT 8.01SC Classical Mechanics, Chapter 14: Potential Energy and Conservation of Energy",
+   "url": "https://ocw.mit.edu/courses/8-01sc-classical-mechanics-fall-2016/mit8_01scs22_chapter14.pdf"
+  }
+ ],
+ "pre": [
+  "phy-0-5",
+  "phy-0-3",
+  "phy-0-4"
+ ],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Conservative force: path independence",
+   "d": "State the definition of a conservative force in both equivalent forms (path independence, zero work around closed paths) and classify familiar forces.",
+   "type": "concept"
+  },
+  {
+   "id": "k2",
+   "t": "Potential energy defined from work",
+   "d": "Define potential energy by \\( \\Delta U = -W_{\\text{cons}} \\), explain why only differences are physical, and compute \\( U \\) from a given force by integration.",
+   "type": "concept"
+  },
+  {
+   "id": "k3",
+   "t": "Gravitational and spring potential energy",
+   "d": "Derive and use \\( U = mgy \\) and \\( U = \\tfrac12 kx^2 \\), measuring each coordinate correctly.",
+   "type": "fact"
+  },
+  {
+   "id": "k4",
+   "t": "Force as negative derivative of U",
+   "d": "Recover the force from a potential energy function using \\( F_x = -dU/dx \\) (and \\( \\vec F = -\\nabla U \\)), and read force direction from a graph of U.",
+   "type": "procedure"
+  },
+  {
+   "id": "k5",
+   "t": "Conservation of mechanical energy",
+   "d": "Derive \\( K + U = \\text{const} \\) from the work–energy theorem and apply it to find speeds, heights and compressions.",
+   "type": "procedure"
+  },
+  {
+   "id": "k6",
+   "t": "Nonconservative work changes mechanical energy",
+   "d": "Use \\( W_{nc} = \\Delta K + \\Delta U \\) with friction and applied forces, without double counting.",
+   "type": "procedure"
+  },
+  {
+   "id": "k7",
+   "t": "Energy diagrams and turning points",
+   "d": "From a graph of \\( U(x) \\) and a total energy \\( E \\), find allowed regions, turning points and speeds.",
+   "type": "skill"
+  },
+  {
+   "id": "k8",
+   "t": "Equilibrium and stability from U",
+   "d": "Locate equilibria where \\( dU/dx = 0 \\) and classify them as stable, unstable or neutral using the second derivative.",
+   "type": "concept"
+  }
+ ],
+ "intro": "The work–energy theorem from the previous topic says that the net work done on a particle equals its change in kinetic energy. It is exact, but in its raw form it is laborious: to use it you must compute \\( \\int \\vec F \\cdot d\\vec r \\) for every force along the actual path, which usually means knowing the path first.\n\nFor a special and very important class of forces, gravity and ideal springs among them, the work done between two positions does not depend on the path at all. For such forces the work can be recorded once and for all as a function of position, the **potential energy**, and the work–energy theorem becomes a conservation law: a quantity built from speed and position that does not change as the motion proceeds. This topic develops that idea carefully: which forces qualify, how the potential energy is defined and computed, how the force is recovered from it, what happens when friction is present, and how a single graph of \\( U(x) \\) tells you where a particle can go and where it can rest.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "Conservative and nonconservative forces",
+   "kps": [
+    "k1"
+   ],
+   "md": "This section answers a prior question: for which forces does it make sense to speak of stored energy at all? Potential energy is only defined for forces with a particular property, so we identify that property first.\n\n**Definition.** A force \\( \\vec F \\) that depends only on position is **conservative** if the work it does on a particle moving from point \\( A \\) to point \\( B \\),\n\\[ W_{A\\to B} = \\int_C \\vec F \\cdot d\\vec r, \\]\nis the same for every path \\( C \\) that joins \\( A \\) to \\( B \\). A force that fails this test is **nonconservative**.\n\nAn equivalent statement is:\n\n> A force is conservative if and only if the work it does around every closed path is zero: \\( \\oint \\vec F \\cdot d\\vec r = 0 \\).\n\n*Why the two are equivalent.* Take two paths \\( C_1 \\) and \\( C_2 \\) from \\( A \\) to \\( B \\). Going out along \\( C_1 \\) and back along \\( C_2 \\) reversed is a closed loop, and reversing a path reverses the sign of every \\( \\vec F \\cdot d\\vec r \\). So the loop work is \\( W_{C_1} - W_{C_2} \\). This vanishes for every loop exactly when \\( W_{C_1} = W_{C_2} \\) for every pair of paths.\n\n**Uniform gravity is conservative.** Near Earth's surface the gravitational force is \\( \\vec F = -mg\\,\\hat{\\jmath} \\) with \\( y \\) measured upward. For any small displacement \\( d\\vec r = dx\\,\\hat\\imath + dy\\,\\hat\\jmath \\), \\( \\vec F\\cdot d\\vec r = -mg\\,dy \\). Horizontal motion contributes nothing, so along any path\n\\[ W_{A\\to B} = -mg\\,(y_B - y_A). \\]\nOnly the change in height enters.\n\n*Worked example.* A 5.0 kg box is lifted from the floor to a shelf 2.0 m higher, once straight up and once by being pushed along a 6.0 m ramp. Straight up: \\( W_g = -(5.0)(9.80)(2.0) = -98 \\) J. Along the ramp, the displacement has a vertical part totalling 2.0 m and a horizontal part that does nothing, so again \\( W_g = -98 \\) J. The person pushing may do different amounts of work on the two routes, but gravity does not.\n\n**Kinetic friction is nonconservative.** The kinetic friction force on a sliding block has magnitude \\( f_k = \\mu_k N \\) and always points opposite the velocity, hence opposite each \\( d\\vec r \\). Every contribution \\( \\vec f\\cdot d\\vec r = -f_k\\,ds \\) is negative, so over a path of length \\( s \\) with constant \\( f_k \\), \\( W_f = -f_k s \\). This depends on the length of the path, not only its endpoints.\n\n*Worked example.* A block slides 3.0 m across a floor and is pushed 3.0 m back to where it started, with \\( f_k = 4.0 \\) N throughout. The path is closed, yet \\( W_f = -(4.0)(6.0) = -24 \\) J, not zero. No function of position can account for this work, because the block ends where it began.\n\nFor forces in the plane there is a practical test: if \\( \\vec F = F_x\\hat\\imath + F_y\\hat\\jmath \\) is conservative then \\( \\partial F_x/\\partial y = \\partial F_y/\\partial x \\). On a region without holes this condition is also sufficient. The spring force \\( -kx\\,\\hat\\imath \\) and the inverse-square gravitational force, treated in later topics, are conservative; friction, air drag and the push of a hand are not.\n\n**Common mistakes.** \"Conservative\" is a property of a force, not of an object or a motion; it does not mean energy is never transferred, only that the force's work depends on endpoints alone. A second error is to conclude that gravity does zero work because it is conservative. Gravity does zero work only around a *closed* path; between different heights its work is \\( -mg\\,\\Delta y \\), which is certainly not zero.",
+   "questions": [
+    {
+     "id": "s1q1",
+     "kp": "k1",
+     "type": "written",
+     "prompt": "Using the closed-path criterion, explain why kinetic friction on a block sliding across a fixed floor is nonconservative. Your answer should mention the sign of \\( \\vec f\\cdot d\\vec r \\) on every segment of the path.",
+     "rubric": [
+      "States the criterion: a force is conservative iff its work around every closed path is zero (equivalently, path independence).",
+      "Kinetic friction opposes the velocity, so \\( \\vec f\\cdot d\\vec r = -f_k\\,ds < 0 \\) on every segment.",
+      "Therefore the work around a closed path is \\( -\\int f_k\\,ds < 0 \\), which is not zero.",
+      "Concludes that friction's work depends on path length, so no potential energy function exists for it."
+     ],
+     "model": "A force is conservative exactly when its work around every closed path is zero. Kinetic friction on a sliding block always points opposite to the block's velocity, and the displacement \\( d\\vec r \\) points along the velocity, so on every small segment \\( \\vec f\\cdot d\\vec r = -f_k\\,ds \\), which is negative. Going around a closed path, these contributions add up to \\( -\\int f_k\\,ds \\), a negative number proportional to the length of the path (for constant \\( f_k \\) it is \\( -f_k \\) times the path length). Since this is not zero, friction fails the criterion; its work depends on the route, not only on the endpoints, so it cannot be described by a potential energy.",
+     "why": "The key is that friction reverses direction whenever the motion reverses, so it can never give back on the return leg what it took on the outward leg. Gravity, by contrast, does negative work going up and equal positive work coming down."
+    },
+    {
+     "id": "s1q2",
+     "kp": "k1",
+     "type": "number",
+     "prompt": "A 2.0 kg stone is carried along a winding path from a point 5.0 m above the ground to a point 1.0 m above the ground. How much work (in J) does gravity do on the stone? Use \\( g = 9.80 \\) m/s².",
+     "answer": "78.4",
+     "tol": 0.01,
+     "why": "Gravity is conservative, so only the change in height matters: \\( W_g = -mg(y_f - y_i) = -(2.0)(9.80)(1.0 - 5.0) = 78.4 \\) J. The work is positive because the stone ends lower; the winding path is irrelevant."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "Defining potential energy",
+   "kps": [
+    "k2",
+    "k3"
+   ],
+   "md": "Once we know that a force's work depends only on endpoints, we can store that work in a function of position. This section defines that function and computes it for the two forces you will use most.\n\n> **Definition.** Let \\( \\vec F \\) be conservative. The **potential energy** associated with \\( \\vec F \\) is a function \\( U(\\vec r) \\) whose change between any two points equals the negative of the work done by \\( \\vec F \\):\n> \\[ \\Delta U = U(B) - U(A) = -W_{A\\to B} = -\\int_A^B \\vec F\\cdot d\\vec r. \\]\n\nPath independence is exactly what makes this definition consistent: if the work depended on the path, the right side would not have a single value. In one dimension the definition reads\n\\[ U(x) = U(x_0) - \\int_{x_0}^{x} F_x(x')\\,dx'. \\]\nThe point \\( x_0 \\) is a **reference point** and \\( U(x_0) \\), usually set to zero, is arbitrary. Adding a constant to \\( U \\) changes no difference \\( \\Delta U \\), and only differences enter the physics, so the choice of reference is a matter of convenience.\n\nThe minus sign has a physical reading. When the force does positive work (a falling stone, a released spring), the potential energy decreases; that decrease is exactly the kinetic energy the force supplies. Strictly, potential energy belongs to the *system* of interacting bodies (stone and Earth, block and spring), not to one object, although for Earth-bound problems we loosely speak of \"the stone's potential energy\".\n\n**Uniform gravity.** With \\( F_y = -mg \\) and \\( y \\) measured upward,\n\\[ U(y) - U(y_0) = -\\int_{y_0}^{y}(-mg)\\,dy' = mg(y - y_0). \\]\nChoosing \\( U = 0 \\) at \\( y_0 = 0 \\) gives the **gravitational potential energy** \\( U_g = mgy \\). Any convenient level can serve as \\( y = 0 \\); the floor, the table top and the lowest point of a swing are all common choices.\n\n**Ideal spring.** Hooke's law gives \\( F_x = -kx \\), where \\( x \\) is the displacement of the spring's end *from its natural (relaxed) length* and \\( k \\) is the spring constant. Then\n\\[ U(x) - U(0) = -\\int_0^x(-kx')\\,dx' = \\tfrac12 kx^2. \\]\nWith \\( U(0) = 0 \\), the **elastic potential energy** is \\( U_s = \\tfrac12 kx^2 \\). It is the same for stretching and compressing by the same amount, and it grows quadratically, so doubling the deformation stores four times the energy.\n\n*Worked example 1.* A spring with \\( k = 400 \\) N/m is compressed 0.150 m. Its stored energy is \\( \\tfrac12(400)(0.150)^2 = 4.50 \\) J.\n\n*Worked example 2.* A nonlinear restoring force is \\( F_x = -cx^3 \\) with \\( c > 0 \\). Taking \\( U(0) = 0 \\),\n\\[ U(x) = -\\int_0^x(-c\\,x'^3)\\,dx' = \\frac{c\\,x^4}{4}. \\]\nThe result is non-negative and even in \\( x \\), as it should be for a force that always points back toward \\( x = 0 \\).\n\n**Common mistakes.**\n- *Sign.* Potential energy is minus the work of the force, not the work itself. A useful check: \\( U \\) should increase as you move against the force.\n- *Wrong origin for the spring.* In \\( \\tfrac12 kx^2 \\), \\( x \\) is measured from the natural length. For a vertical spring with a hanging mass it is tempting to measure from the new equilibrium position; that is legitimate only if you then drop the separate gravitational term, a point taken up in the topic on oscillations.\n- *Assigning a potential energy to friction.* Friction's work depends on the path, so no function \\( U \\) satisfies the definition.",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k2",
+     "type": "expression",
+     "prompt": "A particle moves along \\( x \\) under the conservative force \\( F_x = ax - bx^3 \\), where \\( a \\) and \\( b \\) are positive constants. Find the potential energy \\( U(x) \\) with the reference \\( U(0) = 0 \\). Enter your answer in terms of `x`, `a`, `b`.",
+     "answer": "b*x^4/4 - a*x^2/2",
+     "vars": "x, a, b",
+     "why": "\\[ U(x) = -\\int_0^x (ax' - bx'^3)\\,dx' = -\\frac{a x^2}{2} + \\frac{b x^4}{4}. \\]\nCheck: \\( -dU/dx = ax - bx^3 = F_x \\). (This is a double-well potential with an unstable equilibrium at the origin.)"
+    },
+    {
+     "id": "s2q2",
+     "kp": "k3",
+     "type": "number",
+     "prompt": "A spring with \\( k = 250 \\) N/m is stretched 8.0 cm from its natural length. How much elastic potential energy (in J) does it store?",
+     "answer": "0.5*250*0.08^2",
+     "tol": 0.01,
+     "why": "Convert to metres first: \\( x = 0.080 \\) m. Then \\( U = \\tfrac12 kx^2 = \\tfrac12(250)(0.080)^2 = 0.800 \\) J. Using 8.0 instead of 0.080 would give an answer \\( 10^4 \\) times too large."
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "Recovering force from potential energy",
+   "kps": [
+    "k4"
+   ],
+   "md": "The definition of \\( U \\) goes from force to energy by integration. This section runs it backward: given the potential energy, recover the force. This is how forces are often specified in practice (molecular interactions, for instance, are usually given as potential energy curves), and it is the basis for reading graphs of \\( U \\).\n\n**One dimension.** Apply the definition to an infinitesimal displacement: \\( dU = -F_x\\,dx \\). Dividing by \\( dx \\),\n\\[ F_x = -\\frac{dU}{dx}. \\]\nThis is the fundamental theorem of calculus applied to \\( U(x) = U(x_0) - \\int_{x_0}^x F_x\\,dx' \\); the arbitrary constant disappears on differentiation, as it must.\n\n**Three dimensions.** Along a displacement \\( d\\vec r \\), \\( dU = -\\vec F\\cdot d\\vec r = -(F_x\\,dx + F_y\\,dy + F_z\\,dz) \\). Comparing with the total differential of \\( U(x,y,z) \\) gives\n\\[ F_x = -\\frac{\\partial U}{\\partial x},\\quad F_y = -\\frac{\\partial U}{\\partial y},\\quad F_z = -\\frac{\\partial U}{\\partial z}, \\qquad \\vec F = -\\nabla U. \\]\nThe vector \\( \\nabla U \\) is the **gradient** of \\( U \\); it points in the direction in which \\( U \\) increases fastest, so the force points in the direction of fastest *decrease*.\n\n**Graphical reading.** In one dimension, the force at \\( x \\) is minus the slope of the \\( U(x) \\) curve there. Where the curve rises to the right, the force points left; where it falls, the force points right; the steeper the curve, the larger the force. A convenient image is a bead on a frictionless wire bent into the shape of the graph: it is always pushed downhill. Note what the force does *not* depend on: the value of \\( U \\) itself. A point with \\( U = 0 \\) can have a large force, and a point with large \\( U \\) can have none.\n\n*Worked example.* A particle moves along \\( x \\) with \\( U(x) = 3x^2 - x^3 \\), where \\( U \\) is in joules and \\( x \\) in metres (so the coefficients carry units J/m² and J/m³). Then\n\\[ F_x = -\\frac{dU}{dx} = -(6x - 3x^2) = 3x^2 - 6x. \\]\nAt \\( x = 1 \\) m, \\( F_x = 3 - 6 = -3 \\) N, pointing toward \\( -x \\). At \\( x = 3 \\) m, \\( F_x = 27 - 18 = 9 \\) N toward \\( +x \\). Check against the graph: \\( dU/dx = 6x - 3x^2 \\) is positive at \\( x = 1 \\) (curve rising), so the force points left; negative at \\( x = 3 \\) (curve falling), so the force points right.\n\n*Consistency check with gravity and springs.* From \\( U = mgy \\), \\( F_y = -mg \\): downward, as required. From \\( U = \\tfrac12 kx^2 \\), \\( F_x = -kx \\): Hooke's law. The derivative relation reproduces exactly the forces we started with.\n\n**Common mistakes.** The most frequent error is losing the minus sign, which makes the force point uphill on the energy graph, an immediate sign that something is wrong. The second is to infer the force from the value of \\( U \\) rather than its slope.",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k4",
+     "type": "expression",
+     "prompt": "The potential energy of a particle moving along the positive \\( x \\)-axis is \\( U(x) = \\dfrac{a}{x^2} - \\dfrac{b}{x} \\), with \\( a, b > 0 \\). Find the force \\( F_x(x) \\). Enter your answer in terms of `x`, `a`, `b`.",
+     "answer": "2*a/x^3 - b/x^2",
+     "vars": "x, a, b",
+     "why": "\\( dU/dx = -2a/x^3 + b/x^2 \\), so \\( F_x = -dU/dx = 2a/x^3 - b/x^2 \\). The first term is repulsive (positive, pushing to larger \\( x \\)) and dominates at small \\( x \\); the second is attractive."
+    },
+    {
+     "id": "s3q2",
+     "kp": "k4",
+     "type": "mcq",
+     "prompt": "At a certain point, a particle's potential energy is \\( U = +5.0 \\) J and the slope of the potential energy curve is \\( dU/dx = +2.0 \\) J/m. What is the force on the particle there?",
+     "options": [
+      "2.0 N in the \\( -x \\) direction",
+      "2.0 N in the \\( +x \\) direction, since the curve rises in that direction",
+      "5.0 N in the \\( -x \\) direction, since the force is set by the value of \\( U \\)",
+      "It cannot be determined without knowing where \\( U = 0 \\) was chosen"
+     ],
+     "answer": 0,
+     "why": "\\( F_x = -dU/dx = -2.0 \\) N: magnitude 2.0 N, pointing toward \\( -x \\), i.e. downhill on the energy curve. The value of \\( U \\) is irrelevant (and depends on the arbitrary reference), while its slope is not affected by the reference at all."
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "Conservation of mechanical energy",
+   "kps": [
+    "k5"
+   ],
+   "md": "This section turns the definitions into the tool you will use most: a conservation law that gives speeds and positions without solving for the motion in time.\n\n**Derivation.** The work–energy theorem says \\( W_{\\text{net}} = \\Delta K \\). Split the net work into work done by conservative forces and work done by nonconservative forces: \\( W_{\\text{net}} = W_c + W_{nc} \\). By the definition of potential energy, \\( W_c = -\\Delta U \\), where \\( U \\) is the sum of the potential energies of all conservative forces present. If the nonconservative forces do no work,\n\\[ \\Delta K + \\Delta U = 0 \\quad\\Longleftrightarrow\\quad K_i + U_i = K_f + U_f. \\]\nThe sum \\( E = K + U \\) is the **mechanical energy**, and this result is the **conservation of mechanical energy**.\n\nThe condition is that nonconservative forces do *no work*, not that they are absent. The normal force from a fixed frictionless surface is perpendicular to the velocity, so \\( \\vec N\\cdot d\\vec r = 0 \\); the tension in a pendulum string with a fixed pivot is likewise perpendicular to the motion. Such forces change the direction of motion but not the energy.\n\n**Procedure.**\n1. Choose the system and list the forces. Decide which are conservative (included through \\( U \\)) and confirm that the others do no work.\n2. Choose two states, an initial and a final one, at which you know or want \\( K \\) and \\( U \\).\n3. Fix reference points for each potential energy and write \\( K_i + U_i = K_f + U_f \\).\n4. Solve, and check units and limiting cases.\n\n*Worked example 1 (spring and ramp).* A 0.50 kg block is pressed against a horizontal spring (\\( k = 200 \\) N/m), compressing it 0.10 m, and released on a frictionless surface that later curves up into a ramp. With \\( y = 0 \\) on the level surface: initially \\( K = 0 \\), \\( U_s = \\tfrac12(200)(0.10)^2 = 1.0 \\) J. When the block leaves the spring, all of this is kinetic: \\( \\tfrac12(0.50)v^2 = 1.0 \\), so \\( v = 2.0 \\) m/s. At its highest point on the ramp it is momentarily at rest, so \\( mgh = 1.0 \\) J and \\( h = 1.0/(0.50 \\times 9.80) = 0.204 \\) m. The shape of the ramp does not matter.\n\n*Worked example 2 (two potential energies at once).* A 2.0 kg ball is dropped from 0.50 m above the top of a vertical spring (\\( k = 1960 \\) N/m). Find the maximum compression \\( d \\). Take the lowest point as \\( y = 0 \\); the ball starts at height \\( 0.50 + d \\) and is at rest at both ends. Then\n\\[ mg(0.50 + d) = \\tfrac12 kd^2 \\quad\\Longrightarrow\\quad 980\\,d^2 - 19.6\\,d - 9.80 = 0, \\]\nwith positive root \\( d = 0.110 \\) m. Notice that gravity keeps doing positive work while the spring is being compressed; that is why \\( d \\) appears on the left.\n\n**What energy conservation does not tell you.** Energy is a scalar. It gives the speed at a position but not the direction of motion, and it gives nothing about *when* the particle arrives. For times you must return to Newton's second law or integrate \\( dt = dx/v(x) \\).\n\n**Common mistakes.** Using \\( mgh \\) with \\( h \\) measured only to the top of the spring (forgetting the extra drop \\( d \\)); applying the law when friction does work; and mixing reference levels between the two states.",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k5",
+     "type": "number",
+     "prompt": "A roller-coaster car moves at 3.0 m/s at the top of a hill 12.0 m above the lowest point of the track. Neglecting friction and air resistance, what is its speed (in m/s) at the lowest point? Use \\( g = 9.80 \\) m/s².",
+     "answer": "sqrt(3^2 + 2*9.80*12)",
+     "tol": 0.01,
+     "why": "\\( \\tfrac12 mv_i^2 + mgh = \\tfrac12 mv_f^2 \\), so \\( v_f = \\sqrt{v_i^2 + 2gh} = \\sqrt{9.0 + 235.2} = 15.6 \\) m/s. The mass cancels and the shape of the track does not matter."
+    },
+    {
+     "id": "s4q2",
+     "kp": "k5",
+     "type": "written",
+     "prompt": "A bead slides along a frictionless wire bent into a complicated curve. The wire exerts a normal force on the bead that changes in magnitude and direction. Explain why mechanical energy is nevertheless conserved, and state precisely what condition on nonconservative forces the conservation law requires.",
+     "rubric": [
+      "States the condition: nonconservative forces must do zero (net) work, not merely be absent.",
+      "The normal force is perpendicular to the wire, hence to the velocity and to \\( d\\vec r \\).",
+      "Therefore \\( \\vec N \\cdot d\\vec r = 0 \\) and the normal force does no work.",
+      "Only gravity (conservative) does work, so \\( W_{nc} = 0 \\) and \\( K + U \\) is constant."
+     ],
+     "model": "From the work–energy theorem, \\( \\Delta K + \\Delta U = W_{nc} \\), so mechanical energy is conserved exactly when the nonconservative forces do zero work; they may be present. The wire is frictionless, so the only force it exerts is a normal force, perpendicular to the wire. The bead's velocity, and each displacement \\( d\\vec r \\), is tangent to the wire. Hence \\( \\vec N\\cdot d\\vec r = 0 \\) at every instant: the normal force steers the bead but never changes its speed. The only force doing work is gravity, which is conservative and accounted for by \\( mgy \\). Thus \\( W_{nc} = 0 \\) and \\( K + U \\) is constant.",
+     "why": "Forces perpendicular to the velocity (normal forces on fixed frictionless surfaces, string tension with a fixed pivot, magnetic forces on charges) do no work. What matters is work, not presence."
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "Nonconservative forces and the energy balance",
+   "kps": [
+    "k6"
+   ],
+   "md": "Real systems include friction, drag and applied pushes. This section extends the energy method to them, so that it remains usable when mechanical energy is not conserved.\n\n**Statement.** Return to \\( W_{\\text{net}} = W_c + W_{nc} = \\Delta K \\) and replace \\( W_c \\) by \\( -\\Delta U \\):\n\\[ W_{nc} = \\Delta K + \\Delta U = \\Delta E. \\]\nThe work done by nonconservative forces equals the change in mechanical energy. Equivalently, \\( K_i + U_i + W_{nc} = K_f + U_f \\). An applied push in the direction of motion makes \\( W_{nc} > 0 \\) and raises \\( E \\); kinetic friction makes \\( W_{nc} < 0 \\) and lowers it.\n\n**Where the energy goes.** For a block sliding on a fixed surface, the mechanical energy lost, \\( f_k d \\), appears as **thermal energy** (internal energy of block and surface). If the thermal energy is counted as part of the system, the total energy \\( K + U + E_{\\text{th}} + \\dots \\) is conserved; this broader statement, the **conservation of energy**, has never been observed to fail. Mechanical energy is conserved only in the special case \\( W_{nc} = 0 \\).\n\n**The double-counting rule.** Each force enters the energy equation exactly once: either as a potential energy term (if conservative and you choose to) or as work, never both. Gravity is normally included through \\( mgy \\); if you also add \"work done by gravity\" to \\( W_{nc} \\), you have counted it twice.\n\n*Worked example.* A 3.0 kg block starts from rest at the top of a 2.0 m long incline at \\( 30^\\circ \\), with \\( \\mu_k = 0.20 \\). Find its speed at the bottom.\n\n- Height drop: \\( h = (2.0)\\sin 30^\\circ = 1.0 \\) m, so \\( \\Delta U = -mgh = -(3.0)(9.80)(1.0) = -29.4 \\) J.\n- The normal force is \\( N = mg\\cos 30^\\circ \\), so \\( f_k = \\mu_k mg\\cos 30^\\circ = (0.20)(3.0)(9.80)(0.866) = 5.09 \\) N, and \\( W_{nc} = -f_k L = -(5.09)(2.0) = -10.2 \\) J.\n- Then \\( \\Delta K = W_{nc} - \\Delta U = -10.2 + 29.4 = 19.2 \\) J, so \\( v = \\sqrt{2(19.2)/3.0} = 3.58 \\) m/s.\n\nWithout friction the speed would be \\( \\sqrt{2gh} = 4.43 \\) m/s; friction has removed about a third of the kinetic energy.\n\n*Second example (stopping distance).* A block moving at \\( v_0 \\) on a level floor with kinetic friction coefficient \\( \\mu_k \\) stops after sliding distance \\( d \\): \\( -\\mu_k mg\\,d = 0 - \\tfrac12 mv_0^2 \\), so \\( d = v_0^2/(2\\mu_k g) \\), independent of the mass.\n\n**Common mistakes.** Besides double counting, students often give friction work the wrong sign, or use the displacement rather than the path length when the block reverses direction. Friction always removes mechanical energy from a block sliding on a fixed surface, over every segment of the path.",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k6",
+     "type": "number",
+     "prompt": "A 0.40 kg block rests against a horizontal spring (\\( k = 160 \\) N/m) compressed 0.20 m, and is not attached to it. The floor has \\( \\mu_k = 0.25 \\) everywhere. The block is released. What total distance (in m), measured from the release point, does it slide before stopping? Use \\( g = 9.80 \\) m/s².",
+     "answer": "0.5*160*0.2^2/(0.25*0.40*9.80)",
+     "tol": 0.01,
+     "why": "Initial mechanical energy: \\( \\tfrac12(160)(0.20)^2 = 3.20 \\) J; final: 0. Friction acts over the whole sliding distance \\( d \\) (including the 0.20 m while the spring expands) with \\( f_k = \\mu_k mg = (0.25)(0.40)(9.80) = 0.98 \\) N. So \\( -f_k d = 0 - 3.20 \\), giving \\( d = 3.27 \\) m. (This assumes the spring pushes hard enough to start the block moving and that the block leaves the spring, which it does here since \\( kx = 32 \\) N is far larger than 0.98 N.)"
+    },
+    {
+     "id": "s5q2",
+     "kp": "k6",
+     "type": "written",
+     "prompt": "A student finds the speed of a block at the bottom of a rough incline of height \\( h \\) as follows: \\\"\\( K_i + U_i + W_{nc} = K_f + U_f \\), with \\( U_i = mgh \\), \\( U_f = 0 \\), and \\( W_{nc} = W_{\\text{grav}} + W_{\\text{fric}} = mgh - f_k L \\).\\\" Identify the error, explain why it is an error, and give the correct expression for \\( \\tfrac12 mv_f^2 \\) (block starts from rest).",
+     "rubric": [
+      "Identifies that gravity has been counted twice: once through \\( U = mgh \\) and again as work.",
+      "Explains that gravity is conservative and its work is already represented by \\( -\\Delta U \\); each force appears exactly once.",
+      "Gravity is not a nonconservative force, so it does not belong in \\( W_{nc} \\).",
+      "Correct result: \\( \\tfrac12 mv_f^2 = mgh - f_k L \\)."
+     ],
+     "model": "The student has counted gravity twice. The term \\( U_i - U_f = mgh \\) already is the work done by gravity (that is what potential energy means: \\( W_g = -\\Delta U \\)). Gravity is conservative, so it does not belong in \\( W_{nc} \\) at all; putting \\( mgh \\) there adds its work a second time. Each force must appear once, either as a potential energy or as work. The correct balance is \\( 0 + mgh - f_k L = \\tfrac12 mv_f^2 \\), i.e. \\( \\tfrac12 mv_f^2 = mgh - f_k L \\); the student's version would give \\( 2mgh - f_kL \\).",
+     "why": "Decide for each force at the outset: conservative forces through \\( U \\), everything else through \\( W_{nc} \\)."
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "title": "Energy diagrams, turning points and equilibrium",
+   "kps": [
+    "k7",
+    "k8"
+   ],
+   "md": "A graph of \\( U(x) \\) together with the value of \\( E \\) summarizes, qualitatively and often quantitatively, everything a one-dimensional conservative system can do. This section shows how to read such an **energy diagram**.\n\n**Allowed regions and turning points.** Since \\( K = E - U(x) \\) and \\( K = \\tfrac12 mv^2 \\ge 0 \\), motion is possible only where \\( U(x) \\le E \\). On the diagram, draw the horizontal line at height \\( E \\): the particle is confined to the intervals where the curve lies on or below the line. At a point where \\( U(x) = E \\) the kinetic energy is zero; the particle stops momentarily and, because the force there pushes it back into the allowed region, reverses. Such points are **turning points**. At any allowed \\( x \\) the speed is \\( v = \\sqrt{2(E - U(x))/m} \\): the vertical gap between the line and the curve is the kinetic energy.\n\n**Equilibrium.** A particle at rest stays at rest where the force vanishes, that is where \\( dU/dx = 0 \\). These **equilibrium points** are the flat spots of the curve. They come in three kinds, distinguished by what the force does after a small displacement:\n- **Stable equilibrium**: a local minimum of \\( U \\), with \\( d^2U/dx^2 > 0 \\). Displaced either way, the particle finds itself on a slope that pushes it back.\n- **Unstable equilibrium**: a local maximum, \\( d^2U/dx^2 < 0 \\). A small displacement produces a force that pushes it further away.\n- **Neutral equilibrium**: \\( U \\) constant in a neighbourhood; a displaced particle feels no force and simply stays.\n\n(If \\( U'' = 0 \\) at an isolated flat point, the second-derivative test is inconclusive and higher derivatives or the graph must decide.) Near a stable minimum at \\( x_0 \\), Taylor's theorem gives \\( U(x) \\approx U(x_0) + \\tfrac12 U''(x_0)(x - x_0)^2 \\), the potential energy of a spring with effective constant \\( k_{\\text{eff}} = U''(x_0) \\). This is why small oscillations about almost any stable equilibrium are the simple harmonic motion studied later in this course.\n\n*Worked example.* Let \\( U(x) = x^4 - 2x^2 \\) (J, with \\( x \\) in m). Then \\( dU/dx = 4x^3 - 4x = 4x(x-1)(x+1) \\), which vanishes at \\( x = -1, 0, 1 \\). Since \\( d^2U/dx^2 = 12x^2 - 4 \\) equals \\( -4 \\) at \\( x = 0 \\) and \\( 8 \\) at \\( x = \\pm1 \\), the origin is unstable (with \\( U = 0 \\)) and \\( x = \\pm1 \\) are stable (with \\( U = -1 \\) J). A particle with \\( E = -0.5 \\) J that starts in the right-hand well has turning points where \\( x^4 - 2x^2 = -0.5 \\), i.e. \\( x^2 = 1 \\pm \\sqrt{0.5} \\), so \\( x = 0.541 \\) m and \\( x = 1.307 \\) m. It cannot cross to the left well: the hump at \\( x = 0 \\) has \\( U = 0 > E \\).\n\n```plot\nx: -1.8, 1.8\ny: -1.3, 1.5\nf: x^4 - 2*x^2 | U(x)\nslider: a, -1, 1.2, -0.5\nf: a + 0*x | E = a\n```\n\nDrag \\( a \\) (the total energy). For \\( -1 < a < 0 \\) the line crosses the curve four times, giving two separate allowed intervals, one in each well; which one the particle occupies depends on where it started. As \\( a \\) passes \\( 0 \\), the two intervals merge and the particle can travel between the wells, slowing as it crosses the hump.\n\n**Common mistakes.** Treating the diagram as a picture of the path in space (it is a graph of energy against position, and the particle moves only along \\( x \\)); and assuming that any point with \\( U = E \\) is a turning point even when it is an equilibrium, where a particle arriving with exactly that energy would take infinitely long to get there.",
+   "questions": [
+    {
+     "id": "s6q1",
+     "kp": "k7",
+     "type": "numbers",
+     "prompt": "A particle moves along \\( x \\) with \\( U(x) = 2x^3 - 6x \\) (J, with \\( x \\) in m). It has total energy \\( E = 0 \\) and is released in the potential well near \\( x = 1 \\). Find its two turning points (in m), separated by a comma.",
+     "answer": "0, sqrt(3)",
+     "tol": 0.01,
+     "why": "Turning points satisfy \\( U = E \\): \\( 2x^3 - 6x = 0 \\), i.e. \\( x = 0 \\) or \\( x = \\pm\\sqrt3 \\). The well is around the minimum at \\( x = 1 \\) (where \\( U = -4 \\) J), bounded by the crossings at \\( x = 0 \\) and \\( x = \\sqrt3 \\approx 1.73 \\) m. The crossing at \\( -\\sqrt3 \\) lies beyond the hump at \\( x = -1 \\) (where \\( U = +4 \\) J), which the particle cannot cross."
+    },
+    {
+     "id": "s6q2",
+     "kp": "k8",
+     "type": "written",
+     "prompt": "For \\( U(x) = 2x^3 - 6x \\) (J, \\( x \\) in m), find every equilibrium position and classify each as stable or unstable, justifying the classification from the force on a slightly displaced particle as well as from the second derivative.",
+     "rubric": [
+      "Sets \\( dU/dx = 6x^2 - 6 = 0 \\) and finds \\( x = \\pm 1 \\) m.",
+      "Computes \\( d^2U/dx^2 = 12x \\): positive at \\( x = 1 \\) (stable, minimum), negative at \\( x = -1 \\) (unstable, maximum).",
+      "Force argument: \\( F_x = 6 - 6x^2 \\); near \\( x = 1 \\) it points back toward 1 on both sides; near \\( x = -1 \\) it points away."
+     ],
+     "model": "Equilibria: \\( dU/dx = 6x^2 - 6 = 0 \\) gives \\( x = 1 \\) m and \\( x = -1 \\) m. Second derivative: \\( U'' = 12x \\), which is \\( +12 \\) at \\( x = 1 \\) (local minimum, stable) and \\( -12 \\) at \\( x = -1 \\) (local maximum, unstable). Force check: \\( F_x = -dU/dx = 6 - 6x^2 \\). Just to the right of \\( x = 1 \\), \\( x^2 > 1 \\) so \\( F_x < 0 \\), pushing back left; just to the left, \\( F_x > 0 \\), pushing back right: stable. Just to the right of \\( x = -1 \\) (say \\( x = -0.9 \\)), \\( x^2 < 1 \\) so \\( F_x > 0 \\), pushing further right; just to the left, \\( F_x < 0 \\), pushing further left: unstable.",
+     "why": "A minimum of \\( U \\) is stable because the force, being minus the slope, always points back toward it; at a maximum the slope pushes the particle away on both sides."
+    }
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "t": "conservative force",
+   "d": "A force whose work on a particle moving between two points is the same for every path; equivalently, its work around every closed path is zero.",
+   "ex": "Uniform gravity, ideal spring forces, inverse-square gravity."
+  },
+  {
+   "t": "nonconservative force",
+   "d": "A force whose work between two points depends on the path taken.",
+   "ex": "Kinetic friction, air drag, an applied push."
+  },
+  {
+   "t": "potential energy",
+   "d": "For a conservative force, a function of position \\( U \\) whose change equals the negative of the work done by the force: \\( \\Delta U = -W \\).",
+   "ex": "Belongs to the system of interacting bodies; only differences are physical."
+  },
+  {
+   "t": "reference point",
+   "d": "The position at which the potential energy is assigned a chosen value (usually zero); its choice does not affect any physical prediction.",
+   "ex": "Floor level for \\( mgy \\); natural length for a spring."
+  },
+  {
+   "t": "gravitational potential energy",
+   "d": "Near Earth's surface, \\( U_g = mgy \\) with \\( y \\) measured upward from a chosen level."
+  },
+  {
+   "t": "elastic potential energy",
+   "d": "The potential energy of an ideal spring, \\( U_s = \\tfrac12 kx^2 \\), with \\( x \\) the displacement from its natural length."
+  },
+  {
+   "t": "mechanical energy",
+   "d": "The sum \\( E = K + U \\) of the kinetic energy and all potential energies of a system."
+  },
+  {
+   "t": "conservation of mechanical energy",
+   "d": "If nonconservative forces do no work, \\( K + U \\) is constant: \\( K_i + U_i = K_f + U_f \\)."
+  },
+  {
+   "t": "thermal energy",
+   "d": "Internal energy associated with random microscopic motion; mechanical energy removed by kinetic friction appears as thermal energy of the surfaces."
+  },
+  {
+   "t": "gradient",
+   "d": "For a scalar function \\( U(x,y,z) \\), the vector \\( \\nabla U = (\\partial U/\\partial x, \\partial U/\\partial y, \\partial U/\\partial z) \\); a conservative force is \\( \\vec F = -\\nabla U \\)."
+  },
+  {
+   "t": "energy diagram",
+   "d": "A graph of potential energy \\( U(x) \\) against position, with the total energy \\( E \\) drawn as a horizontal line."
+  },
+  {
+   "t": "turning point",
+   "d": "A position where \\( U(x) = E \\), so the kinetic energy is zero and the particle momentarily stops and reverses."
+  },
+  {
+   "t": "equilibrium point",
+   "d": "A position where the net force is zero, i.e. \\( dU/dx = 0 \\)."
+  },
+  {
+   "t": "stable equilibrium",
+   "d": "An equilibrium at a local minimum of \\( U \\) (\\( U'' > 0 \\)); after a small displacement the force points back toward it."
+  },
+  {
+   "t": "unstable equilibrium",
+   "d": "An equilibrium at a local maximum of \\( U \\) (\\( U'' < 0 \\)); after a small displacement the force pushes the particle further away."
+  },
+  {
+   "t": "neutral equilibrium",
+   "d": "An equilibrium in a region where \\( U \\) is constant; a displaced particle feels no force."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "term",
+   "front": "Define: conservative force",
+   "back": "A position-dependent force whose work between any two points is independent of the path; equivalently, zero work around every closed path.",
+   "kp": "k1"
+  },
+  {
+   "id": "c2",
+   "type": "concept",
+   "front": "Why is kinetic friction nonconservative?",
+   "back": "It always opposes the motion, so its work over any path is \\( -f_k \\times \\) (path length), which is nonzero around a closed loop.",
+   "kp": "k1"
+  },
+  {
+   "id": "c3",
+   "type": "formula",
+   "front": "Definition of potential energy change",
+   "back": "\\( \\Delta U = U_B - U_A = -W_{A\\to B} = -\\int_A^B \\vec F\\cdot d\\vec r \\)",
+   "kp": "k2"
+  },
+  {
+   "id": "c4",
+   "type": "concept",
+   "front": "Why can the zero of potential energy be chosen freely?",
+   "back": "Only differences \\( \\Delta U \\) appear in the physics; adding a constant to \\( U \\) changes no difference and no force.",
+   "kp": "k2"
+  },
+  {
+   "id": "c5",
+   "type": "formula",
+   "front": "Gravitational potential energy near Earth",
+   "back": "\\( U_g = mgy \\), \\( y \\) measured upward from any chosen level",
+   "kp": "k3"
+  },
+  {
+   "id": "c6",
+   "type": "formula",
+   "front": "Elastic potential energy of a spring",
+   "back": "\\( U_s = \\tfrac12 kx^2 \\), \\( x \\) measured from the natural length",
+   "kp": "k3"
+  },
+  {
+   "id": "c7",
+   "type": "formula",
+   "front": "Force from potential energy (1D and 3D)",
+   "back": "\\( F_x = -\\dfrac{dU}{dx} \\); \\( \\vec F = -\\nabla U \\)",
+   "kp": "k4"
+  },
+  {
+   "id": "c8",
+   "type": "concept",
+   "front": "On a graph of \\( U(x) \\), which way does the force point?",
+   "back": "Downhill: opposite the slope, with magnitude equal to the steepness. The value of \\( U \\) is irrelevant.",
+   "kp": "k4"
+  },
+  {
+   "id": "c9",
+   "type": "problem",
+   "front": "\\( U(x) = 3x^2 - x^3 \\) (SI). Force at \\( x = 1 \\) m?",
+   "back": "\\( F_x = -(6x - 3x^2) = -3 \\) N",
+   "kp": "k4",
+   "answer": "-3",
+   "check": "number"
+  },
+  {
+   "id": "c10",
+   "type": "formula",
+   "front": "Conservation of mechanical energy",
+   "back": "\\( K_i + U_i = K_f + U_f \\) (when \\( W_{nc} = 0 \\))",
+   "kp": "k5"
+  },
+  {
+   "id": "c11",
+   "type": "concept",
+   "front": "Exact condition for mechanical energy to be conserved",
+   "back": "Nonconservative forces do zero net work (they may be present, e.g. normal forces perpendicular to the motion).",
+   "kp": "k5"
+  },
+  {
+   "id": "c12",
+   "type": "concept",
+   "front": "What can energy conservation not tell you about a motion?",
+   "back": "The direction of the velocity and the time at which positions are reached.",
+   "kp": "k5"
+  },
+  {
+   "id": "c13",
+   "type": "formula",
+   "front": "Energy balance with nonconservative forces",
+   "back": "\\( W_{nc} = \\Delta K + \\Delta U \\), i.e. \\( K_i + U_i + W_{nc} = K_f + U_f \\)",
+   "kp": "k6"
+  },
+  {
+   "id": "c14",
+   "type": "concept",
+   "front": "What is the double-counting error?",
+   "back": "Including a conservative force (e.g. gravity) both as a potential energy and as work. Each force appears once.",
+   "kp": "k6"
+  },
+  {
+   "id": "c15",
+   "type": "problem",
+   "front": "Stopping distance on a level floor, initial speed \\( v_0 \\), coefficient \\( \\mu_k \\)",
+   "back": "\\( d = v_0^2/(2\\mu_k g) \\), from \\( -\\mu_k mg d = -\\tfrac12 mv_0^2 \\)",
+   "kp": "k6"
+  },
+  {
+   "id": "c16",
+   "type": "concept",
+   "front": "Where on an energy diagram can a particle with energy \\( E \\) be?",
+   "back": "Only where \\( U(x) \\le E \\); the gap \\( E - U \\) is its kinetic energy.",
+   "kp": "k7"
+  },
+  {
+   "id": "c17",
+   "type": "term",
+   "front": "Define: turning point",
+   "back": "A position where \\( U(x) = E \\), so \\( K = 0 \\) and the particle reverses.",
+   "kp": "k7"
+  },
+  {
+   "id": "c18",
+   "type": "formula",
+   "front": "Speed at position \\( x \\) from an energy diagram",
+   "back": "\\( v = \\sqrt{2\\,(E - U(x))/m} \\)",
+   "kp": "k7"
+  },
+  {
+   "id": "c19",
+   "type": "concept",
+   "front": "Test for stable vs unstable equilibrium",
+   "back": "At \\( dU/dx = 0 \\): \\( U'' > 0 \\) stable (minimum), \\( U'' < 0 \\) unstable (maximum), \\( U \\) locally constant neutral.",
+   "kp": "k8"
+  },
+  {
+   "id": "c20",
+   "type": "concept",
+   "front": "Near a stable minimum \\( x_0 \\), what does \\( U \\) look like?",
+   "back": "\\( U \\approx U(x_0) + \\tfrac12 U''(x_0)(x-x_0)^2 \\): a spring with \\( k_{\\text{eff}} = U''(x_0) \\).",
+   "kp": "k8"
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k5",
+   "type": "number",
+   "prompt": "A simple pendulum of length 1.20 m is released from rest with its string at \\( 40.0^\\circ \\) from the vertical. What is the bob's speed (in m/s) at the lowest point? Use \\( g = 9.80 \\) m/s².",
+   "answer": "sqrt(2*9.80*1.20*(1-cos(40 deg)))",
+   "tol": 0.01,
+   "why": "The bob drops \\( h = L(1 - \\cos\\theta) = 1.20(1 - \\cos 40^\\circ) = 0.281 \\) m. Tension is perpendicular to the motion, so \\( v = \\sqrt{2gh} = \\sqrt{2(9.80)(0.281)} = 2.35 \\) m/s."
+  },
+  {
+   "id": "p2",
+   "kp": "k5",
+   "type": "number",
+   "prompt": "A 1.50 kg ball is dropped from rest 0.80 m above the top of a vertical spring with \\( k = 900 \\) N/m. Find the maximum compression of the spring (in m). Use \\( g = 9.80 \\) m/s².",
+   "answer": "0.178814443346501",
+   "tol": 0.01,
+   "why": "From the release point to the lowest point the ball falls \\( 0.80 + d \\) and is at rest at both ends: \\( mg(0.80 + d) = \\tfrac12 kd^2 \\), i.e. \\( 450d^2 - 14.7d - 11.76 = 0 \\). The positive root is \\( d = 0.179 \\) m."
+  },
+  {
+   "id": "p3",
+   "kp": "k4",
+   "type": "expression",
+   "prompt": "Two atoms interact with a potential energy \\( U(r) = -\\dfrac{A}{r} + \\dfrac{B}{r^2} \\) (\\( A, B > 0 \\)), where \\( r \\) is their separation. Find the radial force \\( F_r \\) (positive means repulsive). Enter your answer in terms of `r`, `A`, `B`.",
+   "answer": "-A/r^2 + 2*B/r^3",
+   "vars": "r, A, B",
+   "why": "\\( F_r = -dU/dr = -\\left(\\dfrac{A}{r^2} - \\dfrac{2B}{r^3}\\right) = -\\dfrac{A}{r^2} + \\dfrac{2B}{r^3} \\). Attractive at large \\( r \\), repulsive at small \\( r \\)."
+  },
+  {
+   "id": "p4",
+   "kp": "k8",
+   "type": "number",
+   "prompt": "For the potential \\( U(r) = -A/r + B/r^2 \\) with \\( A = 3.0 \\) J·m and \\( B = 0.60 \\) J·m², find the equilibrium separation (in m).",
+   "answer": "2*0.60/3.0",
+   "tol": 0.01,
+   "why": "\\( dU/dr = A/r^2 - 2B/r^3 = 0 \\Rightarrow r = 2B/A = 2(0.60)/3.0 = 0.40 \\) m. Since \\( U \\) decreases then increases through this point (it is a minimum), the equilibrium is stable."
+  },
+  {
+   "id": "p5",
+   "kp": "k5",
+   "type": "written",
+   "prompt": "A small block starts from rest at height \\( h \\) on a frictionless track that ends in a vertical circular loop of radius \\( R \\) (bottom of loop at height 0). Derive the minimum \\( h \\) for which the block goes around the loop without leaving the track. Identify clearly where you use energy conservation and where you use Newton's second law.",
+   "rubric": [
+    "At the top of the loop, the condition for staying on the track is \\( N \\ge 0 \\); at the minimum, \\( N = 0 \\) and \\( mg = mv^2/R \\), so \\( v_{\\text{top}}^2 = gR \\) (Newton's second law, radial direction).",
+    "Energy conservation from release to the top (height \\( 2R \\)): \\( mgh = mg(2R) + \\tfrac12 mv_{\\text{top}}^2 \\).",
+    "Combines to \\( h = 2R + R/2 = 5R/2 \\).",
+    "Notes that the normal force does no work, justifying energy conservation."
+   ],
+   "model": "At the top of the loop the block moves in a circle of radius \\( R \\), and the net downward force \\( mg + N \\) supplies the centripetal force: \\( mg + N = mv^2/R \\) (Newton's second law). Staying on the track requires \\( N \\ge 0 \\), so \\( v_{\\text{top}}^2 \\ge gR \\), with equality at the threshold. The track is frictionless and the normal force is perpendicular to the motion, so mechanical energy is conserved between release and the top of the loop, at height \\( 2R \\): \\( mgh = 2mgR + \\tfrac12 mv_{\\text{top}}^2 \\). With \\( v_{\\text{top}}^2 = gR \\): \\( h = 2R + R/2 = \\tfrac52 R \\).",
+   "why": "Energy alone cannot give the answer, because it says nothing about whether the track can supply the needed force; the dynamical condition \\( N \\ge 0 \\) at the top is essential."
+  },
+  {
+   "id": "p6",
+   "kp": "k6",
+   "type": "number",
+   "prompt": "A 20.0 kg sled starts from rest at the top of a hill 8.0 m high and reaches the bottom moving at 9.0 m/s. How much mechanical energy (in J) was converted to thermal energy by friction and drag? Use \\( g = 9.80 \\) m/s².",
+   "answer": "20*9.80*8 - 0.5*20*81",
+   "tol": 0.01,
+   "why": "\\( \\Delta U = -mgh = -1568 \\) J, \\( \\Delta K = \\tfrac12(20.0)(9.0)^2 = 810 \\) J. So \\( W_{nc} = \\Delta K + \\Delta U = -758 \\) J: 758 J became thermal energy."
+  },
+  {
+   "id": "p7",
+   "kp": "k5",
+   "type": "mcq",
+   "prompt": "Two identical balls are thrown from the edge of the same cliff with the same speed, one at \\( 60^\\circ \\) above the horizontal and one straight down. Air resistance is negligible. Which reaches the ground below with the greater speed?",
+   "options": [
+    "They arrive with equal speeds",
+    "The ball thrown straight down, because it has a head start downward",
+    "The ball thrown upward, because it falls from a greater maximum height",
+    "It depends on the masses of the balls"
+   ],
+   "answer": 0,
+   "why": "Both start with the same kinetic energy and the same potential energy and end at the same height; only gravity does work. So \\( \\tfrac12 mv_f^2 = \\tfrac12 mv_i^2 + mgh \\) gives the same \\( v_f \\) for both. The directions and flight times differ, but the speeds do not."
+  },
+  {
+   "id": "p8",
+   "kp": "k1",
+   "type": "written",
+   "prompt": "Is the force \\( \\vec F = (y\\,\\hat\\imath - x\\,\\hat\\jmath) \\) N (with \\( x, y \\) in m) conservative? Decide using the partial-derivative test, and confirm by computing its work around the unit square traversed counterclockwise: \\( (0,0)\\to(1,0)\\to(1,1)\\to(0,1)\\to(0,0) \\).",
+   "rubric": [
+    "Computes \\( \\partial F_x/\\partial y = 1 \\) and \\( \\partial F_y/\\partial x = -1 \\); unequal, so not conservative.",
+    "Evaluates each side: bottom (y = 0) gives 0; right (x = 1, F_y = -1) gives -1 J; top (y = 1, moving in -x) gives -1 J; left (x = 0) gives 0.",
+    "Total loop work -2 J, nonzero, confirming the force is nonconservative."
+   ],
+   "model": "Test: \\( \\partial F_x/\\partial y = \\partial(y)/\\partial y = 1 \\) while \\( \\partial F_y/\\partial x = \\partial(-x)/\\partial x = -1 \\). They differ, so \\( \\vec F \\) is not conservative. Loop: bottom edge, \\( y = 0 \\), \\( d\\vec r = dx\\,\\hat\\imath \\): \\( F_x = 0 \\), work 0. Right edge, \\( x = 1 \\), \\( d\\vec r = dy\\,\\hat\\jmath \\): \\( F_y = -1 \\), work \\( \\int_0^1(-1)dy = -1 \\) J. Top edge, \\( y = 1 \\), from \\( x = 1 \\) to 0: \\( \\int_1^0 (1)\\,dx = -1 \\) J. Left edge, \\( x = 0 \\): \\( F_y = 0 \\), work 0. Total \\( -2 \\) J \\( \\ne 0 \\), confirming the force is nonconservative.",
+   "why": "This force circulates clockwise around the origin, so it opposes a counterclockwise trip on every side where it is nonzero."
+  },
+  {
+   "id": "p9",
+   "kp": "k5",
+   "type": "number",
+   "prompt": "A vertical spring gun (\\( k = 800 \\) N/m) is compressed 0.050 m and launches a 20.0 g ball straight up. How high (in m) above its starting position, the compressed position, does the ball rise? Neglect air resistance and the spring's mass; use \\( g = 9.80 \\) m/s².",
+   "answer": "0.5*800*0.05^2/(0.020*9.80)",
+   "tol": 0.01,
+   "why": "Measure heights from the starting position. Initially \\( K = 0 \\), \\( U_s = \\tfrac12(800)(0.050)^2 = 1.00 \\) J, \\( U_g = 0 \\). At the top, \\( K = 0 \\), \\( U_s = 0 \\), \\( U_g = mgH \\). So \\( H = 1.00/(0.020 \\times 9.80) = 5.10 \\) m."
+  },
+  {
+   "id": "p10",
+   "kp": "k5",
+   "type": "written",
+   "prompt": "Explain why energy conservation alone cannot tell you how long a frictionless roller-coaster car takes to travel between two points of the track, and describe how the time could be found once the speed at every position is known.",
+   "rubric": [
+    "Energy is a scalar relation between speed and position; it contains no time variable.",
+    "It gives the speed at each position but not how the positions are distributed in time; different tracks with the same endpoints give different times.",
+    "Time is obtained by integrating \\( dt = ds/v(s) \\) along the track, with \\( v(s) \\) from energy conservation."
+   ],
+   "model": "Energy conservation relates speed to position, \\( v = \\sqrt{v_0^2 + 2g(y_0 - y)} \\); time does not appear in it. Two tracks with the same endpoints give the same final speed but can take very different times, because the car spends different amounts of time at each speed along paths of different length. Once the speed \\( v(s) \\) at each arc-length position \\( s \\) is known from energy, the travel time follows from \\( v = ds/dt \\): \\( t = \\int ds / v(s) \\) along the track.",
+   "why": "This is exactly the idea behind the brachistochrone problem, where one asks which track shape minimizes this integral."
+  },
+  {
+   "id": "p11",
+   "kp": "k7",
+   "type": "number",
+   "prompt": "A 0.20 kg particle moves along \\( x \\) with \\( U(x) = 2x^3 - 6x \\) (J, \\( x \\) in m) and total energy \\( E = 0 \\). What is its speed (in m/s) as it passes \\( x = 1 \\) m?",
+   "answer": "sqrt(2*4/0.20)",
+   "tol": 0.01,
+   "why": "\\( U(1) = 2 - 6 = -4 \\) J, so \\( K = E - U = 4 \\) J and \\( v = \\sqrt{2K/m} = \\sqrt{40} = 6.32 \\) m/s."
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k6",
+   "type": "number",
+   "prompt": "A 2.0 kg block slides from rest down a frictionless curved ramp from a height of 3.0 m onto a level floor with \\( \\mu_k = 0.30 \\). How far (in m) does it slide along the floor before stopping? Use \\( g = 9.80 \\) m/s².",
+   "answer": "3.0/0.30",
+   "tol": 0.01,
+   "why": "At the bottom \\( K = mgh \\). On the floor friction removes \\( \\mu_k mg\\,d \\): \\( mgh = \\mu_k mg\\,d \\Rightarrow d = h/\\mu_k = 3.0/0.30 = 10.0 \\) m. Mass and \\( g \\) cancel."
+  },
+  {
+   "id": "e2",
+   "kp": "k4",
+   "type": "expression",
+   "prompt": "A particle moves along \\( x > 0 \\) with potential energy \\( U(x) = c\\,x^2 e^{-x/a} \\), where \\( c \\) and \\( a \\) are positive constants. Find \\( F_x(x) \\). Enter it in terms of `x`, `c`, `a`.",
+   "answer": "c*x*(x - 2*a)*exp(-x/a)/a",
+   "vars": "x, c, a",
+   "why": "By the product rule, \\( dU/dx = c\\left(2x - \\dfrac{x^2}{a}\\right)e^{-x/a} \\). So \\( F_x = -dU/dx = c\\left(\\dfrac{x^2}{a} - 2x\\right)e^{-x/a} = \\dfrac{c\\,x(x - 2a)}{a}e^{-x/a} \\)."
+  },
+  {
+   "id": "e3",
+   "kp": "k8",
+   "type": "written",
+   "prompt": "A particle of mass \\( m \\) moves along \\( x \\) with \\( U(x) = x^4 - 4x^2 \\) (SI units). (a) Find and classify all equilibria. (b) Give the effective spring constant for small oscillations about each stable equilibrium. (c) State the range of total energies \\( E \\) for which a particle starting near \\( x = \\sqrt2 \\) remains in that well.",
+   "rubric": [
+    "(a) \\( U' = 4x^3 - 8x = 0 \\) at \\( x = 0, \\pm\\sqrt2 \\).",
+    "Classification via \\( U'' = 12x^2 - 8 \\): \\( -8 \\) at 0 (unstable), \\( +16 \\) at \\( \\pm\\sqrt2 \\) (stable).",
+    "(b) \\( k_{\\text{eff}} = U''(\\pm\\sqrt2) = 16 \\) N/m.",
+    "(c) \\( U(\\pm\\sqrt2) = -4 \\) J and \\( U(0) = 0 \\); the particle is confined to the right well for \\( -4 \\le E < 0 \\) J."
+   ],
+   "model": "(a) \\( U'(x) = 4x^3 - 8x = 4x(x^2 - 2) \\), zero at \\( x = 0 \\) and \\( x = \\pm\\sqrt2 \\) m. \\( U''(x) = 12x^2 - 8 \\): at 0 it is \\( -8 < 0 \\), a maximum, unstable; at \\( \\pm\\sqrt2 \\) it is \\( 24 - 8 = 16 > 0 \\), minima, stable. (b) Near each minimum \\( U \\approx U(x_0) + \\tfrac12 U''(x_0)(x - x_0)^2 \\), so \\( k_{\\text{eff}} = 16 \\) N/m. (c) \\( U(\\sqrt2) = 4 - 8 = -4 \\) J and the barrier at the origin has \\( U(0) = 0 \\). The particle must have \\( E \\ge -4 \\) J to exist in the well at all (with \\( E = -4 \\) J it sits at rest at the bottom) and \\( E < 0 \\) to be unable to cross the barrier: \\( -4 \\le E < 0 \\) J.",
+   "why": "The barrier height is \\( U(0) - U(\\sqrt2) = 4 \\) J; any energy above the barrier top lets the particle reach both wells."
+  },
+  {
+   "id": "e4",
+   "kp": "k5",
+   "type": "number",
+   "prompt": "A 0.50 kg block on a frictionless incline at \\( 25.0^\\circ \\) is pressed against a spring (\\( k = 300 \\) N/m) at the bottom, compressing it 0.12 m, and released. How far along the incline (in m), measured from the release point, does it travel before momentarily stopping? Use \\( g = 9.80 \\) m/s².",
+   "answer": "0.5*300*0.12^2/(0.50*9.80*sin(25 deg))",
+   "tol": 0.01,
+   "why": "Let \\( d \\) be the distance along the incline from release. At the highest point \\( K = 0 \\) and the block has risen \\( d\\sin 25^\\circ \\). Energy: \\( \\tfrac12 kx^2 = mg\\,d\\sin25^\\circ \\), so \\( d = \\dfrac{\\tfrac12(300)(0.12)^2}{(0.50)(9.80)\\sin25^\\circ} = \\dfrac{2.16}{2.071} = 1.04 \\) m."
+  },
+  {
+   "id": "e5",
+   "kp": "k2",
+   "type": "written",
+   "prompt": "A student argues: \\\"A block slid around a closed rectangle on a rough table returns to its starting point, so its position is unchanged, so friction's work must be zero; therefore friction has a potential energy function.\\\" Identify every error in this argument and explain, using the definition of potential energy, why no such function can exist.",
+   "rubric": [
+    "Work is a path integral \\( \\int \\vec f\\cdot d\\vec r \\), not determined by net displacement; returning to the start does not make it zero.",
+    "Friction does negative work on every segment, so the closed-loop work is \\( -f_k \\times \\) perimeter \\( \\neq 0 \\).",
+    "If \\( U \\) existed, the loop work would be \\( -\\Delta U = -(U(A) - U(A)) = 0 \\): contradiction.",
+    "Hence the premise and the conclusion are both false."
+   ],
+   "model": "The argument confuses work with something determined by net displacement. Work is the line integral \\( \\int \\vec f\\cdot d\\vec r \\) along the actual path; for friction every segment contributes \\( -f_k\\,ds < 0 \\), so around the rectangle the work is \\( -f_k \\) times the perimeter, not zero. The conclusion also fails: if a potential energy function \\( U \\) existed, the definition \\( W_{A\\to B} = -[U(B) - U(A)] \\) would force the work around any closed path (\\( B = A \\)) to be zero. Since friction's closed-loop work is nonzero, no such \\( U \\) exists.",
+   "why": "The only forces for which returning to the start guarantees zero work are conservative ones; that is the definition, not a general fact."
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "Conservative-force test",
+    "formula": "\\( \\oint \\vec F\\cdot d\\vec r = 0 \\); in 2D, \\( \\partial F_x/\\partial y = \\partial F_y/\\partial x \\)",
+    "when": "Deciding whether a potential energy exists.",
+    "example": "Gravity: yes. Friction: loop work \\( -f_k \\times \\) length, no.",
+    "watch": "The partial-derivative test is sufficient only on regions without holes."
+   },
+   {
+    "name": "Potential energy from force",
+    "formula": "\\( U(x) = U(x_0) - \\int_{x_0}^{x} F_x\\,dx' \\)",
+    "when": "A conservative force is given; you need \\( U \\).",
+    "example": "\\( F = -cx^3 \\Rightarrow U = cx^4/4 \\).",
+    "watch": "Keep the minus sign; pick a convenient reference."
+   },
+   {
+    "name": "Standard potential energies",
+    "formula": "\\( U_g = mgy \\); \\( U_s = \\tfrac12 kx^2 \\)",
+    "when": "Uniform gravity; ideal springs.",
+    "example": "\\( k = 400 \\) N/m, \\( x = 0.15 \\) m: 4.5 J.",
+    "watch": "Spring \\( x \\) is from the natural length, not from an equilibrium with a hanging load."
+   },
+   {
+    "name": "Force from potential energy",
+    "formula": "\\( F_x = -dU/dx \\), \\( \\vec F = -\\nabla U \\)",
+    "when": "\\( U \\) is given (formula or graph).",
+    "example": "\\( U = 3x^2 - x^3 \\Rightarrow F = 3x^2 - 6x \\).",
+    "watch": "Force follows the slope, not the value."
+   },
+   {
+    "name": "Mechanical energy conservation",
+    "formula": "\\( K_i + U_i = K_f + U_f \\)",
+    "when": "Only conservative forces do work.",
+    "example": "Speed after falling \\( h \\): \\( \\sqrt{v_0^2 + 2gh} \\).",
+    "watch": "Gives speed, not direction or time."
+   },
+   {
+    "name": "Energy balance with friction",
+    "formula": "\\( K_i + U_i + W_{nc} = K_f + U_f \\)",
+    "when": "Friction, drag or applied forces do work.",
+    "example": "Rough incline: \\( \\tfrac12 mv^2 = mgh - \\mu_k mg\\cos\\theta\\,L \\).",
+    "watch": "Each force once: never gravity in both \\( U \\) and \\( W_{nc} \\)."
+   },
+   {
+    "name": "Energy diagram reading",
+    "formula": "Allowed: \\( U(x) \\le E \\); turning points: \\( U = E \\); \\( v = \\sqrt{2(E-U)/m} \\)",
+    "when": "A graph or formula for \\( U(x) \\) and a value of \\( E \\).",
+    "example": "\\( U = x^4 - 2x^2 \\), \\( E = -0.5 \\): \\( x \\in [0.541, 1.307] \\) in the right well.",
+    "watch": "Which interval applies depends on the starting position."
+   },
+   {
+    "name": "Stability test",
+    "formula": "\\( U' = 0 \\); \\( U'' > 0 \\) stable, \\( U'' < 0 \\) unstable",
+    "when": "Classifying equilibria.",
+    "example": "\\( U = 2x^3 - 6x \\): \\( x = 1 \\) stable, \\( x = -1 \\) unstable.",
+    "watch": "\\( U'' = 0 \\) is inconclusive; look at the graph or higher derivatives."
+   }
+  ],
+  "stuck": [
+   "List every force and label it conservative or not; decide which will enter through \\( U \\) and which through \\( W_{nc} \\).",
+   "Pick the two states to compare and write out \\( K \\) and each \\( U \\) at both, with the reference levels stated explicitly.",
+   "If a geometric condition is involved (leaving a track, a string going slack), write Newton's second law at that point in addition to the energy equation.",
+   "For a given \\( U(x) \\), sketch it and draw the line \\( y = E \\); the picture shows allowed regions and turning points at once.",
+   "Check limiting cases: set friction to zero, or the spring constant to infinity, and see whether your answer reduces to something you know."
+  ]
+ }
+}

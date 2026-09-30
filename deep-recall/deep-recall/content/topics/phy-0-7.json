@@ -1,0 +1,724 @@
+{
+ "key": "phy-0-7",
+ "title": "Momentum and collisions",
+ "v": 1,
+ "scope": "Linear momentum, impulse, conservation of momentum, center of mass (discrete and 1D continuous) and its motion, perfectly inelastic, elastic and partially elastic collisions in one and two dimensions; variable-mass (rocket) problems are out of scope.",
+ "sources": [
+  {
+   "title": "OpenStax University Physics Volume 1, Ch. 9 Linear Momentum and Collisions",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/9-introduction"
+  },
+  {
+   "title": "OpenStax University Physics Volume 1, 9.4 Types of Collisions",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/9-4-types-of-collisions"
+  },
+  {
+   "title": "OpenStax University Physics Volume 1, 9.6 Center of Mass",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/9-6-center-of-mass"
+  },
+  {
+   "title": "MIT 8.01SC Classical Mechanics, Chapter 15: Collision Theory",
+   "url": "https://ocw.mit.edu/courses/8-01sc-classical-mechanics-fall-2016/mit8_01scs22_chapter15.pdf"
+  }
+ ],
+ "pre": [
+  "phy-0-2",
+  "phy-0-6"
+ ],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Momentum and Newton's second law",
+   "d": "Define linear momentum as a vector and state Newton's second law as \\( \\vec F_{\\text{net}} = d\\vec p/dt \\).",
+   "type": "concept"
+  },
+  {
+   "id": "k2",
+   "t": "Impulse–momentum theorem",
+   "d": "Compute impulse as \\( \\int \\vec F\\,dt \\) (area under an F–t graph), relate it to \\( \\Delta\\vec p \\), and find average forces.",
+   "type": "procedure"
+  },
+  {
+   "id": "k3",
+   "t": "Conservation of momentum for isolated systems",
+   "d": "Derive momentum conservation from Newton's third law, state when it holds (including component-wise and during brief collisions), and apply it.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k4",
+   "t": "Locating the center of mass",
+   "d": "Compute the center of mass of particle systems and of one-dimensional continuous bodies by integration.",
+   "type": "procedure"
+  },
+  {
+   "id": "k5",
+   "t": "Motion of the center of mass",
+   "d": "Use \\( \\vec P = M\\vec v_{\\text{cm}} \\) and \\( \\vec F_{\\text{ext}} = M\\vec a_{\\text{cm}} \\) to predict system motion regardless of internal forces.",
+   "type": "concept"
+  },
+  {
+   "id": "k6",
+   "t": "Perfectly inelastic collisions",
+   "d": "Solve collisions in which bodies stick together and compute the kinetic energy lost.",
+   "type": "procedure"
+  },
+  {
+   "id": "k7",
+   "t": "Elastic collisions in one dimension",
+   "d": "Solve 1D elastic collisions, derive relative-velocity reversal, and use the coefficient of restitution.",
+   "type": "procedure"
+  },
+  {
+   "id": "k8",
+   "t": "Collisions in two dimensions",
+   "d": "Apply momentum conservation by components to oblique collisions, including the equal-mass elastic right-angle result.",
+   "type": "skill"
+  },
+  {
+   "id": "k9",
+   "t": "Choosing momentum or energy",
+   "d": "Decide, stage by stage, whether momentum, mechanical energy, both or neither is conserved in a process.",
+   "type": "distinction"
+  }
+ ],
+ "intro": "Newton's second law and the energy method both require knowing the forces. In a collision that is exactly what you do not know: two cars crumple, a bat meets a ball, a nucleus absorbs a neutron, and the forces involved are enormous, brief and too complicated to model. Yet the outcome is far from arbitrary.\n\nThe reason is Newton's third law. Whatever the interaction forces are, they come in equal and opposite pairs, so their effects on the two bodies cancel in a precise sense: a quantity called **linear momentum**, summed over the bodies, cannot be changed by them. This topic builds that idea from the second law, introduces the impulse that measures how a force changes momentum, locates the one point of a system whose motion depends only on external forces (the **center of mass**), and then uses momentum conservation, together with energy where it applies, to predict the outcomes of collisions in one and two dimensions.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "Momentum and impulse",
+   "kps": [
+    "k1",
+    "k2"
+   ],
+   "md": "This section defines the quantity that collisions conserve and the measure of how a force changes it. Both come from rewriting Newton's second law.\n\n> **Definition.** The **linear momentum** of a particle of mass \\( m \\) and velocity \\( \\vec v \\) is the vector \\( \\vec p = m\\vec v \\). Its SI unit is kg·m/s.\n\nFor constant mass, \\( d\\vec p/dt = m\\,d\\vec v/dt = m\\vec a \\), so Newton's second law can be written\n\\[ \\vec F_{\\text{net}} = \\frac{d\\vec p}{dt}. \\]\nThis is in fact the form in which Newton stated it, and it remains correct in situations (relativity, variable-mass systems handled carefully) where \\( m\\vec a \\) needs modification. Momentum is a vector: two bodies with equal speeds moving in opposite directions have opposite momenta, and a reversal of direction is a large change in momentum even if the speed is unchanged.\n\n**Impulse.** Integrate the second law over a time interval:\n\\[ \\vec J \\equiv \\int_{t_i}^{t_f}\\vec F_{\\text{net}}\\,dt = \\vec p_f - \\vec p_i = \\Delta\\vec p. \\]\nThe integral \\( \\vec J \\) is the **impulse** of the force, and the equation is the **impulse–momentum theorem**. For a force along one axis, the impulse is the signed area under the graph of \\( F(t) \\). The **average force** over the interval is defined so as to give the same impulse: \\( \\vec F_{\\text{avg}} = \\vec J/\\Delta t \\).\n\nThe theorem is useful precisely because collision forces are complicated. You rarely know \\( F(t) \\), but you often know the velocities before and after and can estimate the duration, and that is enough to find the average force.\n\n*Worked example.* A 0.145 kg baseball approaches a bat at 40.0 m/s and leaves in the opposite direction at 50.0 m/s; the contact lasts 1.20 ms. Take the outgoing direction as positive. Then \\( p_i = (0.145)(-40.0) = -5.80 \\) kg·m/s and \\( p_f = (0.145)(50.0) = 7.25 \\) kg·m/s, so\n\\[ J = \\Delta p = 7.25 - (-5.80) = 13.05 \\text{ N·s}, \\qquad F_{\\text{avg}} = \\frac{13.05}{1.20\\times10^{-3}} = 1.09\\times10^{4} \\text{ N}. \\]\nThe ball's weight, about 1.4 N, is negligible by comparison, which is why gravity can be ignored during the contact.\n\n*Same impulse, different duration.* The plot shows force pulses (force in kN against time in ms) that all have the same area, 6 N·s. Drag \\( w \\), which sets the pulse width. As the contact time grows, the peak force falls in proportion. This is the principle of air bags, padded helmets and bending your knees on landing: the momentum change is fixed by the initial and final velocities, so lengthening the stopping time is the only way to reduce the force.\n\n```plot\nx: 0, 10\ny: 0, 12\nslider: w, 0.3, 3, 0.6\nf: 6/(w*sqrt(pi))*exp(-((x-5)/w)^2) | F(t), area 6 N·s\nshade: 6/(w*sqrt(pi))*exp(-((x-5)/w)^2), 0, 10 | impulse\n```\n\n**Common mistakes.** The most frequent is to subtract speeds instead of velocities: in the example, using \\( 50.0 - 40.0 \\) gives an impulse seven times too small. Always fix a positive direction and give every velocity its sign. A second mistake is to treat \\( \\vec F_{\\text{avg}} \\) as the peak force; the peak can be much larger.",
+   "questions": [
+    {
+     "id": "s1q1",
+     "kp": "k2",
+     "type": "number",
+     "prompt": "A ball is struck by a force \\( F(t) = F_0\\sin(\\pi t/T) \\) for \\( 0 \\le t \\le T \\), with \\( F_0 = 1500 \\) N and \\( T = 4.0 \\) ms. What impulse (in N·s) does the force deliver? (Integrate; do not use the peak force times the duration.)",
+     "answer": "2*1500*0.004/pi",
+     "tol": 0.01,
+     "why": "\\( J = \\int_0^T F_0\\sin(\\pi t/T)\\,dt = F_0\\dfrac{T}{\\pi}\\left[-\\cos(\\pi t/T)\\right]_0^T = \\dfrac{2F_0T}{\\pi} = \\dfrac{2(1500)(0.0040)}{\\pi} = 3.82 \\) N·s. The average force is \\( 2F_0/\\pi \\approx 0.64F_0 \\), not \\( F_0 \\)."
+    },
+    {
+     "id": "s1q2",
+     "kp": "k2",
+     "type": "written",
+     "prompt": "Use the impulse–momentum theorem to explain why an air bag reduces the force on a passenger's head in a crash, even though the passenger's change in momentum is the same with or without it. State what quantity the air bag changes.",
+     "rubric": [
+      "The momentum change \\( \\Delta p = m(0 - v) \\) is fixed by the initial speed and final rest; the air bag cannot change it.",
+      "Impulse theorem: \\( F_{\\text{avg}}\\Delta t = \\Delta p \\).",
+      "The air bag increases the stopping time \\( \\Delta t \\) (and spreads the force over a larger area).",
+      "Therefore the average force \\( F_{\\text{avg}} = \\Delta p/\\Delta t \\) is smaller."
+     ],
+     "model": "The head starts with momentum \\( mv \\) and ends at rest whatever happens, so its change in momentum is fixed at \\( \\Delta p = -mv \\). The impulse–momentum theorem says \\( F_{\\text{avg}}\\,\\Delta t = \\Delta p \\). Striking a dashboard stops the head in a few milliseconds; the air bag deforms and brings it to rest over a much longer time, perhaps ten times longer. With \\( \\Delta p \\) fixed, a larger \\( \\Delta t \\) means a proportionally smaller average force \\( F_{\\text{avg}} = \\Delta p/\\Delta t \\). (The bag also spreads the force over a larger area, reducing pressure.)",
+     "why": "What the air bag changes is the duration of the impulse, not the impulse itself."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "Conservation of momentum",
+   "kps": [
+    "k3"
+   ],
+   "md": "The impulse–momentum theorem describes one body. This section asks what happens to the total momentum of several bodies that push on one another, and obtains the conservation law that makes collision problems solvable.\n\n**Derivation for two bodies.** Let bodies 1 and 2 exert forces \\( \\vec F_{12} \\) (on 1 by 2) and \\( \\vec F_{21} \\) (on 2 by 1) on each other, and let each also feel external forces from outside the pair. Then\n\\[ \\frac{d\\vec p_1}{dt} = \\vec F_{12} + \\vec F_{1,\\text{ext}}, \\qquad \\frac{d\\vec p_2}{dt} = \\vec F_{21} + \\vec F_{2,\\text{ext}}. \\]\nAdding, and using Newton's third law \\( \\vec F_{12} = -\\vec F_{21} \\), the internal forces cancel:\n\\[ \\frac{d\\vec P}{dt} = \\vec F_{\\text{ext}}, \\qquad \\vec P = \\vec p_1 + \\vec p_2. \\]\nThe same cancellation works for any number of bodies, since internal forces come in third-law pairs.\n\n> **Conservation of linear momentum.** If the net external force on a system is zero, its total momentum \\( \\vec P = \\sum_j m_j\\vec v_j \\) is constant.\n\nA system with zero net external force is called **isolated** (OpenStax uses \"closed and isolated\"). Three refinements make the law far more useful:\n\n- **By components.** Because \\( d\\vec P/dt = \\vec F_{\\text{ext}} \\) is a vector equation, if the external force has no \\( x \\)-component then \\( P_x \\) is conserved even if \\( P_y \\) is not. A projectile that explodes in flight keeps its horizontal momentum even though gravity acts vertically.\n- **The impulse approximation.** During a collision lasting \\( \\Delta t \\), external forces such as gravity or road friction are finite, so their impulse \\( \\vec F_{\\text{ext}}\\Delta t \\) is small when \\( \\Delta t \\) is short, while the internal forces are huge. Momentum just before and just after a brief collision may therefore be equated even when the system is not strictly isolated.\n- **System choice.** Conservation is a statement about a chosen system. A falling ball's momentum is not conserved, because gravity from Earth is external to it; the momentum of the ball–Earth system is conserved, because the gravitational pair is then internal.\n\n*Worked example 1.* Two skaters, of masses 50 kg and 75 kg, stand at rest on frictionless ice and push apart. The 50 kg skater moves off at 3.0 m/s. The ice exerts only vertical forces (normal force balancing weight), so horizontal momentum is conserved and was zero: \\( 0 = (50)(3.0) + (75)v \\Rightarrow v = -2.0 \\) m/s. The heavier skater moves at 2.0 m/s in the opposite direction.\n\n*Worked example 2.* A 1.0 kg cart moving at 2.0 m/s on a level frictionless track catches a 0.25 kg sandbag dropped vertically into it. Horizontally no external force acts, so \\( (1.0)(2.0) = (1.25)v \\Rightarrow v = 1.6 \\) m/s. Vertically the track pushes up hard during the catch, so vertical momentum is not conserved, and that does not affect the horizontal result.\n\n**Common mistakes.** Applying conservation to a single body that is being pushed; forgetting that momentum is a vector (adding magnitudes of momenta in different directions); and claiming conservation over a long interval in which external forces clearly act, such as the full flight of a projectile.",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k3",
+     "type": "number",
+     "prompt": "A 70.0 kg astronaut floating at rest in space throws a 3.50 kg wrench at 8.00 m/s. With what speed (in m/s) does the astronaut recoil?",
+     "answer": "3.5*8/70",
+     "tol": 0.01,
+     "why": "No external force, total momentum zero: \\( 0 = (3.50)(8.00) + (70.0)v \\Rightarrow v = -0.400 \\) m/s. The recoil speed is 0.400 m/s, opposite to the wrench."
+    },
+    {
+     "id": "s2q2",
+     "kp": "k3",
+     "type": "mcq",
+     "prompt": "A ball is released from rest and falls toward the ground. Air resistance is negligible. Which statement about momentum conservation is correct?",
+     "options": [
+      "The ball's momentum is not conserved, because Earth's gravity is external to it; the momentum of the ball–Earth system is conserved",
+      "The ball's momentum is conserved, because gravity is a conservative force",
+      "Neither the ball's nor the ball–Earth system's momentum is conserved, because gravity does work",
+      "The ball's momentum is conserved, because there is no collision"
+     ],
+     "answer": 0,
+     "why": "Momentum conservation depends on external forces, not on whether forces are conservative or do work. The ball alone feels an external force \\( mg \\), so \\( dp/dt = mg \\ne 0 \\). In the ball–Earth system, the gravitational forces are an internal third-law pair, so the total momentum is conserved: Earth acquires an equal and opposite (though imperceptible) momentum."
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "The center of mass and its motion",
+   "kps": [
+    "k4",
+    "k5"
+   ],
+   "md": "The total momentum of a system can be written as if all its mass moved with one velocity. This section identifies the point that moves with that velocity and shows that its motion is governed by external forces alone.\n\n> **Definition.** The **center of mass** of a system of particles with masses \\( m_j \\) at positions \\( \\vec r_j \\) and total mass \\( M = \\sum m_j \\) is\n> \\[ \\vec r_{\\text{cm}} = \\frac{1}{M}\\sum_j m_j\\vec r_j. \\]\n> For a continuous body, \\( \\vec r_{\\text{cm}} = \\dfrac{1}{M}\\displaystyle\\int \\vec r\\,dm \\).\n\nIt is a mass-weighted average position, computed separately in each component. For a thin rod along \\( x \\) with **linear mass density** \\( \\lambda(x) \\) (mass per unit length), \\( dm = \\lambda\\,dx \\), so \\( M = \\int_0^L\\lambda\\,dx \\) and \\( x_{\\text{cm}} = \\frac1M\\int_0^L x\\lambda\\,dx \\).\n\n*Worked example 1.* Masses 2.0 kg at \\( (0, 0) \\), 3.0 kg at \\( (4.0, 0) \\) m and 5.0 kg at \\( (0, 2.0) \\) m: \\( M = 10 \\) kg, \\( x_{\\text{cm}} = (3.0)(4.0)/10 = 1.2 \\) m, \\( y_{\\text{cm}} = (5.0)(2.0)/10 = 1.0 \\) m.\n\n*Worked example 2.* A rod of length \\( L \\) has \\( \\lambda(x) = \\lambda_0 x/L \\), denser toward \\( x = L \\). Then\n\\[ M = \\int_0^L \\frac{\\lambda_0 x}{L}\\,dx = \\frac{\\lambda_0 L}{2}, \\qquad \\int_0^L x\\,\\frac{\\lambda_0 x}{L}\\,dx = \\frac{\\lambda_0L^2}{3}, \\qquad x_{\\text{cm}} = \\frac{2L}{3}. \\]\nIt lies past the midpoint, toward the heavier end, as it must. For a uniform rod the same computation gives \\( L/2 \\); in general, for a uniform body, any symmetry plane contains the center of mass.\n\n**Why it matters.** Differentiate the definition with respect to time (masses constant):\n\\[ M\\vec v_{\\text{cm}} = \\sum_j m_j\\vec v_j = \\vec P, \\qquad M\\vec a_{\\text{cm}} = \\frac{d\\vec P}{dt} = \\vec F_{\\text{ext}}. \\]\nThe total momentum is the total mass times the center-of-mass velocity, and the center of mass accelerates as a single particle of mass \\( M \\) acted on by the net external force. Internal forces, however violent, cannot change its motion. When \\( \\vec F_{\\text{ext}} = 0 \\), conservation of momentum is the statement that \\( \\vec v_{\\text{cm}} \\) is constant.\n\n*Worked example 3.* A shell fired over level ground would land 400 m from the gun. At the top of its path it explodes into two equal fragments; one falls straight down from the apex, reaching the ground at \\( x = 200 \\) m. Gravity is the only external force, so the center of mass continues on the original parabola and lands at 400 m. Both fragments start with zero vertical velocity at the same height, so they land together, and \\( 400 = \\tfrac12(200) + \\tfrac12 x_2 \\) gives \\( x_2 = 600 \\) m.\n\n*Worked example 4.* A 60 kg person walks 3.0 m from one end of a 90 kg boat to the other; water drag is negligible. Nothing external acts horizontally and everything starts at rest, so \\( x_{\\text{cm}} \\) cannot move. If the boat moves \\( \\Delta x_b \\), the person moves \\( 3.0 + \\Delta x_b \\) relative to the water, both measured in the person's walking direction: \\( 60(3.0 + \\Delta x_b) + 90\\,\\Delta x_b = 0 \\), so \\( \\Delta x_b = -1.2 \\) m. The boat moves 1.2 m backward.\n\n**Common mistakes.** Using lengths instead of masses as weights, forgetting to divide by \\( M \\) in the continuous case, and assuming the center of mass must lie inside the material (for a ring it is at the empty center).",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k4",
+     "type": "expression",
+     "prompt": "A thin rod lies along the \\( x \\)-axis from \\( x = 0 \\) to \\( x = L \\) with linear mass density \\( \\lambda(x) = \\lambda_0(1 + x/L) \\). Find \\( x_{\\text{cm}} \\). Enter it in terms of `L`.",
+     "answer": "5*L/9",
+     "vars": "L",
+     "why": "\\( M = \\int_0^L\\lambda_0(1 + x/L)\\,dx = \\lambda_0\\left(L + \\dfrac L2\\right) = \\dfrac32\\lambda_0L \\). \\( \\int_0^Lx\\lambda_0(1 + x/L)\\,dx = \\lambda_0\\left(\\dfrac{L^2}{2} + \\dfrac{L^2}{3}\\right) = \\dfrac56\\lambda_0L^2 \\). So \\( x_{\\text{cm}} = \\dfrac{5/6}{3/2}L = \\dfrac{5L}{9} \\approx 0.556L \\), just past the midpoint toward the denser end."
+    },
+    {
+     "id": "s3q2",
+     "kp": "k5",
+     "type": "number",
+     "prompt": "A 60.0 kg person stands at one end of a 90.0 kg boat of length 3.00 m, initially at rest on still water (neglect water drag). The person walks to the other end. How far (in m) does the boat move relative to the water?",
+     "answer": "60*3/150",
+     "tol": 0.01,
+     "why": "No horizontal external force and zero initial momentum, so the center of mass stays fixed. Let the boat move \\( \\Delta x_b \\) (positive in the walking direction); the person moves \\( 3.00 + \\Delta x_b \\). Then \\( 60.0(3.00 + \\Delta x_b) + 90.0\\,\\Delta x_b = 0 \\Rightarrow \\Delta x_b = -1.20 \\) m. The boat moves 1.20 m opposite to the person's walk."
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "Perfectly inelastic collisions and staged problems",
+   "kps": [
+    "k6",
+    "k9"
+   ],
+   "md": "A **collision** is a brief interaction during which the impulse approximation applies, so the total momentum just before equals the total momentum just after. Momentum alone gives one vector equation, which is not always enough to fix the outcome. This section treats the case in which the bodies stick together, where momentum does suffice, and examines what happens to the kinetic energy.\n\n> **Definitions.** A collision is **elastic** if total kinetic energy is the same before and after; **inelastic** if kinetic energy is lost; and **perfectly (completely) inelastic** if the bodies move off together with a common velocity.\n\n**Perfectly inelastic collisions.** If masses \\( m_1 \\) and \\( m_2 \\) with velocities \\( \\vec v_1 \\) and \\( \\vec v_2 \\) stick,\n\\[ m_1\\vec v_1 + m_2\\vec v_2 = (m_1 + m_2)\\vec v_f \\quad\\Longrightarrow\\quad \\vec v_f = \\frac{m_1\\vec v_1 + m_2\\vec v_2}{m_1 + m_2} = \\vec v_{\\text{cm}}. \\]\nThe final velocity is the center-of-mass velocity, which the collision cannot change.\n\n*Energy loss.* If \\( m_2 \\) is initially at rest and \\( m_1 \\) moves at \\( v \\), then \\( v_f = m_1v/(m_1 + m_2) \\), and a short calculation gives\n\\[ \\frac{K_i - K_f}{K_i} = \\frac{m_2}{m_1 + m_2}. \\]\nThe lost kinetic energy goes into deformation, heat and sound; total energy is conserved, mechanical energy is not. Among all collisions consistent with momentum conservation, sticking loses the most kinetic energy: in the center-of-mass frame the total momentum is zero, and sticking brings both bodies to rest there.\n\n**Staged problems: the ballistic pendulum.** A bullet of mass \\( m \\) is fired into a block of mass \\( M \\) hanging on a string, lodges in it, and the block swings up to height \\( h \\). The process has two stages with different conservation laws.\n\n1. *The collision* is brief; momentum is conserved, but kinetic energy is not, since the bullet tears into the wood. \\( mv = (m + M)V \\).\n2. *The swing* is not brief (gravity and tension change the momentum), but only gravity does work, so mechanical energy is conserved: \\( \\tfrac12(m + M)V^2 = (m + M)gh \\).\n\n*Worked example.* With \\( m = 10.0 \\) g, \\( M = 2.00 \\) kg and \\( h = 0.120 \\) m: stage 2 gives \\( V = \\sqrt{2gh} = \\sqrt{2(9.80)(0.120)} = 1.534 \\) m/s, and stage 1 gives \\( v = \\dfrac{m + M}{m}V = \\dfrac{2.010}{0.0100}(1.534) = 308 \\) m/s. The fraction of the bullet's kinetic energy that survives the collision is \\( m/(m + M) \\approx 0.5\\% \\).\n\n**Common mistakes.** The classic error is to write \\( \\tfrac12mv^2 = (m + M)gh \\), applying energy conservation across the collision. It ignores the energy dissipated in the collision and underestimates \\( v \\) badly: here it would give \\( v = \\sqrt{2(2.010)(9.80)(0.120)/0.0100} = 21.7 \\) m/s instead of 308 m/s. The other error is to apply momentum conservation during the swing, where the string and gravity supply large external impulses. Identify each stage, then ask of each: is it brief (momentum), and do only conservative forces do work (energy)?",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k6",
+     "type": "number",
+     "prompt": "A 1200 kg car moving at 20.0 m/s rear-ends a 800 kg car moving at 10.0 m/s in the same direction, and the two lock together. How much kinetic energy (in J) is lost in the collision?",
+     "answer": "0.5*1200*20^2 + 0.5*800*10^2 - 0.5*2000*16^2",
+     "tol": 0.01,
+     "why": "Momentum: \\( (1200)(20.0) + (800)(10.0) = 2000v_f \\Rightarrow v_f = 16.0 \\) m/s. \\( K_i = \\tfrac12(1200)(400) + \\tfrac12(800)(100) = 280\\,000 \\) J; \\( K_f = \\tfrac12(2000)(256) = 256\\,000 \\) J. Loss: \\( 2.40\\times10^4 \\) J. (The loss is modest because the relative speed was only 10 m/s: the energy available for dissipation is \\( \\tfrac12\\mu v_{\\text{rel}}^2 \\) with \\( \\mu = m_1m_2/(m_1+m_2) = 480 \\) kg.)"
+    },
+    {
+     "id": "s4q2",
+     "kp": "k9",
+     "type": "written",
+     "prompt": "In a ballistic pendulum, a student writes \\( \\tfrac12mv^2 = (m + M)gh \\) to find the bullet's speed. Explain precisely why this is wrong, what conservation law applies in each stage of the process and why, and whether the student's answer for \\( v \\) will be too large or too small.",
+     "rubric": [
+      "Identifies two stages: the brief collision, then the swing.",
+      "Collision: momentum conserved (brief, external impulses negligible); kinetic energy not conserved (perfectly inelastic, energy dissipated).",
+      "Swing: only gravity does work (tension is perpendicular), so mechanical energy is conserved; momentum is not (external forces act over a long time).",
+      "The student's equation assumes no kinetic energy is lost in the collision, so it gives a speed that is too small."
+     ],
+     "model": "The process has two stages. During the collision the bullet embeds itself in the block in a very short time. The internal forces are enormous compared with gravity and string tension, so momentum is conserved: \\( mv = (m + M)V \\). But the collision is perfectly inelastic: most of the bullet's kinetic energy becomes heat and deformation, so kinetic energy is not conserved. During the swing, the tension is perpendicular to the motion and does no work, and gravity is conservative, so \\( \\tfrac12(m + M)V^2 = (m + M)gh \\); momentum is not conserved here because gravity and tension act for a long time. The student's equation equates the bullet's initial kinetic energy with the final potential energy, ignoring the energy lost in the collision. Since only a small fraction \\( m/(m + M) \\) of the kinetic energy survives, the actual \\( \\tfrac12 mv^2 \\) is far larger than \\( (m+M)gh \\); the student's \\( v \\) is too small.",
+     "why": "Always split staged problems and ask of each stage separately whether momentum and/or mechanical energy is conserved."
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "Elastic collisions in one dimension",
+   "kps": [
+    "k7"
+   ],
+   "md": "When the bodies bounce apart, momentum conservation gives one equation for two unknown final velocities in one dimension. A second condition is needed. For an elastic collision it is conservation of kinetic energy; this section solves the resulting system and extracts a simpler equivalent condition.\n\n**Setting up.** Bodies of mass \\( m_1 \\) and \\( m_2 \\) move along a line with velocities \\( v_{1i} \\), \\( v_{2i} \\) (signed). Elastic collision:\n\\[ m_1v_{1i} + m_2v_{2i} = m_1v_{1f} + m_2v_{2f}, \\qquad \\tfrac12m_1v_{1i}^2 + \\tfrac12m_2v_{2i}^2 = \\tfrac12m_1v_{1f}^2 + \\tfrac12m_2v_{2f}^2. \\]\nGroup each equation by body: \\( m_1(v_{1i} - v_{1f}) = m_2(v_{2f} - v_{2i}) \\) and \\( m_1(v_{1i}^2 - v_{1f}^2) = m_2(v_{2f}^2 - v_{2i}^2) \\). Factor the second as a difference of squares and divide by the first (assuming a collision actually happens, so \\( v_{1i} \\ne v_{1f} \\)):\n\\[ v_{1i} + v_{1f} = v_{2i} + v_{2f} \\quad\\Longleftrightarrow\\quad v_{2f} - v_{1f} = -(v_{2i} - v_{1i}). \\]\n> **Relative-velocity reversal.** In a one-dimensional elastic collision, the relative velocity of the two bodies is reversed: they separate at the same speed at which they approached.\n\nThis linear equation together with momentum conservation gives\n\\[ v_{1f} = \\frac{(m_1 - m_2)v_{1i} + 2m_2v_{2i}}{m_1 + m_2}, \\qquad v_{2f} = \\frac{(m_2 - m_1)v_{2i} + 2m_1v_{1i}}{m_1 + m_2}. \\]\nIn practice it is usually faster to solve the two linear equations directly than to recall these formulas.\n\n**Special cases** (target at rest, \\( v_{2i} = 0 \\)):\n- \\( m_1 = m_2 \\): \\( v_{1f} = 0 \\), \\( v_{2f} = v_{1i} \\); the bodies exchange velocities (Newton's cradle).\n- \\( m_2 \\gg m_1 \\): \\( v_{1f} \\approx -v_{1i} \\), \\( v_{2f} \\approx 0 \\); a ball bouncing off a wall.\n- \\( m_2 \\ll m_1 \\): \\( v_{1f} \\approx v_{1i} \\), \\( v_{2f} \\approx 2v_{1i} \\); the light target leaves at up to twice the projectile's speed.\n\nThe plot shows \\( v_{1f}/v_{1i} \\) and \\( v_{2f}/v_{1i} \\) against the mass ratio \\( x = m_2/m_1 \\) for a target at rest. The projectile's final velocity changes sign at \\( x = 1 \\): lighter projectiles bounce back.\n\n```plot\nx: 0, 6\ny: -1.1, 2.1\nf: (1 - x)/(1 + x) | projectile, v1f/v1i\nf: 2/(1 + x) | target, v2f/v1i\nhline: 0\n```\n\n*Worked example.* A 0.20 kg cart at 3.0 m/s hits a 0.30 kg cart at rest, elastically. Momentum: \\( 0.60 = 0.20v_{1f} + 0.30v_{2f} \\). Reversal: \\( v_{2f} - v_{1f} = 3.0 \\). Substituting \\( v_{2f} = v_{1f} + 3.0 \\): \\( 0.60 = 0.50v_{1f} + 0.90 \\), so \\( v_{1f} = -0.60 \\) m/s and \\( v_{2f} = 2.4 \\) m/s. Check: \\( K_i = 0.90 \\) J; \\( K_f = \\tfrac12(0.20)(0.36) + \\tfrac12(0.30)(5.76) = 0.036 + 0.864 = 0.90 \\) J.\n\n**Coefficient of restitution.** Real collisions lie between elastic and perfectly inelastic. The **coefficient of restitution** \\( e = -\\dfrac{v_{2f} - v_{1f}}{v_{2i} - v_{1i}} \\) measures the fraction of approach speed recovered as separation speed: \\( e = 1 \\) elastic, \\( e = 0 \\) perfectly inelastic. For a ball dropped from height \\( h \\) onto a floor and rebounding to \\( h' \\), \\( e = \\sqrt{h'/h} \\).\n\n**Common mistakes.** Sign errors in the reversal condition, and applying elastic formulas to collisions that are not stated or known to be elastic.",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k7",
+     "type": "numbers",
+     "prompt": "A 2.0 kg ball moving at \\( +4.0 \\) m/s collides head-on and elastically with a 1.0 kg ball moving at \\( -2.0 \\) m/s. Find the final velocities \\( v_{1f} \\) and \\( v_{2f} \\) in m/s, in that order, separated by a comma.",
+     "answer": "0, 6",
+     "tol": 0.01,
+     "why": "Momentum: \\( (2.0)(4.0) + (1.0)(-2.0) = 6.0 = 2.0v_{1f} + 1.0v_{2f} \\). Reversal: \\( v_{2f} - v_{1f} = -(-2.0 - 4.0) = 6.0 \\). Substituting \\( v_{2f} = v_{1f} + 6.0 \\): \\( 6.0 = 3.0v_{1f} + 6.0 \\), so \\( v_{1f} = 0 \\) and \\( v_{2f} = 6.0 \\) m/s. Check: \\( K_i = 16 + 2 = 18 \\) J, \\( K_f = 0 + 18 = 18 \\) J."
+    },
+    {
+     "id": "s5q2",
+     "kp": "k7",
+     "type": "written",
+     "prompt": "Starting from conservation of momentum and of kinetic energy, derive the relative-velocity-reversal condition \\( v_{2f} - v_{1f} = -(v_{2i} - v_{1i}) \\) for a one-dimensional elastic collision. State the step at which you divide and why the division is legitimate.",
+     "rubric": [
+      "Rearranges momentum as \\( m_1(v_{1i} - v_{1f}) = m_2(v_{2f} - v_{2i}) \\).",
+      "Rearranges energy as \\( m_1(v_{1i}^2 - v_{1f}^2) = m_2(v_{2f}^2 - v_{2i}^2) \\) and factors as a difference of squares.",
+      "Divides the energy equation by the momentum equation, justified because \\( v_{1i} \\ne v_{1f} \\) when a collision actually occurs.",
+      "Obtains \\( v_{1i} + v_{1f} = v_{2i} + v_{2f} \\) and rearranges to the reversal condition."
+     ],
+     "model": "Momentum: \\( m_1v_{1i} + m_2v_{2i} = m_1v_{1f} + m_2v_{2f} \\), i.e. \\( m_1(v_{1i} - v_{1f}) = m_2(v_{2f} - v_{2i}) \\) (1). Energy (after cancelling \\( \\tfrac12 \\)): \\( m_1(v_{1i}^2 - v_{1f}^2) = m_2(v_{2f}^2 - v_{2i}^2) \\), i.e. \\( m_1(v_{1i} - v_{1f})(v_{1i} + v_{1f}) = m_2(v_{2f} - v_{2i})(v_{2f} + v_{2i}) \\) (2). If a collision actually occurs, body 1's velocity changes, so \\( v_{1i} - v_{1f} \\ne 0 \\) and by (1) the right side of (1) is also nonzero. Dividing (2) by (1): \\( v_{1i} + v_{1f} = v_{2i} + v_{2f} \\). Rearranging, \\( v_{2f} - v_{1f} = v_{1i} - v_{2i} = -(v_{2i} - v_{1i}) \\).",
+     "why": "The trivial solution \\( v_{1f} = v_{1i}, v_{2f} = v_{2i} \\) (no collision) also satisfies both conservation laws; the division discards it."
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "title": "Collisions in two dimensions",
+   "kps": [
+    "k8",
+    "k9"
+   ],
+   "md": "In a two- or three-dimensional collision the bodies can scatter at angles. Momentum conservation still holds, now as a vector equation, which in the plane means two independent scalar equations. This section shows how to organize such problems.\n\n**Method.** Choose axes, usually with \\( x \\) along one incoming velocity. Write\n\\[ \\sum m_jv_{jx,i} = \\sum m_jv_{jx,f}, \\qquad \\sum m_jv_{jy,i} = \\sum m_jv_{jy,f}. \\]\nAdd kinetic energy conservation only if the collision is known to be elastic. Count unknowns against equations: in a planar collision of two bodies there are four final velocity components; momentum gives two equations, elasticity a third, so one further piece of information (typically one measured angle or speed) is needed.\n\n*Worked example 1 (perfectly inelastic).* A 1500 kg car moving east at 20.0 m/s collides at an intersection with a 2500 kg truck moving north at 12.0 m/s, and they lock together. With \\( x \\) east and \\( y \\) north:\n\\[ P_x = (1500)(20.0) = 3.00\\times10^4 \\text{ kg·m/s}, \\qquad P_y = (2500)(12.0) = 3.00\\times10^4 \\text{ kg·m/s}. \\]\nThe wreck (4000 kg) moves with \\( v_x = v_y = 7.50 \\) m/s, i.e. speed \\( 7.50\\sqrt2 = 10.6 \\) m/s at \\( 45^\\circ \\) north of east. Accident investigators run this reasoning backward, from skid directions to pre-crash speeds.\n\n*Worked example 2 (equal masses, elastic, target at rest).* A puck of mass \\( m \\) with velocity \\( \\vec v \\) strikes an identical puck at rest, elastically. Momentum and energy give, after cancelling \\( m \\) and \\( \\tfrac12m \\),\n\\[ \\vec v = \\vec v_1 + \\vec v_2, \\qquad v^2 = v_1^2 + v_2^2. \\]\nSquaring the first: \\( v^2 = v_1^2 + v_2^2 + 2\\,\\vec v_1\\cdot\\vec v_2 \\). Comparing with the second, \\( \\vec v_1\\cdot\\vec v_2 = 0 \\). Unless the collision is head-on (one final velocity zero), the two pucks leave at right angles. Geometrically, \\( \\vec v_1 \\), \\( \\vec v_2 \\) and \\( \\vec v \\) form a right triangle with hypotenuse \\( \\vec v \\). So if the first puck is deflected by \\( \\theta \\), \\( v_1 = v\\cos\\theta \\) and \\( v_2 = v\\sin\\theta \\), the second moving at \\( 90^\\circ - \\theta \\) on the other side of the original line. With \\( v = 5.0 \\) m/s and \\( \\theta = 30^\\circ \\): \\( v_1 = 4.33 \\) m/s, \\( v_2 = 2.50 \\) m/s at \\( 60^\\circ \\) on the opposite side. This right-angle signature, seen in bubble-chamber photographs of proton–proton scattering, is one way physicists identify equal-mass elastic collisions.\n\n**Choosing tools across a problem.** The general principles for all collision problems are now in place:\n- During a brief collision, conserve momentum (every component).\n- Conserve kinetic energy only if the collision is elastic.\n- Before or after the collision, when forces like gravity or string tension act over longer times, momentum is typically not conserved but mechanical energy may be.\n\n**Common mistakes.** Conserving speed-magnitudes rather than vector components; forgetting that components along \\( y \\) must sum to zero when the initial motion is along \\( x \\) (so outgoing bodies must go to opposite sides of the line); and adding kinetic energy conservation for a collision that is not elastic.",
+   "questions": [
+    {
+     "id": "s6q1",
+     "kp": "k8",
+     "type": "number",
+     "prompt": "A hockey puck moving at 5.0 m/s strikes an identical puck at rest in an elastic, off-center collision. The first puck moves off at \\( 30^\\circ \\) from its original direction. What is the speed (in m/s) of the second puck?",
+     "answer": "5*sin(30 deg)",
+     "tol": 0.01,
+     "why": "Equal masses, elastic, target at rest: final velocities are perpendicular and \\( \\vec v = \\vec v_1 + \\vec v_2 \\) is a right triangle with hypotenuse \\( v \\). The first puck has \\( v_1 = v\\cos30^\\circ = 4.33 \\) m/s; the second has \\( v_2 = v\\sin30^\\circ = 2.50 \\) m/s, at \\( 60^\\circ \\) on the other side of the original line. Check the transverse momentum: \\( 4.33\\sin30^\\circ = 2.17 = 2.50\\sin60^\\circ \\)."
+    },
+    {
+     "id": "s6q2",
+     "kp": "k8",
+     "type": "number",
+     "prompt": "A 2.0 kg puck moving east at 3.0 m/s collides with and sticks to a 3.0 kg puck moving north at 1.5 m/s. At what angle north of east (in degrees) does the combined object move?",
+     "answer": "atan(4.5/6)*180/pi",
+     "tol": 0.01,
+     "why": "\\( P_x = (2.0)(3.0) = 6.0 \\) kg·m/s, \\( P_y = (3.0)(1.5) = 4.5 \\) kg·m/s. Direction: \\( \\theta = \\arctan(4.5/6.0) = 36.9^\\circ \\) north of east; speed \\( \\sqrt{6.0^2 + 4.5^2}/5.0 = 1.50 \\) m/s."
+    }
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "t": "linear momentum",
+   "d": "For a particle, the vector \\( \\vec p = m\\vec v \\); for a system, the vector sum \\( \\vec P = \\sum m_j\\vec v_j \\)."
+  },
+  {
+   "t": "impulse",
+   "d": "The time integral of a force, \\( \\vec J = \\int \\vec F\\,dt \\); for a one-dimensional force it is the area under the F–t graph."
+  },
+  {
+   "t": "impulse–momentum theorem",
+   "d": "The impulse of the net force on a body equals its change in momentum: \\( \\vec J_{\\text{net}} = \\Delta\\vec p \\)."
+  },
+  {
+   "t": "average force",
+   "d": "The constant force that would deliver the same impulse over the same interval: \\( \\vec F_{\\text{avg}} = \\vec J/\\Delta t \\)."
+  },
+  {
+   "t": "isolated system",
+   "d": "A system on which the net external force is zero, so its total momentum is constant."
+  },
+  {
+   "t": "impulse approximation",
+   "d": "Treating external forces as negligible during a brief collision because their impulse over the short contact time is small compared with that of the internal forces."
+  },
+  {
+   "t": "center of mass",
+   "d": "The mass-weighted average position \\( \\vec r_{\\text{cm}} = \\frac1M\\sum m_j\\vec r_j \\) (or \\( \\frac1M\\int\\vec r\\,dm \\)); it moves as a particle of mass \\( M \\) under the net external force."
+  },
+  {
+   "t": "linear mass density",
+   "d": "Mass per unit length of a thin body, \\( \\lambda = dm/dx \\)."
+  },
+  {
+   "t": "collision",
+   "d": "A brief interaction between bodies, during which total momentum is conserved to good approximation."
+  },
+  {
+   "t": "elastic collision",
+   "d": "A collision in which total kinetic energy is conserved."
+  },
+  {
+   "t": "inelastic collision",
+   "d": "A collision in which some kinetic energy is converted to other forms."
+  },
+  {
+   "t": "perfectly inelastic collision",
+   "d": "A collision after which the bodies move together with a common velocity; it loses the maximum kinetic energy consistent with momentum conservation."
+  },
+  {
+   "t": "coefficient of restitution",
+   "d": "\\( e = -(v_{2f} - v_{1f})/(v_{2i} - v_{1i}) \\), the ratio of separation speed to approach speed; 1 for elastic, 0 for perfectly inelastic collisions."
+  },
+  {
+   "t": "center-of-mass frame",
+   "d": "The reference frame moving with \\( \\vec v_{\\text{cm}} \\), in which the total momentum is zero."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "formula",
+   "front": "Newton's second law in momentum form",
+   "back": "\\( \\vec F_{\\text{net}} = d\\vec p/dt \\), with \\( \\vec p = m\\vec v \\)",
+   "kp": "k1"
+  },
+  {
+   "id": "c2",
+   "type": "formula",
+   "front": "Impulse–momentum theorem",
+   "back": "\\( \\vec J = \\int_{t_i}^{t_f}\\vec F_{\\text{net}}\\,dt = \\Delta\\vec p \\)",
+   "kp": "k2"
+  },
+  {
+   "id": "c3",
+   "type": "concept",
+   "front": "Why do air bags and bent knees reduce injury?",
+   "back": "\\( \\Delta p \\) is fixed; increasing \\( \\Delta t \\) reduces \\( F_{\\text{avg}} = \\Delta p/\\Delta t \\).",
+   "kp": "k2"
+  },
+  {
+   "id": "c4",
+   "type": "problem",
+   "front": "A 0.145 kg ball arrives at 40 m/s and leaves opposite at 50 m/s. Impulse magnitude?",
+   "back": "\\( 0.145 \\times 90 = 13.05 \\) N·s (subtract signed velocities)",
+   "kp": "k2",
+   "answer": "13.05",
+   "check": "number"
+  },
+  {
+   "id": "c5",
+   "type": "concept",
+   "front": "Why do internal forces not change a system's total momentum?",
+   "back": "They come in Newton's-third-law pairs \\( \\vec F_{12} = -\\vec F_{21} \\), whose contributions to \\( d\\vec P/dt \\) cancel.",
+   "kp": "k3"
+  },
+  {
+   "id": "c6",
+   "type": "concept",
+   "front": "When can momentum be conserved in one component only?",
+   "back": "When the net external force has zero component in that direction (e.g. horizontal momentum of a projectile).",
+   "kp": "k3"
+  },
+  {
+   "id": "c7",
+   "type": "concept",
+   "front": "Why may momentum be conserved across a collision even when gravity or friction acts?",
+   "back": "The collision is brief; external forces are finite, so their impulse \\( F_{\\text{ext}}\\Delta t \\) is negligible.",
+   "kp": "k3"
+  },
+  {
+   "id": "c8",
+   "type": "formula",
+   "front": "Center of mass (discrete and continuous)",
+   "back": "\\( \\vec r_{\\text{cm}} = \\frac1M\\sum m_j\\vec r_j = \\frac1M\\int \\vec r\\,dm \\)",
+   "kp": "k4"
+  },
+  {
+   "id": "c9",
+   "type": "problem",
+   "front": "Center of mass of a rod on \\( [0, L] \\) with \\( \\lambda = \\lambda_0x/L \\)",
+   "back": "\\( x_{\\text{cm}} = \\frac{\\int x^2dx}{\\int x\\,dx} = \\frac{2L}{3} \\)",
+   "kp": "k4",
+   "answer": "2*L/3",
+   "vars": "L",
+   "check": "expression"
+  },
+  {
+   "id": "c10",
+   "type": "formula",
+   "front": "Motion of the center of mass",
+   "back": "\\( \\vec P = M\\vec v_{\\text{cm}} \\), \\( \\vec F_{\\text{ext}} = M\\vec a_{\\text{cm}} \\)",
+   "kp": "k5"
+  },
+  {
+   "id": "c11",
+   "type": "concept",
+   "front": "A shell explodes in mid-flight. What happens to its center of mass?",
+   "back": "It continues on the original parabola (until a fragment hits something), since only gravity acts externally.",
+   "kp": "k5"
+  },
+  {
+   "id": "c12",
+   "type": "formula",
+   "front": "Final velocity in a perfectly inelastic collision",
+   "back": "\\( \\vec v_f = \\dfrac{m_1\\vec v_1 + m_2\\vec v_2}{m_1 + m_2} = \\vec v_{\\text{cm}} \\)",
+   "kp": "k6"
+  },
+  {
+   "id": "c13",
+   "type": "formula",
+   "front": "Fraction of KE lost when \\( m_1 \\) sticks to \\( m_2 \\) at rest",
+   "back": "\\( \\dfrac{\\Delta K}{K_i} = \\dfrac{m_2}{m_1 + m_2} \\)",
+   "kp": "k6"
+  },
+  {
+   "id": "c14",
+   "type": "concept",
+   "front": "Ballistic pendulum: which law in which stage?",
+   "back": "Collision: momentum (not KE). Swing: mechanical energy (not momentum).",
+   "kp": "k9"
+  },
+  {
+   "id": "c15",
+   "type": "concept",
+   "front": "Relative-velocity condition for a 1D elastic collision",
+   "back": "\\( v_{2f} - v_{1f} = -(v_{2i} - v_{1i}) \\): they separate as fast as they approached.",
+   "kp": "k7"
+  },
+  {
+   "id": "c16",
+   "type": "formula",
+   "front": "1D elastic, target at rest: final velocities",
+   "back": "\\( v_{1f} = \\frac{m_1 - m_2}{m_1 + m_2}v_{1i} \\), \\( v_{2f} = \\frac{2m_1}{m_1 + m_2}v_{1i} \\)",
+   "kp": "k7"
+  },
+  {
+   "id": "c17",
+   "type": "concept",
+   "front": "Equal masses, 1D elastic, target at rest: outcome?",
+   "back": "They exchange velocities: projectile stops, target moves off at the projectile's speed.",
+   "kp": "k7"
+  },
+  {
+   "id": "c18",
+   "type": "formula",
+   "front": "Coefficient of restitution; from bounce heights",
+   "back": "\\( e = -\\dfrac{v_{2f} - v_{1f}}{v_{2i} - v_{1i}} \\); \\( e = \\sqrt{h'/h} \\) for a ball on a floor",
+   "kp": "k7"
+  },
+  {
+   "id": "c19",
+   "type": "concept",
+   "front": "Equal masses, elastic, target at rest, off-center: angle between final velocities?",
+   "back": "\\( 90^\\circ \\), from \\( \\vec v = \\vec v_1 + \\vec v_2 \\) and \\( v^2 = v_1^2 + v_2^2 \\Rightarrow \\vec v_1\\cdot\\vec v_2 = 0 \\).",
+   "kp": "k8"
+  },
+  {
+   "id": "c20",
+   "type": "concept",
+   "front": "How many unknowns in a planar two-body collision, and how many equations does momentum give?",
+   "back": "Four final components; momentum gives two, elasticity one more, so one extra datum is needed.",
+   "kp": "k8"
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k2",
+   "type": "number",
+   "prompt": "The force on a ball during a kick is \\( F(t) = (6.0\\times10^6\\ \\text{N/s})\\,t - (2.0\\times10^9\\ \\text{N/s}^2)\\,t^2 \\) for \\( 0 \\le t \\le 3.0 \\) ms. What impulse (in N·s) does it deliver?",
+   "answer": "9.0",
+   "tol": 0.01,
+   "why": "\\( J = \\int_0^{T}(at - bt^2)\\,dt = \\tfrac12aT^2 - \\tfrac13bT^3 = \\tfrac12(6.0\\times10^6)(9.0\\times10^{-6}) - \\tfrac13(2.0\\times10^9)(2.7\\times10^{-8}) = 27 - 18 = 9.0 \\) N·s."
+  },
+  {
+   "id": "p2",
+   "kp": "k2",
+   "type": "number",
+   "prompt": "A 0.50 kg ball is dropped from 2.0 m onto a floor and rebounds to 1.5 m. Contact lasts 5.0 ms. What is the average force (in N) exerted by the floor on the ball during contact? Include the effect of gravity during contact; use \\( g = 9.80 \\) m/s².",
+   "answer": "0.5*(sqrt(2*9.8*2)+sqrt(2*9.8*1.5))/0.005 + 0.5*9.8",
+   "tol": 0.01,
+   "why": "Speeds: down \\( \\sqrt{2(9.80)(2.0)} = 6.26 \\) m/s, up \\( \\sqrt{2(9.80)(1.5)} = 5.42 \\) m/s. With up positive, \\( \\Delta p = 0.50(5.42 + 6.26) = 5.84 \\) N·s. Net average force \\( 5.84/0.0050 = 1168 \\) N upward. The net force is \\( N_{\\text{avg}} - mg \\), so \\( N_{\\text{avg}} = 1168 + 4.9 = 1173 \\) N (about 1.17 kN). Gravity is a 0.4% correction."
+  },
+  {
+   "id": "p3",
+   "kp": "k4",
+   "type": "expression",
+   "prompt": "A rod on \\( 0 \\le x \\le L \\) has density \\( \\lambda(x) = \\lambda_0x^2/L^2 \\). Find \\( x_{\\text{cm}} \\) in terms of `L`.",
+   "answer": "3*L/4",
+   "vars": "L",
+   "why": "\\( x_{\\text{cm}} = \\dfrac{\\int_0^Lx^3\\,dx}{\\int_0^Lx^2\\,dx} = \\dfrac{L^4/4}{L^3/3} = \\dfrac{3L}{4} \\) (the constant \\( \\lambda_0/L^2 \\) cancels)."
+  },
+  {
+   "id": "p4",
+   "kp": "k3",
+   "type": "number",
+   "prompt": "A 4.0 kg object at rest explodes into three pieces. A 1.0 kg piece moves east at 12 m/s and a 2.0 kg piece moves north at 5.0 m/s. What is the speed (in m/s) of the third piece?",
+   "answer": "sqrt(12^2+10^2)",
+   "tol": 0.01,
+   "why": "Third mass: 1.0 kg. Total momentum zero: \\( \\vec p_3 = -[(12)\\hat\\imath + (10)\\hat\\jmath] \\) kg·m/s. Speed \\( = \\sqrt{144 + 100}/1.0 = 15.6 \\) m/s, directed south of west at \\( \\arctan(10/12) = 39.8^\\circ \\) below west."
+  },
+  {
+   "id": "p5",
+   "kp": "k6",
+   "type": "written",
+   "prompt": "A student analyses a 2.0 kg cart at 3.0 m/s that couples to a 1.0 kg cart at rest: \\\"Kinetic energy is conserved, so \\( \\tfrac12(2.0)(3.0)^2 = \\tfrac12(3.0)v^2 \\), giving \\( v = 2.45 \\) m/s.\\\" Find the error, give the correct final speed, and show that the student's answer violates a conservation law.",
+   "rubric": [
+    "Coupling is a perfectly inelastic collision; kinetic energy is not conserved.",
+    "Momentum is the conserved quantity: \\( (2.0)(3.0) = 3.0v \\Rightarrow v = 2.0 \\) m/s.",
+    "Student's value gives momentum \\( 3.0 \\times 2.45 = 7.35 \\ne 6.0 \\) kg·m/s, violating momentum conservation.",
+    "Correct KE loss: 9.0 J to 6.0 J (one third lost, \\( m_2/(m_1+m_2) \\))."
+   ],
+   "model": "When carts couple, the collision is perfectly inelastic, so kinetic energy is not conserved; momentum is. Correct: \\( (2.0)(3.0) = (3.0)v \\Rightarrow v = 2.0 \\) m/s. The student's \\( v = 2.45 \\) m/s would give final momentum \\( 7.35 \\) kg·m/s, larger than the initial 6.0 kg·m/s, which no internal forces can produce. With the correct speed, \\( K \\) drops from 9.0 J to 6.0 J; the fraction lost is \\( m_2/(m_1 + m_2) = 1/3 \\), as the general formula predicts.",
+   "why": "Momentum is conserved in every collision; kinetic energy only in elastic ones."
+  },
+  {
+   "id": "p6",
+   "kp": "k7",
+   "type": "number",
+   "prompt": "A ball dropped from 1.80 m onto a hard floor rebounds to 1.20 m. What is the coefficient of restitution for the ball–floor collision?",
+   "answer": "sqrt(1.2/1.8)",
+   "tol": 0.01,
+   "why": "Impact speed \\( \\sqrt{2gh} \\), rebound speed \\( \\sqrt{2gh'} \\); the floor does not move, so \\( e = \\sqrt{h'/h} = \\sqrt{1.20/1.80} = 0.816 \\)."
+  },
+  {
+   "id": "p7",
+   "kp": "k2",
+   "type": "mcq",
+   "prompt": "A lump of clay and a rubber ball, of equal mass, hit a wall at the same speed. The clay sticks; the ball bounces straight back with the same speed. Which receives the larger impulse from the wall?",
+   "options": [
+    "The ball, twice as large as the clay's",
+    "Both receive the same impulse, since they arrive with the same momentum",
+    "The clay, because it is stopped completely",
+    "It depends on which contact lasts longer"
+   ],
+   "answer": 0,
+   "why": "Impulse equals change in momentum. The clay goes from \\( mv \\) to 0: \\( |\\Delta p| = mv \\). The ball goes from \\( mv \\) to \\( -mv \\): \\( |\\Delta p| = 2mv \\). Contact duration affects the average force, not the impulse."
+  },
+  {
+   "id": "p8",
+   "kp": "k7",
+   "type": "number",
+   "prompt": "In a reactor, a neutron (mass \\( m \\)) collides head-on and elastically with a carbon-12 nucleus (mass \\( 12m \\)) at rest. What fraction of the neutron's kinetic energy is transferred to the nucleus?",
+   "answer": "48/169",
+   "tol": 0.01,
+   "why": "\\( v_{2f} = \\dfrac{2m_1}{m_1 + m_2}v = \\dfrac{2}{13}v \\). Transferred fraction: \\( \\dfrac{\\tfrac12(12m)(2v/13)^2}{\\tfrac12mv^2} = \\dfrac{48}{169} = 0.284 \\). In general it is \\( 4m_1m_2/(m_1 + m_2)^2 \\), largest for equal masses, which is why hydrogen-rich water is a good moderator."
+  },
+  {
+   "id": "p9",
+   "kp": "k3",
+   "type": "written",
+   "prompt": "Two cars collide at an intersection. Road friction acts on both cars throughout. Explain why investigators may nevertheless equate total momentum just before and just after the impact, and state when this justification would fail.",
+   "rubric": [
+    "Friction is an external force, so strictly momentum is not conserved.",
+    "The collision lasts a very short time (tenths of a second or less), and friction is limited to about \\( \\mu mg \\), so its impulse is small.",
+    "The internal collision forces are much larger than friction during that interval, so they dominate the momentum change of each car.",
+    "The approximation fails over longer times (e.g. the post-collision skid), where friction's impulse is significant."
+   ],
+   "model": "Road friction is an external force, so strictly the two-car system is not isolated. But its magnitude is at most about \\( \\mu mg \\), while the forces the cars exert on each other during impact are many times larger. The impact lasts a short time \\( \\Delta t \\), so friction's impulse, at most \\( \\mu mg\\,\\Delta t \\), is small compared with the momenta involved, and \\( \\vec P_{\\text{before}} \\approx \\vec P_{\\text{after}} \\) (the impulse approximation). The justification fails over longer intervals: during the subsequent skid, friction acts for seconds and removes the wreck's momentum entirely, which is why energy (work of friction) is used for that stage instead.",
+   "why": "Momentum conservation is exact only for isolated systems but is an excellent approximation over short intervals dominated by internal forces."
+  },
+  {
+   "id": "p10",
+   "kp": "k5",
+   "type": "number",
+   "prompt": "A 3.0 kg particle moves at \\( +4.0 \\) m/s and a 1.0 kg particle at \\( -6.0 \\) m/s along the same line. What is the velocity (in m/s) of their center of mass?",
+   "answer": "(3*4 - 6)/4",
+   "tol": 0.01,
+   "why": "\\( v_{\\text{cm}} = \\dfrac{(3.0)(4.0) + (1.0)(-6.0)}{4.0} = 1.5 \\) m/s. If they collide and stick, this is their common final velocity."
+  },
+  {
+   "id": "p11",
+   "kp": "k1",
+   "type": "number",
+   "prompt": "A 0.50 kg puck moving east at 4.0 m/s is struck and afterward moves north at 3.0 m/s. What is the magnitude (in kg·m/s) of its change in momentum? (Momentum is a vector; the answer is not \\( 0.50 \\times (4.0 - 3.0) \\).)",
+   "answer": "0.5*sqrt(4^2+3^2)",
+   "tol": 0.01,
+   "why": "\\( \\Delta\\vec p = m(\\vec v_f - \\vec v_i) = 0.50[(0, 3.0) - (4.0, 0)] = (-2.0, 1.5) \\) kg·m/s, magnitude \\( \\sqrt{2.0^2 + 1.5^2} = 2.5 \\) kg·m/s. By the second law in the form \\( \\vec F = d\\vec p/dt \\), the average force of the blow points along \\( \\Delta\\vec p \\): north of west, at \\( 36.9^\\circ \\) above west."
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k9",
+   "type": "number",
+   "prompt": "An 8.0 g bullet is fired horizontally into a 1.50 kg wooden block hanging from a 1.20 m string, and lodges in it. The block swings up until the string makes \\( 25.0^\\circ \\) with the vertical. Find the bullet's initial speed (in m/s). Use \\( g = 9.80 \\) m/s².",
+   "answer": "(1.508/0.008)*sqrt(2*9.80*1.20*(1-cos(25 deg)))",
+   "tol": 0.01,
+   "why": "Rise: \\( h = L(1 - \\cos25^\\circ) = 1.20(0.0937) = 0.1124 \\) m. Swing (energy): \\( V = \\sqrt{2gh} = 1.484 \\) m/s. Collision (momentum): \\( v = \\dfrac{m + M}{m}V = \\dfrac{1.508}{0.0080}(1.484) = 280 \\) m/s."
+  },
+  {
+   "id": "e2",
+   "kp": "k7",
+   "type": "numbers",
+   "prompt": "A 0.50 kg glider moving at 6.0 m/s catches up with a 1.50 kg glider moving at 2.0 m/s in the same direction on a level air track, and they collide elastically. Find \\( v_{1f} \\) and \\( v_{2f} \\) (in m/s), in that order, separated by a comma.",
+   "answer": "0, 4",
+   "tol": 0.01,
+   "why": "Momentum: \\( 3.0 + 3.0 = 6.0 = 0.50v_{1f} + 1.50v_{2f} \\). Reversal: \\( v_{2f} - v_{1f} = 6.0 - 2.0 = 4.0 \\). Then \\( 6.0 = 0.50v_{1f} + 1.50(v_{1f} + 4.0) = 2.0v_{1f} + 6.0 \\), so \\( v_{1f} = 0 \\) and \\( v_{2f} = 4.0 \\) m/s. Check: \\( K_i = 9.0 + 3.0 = 12 \\) J, \\( K_f = 0 + 12 = 12 \\) J."
+  },
+  {
+   "id": "e3",
+   "kp": "k8",
+   "type": "written",
+   "prompt": "Prove that when a particle collides elastically with an identical particle at rest, and the collision is not head-on, the two particles move off at right angles. State each conservation law you use and why it applies.",
+   "rubric": [
+    "Momentum conservation (brief collision, no external impulse): \\( m\\vec v = m\\vec v_1 + m\\vec v_2 \\Rightarrow \\vec v = \\vec v_1 + \\vec v_2 \\).",
+    "Kinetic energy conservation (elastic): \\( v^2 = v_1^2 + v_2^2 \\).",
+    "Squares the momentum equation: \\( v^2 = v_1^2 + v_2^2 + 2\\vec v_1\\cdot\\vec v_2 \\), so \\( \\vec v_1\\cdot\\vec v_2 = 0 \\).",
+    "Not head-on means neither final velocity is zero, so the dot product vanishing means they are perpendicular."
+   ],
+   "model": "During the brief collision external impulses are negligible, so momentum is conserved: \\( m\\vec v = m\\vec v_1 + m\\vec v_2 \\), hence \\( \\vec v = \\vec v_1 + \\vec v_2 \\). The collision is elastic, so kinetic energy is conserved: \\( \\tfrac12mv^2 = \\tfrac12mv_1^2 + \\tfrac12mv_2^2 \\), hence \\( v^2 = v_1^2 + v_2^2 \\). Taking the dot product of the momentum equation with itself: \\( v^2 = v_1^2 + v_2^2 + 2\\vec v_1\\cdot\\vec v_2 \\). Comparing, \\( \\vec v_1\\cdot\\vec v_2 = 0 \\). If the collision is not head-on, both final velocities are nonzero (a head-on elastic collision of equal masses leaves the projectile at rest), so a zero dot product means \\( \\vec v_1 \\perp \\vec v_2 \\).",
+   "why": "Equal masses are essential: they let \\( m \\) cancel identically from both equations, making them relations among the velocity vectors alone."
+  },
+  {
+   "id": "e4",
+   "kp": "k4",
+   "type": "expression",
+   "prompt": "A rod on \\( 0 \\le x \\le L \\) has density \\( \\lambda(x) = \\lambda_0\\sqrt{x/L} \\). Find \\( x_{\\text{cm}} \\). Enter it in terms of `L`.",
+   "answer": "3*L/5",
+   "vars": "L",
+   "why": "\\( M = \\dfrac{\\lambda_0}{\\sqrt L}\\int_0^Lx^{1/2}dx = \\dfrac{\\lambda_0}{\\sqrt L}\\cdot\\dfrac23L^{3/2} \\); \\( \\int x\\,dm = \\dfrac{\\lambda_0}{\\sqrt L}\\cdot\\dfrac25L^{5/2} \\). So \\( x_{\\text{cm}} = \\dfrac{2/5}{2/3}L = \\dfrac{3L}{5} \\)."
+  },
+  {
+   "id": "e5",
+   "kp": "k6",
+   "type": "written",
+   "prompt": "A body of mass \\( m_1 \\) moving with speed \\( v \\) collides with and sticks to a body of mass \\( m_2 \\) at rest. Show that the fraction of kinetic energy lost is \\( m_2/(m_1 + m_2) \\). Then explain where the energy goes, why momentum is nevertheless conserved exactly, and what the result implies when a small car hits a parked truck versus when a truck hits a parked small car.",
+   "rubric": [
+    "Momentum: \\( v_f = m_1v/(m_1 + m_2) \\).",
+    "Computes \\( K_f/K_i = m_1/(m_1 + m_2) \\), so the lost fraction is \\( m_2/(m_1 + m_2) \\).",
+    "Energy goes to deformation, heat and sound; total energy is conserved though mechanical energy is not. Momentum is conserved because the collision forces are internal third-law pairs.",
+    "Small car into truck (\\( m_2 \\) large): nearly all KE dissipated; truck into small car (\\( m_2 \\) small): only a small fraction dissipated."
+   ],
+   "model": "Momentum: \\( m_1v = (m_1 + m_2)v_f \\Rightarrow v_f = \\dfrac{m_1v}{m_1 + m_2} \\). Then \\( K_f = \\tfrac12(m_1 + m_2)v_f^2 = \\dfrac{m_1}{m_1 + m_2}\\cdot\\tfrac12m_1v^2 = \\dfrac{m_1}{m_1 + m_2}K_i \\), so the fraction lost is \\( 1 - \\dfrac{m_1}{m_1 + m_2} = \\dfrac{m_2}{m_1 + m_2} \\). The lost kinetic energy becomes internal energy (permanent deformation, heating) and sound; total energy is conserved, but mechanical energy is not. Momentum is conserved exactly (up to negligible external impulse) because the forces the bodies exert on each other are an equal and opposite third-law pair. If a small car (\\( m_1 \\)) hits a parked truck (\\( m_2 \\gg m_1 \\)), the fraction lost is close to 1: almost all the car's kinetic energy goes into crushing. If the truck hits the parked car, \\( m_2 \\ll m_1 \\) and only a small fraction of the truck's much larger kinetic energy is dissipated; the wreck keeps moving at nearly the truck's speed.",
+   "why": "The dissipated energy equals the kinetic energy in the center-of-mass frame, \\( \\tfrac12\\mu v^2 \\) with \\( \\mu = m_1m_2/(m_1+m_2) \\), which is symmetric in the two masses; the fractions differ because \\( K_i \\) differs."
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "Impulse–momentum",
+    "formula": "\\( \\vec J = \\int\\vec F\\,dt = \\Delta\\vec p \\); \\( F_{\\text{avg}} = \\Delta p/\\Delta t \\)",
+    "when": "A force acts over a known time or the velocity change is known.",
+    "example": "Baseball: \\( J = 0.145(50 + 40) = 13.05 \\) N·s.",
+    "watch": "Use signed velocities; reversal doubles \\( \\Delta p \\)."
+   },
+   {
+    "name": "Momentum conservation",
+    "formula": "\\( \\sum m_j\\vec v_{j,i} = \\sum m_j\\vec v_{j,f} \\)",
+    "when": "Net external force zero, or a brief collision, or a component with no external force.",
+    "example": "Skaters: \\( 0 = 50(3.0) + 75v \\Rightarrow v = -2.0 \\) m/s.",
+    "watch": "Choose the system so that interaction forces are internal."
+   },
+   {
+    "name": "Center of mass",
+    "formula": "\\( x_{\\text{cm}} = \\frac1M\\sum m_jx_j = \\frac{\\int x\\lambda\\,dx}{\\int\\lambda\\,dx} \\)",
+    "when": "Locating the balance point; predicting system motion.",
+    "example": "\\( \\lambda \\propto x \\) on \\( [0,L] \\): \\( 2L/3 \\).",
+    "watch": "Each component separately; divide by total mass."
+   },
+   {
+    "name": "Center-of-mass motion",
+    "formula": "\\( M\\vec a_{\\text{cm}} = \\vec F_{\\text{ext}} \\)",
+    "when": "Explosions, people walking on boats, anything with complicated internal forces.",
+    "example": "Exploding shell: CM lands where the unexploded shell would.",
+    "watch": "Valid until an external force (e.g. the ground) acts on a fragment."
+   },
+   {
+    "name": "Perfectly inelastic",
+    "formula": "\\( \\vec v_f = \\frac{m_1\\vec v_1 + m_2\\vec v_2}{m_1 + m_2} \\); lost fraction \\( m_2/(m_1+m_2) \\) (target at rest)",
+    "when": "Bodies stick together.",
+    "example": "1200 kg at 20 m/s + 800 kg at 10 m/s: 16 m/s.",
+    "watch": "Never conserve kinetic energy here."
+   },
+   {
+    "name": "1D elastic",
+    "formula": "Momentum + \\( v_{2f} - v_{1f} = -(v_{2i} - v_{1i}) \\)",
+    "when": "Collision stated or known to be elastic.",
+    "example": "0.20 kg at 3.0 m/s on 0.30 kg at rest: \\( -0.60 \\), \\( 2.4 \\) m/s.",
+    "watch": "Two linear equations are easier than the quadratic energy equation."
+   },
+   {
+    "name": "Coefficient of restitution",
+    "formula": "\\( e = -\\frac{v_{2f} - v_{1f}}{v_{2i} - v_{1i}} \\); bounce: \\( e = \\sqrt{h'/h} \\)",
+    "when": "Partially elastic collisions.",
+    "example": "1.80 m to 1.20 m: \\( e = 0.816 \\).",
+    "watch": "\\( e = 1 \\) elastic, 0 perfectly inelastic."
+   },
+   {
+    "name": "2D collisions",
+    "formula": "\\( P_x \\) and \\( P_y \\) conserved separately",
+    "when": "Oblique collisions.",
+    "example": "Car east 20 m/s (1500 kg) + truck north 12 m/s (2500 kg): 10.6 m/s at 45°.",
+    "watch": "Count unknowns; elastic adds one equation."
+   }
+  ],
+  "stuck": [
+   "Split the process into stages (before, during, after the collision) and ask for each: is it brief, and do only conservative forces do work?",
+   "Draw the system boundary so the collision forces are internal; list external forces and check their direction and duration.",
+   "Write momentum equations component by component with a sign convention stated before substituting numbers.",
+   "For an elastic 1D collision, replace the energy equation by the relative-velocity reversal condition.",
+   "Check your answer by recomputing total momentum (always) and kinetic energy (should not increase, and should be unchanged if elastic)."
+  ]
+ }
+}

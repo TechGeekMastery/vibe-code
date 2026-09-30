@@ -1,0 +1,836 @@
+{
+ "key": "mth-6-5",
+ "title": "Pigeonhole and inclusion–exclusion",
+ "v": 1,
+ "scope": "The pigeonhole principle (basic and generalized, with constructed holes and R(3,3)) and inclusion–exclusion (two, three and n sets, complement form) with applications to divisibility, derangements, surjections and bounded solutions; generating functions, Stirling numbers and general Ramsey theory are out of scope.",
+ "sources": [
+  {
+   "title": "Lehman, Leighton, Meyer, Mathematics for Computer Science (MIT 6.042J), sections on the pigeonhole principle and inclusion–exclusion",
+   "url": "https://ocw.mit.edu/courses/6-042j-mathematics-for-computer-science-spring-2015/mit6_042js15_session27.pdf"
+  },
+  {
+   "title": "University of Illinois CS 173, Pigeonhole Principle and Principle of Inclusion-Exclusion notes",
+   "url": "https://courses.grainger.illinois.edu/cs173/fa2020/Lectures/Notes/PHPandPIENotes.pdf"
+  },
+  {
+   "title": "Oscar Levin, Discrete Mathematics: An Open Introduction, 3.8 Advanced Counting Using PIE",
+   "url": "https://discrete.openmathbooks.org/dmoi4/sec_advPIE.html"
+  },
+  {
+   "title": "Richard Hammack, Book of Proof (3rd ed.), Chapter 3: Counting",
+   "url": "https://richardhammack.github.io/BookOfProof/"
+  }
+ ],
+ "pre": [
+  "mth-6-3",
+  "mth-6-4"
+ ],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Pigeonhole principle and its proof",
+   "d": "State the pigeonhole principle as a statement about functions between finite sets and prove it by contrapositive or contradiction.",
+   "type": "concept"
+  },
+  {
+   "id": "k2",
+   "t": "Modeling pigeons and holes",
+   "d": "Choose pigeons and holes so that two pigeons sharing a hole forces the property to be proved.",
+   "type": "skill"
+  },
+  {
+   "id": "k3",
+   "t": "Generalized pigeonhole principle",
+   "d": "State and prove that N objects in k boxes force some box to hold at least the ceiling of N/k objects.",
+   "type": "concept"
+  },
+  {
+   "id": "k4",
+   "t": "Guarantee thresholds and sharpness",
+   "d": "Find the least number of objects that guarantees an outcome, proving both the bound and that one fewer does not suffice.",
+   "type": "procedure"
+  },
+  {
+   "id": "k5",
+   "t": "Constructed holes: residues, odd parts, Ramsey",
+   "d": "Build holes from remainders, odd parts or colour classes to prove non-obvious existence results.",
+   "type": "skill"
+  },
+  {
+   "id": "k6",
+   "t": "Inclusion-exclusion for two and three sets",
+   "d": "Derive and apply the two- and three-set union formulas, including multiples counted with floors and lcm.",
+   "type": "procedure"
+  },
+  {
+   "id": "k7",
+   "t": "General inclusion-exclusion and its proof",
+   "d": "State inclusion-exclusion for n sets and prove it by counting how often each element is counted.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k8",
+   "t": "Complement form: counting elements with no property",
+   "d": "Count elements of a universe that lie in none of the sets, using the alternating sum starting from the universe.",
+   "type": "procedure"
+  },
+  {
+   "id": "k9",
+   "t": "Derangements",
+   "d": "Derive the derangement formula by inclusion-exclusion and compute small values and the limit of the proportion.",
+   "type": "procedure"
+  },
+  {
+   "id": "k10",
+   "t": "Counting surjections",
+   "d": "Count onto functions from an m-set to an n-set by excluding functions that miss codomain elements.",
+   "type": "procedure"
+  },
+  {
+   "id": "k11",
+   "t": "Integer solutions with upper bounds",
+   "d": "Count solutions of x1 + ... + xk = n with upper bounds by combining stars and bars with inclusion-exclusion.",
+   "type": "procedure"
+  }
+ ],
+ "intro": "Two kinds of question keep recurring in combinatorics, and neither is answered by the basic sum and product rules of counting. The first is an **existence** question: must some configuration occur? Among any 367 people, must two share a birthday; among any six people, must three know each other or three be mutual strangers? You cannot answer by listing all cases, and you usually cannot point to the configuration; you need an argument that it cannot be avoided. The second is a **counting** question about overlapping sets: how many integers up to 1000 are divisible by 2, 3 or 5, or how many permutations leave no element in its original place? The sum rule needs disjoint sets, and here the sets overlap in complicated ways.\n\nThe pigeonhole principle answers the first kind by comparing sizes of finite sets; inclusion–exclusion answers the second by correcting overcounts systematically. Both are short statements with short proofs. The skill this chapter develops is in applying them: choosing the pigeons and the holes, and choosing the sets whose union or complement you want.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "The pigeonhole principle",
+   "kps": [
+    "k1",
+    "k2"
+   ],
+   "md": "This section answers a basic question about finite sets: when must a function fail to be one-to-one? The answer is the most useful existence tool in elementary combinatorics.\n\n> **Pigeonhole principle.** Let \\(A\\) and \\(B\\) be finite sets with \\(|A| > |B|\\). Then no function \\(f : A \\to B\\) is injective: there exist distinct \\(a_1, a_2 \\in A\\) with \\(f(a_1) = f(a_2)\\).\n\nThe informal version is where the name comes from: if more than \\(k\\) **pigeons** fly into \\(k\\) **holes**, some hole contains at least two pigeons. The pigeons are the elements of \\(A\\), the holes are the elements of \\(B\\), and \\(f\\) records which hole each pigeon enters.\n\n**Proof.** We prove the contrapositive: if \\(f\\) is injective, then \\(|A| \\le |B|\\). If \\(f\\) is injective, distinct elements of \\(A\\) have distinct images, so \\(f\\) is a bijection from \\(A\\) onto its image \\(f(A)\\). Hence \\(|A| = |f(A)|\\). Since \\(f(A) \\subseteq B\\), \\(|f(A)| \\le |B|\\). So \\(|A| \\le |B|\\). \\(\\blacksquare\\)\n\nAn equivalent argument by contradiction: if every hole held at most one pigeon, the total number of pigeons would be at most the number of holes, which contradicts \\(|A| > |B|\\).\n\nNotice what the principle does not give you. It says that two pigeons share a hole, not which two or which hole. A proof that uses it is typically **nonconstructive**: it establishes existence without exhibiting the object.\n\n**Modeling.** The work in a pigeonhole proof is choosing the pigeons and holes. The requirement is precise: every pigeon must be assigned to a hole (the assignment is a function), there must be more pigeons than holes, and *two pigeons in the same hole must give the conclusion you want*. The third requirement is the one that takes thought.\n\n**Worked example 1.** *Among any \\(n+1\\) integers chosen from \\(\\{1, 2, \\dots, 2n\\}\\), two are consecutive, and hence relatively prime.*\n\nHoles: the \\(n\\) pairs \\(\\{1,2\\}, \\{3,4\\}, \\dots, \\{2n-1, 2n\\}\\). These pairs partition \\(\\{1, \\dots, 2n\\}\\), so each chosen integer lies in exactly one pair. Pigeons: the \\(n+1\\) chosen integers. Since \\(n+1 > n\\), two chosen integers lie in the same pair, and two distinct integers in the same pair are consecutive. If \\(d\\) divides both \\(m\\) and \\(m+1\\), then \\(d\\) divides their difference \\(1\\), so \\(\\gcd(m, m+1) = 1\\).\n\n**Worked example 2.** *Five points are placed in a square of side 2. Some two of them are at distance at most \\(\\sqrt{2}\\).*\n\nDivide the square into four closed unit squares by joining the midpoints of opposite sides. Assign each point to one unit square containing it (a point on a shared edge can be assigned to either). Five points, four squares: two points lie in the same closed unit square. The greatest distance between two points of a unit square is its diagonal, \\(\\sqrt{1^2 + 1^2} = \\sqrt{2}\\). So those two points are within \\(\\sqrt{2}\\) of each other.\n\nIn both examples the holes were chosen *so that sharing a hole implies the conclusion*: sharing a pair implies consecutiveness; sharing a unit square implies distance at most \\(\\sqrt{2}\\).\n\n**Common mistake.** Choosing holes for which sharing a hole does not give the conclusion. In Example 2, dividing the square into four horizontal strips of height \\(\\tfrac{1}{2}\\) also gives four holes, but two points in the same strip can be almost 2 apart horizontally, so nothing follows. The count of holes is the easy part; the geometry or arithmetic of a single hole is what makes the argument work. A second error is leaving some pigeon without a hole, for example using pairs that do not cover every possible chosen number.",
+   "questions": [
+    {
+     "id": "s1q1",
+     "kp": "k2",
+     "type": "written",
+     "prompt": "Five points are chosen inside or on an equilateral triangle of side length 1. Prove that some two of them are at distance at most \\(\\tfrac{1}{2}\\). State the pigeons, the holes, and why two pigeons in the same hole give the conclusion.",
+     "rubric": [
+      "Divides the triangle into four equilateral triangles of side 1/2 by joining the midpoints of the sides.",
+      "Identifies the five points as pigeons and the four small triangles as holes, with every point assigned to one small triangle.",
+      "Applies the pigeonhole principle (5 > 4) to get two points in the same small triangle.",
+      "Justifies that two points in a closed equilateral triangle of side 1/2 are at distance at most 1/2 (the diameter of a triangle is its longest side)."
+     ],
+     "model": "Join the midpoints of the three sides. This divides the triangle into four equilateral triangles of side \\(\\tfrac{1}{2}\\) whose union is the whole triangle. Assign each of the five points to one small triangle that contains it (points on shared edges go to either). Since there are five points and four small triangles, the pigeonhole principle gives two points in the same small triangle. The largest distance between two points of a closed triangle is the length of its longest side, because the distance from a fixed point to points of a triangle is maximized at a vertex, and applying this twice places both points at vertices. For a triangle of side \\(\\tfrac{1}{2}\\) this is \\(\\tfrac{1}{2}\\). Hence those two points are at distance at most \\(\\tfrac{1}{2}\\).",
+     "why": "The midpoint subdivision is the natural choice because each piece has diameter exactly \\(\\tfrac{1}{2}\\), the bound in the conclusion. The fact that a triangle's diameter equals its longest side follows from convexity of distance: \\(\\lVert x - p \\rVert\\) is a convex function of \\(x\\), so its maximum over a triangle is attained at a vertex."
+    },
+    {
+     "id": "s1q2",
+     "kp": "k1",
+     "type": "number",
+     "prompt": "What is the least number of integers you must choose so that, no matter which integers are chosen, two of them have the same remainder on division by 7?",
+     "answer": "8",
+     "why": "The holes are the 7 possible remainders \\(0, 1, \\dots, 6\\). With 8 integers, two share a remainder by the pigeonhole principle. With 7 integers this can fail: \\(0, 1, \\dots, 6\\) have distinct remainders. So the answer is \\(8\\)."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "The generalized principle and guarantee thresholds",
+   "kps": [
+    "k3",
+    "k4"
+   ],
+   "md": "The basic principle guarantees two objects in one box. Many problems ask for more: at least three people sharing a birth month, at least five students with the same grade. This section gives the general bound and a method for answering \"how many do you need to guarantee...?\" questions completely.\n\n> **Generalized pigeonhole principle.** If \\(N\\) objects are placed into \\(k\\) boxes, then some box contains at least \\(\\lceil N/k \\rceil\\) objects.\n\nHere \\(\\lceil x \\rceil\\), the **ceiling** of \\(x\\), is the least integer greater than or equal to \\(x\\).\n\n**Proof.** Suppose, for contradiction, that every box contains at most \\(\\lceil N/k \\rceil - 1\\) objects. By definition of the ceiling, \\(\\lceil N/k \\rceil - 1 < N/k\\). Then the total number of objects is at most\n\\[ k\\left(\\left\\lceil \\tfrac{N}{k} \\right\\rceil - 1\\right) < k \\cdot \\tfrac{N}{k} = N, \\]\nwhich contradicts there being \\(N\\) objects. \\(\\blacksquare\\)\n\nA convenient equivalent form: *if \\(N > rk\\), some box contains at least \\(r+1\\) objects.* (If \\(N > rk\\) then \\(N/k > r\\), so \\(\\lceil N/k \\rceil \\ge r+1\\).) The basic principle is the case \\(r = 1\\). Another way to read the theorem is as an averaging statement: the average number of objects per box is \\(N/k\\), and some box must be at least average; because box counts are integers, \"at least \\(N/k\\)\" upgrades to \"at least \\(\\lceil N/k \\rceil\\).\"\n\n**Guarantee thresholds.** A typical question is: what is the least \\(N\\) such that *every* placement of \\(N\\) objects into \\(k\\) boxes puts at least \\(r\\) objects in some box? The answer is\n\\[ N = k(r-1) + 1. \\]\nA complete answer has two parts, and both are required:\n\n1. **Sufficiency.** With \\(N = k(r-1)+1\\) objects, \\(N > (r-1)k\\), so some box has at least \\(r\\) objects.\n2. **Sharpness.** With \\(k(r-1)\\) objects, the placement that puts exactly \\(r-1\\) objects in each box has no box with \\(r\\) objects. So fewer than \\(k(r-1)+1\\) objects cannot guarantee the outcome.\n\nThe sharpness step is an **extremal example**: a worst case that avoids the outcome for as long as possible. Without it you have only shown that \\(k(r-1)+1\\) is enough, not that it is the least number that is enough.\n\n**Worked example 1.** *How many cards must be drawn from a standard 52-card deck to guarantee three cards of the same suit?* Boxes: the \\(k = 4\\) suits, \\(r = 3\\). Sufficiency: with \\(4 \\cdot 2 + 1 = 9\\) cards, \\(9 > 2 \\cdot 4\\), so some suit has at least 3 cards. Sharpness: 8 cards consisting of two of each suit contain no three of a suit. Answer: 9.\n\n**Worked example 2.** *In any group of 100 people, at least how many are guaranteed to share a birth month?* \\(\\lceil 100/12 \\rceil = \\lceil 8.33\\ldots \\rceil = 9\\). And 9 is the best guarantee: 100 people can be split as four months of 9 and eight months of 8 (\\(36 + 64 = 100\\)), so no month is forced to have 10.\n\n**Worked example 3 (where the formula does not apply).** *How many cards must be drawn to guarantee three hearts?* This asks about a *specific* box, not *some* box, so the generalized principle is the wrong tool. Reason directly about the worst case: you could draw all 39 non-hearts before any heart, and then need 3 more. So 42 cards guarantee three hearts, and 41 do not (39 non-hearts and 2 hearts). The answer is 42.\n\n**Common mistake.** Confusing \"some box has \\(r\\)\" with \"a particular box has \\(r\\),\" as Example 3 shows. The other frequent error is giving the threshold \\(k(r-1)+1\\) without the extremal example, or computing it as \\(kr\\) or \\(kr+1\\) by thinking \"\\(r\\) in each box, plus one.\" The count \\(k(r-1)\\) is the largest number of objects that can avoid the outcome; the threshold is one more than that.",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k4",
+     "type": "number",
+     "prompt": "A course gives letter grades A, B, C, D and F. What is the least number of students the course must have to guarantee that at least 5 students receive the same grade?",
+     "answer": "21",
+     "why": "There are \\(k = 5\\) grades and we want \\(r = 5\\) in one grade. The threshold is \\(k(r-1) + 1 = 5 \\cdot 4 + 1 = 21\\). With 21 students, \\(21 > 4 \\cdot 5\\), so some grade has at least 5 students. With 20 students, four of each grade avoids the outcome."
+    },
+    {
+     "id": "s2q2",
+     "kp": "k3",
+     "type": "written",
+     "prompt": "Prove the generalized pigeonhole principle: if \\(N\\) objects are placed into \\(k\\) boxes, some box contains at least \\(\\lceil N/k \\rceil\\) objects. Point out exactly where the definition of the ceiling function is used.",
+     "rubric": [
+      "Assumes for contradiction that every box has at most ceil(N/k) - 1 objects.",
+      "Uses the definition of ceiling to get ceil(N/k) - 1 < N/k (the ceiling is the least integer at least N/k).",
+      "Sums over the k boxes to get a total strictly less than N.",
+      "Concludes the contradiction with the total being N."
+     ],
+     "model": "Suppose every box contains at most \\(\\lceil N/k \\rceil - 1\\) objects. Because \\(\\lceil N/k \\rceil\\) is the least integer that is at least \\(N/k\\), the integer \\(\\lceil N/k \\rceil - 1\\) is less than \\(N/k\\). Summing over the \\(k\\) boxes, the total number of objects is at most \\(k(\\lceil N/k \\rceil - 1) < k \\cdot N/k = N\\). This contradicts the fact that \\(N\\) objects were placed. Hence some box contains at least \\(\\lceil N/k \\rceil\\) objects.",
+     "why": "The ceiling definition is used once: to convert \"less than \\(\\lceil N/k\\rceil\\)\" into \"strictly less than \\(N/k\\)\". That strict inequality is what makes the total fall short of \\(N\\)."
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "Constructing the holes",
+   "kps": [
+    "k5"
+   ],
+   "md": "The previous sections used holes that were given by the problem: months, suits, grades. The harder and more interesting applications require you to *construct* the holes. This section develops three standard constructions: remainders, odd parts, and colour classes.\n\n**Remainders as holes.** Any integer has exactly one remainder in \\(\\{0, 1, \\dots, n-1\\}\\) on division by \\(n\\), and two integers with the same remainder differ by a multiple of \\(n\\). So among any \\(n+1\\) integers, two differ by a multiple of \\(n\\). A stronger construction applies this to *partial sums*.\n\n**Worked example 1.** *Given any integers \\(a_1, a_2, \\dots, a_n\\), some nonempty block of consecutive terms \\(a_{i+1} + a_{i+2} + \\dots + a_j\\) has a sum divisible by \\(n\\).*\n\nLet \\(S_j = a_1 + \\dots + a_j\\) for \\(j = 1, \\dots, n\\). If some \\(S_j\\) is divisible by \\(n\\), the block \\(a_1, \\dots, a_j\\) works. Otherwise each of the \\(n\\) numbers \\(S_1, \\dots, S_n\\) has a remainder in \\(\\{1, \\dots, n-1\\}\\), which has only \\(n-1\\) elements. By the pigeonhole principle two of them, say \\(S_i\\) and \\(S_j\\) with \\(i < j\\), have the same remainder. Then \\(n\\) divides \\(S_j - S_i = a_{i+1} + \\dots + a_j\\). The pigeons were the partial sums, not the terms; that choice is the whole idea.\n\n**Odd parts as holes.** Every positive integer can be written uniquely as \\(2^e m\\) with \\(e \\ge 0\\) and \\(m\\) odd; call \\(m\\) its **odd part**.\n\n**Worked example 2.** *Among any \\(n+1\\) integers chosen from \\(\\{1, \\dots, 2n\\}\\), one divides another.*\n\nThe odd part of a number in \\(\\{1, \\dots, 2n\\}\\) is an odd number in \\(\\{1, 3, \\dots, 2n-1\\}\\), a set of \\(n\\) elements. With \\(n+1\\) chosen numbers, two distinct ones, \\(x = 2^e m\\) and \\(y = 2^f m\\), have the same odd part. They are distinct, so \\(e \\neq f\\); say \\(e < f\\). Then \\(y = 2^{f-e} x\\), so \\(x\\) divides \\(y\\).\n\nThe bound is sharp: the \\(n\\) numbers \\(n+1, n+2, \\dots, 2n\\) contain no pair where one divides the other, since the smallest proper multiple of any of them, \\(2(n+1)\\), exceeds \\(2n\\).\n\n**Colour classes as holes.** The next result is the first case of **Ramsey theory**, which studies the fact that sufficiently large structures cannot avoid containing orderly substructures.\n\n**Worked example 3.** *In any group of six people, where each pair either are acquainted or are strangers, there are three mutual acquaintances or three mutual strangers.*\n\nFix one person \\(P\\). The other five people fall into two holes: acquaintances of \\(P\\) and strangers to \\(P\\). By the generalized principle, one hole contains at least \\(\\lceil 5/2 \\rceil = 3\\) people. Suppose three people \\(X, Y, Z\\) are acquainted with \\(P\\) (the other case is symmetric, with the roles of acquaintance and stranger exchanged). If some pair among \\(X, Y, Z\\) are acquainted, that pair together with \\(P\\) forms three mutual acquaintances. If no pair among them is acquainted, then \\(X, Y, Z\\) are three mutual strangers. Either way the conclusion holds.\n\nSix is the least group size that works: seat five people at a round table and let each person know exactly the two neighbours. Any three of the five include two who are not neighbours, so there are no three mutual acquaintances; and any three include two who are neighbours, so there are no three mutual strangers. In the language of the field, the **Ramsey number** \\(R(3,3)\\) equals 6.\n\n**Common mistake.** Treating the objects in the problem as the pigeons without asking whether that choice can succeed. In Example 1, the \\(n\\) terms themselves are too few to force anything; the argument works only because the partial sums, together with the possibility that one of them is already divisible, give a case split with a pigeonhole step inside. When a direct choice fails, ask which derived quantity (a partial sum, an odd part, a colour relative to a fixed element) turns \"same hole\" into the desired conclusion.",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k5",
+     "type": "written",
+     "prompt": "Prove that among any \\(n+1\\) integers chosen from \\(\\{1, 2, \\dots, 2n\\}\\), one of them divides another. Then show that the statement becomes false if \\(n+1\\) is replaced by \\(n\\).",
+     "rubric": [
+      "Writes each chosen number uniquely as 2^e times an odd number m, and observes that m lies in {1, 3, ..., 2n-1}, which has n elements.",
+      "Applies the pigeonhole principle to get two distinct chosen numbers with the same odd part.",
+      "Concludes that the one with the smaller power of 2 divides the other.",
+      "Gives a set of n numbers with no divisibility pair, such as {n+1, ..., 2n}, and justifies it."
+     ],
+     "model": "Write each chosen number as \\(2^e m\\) with \\(e \\ge 0\\) and \\(m\\) odd; this representation is unique. Since the number is at most \\(2n\\), its odd part \\(m\\) is one of the \\(n\\) odd numbers \\(1, 3, \\dots, 2n-1\\). There are \\(n+1\\) chosen numbers and \\(n\\) possible odd parts, so by the pigeonhole principle two distinct chosen numbers \\(x = 2^e m\\) and \\(y = 2^f m\\) share an odd part. Since \\(x \\ne y\\), \\(e \\ne f\\); without loss of generality \\(e < f\\). Then \\(y = 2^{f-e}x\\), so \\(x \\mid y\\).\n\nWith only \\(n\\) numbers the statement fails: take \\(\\{n+1, n+2, \\dots, 2n\\}\\). If \\(x\\) divides \\(y\\) with \\(x \\ne y\\) in this set, then \\(y \\ge 2x \\ge 2(n+1) > 2n\\), which is impossible.",
+     "why": "The odd part is the right hole because two numbers with the same odd part differ only by a power of 2, and of two such numbers the smaller divides the larger. The extremal set \\(\\{n+1, \\dots, 2n\\}\\) shows the count \\(n+1\\) cannot be lowered."
+    },
+    {
+     "id": "s3q2",
+     "kp": "k5",
+     "type": "written",
+     "prompt": "Prove that among any \\(n+1\\) integers, there are two whose difference is divisible by \\(n\\). Then explain why the argument gives nothing for a set of \\(n\\) integers, by exhibiting \\(n\\) integers no two of whose differences are divisible by \\(n\\).",
+     "rubric": [
+      "Uses the n possible remainders 0, 1, ..., n-1 on division by n as holes.",
+      "Applies the pigeonhole principle to n+1 integers to get two with the same remainder.",
+      "Shows that equal remainders imply n divides the difference (a = qn + r, b = q'n + r gives a - b = (q - q')n).",
+      "Gives the example 0, 1, ..., n-1 (or any complete residue system) for n integers."
+     ],
+     "model": "By the division algorithm each integer \\(a\\) can be written uniquely as \\(a = qn + r\\) with \\(0 \\le r \\le n-1\\). There are \\(n\\) possible remainders and \\(n+1\\) integers, so two of the integers, \\(a = qn + r\\) and \\(b = q'n + r\\), have the same remainder. Then \\(a - b = (q - q')n\\) is divisible by \\(n\\).\n\nFor \\(n\\) integers this can fail: \\(0, 1, \\dots, n-1\\) have pairwise differences of absolute value between 1 and \\(n-1\\), none divisible by \\(n\\).",
+     "why": "Remainders are the standard holes for divisibility questions: sharing a remainder is exactly equivalent to having a difference divisible by \\(n\\)."
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "Inclusion–exclusion for two and three sets",
+   "kps": [
+    "k6"
+   ],
+   "md": "The sum rule says \\(|A \\cup B| = |A| + |B|\\) when \\(A\\) and \\(B\\) are disjoint. Most unions of interest are not disjoint, and adding the sizes then counts the shared elements twice. **Inclusion–exclusion** is the systematic correction. This section derives it for two and three sets.\n\n> **Two sets.** For finite sets \\(A\\) and \\(B\\), \\(\\;|A \\cup B| = |A| + |B| - |A \\cap B|.\\)\n\n**Proof.** Write \\(A \\cup B\\) as the disjoint union of \\(A\\) and \\(B \\setminus A\\). By the sum rule, \\(|A \\cup B| = |A| + |B \\setminus A|\\). Also \\(B\\) is the disjoint union of \\(B \\setminus A\\) and \\(A \\cap B\\), so \\(|B \\setminus A| = |B| - |A \\cap B|\\). Substituting gives the formula. \\(\\blacksquare\\)\n\n> **Three sets.** For finite sets \\(A, B, C\\),\n\\[ |A \\cup B \\cup C| = |A| + |B| + |C| - |A \\cap B| - |A \\cap C| - |B \\cap C| + |A \\cap B \\cap C|. \\]\n\n**Proof.** Apply the two-set formula to \\(A \\cup B\\) and \\(C\\):\n\\[ |(A \\cup B) \\cup C| = |A \\cup B| + |C| - |(A \\cup B) \\cap C|. \\]\nBy distributivity, \\((A \\cup B) \\cap C = (A \\cap C) \\cup (B \\cap C)\\), and the two-set formula gives\n\\[ |(A \\cap C) \\cup (B \\cap C)| = |A \\cap C| + |B \\cap C| - |A \\cap B \\cap C|, \\]\nsince \\((A \\cap C) \\cap (B \\cap C) = A \\cap B \\cap C\\). Substituting this and \\(|A \\cup B| = |A| + |B| - |A \\cap B|\\) and collecting terms gives the three-set formula. \\(\\blacksquare\\)\n\nIt is worth checking the formula element by element, since that is how the general proof will go. An element in exactly one of the sets is counted once in the first group of terms and nowhere else. An element in exactly two, say \\(A\\) and \\(B\\), is counted twice, then subtracted once (in \\(|A \\cap B|\\)): net 1. An element in all three is counted \\(3 - 3 + 1 = 1\\) time.\n\n**Counting multiples.** A frequent use is counting integers with divisibility properties. The number of multiples of \\(d\\) in \\(\\{1, \\dots, N\\}\\) is \\(\\lfloor N/d \\rfloor\\), where \\(\\lfloor x \\rfloor\\), the **floor**, is the greatest integer at most \\(x\\). An integer is divisible by both \\(a\\) and \\(b\\) exactly when it is divisible by \\(\\operatorname{lcm}(a,b)\\).\n\n**Worked example.** *How many integers in \\(\\{1, \\dots, 1000\\}\\) are divisible by 2, 3 or 5?* Let \\(A_2, A_3, A_5\\) be the sets of multiples of 2, 3, 5. Since 2, 3, 5 are pairwise coprime, each lcm is a product.\n\\[ |A_2| = 500,\\quad |A_3| = \\lfloor 1000/3 \\rfloor = 333,\\quad |A_5| = 200, \\]\n\\[ |A_2 \\cap A_3| = \\lfloor 1000/6 \\rfloor = 166,\\quad |A_2 \\cap A_5| = 100,\\quad |A_3 \\cap A_5| = \\lfloor 1000/15 \\rfloor = 66, \\]\n\\[ |A_2 \\cap A_3 \\cap A_5| = \\lfloor 1000/30 \\rfloor = 33. \\]\nSo \\(|A_2 \\cup A_3 \\cup A_5| = 500 + 333 + 200 - 166 - 100 - 66 + 33 = 734\\). The number divisible by *none* of 2, 3, 5 is the complement: \\(1000 - 734 = 266\\).\n\n**Common mistake.** Replacing the lcm by the product when the numbers are not coprime. Multiples of both 4 and 6 are the multiples of \\(\\operatorname{lcm}(4,6) = 12\\), not of 24; using 24 misses 12, 36, 60 and so on. A second mistake is stopping after subtracting the pairwise intersections: an element in all three sets has then been counted \\(3 - 3 = 0\\) times, which is why the triple intersection must be added back.",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k6",
+     "type": "number",
+     "prompt": "How many integers in \\(\\{1, 2, \\dots, 500\\}\\) are divisible by 4 or by 6?",
+     "answer": "167",
+     "why": "Let \\(A\\) be the multiples of 4 and \\(B\\) the multiples of 6. \\(|A| = \\lfloor 500/4 \\rfloor = 125\\), \\(|B| = \\lfloor 500/6 \\rfloor = 83\\). An integer is in both exactly when it is a multiple of \\(\\operatorname{lcm}(4,6) = 12\\), so \\(|A \\cap B| = \\lfloor 500/12 \\rfloor = 41\\). Hence \\(|A \\cup B| = 125 + 83 - 41 = 167\\). Using 24 instead of 12 would give \\(125 + 83 - 20 = 188\\), which is wrong."
+    },
+    {
+     "id": "s4q2",
+     "kp": "k6",
+     "type": "written",
+     "prompt": "Derive the three-set inclusion–exclusion formula from the two-set formula. Name each set identity you use.",
+     "rubric": [
+      "Applies the two-set formula to (A ∪ B) and C.",
+      "Uses distributivity: (A ∪ B) ∩ C = (A ∩ C) ∪ (B ∩ C).",
+      "Applies the two-set formula to (A ∩ C) ∪ (B ∩ C), using (A ∩ C) ∩ (B ∩ C) = A ∩ B ∩ C.",
+      "Substitutes the two-set formula for |A ∪ B| and collects terms correctly, with the triple intersection added."
+     ],
+     "model": "By the two-set formula, \\(|A \\cup B \\cup C| = |A \\cup B| + |C| - |(A \\cup B) \\cap C|\\). By distributivity of intersection over union, \\((A \\cup B) \\cap C = (A \\cap C) \\cup (B \\cap C)\\). The intersection of these two sets is \\(A \\cap B \\cap C\\) (by associativity, commutativity and idempotence \\(C \\cap C = C\\)), so the two-set formula gives \\(|(A \\cup B) \\cap C| = |A \\cap C| + |B \\cap C| - |A \\cap B \\cap C|\\). Also \\(|A \\cup B| = |A| + |B| - |A \\cap B|\\). Substituting,\n\\[ |A \\cup B \\cup C| = |A| + |B| - |A \\cap B| + |C| - |A \\cap C| - |B \\cap C| + |A \\cap B \\cap C|, \\]\nwhich is the three-set formula.",
+     "why": "The sign of the triple term comes out positive because it enters through a subtracted term that itself contains a subtracted term."
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "The general principle of inclusion–exclusion",
+   "kps": [
+    "k7",
+    "k8"
+   ],
+   "md": "With four or more sets, deriving the formula by repeated use of the two-set case is tedious, and it hides why the signs alternate. This section states inclusion–exclusion for any finite number of sets and proves it by the element-counting argument previewed in the previous section.\n\nFor finite sets \\(A_1, \\dots, A_n\\) and a nonempty set of indices \\(I \\subseteq \\{1, \\dots, n\\}\\), write \\(A_I = \\bigcap_{i \\in I} A_i\\). Let\n\\[ S_k = \\sum_{|I| = k} |A_I|, \\]\nthe sum of the sizes of all \\(k\\)-fold intersections; there are \\(\\binom{n}{k}\\) terms in \\(S_k\\).\n\n> **Principle of inclusion–exclusion.**\n\\[ |A_1 \\cup \\dots \\cup A_n| = S_1 - S_2 + S_3 - \\dots + (-1)^{n+1} S_n = \\sum_{k=1}^{n} (-1)^{k+1} S_k. \\]\n\n**Proof.** Both sides count elements, so it suffices to show that each element \\(x\\) contributes the same amount to each side. If \\(x\\) lies in none of the sets, it contributes 0 to both. Suppose \\(x\\) lies in exactly \\(m \\ge 1\\) of the sets. It contributes 1 to the left side. On the right, \\(x \\in A_I\\) exactly when \\(I\\) is a subset of the \\(m\\) indices of sets containing \\(x\\), so \\(x\\) is counted in \\(\\binom{m}{k}\\) of the terms of \\(S_k\\) (and in none when \\(k > m\\)). Its total contribution to the right side is\n\\[ \\sum_{k=1}^{m} (-1)^{k+1}\\binom{m}{k} = 1 - \\sum_{k=0}^{m} (-1)^{k}\\binom{m}{k} = 1 - (1 - 1)^m = 1, \\]\nusing the binomial theorem and \\(m \\ge 1\\). So each element contributes equally to both sides. \\(\\blacksquare\\)\n\nThe identity \\(\\sum_k (-1)^k \\binom{m}{k} = 0\\) for \\(m \\ge 1\\) is the engine: among the subsets of an \\(m\\)-element set, those of even size and those of odd size are equally numerous.\n\n**Complement form.** Often the sets \\(A_i\\) are the elements of a universe \\(U\\) that have some undesired **property** \\(P_i\\), and we want the elements with none of the properties. Subtracting the union from \\(|U|\\) and setting \\(S_0 = |U|\\):\n\\[ |U \\setminus (A_1 \\cup \\dots \\cup A_n)| = \\sum_{k=0}^{n} (-1)^{k} S_k = S_0 - S_1 + S_2 - \\dots + (-1)^n S_n. \\]\n\n**Symmetric case.** When every \\(k\\)-fold intersection has the same size \\(N_k\\), which happens in most applications with a symmetric structure, \\(S_k = \\binom{n}{k}N_k\\), and the whole computation reduces to finding \\(N_k\\).\n\n**Worked example.** *How many integers in \\(\\{1, \\dots, 360\\}\\) share no prime factor with 360?* Since \\(360 = 2^3 \\cdot 3^2 \\cdot 5\\), the bad properties are divisibility by 2, 3 and 5. With \\(U = \\{1, \\dots, 360\\}\\):\n\\[ S_0 = 360,\\quad S_1 = 180 + 120 + 72 = 372,\\quad S_2 = 60 + 36 + 24 = 120,\\quad S_3 = 12. \\]\nThe count is \\(360 - 372 + 120 - 12 = 96\\). Because each divisor divides 360, every floor is exact and the answer factors as \\(360(1 - \\tfrac12)(1 - \\tfrac13)(1 - \\tfrac15) = 96\\). This number is Euler's \\(\\varphi(360)\\), which reappears in the chapter on modular arithmetic.\n\n**Common mistake.** Treating \\(S_k\\) as a single intersection rather than a sum over all \\(\\binom{n}{k}\\) of them, or getting the parity of the signs wrong. A reliable check: the terms of \\(S_k\\) enter with sign \\((-1)^{k}\\) in the \"none\" count and \\((-1)^{k+1}\\) in the union count. Another check is to test the formula on an element in exactly two sets and verify it is counted once.",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k7",
+     "type": "written",
+     "prompt": "Prove the general principle of inclusion–exclusion for sets \\(A_1, \\dots, A_n\\) by showing that an element belonging to exactly \\(m \\ge 1\\) of the sets is counted exactly once by the right-hand side. Identify the identity that does the work and justify it.",
+     "rubric": [
+      "Reduces the claim to comparing each element's contribution to both sides, noting elements in no set contribute 0.",
+      "Shows an element in exactly m sets appears in exactly C(m,k) of the k-fold intersections.",
+      "Computes the contribution as the alternating sum of C(m,k) for k = 1 to m.",
+      "Evaluates it as 1 using the binomial theorem: the sum from k = 0 to m of (-1)^k C(m,k) = (1 - 1)^m = 0 for m ≥ 1."
+     ],
+     "model": "Both sides of the formula count elements of \\(A_1 \\cup \\dots \\cup A_n\\) with multiplicities, so it suffices to compare each element's contribution. An element in no \\(A_i\\) contributes nothing to either side. Let \\(x\\) lie in exactly \\(m \\ge 1\\) of the sets, with index set \\(J\\), \\(|J| = m\\). The left side counts \\(x\\) once. On the right, \\(x \\in A_I\\) if and only if \\(I \\subseteq J\\), so \\(x\\) is counted in exactly \\(\\binom{m}{k}\\) of the intersections making up \\(S_k\\). Its net contribution is \\(\\sum_{k=1}^{m}(-1)^{k+1}\\binom{m}{k}\\). By the binomial theorem, \\(\\sum_{k=0}^{m}(-1)^k\\binom{m}{k} = (1 + (-1))^m = 0\\) because \\(m \\ge 1\\). Removing the \\(k = 0\\) term, which equals 1, gives \\(\\sum_{k=1}^{m}(-1)^k\\binom{m}{k} = -1\\), so \\(\\sum_{k=1}^{m}(-1)^{k+1}\\binom{m}{k} = 1\\). Every element is counted once on each side, so the two sides are equal.",
+     "why": "The hypothesis \\(m \\ge 1\\) matters: for \\(m = 0\\), \\((1-1)^0 = 1\\), which is why the complement form includes the \\(k = 0\\) term \\(S_0 = |U|\\)."
+    },
+    {
+     "id": "s5q2",
+     "kp": "k8",
+     "type": "number",
+     "prompt": "How many integers in \\(\\{1, 2, \\dots, 210\\}\\) are divisible by none of 2, 3, 5, 7?",
+     "answer": "48",
+     "why": "Here \\(210 = 2 \\cdot 3 \\cdot 5 \\cdot 7\\), so every floor is exact. \\(S_0 = 210\\); \\(S_1 = 105 + 70 + 42 + 30 = 247\\); \\(S_2 = 35 + 21 + 15 + 14 + 10 + 6 = 101\\); \\(S_3 = 7 + 5 + 3 + 2 = 17\\); \\(S_4 = 1\\). The count is \\(210 - 247 + 101 - 17 + 1 = 48\\), which equals \\(210 \\cdot \\tfrac12 \\cdot \\tfrac23 \\cdot \\tfrac45 \\cdot \\tfrac67 = 48\\)."
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "title": "Derangements",
+   "kps": [
+    "k9"
+   ],
+   "md": "The general principle is most powerful when the sets are defined by symmetric properties, so that every \\(k\\)-fold intersection has the same size. This section applies it to a classical problem: counting permutations in which nothing stays where it started.\n\nA **derangement** of \\(\\{1, \\dots, n\\}\\) is a permutation \\(\\sigma\\) with \\(\\sigma(i) \\ne i\\) for every \\(i\\); that is, a permutation with no **fixed point**. Write \\(D_n\\) for the number of derangements. The classical formulation: \\(n\\) people check their hats, and the hats are returned at random; in how many ways does nobody get their own hat back?\n\n**Setting up the sets.** Let \\(U\\) be the set of all \\(n!\\) permutations, and for each \\(i\\) let \\(A_i\\) be the set of permutations with \\(\\sigma(i) = i\\). The derangements are exactly the permutations in none of the \\(A_i\\), so the complement form applies.\n\n**Computing the intersections.** Fix a set \\(I\\) of \\(k\\) indices. A permutation in \\(A_I\\) fixes each element of \\(I\\) and permutes the remaining \\(n-k\\) elements arbitrarily, so \\(|A_I| = (n-k)!\\). This depends only on \\(k\\), so \\(S_k = \\binom{n}{k}(n-k)! = \\frac{n!}{k!}\\).\n\n> **Derangement formula.**\n\\[ D_n = \\sum_{k=0}^{n} (-1)^k \\binom{n}{k}(n-k)! = n!\\sum_{k=0}^{n}\\frac{(-1)^k}{k!}. \\]\n\n**Worked example.** For \\(n = 4\\): \\(S_0 = 24\\), \\(S_1 = 4 \\cdot 6 = 24\\), \\(S_2 = 6 \\cdot 2 = 12\\), \\(S_3 = 4 \\cdot 1 = 4\\), \\(S_4 = 1\\). So \\(D_4 = 24 - 24 + 12 - 4 + 1 = 9\\). You can confirm this by listing: the derangements of \\(1234\\) are 2143, 2341, 2413, 3142, 3412, 3421, 4123, 4312, 4321.\n\nFor \\(n = 5\\): \\(D_5 = 120 - 120 + 60 - 20 + 5 - 1 = 44\\). The first values are \\(D_1 = 0, D_2 = 1, D_3 = 2, D_4 = 9, D_5 = 44, D_6 = 265\\).\n\n**The limit.** The sum \\(\\sum_{k=0}^{n}(-1)^k/k!\\) is a partial sum of the Maclaurin series \\(e^{x} = \\sum_{k \\ge 0} x^k/k!\\) at \\(x = -1\\). Hence\n\\[ \\frac{D_n}{n!} \\to \\frac{1}{e} \\approx 0.3679 \\quad (n \\to \\infty). \\]\nThe probability that a random permutation is a derangement is close to \\(0.368\\) already for \\(n = 5\\) (\\(44/120 \\approx 0.367\\)), and it barely changes as \\(n\\) grows. The alternating series error bound gives more: the error \\(|D_n - n!/e|\\) is less than \\(n!/(n+1)! = 1/(n+1) \\le \\tfrac12\\), so for \\(n \\ge 1\\), \\(D_n\\) is the integer nearest to \\(n!/e\\).\n\n**Why the complement form is essential.** A direct count of derangements has to track which elements are already placed and which positions are still forbidden, and the cases multiply quickly. Inclusion–exclusion replaces this with intersections of the \"bad\" sets, and fixing points is easy to count. This is the general strategy: when the objects you want are defined by the absence of several properties, count the objects that *have* specified properties, which is usually easier, and let the alternating sum do the rest.\n\n**Common mistake.** Computing \\(|A_I|\\) as \\((n-1)!\\) for every intersection, or forgetting the binomial coefficient and writing \\(S_k = (n-k)!\\). \\(S_k\\) is a sum over all \\(\\binom{n}{k}\\) choices of which \\(k\\) points are fixed. A related slip is to read \"at least the points of \\(I\\) are fixed\" as \"exactly the points of \\(I\\) are fixed\"; \\(A_I\\) allows other fixed points too, and the alternating signs correct for that.",
+   "questions": [
+    {
+     "id": "s6q1",
+     "kp": "k9",
+     "type": "number",
+     "prompt": "Compute \\(D_6\\), the number of derangements of \\(\\{1, 2, 3, 4, 5, 6\\}\\), using the inclusion–exclusion formula.",
+     "answer": "265",
+     "why": "\\(D_6 = \\sum_{k=0}^{6}(-1)^k \\frac{6!}{k!} = 720 - 720 + 360 - 120 + 30 - 6 + 1 = 265\\). As a check, \\(720/e \\approx 264.87\\), and 265 is the nearest integer."
+    },
+    {
+     "id": "s6q2",
+     "kp": "k9",
+     "type": "written",
+     "prompt": "Derive the formula \\(D_n = n!\\sum_{k=0}^{n}(-1)^k/k!\\). Define the sets you use, compute the size of a \\(k\\)-fold intersection with justification, and explain why the complement form of inclusion–exclusion is the right version.",
+     "rubric": [
+      "Defines U as all n! permutations and A_i as permutations fixing i.",
+      "Explains that derangements are the permutations in none of the A_i, so the complement form applies.",
+      "Shows |A_I| = (n - k)! for |I| = k because the other n - k elements are permuted arbitrarily.",
+      "Obtains S_k = C(n,k)(n-k)! = n!/k! and assembles the alternating sum."
+     ],
+     "model": "Let \\(U\\) be the set of permutations of \\(\\{1, \\dots, n\\}\\), so \\(|U| = n!\\), and let \\(A_i = \\{\\sigma \\in U : \\sigma(i) = i\\}\\). A derangement is a permutation with no fixed point, that is, one lying in none of the \\(A_i\\), so \\(D_n = |U \\setminus (A_1 \\cup \\dots \\cup A_n)|\\) and the complement form applies: \\(D_n = \\sum_{k=0}^{n}(-1)^k S_k\\). For \\(I\\) with \\(|I| = k\\), a permutation lies in \\(A_I\\) exactly when it fixes every element of \\(I\\); its values on the other \\(n-k\\) elements form an arbitrary permutation of those elements, so \\(|A_I| = (n-k)!\\). There are \\(\\binom{n}{k}\\) choices of \\(I\\), so \\(S_k = \\binom{n}{k}(n-k)! = n!/k!\\). Therefore \\(D_n = \\sum_{k=0}^{n}(-1)^k n!/k! = n!\\sum_{k=0}^{n}(-1)^k/k!\\).",
+     "why": "The step that needs care is \\(|A_I| = (n-k)!\\): the points of \\(I\\) are fixed, and nothing is said about the other points, so they may or may not be fixed."
+    }
+   ]
+  },
+  {
+   "id": "s7",
+   "title": "Surjections and bounded solutions",
+   "kps": [
+    "k10",
+    "k11"
+   ],
+   "md": "This section applies the same method to two more counting problems that appear throughout discrete mathematics: counting functions that hit every element of the codomain, and counting integer solutions of an equation when the variables have upper bounds. Both rely on counts from the previous chapter on permutations and combinations.\n\n**Surjections.** A function \\(f : X \\to Y\\) is **surjective** (onto) if every element of \\(Y\\) is the image of some element of \\(X\\). Let \\(|X| = m\\) and \\(Y = \\{y_1, \\dots, y_n\\}\\). The universe is all functions \\(X \\to Y\\), of which there are \\(n^m\\) by the product rule. The bad property \\(P_i\\) is \"\\(y_i\\) is not in the image,\" and \\(A_i\\) is the set of functions with that property. A function in \\(A_I\\), \\(|I| = k\\), avoids \\(k\\) specified elements, so it is an arbitrary function into the remaining \\(n - k\\) elements: \\(|A_I| = (n-k)^m\\). Hence\n\n> **Number of surjections** from an \\(m\\)-set onto an \\(n\\)-set:\n\\[ \\sum_{k=0}^{n}(-1)^k\\binom{n}{k}(n-k)^m. \\]\n\n**Worked example.** *Surjections from a 5-element set onto a 3-element set:* \\(3^5 - \\binom31 2^5 + \\binom32 1^5 - \\binom33 0^5 = 243 - 96 + 3 - 0 = 150\\). An interpretation: 150 ways to assign 5 distinct tasks to 3 workers so that every worker gets at least one task.\n\nTwo checks on the formula. When \\(m < n\\) it must give 0, since no function from a smaller set can be onto a larger one. When \\(m = n\\) it must give \\(n!\\), since a surjection between sets of equal size is a bijection. (For example \\(m = n = 3\\): \\(27 - 24 + 3 - 0 = 6 = 3!\\).)\n\n**Bounded integer solutions.** Recall **stars and bars**: the number of solutions of \\(x_1 + \\dots + x_k = n\\) in nonnegative integers is \\(\\binom{n + k - 1}{k - 1}\\). Lower bounds are handled by substitution: if \\(x_i \\ge a\\), set \\(x_i' = x_i - a \\ge 0\\). Upper bounds cannot be handled that way. Instead, treat each violated upper bound as a bad property and use inclusion–exclusion.\n\n**Worked example.** *How many solutions does \\(x_1 + x_2 + x_3 = 11\\) have in integers with \\(0 \\le x_i \\le 4\\)?*\n\nUniverse: nonnegative solutions, \\(\\binom{13}{2} = 78\\). Let \\(A_i\\) be the solutions with \\(x_i \\ge 5\\). For \\(A_1\\), substitute \\(x_1' = x_1 - 5 \\ge 0\\): \\(x_1' + x_2 + x_3 = 6\\), which has \\(\\binom{8}{2} = 28\\) solutions; by symmetry \\(S_1 = 3 \\cdot 28 = 84\\). For \\(A_1 \\cap A_2\\), subtract 5 from both: sum 1, giving \\(\\binom{3}{2} = 3\\) solutions; \\(S_2 = 3 \\cdot 3 = 9\\). For all three, the sum would be \\(11 - 15 < 0\\), so \\(S_3 = 0\\). The count is\n\\[ 78 - 84 + 9 - 0 = 3. \\]\nCheck directly: the solutions are \\((4,4,3), (4,3,4), (3,4,4)\\).\n\n**Common mistake.** In the surjection formula, writing \\((n-1)^m\\) for every term, or forgetting that the \\(k = 0\\) term is \\(n^m\\). In the bounded-solutions problem, the usual error is subtracting only \\(S_1\\), which can give a negative number (as here: \\(78 - 84 < 0\\)). A negative intermediate result is a signal that the higher-order intersections have not yet been added back. Another error is subtracting the bound itself (4) instead of the first violating value (5) when setting up \\(A_i\\).",
+   "questions": [
+    {
+     "id": "s7q1",
+     "kp": "k10",
+     "type": "number",
+     "prompt": "How many surjective functions are there from a 6-element set onto a 3-element set?",
+     "answer": "540",
+     "why": "\\(\\sum_{k=0}^{3}(-1)^k\\binom3k(3-k)^6 = 3^6 - 3 \\cdot 2^6 + 3 \\cdot 1^6 - 0 = 729 - 192 + 3 = 540\\)."
+    },
+    {
+     "id": "s7q2",
+     "kp": "k11",
+     "type": "number",
+     "prompt": "How many solutions does \\(x_1 + x_2 + x_3 + x_4 = 20\\) have in integers with \\(0 \\le x_i \\le 7\\) for each \\(i\\)?",
+     "answer": "161",
+     "why": "Universe: \\(\\binom{23}{3} = 1771\\) nonnegative solutions. Let \\(A_i\\) be the solutions with \\(x_i \\ge 8\\). One variable reduced by 8 leaves sum 12: \\(\\binom{15}{3} = 455\\), so \\(S_1 = 4 \\cdot 455 = 1820\\). Two variables reduced leaves sum 4: \\(\\binom{7}{3} = 35\\), so \\(S_2 = 6 \\cdot 35 = 210\\). Three would leave sum \\(-4\\), so \\(S_3 = S_4 = 0\\). Count: \\(1771 - 1820 + 210 = 161\\)."
+    }
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "t": "pigeonhole principle",
+   "d": "If \\(|A| > |B|\\) for finite sets, no function \\(A \\to B\\) is injective; equivalently, more than \\(k\\) objects in \\(k\\) boxes put two objects in some box."
+  },
+  {
+   "t": "generalized pigeonhole principle",
+   "d": "If \\(N\\) objects are placed in \\(k\\) boxes, some box contains at least \\(\\lceil N/k \\rceil\\) objects; equivalently, if \\(N > rk\\), some box has at least \\(r+1\\)."
+  },
+  {
+   "t": "ceiling",
+   "d": "\\(\\lceil x \\rceil\\) is the least integer greater than or equal to \\(x\\)."
+  },
+  {
+   "t": "floor",
+   "d": "\\(\\lfloor x \\rfloor\\) is the greatest integer less than or equal to \\(x\\); the number of multiples of \\(d\\) in \\(\\{1, \\dots, N\\}\\) is \\(\\lfloor N/d \\rfloor\\)."
+  },
+  {
+   "t": "nonconstructive proof",
+   "d": "A proof that shows an object exists without exhibiting it or giving a method to find it.",
+   "ex": "Pigeonhole proofs are usually nonconstructive."
+  },
+  {
+   "t": "extremal example",
+   "d": "A configuration showing that a bound cannot be improved, by avoiding the conclusion with one fewer object (or one more hole).",
+   "ex": "Two cards of each suit show 8 cards do not guarantee three of a suit."
+  },
+  {
+   "t": "odd part",
+   "d": "For a positive integer written uniquely as \\(2^e m\\) with \\(m\\) odd, the odd part is \\(m\\)."
+  },
+  {
+   "t": "Ramsey number R(3,3)",
+   "d": "The least n such that any acquaintance relation on n people contains three mutual acquaintances or three mutual strangers; it equals 6."
+  },
+  {
+   "t": "inclusion–exclusion",
+   "d": "The formula \\(|A_1 \\cup \\dots \\cup A_n| = \\sum_{k=1}^{n}(-1)^{k+1}S_k\\), where \\(S_k\\) is the sum of the sizes of all \\(k\\)-fold intersections."
+  },
+  {
+   "t": "S_k (k-th intersection sum)",
+   "d": "\\(S_k = \\sum_{|I|=k}|A_I|\\), the sum over all \\(\\binom{n}{k}\\) sets \\(I\\) of \\(k\\) indices of the size of \\(\\bigcap_{i \\in I}A_i\\); \\(S_0 = |U|\\)."
+  },
+  {
+   "t": "derangement",
+   "d": "A permutation \\(\\sigma\\) of \\(\\{1,\\dots,n\\}\\) with \\(\\sigma(i) \\ne i\\) for all \\(i\\); the number of them is \\(D_n\\)."
+  },
+  {
+   "t": "fixed point",
+   "d": "An element \\(i\\) with \\(\\sigma(i) = i\\)."
+  },
+  {
+   "t": "surjection",
+   "d": "A function \\(f: X \\to Y\\) such that every \\(y \\in Y\\) equals \\(f(x)\\) for some \\(x \\in X\\); also called an onto function."
+  },
+  {
+   "t": "stars and bars",
+   "d": "The count \\(\\binom{n+k-1}{k-1}\\) of solutions of \\(x_1 + \\dots + x_k = n\\) in nonnegative integers."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "term",
+   "front": "Pigeonhole principle (function form)",
+   "back": "If \\(A, B\\) are finite and \\(|A| > |B|\\), then no function \\(f : A \\to B\\) is injective.",
+   "kp": "k1"
+  },
+  {
+   "id": "c2",
+   "type": "concept",
+   "front": "How is the pigeonhole principle proved?",
+   "back": "Contrapositive: if \\(f\\) is injective, \\(f\\) is a bijection onto \\(f(A) \\subseteq B\\), so \\(|A| = |f(A)| \\le |B|\\).",
+   "kp": "k1"
+  },
+  {
+   "id": "c3",
+   "type": "concept",
+   "front": "What three conditions must a pigeonhole model satisfy?",
+   "back": "Every pigeon is assigned to a hole; there are more pigeons than holes; two pigeons in one hole imply the desired conclusion.",
+   "kp": "k2"
+  },
+  {
+   "id": "c4",
+   "type": "formula",
+   "front": "Generalized pigeonhole principle",
+   "back": "\\(N\\) objects in \\(k\\) boxes \\(\\Rightarrow\\) some box has at least \\(\\lceil N/k \\rceil\\) objects.",
+   "kp": "k3"
+  },
+  {
+   "id": "c5",
+   "type": "formula",
+   "front": "Least \\(N\\) guaranteeing some one of \\(k\\) boxes gets at least \\(r\\) objects",
+   "back": "\\(N = k(r-1) + 1\\); sharp because \\(r-1\\) in each box avoids it.",
+   "kp": "k4"
+  },
+  {
+   "id": "c6",
+   "type": "problem",
+   "front": "Cards to draw to guarantee 3 of the same suit",
+   "back": "9: \\(4 \\cdot 2 + 1\\); eight cards (two per suit) do not suffice.",
+   "kp": "k4",
+   "answer": "9",
+   "check": "number"
+  },
+  {
+   "id": "c7",
+   "type": "problem",
+   "front": "Cards to draw to guarantee 3 hearts",
+   "back": "42: all 39 non-hearts could come first, then 3 hearts are needed.",
+   "kp": "k4",
+   "answer": "42",
+   "check": "number"
+  },
+  {
+   "id": "c8",
+   "type": "concept",
+   "front": "Holes for: among \\(n+1\\) numbers from \\(\\{1,\\dots,2n\\}\\), one divides another",
+   "back": "The \\(n\\) possible odd parts \\(1, 3, \\dots, 2n-1\\) (write each number as \\(2^e m\\), \\(m\\) odd).",
+   "kp": "k5"
+  },
+  {
+   "id": "c9",
+   "type": "concept",
+   "front": "Why must some consecutive block of \\(a_1, \\dots, a_n\\) have sum divisible by \\(n\\)?",
+   "back": "Apply pigeonhole to the partial sums \\(S_1, \\dots, S_n\\) mod \\(n\\): either one is 0 or two are equal, and their difference is a block sum.",
+   "kp": "k5"
+  },
+  {
+   "id": "c10",
+   "type": "problem",
+   "front": "\\(R(3,3)\\)",
+   "back": "6; five people seated in a cycle, each knowing only the two neighbours, show 5 is not enough.",
+   "kp": "k5",
+   "answer": "6",
+   "check": "number"
+  },
+  {
+   "id": "c11",
+   "type": "formula",
+   "front": "Inclusion–exclusion for three sets",
+   "back": "\\(|A\\cup B\\cup C| = |A|+|B|+|C| - |A\\cap B| - |A\\cap C| - |B\\cap C| + |A\\cap B\\cap C|\\)",
+   "kp": "k6"
+  },
+  {
+   "id": "c12",
+   "type": "concept",
+   "front": "Multiples of both \\(a\\) and \\(b\\) in \\(\\{1,\\dots,N\\}\\)",
+   "back": "\\(\\lfloor N/\\operatorname{lcm}(a,b) \\rfloor\\), not \\(\\lfloor N/(ab) \\rfloor\\) unless \\(a, b\\) are coprime.",
+   "kp": "k6"
+  },
+  {
+   "id": "c13",
+   "type": "formula",
+   "front": "General inclusion–exclusion",
+   "back": "\\(|A_1\\cup\\dots\\cup A_n| = \\sum_{k=1}^{n}(-1)^{k+1}S_k\\), \\(S_k = \\sum_{|I|=k}|A_I|\\).",
+   "kp": "k7"
+  },
+  {
+   "id": "c14",
+   "type": "concept",
+   "front": "Key identity in the proof of inclusion–exclusion",
+   "back": "\\(\\sum_{k=0}^{m}(-1)^k\\binom{m}{k} = (1-1)^m = 0\\) for \\(m \\ge 1\\), so an element in \\(m\\) sets is counted once.",
+   "kp": "k7"
+  },
+  {
+   "id": "c15",
+   "type": "formula",
+   "front": "Number of elements with none of the properties",
+   "back": "\\(\\sum_{k=0}^{n}(-1)^k S_k\\), with \\(S_0 = |U|\\).",
+   "kp": "k8"
+  },
+  {
+   "id": "c16",
+   "type": "formula",
+   "front": "Derangement number \\(D_n\\)",
+   "back": "\\(D_n = n!\\sum_{k=0}^{n}(-1)^k/k!\\), the integer nearest \\(n!/e\\) for \\(n \\ge 1\\).",
+   "kp": "k9"
+  },
+  {
+   "id": "c17",
+   "type": "problem",
+   "front": "\\(D_5\\)",
+   "back": "\\(120 - 120 + 60 - 20 + 5 - 1 = 44\\).",
+   "kp": "k9",
+   "answer": "44",
+   "check": "number"
+  },
+  {
+   "id": "c18",
+   "type": "formula",
+   "front": "Surjections from an \\(m\\)-set onto an \\(n\\)-set",
+   "back": "\\(\\sum_{k=0}^{n}(-1)^k\\binom{n}{k}(n-k)^m\\)",
+   "kp": "k10"
+  },
+  {
+   "id": "c19",
+   "type": "problem",
+   "front": "Surjections from a 5-set onto a 3-set",
+   "back": "\\(243 - 96 + 3 = 150\\).",
+   "kp": "k10",
+   "answer": "150",
+   "check": "number"
+  },
+  {
+   "id": "c20",
+   "type": "concept",
+   "front": "How do you count solutions of \\(x_1+\\dots+x_k=n\\) with \\(x_i \\le b\\)?",
+   "back": "Stars and bars for the universe; \\(A_i\\): \\(x_i \\ge b+1\\), substitute \\(x_i' = x_i - (b+1)\\); alternate signs over how many bounds are violated.",
+   "kp": "k11"
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k1",
+   "type": "written",
+   "prompt": "Prove that in any set of 367 people, two have the same birthday (month and day). State the function to which you apply the pigeonhole principle, including its domain and codomain.",
+   "rubric": [
+    "Defines f from the set of people to the set of possible birthdays (366 dates including February 29).",
+    "Notes the domain has 367 elements and the codomain 366.",
+    "Applies the pigeonhole principle to conclude f is not injective.",
+    "Interprets non-injectivity as two people sharing a birthday."
+   ],
+   "model": "Let \\(P\\) be the set of 367 people and \\(D\\) the set of possible birthdays, which has 366 elements when February 29 is included. Define \\(f : P \\to D\\) by sending each person to their birthday. Since \\(|P| = 367 > 366 = |D|\\), the pigeonhole principle says \\(f\\) is not injective: there are distinct people \\(p_1 \\ne p_2\\) with \\(f(p_1) = f(p_2)\\), that is, with the same birthday.",
+   "why": "The number 367 is chosen so that the argument works even counting February 29; with 366 people the conclusion can fail."
+  },
+  {
+   "id": "p2",
+   "kp": "k4",
+   "type": "number",
+   "prompt": "A drawer contains 10 red, 10 blue and 10 black socks. In the dark, what is the least number of socks you must take to guarantee two socks of the same colour?",
+   "answer": "4",
+   "why": "Three colours are the holes. Four socks guarantee a pair, since \\(4 > 3\\). Three socks can be one of each colour, so three do not suffice."
+  },
+  {
+   "id": "p3",
+   "kp": "k4",
+   "type": "number",
+   "prompt": "Using the same drawer (10 red, 10 blue, 10 black socks), what is the least number you must take to guarantee two black socks?",
+   "answer": "22",
+   "why": "This concerns a specific colour, so reason about the worst case: all 20 red and blue socks could be drawn first, and then two black ones are needed. So 22 socks guarantee two black socks, and 21 (20 non-black and 1 black) do not."
+  },
+  {
+   "id": "p4",
+   "kp": "k3",
+   "type": "written",
+   "prompt": "A class has 40 students, each of whom was born on one of the 7 days of the week. Prove that at least 6 were born on the same day of the week, and show that 7 cannot be guaranteed.",
+   "rubric": [
+    "Applies the generalized pigeonhole principle with N = 40, k = 7.",
+    "Computes ceil(40/7) = 6.",
+    "Gives a distribution with no day having 7, for example five days with 6 and two days with 5.",
+    "Checks that the distribution sums to 40."
+   ],
+   "model": "Place the 40 students into 7 boxes by weekday of birth. By the generalized pigeonhole principle some box contains at least \\(\\lceil 40/7 \\rceil = 6\\) students (since \\(40/7 \\approx 5.71\\)). To see that 7 cannot be guaranteed, consider five weekdays with 6 students each and two with 5: \\(5 \\cdot 6 + 2 \\cdot 5 = 40\\), and no weekday has 7.",
+   "why": "The extremal example spreads the students as evenly as possible; that is always the configuration that minimizes the largest box."
+  },
+  {
+   "id": "p5",
+   "kp": "k5",
+   "type": "written",
+   "prompt": "Explain why the following argument is invalid, and then give a correct proof of the claim. *Claim:* among any 5 integers, some 3 have a sum divisible by 3. *Argument:* \"There are 3 remainders mod 3 and 5 integers, so by pigeonhole two integers have the same remainder; add any third integer to them.\" ",
+   "rubric": [
+    "Identifies the flaw: two equal remainders plus an arbitrary third integer need not give a sum divisible by 3 (e.g., remainders 1, 1, 0 sum to 2).",
+    "Splits into cases: some remainder class has at least 3 integers, or each class has at most 2.",
+    "Case 1: three integers with the same remainder r have sum congruent to 3r, divisible by 3.",
+    "Case 2: with 5 integers and at most 2 per class, every class is nonempty (otherwise at most 4 integers), so one from each class gives sum congruent to 0 + 1 + 2 = 3."
+   ],
+   "model": "The argument fails because sharing a remainder does not give the conclusion: two integers with remainder 1 and a third with remainder 0 have sum with remainder 2. The holes do not force the property.\n\nCorrect proof. Sort the 5 integers by remainder mod 3. If some remainder class contains at least 3 of them, pick three with remainder \\(r\\); their sum has remainder that of \\(3r\\), which is divisible by 3. Otherwise each class contains at most 2 integers. Then every class is nonempty, since two classes could hold at most 4 integers. Pick one integer from each class; their sum is congruent to \\(0 + 1 + 2 = 3\\), which is divisible by 3.",
+   "why": "The case split is itself a pigeonhole use: \\(\\lceil 5/3 \\rceil = 2\\) is not enough for Case 1, so the argument must also exploit the case in which the integers are spread across all classes."
+  },
+  {
+   "id": "p6",
+   "kp": "k6",
+   "type": "number",
+   "prompt": "In a group of 60 students, 35 take calculus, 28 take physics and 12 take both. How many take neither?",
+   "answer": "9",
+   "why": "\\(|C \\cup P| = 35 + 28 - 12 = 51\\), so \\(60 - 51 = 9\\) take neither."
+  },
+  {
+   "id": "p7",
+   "kp": "k8",
+   "type": "number",
+   "prompt": "How many integers in \\(\\{1, 2, \\dots, 1000\\}\\) are divisible by none of 2, 3 and 5?",
+   "answer": "266",
+   "why": "\\(S_0 = 1000\\), \\(S_1 = 500 + 333 + 200 = 1033\\), \\(S_2 = 166 + 100 + 66 = 332\\), \\(S_3 = 33\\). Count: \\(1000 - 1033 + 332 - 33 = 266\\)."
+  },
+  {
+   "id": "p8",
+   "kp": "k8",
+   "type": "number",
+   "prompt": "How many permutations of the letters \\(a, b, c, d, e\\) contain none of the consecutive strings \"ab\", \"cd\"? (Each string must appear as adjacent letters in that order to count.)",
+   "answer": "78",
+   "why": "Universe: \\(5! = 120\\). Let \\(A\\) be the permutations containing \"ab\": treat \"ab\" as one block, giving \\(4! = 24\\). Similarly \\(|B| = 24\\) for \"cd\". Both: two blocks and \\(e\\), giving \\(3! = 6\\). Count: \\(120 - 24 - 24 + 6 = 78\\)."
+  },
+  {
+   "id": "p9",
+   "kp": "k9",
+   "type": "written",
+   "prompt": "Show that for \\(n \\ge 1\\) the derangement number \\(D_n\\) is the integer nearest to \\(n!/e\\). You may use that for an alternating series whose terms decrease in absolute value to 0, the error after any partial sum is less than the first omitted term.",
+   "rubric": [
+    "Writes n!/e as n! times the full series for e^{-1} and D_n as n! times the partial sum through k = n.",
+    "Bounds |n!/e - D_n| by n! times the first omitted term, n!/(n+1)! = 1/(n+1).",
+    "Notes 1/(n+1) ≤ 1/2 for n ≥ 1, with strict inequality of the error, so the error is less than 1/2.",
+    "Concludes that the integer D_n is within 1/2 of n!/e, hence is the nearest integer."
+   ],
+   "model": "We have \\(e^{-1} = \\sum_{k=0}^{\\infty}(-1)^k/k!\\) and \\(D_n = n!\\sum_{k=0}^{n}(-1)^k/k!\\). So \\(n!/e - D_n = n!\\sum_{k=n+1}^{\\infty}(-1)^k/k!\\). The tail is an alternating series whose terms decrease to 0, so its absolute value is less than its first term, \\(1/(n+1)!\\). Hence \\(|n!/e - D_n| < n!/(n+1)! = 1/(n+1) \\le 1/2\\) for \\(n \\ge 1\\). An integer within less than \\(1/2\\) of a real number is the unique nearest integer, so \\(D_n\\) is the integer nearest \\(n!/e\\).",
+   "why": "For \\(n = 4\\): \\(24/e \\approx 8.83\\), nearest integer 9, matching \\(D_4 = 9\\)."
+  },
+  {
+   "id": "p10",
+   "kp": "k10",
+   "type": "mcq",
+   "prompt": "A student counts surjections from a 4-element set onto a 3-element set as \\(3^4 - 3 \\cdot 2^4 = 33\\). What is wrong, and what is the correct count?",
+   "options": [
+    "Nothing is wrong; the answer is 33.",
+    "The functions missing two codomain elements were subtracted twice and must be added back: \\(81 - 48 + 3 = 36\\).",
+    "The universe should be \\(4^3 = 64\\), giving \\(64 - 48 = 16\\).",
+    "Surjections from 4 elements onto 3 are bijections, so the count is \\(3! = 6\\)."
+   ],
+   "answer": 1,
+   "why": "A function missing two codomain elements (a constant function) lies in two of the sets \\(A_i\\) and is subtracted twice. The \\(k = 2\\) term \\(\\binom32 1^4 = 3\\) adds it back once. The correct count is \\(81 - 48 + 3 - 0 = 36\\). Option C reverses domain and codomain in the count of functions (functions \\(X \\to Y\\) number \\(|Y|^{|X|}\\)); option D confuses surjection with bijection, which requires equal sizes."
+  },
+  {
+   "id": "p11",
+   "kp": "k11",
+   "type": "number",
+   "prompt": "How many solutions does \\(x_1 + x_2 + x_3 = 15\\) have in integers with \\(0 \\le x_i \\le 6\\)?",
+   "answer": "10",
+   "why": "Universe \\(\\binom{17}{2} = 136\\). With \\(x_i \\ge 7\\): sum 8 remains, \\(\\binom{10}{2} = 45\\), so \\(S_1 = 135\\). Two violations: sum 1, \\(\\binom{3}{2} = 3\\), \\(S_2 = 9\\). Three: negative, 0. Count \\(136 - 135 + 9 = 10\\)."
+  },
+  {
+   "id": "p12",
+   "kp": "k2",
+   "type": "written",
+   "prompt": "Prove that in any group of \\(n \\ge 2\\) people, two have the same number of friends within the group (friendship is symmetric, and nobody is their own friend).",
+   "rubric": [
+    "Notes that each person's number of friends lies in {0, 1, ..., n-1}, which has n values.",
+    "Observes that 0 and n-1 cannot both occur: someone with n-1 friends is friends with everyone, so nobody has 0.",
+    "Concludes that the n people take at most n-1 distinct values.",
+    "Applies the pigeonhole principle to get two people with the same count."
+   ],
+   "model": "Each person has between 0 and \\(n-1\\) friends, which gives \\(n\\) possible values, the same as the number of people, so the pigeonhole principle does not apply directly. However, the values 0 and \\(n-1\\) cannot both occur: if someone has \\(n-1\\) friends, they are friends with every other person, so no one has 0 friends. Hence the friend counts take values in \\(\\{0, \\dots, n-2\\}\\) or in \\(\\{1, \\dots, n-1\\}\\), a set of \\(n-1\\) values in either case. With \\(n\\) people and \\(n-1\\) possible values, two people have the same number of friends.",
+   "why": "The first attempt gives \\(n\\) holes for \\(n\\) pigeons, which is not enough; the extra observation removes one hole. This is typical: when the count is exactly balanced, look for two holes that cannot both be occupied."
+  },
+  {
+   "id": "p13",
+   "kp": "k6",
+   "type": "written",
+   "prompt": "A student computes the number of integers in \\(\\{1, \\dots, 100\\}\\) divisible by 4 or 6 as \\(25 + 16 - 4 = 37\\). Identify the error, explain why it is an error, and give the correct count.",
+   "rubric": [
+    "Identifies that the student counted multiples of 24 (4 · 6) for the intersection.",
+    "Explains that an integer divisible by both 4 and 6 is exactly a multiple of lcm(4, 6) = 12, since 4 and 6 are not coprime.",
+    "Computes |A ∩ B| = floor(100/12) = 8.",
+    "Gives the correct count 25 + 16 - 8 = 33."
+   ],
+   "model": "The intersection term used \\(\\lfloor 100/24 \\rfloor = 4\\), treating \"divisible by 4 and by 6\" as \"divisible by \\(4 \\cdot 6\\).\" That is valid only for coprime divisors. Since \\(\\gcd(4,6) = 2\\), an integer divisible by both is exactly a multiple of \\(\\operatorname{lcm}(4,6) = 12\\); for example 12 is divisible by both but not by 24. So \\(|A \\cap B| = \\lfloor 100/12 \\rfloor = 8\\), and the correct count is \\(25 + 16 - 8 = 33\\).",
+   "why": "An integer \\(x\\) is divisible by \\(a\\) and \\(b\\) if and only if \\(\\operatorname{lcm}(a,b) \\mid x\\); \\(\\operatorname{lcm}(a,b) = ab\\) exactly when \\(\\gcd(a,b) = 1\\)."
+  },
+  {
+   "id": "p14",
+   "kp": "k5",
+   "type": "written",
+   "prompt": "Prove that among any 7 distinct integers there are two whose sum or difference is divisible by 10.",
+   "rubric": [
+    "Defines 6 holes by remainder mod 10: {0}, {5}, {1,9}, {2,8}, {3,7}, {4,6}.",
+    "Applies the pigeonhole principle to 7 integers and 6 holes.",
+    "Two integers with the same remainder have difference divisible by 10.",
+    "Two integers with remainders r and 10 - r have sum divisible by 10."
+   ],
+   "model": "Group the remainders mod 10 into six classes: \\(\\{0\\}, \\{5\\}, \\{1, 9\\}, \\{2, 8\\}, \\{3, 7\\}, \\{4, 6\\}\\). Every integer falls into exactly one class according to its remainder. With 7 integers and 6 classes, two distinct integers \\(a, b\\) fall into the same class. If they have the same remainder, \\(10 \\mid a - b\\). Otherwise their remainders are \\(r\\) and \\(10 - r\\) for some \\(r \\in \\{1,2,3,4\\}\\), and \\(a + b\\) has remainder \\(r + (10 - r) = 10 \\equiv 0\\), so \\(10 \\mid a + b\\).",
+   "why": "Ten remainder classes would need 11 integers; pairing each remainder with its negative halves the holes because either a sum or a difference is acceptable."
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k5",
+   "type": "written",
+   "prompt": "Prove that in any group of six people there are three mutual acquaintances or three mutual strangers (acquaintance is symmetric). Then show that the statement is false for five people.",
+   "rubric": [
+    "Fixes a person P and splits the other five into acquaintances and strangers of P.",
+    "Uses the generalized pigeonhole principle to get at least 3 in one class.",
+    "Handles both sub-cases: an acquainted pair among those three plus P, or the three are mutual strangers (and notes the other class is symmetric).",
+    "Gives the 5-cycle (each person knows exactly two neighbours around a table) and verifies it has no three mutual acquaintances and no three mutual strangers."
+   ],
+   "model": "Fix a person \\(P\\). Each of the other five people is either acquainted with \\(P\\) or a stranger to \\(P\\). By the generalized pigeonhole principle, one of these two classes contains at least \\(\\lceil 5/2 \\rceil = 3\\) people. Suppose \\(X, Y, Z\\) are all acquainted with \\(P\\). If some two of \\(X, Y, Z\\) are acquainted, those two with \\(P\\) are three mutual acquaintances. If no two of them are acquainted, \\(X, Y, Z\\) are three mutual strangers. If instead \\(X, Y, Z\\) are all strangers to \\(P\\), the same argument with the roles exchanged gives three mutual strangers (two of \\(X,Y,Z\\) strangers to each other, together with \\(P\\)) or three mutual acquaintances (\\(X, Y, Z\\)).\n\nFor five people, seat them around a table and let each know exactly the two people beside them. Among any three of the five, at least two are not adjacent (a cycle of 5 contains no triangle), so no three are mutual acquaintances; and among any three, at least two are adjacent (three of five seats around a table cannot be pairwise non-adjacent), so no three are mutual strangers.",
+   "why": "This shows \\(R(3,3) = 6\\). For the non-adjacency claim: three pairwise non-adjacent seats among five around a table would need at least one empty seat between each pair, which takes at least 6 seats."
+  },
+  {
+   "id": "e2",
+   "kp": "k7",
+   "type": "written",
+   "prompt": "State the principle of inclusion–exclusion for \\(n\\) finite sets in the complement form (elements of a finite universe \\(U\\) in none of \\(A_1, \\dots, A_n\\)), and prove it.",
+   "rubric": [
+    "States the formula with S_0 = |U| and S_k the sum over all k-subsets I of |A_I|, with sign (-1)^k.",
+    "Shows an element in none of the sets contributes 1 to both sides (only the k = 0 term counts it).",
+    "Shows an element in exactly m ≥ 1 sets contributes the sum of (-1)^k C(m,k) over k = 0..m.",
+    "Evaluates that sum as (1 - 1)^m = 0 by the binomial theorem, matching its contribution 0 to the left side."
+   ],
+   "model": "**Statement.** With \\(S_0 = |U|\\) and \\(S_k = \\sum_{|I| = k}\\left|\\bigcap_{i\\in I}A_i\\right|\\) for \\(1 \\le k \\le n\\),\n\\[ \\left|U \\setminus (A_1 \\cup \\dots \\cup A_n)\\right| = \\sum_{k=0}^{n}(-1)^k S_k. \\]\n**Proof.** Compare the contribution of each \\(x \\in U\\). If \\(x\\) lies in no \\(A_i\\), it is counted once on the left, and on the right only in \\(S_0\\) (it lies in no intersection), so once. If \\(x\\) lies in exactly the \\(m \\ge 1\\) sets indexed by \\(J\\), it is not counted on the left. On the right it lies in \\(A_I\\) exactly when \\(I \\subseteq J\\), so it is counted \\(\\binom{m}{k}\\) times in \\(S_k\\) (including \\(k = 0\\), where \\(\\binom m0 = 1\\) accounts for \\(S_0\\)). Its total contribution is \\(\\sum_{k=0}^{m}(-1)^k\\binom mk = (1-1)^m = 0\\) by the binomial theorem, since \\(m \\ge 1\\). So both sides count every element the same number of times and are equal.",
+   "why": "This form is equivalent to the union form by subtracting from \\(|U|\\); proving it directly is slightly cleaner because the \\(k = 0\\) term is part of the binomial sum."
+  },
+  {
+   "id": "e3",
+   "kp": "k9",
+   "type": "number",
+   "prompt": "Seven letters are placed at random into seven addressed envelopes, one per envelope. In how many of the \\(7!\\) arrangements does no letter go into its correct envelope?",
+   "answer": "1854",
+   "why": "This is \\(D_7 = 7!\\sum_{k=0}^{7}(-1)^k/k! = 5040 - 5040 + 2520 - 840 + 210 - 42 + 7 - 1 = 1854\\). Check: \\(5040/e \\approx 1854.11\\)."
+  },
+  {
+   "id": "e4",
+   "kp": "k10",
+   "type": "number",
+   "prompt": "In how many ways can 5 distinct tasks be assigned to 4 workers so that every worker receives at least one task? (Each task goes to exactly one worker.)",
+   "answer": "240",
+   "why": "Count surjections from a 5-set onto a 4-set: \\(4^5 - 4 \\cdot 3^5 + 6 \\cdot 2^5 - 4 \\cdot 1^5 + 0 = 1024 - 972 + 192 - 4 = 240\\). Alternatively: choose the worker with two tasks and the pair of tasks, \\(4 \\cdot \\binom52 = 40\\), then assign the other three tasks bijectively, \\(3! = 6\\): \\(240\\)."
+  },
+  {
+   "id": "e5",
+   "kp": "k4",
+   "type": "written",
+   "prompt": "Determine, with proof, the least number of integers that must be chosen from \\(\\{1, 2, \\dots, 20\\}\\) to guarantee that two of the chosen integers sum to 21.",
+   "rubric": [
+    "Partitions {1,...,20} into the 10 pairs {i, 21 - i}.",
+    "Shows 11 integers force two in the same pair (pigeonhole), which sum to 21.",
+    "Gives an extremal set of 10 integers with no two summing to 21, such as {1, ..., 10}.",
+    "States the answer 11 with both parts of the argument."
+   ],
+   "model": "Partition \\(\\{1, \\dots, 20\\}\\) into the 10 pairs \\(\\{1,20\\}, \\{2,19\\}, \\dots, \\{10,11\\}\\); each pair sums to 21 and every number lies in exactly one pair. If 11 integers are chosen, the pigeonhole principle puts two in the same pair, and they sum to 21. Ten integers do not suffice: \\(\\{1, \\dots, 10\\}\\) has maximum pairwise sum \\(9 + 10 = 19 < 21\\). So the answer is 11.",
+   "why": "Both halves are required: the pairing gives sufficiency, the set \\(\\{1,\\dots,10\\}\\) (one from each pair) gives sharpness."
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "Pigeonhole principle",
+    "formula": "\\(|A| > |B| \\Rightarrow\\) no \\(f: A \\to B\\) is injective",
+    "when": "Proving two objects must share some attribute.",
+    "example": "13 people: two share a birth month.",
+    "watch": "Two pigeons in one hole must actually imply the conclusion."
+   },
+   {
+    "name": "Generalized pigeonhole",
+    "formula": "\\(N\\) objects, \\(k\\) boxes \\(\\Rightarrow\\) a box with \\(\\ge \\lceil N/k \\rceil\\)",
+    "when": "Guaranteeing more than two objects in some class.",
+    "example": "100 people: \\(\\lceil 100/12 \\rceil = 9\\) share a month.",
+    "watch": "Says 'some box', never 'a particular box'."
+   },
+   {
+    "name": "Guarantee threshold",
+    "formula": "\\(k(r-1)+1\\) objects force \\(r\\) in some one of \\(k\\) boxes",
+    "when": "'How many must be chosen to guarantee...'",
+    "example": "3 of a suit: \\(4 \\cdot 2 + 1 = 9\\).",
+    "watch": "Always give the extremal example (\\(r-1\\) per box) for sharpness."
+   },
+   {
+    "name": "Constructed holes",
+    "formula": "Remainders mod n; odd parts; colour classes relative to a fixed vertex",
+    "when": "The natural objects do not work as pigeons directly.",
+    "example": "Partial sums \\(S_1,\\dots,S_n\\) mod \\(n\\) give a block sum divisible by \\(n\\).",
+    "watch": "Check the hole count and that each object lands in exactly one hole."
+   },
+   {
+    "name": "Two/three-set inclusion–exclusion",
+    "formula": "\\(|A\\cup B| = |A|+|B|-|A\\cap B|\\); three sets add back \\(|A\\cap B\\cap C|\\)",
+    "when": "Counting a union of overlapping sets.",
+    "example": "Divisible by 2, 3 or 5 up to 1000: 734.",
+    "watch": "Use lcm for 'divisible by both'."
+   },
+   {
+    "name": "General inclusion–exclusion (none form)",
+    "formula": "\\(\\#\\text{none} = \\sum_{k=0}^{n}(-1)^k S_k\\)",
+    "when": "Objects defined by the absence of several properties.",
+    "example": "Coprime to 360 in \\(\\{1..360\\}\\): \\(360-372+120-12=96\\).",
+    "watch": "\\(S_k\\) sums over all \\(\\binom nk\\) intersections."
+   },
+   {
+    "name": "Derangements",
+    "formula": "\\(D_n = n!\\sum_{k=0}^n (-1)^k/k!\\)",
+    "when": "Permutations with no fixed point.",
+    "example": "\\(D_4 = 9\\), \\(D_5 = 44\\).",
+    "watch": "\\(|A_I| = (n-k)!\\), and \\(D_n/n! \\to 1/e\\)."
+   },
+   {
+    "name": "Surjections",
+    "formula": "\\(\\sum_{k=0}^n(-1)^k\\binom nk (n-k)^m\\)",
+    "when": "Onto functions; distributions where every recipient gets something.",
+    "example": "5 onto 3: \\(243-96+3=150\\).",
+    "watch": "Check: 0 if \\(m<n\\), \\(n!\\) if \\(m=n\\)."
+   },
+   {
+    "name": "Upper-bounded solutions",
+    "formula": "Bad set \\(A_i\\): \\(x_i \\ge b+1\\); substitute and use \\(\\binom{n+k-1}{k-1}\\)",
+    "when": "\\(x_1+\\dots+x_k=n\\) with \\(x_i \\le b\\).",
+    "example": "\\(x_1+x_2+x_3=11\\), \\(x_i\\le4\\): \\(78-84+9=3\\).",
+    "watch": "Subtract \\(b+1\\), not \\(b\\); keep going until the reduced sum is negative."
+   }
+  ],
+  "stuck": [
+   "For an existence claim, ask what property two objects must share for the conclusion to follow; make that property the hole.",
+   "If the given objects do not work as pigeons, try derived quantities: partial sums, remainders, odd parts, colours relative to a fixed element.",
+   "For a 'least number to guarantee' question, build the worst case first: the largest configuration that avoids the outcome. The answer is one more.",
+   "For a count defined by 'none of' or 'at least one of', name the bad sets, compute the size of a k-fold intersection, and check whether it depends only on k.",
+   "Sanity-check inclusion–exclusion answers on a small case by brute force or by listing.",
+   "If an intermediate result is negative, you have stopped the alternating sum too early."
+  ]
+ }
+}

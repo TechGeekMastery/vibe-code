@@ -1,0 +1,130 @@
+{
+ "subject": "Physics",
+ "sid": "phy",
+ "ui": 0,
+ "course": "Mechanics",
+ "blurb": "From kinematics to quantum mechanics, with the problem-solving to match.",
+ "kind": "program",
+ "code": null,
+ "topics": [
+  {
+   "key": "phy-0-0",
+   "title": "One-dimensional kinematics",
+   "reference": "AP Physics C and University Physics (Young and Freedman); Griffiths for quantum topics"
+  },
+  {
+   "key": "phy-0-1",
+   "title": "Projectile motion",
+   "reference": "AP Physics C and University Physics (Young and Freedman); Griffiths for quantum topics"
+  },
+  {
+   "key": "phy-0-2",
+   "title": "Newton’s laws and free-body diagrams",
+   "reference": "AP Physics C and University Physics (Young and Freedman); Griffiths for quantum topics"
+  },
+  {
+   "key": "phy-0-3",
+   "title": "Friction and inclined planes",
+   "reference": "AP Physics C and University Physics (Young and Freedman); Griffiths for quantum topics"
+  },
+  {
+   "key": "phy-0-4",
+   "title": "Circular motion",
+   "reference": "AP Physics C and University Physics (Young and Freedman); Griffiths for quantum topics"
+  },
+  {
+   "key": "phy-0-5",
+   "title": "Work and kinetic energy",
+   "reference": "AP Physics C and University Physics (Young and Freedman); Griffiths for quantum topics"
+  },
+  {
+   "key": "phy-0-6",
+   "title": "Potential energy and energy conservation",
+   "reference": "AP Physics C and University Physics (Young and Freedman); Griffiths for quantum topics"
+  },
+  {
+   "key": "phy-0-7",
+   "title": "Momentum and collisions",
+   "reference": "AP Physics C and University Physics (Young and Freedman); Griffiths for quantum topics"
+  },
+  {
+   "key": "phy-0-8",
+   "title": "Rotational kinematics and torque",
+   "reference": "AP Physics C and University Physics (Young and Freedman); Griffiths for quantum topics"
+  },
+  {
+   "key": "phy-0-9",
+   "title": "Rotational dynamics and angular momentum",
+   "reference": "AP Physics C and University Physics (Young and Freedman); Griffiths for quantum topics"
+  },
+  {
+   "key": "phy-0-10",
+   "title": "Gravitation and orbits",
+   "reference": "AP Physics C and University Physics (Young and Freedman); Griffiths for quantum topics"
+  },
+  {
+   "key": "phy-0-11",
+   "title": "Simple harmonic motion",
+   "reference": "AP Physics C and University Physics (Young and Freedman); Griffiths for quantum topics"
+  }
+ ],
+ "otherCourses": [
+  {
+   "course": "Waves, Fluids & Thermodynamics",
+   "topics": [
+    "Wave properties and superposition",
+    "Sound and the Doppler effect",
+    "Pressure and buoyancy",
+    "Fluid flow and Bernoulli’s equation",
+    "Heat, temperature, and calorimetry",
+    "Ideal gases and kinetic theory",
+    "The first law of thermodynamics",
+    "Heat engines and entropy"
+   ]
+  },
+  {
+   "course": "Electricity & Magnetism",
+   "topics": [
+    "Coulomb’s law",
+    "Electric fields and Gauss’s law",
+    "Electric potential",
+    "Capacitance",
+    "Current, resistance, and Ohm’s law",
+    "DC circuits and Kirchhoff’s laws",
+    "RC circuits",
+    "Magnetic forces",
+    "Sources of magnetic fields",
+    "Faraday’s law and induction",
+    "Inductance and RL/LC circuits",
+    "AC circuits"
+   ]
+  },
+  {
+   "course": "Optics & Modern Physics",
+   "topics": [
+    "Reflection and refraction",
+    "Mirrors and lenses",
+    "Interference and diffraction",
+    "Time dilation and length contraction",
+    "Relativistic energy and momentum",
+    "Photons and the photoelectric effect",
+    "Atomic spectra and the Bohr model",
+    "Matter waves and uncertainty",
+    "Nuclear physics and radioactive decay"
+   ]
+  },
+  {
+   "course": "Quantum & Beyond",
+   "topics": [
+    "The Schrödinger equation and the particle in a box",
+    "Quantum tunneling",
+    "The hydrogen atom and quantum numbers",
+    "Spin",
+    "Entanglement and Bell’s theorem",
+    "Lagrangian mechanics",
+    "General relativity basics",
+    "The Standard Model"
+   ]
+  }
+ ]
+}

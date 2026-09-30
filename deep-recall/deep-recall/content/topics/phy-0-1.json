@@ -1,0 +1,666 @@
+{
+ "key": "phy-0-1",
+ "title": "Projectile motion",
+ "v": 1,
+ "scope": "Motion in a vertical plane under constant gravitational acceleration with air resistance neglected: position, velocity and acceleration vectors, independence of components, time of flight, maximum height, trajectory, range, and launches to a different height; drag is discussed only qualitatively, and forces are left to the next chapter.",
+ "sources": [
+  {
+   "title": "OpenStax University Physics Vol. 1, 4.2 Acceleration Vector",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/4-2-acceleration-vector"
+  },
+  {
+   "title": "OpenStax University Physics Vol. 1, 4.3 Projectile Motion",
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/4-3-projectile-motion"
+  },
+  {
+   "title": "MIT 8.01SC Classical Mechanics, Chapter 5: Two Dimensional Kinematics",
+   "url": "https://ocw.mit.edu/courses/8-01sc-classical-mechanics-fall-2016/mit8_01scs22_chapter5.pdf"
+  }
+ ],
+ "pre": [
+  "phy-0-0"
+ ],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Position, velocity, acceleration vectors",
+   "d": "Differentiate a position vector r(t) componentwise to get velocity and acceleration, and compute speed and direction.",
+   "type": "concept"
+  },
+  {
+   "id": "k2",
+   "t": "Independence of horizontal and vertical motion",
+   "d": "Explain why, with a = −g ĵ, the horizontal and vertical motions are separate one-dimensional problems sharing only time.",
+   "type": "concept"
+  },
+  {
+   "id": "k3",
+   "t": "Resolving the launch velocity",
+   "d": "Write v₀ₓ = v₀ cos θ₀ and v₀ᵧ = v₀ sin θ₀ and set up both component equations.",
+   "type": "procedure"
+  },
+  {
+   "id": "k4",
+   "t": "Time to apex, flight time, maximum height",
+   "d": "Derive and use the apex condition vᵧ = 0 to find time to the top, maximum height and level-ground flight time.",
+   "type": "procedure"
+  },
+  {
+   "id": "k5",
+   "t": "The trajectory is a parabola",
+   "d": "Eliminate t to obtain y(x) and explain why the path is parabolic.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k6",
+   "t": "Level-ground range and its maximum",
+   "d": "Derive R = v₀² sin 2θ₀ / g, show the maximum is at 45° and that complementary angles give equal ranges.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k7",
+   "t": "Launch and landing at different heights",
+   "d": "Solve the vertical quadratic for the landing time, reject the nonphysical root, and find the horizontal distance.",
+   "type": "skill"
+  },
+  {
+   "id": "k8",
+   "t": "Velocity at a point of the path",
+   "d": "Find speed and direction at any time or at impact from the components.",
+   "type": "skill"
+  },
+  {
+   "id": "k9",
+   "t": "Limits of the drag-free model",
+   "d": "State what neglecting air resistance assumes and how drag qualitatively changes range and optimal angle.",
+   "type": "fact"
+  }
+ ],
+ "intro": "A thrown ball, a jet of water, a long jumper and a package released from an aircraft all follow curved paths. The question this chapter answers is how to predict such a path exactly: where the body will be at each moment, how high it will rise, where it will land, and how fast it will be moving when it does.\n\nThe answer rests on one structural fact. Near Earth's surface, and with air resistance neglected, the only acceleration is the constant gravitational acceleration, pointing straight down. The horizontal part of the motion is therefore unaccelerated and the vertical part is free fall, and these two one-dimensional motions proceed independently, linked only by the common clock. Projectile motion is thus the previous chapter applied twice. Before doing that you need the vector language for motion in a plane; once it is in place, the curved path, its range and its dependence on launch angle all follow by calculation rather than by memorized rules.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "Position, velocity, and acceleration as vectors",
+   "kps": [
+    "k1"
+   ],
+   "md": "A body moving in a plane needs two numbers to locate it, so the one-dimensional definitions must be extended. This section does that with vectors and shows that each vector equation is simply a pair of one-dimensional equations.\n\n**Definitions.** Fix axes: \\( x \\) horizontal and \\( y \\) vertical (upward), with unit vectors \\( \\hat{\\imath} \\) and \\( \\hat{\\jmath} \\). The **position vector** is\n\\[ \\vec r(t) = x(t)\\,\\hat{\\imath} + y(t)\\,\\hat{\\jmath}. \\]\nThe **velocity vector** and **acceleration vector** are its derivatives:\n\\[ \\vec v = \\frac{d\\vec r}{dt} = \\frac{dx}{dt}\\hat{\\imath} + \\frac{dy}{dt}\\hat{\\jmath}, \\qquad \\vec a = \\frac{d\\vec v}{dt} = \\frac{dv_x}{dt}\\hat{\\imath} + \\frac{dv_y}{dt}\\hat{\\jmath}. \\]\nBecause the unit vectors are constant, differentiating a vector means differentiating each component separately. The speed is the magnitude \\( |\\vec v| = \\sqrt{v_x^2 + v_y^2} \\), and the direction of motion is given by the angle \\( \\phi \\) with \\( \\tan\\phi = v_y/v_x \\) (checking the quadrant from the signs of the components).\n\n**Why velocity is tangent to the path.** Over a short interval the displacement \\( \\Delta\\vec r \\) is a chord of the path. As \\( \\Delta t \\to 0 \\) the chord's direction approaches the tangent direction, and \\( \\Delta\\vec r/\\Delta t \\) approaches \\( \\vec v \\). So the velocity always points along the path, in the direction of travel. The acceleration has no such restriction: it can point anywhere, and in projectile motion it points straight down while the path curves.\n\n**Worked example.** A particle has \\( \\vec r(t) = (3.0t)\\,\\hat{\\imath} + (4.0t - 4.9t^2)\\,\\hat{\\jmath} \\) in meters, with \\( t \\) in seconds.\n\n1. Velocity: \\( \\vec v = 3.0\\,\\hat{\\imath} + (4.0 - 9.8t)\\,\\hat{\\jmath} \\) m/s.\n2. Acceleration: \\( \\vec a = -9.8\\,\\hat{\\jmath} \\) m/s², constant and downward. This is a projectile.\n3. At \\( t = 0.50 \\) s: \\( \\vec v = 3.0\\,\\hat{\\imath} - 0.90\\,\\hat{\\jmath} \\) m/s. Speed: \\( \\sqrt{3.0^2 + 0.90^2} = 3.13 \\) m/s. Direction: \\( \\tan\\phi = -0.90/3.0 \\), so the velocity points \\( 16.7^\\circ \\) below the horizontal. The particle is past its highest point, since \\( v_y < 0 \\).\n\n**Common mistake.** Adding magnitudes instead of vectors: the speed is not \\( |v_x| + |v_y| \\) (here that would give 3.9 m/s). The components are perpendicular, so the magnitude comes from the Pythagorean theorem. A second mistake is reading the angle from \\( \\arctan(v_y/v_x) \\) without checking signs; a velocity with \\( v_x < 0 \\) points into the second or third quadrant, which the calculator's arctangent never returns.",
+   "questions": [
+    {
+     "id": "s1q1",
+     "kp": "k1",
+     "type": "number",
+     "prompt": "A particle has \\( \\vec r(t) = (2.0t^2)\\,\\hat{\\imath} + (3.0t - t^3)\\,\\hat{\\jmath} \\) (meters, seconds). Find its speed at \\( t = 2.0 \\) s, in m/s.",
+     "answer": "sqrt(8^2 + 9^2)",
+     "tol": 0.005,
+     "why": "\\( \\vec v = 4.0t\\,\\hat{\\imath} + (3.0 - 3.0t^2)\\,\\hat{\\jmath} \\). At \\( t = 2.0 \\): \\( \\vec v = 8.0\\,\\hat{\\imath} - 9.0\\,\\hat{\\jmath} \\). Speed \\( = \\sqrt{64 + 81} = \\sqrt{145} = 12.0 \\) m/s."
+    },
+    {
+     "id": "s1q2",
+     "kp": "k1",
+     "type": "written",
+     "prompt": "Explain why the velocity vector of a particle is always tangent to its path, while the acceleration vector need not be. Give a concrete motion in which the acceleration is perpendicular to the velocity at some instant.",
+     "rubric": [
+      "Velocity is the limit of Δr/Δt, and Δr is a chord that approaches the tangent direction",
+      "Acceleration is the rate of change of velocity, which can change in direction as well as magnitude, so it is not tied to the path direction",
+      "Gives a valid example, such as a projectile at its highest point (v horizontal, a vertical)"
+     ],
+     "model": "The displacement \\( \\Delta\\vec r \\) over a short interval is the chord joining two nearby points of the path. As \\( \\Delta t \\to 0 \\), the chord's direction approaches the direction of the tangent line, so \\( \\vec v = \\lim \\Delta\\vec r/\\Delta t \\) is tangent to the path. The acceleration is the rate of change of \\( \\vec v \\); it records changes in direction as well as in magnitude, so it has no reason to point along the path. At the highest point of a projectile's path, \\( \\vec v = v_{0x}\\hat{\\imath} \\) is horizontal while \\( \\vec a = -g\\hat{\\jmath} \\) is vertical: perpendicular.",
+     "why": "Tangency is a consequence of the definition as a limit of chords; acceleration measures turning as well as speeding up, which is why it points toward the inside of a curving path."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "The projectile model: independent components",
+   "kps": [
+    "k2",
+    "k3"
+   ],
+   "md": "This section states the model precisely and shows why it turns a curved-path problem into two straight-line problems.\n\n**The model.** A **projectile** is a body that, after launch, moves under gravity alone. We assume (i) air resistance is negligible, (ii) the region is small enough that \\( g \\) is constant in magnitude and direction, and (iii) the body can be treated as a particle. Then\n\\[ \\vec a = -g\\,\\hat{\\jmath}, \\qquad a_x = 0, \\quad a_y = -g, \\]\nwith \\( g = 9.80 \\) m/s² and the \\( y \\)-axis upward.\n\n**Independence of the components.** Because the acceleration vector has components \\( (0, -g) \\), and differentiation acts componentwise, the \\( x \\)-equation \\( dv_x/dt = 0 \\) contains nothing about \\( y \\), and the \\( y \\)-equation \\( dv_y/dt = -g \\) contains nothing about \\( x \\). Each can be integrated on its own with the constant-acceleration results from one-dimensional kinematics:\n\\[ x = x_0 + v_{0x}t, \\qquad v_x = v_{0x}, \\]\n\\[ y = y_0 + v_{0y}t - \\tfrac12 g t^2, \\qquad v_y = v_{0y} - gt. \\]\nThe only thing the two motions share is the time \\( t \\). A problem typically uses one component to find \\( t \\) and the other to use it.\n\n**Resolving the launch velocity.** If the body is launched with speed \\( v_0 \\) at angle \\( \\theta_0 \\) above the horizontal, the **launch angle**, then\n\\[ v_{0x} = v_0\\cos\\theta_0, \\qquad v_{0y} = v_0\\sin\\theta_0. \\]\n\n**Worked example (horizontal launch).** A ball rolls off a horizontal table 1.20 m high at 2.50 m/s. Where does it land, and with what vertical velocity? Put the origin on the floor directly below the edge.\n\n1. Components: \\( v_{0x} = 2.50 \\) m/s, \\( v_{0y} = 0 \\), \\( y_0 = 1.20 \\) m.\n2. Vertical motion determines the time: \\( 0 = 1.20 - 4.90t^2 \\), so \\( t = \\sqrt{1.20/4.90} = 0.495 \\) s.\n3. Horizontal motion uses that time: \\( x = 2.50 \\times 0.495 = 1.24 \\) m from the foot of the table.\n4. Vertical velocity at landing: \\( v_y = -9.80 \\times 0.495 = -4.85 \\) m/s, while \\( v_x \\) is still 2.50 m/s.\n\nNote that the fall time, 0.495 s, is exactly the time a ball dropped from rest at 1.20 m would take. The horizontal velocity does not delay or hasten the fall.\n\n**Common mistake.** Believing that a faster horizontal launch \"keeps the ball up\" longer. In the drag-free model, the time to fall a given height depends only on \\( v_{0y} \\) and the height; a bullet fired horizontally and a bullet dropped from the same height at the same instant land together. (With air resistance the components are coupled, because drag depends on the total speed; this is one reason the model is an approximation.) A second mistake is using \\( v_0 \\) itself, rather than its component, in one of the component equations.",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k3",
+     "type": "number",
+     "prompt": "An aircraft flying horizontally at 60.0 m/s at an altitude of 180 m releases a package. Neglecting air resistance and using \\( g = 9.80 \\) m/s², how far horizontally, in meters, does the package travel before reaching the ground?",
+     "answer": "60*sqrt(2*180/9.8)",
+     "tol": 0.005,
+     "why": "The package leaves with the aircraft's velocity: \\( v_{0x} = 60.0 \\) m/s, \\( v_{0y} = 0 \\). Vertical: \\( 180 = 4.90t^2 \\), \\( t = 6.06 \\) s. Horizontal: \\( x = 60.0 \\times 6.06 = 364 \\) m."
+    },
+    {
+     "id": "s2q2",
+     "kp": "k2",
+     "type": "written",
+     "prompt": "Two identical balls leave the edge of a table at the same instant: A is simply released from rest, B is pushed off horizontally at 3.0 m/s. Which reaches the floor first? Justify from the component equations, and name the assumption on which your answer depends.",
+     "rubric": [
+      "Both have v₀ᵧ = 0 and the same initial height",
+      "The y-equation y = y₀ − ½gt² does not contain vₓ, so the landing time is the same",
+      "They land simultaneously; B lands farther out",
+      "Assumption: air resistance negligible (otherwise drag couples the components)"
+     ],
+     "model": "For both balls \\( y_0 \\) is the table height and \\( v_{0y} = 0 \\), and the vertical equation \\( y = y_0 - \\tfrac12 g t^2 \\) contains neither \\( x \\) nor \\( v_x \\). So both reach \\( y = 0 \\) at the same time \\( t = \\sqrt{2y_0/g} \\); they land simultaneously, with B a distance \\( 3.0t \\) farther from the table. This relies on the acceleration being exactly \\( -g\\hat{\\jmath} \\), i.e. on neglecting air resistance, which would depend on the total speed and so would couple the horizontal and vertical motions.",
+     "why": "This is the operational content of the statement that perpendicular components evolve independently."
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "Time to the apex, maximum height, and the shape of the path",
+   "kps": [
+    "k4",
+    "k5"
+   ],
+   "md": "With the component equations in hand, the natural questions are how long the projectile rises, how high it goes, and what curve it traces. This section answers all three for a launch from the origin at speed \\( v_0 \\) and angle \\( \\theta_0 \\).\n\n**The apex.** The highest point, the **apex**, is where the vertical velocity changes sign: \\( v_y = 0 \\). The horizontal velocity is unchanged there, so the velocity at the apex is \\( v_{0x}\\hat{\\imath} \\), not zero. From \\( 0 = v_0\\sin\\theta_0 - gt \\),\n\\[ t_{\\text{top}} = \\frac{v_0\\sin\\theta_0}{g}. \\]\nSubstituting into the \\( y \\)-equation, or using \\( v_y^2 = v_{0y}^2 - 2g\\,\\Delta y \\) with \\( v_y = 0 \\),\n\\[ H = \\frac{v_0^2\\sin^2\\theta_0}{2g}. \\]\n\n**Flight time on level ground.** Setting \\( y = 0 \\): \\( t\\big(v_0\\sin\\theta_0 - \\tfrac12 g t\\big) = 0 \\), so the landing time is\n\\[ T = \\frac{2v_0\\sin\\theta_0}{g} = 2t_{\\text{top}}. \\]\nThe descent takes as long as the ascent, a consequence of the symmetry of the vertical motion about \\( t_{\\text{top}} \\).\n\n**The trajectory.** To get the path as a curve \\( y(x) \\), eliminate \\( t \\): from \\( x = v_0\\cos\\theta_0\\,t \\), \\( t = x/(v_0\\cos\\theta_0) \\). Substituting,\n\\[ y = x\\tan\\theta_0 - \\frac{g}{2v_0^2\\cos^2\\theta_0}\\,x^2. \\]\nThis is a quadratic in \\( x \\) with negative leading coefficient: the **trajectory** is a downward-opening parabola. The linear term alone would be the straight line along the launch direction; the quadratic term is how far the body has fallen below that line, \\( \\tfrac12 g t^2 \\), rewritten in terms of \\( x \\).\n\n**Worked example.** A ball is launched from level ground at 20.0 m/s, 35.0° above the horizontal; \\( g = 9.80 \\) m/s².\n\n1. Components: \\( v_{0x} = 20.0\\cos 35.0^\\circ = 16.38 \\) m/s, \\( v_{0y} = 20.0\\sin 35.0^\\circ = 11.47 \\) m/s.\n2. Time to apex: \\( 11.47/9.80 = 1.17 \\) s.\n3. Maximum height: \\( 11.47^2/(2 \\times 9.80) = 6.71 \\) m.\n4. Flight time: \\( 2 \\times 1.17 = 2.34 \\) s; horizontal distance \\( 16.38 \\times 2.34 = 38.4 \\) m.\n\nThe plot draws this trajectory parametrically (horizontal axis \\( x \\), vertical axis \\( y \\), both in meters) and marks the apex.\n\n```plot\nx: 0, 42\ny: 0, 12\nxlabel: x (m)\nylabel: y (m)\nparam: 16.383*t; 11.472*t - 4.9*t^2 | trajectory\nt: 0, 2.341\npoint: 19.18, 6.714\n```\n\n**Common mistakes.** Setting the velocity to zero at the apex; only its vertical component vanishes. Using the level-ground flight time \\( T = 2v_0\\sin\\theta_0/g \\) when the landing point is higher or lower than the launch point; that formula came from setting \\( y = 0 \\) and is valid only there. Mixing degrees and radians on a calculator when evaluating \\( \\sin\\theta_0 \\).",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k4",
+     "type": "number",
+     "prompt": "A ball is launched from level ground at 25.0 m/s at 60.0° above the horizontal. Using \\( g = 9.80 \\) m/s², find its maximum height, in meters.",
+     "answer": "(25*sin(60*pi/180))^2/(2*9.8)",
+     "tol": 0.005,
+     "why": "\\( v_{0y} = 25.0\\sin 60.0^\\circ = 21.65 \\) m/s. \\( H = v_{0y}^2/(2g) = 468.75/19.6 = 23.9 \\) m."
+    },
+    {
+     "id": "s3q2",
+     "kp": "k5",
+     "type": "expression",
+     "prompt": "A projectile is launched from the origin with speed \\( v_0 \\) at angle \\( \\theta \\) above the horizontal. Give its height \\( y \\) as a function of horizontal position \\( x \\), in terms of \\( x \\), \\( v_0 \\) (type `v0`), \\( \\theta \\) (type `theta`) and \\( g \\).",
+     "answer": "x*tan(theta) - g*x^2/(2*v0^2*cos(theta)^2)",
+     "vars": "x v0 theta g",
+     "why": "Eliminate \\( t = x/(v_0\\cos\\theta) \\) from \\( y = v_0\\sin\\theta\\,t - \\tfrac12 g t^2 \\): \\( y = x\\tan\\theta - \\dfrac{g x^2}{2v_0^2\\cos^2\\theta} \\)."
+    },
+    {
+     "id": "s3q3",
+     "kp": "k4",
+     "type": "mcq",
+     "prompt": "At the highest point of a projectile's path (air resistance neglected, launch angle between 0° and 90°), which statement is correct?",
+     "options": [
+      "\\( \\vec v = 0 \\) and \\( \\vec a = 0 \\)",
+      "\\( \\vec v = 0 \\) and \\( \\vec a = -g\\hat{\\jmath} \\)",
+      "\\( \\vec v = v_0\\cos\\theta_0\\,\\hat{\\imath} \\) and \\( \\vec a = -g\\hat{\\jmath} \\)",
+      "\\( \\vec v = v_0\\cos\\theta_0\\,\\hat{\\imath} \\) and \\( \\vec a = 0 \\)"
+     ],
+     "answer": 2,
+     "why": "Only \\( v_y \\) vanishes at the apex; \\( v_x = v_0\\cos\\theta_0 \\) is constant throughout. The acceleration is \\( -g\\hat{\\jmath} \\) at every instant, including the apex. Options with \\( \\vec v = 0 \\) confuse the vertical component with the whole vector; options with \\( \\vec a = 0 \\) confuse zero velocity with zero rate of change."
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "Range on level ground and the best launch angle",
+   "kps": [
+    "k6"
+   ],
+   "md": "Gunners asked this question long before calculus, and Galileo's *Two New Sciences* (1638) answered it for the drag-free case: at a given launch speed, which angle carries the projectile farthest over level ground? This section derives the range and answers it.\n\n**The range formula.** The **horizontal range** \\( R \\) is the horizontal distance traveled when the projectile returns to its launch height. Multiply the horizontal velocity by the flight time from the previous section:\n\\[ R = v_0\\cos\\theta_0 \\cdot \\frac{2v_0\\sin\\theta_0}{g} = \\frac{v_0^2\\,2\\sin\\theta_0\\cos\\theta_0}{g} = \\frac{v_0^2\\sin 2\\theta_0}{g}, \\]\nusing the double-angle identity \\( \\sin 2\\theta = 2\\sin\\theta\\cos\\theta \\).\n\n**Maximum range.** For fixed \\( v_0 \\), \\( R \\) is largest when \\( \\sin 2\\theta_0 \\) is largest, which is 1, at \\( 2\\theta_0 = 90^\\circ \\), i.e. \\( \\theta_0 = 45^\\circ \\). The maximum range is \\( R_{\\max} = v_0^2/g \\).\n\n**Complementary angles.** Since \\( \\sin(180^\\circ - \\alpha) = \\sin\\alpha \\), the angles \\( \\theta_0 \\) and \\( 90^\\circ - \\theta_0 \\) give\n\\[ \\sin 2(90^\\circ - \\theta_0) = \\sin(180^\\circ - 2\\theta_0) = \\sin 2\\theta_0, \\]\nhence equal ranges. The higher launch spends longer in the air (larger \\( v_{0y} \\)) but moves more slowly horizontally (smaller \\( v_{0x} \\)), and the two effects cancel exactly. The paths are different: the steeper one rises higher.\n\n**Worked example.** At \\( v_0 = 20.0 \\) m/s and \\( g = 9.80 \\) m/s²:\n1. \\( \\theta_0 = 35.0^\\circ \\): \\( R = 400\\sin 70.0^\\circ/9.80 = 38.4 \\) m, matching the previous section's step-by-step result.\n2. \\( \\theta_0 = 55.0^\\circ \\): \\( \\sin 110^\\circ = \\sin 70^\\circ \\), so again \\( R = 38.4 \\) m.\n3. \\( \\theta_0 = 45.0^\\circ \\): \\( R = 400/9.80 = 40.8 \\) m, the maximum.\n\nIn the plot, drag the slider \\( a \\) (the launch angle in degrees, launch speed fixed at 20.0 m/s). Watch the vertical line marking the landing point: it moves outward as \\( a \\) rises toward 45, then back in. Setting \\( a \\) to 35 and then 55 lands the ball at the same point along visibly different arcs.\n\n```plot\nx: 0, 45\ny: 0, 21\nxlabel: x (m)\nylabel: y (m)\nslider: a, 5, 85, 35 | launch angle (degrees)\nparam: 20*cos(a*pi/180)*t; 20*sin(a*pi/180)*t - 4.9*t^2 | trajectory, v0 = 20 m/s\nt: 0, 4.1\nvline: 400*sin(2*a*pi/180)/9.8 | landing point\n```\n\n(The curve is drawn for a fixed time window and so continues below ground level after landing; only the part above the axis is physical.)\n\n**Common mistakes.** Applying \\( R = v_0^2\\sin 2\\theta_0/g \\) when launch and landing heights differ; its derivation used \\( y = 0 \\) at landing. Concluding that 45° is always optimal: for a launch from above the landing level (a shot put released at shoulder height), the best angle is below 45°, and air resistance generally lowers it further.",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k6",
+     "type": "number",
+     "prompt": "What is the minimum launch speed, in m/s, that allows a projectile to reach a target 60.0 m away on level ground? Use \\( g = 9.80 \\) m/s².",
+     "answer": "sqrt(60*9.8)",
+     "tol": 0.005,
+     "why": "For a given speed the greatest range is \\( v_0^2/g \\), at 45°. The minimum speed satisfies \\( v_0^2/g = 60.0 \\), so \\( v_0 = \\sqrt{588} = 24.2 \\) m/s."
+    },
+    {
+     "id": "s4q2",
+     "kp": "k6",
+     "type": "written",
+     "prompt": "Prove that on level ground the launch angles \\( \\theta_0 \\) and \\( 90^\\circ - \\theta_0 \\) give the same range, and that 45° gives the maximum. State every assumption the proof relies on.",
+     "rubric": [
+      "Derives or quotes R = v₀² sin 2θ₀/g from R = v₀ₓ · T with T = 2v₀ sin θ₀ / g",
+      "Shows sin 2(90° − θ₀) = sin(180° − 2θ₀) = sin 2θ₀",
+      "Maximum of sin 2θ₀ on 0° to 90° is 1 at θ₀ = 45°",
+      "Assumptions: no air resistance, constant g, landing at launch height, same v₀"
+     ],
+     "model": "Assume no air resistance, constant \\( g \\), and landing at the launch height. Then \\( T = 2v_0\\sin\\theta_0/g \\) and \\( R = v_0\\cos\\theta_0\\,T = v_0^2\\sin 2\\theta_0/g \\). For the complementary angle, \\( \\sin 2(90^\\circ - \\theta_0) = \\sin(180^\\circ - 2\\theta_0) = \\sin 2\\theta_0 \\), so the ranges agree. For \\( 0^\\circ < \\theta_0 < 90^\\circ \\), \\( 2\\theta_0 \\in (0^\\circ, 180^\\circ) \\) and \\( \\sin 2\\theta_0 \\le 1 \\), with equality only at \\( 2\\theta_0 = 90^\\circ \\); hence the unique maximum is at \\( \\theta_0 = 45^\\circ \\), with \\( R_{\\max} = v_0^2/g \\).",
+     "why": "Each assumption is used: drag would change the component equations, and a different landing height would change \\( T \\)."
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "Launches to a different height, impact velocity, and the limits of the model",
+   "kps": [
+    "k7",
+    "k8",
+    "k9"
+   ],
+   "md": "Real launches rarely land at their starting height. This section handles the general case, shows how to get the velocity at impact, and states what the drag-free model leaves out.\n\n**General procedure.** Place the origin at the launch point with \\( y \\) up. The landing condition is \\( y = y_{\\text{land}} \\), a known number (negative if the landing point is below the launch point). The vertical equation\n\\[ y_{\\text{land}} = v_{0y}t - \\tfrac12 g t^2 \\]\nis a quadratic in \\( t \\). It has two roots; the physical one is the positive root that describes the body arriving at that height after launch (for a landing point below the launch, the other root is negative and describes a fictitious earlier time on the extended parabola). Then \\( x = v_{0x}t \\) gives the horizontal distance.\n\n**Impact velocity.** At the landing time, \\( v_x = v_{0x} \\) and \\( v_y = v_{0y} - gt \\); the speed is \\( \\sqrt{v_x^2 + v_y^2} \\) and the angle below the horizontal is \\( \\arctan(|v_y|/v_x) \\). A useful check comes from the time-free equation of one-dimensional kinematics applied to the vertical motion: \\( v_y^2 = v_{0y}^2 - 2g\\,\\Delta y \\), so\n\\[ v^2 = v_{0x}^2 + v_{0y}^2 - 2g\\,\\Delta y = v_0^2 - 2g\\,\\Delta y. \\]\nThe speed at a given height depends only on the launch speed and the drop, not on the launch angle. (The chapter on energy will explain this as conservation of mechanical energy.)\n\n**Worked example.** A stone is thrown from the top of a 25.0 m cliff at 18.0 m/s, 30.0° above the horizontal, and lands on flat ground below; \\( g = 9.80 \\) m/s².\n\n1. Components: \\( v_{0x} = 18.0\\cos 30.0^\\circ = 15.59 \\) m/s, \\( v_{0y} = 9.00 \\) m/s.\n2. Landing: \\( -25.0 = 9.00t - 4.90t^2 \\), i.e. \\( 4.90t^2 - 9.00t - 25.0 = 0 \\), so\n\\[ t = \\frac{9.00 + \\sqrt{81.0 + 490}}{9.80} = 3.36 \\text{ s}. \\]\n3. Horizontal distance: \\( 15.59 \\times 3.36 = 52.3 \\) m.\n4. Impact: \\( v_y = 9.00 - 9.80(3.36) = -23.9 \\) m/s, speed \\( \\sqrt{15.59^2 + 23.9^2} = 28.5 \\) m/s at \\( \\arctan(23.9/15.59) = 56.9^\\circ \\) below the horizontal.\n5. Check: \\( v^2 = 18.0^2 + 2(9.80)(25.0) = 814 \\), and \\( \\sqrt{814} = 28.5 \\) m/s.\n\n**Limits of the model.** The drag-free model is excellent for dense, slow bodies over short distances (a thrown stone, a ball rolling off a table) and poor for light or fast ones (a badminton shuttle, a long drive in golf, artillery). **Air resistance** acts opposite to the velocity and grows with speed. It reduces both height and range, makes the descent steeper and shorter than the ascent (the path is no longer a parabola), and couples the components. For realistic projectiles with drag, the angle of maximum range is generally below 45°; how far below depends on the body and speed, and no simple formula gives it.\n\n**Common mistakes.** Taking the negative root of the quadratic, or the root for the wrong crossing when the target is above the launch point (then both roots may be positive: one on the way up, one on the way down, and the problem statement decides which is meant). Using \\( y_{\\text{land}} = +25.0 \\) m for a landing point below the launch point while keeping \\( y \\) upward.",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k7",
+     "type": "number",
+     "prompt": "A ball is thrown from the roof of a 10.0 m tall building at 15.0 m/s, 40.0° above the horizontal, and lands on level ground. Using \\( g = 9.80 \\) m/s², how far from the base of the building does it land, in meters?",
+     "answer": "15*cos(40*pi/180)*(15*sin(40*pi/180) + sqrt((15*sin(40*pi/180))^2 + 2*9.8*10))/9.8",
+     "tol": 0.005,
+     "why": "\\( v_{0x} = 11.49 \\) m/s, \\( v_{0y} = 9.64 \\) m/s. Landing: \\( -10.0 = 9.64t - 4.90t^2 \\), so \\( t = \\big(9.64 + \\sqrt{9.64^2 + 196}\\big)/9.80 = 2.72 \\) s. Distance \\( 11.49 \\times 2.72 = 31.2 \\) m."
+    },
+    {
+     "id": "s5q2",
+     "kp": "k8",
+     "type": "number",
+     "prompt": "A ball is thrown at 12.0 m/s, 25.0° above the horizontal, from a platform 8.00 m above level ground. Using \\( g = 9.80 \\) m/s², find its speed just before it lands, in m/s.",
+     "answer": "sqrt(12^2 + 2*9.8*8)",
+     "tol": 0.005,
+     "why": "\\( v^2 = v_0^2 - 2g\\,\\Delta y = 144 + 2(9.80)(8.00) = 300.8 \\), so \\( v = 17.3 \\) m/s. The launch angle does not enter; computing components (\\( v_x = 10.88 \\), \\( v_y = -13.51 \\) m/s at landing) gives the same result."
+    }
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "t": "position vector",
+   "d": "The vector r(t) = x(t) î + y(t) ĵ from the origin to the particle."
+  },
+  {
+   "t": "velocity vector",
+   "d": "v = dr/dt, computed componentwise; tangent to the path in the direction of motion."
+  },
+  {
+   "t": "acceleration vector",
+   "d": "a = dv/dt; records changes in both the magnitude and direction of velocity."
+  },
+  {
+   "t": "projectile",
+   "d": "A body moving after launch under gravity alone, with air resistance neglected, so that a = −g ĵ."
+  },
+  {
+   "t": "launch angle",
+   "d": "The angle θ₀ between the initial velocity and the horizontal; v₀ₓ = v₀ cos θ₀, v₀ᵧ = v₀ sin θ₀."
+  },
+  {
+   "t": "apex",
+   "d": "The highest point of the path, where vᵧ = 0; the velocity there is horizontal, equal to v₀ₓ."
+  },
+  {
+   "t": "trajectory",
+   "d": "The path of the projectile as a curve y(x); in the drag-free model a downward-opening parabola."
+  },
+  {
+   "t": "time of flight",
+   "d": "The time between launch and landing; 2v₀ sin θ₀ / g when landing at launch height."
+  },
+  {
+   "t": "horizontal range",
+   "d": "The horizontal distance traveled on returning to launch height; R = v₀² sin 2θ₀ / g."
+  },
+  {
+   "t": "air resistance (drag)",
+   "d": "A force opposite to the velocity that grows with speed; it reduces range and height and breaks the independence of components."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "formula",
+   "front": "Velocity and acceleration vectors from r(t)",
+   "back": "\\( \\vec v = \\frac{dx}{dt}\\hat{\\imath} + \\frac{dy}{dt}\\hat{\\jmath},\\ \\vec a = \\frac{dv_x}{dt}\\hat{\\imath} + \\frac{dv_y}{dt}\\hat{\\jmath} \\)",
+   "kp": "k1"
+  },
+  {
+   "id": "c2",
+   "type": "concept",
+   "front": "Why is velocity tangent to the path?",
+   "back": "It is the limit of Δr/Δt, and the chord Δr tends to the tangent direction.",
+   "kp": "k1"
+  },
+  {
+   "id": "c3",
+   "type": "formula",
+   "front": "Acceleration of a projectile (y up)",
+   "back": "\\( \\vec a = -g\\hat{\\jmath}:\\ a_x = 0,\\ a_y = -g \\)",
+   "kp": "k2"
+  },
+  {
+   "id": "c4",
+   "type": "concept",
+   "front": "What do the horizontal and vertical motions of a projectile have in common?",
+   "back": "Only the time t. Each is an independent 1D problem (constant velocity, free fall).",
+   "kp": "k2"
+  },
+  {
+   "id": "c5",
+   "type": "concept",
+   "front": "Ball dropped vs ball launched horizontally from the same height: which lands first (no drag)?",
+   "back": "Same time; the fall time depends only on v₀ᵧ = 0 and the height.",
+   "kp": "k2"
+  },
+  {
+   "id": "c6",
+   "type": "formula",
+   "front": "Launch velocity components",
+   "back": "\\( v_{0x} = v_0\\cos\\theta_0,\\ v_{0y} = v_0\\sin\\theta_0 \\)",
+   "kp": "k3"
+  },
+  {
+   "id": "c7",
+   "type": "formula",
+   "front": "Time to apex and maximum height",
+   "back": "\\( t_{\\text{top}} = \\frac{v_0\\sin\\theta_0}{g},\\ H = \\frac{v_0^2\\sin^2\\theta_0}{2g} \\)",
+   "kp": "k4"
+  },
+  {
+   "id": "c8",
+   "type": "problem",
+   "front": "Level-ground time of flight in terms of v₀, θ, g",
+   "back": "\\( T = 2v_0\\sin\\theta/g \\) (set \\( y = 0 \\), discard \\( t = 0 \\)).",
+   "answer": "2*v0*sin(theta)/g",
+   "vars": "v0 theta g",
+   "check": "expression",
+   "kp": "k4"
+  },
+  {
+   "id": "c9",
+   "type": "concept",
+   "front": "Velocity at the apex",
+   "back": "Horizontal, equal to \\( v_0\\cos\\theta_0\\,\\hat{\\imath} \\); not zero.",
+   "kp": "k4"
+  },
+  {
+   "id": "c10",
+   "type": "formula",
+   "front": "Trajectory equation",
+   "back": "\\( y = x\\tan\\theta_0 - \\dfrac{g x^2}{2v_0^2\\cos^2\\theta_0} \\)",
+   "kp": "k5"
+  },
+  {
+   "id": "c11",
+   "type": "concept",
+   "front": "Why is the drag-free trajectory a parabola?",
+   "back": "x is linear in t and y is quadratic in t; eliminating t leaves y quadratic in x.",
+   "kp": "k5"
+  },
+  {
+   "id": "c12",
+   "type": "formula",
+   "front": "Level-ground range",
+   "back": "\\( R = \\dfrac{v_0^2\\sin 2\\theta_0}{g} \\), maximum \\( v_0^2/g \\) at 45°",
+   "kp": "k6"
+  },
+  {
+   "id": "c13",
+   "type": "concept",
+   "front": "Which launch angles give the same level-ground range?",
+   "back": "Complementary ones, \\( \\theta_0 \\) and \\( 90^\\circ - \\theta_0 \\), since \\( \\sin(180^\\circ - 2\\theta_0) = \\sin 2\\theta_0 \\).",
+   "kp": "k6"
+  },
+  {
+   "id": "c14",
+   "type": "problem",
+   "front": "Range at 45° for v₀ = 20.0 m/s, g = 9.80 m/s² (in m)",
+   "back": "R = 400/9.80 = 40.8 m",
+   "answer": "400/9.8",
+   "check": "number",
+   "kp": "k6"
+  },
+  {
+   "id": "c15",
+   "type": "concept",
+   "front": "Landing below launch point: which root of the vertical quadratic?",
+   "back": "The positive root; the negative one is a fictitious time before launch.",
+   "kp": "k7"
+  },
+  {
+   "id": "c16",
+   "type": "formula",
+   "front": "Speed at a height Δy relative to launch (no drag)",
+   "back": "\\( v^2 = v_0^2 - 2g\\,\\Delta y \\), independent of launch angle",
+   "kp": "k8"
+  },
+  {
+   "id": "c17",
+   "type": "concept",
+   "front": "Two effects of air resistance on a projectile",
+   "back": "Reduces height and range (path no longer a parabola, steeper descent); lowers the angle of maximum range below 45°.",
+   "kp": "k9"
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k3",
+   "type": "number",
+   "prompt": "A stone is thrown horizontally at 8.00 m/s from the top of a 45.0 m cliff. Using \\( g = 9.80 \\) m/s², how far from the base of the cliff does it land, in meters?",
+   "answer": "8*sqrt(2*45/9.8)",
+   "tol": 0.005,
+   "why": "\\( t = \\sqrt{2(45.0)/9.80} = 3.03 \\) s; \\( x = 8.00 \\times 3.03 = 24.2 \\) m."
+  },
+  {
+   "id": "p2",
+   "kp": "k4",
+   "type": "number",
+   "prompt": "A ball is kicked from level ground at 30.0 m/s, 50.0° above the horizontal. Using \\( g = 9.80 \\) m/s², find its time of flight, in seconds.",
+   "answer": "2*30*sin(50*pi/180)/9.8",
+   "tol": 0.005,
+   "why": "\\( T = 2v_0\\sin\\theta_0/g = 60.0\\sin 50.0^\\circ/9.80 = 4.69 \\) s."
+  },
+  {
+   "id": "p3",
+   "kp": "k4",
+   "type": "expression",
+   "prompt": "Give the maximum height \\( H \\) of a projectile launched from level ground with speed \\( v_0 \\) (type `v0`) at angle \\( \\theta \\) (type `theta`), in terms of \\( v_0 \\), \\( \\theta \\) and \\( g \\).",
+   "answer": "(v0*sin(theta))^2/(2*g)",
+   "vars": "v0 theta g",
+   "why": "At the apex \\( v_y = 0 \\): \\( 0 = (v_0\\sin\\theta)^2 - 2gH \\), so \\( H = v_0^2\\sin^2\\theta/(2g) \\)."
+  },
+  {
+   "id": "p4",
+   "kp": "k7",
+   "type": "written",
+   "prompt": "A ball is thrown at 15.0 m/s, 30.0° above the horizontal, from a 20.0 m cliff. A proposed solution for where it lands: 'R = v₀² sin 2θ₀ / g = (225)(0.866)/9.80 = 19.9 m.' Identify the error, explain why the answer is too small, and set up (without necessarily finishing) the correct calculation.",
+   "rubric": [
+    "States that the range formula assumes landing at launch height",
+    "Explains that the ball continues falling 20.0 m below launch height after passing that level, gaining more horizontal distance",
+    "Writes −20.0 = 7.50t − 4.90t² (or equivalent) and takes the positive root",
+    "Uses x = (15.0 cos 30.0°) t"
+   ],
+   "model": "The formula \\( R = v_0^2\\sin 2\\theta_0/g \\) was derived by setting \\( y = 0 \\) at landing, i.e. by assuming the landing point is at the launch height. Here the ball crosses the launch height 19.9 m out, but keeps falling another 20.0 m, all the while moving horizontally at \\( v_{0x} = 13.0 \\) m/s, so it lands farther away. Correct setup with the origin at launch: \\( -20.0 = 7.50t - 4.90t^2 \\); take the positive root (\\( t = 2.93 \\) s) and then \\( x = 13.0t = 38.0 \\) m.",
+   "why": "Always check that the hypotheses of a derived formula match the situation."
+  },
+  {
+   "id": "p5",
+   "kp": "k6",
+   "type": "numbers",
+   "prompt": "A projectile is launched on level ground at 20.0 m/s and must land 30.0 m away. Using \\( g = 9.80 \\) m/s², find both possible launch angles, in degrees.",
+   "answer": "asin(0.735)*90/pi, 90 - asin(0.735)*90/pi",
+   "tol": 0.005,
+   "why": "\\( \\sin 2\\theta_0 = Rg/v_0^2 = 294/400 = 0.735 \\). So \\( 2\\theta_0 = 47.3^\\circ \\) or \\( 132.7^\\circ \\), giving \\( \\theta_0 = 23.7^\\circ \\) or \\( 66.3^\\circ \\), complementary as expected."
+  },
+  {
+   "id": "p6",
+   "kp": "k6",
+   "type": "mcq",
+   "prompt": "Two projectiles are launched from level ground with the same speed, one at 30° and one at 60°, and air resistance is neglected. Which quantity is the same for both?",
+   "options": [
+    "Maximum height",
+    "Time of flight",
+    "Horizontal range",
+    "Horizontal component of velocity"
+   ],
+   "answer": 2,
+   "why": "\\( R \\propto \\sin 2\\theta_0 \\), and \\( \\sin 60^\\circ = \\sin 120^\\circ \\). Height and flight time depend on \\( \\sin\\theta_0 \\) (larger at 60°), and \\( v_{0x} \\) on \\( \\cos\\theta_0 \\) (larger at 30°); in the range these differences cancel."
+  },
+  {
+   "id": "p7",
+   "kp": "k8",
+   "type": "number",
+   "prompt": "A ball is launched at 25.0 m/s, 53.0° above the horizontal. Using \\( g = 9.80 \\) m/s², find its speed 1.50 s after launch, in m/s.",
+   "answer": "sqrt((25*cos(53*pi/180))^2 + (25*sin(53*pi/180) - 9.8*1.5)^2)",
+   "tol": 0.005,
+   "why": "\\( v_x = 25.0\\cos 53.0^\\circ = 15.05 \\) m/s. \\( v_y = 25.0\\sin 53.0^\\circ - 9.80(1.50) = 19.97 - 14.70 = 5.27 \\) m/s. Speed \\( = \\sqrt{15.05^2 + 5.27^2} = 15.9 \\) m/s."
+  },
+  {
+   "id": "p8",
+   "kp": "k5",
+   "type": "written",
+   "prompt": "Derive the trajectory equation \\( y(x) \\) for a projectile launched from the origin with speed \\( v_0 \\) at angle \\( \\theta_0 \\). Interpret each of its two terms physically, and explain what happens to the derivation when \\( \\theta_0 = 90^\\circ \\).",
+   "rubric": [
+    "Writes x = v₀ cos θ₀ t and y = v₀ sin θ₀ t − ½gt²",
+    "Eliminates t to get y = x tan θ₀ − g x²/(2v₀² cos² θ₀)",
+    "Interprets x tan θ₀ as the straight launch line and the second term as the gravitational drop ½gt²",
+    "At 90°, cos θ₀ = 0, x stays 0 and t cannot be eliminated; the motion is vertical 1D"
+   ],
+   "model": "Components: \\( x = v_0\\cos\\theta_0\\,t \\), \\( y = v_0\\sin\\theta_0\\,t - \\tfrac12 g t^2 \\). For \\( \\cos\\theta_0 \\ne 0 \\), \\( t = x/(v_0\\cos\\theta_0) \\), so \\( y = x\\tan\\theta_0 - \\dfrac{g x^2}{2v_0^2\\cos^2\\theta_0} \\). The first term is the height of the straight line along the launch direction, where the body would be without gravity; the second is \\( \\tfrac12 g t^2 \\) expressed in terms of \\( x \\), the distance fallen below that line. At \\( \\theta_0 = 90^\\circ \\), \\( v_{0x} = 0 \\), so \\( x = 0 \\) for all \\( t \\): \\( t \\) cannot be expressed through \\( x \\), there is no function \\( y(x) \\), and the motion is one-dimensional vertical free fall.",
+   "why": "The two-term reading ('straight line minus fall') is the cleanest way to see why every drag-free trajectory bends below the aiming line by \\( \\tfrac12 gt^2 \\)."
+  },
+  {
+   "id": "p9",
+   "kp": "k7",
+   "type": "number",
+   "prompt": "A ball is kicked from the ground at 22.0 m/s, 40.0° above the horizontal, toward a vertical wall 30.0 m away. Using \\( g = 9.80 \\) m/s², at what height does it strike the wall, in meters?",
+   "answer": "22*sin(40*pi/180)*(30/(22*cos(40*pi/180))) - 4.9*(30/(22*cos(40*pi/180)))^2",
+   "tol": 0.005,
+   "why": "Here \\( x \\) is known, so use it for the time: \\( t = 30.0/(22.0\\cos 40.0^\\circ) = 1.78 \\) s. Then \\( y = 22.0\\sin 40.0^\\circ(1.78) - 4.90(1.78)^2 = 25.17 - 15.53 = 9.65 \\) m."
+  },
+  {
+   "id": "p10",
+   "kp": "k9",
+   "type": "written",
+   "prompt": "Explain why the statement 'horizontal and vertical motions are independent' fails once air resistance is included, and describe two qualitative changes drag makes to a projectile's path.",
+   "rubric": [
+    "Drag is opposite the velocity with magnitude depending on the speed, which involves both components",
+    "So the horizontal acceleration depends on vᵧ and vice versa: the equations are coupled",
+    "Two valid changes: lower height/shorter range; asymmetric path with steeper, shorter descent; optimal angle below 45°"
+   ],
+   "model": "Air resistance points opposite to \\( \\vec v \\) and its magnitude grows with the speed \\( \\sqrt{v_x^2 + v_y^2} \\). Its horizontal component therefore depends on \\( v_y \\) and its vertical component on \\( v_x \\), so \\( dv_x/dt \\) and \\( dv_y/dt \\) are no longer separate equations. Consequences: the projectile loses horizontal speed continuously, so the range and the maximum height are reduced; and because it is moving more slowly on the way down, the descent is steeper and the path is not symmetric about the apex. For realistic bodies the angle of maximum range falls below 45°.",
+   "why": "Independence is a property of the specific acceleration \\( -g\\hat{\\jmath} \\), not a general law of motion."
+  },
+  {
+   "id": "p11",
+   "kp": "k1",
+   "type": "expression",
+   "prompt": "A particle has \\( \\vec r(t) = (5t)\\,\\hat{\\imath} + (12t - 4.9t^2)\\,\\hat{\\jmath} \\) (SI units). Give its speed as a function of \\( t \\).",
+   "answer": "sqrt(25 + (12 - 9.8*t)^2)",
+   "vars": "t",
+   "why": "\\( \\vec v = 5\\,\\hat{\\imath} + (12 - 9.8t)\\,\\hat{\\jmath} \\), so \\( |\\vec v| = \\sqrt{25 + (12 - 9.8t)^2} \\). Its minimum, 5 m/s, occurs at the apex."
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k7",
+   "type": "number",
+   "prompt": "A ball is thrown from a 30.0 m high cliff at 20.0 m/s, 25.0° above the horizontal, and lands on flat ground below. Using \\( g = 9.80 \\) m/s², find the horizontal distance from the cliff to the landing point, in meters.",
+   "answer": "20*cos(25*pi/180)*(20*sin(25*pi/180) + sqrt((20*sin(25*pi/180))^2 + 2*9.8*30))/9.8",
+   "tol": 0.005,
+   "why": "\\( v_{0x} = 18.13 \\) m/s, \\( v_{0y} = 8.45 \\) m/s. \\( -30.0 = 8.45t - 4.90t^2 \\Rightarrow t = \\big(8.45 + \\sqrt{8.45^2 + 588}\\big)/9.80 = 3.48 \\) s. \\( x = 18.13 \\times 3.48 = 63.1 \\) m."
+  },
+  {
+   "id": "e2",
+   "kp": "k6",
+   "type": "written",
+   "prompt": "Starting from \\( \\vec a = -g\\hat{\\jmath} \\), derive the level-ground range of a projectile and show that 45° maximizes it. Then explain precisely why a shot-putter, who releases the shot about 2 m above the ground, does better with an angle below 45° even without air resistance.",
+   "rubric": [
+    "Integrates components: x = v₀ cos θ t, y = v₀ sin θ t − ½gt²",
+    "Finds T from y = 0, then R = v₀² sin 2θ/g; maximum at 45°",
+    "Notes the shot lands below its release height, so the flight time is longer than 2v₀ sin θ/g",
+    "Explains the extra fall time favors more horizontal velocity: lowering θ increases v₀ₓ at little cost in time, so the optimum drops below 45°"
+   ],
+   "model": "Integrating \\( \\vec a = -g\\hat{\\jmath} \\) with launch from the origin: \\( x = v_0\\cos\\theta\\,t \\), \\( y = v_0\\sin\\theta\\,t - \\tfrac12 g t^2 \\). Landing at \\( y = 0 \\) gives \\( T = 2v_0\\sin\\theta/g \\), so \\( R = v_0^2\\sin 2\\theta/g \\), maximal when \\( \\sin 2\\theta = 1 \\), i.e. \\( \\theta = 45^\\circ \\). For a release height \\( h > 0 \\), the shot must fall \\( h \\) below its release level, so its flight time exceeds \\( 2v_0\\sin\\theta/g \\) even at \\( \\theta = 0 \\) (where it is \\( \\sqrt{2h/g} \\)). Part of the air time is thus provided by the height rather than by the vertical launch component, and it is worth trading some vertical component for horizontal speed \\( v_0\\cos\\theta \\). The optimum balances these at an angle below 45°, approaching 45° as \\( h/(v_0^2/g) \\to 0 \\).",
+   "why": "This isolates exactly which hypothesis (landing height equals launch height) the 45° result depends on."
+  },
+  {
+   "id": "e3",
+   "kp": "k6",
+   "type": "number",
+   "prompt": "A player throws a ball at 15.0 m/s to a teammate 18.0 m away at the same height. Using \\( g = 9.80 \\) m/s², find the smaller of the two possible launch angles, in degrees.",
+   "answer": "asin(18*9.8/225)*90/pi",
+   "tol": 0.005,
+   "why": "\\( \\sin 2\\theta_0 = Rg/v_0^2 = 176.4/225 = 0.784 \\). \\( 2\\theta_0 = 51.6^\\circ \\), so \\( \\theta_0 = 25.8^\\circ \\) (the other solution is \\( 64.2^\\circ \\))."
+  },
+  {
+   "id": "e4",
+   "kp": "k2",
+   "type": "written",
+   "prompt": "A dart gun is aimed directly at a target hanging at some height and horizontal distance. The target is released from rest at the instant the dart is fired. Prove that, if the dart's speed is large enough for it to reach the target's line of fall before hitting the ground, it always hits the target (no air resistance).",
+   "rubric": [
+    "Without gravity the dart would travel along the aiming line and reach the target's initial position at time t = d/v₀ₓ",
+    "With gravity the dart's height at any time is the straight-line height minus ½gt²",
+    "The target's height is its initial height minus ½gt²",
+    "At the time the dart reaches the target's x, both are ½gt² below the initial target position: they coincide"
+   ],
+   "model": "Let the target start at \\( (d, h) \\) and the gun at the origin, aimed along the line to the target, so \\( \\tan\\theta_0 = h/d \\). Dart: \\( x = v_0\\cos\\theta_0\\,t \\), \\( y = v_0\\sin\\theta_0\\,t - \\tfrac12 g t^2 \\). It reaches \\( x = d \\) at \\( t_1 = d/(v_0\\cos\\theta_0) \\), at height \\( y = d\\tan\\theta_0 - \\tfrac12 g t_1^2 = h - \\tfrac12 g t_1^2 \\). Target: \\( x = d \\), \\( y = h - \\tfrac12 g t^2 \\), so at \\( t_1 \\) it is at \\( h - \\tfrac12 g t_1^2 \\). The positions coincide. Both bodies fall the same distance \\( \\tfrac12 g t^2 \\) below where they would be without gravity, because both have acceleration \\( -g\\hat{\\jmath} \\).",
+   "why": "This is the independence of components in its sharpest form: gravity displaces every body by the same \\( \\tfrac12 g t^2 \\) from its gravity-free motion."
+  },
+  {
+   "id": "e5",
+   "kp": "k8",
+   "type": "number",
+   "prompt": "A ball is thrown at 10.0 m/s, 60.0° above the horizontal, from a height of 12.0 m above level ground. Using \\( g = 9.80 \\) m/s², find its speed just before landing, in m/s.",
+   "answer": "sqrt(10^2 + 2*9.8*12)",
+   "tol": 0.005,
+   "why": "\\( v^2 = v_0^2 - 2g\\,\\Delta y = 100 + 2(9.80)(12.0) = 335.2 \\), so \\( v = 18.3 \\) m/s, independent of the 60.0° angle."
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "Componentwise derivatives",
+    "formula": "\\( \\vec v = \\dot x\\,\\hat{\\imath} + \\dot y\\,\\hat{\\jmath},\\ \\vec a = \\dot v_x\\,\\hat{\\imath} + \\dot v_y\\,\\hat{\\jmath} \\)",
+    "when": "Position given as a vector function of time.",
+    "example": "\\( \\vec r = 3t\\,\\hat{\\imath} + (4t - 4.9t^2)\\hat{\\jmath} \\Rightarrow \\vec a = -9.8\\hat{\\jmath} \\)",
+    "watch": "Speed is the Pythagorean magnitude, not the sum of components."
+   },
+   {
+    "name": "Projectile component equations",
+    "formula": "\\( x = x_0 + v_{0x}t,\\ y = y_0 + v_{0y}t - \\tfrac12 g t^2,\\ v_y = v_{0y} - gt \\)",
+    "when": "Any drag-free projectile.",
+    "example": "table 1.20 m, 2.50 m/s: \\( t = 0.495 \\) s, \\( x = 1.24 \\) m",
+    "watch": "Use one component to find t, the other to use it."
+   },
+   {
+    "name": "Resolve the launch velocity",
+    "formula": "\\( v_{0x} = v_0\\cos\\theta_0,\\ v_{0y} = v_0\\sin\\theta_0 \\)",
+    "when": "Launch speed and angle given.",
+    "example": "20.0 m/s at 35.0°: 16.38 and 11.47 m/s",
+    "watch": "Calculator in degree mode; θ measured from the horizontal."
+   },
+   {
+    "name": "Apex and maximum height",
+    "formula": "\\( t_{\\text{top}} = v_{0y}/g,\\ H = v_{0y}^2/(2g) \\)",
+    "when": "Asked how high or how long to the top.",
+    "example": "25.0 m/s at 60.0°: \\( H = 23.9 \\) m",
+    "watch": "At the apex only vᵧ = 0; vₓ is unchanged."
+   },
+   {
+    "name": "Trajectory",
+    "formula": "\\( y = x\\tan\\theta_0 - \\dfrac{g x^2}{2v_0^2\\cos^2\\theta_0} \\)",
+    "when": "Height wanted at a known horizontal distance.",
+    "example": "wall 30.0 m away: height 9.65 m (22.0 m/s, 40°)",
+    "watch": "Launch point must be the origin."
+   },
+   {
+    "name": "Level-ground range",
+    "formula": "\\( R = v_0^2\\sin 2\\theta_0/g \\)",
+    "when": "Landing at launch height only.",
+    "example": "20.0 m/s: 38.4 m at 35° and at 55°, 40.8 m at 45°",
+    "watch": "Not valid for cliffs, roofs, or raised targets."
+   },
+   {
+    "name": "Different landing height",
+    "formula": "\\( y_{\\text{land}} = v_{0y}t - \\tfrac12 g t^2 \\) (quadratic in t)",
+    "when": "Launch and landing heights differ.",
+    "example": "25.0 m cliff, 18.0 m/s at 30°: \\( t = 3.36 \\) s, \\( x = 52.3 \\) m",
+    "watch": "Choose the root that matches the physical crossing."
+   },
+   {
+    "name": "Speed at a given height",
+    "formula": "\\( v^2 = v_0^2 - 2g\\,\\Delta y \\)",
+    "when": "Speed wanted at landing or at a known height.",
+    "example": "12.0 m/s from 8.00 m: 17.3 m/s",
+    "watch": "Gives speed only; direction needs components."
+   }
+  ],
+  "stuck": [
+   "Draw axes with y up, put the origin at the launch point, and write v₀ₓ, v₀ᵧ, and the landing y with signs.",
+   "Ask which component gives you the time: the horizontal one if x is known, the vertical one if a height is known.",
+   "Before using R = v₀² sin 2θ₀ / g or T = 2v₀ sin θ₀ / g, check that landing height equals launch height.",
+   "At the apex set vᵧ = 0, never v = 0.",
+   "Check an impact speed with v² = v₀² − 2g Δy."
+  ]
+ }
+}
