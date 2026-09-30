@@ -6506,7 +6506,7 @@ function packNow(key) { const x = hasPack(key) && PACKS[PACK_INDEX[key].c]; retu
 function loadPack(key) {
   if (!hasPack(key)) return Promise.resolve(null);
   const ix = PACK_INDEX[key], x = PACKS[ix.c] = PACKS[ix.c] || {};
-  if (x.data) return Promise.resolve(x.data[key] || null);
+  if (x.data) { const P = x.data[key] || null; if (P && !(Store.outlines[key] && Store.outlines[key].pack)) packAttach(key, P); return Promise.resolve(P); }
   if (!x.p) {
     x.p = fetch('packs/' + ix.c + '.json?v=' + ix.h).then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
       .then(d => { x.data = d; Object.keys(d).forEach(k => packAttach(k, d[k])); return d; })
