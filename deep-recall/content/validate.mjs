@@ -69,6 +69,8 @@ for (const key of keys) {
     if (/(^|[^\\])\$[^$\s]/.test(s)) E('uses $ for math: ' + s.slice(0, 60));
     const o1 = (s.match(/\\\(/g) || []).length, c1 = (s.match(/\\\)/g) || []).length, o2 = (s.match(/\\\[/g) || []).length, c2 = (s.match(/\\\]/g) || []).length;
     if (o1 !== c1 || o2 !== c2) E('unbalanced math delimiters: ' + s.slice(0, 70));
+    if (/\\["']/.test(s)) E('stray backslash before a quote (shows as a visible backslash): ' + s.match(/.{0,30}\\["'].{0,10}/)[0]);
+    if (/[\t\u0008\u000c]/.test(s)) E('control character (a lost backslash, e.g. \\t in \\to): ' + JSON.stringify(s.match(/.{0,20}[\t\u0008\u000c].{0,10}/)[0]));
     const prose = s.replace(/\\\([\s\S]*?\\\)|\\\[[\s\S]*?\\\]|```[\s\S]*?```|`[^`]*`/g, '');
     if (/\b[a-z]\^\d|\bsqrt\(|<=|>=|->/.test(prose)) W('keyboard notation in prose: ' + prose.match(/.{0,20}(\b[a-z]\^\d|\bsqrt\(|<=|>=|->).{0,20}/)[0]);
     if (/!\s|fascinating|amazing|mind-blowing|let's dive|let’s dive/i.test(prose)) W('register: ' + (prose.match(/.{0,30}(!\s|fascinating|amazing|mind-blowing|let's dive|let’s dive).{0,20}/i) || [''])[0]);

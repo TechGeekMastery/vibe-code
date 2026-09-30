@@ -227,7 +227,7 @@
      "id": "s5q2",
      "kp": "k6",
      "type": "written",
-     "prompt": "A student finds the speed of a block at the bottom of a rough incline of height \\( h \\) as follows: \\\"\\( K_i + U_i + W_{nc} = K_f + U_f \\), with \\( U_i = mgh \\), \\( U_f = 0 \\), and \\( W_{nc} = W_{\\text{grav}} + W_{\\text{fric}} = mgh - f_k L \\).\\\" Identify the error, explain why it is an error, and give the correct expression for \\( \\tfrac12 mv_f^2 \\) (block starts from rest).",
+     "prompt": "A student finds the speed of a block at the bottom of a rough incline of height \\( h \\) as follows: \"\\( K_i + U_i + W_{nc} = K_f + U_f \\), with \\( U_i = mgh \\), \\( U_f = 0 \\), and \\( W_{nc} = W_{\\text{grav}} + W_{\\text{fric}} = mgh - f_k L \\).\" Identify the error, explain why it is an error, and give the correct expression for \\( \\tfrac12 mv_f^2 \\) (block starts from rest).",
      "rubric": [
       "Identifies that gravity has been counted twice: once through \\( U = mgh \\) and again as work.",
       "Explains that gravity is conservative and its work is already represented by \\( -\\Delta U \\); each force appears exactly once.",
@@ -656,7 +656,7 @@
    "id": "e5",
    "kp": "k2",
    "type": "written",
-   "prompt": "A student argues: \\\"A block slid around a closed rectangle on a rough table returns to its starting point, so its position is unchanged, so friction's work must be zero; therefore friction has a potential energy function.\\\" Identify every error in this argument and explain, using the definition of potential energy, why no such function can exist.",
+   "prompt": "A student argues: \"A block slid around a closed rectangle on a rough table returns to its starting point, so its position is unchanged, so friction's work must be zero; therefore friction has a potential energy function.\" Identify every error in this argument and explain, using the definition of potential energy, why no such function can exist.",
    "rubric": [
     "Work is a path integral \\( \\int \\vec f\\cdot d\\vec r \\), not determined by net displacement; returning to the start does not make it zero.",
     "Friction does negative work on every segment, so the closed-loop work is \\( -f_k \\times \\) perimeter \\( \\neq 0 \\).",

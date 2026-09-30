@@ -152,7 +152,7 @@
      "id": "s2q2",
      "kp": "k3",
      "type": "written",
-     "prompt": "A student argues: \\\"\\(\\lim_{x\\to\\infty}\\sin(\\pi x)\\) does not exist, so by the theorem on sequences from functions, the sequence \\(a_n = \\sin(\\pi n)\\) diverges.\\\" Identify precisely what is wrong with this argument, and determine whether \\(\\{a_n\\}\\) converges.",
+     "prompt": "A student argues: \"\\(\\lim_{x\\to\\infty}\\sin(\\pi x)\\) does not exist, so by the theorem on sequences from functions, the sequence \\(a_n = \\sin(\\pi n)\\) diverges.\" Identify precisely what is wrong with this argument, and determine whether \\(\\{a_n\\}\\) converges.",
      "rubric": [
       "States the theorem's direction: a function limit implies the sequence limit, not the converse.",
       "Explains that the integers can avoid the oscillation of \\(f\\), so no conclusion follows from the function having no limit.",
@@ -273,7 +273,7 @@
      "id": "s5q2",
      "kp": "k8",
      "type": "written",
-     "prompt": "A student writes: \\\"Let \\(a_1 = 1\\) and \\(a_{n+1} = 2a_n + 1\\). Taking limits, \\(L = 2L + 1\\), so \\(\\lim a_n = -1\\).\\\" Explain exactly which step is invalid and what actually happens to the sequence.",
+     "prompt": "A student writes: \"Let \\(a_1 = 1\\) and \\(a_{n+1} = 2a_n + 1\\). Taking limits, \\(L = 2L + 1\\), so \\(\\lim a_n = -1\\).\" Explain exactly which step is invalid and what actually happens to the sequence.",
      "rubric": [
       "Identifies that taking limits in the recurrence presupposes that the limit exists.",
       "Notes that no monotone-and-bounded (or other) convergence argument was given.",
@@ -570,14 +570,14 @@
    "id": "p9",
    "kp": "k2",
    "type": "written",
-   "prompt": "Write the negation of \\\"\\(\\lim_{n\\to\\infty} a_n = L\\)\\\" in \\(\\varepsilon\\)–\\(N\\) form, and use it to prove that \\(a_n = (-1)^n\\) does not converge to 1.",
+   "prompt": "Write the negation of \"\\(\\lim_{n\\to\\infty} a_n = L\\)\" in \\(\\varepsilon\\)–\\(N\\) form, and use it to prove that \\(a_n = (-1)^n\\) does not converge to 1.",
    "rubric": [
     "Negation: there exists \\(\\varepsilon > 0\\) such that for every \\(N\\) there is \\(n \\ge N\\) with \\(|a_n - L| \\ge \\varepsilon\\).",
     "Chooses a specific \\(\\varepsilon\\), e.g. \\(\\varepsilon = 1\\).",
     "For arbitrary \\(N\\), exhibits an odd \\(n \\ge N\\) where \\(|a_n - 1| = 2 \\ge \\varepsilon\\)."
    ],
    "model": "\\(a_n \\not\\to L\\) means: there exists \\(\\varepsilon > 0\\) such that for every integer \\(N\\) there is some \\(n \\ge N\\) with \\(|a_n - L| \\ge \\varepsilon\\). For \\(a_n = (-1)^n\\) and \\(L = 1\\), take \\(\\varepsilon = 1\\). Given any \\(N\\), choose an odd \\(n \\ge N\\) (for example \\(2|N| + 1\\)). Then \\(|a_n - 1| = |-1 - 1| = 2 \\ge 1\\). So the sequence does not converge to 1.",
-   "why": "Negating swaps each quantifier: \\\"for every \\(\\varepsilon\\)\\\" becomes \\\"there exists \\(\\varepsilon\\)\\\", and \\\"there is \\(N\\) such that all \\(n \\ge N\\)\\\" becomes \\\"every \\(N\\) has some \\(n \\ge N\\)\\\"."
+   "why": "Negating swaps each quantifier: \"for every \\(\\varepsilon\\)\" becomes \"there exists \\(\\varepsilon\\)\", and \"there is \\(N\\) such that all \\(n \\ge N\\)\" becomes \"every \\(N\\) has some \\(n \\ge N\\)\"."
   },
   {
    "id": "p10",
@@ -642,7 +642,7 @@
    "id": "e4",
    "kp": "k10",
    "type": "written",
-   "prompt": "True or false: \\\"If \\(\\lim_{n\\to\\infty}|a_n| = 3\\), then \\(\\{a_n\\}\\) converges to 3 or to \\(-3\\).\\\" Prove it or give a counterexample with justification.",
+   "prompt": "True or false: \"If \\(\\lim_{n\\to\\infty}|a_n| = 3\\), then \\(\\{a_n\\}\\) converges to 3 or to \\(-3\\).\" Prove it or give a counterexample with justification.",
    "rubric": [
     "Answers false.",
     "Gives a counterexample such as \\(a_n = 3(-1)^n\\) with \\(|a_n| = 3\\) for all \\(n\\).",

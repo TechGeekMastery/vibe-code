@@ -18,7 +18,7 @@
   },
   {
    "title": "OpenStax University Physics Volume 1, 11.4 Precession of a Gyroscope",
-   "url": "https://opentextbc.ca/universityphysicsv1openstax/chapter/11-3-precession-of-a-gyroscope/"
+   "url": "https://openstax.org/books/university-physics-volume-1/pages/11-4-precession-of-a-gyroscope"
   },
   {
    "title": "MIT 8.01SC Classical Mechanics, Chapter 19: Angular Momentum",
@@ -383,6 +383,10 @@
   {
    "t": "precession",
    "d": "The slow rotation of the spin axis of a spinning body under a torque perpendicular to its angular momentum; for a gyroscope \\( \\Omega = Mgr/(I\\omega) \\)."
+  },
+  {
+   "t": "precession angular velocity",
+   "d": "The angular velocity \\( \\Omega = d\\phi/dt \\) with which the spin axis turns; for a gyroscope with fast spin, \\( \\Omega = Mgr/(I\\omega) \\)."
   },
   {
    "t": "nutation",

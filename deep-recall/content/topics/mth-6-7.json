@@ -1,0 +1,898 @@
+{
+ "key": "mth-6-7",
+ "title": "Graph theory basics",
+ "v": 1,
+ "scope": "Simple graphs and multigraphs, degrees and the handshake lemma, standard families, subgraphs and isomorphism, walks, paths, cycles and connectivity, bipartite graphs and colouring, trees and their characterizations, Euler circuits and trails, and planar graphs with Euler's formula; directed graphs, matchings, shortest-path and spanning-tree algorithms, and proofs of Kuratowski's and the four colour theorem are out of scope.",
+ "sources": [
+  {
+   "title": "O. Levin, Discrete Mathematics: An Open Introduction, Chapter 4 (Graph Theory), LibreTexts",
+   "url": "https://math.libretexts.org/Bookshelves/Combinatorics_and_Discrete_Mathematics/Discrete_Mathematics_(Levin)/4:_Graph_Theory"
+  },
+  {
+   "title": "O. Levin, §4.4 Euler Paths and Circuits (LibreTexts)",
+   "url": "https://math.libretexts.org/Bookshelves/Combinatorics_and_Discrete_Mathematics/Discrete_Mathematics_(Levin)/4:_Graph_Theory/4.4:_Euler_Paths_and_Circuits"
+  },
+  {
+   "title": "R. Zadeh, CME 305 Discrete Mathematics and Algorithms (Stanford), Notes 2: Basic definitions and concepts in graph theory",
+   "url": "https://stanford.edu/~rezab/discrete/Notes/2.pdf"
+  },
+  {
+   "title": "D. Guichard, Combinatorics and Graph Theory, §5.2 Euler Circuits and Walks (Whitman College)",
+   "url": "https://www.whitman.edu/mathematics/cgt_online/book/section05.02.html"
+  }
+ ],
+ "pre": [
+  "mth-6-2",
+  "mth-6-3",
+  "mth-6-4"
+ ],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Graph vocabulary",
+   "d": "Define graph, multigraph, adjacency, incidence, degree and adjacency matrix, and read them off a description of a graph.",
+   "type": "fact"
+  },
+  {
+   "id": "k2",
+   "t": "Handshake lemma",
+   "d": "Prove that the degree sum is twice the number of edges and use it and its corollary to rule out degree sequences and count edges or vertices.",
+   "type": "skill"
+  },
+  {
+   "id": "k3",
+   "t": "Standard families and subgraphs",
+   "d": "Recognize complete, path, cycle, complete bipartite and hypercube graphs, complements and subgraphs, and count their edges.",
+   "type": "fact"
+  },
+  {
+   "id": "k4",
+   "t": "Isomorphism and invariants",
+   "d": "Prove two graphs isomorphic with an explicit bijection, or non-isomorphic with an invariant.",
+   "type": "skill"
+  },
+  {
+   "id": "k5",
+   "t": "Walks, paths and connectivity",
+   "d": "Distinguish walks, trails, paths and cycles, extract a path from a walk, and describe connected components as equivalence classes.",
+   "type": "concept"
+  },
+  {
+   "id": "k6",
+   "t": "Bipartite graphs and colouring",
+   "d": "Prove that a graph is bipartite exactly when it has no odd cycle, and determine small chromatic numbers.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k7",
+   "t": "Trees: leaves and edge count",
+   "d": "Prove that trees with at least two vertices have two leaves and that a tree on n vertices has n − 1 edges.",
+   "type": "mechanism"
+  },
+  {
+   "id": "k8",
+   "t": "Characterizations of trees",
+   "d": "Use and prove the equivalent characterizations: any two of connected, acyclic, n − 1 edges; unique paths; every edge a bridge.",
+   "type": "concept"
+  },
+  {
+   "id": "k9",
+   "t": "Euler circuits and trails",
+   "d": "State and prove Euler's theorem and decide whether a graph has an Euler circuit or trail; distinguish Hamiltonian cycles.",
+   "type": "skill"
+  },
+  {
+   "id": "k10",
+   "t": "Planar graphs and Euler's formula",
+   "d": "Prove v − e + f = 2 for connected plane graphs and derive e ≤ 3v − 6 and e ≤ 2v − 4 to show K₅ and K₃,₃ are not planar.",
+   "type": "skill"
+  }
+ ],
+ "intro": "Many problems involve a collection of objects and a symmetric relation between pairs of them: cities joined by roads, people who know each other, atoms bonded in a molecule, courses that cannot share an exam slot. Stripped of everything except which pairs are related, each becomes a **graph**, and questions about routes, conflicts and networks become questions about that graph: can every vertex be reached from every other, can the edges be traversed in one continuous route, can the vertices be split into two groups with every edge between the groups, can the graph be drawn without crossings.\n\nGraph theory began in 1736 with Euler's answer to one such question, about the bridges of Königsberg. This topic develops the basic vocabulary and the first theorems of the subject, and it draws on the earlier topics throughout: double counting from the counting topic, equivalence classes from the sets topic, and, above all, induction, which is the natural way to prove statements about graphs built up vertex by vertex or edge by edge.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "Graphs, degrees and the handshake lemma",
+   "kps": [
+    "k1",
+    "k2"
+   ],
+   "md": "This section fixes the vocabulary used throughout the topic and proves the first theorem of graph theory, which is a double-counting argument.\n\n> A **graph** \\( G = (V, E) \\) consists of a finite nonempty set \\( V \\) of **vertices** and a set \\( E \\) of **edges**, each edge being a set \\( \\{u, v\\} \\) of two distinct vertices. We write the edge as \\( uv \\); \\( u \\) and \\( v \\) are its **endpoints**, they are **adjacent** (neighbours), and the edge is **incident** with each of them.\n\nGraphs in this sense are called **simple**: they have no **loops** (edges joining a vertex to itself) and no **multiple edges** (two edges with the same endpoints). A **multigraph** allows both, and is needed occasionally, for instance to model two bridges between the same pair of land masses. Unless stated otherwise, \"graph\" means simple graph.\n\n> The **degree** \\( \\deg(v) \\) of a vertex \\( v \\) is the number of edges incident with it (in a multigraph a loop contributes 2). The set of neighbours of \\( v \\) is \\( N(v) \\); in a simple graph \\( \\deg(v) = |N(v)| \\). A vertex of degree 0 is **isolated**, and a graph in which every vertex has degree \\( r \\) is **\\( r \\)-regular**.\n\nA graph can be drawn with points for vertices and curves for edges, but the drawing is not the graph: only which pairs are adjacent matters, not positions or crossings. For computation, a graph with vertices \\( v_{1}, \\dots, v_{n} \\) is stored as its **adjacency matrix**, the \\( n \\times n \\) matrix \\( A \\) with \\( a_{ij} = 1 \\) if \\( v_{i}v_{j} \\in E \\) and \\( a_{ij} = 0 \\) otherwise. For a simple graph \\( A \\) is symmetric with zeros on the diagonal, and the sum of row \\( i \\) is \\( \\deg(v_{i}) \\).\n\n> **Handshake lemma (degree-sum formula).** In every graph, \\( \\displaystyle\\sum_{v \\in V} \\deg(v) = 2|E| \\).\n\n*Proof.* Count the pairs \\( (v, e) \\) in which \\( v \\) is a vertex and \\( e \\) an edge with endpoint \\( v \\). Counting by vertices, \\( v \\) appears in \\( \\deg(v) \\) pairs, which gives \\( \\sum_{v} \\deg(v) \\). Counting by edges, each edge has exactly two endpoints, which gives \\( 2|E| \\). \\( \\blacksquare \\)\n\n> **Corollary.** Every graph has an even number of vertices of odd degree.\n\n*Proof.* Split the degree sum into the sum over vertices of even degree and the sum over vertices of odd degree. The total \\( 2|E| \\) and the first sum are even, so the second sum is even. A sum of odd numbers is even only if it has an even number of terms. \\( \\blacksquare \\)\n\n**Worked example 1.** Is there a graph with degree sequence \\( 3, 3, 3, 3, 3 \\)? The degree sum would be 15, which is odd, contradicting the handshake lemma. So no such graph exists; more generally, an \\( r \\)-regular graph with \\( r \\) odd must have an even number of vertices.\n\n**Worked example 2.** A graph has 12 edges; three of its vertices have degree 4 and all the others have degree 3. If there are \\( a \\) vertices of degree 3, then \\( 3a + 4 \\cdot 3 = 2 \\cdot 12 \\), so \\( a = 4 \\), and the graph has 7 vertices.\n\nThe handshake lemma gives a necessary condition, not a sufficient one. The sequence \\( 5, 5, 4, 3, 2, 1 \\) has even sum 20, yet no simple graph realizes it: with six vertices, a vertex of degree 5 is adjacent to all the others, so two such vertices give every vertex degree at least 2, contradicting the vertex of degree 1.\n\n**The common mistakes.** Concluding that a degree sequence is realizable because its sum is even; forgetting that in a simple graph each degree is at most \\( |V| - 1 \\); and treating a feature of one drawing, such as two edges crossing, as a property of the graph.",
+   "questions": [
+    {
+     "id": "s1q1",
+     "kp": "k2",
+     "type": "written",
+     "prompt": "Prove that there is no simple graph whose degree sequence is (a) \\( 3, 3, 3, 3, 3, 3, 3 \\); (b) \\( 6, 6, 4, 4, 3, 2, 1 \\). For (b) the degree sum is even, so a different argument is needed.",
+     "rubric": [
+      "(a) Degree sum 21 is odd, contradicting the handshake lemma",
+      "(b) Notes the degree sum 26 is even, so parity does not decide the question",
+      "Structural argument for (b): 7 vertices, two vertices of degree 6 are adjacent to all others",
+      "Hence every other vertex has degree at least 2, contradicting the vertex of degree 1"
+     ],
+     "model": "(a) The degree sum is \\( 7 \\cdot 3 = 21 \\), which is odd. By the handshake lemma the degree sum equals \\( 2|E| \\), an even number. So no such graph exists.\n\n(b) The sum is \\( 6 + 6 + 4 + 4 + 3 + 2 + 1 = 26 \\), which is even, so the handshake lemma does not rule it out. Instead, with 7 vertices, a vertex of degree 6 is adjacent to every other vertex. Two such vertices make every remaining vertex adjacent to both of them, so every vertex has degree at least 2. This contradicts the vertex of degree 1.",
+     "why": "Parity is the first check; when it passes, look for a vertex whose degree forces adjacencies (degree \\( n - 1 \\)) or forbids them (degree 0)."
+    },
+    {
+     "id": "s1q2",
+     "kp": "k2",
+     "type": "number",
+     "prompt": "A graph has 15 edges. Two of its vertices have degree 5 and every other vertex has degree 4. How many vertices does it have?",
+     "answer": "7",
+     "why": "With \\( a \\) vertices of degree 4: \\( 2 \\cdot 5 + 4a = 2 \\cdot 15 = 30 \\), so \\( a = 5 \\), and the graph has \\( 2 + 5 = 7 \\) vertices."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "Special graphs, subgraphs and isomorphism",
+   "kps": [
+    "k3",
+    "k4"
+   ],
+   "md": "Certain graphs recur so often that they have names, and many questions about a graph reduce to recognizing one of them inside it. This section introduces the standard families, the notion of a subgraph, and the precise meaning of \"the same graph, drawn or labelled differently\".\n\n**Standard families.** For \\( n \\ge 1 \\):\n- the **complete graph** \\( K_{n} \\): \\( n \\) vertices, every pair adjacent; it is \\( (n-1) \\)-regular with \\( \\binom{n}{2} \\) edges;\n- the **path** \\( P_{n} \\): vertices \\( v_{1}, \\dots, v_{n} \\) and edges \\( v_{1}v_{2}, v_{2}v_{3}, \\dots, v_{n-1}v_{n} \\);\n- the **cycle** \\( C_{n} \\) (\\( n \\ge 3 \\)): the path \\( P_{n} \\) together with the edge \\( v_{n}v_{1} \\); it is 2-regular with \\( n \\) edges;\n- the **complete bipartite graph** \\( K_{m,n} \\): vertex set \\( X \\cup Y \\) with \\( X \\cap Y = \\varnothing \\), \\( |X| = m \\), \\( |Y| = n \\), every vertex of \\( X \\) adjacent to every vertex of \\( Y \\), and no other edges; it has \\( mn \\) edges;\n- the **hypercube** \\( Q_{n} \\): the vertices are the \\( 2^{n} \\) binary strings of length \\( n \\), two being adjacent when they differ in exactly one position; it is \\( n \\)-regular, so by the handshake lemma it has \\( n2^{n-1} \\) edges.\n\nThe **complement** \\( \\overline{G} \\) of \\( G \\) has the same vertices, and \\( uv \\) is an edge of \\( \\overline{G} \\) exactly when it is not an edge of \\( G \\); so \\( |E(G)| + |E(\\overline{G})| = \\binom{|V|}{2} \\). A **subgraph** of \\( G = (V, E) \\) is a graph \\( (V', E') \\) with \\( V' \\subseteq V \\) and \\( E' \\subseteq E \\); it is **spanning** if \\( V' = V \\), and **induced** if \\( E' \\) consists of all edges of \\( G \\) with both endpoints in \\( V' \\).\n\n**Isomorphism.** Two graphs may differ only in the names of their vertices.\n\n> Graphs \\( G_{1} = (V_{1}, E_{1}) \\) and \\( G_{2} = (V_{2}, E_{2}) \\) are **isomorphic**, written \\( G_{1} \\cong G_{2} \\), if there is a bijection \\( \\varphi : V_{1} \\to V_{2} \\) such that for all \\( u, v \\in V_{1} \\), \\( uv \\in E_{1} \\) if and only if \\( \\varphi(u)\\varphi(v) \\in E_{2} \\). Such a \\( \\varphi \\) is an **isomorphism**.\n\nTo prove two graphs isomorphic, exhibit \\( \\varphi \\) and check that it preserves adjacency. If \\( |E_{1}| = |E_{2}| \\), it suffices to check that edges go to edges: \\( \\varphi \\) then maps \\( E_{1} \\) injectively into \\( E_{2} \\), hence onto it, so non-edges go to non-edges. To prove two graphs **not** isomorphic, find an **invariant**, a property preserved by every isomorphism, on which they differ: the numbers of vertices and edges, the degree sequence, the number of connected components, the number of cycles of each length (for example triangles), bipartiteness.\n\n**Worked example 1.** \\( C_{5} \\cong \\overline{C_{5}} \\). Label the vertices of \\( C_{5} \\) by \\( 0, 1, 2, 3, 4 \\), with edges \\( \\{i, i+1\\} \\), indices taken modulo 5 (so \\( 4 + 1 = 0 \\)). The complement has the edges \\( \\{i, i+2\\} \\). The map \\( \\varphi(i) = 2i \\bmod 5 \\) is a bijection of \\( \\{0, 1, 2, 3, 4\\} \\) (it sends \\( 0, 1, 2, 3, 4 \\) to \\( 0, 2, 4, 1, 3 \\)), and it sends the edge \\( \\{i, i+1\\} \\) to \\( \\{2i, 2i+2\\} \\), an edge of the complement. Both graphs have 5 edges, so \\( \\varphi \\) is an isomorphism.\n\n**Worked example 2.** The cycle \\( C_{6} \\) and the graph \\( 2K_{3} \\), two disjoint triangles, both have 6 vertices, 6 edges and every degree equal to 2. They are not isomorphic: \\( 2K_{3} \\) contains a triangle and \\( C_{6} \\) does not, and an isomorphism carries triangles to triangles. (Alternatively, one is connected and the other is not.)\n\nThis example shows that agreement on several invariants does not prove isomorphism. Invariants can only separate graphs; to prove isomorphism you must produce the bijection.\n\n**The common mistakes.** Concluding isomorphism from equal numbers of vertices and edges and equal degree sequences; exhibiting a bijection without checking that it preserves adjacency; and confusing a subgraph with an induced subgraph.",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k3",
+     "type": "number",
+     "prompt": "How many edges does the complement of the cycle \\( C_{8} \\) have?",
+     "answer": "20",
+     "why": "\\( |E(C_{8})| + |E(\\overline{C_{8}})| = \\binom{8}{2} = 28 \\), and \\( C_{8} \\) has 8 edges, so the complement has 20. (Check: it is 5-regular on 8 vertices, and \\( 8 \\cdot 5/2 = 20 \\).)"
+    },
+    {
+     "id": "s2q2",
+     "kp": "k4",
+     "type": "mcq",
+     "prompt": "Two graphs have the same number of vertices, the same number of edges and the same degree sequence. What can be concluded?",
+     "options": [
+      "They are isomorphic, because the degree sequence determines the graph up to relabelling.",
+      "They are not isomorphic unless an explicit bijection is also given.",
+      "They are isomorphic if and only if they have the same number of connected components.",
+      "Nothing yet: they may or may not be isomorphic, and further invariants or an explicit isomorphism are needed."
+     ],
+     "answer": 3,
+     "why": "Equal invariants are consistent with both outcomes: \\( C_{6} \\) and two disjoint triangles share all three but are not isomorphic, while two different labellings of \\( C_{6} \\) share them and are isomorphic. The second option confuses \\\"not yet proved isomorphic\\\" with \\\"not isomorphic\\\". The third is false: \\( K_{3,3} \\) and the prism graph (two triangles joined by three disjoint edges) are both connected, 3-regular, with 6 vertices and 9 edges, yet not isomorphic, since only the prism contains a triangle. The number of components is one more invariant, not a complete test."
+    },
+    {
+     "id": "s2q3",
+     "kp": "k4",
+     "type": "written",
+     "prompt": "Let \\( P_{4} \\) be the path with vertices \\( a, b, c, d \\) and edges \\( ab, bc, cd \\). Show that \\( P_{4} \\) is isomorphic to its complement by listing the edges of \\( \\overline{P_{4}} \\) and exhibiting an explicit isomorphism, with the verification.",
+     "rubric": [
+      "Complement edges: ac, ad, bd (6 pairs minus the 3 path edges)",
+      "Recognizes the complement as the path c–a–d–b",
+      "Explicit bijection, e.g. φ(a) = c, φ(b) = a, φ(c) = d, φ(d) = b",
+      "Checks ab ↦ ca, bc ↦ ad, cd ↦ db are all edges of the complement, and that both graphs have 3 edges"
+     ],
+     "model": "The 4 vertices have \\( \\binom{4}{2} = 6 \\) pairs; removing \\( ab, bc, cd \\) leaves \\( E(\\overline{P_{4}}) = \\{ac, ad, bd\\} \\). This is the path \\( c, a, d, b \\).\n\nDefine \\( \\varphi(a) = c \\), \\( \\varphi(b) = a \\), \\( \\varphi(c) = d \\), \\( \\varphi(d) = b \\), a bijection of \\( \\{a, b, c, d\\} \\). Then\n\\[ ab \\mapsto ca, \\qquad bc \\mapsto ad, \\qquad cd \\mapsto db, \\]\nand \\( ca, ad, db \\) are exactly the edges of \\( \\overline{P_{4}} \\). Since both graphs have 3 edges, edges are mapped onto edges and non-edges onto non-edges, so \\( \\varphi \\) is an isomorphism \\( P_{4} \\to \\overline{P_{4}} \\).",
+     "why": "A graph isomorphic to its complement is called self-complementary; it must have \\( \\frac{1}{2}\\binom{n}{2} \\) edges, which forces \\( n \\equiv 0 \\) or \\( 1 \\pmod 4 \\)."
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "Walks, paths, cycles and connectivity",
+   "kps": [
+    "k5"
+   ],
+   "md": "Most questions about graphs concern movement: can one get from one vertex to another, by which routes, and can one return. This section defines the kinds of route and the notion of connectedness, which splits every graph into pieces.\n\n> A **walk** of length \\( k \\) from \\( u \\) to \\( v \\) is a sequence of vertices \\( u = v_{0}, v_{1}, \\dots, v_{k} = v \\) with \\( v_{i-1}v_{i} \\in E \\) for each \\( i \\); it is **closed** if \\( v_{0} = v_{k} \\). A **trail** is a walk with no repeated edge, and a **path** is a walk with no repeated vertex. A **cycle** is a closed walk of length at least 3 whose vertices \\( v_{0}, \\dots, v_{k-1} \\) are distinct.\n\nTerminology varies between textbooks (some write \"path\" for walk and \"simple path\" for path), so check definitions when reading other sources.\n\n> **Lemma.** If there is a walk from \\( u \\) to \\( v \\), then there is a path from \\( u \\) to \\( v \\).\n\n*Proof.* By the well-ordering principle, choose a walk \\( u = v_{0}, \\dots, v_{k} = v \\) of least length. Suppose some vertex repeats, \\( v_{i} = v_{j} \\) with \\( i < j \\). Deleting \\( v_{i+1}, \\dots, v_{j} \\) leaves \\( v_{0}, \\dots, v_{i}, v_{j+1}, \\dots, v_{k} \\), still a walk from \\( u \\) to \\( v \\) (because \\( v_{i} = v_{j} \\) is adjacent to \\( v_{j+1} \\)), of length \\( k - (j - i) < k \\). This contradicts minimality, so the shortest walk is a path. \\( \\blacksquare \\)\n\n> A graph is **connected** if every two vertices are joined by a path.\n\nFor vertices \\( u, v \\), write \\( u \\sim v \\) if there is a walk from \\( u \\) to \\( v \\). This relation is reflexive (the walk of length 0), symmetric (reverse the walk) and transitive (follow one walk and then the other). Walks are used here rather than paths because two paths joined end to end need not form a path; the lemma converts the resulting walk back into a path. So \\( \\sim \\) is an equivalence relation, and by the partition theorem of the sets topic its classes partition \\( V \\). The subgraphs formed by the classes and the edges within them are the **connected components** of \\( G \\); \\( G \\) is connected exactly when it has one component. In a connected graph the **distance** \\( d(u, v) \\) is the length of a shortest path from \\( u \\) to \\( v \\).\n\n**Worked example 1.** Let \\( G \\) have vertices \\( 1, \\dots, 7 \\) and edges \\( 12, 23, 31, 45, 56, 67 \\). Its components have vertex sets \\( \\{1, 2, 3\\} \\), a triangle, and \\( \\{4, 5, 6, 7\\} \\), a path; within the second, \\( d(4, 7) = 3 \\).\n\n**Worked example 2 (an edge-count criterion).** A graph with \\( n \\) vertices and more than \\( \\binom{n-1}{2} \\) edges is connected.\n\n*Proof.* We prove the contrapositive. Suppose \\( G \\) is disconnected, and let \\( C \\) be one component, with \\( k \\) vertices, \\( 1 \\le k \\le n - 1 \\). No edge joins \\( C \\) to the other \\( n - k \\) vertices, so\n\\[ |E| \\le \\binom{k}{2} + \\binom{n-k}{2}. \\]\nA direct computation gives \\( \\binom{n-1}{2} - \\binom{k}{2} - \\binom{n-k}{2} = (k - 1)(n - k - 1) \\ge 0 \\), so \\( |E| \\le \\binom{n-1}{2} \\). \\( \\blacksquare \\)\n\nThe bound is sharp: \\( K_{n-1} \\) together with one isolated vertex has exactly \\( \\binom{n-1}{2} \\) edges and is disconnected.\n\n**The common mistakes.** Calling a walk with a repeated vertex a path; proving connectivity by exhibiting paths for some pairs of vertices rather than an argument for every pair; and overlooking isolated vertices, each of which is a component by itself.",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k5",
+     "type": "written",
+     "prompt": "Let \\( G \\) be a simple graph with \\( n \\ge 2 \\) vertices in which every vertex has degree at least \\( \\frac{n-1}{2} \\). Prove that \\( G \\) is connected. (Show that any two non-adjacent vertices have a common neighbour.)",
+     "rubric": [
+      "Takes arbitrary distinct u, v; if adjacent, they are joined by a path",
+      "If not adjacent, N(u) and N(v) are subsets of V \\ {u, v}, which has n − 2 elements",
+      "|N(u)| + |N(v)| ≥ n − 1 > n − 2, so N(u) and N(v) cannot be disjoint",
+      "A common neighbour w gives the path u, w, v; hence every pair is joined and G is connected"
+     ],
+     "model": "*Proof.* Let \\( u \\ne v \\) be vertices. If \\( uv \\in E \\), they are joined by a path of length 1. Otherwise, since \\( G \\) is simple and \\( u, v \\) are not adjacent, \\( N(u) \\) and \\( N(v) \\) are subsets of \\( V \\setminus \\{u, v\\} \\), a set with \\( n - 2 \\) elements. If they were disjoint, we would have \\( |N(u)| + |N(v)| \\le n - 2 \\). But \\( |N(u)| + |N(v)| \\ge \\frac{n-1}{2} + \\frac{n-1}{2} = n - 1 \\). So some vertex \\( w \\) lies in both, and \\( u, w, v \\) is a path. Every pair of vertices is joined by a path, so \\( G \\) is connected. \\( \\blacksquare \\)",
+     "why": "The bound is sharp: two disjoint copies of \\( K_{m} \\) have \\( n = 2m \\) vertices and minimum degree \\( m - 1 = \\frac{n}{2} - 1 < \\frac{n-1}{2} \\), and are disconnected."
+    },
+    {
+     "id": "s3q2",
+     "kp": "k5",
+     "type": "number",
+     "prompt": "What is the largest number of edges a disconnected simple graph with 10 vertices can have?",
+     "answer": "36",
+     "why": "By the edge-count criterion, a disconnected graph on \\( n \\) vertices has at most \\( \\binom{n-1}{2} \\) edges, and \\( K_{9} \\) plus an isolated vertex attains it: \\( \\binom{9}{2} = 36 \\)."
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "Bipartite graphs and colouring",
+   "kps": [
+    "k6"
+   ],
+   "md": "Many graphs model a relation between two different kinds of object, such as workers and jobs or students and courses, so that edges only join objects of different kinds. This section characterizes such graphs by a condition on their cycles, which makes them recognizable without knowing the two kinds in advance.\n\n> A graph is **bipartite** if its vertex set can be partitioned into two sets \\( X \\) and \\( Y \\) such that every edge has one endpoint in \\( X \\) and the other in \\( Y \\). Equivalently, its vertices can be coloured with two colours so that adjacent vertices receive different colours.\n\nMore generally, a **proper colouring** with \\( k \\) colours assigns one of \\( k \\) colours to each vertex so that adjacent vertices receive different colours, and the **chromatic number** \\( \\chi(G) \\) is the least \\( k \\) for which a proper colouring exists. A graph with at least one edge is bipartite exactly when \\( \\chi(G) = 2 \\). The graphs \\( K_{m,n} \\), every path, every even cycle and the hypercube \\( Q_{n} \\) are bipartite. \\( K_{3} \\) is not, since among three pairwise adjacent vertices no two may share a colour; in general \\( \\chi(K_{n}) = n \\).\n\n> **Theorem.** A graph is bipartite if and only if it contains no cycle of odd length.\n\n*Proof of (\\( \\Rightarrow \\)).* Let \\( G \\) be bipartite with parts \\( X, Y \\), and let \\( v_{0}, v_{1}, \\dots, v_{k} = v_{0} \\) be a cycle. Consecutive vertices lie in different parts, so the parts alternate: if \\( v_{0} \\in X \\), then \\( v_{i} \\in X \\) exactly when \\( i \\) is even. Since \\( v_{k} = v_{0} \\in X \\), \\( k \\) is even.\n\n*Proof of (\\( \\Leftarrow \\)).* It suffices to treat a connected graph, since a graph is bipartite when each of its components is. So let \\( G \\) be connected with no odd cycle, fix a vertex \\( r \\), and let \\( X \\) be the set of vertices at even distance from \\( r \\) and \\( Y \\) the set at odd distance. For an edge \\( uv \\), a shortest path to \\( u \\) followed by the edge \\( uv \\) is a walk to \\( v \\), so \\( d(r, v) \\le d(r, u) + 1 \\), and symmetrically; hence \\( |d(r, u) - d(r, v)| \\le 1 \\). If \\( u \\) and \\( v \\) were in the same part, the distances would have the same parity and so be equal, say to \\( d \\). A shortest path from \\( r \\) to \\( u \\), the edge \\( uv \\), and a shortest path from \\( v \\) back to \\( r \\) then form a closed walk of odd length \\( 2d + 1 \\). But every closed walk of odd length contains a cycle of odd length (a lemma proved by strong induction in the practice set), contradicting the hypothesis. So every edge joins \\( X \\) to \\( Y \\). \\( \\blacksquare \\)\n\n**Worked example 1.** \\( C_{n} \\) is bipartite if and only if \\( n \\) is even. For even \\( n \\), colour \\( v_{i} \\) by the parity of \\( i \\); every edge \\( v_{i}v_{i+1} \\), and also \\( v_{n}v_{1} \\), joins indices of different parity. For odd \\( n \\), \\( C_{n} \\) is itself an odd cycle. Hence \\( \\chi(C_{n}) = 2 \\) for even \\( n \\) and \\( \\chi(C_{n}) = 3 \\) for odd \\( n \\): alternate two colours along \\( v_{1}, \\dots, v_{n-1} \\) and give \\( v_{n} \\) a third.\n\n**Worked example 2.** The graph with vertices \\( 1, \\dots, 6 \\) and edges \\( 12, 23, 34, 45, 56, 61, 14 \\) is bipartite, with \\( X = \\{1, 3, 5\\} \\) and \\( Y = \\{2, 4, 6\\} \\); the chord \\( 14 \\) joins \\( X \\) to \\( Y \\). Replacing the chord \\( 14 \\) by \\( 13 \\) creates the triangle \\( 1, 2, 3 \\), and the new graph is not bipartite.\n\n**The common mistakes.** Checking only for triangles (a graph with no triangle can contain a 5-cycle); assuming the two parts must have equal size; and, in the proof of (\\( \\Leftarrow \\)), assuming that the closed walk of length \\( 2d + 1 \\) is itself a cycle, although the two shortest paths may share vertices.",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k6",
+     "type": "written",
+     "prompt": "Prove that the hypercube \\( Q_{n} \\) is bipartite for every \\( n \\ge 1 \\) by exhibiting the two parts, and deduce the length of every cycle in \\( Q_{n} \\) has the same parity. Which parity?",
+     "rubric": [
+      "X = strings with an even number of 1s, Y = strings with an odd number of 1s",
+      "Adjacent strings differ in exactly one position, so their numbers of 1s differ by exactly 1",
+      "Hence every edge joins X to Y, so Q_n is bipartite",
+      "By the theorem (⇒ direction), every cycle has even length"
+     ],
+     "model": "Let \\( X \\) be the set of binary strings of length \\( n \\) with an even number of 1s, and \\( Y \\) those with an odd number. These sets partition the vertex set. If two strings are adjacent, they differ in exactly one position, where one has a 0 and the other a 1, so their numbers of 1s differ by exactly 1 and have opposite parity. Hence every edge joins \\( X \\) to \\( Y \\), and \\( Q_{n} \\) is bipartite.\n\nBy the forward direction of the theorem, every cycle in a bipartite graph has even length, so every cycle in \\( Q_{n} \\) has even length.",
+     "why": "The parity of a vertex label that changes by one along every edge is the standard way to exhibit a bipartition."
+    },
+    {
+     "id": "s4q2",
+     "kp": "k6",
+     "type": "number",
+     "prompt": "A new vertex is added to the cycle \\( C_{5} \\) and joined to all five vertices of the cycle. What is the chromatic number of the resulting graph (the wheel with five spokes)?",
+     "answer": "4",
+     "why": "The rim \\( C_{5} \\) is an odd cycle, so it needs 3 colours. The hub is adjacent to every rim vertex, so it needs a colour not used on the rim: at least 4. Four colours suffice (three on the rim, a fourth on the hub), so \\( \\chi = 4 \\)."
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "Trees",
+   "kps": [
+    "k7",
+    "k8"
+   ],
+   "md": "A connected graph may contain many redundant edges; the most economical connected graphs are those without cycles. These are the trees, which model hierarchies, network backbones and the structure of recursive computations. This section proves their basic properties and the equivalent ways of recognizing them.\n\n> A **tree** is a connected graph with no cycles (a connected **acyclic** graph). An acyclic graph is a **forest**; its components are trees. A **leaf** is a vertex of degree 1.\n\n> **Lemma 1.** Every tree with at least two vertices has at least two leaves.\n\n*Proof.* Let \\( v_{0}, v_{1}, \\dots, v_{k} \\) be a path of maximum length in the tree \\( T \\); it exists because \\( T \\) is finite, and \\( k \\ge 1 \\) because \\( T \\) is connected with at least two vertices. Suppose \\( v_{0} \\) had a neighbour \\( w \\ne v_{1} \\). If \\( w = v_{j} \\) for some \\( j \\ge 2 \\), then \\( v_{0}, v_{1}, \\dots, v_{j}, v_{0} \\) is a cycle; if \\( w \\) is not on the path, then \\( w, v_{0}, \\dots, v_{k} \\) is a longer path. Both are impossible, so \\( \\deg(v_{0}) = 1 \\). By the same argument \\( \\deg(v_{k}) = 1 \\), and \\( v_{0} \\ne v_{k} \\). \\( \\blacksquare \\)\n\n> **Lemma 2.** If \\( v \\) is a leaf of a tree \\( T \\) with at least two vertices, then \\( T - v \\) (delete \\( v \\) and its edge) is a tree.\n\n*Proof.* \\( T - v \\) has no cycle, since \\( T \\) has none. It is connected: a path in \\( T \\) between two vertices other than \\( v \\) cannot pass through \\( v \\), because an interior vertex of a path has two distinct neighbours on it, while \\( v \\) has only one neighbour. \\( \\blacksquare \\)\n\n> **Theorem.** A tree with \\( n \\) vertices has exactly \\( n - 1 \\) edges.\n\n*Proof.* By induction on \\( n \\ge 1 \\). A tree with one vertex has no edges. Let \\( n \\ge 1 \\), assume every tree with \\( n \\) vertices has \\( n - 1 \\) edges, and let \\( T \\) be a tree with \\( n + 1 \\ge 2 \\) vertices. By Lemma 1, \\( T \\) has a leaf \\( v \\); by Lemma 2, \\( T - v \\) is a tree with \\( n \\) vertices, hence with \\( n - 1 \\) edges. Restoring \\( v \\) adds exactly one edge, so \\( T \\) has \\( n \\) edges. \\( \\blacksquare \\)\n\n**Characterizations.** For a graph \\( G \\) with \\( n \\) vertices, consider three properties: (1) connected, (2) acyclic, (3) exactly \\( n - 1 \\) edges. The theorem says that (1) and (2) imply (3). In fact *any two* of the three imply the third, so each pair characterizes trees. Two further characterizations are often the most useful:\n\n- \\( G \\) is a tree if and only if every two vertices are joined by exactly one path;\n- \\( G \\) is a tree if and only if it is connected and deleting any edge disconnects it (every edge is a **bridge**).\n\nThe proofs rest on two observations: an edge that lies on a cycle can be deleted without disconnecting the graph (travel around the rest of the cycle instead), and two different paths between the same pair of vertices contain a cycle.\n\n**Worked example 1 ((2) and (3) imply (1)).** Let \\( G \\) be acyclic with \\( n \\) vertices and \\( n - 1 \\) edges, and let its components have \\( n_{1}, \\dots, n_{c} \\) vertices. Each component is connected and acyclic, hence a tree with \\( n_{i} - 1 \\) edges. So \\( n - 1 = \\sum_{i=1}^{c} (n_{i} - 1) = n - c \\), which gives \\( c = 1 \\): \\( G \\) is connected.\n\n**Worked example 2 (counting leaves).** A tree has three vertices of degree 3, two of degree 2, and all its other vertices are leaves. With \\( L \\) leaves, it has \\( n = 5 + L \\) vertices and degree sum \\( 9 + 4 + L \\). By the handshake lemma and the theorem, \\( 13 + L = 2(n - 1) = 8 + 2L \\), so \\( L = 5 \\).\n\nA **spanning tree** of a connected graph \\( G \\) is a spanning subgraph that is a tree. Every connected graph has one: while a cycle remains, delete one of its edges; connectivity is preserved at each step, and the process ends with a connected acyclic spanning subgraph.\n\n**The common mistakes.** Concluding that a graph with \\( n - 1 \\) edges is a tree without checking connectivity or acyclicity (a triangle together with an isolated vertex has 4 vertices and 3 edges); in induction on trees, deleting an arbitrary vertex rather than a leaf, which can disconnect the tree; and forgetting the one-vertex tree.",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k7",
+     "type": "written",
+     "prompt": "Let \\( T \\) be a tree with a vertex of degree \\( k \\ge 2 \\). Prove that \\( T \\) has at least \\( k \\) leaves. (Use the handshake lemma together with the edge count of a tree.)",
+     "rubric": [
+      "Lets n be the number of vertices and L the number of leaves; the degree-k vertex is not a leaf",
+      "The other n − L − 1 vertices have degree at least 2 (no vertex has degree 0 in a tree with n ≥ 2)",
+      "Degree sum 2(n − 1) ≥ L + k + 2(n − L − 1)",
+      "Simplifies to L ≥ k"
+     ],
+     "model": "*Proof.* Let \\( T \\) have \\( n \\) vertices, \\( L \\) of which are leaves, and let \\( w \\) have degree \\( k \\ge 2 \\), so \\( w \\) is not a leaf and \\( n \\ge 2 \\). A tree with at least two vertices has no isolated vertex (it is connected), so every vertex other than \\( w \\) and the leaves has degree at least 2; there are \\( n - L - 1 \\) such vertices. By the handshake lemma and the theorem on trees,\n\\[ 2(n - 1) = \\sum_{v} \\deg(v) \\ge L + k + 2(n - L - 1) = 2n - 2 - L + k. \\]\nHence \\( 0 \\ge k - L \\), that is, \\( L \\ge k \\). \\( \\blacksquare \\)",
+     "why": "The bound is attained by the star \\( K_{1,k} \\), whose centre has degree \\( k \\) and whose \\( k \\) other vertices are leaves."
+    },
+    {
+     "id": "s5q2",
+     "kp": "k7",
+     "type": "number",
+     "prompt": "A tree has two vertices of degree 4, one vertex of degree 3, and all its other vertices are leaves. How many leaves does it have?",
+     "answer": "7",
+     "why": "With \\( L \\) leaves there are \\( n = 3 + L \\) vertices, and the degree sum is \\( 8 + 3 + L = 11 + L \\). It equals \\( 2(n - 1) = 2(2 + L) = 4 + 2L \\), so \\( L = 7 \\)."
+    },
+    {
+     "id": "s5q3",
+     "kp": "k8",
+     "type": "written",
+     "prompt": "Prove that in a tree, every two vertices are joined by exactly one path.",
+     "rubric": [
+      "Existence: the tree is connected",
+      "Uniqueness by contradiction: two different paths P, Q from u to v",
+      "Take the first vertex where they diverge and the first later vertex of P that lies on Q",
+      "The two segments between these vertices form a cycle, contradicting acyclicity"
+     ],
+     "model": "*Proof.* Let \\( u, v \\) be vertices of a tree \\( T \\). Since \\( T \\) is connected, at least one path joins them.\n\nSuppose, for contradiction, that \\( P = (u = p_{0}, p_{1}, \\dots, p_{s} = v) \\) and \\( Q = (u = q_{0}, q_{1}, \\dots, q_{t} = v) \\) are different paths. Neither is an initial segment of the other (both end at \\( v \\), and a path does not revisit \\( v \\)), so there is a least index \\( i \\) with \\( p_{i+1} \\ne q_{i+1} \\); then \\( p_{i} = q_{i} \\). The vertex \\( v \\) lies on both paths after position \\( i \\), so there is a least \\( j > i \\) such that \\( p_{j} \\) lies on \\( Q \\), say \\( p_{j} = q_{l} \\) with \\( l > i \\). Then the segment \\( p_{i}, p_{i+1}, \\dots, p_{j} \\) of \\( P \\) and the segment \\( q_{i}, \\dots, q_{l} \\) of \\( Q \\) have only their endpoints in common, and together they form a closed walk \\( p_{i}, \\dots, p_{j} = q_{l}, q_{l-1}, \\dots, q_{i} = p_{i} \\) with no repeated vertex other than its ends. It has length at least 3, because \\( p_{i+1} \\ne q_{i+1} \\) means the two segments are not the same single edge. So it is a cycle in \\( T \\), a contradiction. Hence the path is unique. \\( \\blacksquare \\)",
+     "why": "Two distinct routes between the same points always enclose a cycle; the care in the proof is in choosing where the routes separate and first rejoin."
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "title": "Euler circuits and trails",
+   "kps": [
+    "k9"
+   ],
+   "md": "Graph theory began with a routing question. The city of Königsberg had seven bridges joining four land masses, and its residents asked whether one could walk through the city crossing every bridge exactly once and return to the start. In 1736 Euler showed that it is impossible and identified exactly when such a route exists. This section proves his theorem and contrasts it with the superficially similar and much harder problem of visiting every vertex once.\n\n> An **Euler trail** in a multigraph is a trail that uses every edge exactly once. An **Euler circuit** is a closed Euler trail.\n\nModelled as a multigraph, with land masses as vertices and bridges as edges, Königsberg has degrees 5, 3, 3 and 3.\n\n> **Theorem (Euler).** Let \\( G \\) be a connected multigraph with at least one edge. Then \\( G \\) has an Euler circuit if and only if every vertex has even degree. \\( G \\) has an Euler trail that is not closed if and only if exactly two vertices have odd degree, and every such trail starts at one of them and ends at the other.\n\n*Proof that an Euler circuit forces even degrees.* Follow the circuit. Each time it passes through a vertex it arrives along one edge and leaves along another; the start is left at the beginning and re-entered at the end, which again pairs two edges. Every edge is used exactly once, so the edges at each vertex are partitioned into pairs, and every degree is even.\n\n*Proof that even degrees give an Euler circuit.* By strong induction on the number of edges. Let \\( G \\) be connected with all degrees even and at least one edge. Start at a vertex \\( v \\) and walk along unused edges for as long as possible. The walk can stop only at \\( v \\): whenever it enters a vertex \\( w \\ne v \\), it has used an odd number of the edges at \\( w \\) (counting a loop twice, as in the degree), and since \\( \\deg(w) \\) is even an unused edge remains. So the walk is a closed trail \\( C \\) ending at \\( v \\). Delete the edges of \\( C \\). In the remaining multigraph \\( H \\) every degree is still even, since each vertex lost an even number of edges. Each component of \\( H \\) that has an edge is connected, has all degrees even and has fewer edges than \\( G \\), so by the inductive hypothesis it has an Euler circuit; and it shares a vertex with \\( C \\), because \\( G \\) is connected. Traverse \\( C \\), and at the first vertex shared with each such component, insert that component's Euler circuit before continuing along \\( C \\). The result is an Euler circuit of \\( G \\). \\( \\blacksquare \\)\n\nThe statement about trails follows. If exactly \\( u \\) and \\( w \\) have odd degree, add a new edge \\( uw \\) (parallel to an existing one if necessary). All degrees become even, so there is an Euler circuit; deleting the added edge from it leaves an Euler trail from \\( u \\) to \\( w \\). Conversely, in a non-closed Euler trail the pairing argument shows that every vertex other than the two ends has even degree and the two ends have odd degree.\n\n**Worked example 1 (Königsberg).** All four vertices have odd degree. So there is no Euler circuit and, since more than two vertices have odd degree, not even an Euler trail.\n\n**Worked example 2.** For \\( n \\ge 3 \\), \\( K_{n} \\) is connected and \\( (n-1) \\)-regular, so it has an Euler circuit exactly when \\( n - 1 \\) is even, that is, when \\( n \\) is odd: \\( K_{5} \\) has one and \\( K_{4} \\) does not.\n\n**Hamiltonian cycles.** A **Hamiltonian cycle** is a cycle that passes through every *vertex* exactly once. Despite the resemblance, no criterion like Euler's is known: deciding whether a graph has a Hamiltonian cycle is an NP-complete problem, and only sufficient conditions are available. One is Dirac's theorem (stated without proof): a simple graph with \\( n \\ge 3 \\) vertices in which every vertex has degree at least \\( n/2 \\) has a Hamiltonian cycle. Euler circuits concern edges and are easy to decide; Hamiltonian cycles concern vertices and are hard.\n\n**The common mistakes.** Omitting connectivity (two disjoint triangles have all degrees even but no Euler circuit); confusing Euler circuits with Hamiltonian cycles; and, in the sufficiency proof, failing to explain why each remaining component meets the circuit \\( C \\).",
+   "questions": [
+    {
+     "id": "s6q1",
+     "kp": "k9",
+     "type": "written",
+     "prompt": "For which integers \\( m, n \\ge 1 \\) does \\( K_{m,n} \\) have (a) an Euler circuit; (b) an Euler trail that is not closed? Justify using Euler's theorem.",
+     "rubric": [
+      "K_{m,n} is connected; vertices in the part of size m have degree n, those in the part of size n have degree m",
+      "(a) Euler circuit iff all degrees even iff m and n are both even",
+      "(b) exactly two odd vertices: the part whose vertices have odd degree must have exactly 2 vertices and the other part must have even-degree vertices",
+      "Answer: K_{2,n} with n odd (equivalently K_{m,2} with m odd), and K_{1,1}"
+     ],
+     "model": "\\( K_{m,n} \\) is connected. A vertex in the part \\( X \\) (\\( |X| = m \\)) has degree \\( n \\), and a vertex in \\( Y \\) (\\( |Y| = n \\)) has degree \\( m \\).\n\n(a) An Euler circuit exists if and only if all degrees are even, i.e. if and only if \\( m \\) and \\( n \\) are both even.\n\n(b) We need exactly two vertices of odd degree. If \\( n \\) is odd, all \\( m \\) vertices of \\( X \\) have odd degree; if \\( m \\) is odd, all \\( n \\) vertices of \\( Y \\) do. So the number of odd-degree vertices is \\( m[n \\text{ odd}] + n[m \\text{ odd}] \\), where \\( [\\cdot] \\) is 1 if the condition holds and 0 otherwise. This equals 2 exactly when: \\( m = 2 \\) and \\( n \\) odd (then \\( m \\) is even, contributing nothing from \\( Y \\)); or \\( n = 2 \\) and \\( m \\) odd; or \\( m = n = 1 \\). So the non-closed Euler trails occur for \\( K_{2,n} \\) and \\( K_{n,2} \\) with \\( n \\) odd, and for \\( K_{1,1} \\).",
+     "why": "Everything follows from the two degree values; the only care needed is counting how many vertices carry each."
+    },
+    {
+     "id": "s6q2",
+     "kp": "k9",
+     "type": "written",
+     "prompt": "A connected graph \\( G \\) has exactly four vertices of odd degree, \\( a, b, c, d \\). Prove that the edge set of \\( G \\) can be split into two trails (each edge in exactly one), and that it cannot be traversed by a single trail.",
+     "rubric": [
+      "No single trail: an Euler trail requires 0 or 2 odd-degree vertices",
+      "Adds two new edges ab and cd (parallel if necessary); all degrees become even and the multigraph stays connected",
+      "Takes an Euler circuit of the new multigraph and deletes the two added edges",
+      "The circuit falls into two trails, each nonempty because ab and cd share no endpoint and so are not consecutive; together they use every original edge exactly once"
+     ],
+     "model": "*No single trail.* A trail using every edge once is an Euler trail, closed or not; by Euler's theorem that requires 0 or 2 vertices of odd degree, and \\( G \\) has 4.\n\n*Two trails.* Add two new edges \\( ab \\) and \\( cd \\) (parallel to existing edges if necessary) to obtain a multigraph \\( G' \\). \\( G' \\) is connected, and adding the edges raises each of \\( a, b, c, d \\) to even degree while leaving the others unchanged, so every degree in \\( G' \\) is even. By Euler's theorem \\( G' \\) has an Euler circuit. Delete the two added edges from it. A circuit with two edges removed falls into two segments, each a trail of original edges. Neither segment is empty: the added edges have no common endpoint, so they are not consecutive in the circuit. The two trails together contain every edge of \\( G \\) exactly once. \\( \\blacksquare \\)",
+     "why": "In general, the edges of a connected graph with \\( 2k > 0 \\) odd vertices split into exactly \\( k \\) trails and no fewer."
+    }
+   ]
+  },
+  {
+   "id": "s7",
+   "title": "Planar graphs and Euler's formula",
+   "kps": [
+    "k10"
+   ],
+   "md": "Circuit layouts and maps raise the question of whether a graph can be drawn without edges crossing. This section proves Euler's formula relating the vertices, edges and faces of such a drawing, and uses it to show that \\( K_{5} \\) and \\( K_{3,3} \\) cannot be drawn without crossings.\n\n> A graph is **planar** if it can be drawn in the plane so that edges meet only at common endpoints. Such a drawing is a **plane graph**; it divides the plane into connected regions called **faces**, exactly one of which, the outer face, is unbounded.\n\nFor example, \\( K_{4} \\) is planar: draw a triangle and place the fourth vertex inside, joined to the three corners. That drawing has 4 faces. A tree drawn without crossings has a single face.\n\n> **Euler's formula.** If a connected plane graph has \\( v \\) vertices, \\( e \\) edges and \\( f \\) faces, then \\( v - e + f = 2 \\).\n\n*Proof.* Fix \\( v \\) and induct on \\( e \\). A connected graph has at least \\( v - 1 \\) edges, with equality exactly for trees. *Base case:* if \\( G \\) is a tree, \\( e = v - 1 \\) and \\( f = 1 \\), so \\( v - e + f = 2 \\). *Inductive step:* if \\( G \\) is connected but not a tree, it contains a cycle. The cycle is a closed curve in the plane, so the two sides of any edge \\( \\varepsilon \\) on it lie in different faces (by the Jordan curve theorem). Deleting \\( \\varepsilon \\) merges those two faces into one and keeps the graph connected, since the rest of the cycle still joins the endpoints of \\( \\varepsilon \\). The new plane graph has \\( v \\) vertices, \\( e - 1 \\) edges and \\( f - 1 \\) faces, so by the inductive hypothesis \\( v - (e - 1) + (f - 1) = 2 \\), which is \\( v - e + f = 2 \\). \\( \\blacksquare \\)\n\nThe **Jordan curve theorem**, that a closed curve without self-intersections separates the plane into an inside and an outside, is intuitively clear but hard to prove; it is taken as known here.\n\n**Counting edge-sides.** Walk around the boundary of each face and count the edges met, an edge counting twice if the face lies on both of its sides. Since every edge has two sides, the total over all faces is \\( 2e \\). In a connected simple graph with at least 3 vertices, every face boundary has length at least 3 (a shorter boundary would need a loop or a multiple edge). Hence \\( 3f \\le 2e \\).\n\n> **Corollary.** A connected simple planar graph with \\( v \\ge 3 \\) vertices has \\( e \\le 3v - 6 \\). If it has no triangle, then \\( e \\le 2v - 4 \\).\n\n*Proof.* From \\( 3f \\le 2e \\) and \\( f = 2 - v + e \\): \\( 3(2 - v + e) \\le 2e \\), so \\( e \\le 3v - 6 \\). With no triangle every face boundary has length at least 4, so \\( 4f \\le 2e \\), and the same computation gives \\( e \\le 2v - 4 \\). \\( \\blacksquare \\)\n\n**Worked example 1.** \\( K_{5} \\) is not planar: \\( v = 5 \\) and \\( e = 10 \\), but \\( 3v - 6 = 9 < 10 \\).\n\n**Worked example 2.** \\( K_{3,3} \\) is not planar. It is bipartite, so it has no odd cycles and in particular no triangles; \\( v = 6 \\) and \\( e = 9 \\), but \\( 2v - 4 = 8 < 9 \\). The first bound alone would not settle the question, since \\( 9 \\le 3 \\cdot 6 - 6 = 12 \\).\n\n**Worked example 3.** A connected plane graph with 10 vertices, each of degree 3, has \\( e = \\frac{3 \\cdot 10}{2} = 15 \\) edges by the handshake lemma, and therefore \\( f = 2 - 10 + 15 = 7 \\) faces.\n\nTwo famous theorems complete the picture; their proofs are beyond this course. **Kuratowski's theorem**: a graph is planar if and only if it contains no subdivision of \\( K_{5} \\) or \\( K_{3,3} \\). The **four colour theorem** (Appel and Haken, 1976, with an extensive computer verification): every planar graph has chromatic number at most 4.\n\n**The common mistakes.** Applying \\( e \\le 3v - 6 \\) to graphs that are not simple or have fewer than 3 vertices; treating the bound as a sufficient condition (\\( K_{3,3} \\) satisfies it and is not planar); and applying \\( v - e + f = 2 \\) to a disconnected plane graph, for which \\( v - e + f = 1 + c \\), where \\( c \\) is the number of components.",
+   "questions": [
+    {
+     "id": "s7q1",
+     "kp": "k10",
+     "type": "written",
+     "prompt": "Prove that every simple planar graph has a vertex of degree at most 5. (Handle graphs with fewer than 3 vertices and disconnected graphs.)",
+     "rubric": [
+      "Graphs with at most 2 vertices: every degree is at most 1",
+      "Reduces to a connected component with at least 3 vertices, or notes that e ≤ 3v − 6 also holds for each component and sums (or treats small components directly)",
+      "Uses e ≤ 3v − 6, so the degree sum 2e ≤ 6v − 12 < 6v",
+      "If every degree were at least 6, the degree sum would be at least 6v; contradiction"
+     ],
+     "model": "*Proof.* If \\( G \\) has at most 2 vertices, every degree is at most 1. Otherwise, if \\( G \\) has a component with at most 2 vertices, a vertex of that component has degree at most 1. So assume every component has at least 3 vertices. Each component \\( H \\) is a connected simple planar graph with \\( v_{H} \\ge 3 \\), so \\( e_{H} \\le 3v_{H} - 6 < 3v_{H} \\). Summing over components, \\( e < 3v \\). If every vertex had degree at least 6, the handshake lemma would give \\( 2e = \\sum \\deg(x) \\ge 6v \\), i.e. \\( e \\ge 3v \\), a contradiction. Hence some vertex has degree at most 5. \\( \\blacksquare \\)",
+     "why": "This lemma is the starting point of the proofs that planar graphs are 6- and 5-colourable: remove a vertex of degree at most 5, colour the rest by induction, and put the vertex back."
+    },
+    {
+     "id": "s7q2",
+     "kp": "k10",
+     "type": "number",
+     "prompt": "A connected plane graph has 8 vertices and 12 edges. How many faces does it have?",
+     "answer": "6",
+     "why": "Euler's formula: \\( f = 2 - v + e = 2 - 8 + 12 = 6 \\). (The cube graph \\( Q_{3} \\) is an example: 6 square faces.)"
+    }
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "t": "graph",
+   "d": "A pair \\( G = (V, E) \\) of a finite nonempty vertex set and a set of edges, each a 2-element subset of \\( V \\) (simple graph: no loops or multiple edges)."
+  },
+  {
+   "t": "multigraph",
+   "d": "A graph in which loops and multiple edges between the same pair of vertices are allowed."
+  },
+  {
+   "t": "adjacent, incident",
+   "d": "Vertices \\( u, v \\) are adjacent if \\( uv \\) is an edge; the edge \\( uv \\) is incident with \\( u \\) and \\( v \\)."
+  },
+  {
+   "t": "degree",
+   "d": "\\( \\deg(v) \\), the number of edges incident with \\( v \\) (a loop counts twice)."
+  },
+  {
+   "t": "regular graph",
+   "d": "A graph in which every vertex has the same degree \\( r \\) (\\( r \\)-regular)."
+  },
+  {
+   "t": "adjacency matrix",
+   "d": "The \\( n \\times n \\) matrix with \\( a_{ij} = 1 \\) if \\( v_{i}v_{j} \\) is an edge and 0 otherwise."
+  },
+  {
+   "t": "handshake lemma",
+   "d": "\\( \\sum_{v} \\deg(v) = 2|E| \\); consequently the number of odd-degree vertices is even."
+  },
+  {
+   "t": "complete graph, cycle, path",
+   "d": "\\( K_{n} \\): all \\( \\binom{n}{2} \\) edges; \\( C_{n} \\): \\( n \\) vertices in a closed ring; \\( P_{n} \\): \\( n \\) vertices in a line."
+  },
+  {
+   "t": "complete bipartite graph",
+   "d": "\\( K_{m,n} \\): parts of sizes \\( m \\) and \\( n \\), with every vertex of one part adjacent to every vertex of the other and no other edges."
+  },
+  {
+   "t": "hypercube",
+   "d": "\\( Q_{n} \\): vertices are binary strings of length \\( n \\), adjacent when they differ in exactly one position."
+  },
+  {
+   "t": "complement",
+   "d": "\\( \\overline{G} \\): same vertices, with \\( uv \\) an edge exactly when it is not an edge of \\( G \\)."
+  },
+  {
+   "t": "subgraph, induced subgraph",
+   "d": "A subgraph uses a subset of the vertices and a subset of the edges among them; it is induced if it contains all edges of \\( G \\) among its vertices."
+  },
+  {
+   "t": "isomorphism",
+   "d": "A bijection \\( \\varphi : V_{1} \\to V_{2} \\) with \\( uv \\in E_{1} \\iff \\varphi(u)\\varphi(v) \\in E_{2} \\)."
+  },
+  {
+   "t": "graph invariant",
+   "d": "A property or number preserved by every isomorphism (e.g. degree sequence, number of components, number of triangles)."
+  },
+  {
+   "t": "walk, trail, path, cycle",
+   "d": "Walk: a sequence of consecutively adjacent vertices. Trail: no repeated edge. Path: no repeated vertex. Cycle: a closed walk of length at least 3 with no repeated vertex except the first = last."
+  },
+  {
+   "t": "connected, component",
+   "d": "A graph is connected if every two vertices are joined by a path; the components are the subgraphs on the equivalence classes of 'joined by a walk'."
+  },
+  {
+   "t": "distance",
+   "d": "\\( d(u, v) \\), the length of a shortest path from \\( u \\) to \\( v \\) in a connected graph."
+  },
+  {
+   "t": "bipartite graph",
+   "d": "A graph whose vertices split into two parts with every edge joining the parts; equivalently, a graph with no odd cycle."
+  },
+  {
+   "t": "proper colouring, chromatic number",
+   "d": "A colouring of vertices with adjacent vertices coloured differently; \\( \\chi(G) \\) is the least number of colours needed."
+  },
+  {
+   "t": "tree, forest, leaf",
+   "d": "A tree is a connected acyclic graph; a forest is an acyclic graph; a leaf is a vertex of degree 1."
+  },
+  {
+   "t": "bridge",
+   "d": "An edge whose deletion increases the number of components."
+  },
+  {
+   "t": "spanning tree",
+   "d": "A spanning subgraph that is a tree."
+  },
+  {
+   "t": "Euler trail, Euler circuit",
+   "d": "A trail using every edge exactly once; a circuit if it is closed."
+  },
+  {
+   "t": "Hamiltonian cycle",
+   "d": "A cycle passing through every vertex exactly once."
+  },
+  {
+   "t": "planar graph, face",
+   "d": "A graph that can be drawn in the plane without crossings; the faces are the regions into which such a drawing divides the plane."
+  },
+  {
+   "t": "Euler's formula",
+   "d": "\\( v - e + f = 2 \\) for a connected plane graph."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "formula",
+   "front": "Handshake lemma",
+   "back": "\\( \\sum_{v \\in V} \\deg(v) = 2|E| \\)",
+   "kp": "k2"
+  },
+  {
+   "id": "c2",
+   "type": "concept",
+   "front": "Why is the number of odd-degree vertices even?",
+   "back": "The degree sum \\( 2|E| \\) is even, so the sum of the odd degrees is even, which requires an even number of odd terms.",
+   "kp": "k2"
+  },
+  {
+   "id": "c3",
+   "type": "formula",
+   "front": "Number of edges of \\( K_{n} \\), \\( K_{m,n} \\), \\( Q_{n} \\)",
+   "back": "\\( \\binom{n}{2} \\), \\( mn \\), \\( n2^{n-1} \\).",
+   "kp": "k3"
+  },
+  {
+   "id": "c4",
+   "type": "term",
+   "front": "Define: graph isomorphism",
+   "back": "A bijection of vertex sets such that \\( uv \\) is an edge iff \\( \\varphi(u)\\varphi(v) \\) is an edge.",
+   "kp": "k4"
+  },
+  {
+   "id": "c5",
+   "type": "concept",
+   "front": "Why are \\( C_{6} \\) and two disjoint triangles not isomorphic?",
+   "back": "One has a triangle (and is disconnected), the other has neither; same vertex, edge and degree data.",
+   "kp": "k4"
+  },
+  {
+   "id": "c6",
+   "type": "concept",
+   "front": "Walk vs trail vs path",
+   "back": "Walk: any route; trail: no repeated edge; path: no repeated vertex.",
+   "kp": "k5"
+  },
+  {
+   "id": "c7",
+   "type": "concept",
+   "front": "Why does a walk from u to v contain a path from u to v?",
+   "back": "A shortest such walk cannot repeat a vertex: cutting out the loop between repeats gives a shorter walk.",
+   "kp": "k5"
+  },
+  {
+   "id": "c8",
+   "type": "concept",
+   "front": "Connected components as a partition",
+   "back": "They are the equivalence classes of the relation 'joined by a walk' (reflexive, symmetric, transitive).",
+   "kp": "k5"
+  },
+  {
+   "id": "c9",
+   "type": "concept",
+   "front": "Characterization of bipartite graphs",
+   "back": "Bipartite if and only if there is no cycle of odd length.",
+   "kp": "k6"
+  },
+  {
+   "id": "c10",
+   "type": "problem",
+   "front": "Chromatic number of \\( C_{7} \\)",
+   "back": "3 (odd cycle, not bipartite; three colours suffice).",
+   "kp": "k6",
+   "answer": "3",
+   "check": "number"
+  },
+  {
+   "id": "c11",
+   "type": "concept",
+   "front": "Why does every tree with at least 2 vertices have 2 leaves?",
+   "back": "The ends of a longest path are leaves: another neighbour would give a cycle or a longer path.",
+   "kp": "k7"
+  },
+  {
+   "id": "c12",
+   "type": "formula",
+   "front": "Number of edges of a tree with n vertices",
+   "back": "\\( n - 1 \\)",
+   "kp": "k7"
+  },
+  {
+   "id": "c13",
+   "type": "concept",
+   "front": "Any two of which three properties characterize a tree on n vertices?",
+   "back": "Connected; acyclic; exactly \\( n - 1 \\) edges.",
+   "kp": "k8"
+  },
+  {
+   "id": "c14",
+   "type": "concept",
+   "front": "Tree in terms of paths",
+   "back": "A graph is a tree iff every two vertices are joined by exactly one path.",
+   "kp": "k8"
+  },
+  {
+   "id": "c15",
+   "type": "concept",
+   "front": "Euler circuit criterion",
+   "back": "A connected multigraph with an edge has an Euler circuit iff every vertex has even degree.",
+   "kp": "k9"
+  },
+  {
+   "id": "c16",
+   "type": "concept",
+   "front": "Non-closed Euler trail criterion",
+   "back": "Connected with exactly two odd-degree vertices; the trail runs from one to the other.",
+   "kp": "k9"
+  },
+  {
+   "id": "c17",
+   "type": "concept",
+   "front": "Euler circuit vs Hamiltonian cycle",
+   "back": "Euler: every edge once (easy criterion). Hamiltonian: every vertex once (no known simple criterion; NP-complete).",
+   "kp": "k9"
+  },
+  {
+   "id": "c18",
+   "type": "formula",
+   "front": "Euler's formula for a connected plane graph",
+   "back": "\\( v - e + f = 2 \\)",
+   "kp": "k10"
+  },
+  {
+   "id": "c19",
+   "type": "formula",
+   "front": "Edge bounds for connected simple planar graphs, \\( v \\ge 3 \\)",
+   "back": "\\( e \\le 3v - 6 \\); if triangle-free, \\( e \\le 2v - 4 \\).",
+   "kp": "k10"
+  },
+  {
+   "id": "c20",
+   "type": "concept",
+   "front": "Why is \\( K_{5} \\) not planar?",
+   "back": "\\( e = 10 > 3v - 6 = 9 \\).",
+   "kp": "k10"
+  },
+  {
+   "id": "c21",
+   "type": "problem",
+   "front": "Faces of a connected plane graph with 10 vertices of degree 3",
+   "back": "\\( e = 15 \\), \\( f = 2 - 10 + 15 = 7 \\).",
+   "kp": "k10",
+   "answer": "7",
+   "check": "number"
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k2",
+   "type": "number",
+   "prompt": "How many edges does the hypercube \\( Q_{4} \\) have?",
+   "answer": "32",
+   "why": "\\( Q_{4} \\) has \\( 2^{4} = 16 \\) vertices, each of degree 4. By the handshake lemma, \\( |E| = \\frac{16 \\cdot 4}{2} = 32 \\)."
+  },
+  {
+   "id": "p2",
+   "kp": "k1",
+   "type": "written",
+   "prompt": "Prove that every simple graph with at least two vertices has two distinct vertices of the same degree.",
+   "rubric": [
+    "With n vertices, degrees lie in {0, 1, …, n − 1}",
+    "Degrees 0 and n − 1 cannot both occur: a vertex of degree n − 1 is adjacent to every other vertex",
+    "So the n degrees take at most n − 1 values",
+    "Pigeonhole: two vertices share a degree"
+   ],
+   "model": "*Proof.* Let \\( G \\) have \\( n \\ge 2 \\) vertices. In a simple graph each degree lies in \\( \\{0, 1, \\dots, n - 1\\} \\), a set of \\( n \\) values. The values \\( 0 \\) and \\( n - 1 \\) cannot both occur: a vertex of degree \\( n - 1 \\) is adjacent to every other vertex, so no vertex has degree 0. Hence the \\( n \\) degrees take at most \\( n - 1 \\) distinct values, and by the pigeonhole principle two vertices have the same degree. \\( \\blacksquare \\)",
+   "why": "The argument fails for multigraphs, which is why simplicity is part of the hypothesis."
+  },
+  {
+   "id": "p3",
+   "kp": "k3",
+   "type": "number",
+   "prompt": "How many edges does the complement of \\( K_{3,5} \\) have?",
+   "answer": "13",
+   "why": "\\( K_{3,5} \\) has 8 vertices and \\( 3 \\cdot 5 = 15 \\) edges; \\( \\binom{8}{2} = 28 \\), so the complement has \\( 28 - 15 = 13 \\) edges. (It is \\( K_{3} \\) and \\( K_{5} \\) side by side: \\( 3 + 10 = 13 \\).)"
+  },
+  {
+   "id": "p4",
+   "kp": "k4",
+   "type": "written",
+   "prompt": "Let \\( \\varphi : V_{1} \\to V_{2} \\) be an isomorphism from \\( G_{1} \\) to \\( G_{2} \\). Prove that \\( \\deg(\\varphi(v)) = \\deg(v) \\) for every vertex \\( v \\), and conclude that isomorphic graphs have the same degree sequence.",
+   "rubric": [
+    "Shows φ maps N(v) into N(φ(v)): u adjacent to v gives φ(u) adjacent to φ(v)",
+    "Shows every neighbour of φ(v) is φ(u) for some neighbour u of v (surjectivity of φ plus the 'if' direction)",
+    "φ restricted to N(v) is injective, hence a bijection N(v) → N(φ(v)), so degrees agree",
+    "Since φ is a bijection on vertices, the multisets of degrees coincide"
+   ],
+   "model": "*Proof.* Let \\( v \\in V_{1} \\). If \\( u \\in N(v) \\), then \\( uv \\in E_{1} \\), so \\( \\varphi(u)\\varphi(v) \\in E_{2} \\) and \\( \\varphi(u) \\in N(\\varphi(v)) \\). Conversely, let \\( x \\in N(\\varphi(v)) \\). Since \\( \\varphi \\) is surjective, \\( x = \\varphi(u) \\) for some \\( u \\), and \\( \\varphi(u)\\varphi(v) \\in E_{2} \\) implies \\( uv \\in E_{1} \\), so \\( u \\in N(v) \\). Thus \\( \\varphi \\) maps \\( N(v) \\) onto \\( N(\\varphi(v)) \\), and it is injective, so it is a bijection between them and \\( \\deg(\\varphi(v)) = \\deg(v) \\).\n\nSince \\( \\varphi \\) is a bijection \\( V_{1} \\to V_{2} \\) preserving degrees, the list of degrees of \\( G_{2} \\) is the list of degrees of \\( G_{1} \\) rearranged: the degree sequences are equal. \\( \\blacksquare \\)",
+   "why": "Every invariant is proved the same way: show that the isomorphism carries the structure in question onto the corresponding structure."
+  },
+  {
+   "id": "p5",
+   "kp": "k5",
+   "type": "written",
+   "prompt": "On the vertex set of a graph, define \\( u \\sim v \\) if there is a walk from \\( u \\) to \\( v \\). Prove that \\( \\sim \\) is an equivalence relation. Why would defining \\( u \\approx v \\) by \\\"there is a path from \\( u \\) to \\( v \\)\\\" require an extra argument for transitivity, and what supplies it?",
+   "rubric": [
+    "Reflexive: the walk of length 0",
+    "Symmetric: reverse the walk",
+    "Transitive: concatenating a walk from u to v with one from v to w gives a walk from u to w",
+    "Concatenated paths may repeat vertices, so they need not be a path; the lemma (every walk contains a path) restores transitivity for ≈, and shows ≈ = ∼"
+   ],
+   "model": "*Reflexive:* the one-term sequence \\( u \\) is a walk of length 0 from \\( u \\) to \\( u \\). *Symmetric:* if \\( u = v_{0}, \\dots, v_{k} = v \\) is a walk, then \\( v_{k}, \\dots, v_{0} \\) is a walk from \\( v \\) to \\( u \\). *Transitive:* a walk from \\( u \\) to \\( v \\) followed by a walk from \\( v \\) to \\( w \\) is a walk from \\( u \\) to \\( w \\). So \\( \\sim \\) is an equivalence relation.\n\nFor paths, the concatenation of a path from \\( u \\) to \\( v \\) and a path from \\( v \\) to \\( w \\) may repeat vertices (the two paths can cross), so it is a walk but not necessarily a path. The lemma that every walk from \\( u \\) to \\( w \\) contains a path from \\( u \\) to \\( w \\) supplies the missing step; it also shows that \\( \\approx \\) and \\( \\sim \\) are the same relation.",
+   "why": "Working with walks and converting to paths only at the end is the standard way to avoid this difficulty."
+  },
+  {
+   "id": "p6",
+   "kp": "k6",
+   "type": "written",
+   "prompt": "Prove by strong induction on the length that every closed walk of odd length in a simple graph contains a cycle of odd length (that is, some odd cycle is formed by vertices and edges of the walk).",
+   "rubric": [
+    "Sets up strong induction on the odd length k of a closed walk v₀, …, v_k = v₀",
+    "If no vertex repeats among v₀, …, v_{k−1}: it is a cycle (length ≥ 3 since a simple graph has no closed walks of length 1)",
+    "Otherwise v_i = v_j with 0 ≤ i < j ≤ k − 1 splits the walk into two closed walks of lengths j − i and k − (j − i), both shorter than k",
+    "Their lengths sum to the odd number k, so one is odd; apply the hypothesis to it"
+   ],
+   "model": "*Proof.* We prove, by strong induction on odd \\( k \\ge 1 \\), that every closed walk \\( v_{0}, v_{1}, \\dots, v_{k} = v_{0} \\) of length \\( k \\) contains an odd cycle.\n\nA closed walk of length 1 would need a loop, which a simple graph does not have, so the statement holds vacuously for \\( k = 1 \\). Let \\( k \\ge 3 \\) be odd and assume the statement for all odd lengths less than \\( k \\).\n\n*Case 1: \\( v_{0}, \\dots, v_{k-1} \\) are distinct.* Then the walk is a cycle of length \\( k \\), which is odd.\n\n*Case 2: \\( v_{i} = v_{j} \\) for some \\( 0 \\le i < j \\le k - 1 \\).* Then \\( v_{i}, v_{i+1}, \\dots, v_{j} \\) is a closed walk of length \\( j - i \\), and \\( v_{j}, v_{j+1}, \\dots, v_{k} = v_{0}, v_{1}, \\dots, v_{i} \\) is a closed walk of length \\( k - (j - i) \\). Both lengths are positive and less than \\( k \\), and they sum to \\( k \\), which is odd, so one of them is odd. By the inductive hypothesis that walk, and hence the original one, contains an odd cycle. \\( \\blacksquare \\)",
+   "why": "This lemma completes the proof that a graph with no odd cycle is bipartite. For even lengths the analogous statement is false: the closed walk \\( u, v, u \\) of length 2 contains no cycle."
+  },
+  {
+   "id": "p7",
+   "kp": "k7",
+   "type": "written",
+   "prompt": "Prove that a forest with \\( n \\) vertices and \\( c \\) components has exactly \\( n - c \\) edges.",
+   "rubric": [
+    "Each component is connected and acyclic, hence a tree",
+    "A component with n_i vertices has n_i − 1 edges",
+    "Every edge lies in exactly one component",
+    "Sum: Σ(n_i − 1) = n − c"
+   ],
+   "model": "*Proof.* Let the components be \\( T_{1}, \\dots, T_{c} \\), with \\( n_{1}, \\dots, n_{c} \\) vertices, so \\( n_{1} + \\cdots + n_{c} = n \\). Each \\( T_{i} \\) is connected and, being part of a forest, acyclic; so it is a tree with \\( n_{i} - 1 \\) edges. Every edge of the forest lies in exactly one component (its endpoints are joined by that edge, so they are in the same component). Hence the number of edges is \\( \\sum_{i=1}^{c} (n_{i} - 1) = n - c \\). \\( \\blacksquare \\)",
+   "why": "With \\( c = 1 \\) this is the edge count of a tree; worked example 1 of the trees section uses the same computation in reverse."
+  },
+  {
+   "id": "p8",
+   "kp": "k8",
+   "type": "written",
+   "prompt": "Prove that a connected graph in which every edge is a bridge is a tree. (Show that an edge lying on a cycle is never a bridge.)",
+   "rubric": [
+    "Lemma: if the edge xy lies on a cycle, deleting it keeps the graph connected",
+    "Reason: any walk that used xy can be rerouted along the rest of the cycle from x to y",
+    "Contrapositive: if G had a cycle, an edge on it would not be a bridge",
+    "So G is connected and acyclic, i.e. a tree"
+   ],
+   "model": "*Lemma.* If an edge \\( xy \\) lies on a cycle of \\( G \\), then \\( G - xy \\) has the same components as \\( G \\). Indeed, the rest of the cycle is a path from \\( x \\) to \\( y \\) avoiding \\( xy \\); in any walk of \\( G \\), replace each use of \\( xy \\) by this path (in the appropriate direction) to obtain a walk in \\( G - xy \\) with the same ends.\n\n*Proof of the claim.* Let \\( G \\) be connected with every edge a bridge. If \\( G \\) contained a cycle, any edge on it would, by the lemma, not be a bridge, contrary to hypothesis. So \\( G \\) is acyclic, and being connected, it is a tree. \\( \\blacksquare \\)",
+   "why": "The converse also holds: in a tree, deleting an edge \\( uv \\) destroys the unique \\( u \\)–\\( v \\) path, so every edge is a bridge."
+  },
+  {
+   "id": "p9",
+   "kp": "k9",
+   "type": "mcq",
+   "prompt": "Which statement is correct?",
+   "options": [
+    "Every graph in which every vertex has even degree has an Euler circuit.",
+    "Every graph with an Euler circuit has a Hamiltonian cycle.",
+    "Every connected multigraph with at least one edge, in which every vertex has even degree, has an Euler circuit.",
+    "Every connected graph in which every vertex has even degree has a Hamiltonian cycle."
+   ],
+   "answer": 2,
+   "why": "This is Euler's theorem. The first option omits connectivity (two disjoint triangles). The second confuses edges with vertices: two triangles sharing one vertex have an Euler circuit (all degrees even, connected) but no Hamiltonian cycle, since the shared vertex would have to be visited twice. The fourth fails for the same graph."
+  },
+  {
+   "id": "p10",
+   "kp": "k10",
+   "type": "written",
+   "prompt": "A connected simple plane graph with \\( v \\ge 3 \\) vertices is drawn so that every face, including the outer face, is bounded by exactly 3 edges. Prove that it has exactly \\( 3v - 6 \\) edges and \\( 2v - 4 \\) faces.",
+   "rubric": [
+    "Counting edge-sides: each face boundary has 3 edges, and each edge has two sides, so 3f = 2e",
+    "Euler's formula v − e + f = 2",
+    "Substituting f = 2e/3: v − e + 2e/3 = 2, so e = 3v − 6",
+    "f = 2e/3 = 2v − 4"
+   ],
+   "model": "Counting edge-sides face by face: each face contributes 3, and each edge has two sides, so \\( 3f = 2e \\) and \\( f = \\frac{2e}{3} \\). By Euler's formula, \\( v - e + \\frac{2e}{3} = 2 \\), so \\( \\frac{e}{3} = v - 2 \\) and \\( e = 3v - 6 \\). Then \\( f = \\frac{2(3v - 6)}{3} = 2v - 4 \\). \\( \\blacksquare \\)",
+   "why": "Such triangulations are exactly the planar graphs that attain the bound \\( e \\le 3v - 6 \\); adding any edge to one destroys planarity."
+  },
+  {
+   "id": "p11",
+   "kp": "k6",
+   "type": "number",
+   "prompt": "What is the chromatic number of the cycle \\( C_{7} \\)?",
+   "answer": "3",
+   "why": "\\( C_{7} \\) is an odd cycle, so it is not bipartite and needs at least 3 colours. Colour \\( v_{1}, \\dots, v_{6} \\) alternately with two colours and \\( v_{7} \\) with a third: 3 colours suffice."
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k2",
+   "type": "written",
+   "prompt": "(a) Prove the handshake lemma and deduce that every graph has an even number of vertices of odd degree. (b) Can nine people each be acquainted with exactly five of the others? Justify.",
+   "rubric": [
+    "(a) Double counts vertex–edge incidences: Σ deg(v) = 2|E|",
+    "(a) Splits the sum into even and odd degrees; the odd-degree sum is even, so the number of odd terms is even",
+    "(b) Models acquaintance as a graph on 9 vertices, each of degree 5",
+    "(b) Degree sum 45 is odd (or: 9 odd-degree vertices), impossible"
+   ],
+   "model": "(a) Count the pairs \\( (v, e) \\) with \\( v \\) an endpoint of \\( e \\). Each vertex \\( v \\) lies in \\( \\deg(v) \\) such pairs, and each edge in exactly 2, so \\( \\sum_{v} \\deg(v) = 2|E| \\). Write the sum as \\( \\sum_{\\deg(v) \\text{ even}} \\deg(v) + \\sum_{\\deg(v) \\text{ odd}} \\deg(v) \\). The total and the first part are even, so the second part is even; a sum of odd numbers is even only when the number of terms is even. So the number of odd-degree vertices is even.\n\n(b) No. Let the people be vertices, with an edge between two acquaintances. Each of the 9 vertices would have degree 5, so there would be 9 vertices of odd degree, an odd number, contradicting (a). (Equivalently, the degree sum \\( 45 \\) would have to equal \\( 2|E| \\).)",
+   "why": "The acquaintance relation is symmetric, which is exactly what makes it a graph and makes the handshake lemma apply."
+  },
+  {
+   "id": "e2",
+   "kp": "k8",
+   "type": "written",
+   "prompt": "Prove that a connected graph with \\( n \\) vertices and \\( n - 1 \\) edges is a tree. You may use that every connected graph has a spanning tree and that a tree on \\( n \\) vertices has \\( n - 1 \\) edges.",
+   "rubric": [
+    "Takes a spanning tree T of G",
+    "T has n vertices, hence n − 1 edges",
+    "T ⊆ G and G has n − 1 edges, so T contains every edge of G: G = T",
+    "Concludes G is a tree (connected and acyclic)"
+   ],
+   "model": "*Proof.* Let \\( G \\) be connected with \\( n \\) vertices and \\( n - 1 \\) edges, and let \\( T \\) be a spanning tree of \\( G \\). Then \\( T \\) has the same \\( n \\) vertices, so it has \\( n - 1 \\) edges. Since the edge set of \\( T \\) is a subset of the edge set of \\( G \\), and both have \\( n - 1 \\) elements, the two edge sets are equal. Hence \\( G = T \\) is a tree. \\( \\blacksquare \\)\n\n(Without spanning trees: if \\( G \\) had a cycle, deleting an edge of the cycle would keep \\( G \\) connected; repeating this until no cycle remains produces a connected acyclic graph, a tree, on \\( n \\) vertices with fewer than \\( n - 1 \\) edges, contradicting the edge count of trees.)",
+   "why": "A finite set contained in another of the same size equals it; the spanning tree cannot be missing any edge."
+  },
+  {
+   "id": "e3",
+   "kp": "k9",
+   "type": "written",
+   "prompt": "Prove that a connected multigraph with at least one edge, in which every vertex has even degree, has an Euler circuit. Identify precisely where each hypothesis (connectedness, even degrees) is used.",
+   "rubric": [
+    "Strong induction on the number of edges",
+    "Builds a closed trail C from a vertex v: the walk can only get stuck at v, because entering w ≠ v uses an odd number of w's edges and deg(w) is even",
+    "Removes C; remaining degrees are even; each component with an edge has an Euler circuit by the hypothesis",
+    "Uses connectedness to show each such component meets C, then splices the circuits into C"
+   ],
+   "model": "*Proof.* By strong induction on the number \\( m \\ge 1 \\) of edges. Assume the statement for all such multigraphs with fewer than \\( m \\) edges, and let \\( G \\) have \\( m \\) edges.\n\n*A closed trail.* Start at a vertex \\( v \\) incident with an edge and walk along unused edges as long as possible. Whenever the walk enters a vertex \\( w \\ne v \\), it has used an odd number of the edges at \\( w \\), counting a loop twice (each earlier visit used two, and this arrival one more); since \\( \\deg(w) \\) is even (**even degrees used**), an unused edge remains, so the walk can continue. Hence it can stop only at \\( v \\), and it is a closed trail \\( C \\).\n\n*The rest.* Delete the edges of \\( C \\) to get \\( H \\). Every vertex lost an even number of edges (two for each pass of \\( C \\)), so all degrees in \\( H \\) are even. If \\( H \\) has no edges, \\( C \\) is an Euler circuit. Otherwise each component of \\( H \\) that has an edge is connected, has all degrees even and fewer than \\( m \\) edges, so by the inductive hypothesis it has an Euler circuit.\n\n*Splicing.* Each such component contains a vertex of \\( C \\): since \\( G \\) is connected (**connectedness used**), there is a path in \\( G \\) from any vertex of the component to \\( v \\), and the first edge of this path not in the component must belong to \\( C \\), so its initial vertex lies on \\( C \\). Traverse \\( C \\) from \\( v \\); on first reaching a vertex shared with a component, traverse that component's Euler circuit and then continue along \\( C \\). Every edge of \\( G \\) is used exactly once, so this is an Euler circuit. \\( \\blacksquare \\)",
+   "why": "Even degrees make the greedy walk close up; connectedness makes the leftover circuits attach to it."
+  },
+  {
+   "id": "e4",
+   "kp": "k6",
+   "type": "written",
+   "prompt": "Prove that a graph is bipartite if and only if it has no cycle of odd length. You may use, without proof, that every closed walk of odd length contains a cycle of odd length.",
+   "rubric": [
+    "(⇒) Vertices of a cycle alternate between the parts, so its length is even",
+    "(⇐) Reduces to connected graphs; fixes r and partitions by parity of d(r, x)",
+    "Shows |d(r, u) − d(r, v)| ≤ 1 for adjacent u, v, so an edge within a part joins two vertices at equal distance d",
+    "Builds a closed walk of length 2d + 1 and invokes the lemma to get an odd cycle, contradiction"
+   ],
+   "model": "(\\( \\Rightarrow \\)) Let \\( G \\) be bipartite with parts \\( X, Y \\) and let \\( v_{0}, \\dots, v_{k} = v_{0} \\) be a cycle. Adjacent vertices are in different parts, so if \\( v_{0} \\in X \\) then \\( v_{i} \\in X \\) exactly when \\( i \\) is even. As \\( v_{k} = v_{0} \\in X \\), \\( k \\) is even.\n\n(\\( \\Leftarrow \\)) A graph is bipartite if each component is (take the union of the parts), so let \\( G \\) be connected with no odd cycle. Fix \\( r \\); let \\( X = \\{ x : d(r, x) \\text{ even} \\} \\) and \\( Y = \\{ x : d(r, x) \\text{ odd} \\} \\). If \\( uv \\) is an edge, a shortest path to \\( u \\) followed by \\( uv \\) is a walk to \\( v \\), so \\( d(r, v) \\le d(r, u) + 1 \\); symmetrically \\( d(r, u) \\le d(r, v) + 1 \\). Suppose \\( u, v \\) lie in the same part. Then their distances have equal parity and differ by at most 1, so both equal some \\( d \\). A shortest path from \\( r \\) to \\( u \\), the edge \\( uv \\), and a shortest path from \\( v \\) back to \\( r \\) form a closed walk of length \\( 2d + 1 \\), which is odd. By the lemma it contains an odd cycle, contradicting the hypothesis. So every edge joins \\( X \\) and \\( Y \\), and \\( G \\) is bipartite. \\( \\blacksquare \\)",
+   "why": "The distance-parity colouring is the natural candidate; odd cycles are exactly what can make it fail."
+  },
+  {
+   "id": "e5",
+   "kp": "k4",
+   "type": "written",
+   "prompt": "The prism graph \\( \\Pi \\) has vertices \\( a_{1}, a_{2}, a_{3}, b_{1}, b_{2}, b_{3} \\) and edges \\( a_{1}a_{2}, a_{2}a_{3}, a_{3}a_{1}, b_{1}b_{2}, b_{2}b_{3}, b_{3}b_{1}, a_{1}b_{1}, a_{2}b_{2}, a_{3}b_{3} \\). Show that \\( \\Pi \\) and \\( K_{3,3} \\) agree on the number of vertices, the number of edges and the degree sequence, but are not isomorphic.",
+   "rubric": [
+    "Both have 6 vertices and 9 edges",
+    "Both are 3-regular (degree sequence 3, 3, 3, 3, 3, 3)",
+    "Π contains the triangle a₁a₂a₃",
+    "K_{3,3} is bipartite, hence has no odd cycle and no triangle; an isomorphism would map a triangle to a triangle"
+   ],
+   "model": "Both graphs have 6 vertices and 9 edges (\\( 3 + 3 + 3 \\) for \\( \\Pi \\); \\( 3 \\cdot 3 \\) for \\( K_{3,3} \\)). In \\( \\Pi \\) each \\( a_{i} \\) is adjacent to the other two \\( a_{j} \\) and to \\( b_{i} \\), and similarly for each \\( b_{i} \\), so \\( \\Pi \\) is 3-regular; \\( K_{3,3} \\) is 3-regular as well. So the degree sequences are both \\( 3, 3, 3, 3, 3, 3 \\).\n\nThey are not isomorphic: \\( a_{1}, a_{2}, a_{3} \\) form a triangle in \\( \\Pi \\), while \\( K_{3,3} \\) is bipartite and so has no cycle of odd length, in particular no triangle. An isomorphism maps the three edges of a triangle to three edges forming a triangle, so no isomorphism exists.",
+   "why": "The number of triangles is an invariant that degree data cannot see. (\\( \\Pi \\) is planar and \\( K_{3,3} \\) is not, another distinguishing invariant.)"
+  },
+  {
+   "id": "e6",
+   "kp": "k10",
+   "type": "written",
+   "prompt": "Prove Euler's formula \\( v - e + f = 2 \\) for connected plane graphs (you may assume the Jordan curve theorem), and use it to prove that \\( K_{5} \\) is not planar, justifying the inequality \\( 3f \\le 2e \\) you use.",
+   "rubric": [
+    "Induction on e for fixed v; base case a tree: e = v − 1, f = 1",
+    "Step: a non-tree has a cycle; deleting a cycle edge merges two faces and keeps connectivity: (v, e − 1, f − 1)",
+    "3f ≤ 2e: face boundaries have length ≥ 3 in a simple connected graph with v ≥ 3, and each edge has two sides",
+    "Derives e ≤ 3v − 6 and notes K₅ has e = 10 > 9"
+   ],
+   "model": "*Euler's formula.* Fix \\( v \\) and induct on \\( e \\ge v - 1 \\) (a connected graph on \\( v \\) vertices has at least \\( v - 1 \\) edges). If \\( e = v - 1 \\), the graph is a tree, which has one face, so \\( v - (v - 1) + 1 = 2 \\). If \\( G \\) is connected and not a tree, it has a cycle; an edge \\( \\varepsilon \\) of the cycle separates two different faces (the cycle is a closed curve, so by the Jordan curve theorem its inside and outside are different regions). Deleting \\( \\varepsilon \\) merges those faces and keeps \\( G \\) connected (the rest of the cycle joins the ends of \\( \\varepsilon \\)), giving a connected plane graph with \\( e - 1 \\) edges and \\( f - 1 \\) faces. By the inductive hypothesis \\( v - (e - 1) + (f - 1) = 2 \\), so \\( v - e + f = 2 \\).\n\n*\\( K_{5} \\) is not planar.* Suppose \\( K_{5} \\) had a plane drawing: \\( v = 5 \\), \\( e = 10 \\), so \\( f = 2 - 5 + 10 = 7 \\). Counting edge-sides around the faces gives a total of \\( 2e \\), since every edge has two sides. In a simple connected graph with at least 3 vertices, every face boundary has at least 3 edge-sides (a boundary of 1 or 2 would require a loop or parallel edges). Hence \\( 3f \\le 2e \\), i.e. \\( 21 \\le 20 \\), a contradiction. (Equivalently, \\( e \\le 3v - 6 = 9 < 10 \\).) \\( \\blacksquare \\)",
+   "why": "Euler's formula converts a topological statement into arithmetic; the face-length bound supplies the inequality that \\( K_{5} \\) violates."
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "Handshake lemma",
+    "formula": "\\( \\sum_{v} \\deg(v) = 2|E| \\); the number of odd-degree vertices is even",
+    "when": "Counting edges or vertices from degrees; ruling out degree sequences.",
+    "example": "Five vertices of degree 3: sum 15 is odd, impossible.",
+    "watch": "An even sum is necessary, not sufficient."
+   },
+   {
+    "name": "Isomorphism",
+    "formula": "bijection \\( \\varphi \\) with \\( uv \\in E_{1} \\iff \\varphi(u)\\varphi(v) \\in E_{2} \\)",
+    "when": "Deciding whether two graphs are the same up to relabelling.",
+    "example": "\\( C_{6} \\not\\cong 2K_{3} \\): triangles.",
+    "watch": "Equal invariants never prove isomorphism; give the bijection."
+   },
+   {
+    "name": "Walk to path",
+    "formula": "A shortest walk from \\( u \\) to \\( v \\) is a path",
+    "when": "Converting routes; proving transitivity of connectivity.",
+    "example": "Cut out the loop between two visits to the same vertex.",
+    "watch": "Concatenated paths are only walks."
+   },
+   {
+    "name": "Bipartite test",
+    "formula": "Bipartite ⇔ no odd cycle",
+    "when": "Deciding 2-colourability.",
+    "example": "\\( Q_{n} \\): colour by parity of the number of 1s.",
+    "watch": "No triangle does not mean bipartite (check 5-cycles, 7-cycles, …)."
+   },
+   {
+    "name": "Trees",
+    "formula": "tree on \\( n \\) vertices: \\( n - 1 \\) edges, \\( \\ge 2 \\) leaves (if \\( n \\ge 2 \\)), unique paths",
+    "when": "Counting leaves or edges in acyclic connected graphs.",
+    "example": "Degrees 3, 3, 3, 2, 2 plus \\( L \\) leaves: \\( 13 + L = 2(4 + L) \\), \\( L = 5 \\).",
+    "watch": "Any two of connected, acyclic, \\( n - 1 \\) edges are needed, not one."
+   },
+   {
+    "name": "Euler's theorem",
+    "formula": "Connected with an edge: Euler circuit ⇔ all degrees even; non-closed Euler trail ⇔ exactly two odd",
+    "when": "Traversing every edge exactly once.",
+    "example": "\\( K_{n} \\) has an Euler circuit iff \\( n \\) is odd (\\( n \\ge 3 \\)).",
+    "watch": "Connectivity is a hypothesis; Hamiltonian cycles are a different problem."
+   },
+   {
+    "name": "Euler's formula and planarity bounds",
+    "formula": "\\( v - e + f = 2 \\); \\( e \\le 3v - 6 \\); triangle-free: \\( e \\le 2v - 4 \\)",
+    "when": "Counting faces; proving non-planarity.",
+    "example": "\\( K_{3,3} \\): \\( 9 > 2 \\cdot 6 - 4 = 8 \\).",
+    "watch": "The bounds require a simple connected graph with \\( v \\ge 3 \\), and they are only necessary conditions."
+   }
+  ],
+  "stuck": [
+   "Translate the problem into a graph: say exactly what the vertices and edges are and whether multiple edges can occur.",
+   "Write down the degrees and apply the handshake lemma; many counting questions end there.",
+   "For statements about all graphs of a kind, induct on the number of vertices or edges, removing a leaf, a vertex of small degree, or an edge on a cycle.",
+   "To show two graphs differ, look for an invariant: components, triangles, odd cycles, degree sequence.",
+   "Test claims on small examples: \\( K_{3}, C_{4}, C_{5}, K_{4}, K_{2,3} \\), two disjoint triangles, a star."
+  ]
+ }
+}

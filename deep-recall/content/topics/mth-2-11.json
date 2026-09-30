@@ -1,0 +1,744 @@
+{
+ "key": "mth-2-11",
+ "title": "Polar coordinates",
+ "v": 1,
+ "scope": "The polar coordinate system and conversion to and from rectangular coordinates, polar equations and their graphs (circles, lines, limaçons, cardioids, roses, spirals), symmetry, slopes and tangent lines, area of polar regions and between polar curves with their intersections, and arc length; conic sections in polar form and double integrals in polar coordinates are left to later courses.",
+ "sources": [
+  {
+   "title": "OpenStax, Calculus Volume 2, Section 7.3: Polar Coordinates",
+   "url": "https://openstax.org/books/calculus-volume-2/pages/7-3-polar-coordinates"
+  },
+  {
+   "title": "OpenStax, Calculus Volume 2, Section 7.4: Area and Arc Length in Polar Coordinates",
+   "url": "https://openstax.org/books/calculus-volume-2/pages/7-4-area-and-arc-length-in-polar-coordinates"
+  },
+  {
+   "title": "OpenStax, Calculus Volume 2, Chapter 7 Key Terms",
+   "url": "https://openstax.org/books/calculus-volume-2/pages/7-key-terms"
+  },
+  {
+   "title": "Paul's Online Math Notes, Calculus II: Area with Polar Coordinates",
+   "url": "https://tutorial.math.lamar.edu/Classes/CalcII/PolarArea.aspx"
+  },
+  {
+   "title": "Paul's Online Math Notes, Calculus II: Arc Length with Polar Coordinates (practice problems)",
+   "url": "https://tutorial.math.lamar.edu/problems/calcii/polararclength.aspx"
+  }
+ ],
+ "pre": [
+  "mth-2-10",
+  "mth-0-5",
+  "mth-2-1"
+ ],
+ "kps": [
+  {
+   "id": "k1",
+   "t": "Polar coordinates and their non-uniqueness",
+   "d": "Plot points in polar coordinates, including negative r, and list the equivalent representations of a point.",
+   "type": "concept"
+  },
+  {
+   "id": "k2",
+   "t": "Converting points and equations",
+   "d": "Convert points and equations between polar and rectangular form, choosing angles by quadrant and tracking the pole.",
+   "type": "procedure"
+  },
+  {
+   "id": "k3",
+   "t": "Graphs of polar equations",
+   "d": "Sketch polar curves from r as a function of theta and recognise circles, lines, limaçons, cardioids, roses and spirals.",
+   "type": "skill"
+  },
+  {
+   "id": "k4",
+   "t": "Symmetry of polar curves",
+   "d": "Apply the three symmetry tests, and explain why a failed test does not prove asymmetry.",
+   "type": "procedure"
+  },
+  {
+   "id": "k5",
+   "t": "Slopes and tangent lines",
+   "d": "Compute dy/dx for r = f(theta), find horizontal, vertical and pole tangents, and analyse cusps.",
+   "type": "procedure"
+  },
+  {
+   "id": "k6",
+   "t": "Area of a polar region",
+   "d": "Derive and apply A = (1/2)∫ r^2 dθ, choosing limits that sweep the region exactly once.",
+   "type": "procedure"
+  },
+  {
+   "id": "k7",
+   "t": "Area between polar curves and intersections",
+   "d": "Find all intersection points (including the pole) and compute areas between polar curves.",
+   "type": "skill"
+  },
+  {
+   "id": "k8",
+   "t": "Arc length in polar coordinates",
+   "d": "Derive and apply the polar arc length formula for curves traced once.",
+   "type": "procedure"
+  }
+ ],
+ "intro": "Rectangular coordinates locate a point by how far it lies to the right of and above the origin. For figures organised around a centre, such as circles about the origin, spirals, flower-shaped curves, or the orbit of a planet about the sun, it is more natural to locate a point by its distance from a fixed point and its direction. Polar coordinates do exactly this, and curves that are complicated in \\(x\\) and \\(y\\) often become simple: the cardioid \\((x^2 + y^2 - x)^2 = x^2 + y^2\\) is \\(r = 1 + \\cos\\theta\\).\n\nThis chapter sets up the polar coordinate system, studies the curves described by polar equations, and then develops calculus in polar coordinates: slopes of tangent lines, areas and arc lengths. A polar curve is a parametric curve with the angle as parameter, so slopes and lengths follow from the previous chapter. Area is different: the natural building block is a thin circular sector rather than a thin rectangle, which leads to a new formula.",
+ "sections": [
+  {
+   "id": "s1",
+   "title": "The polar coordinate system",
+   "kps": [
+    "k1",
+    "k2"
+   ],
+   "md": "This section sets up the polar coordinate system, explains the feature that most distinguishes it from rectangular coordinates (a point has many polar representations), and gives the formulas for converting between the two systems.\n\n> **Definition.** Fix a point \\(O\\), the **pole**, and a ray from \\(O\\), the **polar axis**, usually drawn along the positive \\(x\\)-axis. A point \\(P\\) has **polar coordinates** \\((r, \\theta)\\) if \\(P\\) is reached by rotating the polar axis through the angle \\(\\theta\\) (counterclockwise for \\(\\theta > 0\\)) and moving a directed distance \\(r\\) along the rotated ray. If \\(r < 0\\), the point lies at distance \\(|r|\\) on the opposite ray, in the direction \\(\\theta + \\pi\\).\n\n**Many representations.** Adding a full turn to the angle does not move the point, and reversing the direction while negating \\(r\\) does not either:\n\\[ (r, \\theta) = (r, \\theta + 2\\pi k) = (-r, \\theta + \\pi + 2\\pi k) \\quad \\text{for every integer } k. \\]\nThe pole is \\((0, \\theta)\\) for every \\(\\theta\\). Rectangular coordinates are unique; polar coordinates are not, and this fact will matter when finding where two polar curves intersect.\n\n**Conversion.** Placing the pole at the origin and the polar axis along the positive \\(x\\)-axis, the definitions of sine and cosine give\n\\[ x = r\\cos\\theta, \\qquad y = r\\sin\\theta, \\]\nand conversely\n\\[ r^2 = x^2 + y^2, \\qquad \\tan\\theta = \\frac yx \\quad (x \\ne 0). \\]\nThe equation \\(\\tan\\theta = \\frac yx\\) determines \\(\\theta\\) only up to a multiple of \\(\\pi\\); the correct angle must be chosen by looking at the quadrant of \\((x, y)\\).\n\n**Worked example 1.** The point with polar coordinates \\(\\left(2, \\frac{2\\pi}{3}\\right)\\) has \\(x = 2\\cos\\frac{2\\pi}3 = -1\\) and \\(y = 2\\sin\\frac{2\\pi}{3} = \\sqrt3\\): it is \\((-1, \\sqrt3)\\). The point \\(\\left(-2, \\frac\\pi3\\right)\\) has \\(x = -2\\cdot\\frac12 = -1\\) and \\(y = -2\\cdot\\frac{\\sqrt3}{2} = -\\sqrt3\\): it lies in the third quadrant, opposite the direction \\(\\frac\\pi3\\).\n\n**Worked example 2.** Express \\((-1, -1)\\) in polar coordinates. Here \\(r^2 = 2\\), and \\(\\tan\\theta = 1\\). The calculator value \\(\\arctan 1 = \\frac\\pi4\\) points into the first quadrant, but \\((-1, -1)\\) is in the third, so \\(\\theta = \\frac{\\pi}{4} + \\pi = \\frac{5\\pi}{4}\\). With \\(r > 0\\) and \\(0 \\le \\theta < 2\\pi\\), the answer is \\(\\left(\\sqrt2, \\frac{5\\pi}4\\right)\\); another valid representation is \\(\\left(-\\sqrt2, \\frac\\pi4\\right)\\).\n\n**Worked example 3.** For \\((0, -3)\\), \\(x = 0\\) and the tangent is undefined, but the point is on the negative \\(y\\)-axis, so \\(\\left(3, \\frac{3\\pi}{2}\\right)\\) works.\n\n**Common mistakes.** Taking \\(\\theta = \\arctan\\frac yx\\) without checking the quadrant, which is wrong for every point with \\(x < 0\\). Plotting a point with \\(r < 0\\) in the direction \\(\\theta\\) rather than \\(\\theta + \\pi\\). And assuming that two different coordinate pairs must be two different points.",
+   "questions": [
+    {
+     "id": "s1q1",
+     "kp": "k1",
+     "type": "written",
+     "prompt": "Find the rectangular coordinates of the points with polar coordinates \\(\\left(4, \\frac{5\\pi}{6}\\right)\\) and \\(\\left(-2, \\frac{\\pi}{3}\\right)\\). Then give two other polar representations of \\(\\left(4, \\frac{5\\pi}6\\right)\\), one with \\(r < 0\\).",
+     "rubric": [
+      "\\(\\left(4, \\frac{5\\pi}6\\right) \\to \\left(-2\\sqrt3, 2\\right)\\) using \\(x = r\\cos\\theta\\), \\(y = r\\sin\\theta\\).",
+      "\\(\\left(-2, \\frac\\pi3\\right) \\to \\left(-1, -\\sqrt3\\right)\\), noting it lies opposite the direction \\(\\frac\\pi3\\).",
+      "A representation with a shifted angle, e.g. \\(\\left(4, -\\frac{7\\pi}{6}\\right)\\) or \\(\\left(4, \\frac{17\\pi}6\\right)\\).",
+      "A representation with \\(r < 0\\): \\(\\left(-4, -\\frac\\pi6\\right)\\) or \\(\\left(-4, \\frac{11\\pi}{6}\\right)\\)."
+     ],
+     "model": "\\(\\left(4, \\frac{5\\pi}6\\right)\\): \\(x = 4\\cos\\frac{5\\pi}6 = 4\\left(-\\frac{\\sqrt3}{2}\\right) = -2\\sqrt3\\), \\(y = 4\\sin\\frac{5\\pi}{6} = 2\\); the point is \\((-2\\sqrt3, 2)\\). \\(\\left(-2, \\frac\\pi3\\right)\\): \\(x = -2\\cos\\frac\\pi3 = -1\\), \\(y = -2\\sin\\frac\\pi3 = -\\sqrt3\\); the point is \\((-1, -\\sqrt3)\\), in the third quadrant, opposite the ray at angle \\(\\frac\\pi3\\). Other representations of the first point: \\(\\left(4, \\frac{5\\pi}{6} - 2\\pi\\right) = \\left(4, -\\frac{7\\pi}6\\right)\\), and, reversing direction, \\(\\left(-4, \\frac{5\\pi}6 - \\pi\\right) = \\left(-4, -\\frac{\\pi}{6}\\right)\\).",
+     "why": "\\((r, \\theta) = (r, \\theta + 2\\pi k) = (-r, \\theta + \\pi + 2\\pi k)\\)."
+    },
+    {
+     "id": "s1q2",
+     "kp": "k2",
+     "type": "number",
+     "prompt": "Write the point \\((x, y) = (-3, 3)\\) in polar coordinates with \\(r > 0\\) and \\(0 \\le \\theta < 2\\pi\\). Enter \\(\\theta\\).",
+     "answer": "3*pi/4",
+     "why": "\\(r = \\sqrt{9 + 9} = 3\\sqrt2\\) and \\(\\tan\\theta = -1\\). The point is in the second quadrant, so \\(\\theta = \\frac{3\\pi}{4}\\), not \\(\\arctan(-1) = -\\frac\\pi4\\), which points into the fourth quadrant."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "Polar equations and their curves",
+   "kps": [
+    "k2",
+    "k3"
+   ],
+   "md": "A polar equation \\(r = f(\\theta)\\) describes a curve, and many curves that are awkward in rectangular coordinates have simple polar equations. This section explains how to convert equations in both directions, introduces the standard families of polar curves, and gives a method for sketching them.\n\n> **Definition.** The **graph of a polar equation** is the set of all points having at least one polar representation \\((r, \\theta)\\) that satisfies the equation.\n\n**Converting equations.** Substitute \\(x = r\\cos\\theta\\), \\(y = r\\sin\\theta\\), \\(x^2 + y^2 = r^2\\), multiplying by \\(r\\) where that helps.\n\n- \\(r = 3\\) is the circle \\(x^2 + y^2 = 9\\), and \\(\\theta = \\frac\\pi4\\) is the whole line \\(y = x\\) (negative \\(r\\) supplies the half in the third quadrant).\n- \\(r = 2a\\sin\\theta\\): multiplying by \\(r\\), \\(x^2 + y^2 = 2ay\\), that is \\(x^2 + (y - a)^2 = a^2\\), a circle through the pole with centre \\((0, a)\\). Similarly \\(r = 2a\\cos\\theta\\) is the circle with centre \\((a, 0)\\).\n- \\(r = 3\\sec\\theta\\) means \\(r\\cos\\theta = 3\\), the vertical line \\(x = 3\\).\n- In the other direction, \\(x^2 + y^2 = 4x\\) becomes \\(r^2 = 4r\\cos\\theta\\), so \\(r = 0\\) or \\(r = 4\\cos\\theta\\). The pole is already on the curve \\(r = 4\\cos\\theta\\) (at \\(\\theta = \\frac\\pi2\\)), so dividing by \\(r\\) loses nothing and the polar equation is \\(r = 4\\cos\\theta\\).\n\nMultiplying an equation by \\(r\\) can add the pole to the graph, and dividing by \\(r\\) can remove it; check the pole separately.\n\n**Sketching.** Treat \\(r\\) as a function of \\(\\theta\\) and first graph it in an ordinary \\(\\theta r\\)-plane. Where \\(r\\) increases, the curve moves away from the pole; where \\(r = 0\\), the curve passes through the pole; where \\(r < 0\\), points are plotted in the opposite direction. For \\(r = 1 + 2\\cos\\theta\\): \\(r = 3\\) at \\(\\theta = 0\\), \\(r = 1\\) at \\(\\frac\\pi2\\), \\(r = 0\\) at \\(\\frac{2\\pi}{3}\\), \\(r = -1\\) at \\(\\pi\\), and then the values repeat in reverse. Between \\(\\frac{2\\pi}3\\) and \\(\\frac{4\\pi}3\\), \\(r < 0\\), and those points, plotted in the opposite direction, form a small inner loop on the right of the pole.\n\n**Standard families.**\n\n- **Limaçons**: \\(r = a + b\\cos\\theta\\) or \\(r = a + b\\sin\\theta\\). With \\(a, b > 0\\): an inner loop if \\(a < b\\), a **cardioid** (heart shape with a cusp at the pole) if \\(a = b\\), a dimple if \\(b < a < 2b\\), and a convex curve if \\(a \\ge 2b\\).\n- **Roses**: \\(r = a\\cos n\\theta\\) or \\(r = a\\sin n\\theta\\), \\(n \\ge 2\\) an integer: \\(n\\) petals if \\(n\\) is odd, \\(2n\\) petals if \\(n\\) is even.\n- **Spirals**: \\(r = \\theta\\) (Archimedean spiral) moves steadily outward as \\(\\theta\\) grows.\n\nIn the first graph, drag \\(b\\) for the family \\(r = 1 + b\\cos\\theta\\) and watch the shape pass from a circle (\\(b = 0\\)) through a convex curve and a dimpled one to the cardioid at \\(b = 1\\), after which an inner loop appears. In the second, drag \\(n\\) and count the petals of \\(r = \\cos n\\theta\\): odd \\(n\\) gives \\(n\\) petals, because for odd \\(n\\) the second half of the \\(\\theta\\)-interval retraces the first.\n\n```plot\nx: -2.3, 4.8\ny: -2.09, 2.09\nt: 0, 6.2832\nslider: b, 0, 2.5, 0.5 | b\nparam: (1 + b*cos(t))*cos(t); (1 + b*cos(t))*sin(t) | r = 1 + b cos θ\npoint: 0, 0\n```\n\n```plot\nx: -1.87, 1.87\ny: -1.1, 1.1\nt: 0, 6.2832\nslider: n, 1, 7, 3, 1 | n\nparam: cos(n*t)*cos(t); cos(n*t)*sin(t) | r = cos nθ\n```\n\n**Common mistakes.** Counting \\(n\\) petals for even \\(n\\). Dividing by \\(r\\) and losing the pole, or multiplying by \\(r\\) and adding it. And ignoring negative values of \\(r\\), which produce the inner loop of a limaçon and half the petals of a rose with even \\(n\\).",
+   "questions": [
+    {
+     "id": "s2q1",
+     "kp": "k2",
+     "type": "written",
+     "prompt": "Convert \\(r = 4\\sin\\theta - 2\\cos\\theta\\) to rectangular coordinates, identify the curve precisely, and say whether it passes through the pole.",
+     "rubric": [
+      "Multiplies by \\(r\\): \\(r^2 = 4r\\sin\\theta - 2r\\cos\\theta\\), so \\(x^2 + y^2 = 4y - 2x\\).",
+      "Completes squares: \\((x+1)^2 + (y-2)^2 = 5\\).",
+      "Identifies the circle with centre \\((-1, 2)\\) and radius \\(\\sqrt5\\).",
+      "Notes the pole is on the curve (e.g. \\(r = 0\\) when \\(\\tan\\theta = \\frac12\\); or \\((0,0)\\) satisfies the equation), so multiplying by \\(r\\) added nothing."
+     ],
+     "model": "Multiplying by \\(r\\): \\(r^2 = 4r\\sin\\theta - 2r\\cos\\theta\\), i.e. \\(x^2 + y^2 = 4y - 2x\\). Completing squares, \\(x^2 + 2x + 1 + y^2 - 4y + 4 = 5\\), so \\((x + 1)^2 + (y - 2)^2 = 5\\): the circle with centre \\((-1, 2)\\) and radius \\(\\sqrt5\\). The pole lies on it, since \\((0, 0)\\) satisfies \\(1 + 4 = 5\\); in polar terms \\(r = 0\\) when \\(4\\sin\\theta = 2\\cos\\theta\\), i.e. \\(\\tan\\theta = \\frac12\\). Hence multiplying by \\(r\\) did not add a spurious point.",
+     "why": "Every equation \\(r = A\\sin\\theta + B\\cos\\theta\\) is a circle through the pole."
+    },
+    {
+     "id": "s2q2",
+     "kp": "k3",
+     "type": "number",
+     "prompt": "How many petals does the rose \\(r = 3\\sin 4\\theta\\) have?",
+     "answer": "8",
+     "why": "For \\(r = a\\sin n\\theta\\) with \\(n\\) even there are \\(2n\\) petals; here \\(n = 4\\) gives 8. The negative values of \\(r\\) produce the petals lying between those traced with \\(r > 0\\)."
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "Symmetry of polar curves",
+   "kps": [
+    "k4"
+   ],
+   "md": "Symmetry halves or quarters the work of sketching a polar curve and of computing areas and lengths. This section gives tests for the three common symmetries and explains why a failed test does not prove that a symmetry is absent.\n\n**Reflections in polar form.** Reflecting the point \\((r, \\theta)\\):\n- across the polar axis (the \\(x\\)-axis) gives \\((r, -\\theta)\\);\n- across the line \\(\\theta = \\frac\\pi2\\) (the \\(y\\)-axis) gives \\((r, \\pi - \\theta)\\);\n- through the pole gives \\((-r, \\theta)\\), which is also \\((r, \\theta + \\pi)\\).\n\n> **Symmetry tests.** The graph of a polar equation is symmetric\n> (1) about the polar axis if the equation is unchanged when \\(\\theta\\) is replaced by \\(-\\theta\\);\n> (2) about the line \\(\\theta = \\frac\\pi2\\) if the equation is unchanged when \\(\\theta\\) is replaced by \\(\\pi - \\theta\\);\n> (3) about the pole if the equation is unchanged when \\(r\\) is replaced by \\(-r\\), or when \\(\\theta\\) is replaced by \\(\\theta + \\pi\\).\n\n*Why.* In test (1), if \\((r, \\theta)\\) satisfies the equation, so does \\((r, -\\theta)\\), which is the mirror image of the point; so the mirror image of every point of the graph lies on the graph. Tests (2) and (3) work the same way.\n\nConsequently, an equation involving \\(\\theta\\) only through \\(\\cos\\theta\\) is symmetric about the polar axis (since \\(\\cos(-\\theta) = \\cos\\theta\\)), and one involving \\(\\theta\\) only through \\(\\sin\\theta\\) is symmetric about the line \\(\\theta = \\frac\\pi2\\) (since \\(\\sin(\\pi - \\theta) = \\sin\\theta\\)).\n\n**Worked example 1.** The cardioid \\(r = 1 + \\cos\\theta\\) is symmetric about the polar axis. It suffices to plot \\(0 \\le \\theta \\le \\pi\\) (from \\(r = 2\\) on the polar axis, through \\(r = 1\\) at \\(\\theta = \\frac\\pi2\\), to the pole at \\(\\theta = \\pi\\)) and reflect.\n\n**Worked example 2.** The lemniscate \\(r^2 = 4\\cos 2\\theta\\) passes all three tests: \\(\\cos(-2\\theta) = \\cos 2\\theta\\); \\(\\cos(2(\\pi - \\theta)) = \\cos(2\\pi - 2\\theta) = \\cos2\\theta\\); and \\((-r)^2 = r^2\\). So the part in the first quadrant, \\(0 \\le \\theta \\le \\frac\\pi4\\), determines the whole curve.\n\n**The tests are sufficient, not necessary.** Because a point has many representations, a curve can have a symmetry that a test fails to detect. For \\(r = \\sin 2\\theta\\), replacing \\(\\theta\\) by \\(-\\theta\\) gives \\(r = -\\sin2\\theta\\), a different equation. Yet the four-petal rose is symmetric about the polar axis: the mirror image \\((r, -\\theta)\\) of a point on the curve is the same point as \\((-r, \\pi - \\theta)\\), and \\(\\sin(2(\\pi - \\theta)) = -\\sin 2\\theta = -r\\), so this representation satisfies the equation. When a test fails, try another representation of the reflected point, or examine the graph, before concluding that the symmetry is absent.\n\n**Using symmetry in integrals.** When a curve is symmetric, an area or length can be computed over the part of the \\(\\theta\\)-interval that traces one symmetric piece and multiplied by the number of pieces. This requires knowing exactly which \\(\\theta\\)-interval traces which piece, which the sketch supplies.\n\n**Common mistakes.** Concluding that a curve is not symmetric because a test fails. Confusing the tests: replacing \\(\\theta\\) by \\(-\\theta\\) tests the \\(x\\)-axis, not the \\(y\\)-axis. And multiplying by the wrong number of pieces when exploiting symmetry in an integral.",
+   "questions": [
+    {
+     "id": "s3q1",
+     "kp": "k4",
+     "type": "written",
+     "prompt": "Determine which of the three standard symmetries the limaçon \\(r = 1 - 2\\sin\\theta\\) has. Justify each symmetry that holds with a test, and each that fails by exhibiting a point of the curve whose mirror image is not on the curve.",
+     "rubric": [
+      "Replacing \\(\\theta\\) by \\(\\pi - \\theta\\) leaves the equation unchanged (\\(\\sin(\\pi - \\theta) = \\sin\\theta\\)): symmetric about \\(\\theta = \\frac\\pi2\\).",
+      "Not symmetric about the polar axis: e.g. \\(\\theta = \\frac\\pi2\\) gives \\(r = -1\\), the point \\((0, -1)\\); its mirror image \\((0, 1)\\) would need \\(r = 1\\) at \\(\\frac\\pi2\\) or \\(r = -1\\) at \\(\\frac{3\\pi}2\\), neither of which holds.",
+      "Not symmetric about the pole: e.g. \\(\\theta = \\frac{3\\pi}{2}\\) gives \\(r = 3\\), the point \\((0, -3)\\); \\((0, 3)\\) is not on the curve.",
+      "Recognises that a failed test alone does not prove asymmetry; a specific point is needed."
+     ],
+     "model": "About \\(\\theta = \\frac\\pi2\\): replacing \\(\\theta\\) by \\(\\pi - \\theta\\) gives \\(r = 1 - 2\\sin(\\pi - \\theta) = 1 - 2\\sin\\theta\\), unchanged, so the curve is symmetric about the \\(y\\)-axis. About the polar axis: at \\(\\theta = \\frac\\pi2\\), \\(r = -1\\), giving the point \\((0, -1)\\); its reflection \\((0, 1)\\) has representations \\(\\left(1, \\frac\\pi2\\right)\\) and \\(\\left(-1, \\frac{3\\pi}2\\right)\\) (up to multiples of \\(2\\pi\\)), but the equation gives \\(r = -1\\) at \\(\\frac\\pi2\\) and \\(r = 3\\) at \\(\\frac{3\\pi}2\\). So \\((0, 1)\\) is not on the curve and there is no symmetry about the polar axis. About the pole: at \\(\\theta = \\frac{3\\pi}2\\), \\(r = 3\\), the point \\((0, -3)\\); its reflection through the pole, \\((0, 3)\\), would need \\(r = 3\\) at \\(\\frac\\pi2\\) or \\(r = -3\\) at \\(\\frac{3\\pi}{2}\\), and neither holds. So there is no symmetry about the pole.",
+     "why": "Because the tests are only sufficient, disproving a symmetry requires a concrete point whose mirror image fails every representation."
+    },
+    {
+     "id": "s3q2",
+     "kp": "k4",
+     "type": "mcq",
+     "prompt": "For \\(r = \\sin 2\\theta\\), replacing \\(\\theta\\) by \\(-\\theta\\) gives \\(r = -\\sin 2\\theta\\), a different equation. What follows about symmetry of the curve with respect to the polar axis?",
+     "options": [
+      "The curve is not symmetric about the polar axis, because the test fails.",
+      "The curve is symmetric about the polar axis: the reflected point \\((r, -\\theta)\\) can be written \\((-r, \\pi - \\theta)\\), and that representation satisfies the equation.",
+      "The curve is symmetric about the pole only; the change of sign in \\(r\\) shows it.",
+      "The curve is symmetric about the polar axis because replacing \\((r, \\theta)\\) by \\((-r, -\\theta)\\) restores the equation."
+     ],
+     "answer": 1,
+     "why": "The test is sufficient but not necessary. The reflection of \\((r, \\theta)\\) across the polar axis is \\((r, -\\theta) = (-r, \\pi - \\theta)\\), and \\(\\sin(2(\\pi - \\theta)) = -\\sin 2\\theta = -r\\), so the reflected point is on the curve. Option 4 uses a valid algebraic fact but the wrong reflection: \\((-r, -\\theta)\\) is the mirror image of \\((r, \\theta)\\) across the line \\(\\theta = \\frac\\pi2\\), not across the polar axis. The rose is in fact symmetric about both axes and the pole."
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "Slopes and tangent lines of polar curves",
+   "kps": [
+    "k5"
+   ],
+   "md": "To find tangent lines to a polar curve we need \\(\\frac{dy}{dx}\\), not \\(\\frac{dr}{d\\theta}\\). This section obtains the slope by viewing the polar curve as a parametric curve with parameter \\(\\theta\\), and treats the special behaviour at the pole.\n\n**The slope formula.** The curve \\(r = f(\\theta)\\) is the parametric curve\n\\[ x = f(\\theta)\\cos\\theta, \\qquad y = f(\\theta)\\sin\\theta. \\]\nBy the product rule, \\(\\frac{dx}{d\\theta} = f'(\\theta)\\cos\\theta - f(\\theta)\\sin\\theta\\) and \\(\\frac{dy}{d\\theta} = f'(\\theta)\\sin\\theta + f(\\theta)\\cos\\theta\\), so by the parametric slope formula\n\\[ \\frac{dy}{dx} = \\frac{f'(\\theta)\\sin\\theta + f(\\theta)\\cos\\theta}{f'(\\theta)\\cos\\theta - f(\\theta)\\sin\\theta}, \\qquad \\text{where the denominator is not } 0. \\]\nHorizontal tangents occur where the numerator is 0 and the denominator is not; vertical tangents where the denominator is 0 and the numerator is not.\n\n**Tangents at the pole.** If \\(f(\\theta_0) = 0\\) and \\(f'(\\theta_0) \\ne 0\\), the formula reduces to \\(\\frac{f'(\\theta_0)\\sin\\theta_0}{f'(\\theta_0)\\cos\\theta_0} = \\tan\\theta_0\\): the curve passes through the pole tangent to the line \\(\\theta = \\theta_0\\). For the rose \\(r = \\cos2\\theta\\), \\(r = 0\\) at \\(\\theta = \\frac\\pi4\\) and \\(\\frac{3\\pi}{4}\\) (in \\([0, \\pi)\\)), with \\(r' = -2\\sin 2\\theta \\ne 0\\) there, so the petals meet the pole tangent to the lines \\(y = x\\) and \\(y = -x\\).\n\n**Worked example (the cardioid \\(r = 1 + \\cos\\theta\\)).** Here \\(f' = -\\sin\\theta\\). The numerator is \\(-\\sin^2\\theta + (1 + \\cos\\theta)\\cos\\theta = \\cos\\theta + \\cos 2\\theta\\), and the denominator is \\(-\\sin\\theta\\cos\\theta - (1 + \\cos\\theta)\\sin\\theta = -(\\sin\\theta + \\sin2\\theta)\\).\n\n- *At \\(\\theta = \\frac\\pi2\\):* the point is \\((x, y) = (0, 1)\\) and the slope is \\(\\frac{0 + (-1)}{-(1 + 0)} = 1\\). The tangent line is \\(y = x + 1\\).\n- *Horizontal tangents:* \\(\\cos\\theta + \\cos 2\\theta = 2\\cos^2\\theta + \\cos\\theta - 1 = (2\\cos\\theta - 1)(\\cos\\theta + 1) = 0\\). For \\(\\cos\\theta = \\frac12\\), \\(\\theta = \\frac\\pi3\\) or \\(\\frac{5\\pi}{3}\\), where the denominator is \\(\\mp\\frac{3\\sqrt3}{2} \\ne 0\\); then \\(r = \\frac32\\) and the points are \\(\\left(\\frac34, \\pm\\frac{3\\sqrt3}{4}\\right)\\).\n- *At \\(\\theta = \\pi\\):* numerator and denominator both vanish, and \\(r = 0\\), \\(f'(\\pi) = 0\\), so neither rule applies. L'Hôpital's rule gives \\(\\lim_{\\theta\\to\\pi}\\frac{\\cos\\theta + \\cos2\\theta}{-(\\sin\\theta + \\sin2\\theta)} = \\frac{-\\sin\\pi - 2\\sin 2\\pi}{-(\\cos\\pi + 2\\cos2\\pi)} = 0\\): the cardioid enters the pole along the polar axis, forming its cusp.\n\n```plot\nx: -1.2, 3.56\ny: -1.4, 1.4\nt: 0, 6.2832\nparam: (1 + cos(t))*cos(t); (1 + cos(t))*sin(t) | r = 1 + cos θ\nf: x + 1 | tangent at θ = π/2\nhline: 3*sqrt(3)/4 | horizontal tangent at θ = π/3\npoint: 0, 1\npoint: 0.75, 1.299\n```\n\n**Common mistakes.** Using \\(\\frac{dr}{d\\theta}\\) as the slope: it measures how fast the distance from the pole changes, not the steepness of the curve. Omitting the product rule in \\(\\frac{dx}{d\\theta}\\) and \\(\\frac{dy}{d\\theta}\\). And declaring a horizontal tangent where the numerator vanishes without checking the denominator, as at the cusp above.",
+   "questions": [
+    {
+     "id": "s4q1",
+     "kp": "k5",
+     "type": "number",
+     "prompt": "Find the slope of the tangent line to \\(r = 2\\sin\\theta\\) at \\(\\theta = \\frac\\pi6\\).",
+     "answer": "sqrt(3)",
+     "why": "With \\(f = 2\\sin\\theta\\), \\(f' = 2\\cos\\theta\\): numerator \\(2\\cos\\theta\\sin\\theta + 2\\sin\\theta\\cos\\theta = 2\\sin2\\theta\\), denominator \\(2\\cos^2\\theta - 2\\sin^2\\theta = 2\\cos 2\\theta\\). The slope is \\(\\tan 2\\theta\\), which at \\(\\frac\\pi6\\) is \\(\\tan\\frac\\pi3 = \\sqrt3\\)."
+    },
+    {
+     "id": "s4q2",
+     "kp": "k5",
+     "type": "expression",
+     "prompt": "Find the equation of the tangent line to the spiral \\(r = \\theta\\) at \\(\\theta = \\frac\\pi2\\). Give \\(y\\) as a function of \\(x\\).",
+     "answer": "pi/2 - 2*x/pi",
+     "vars": "x",
+     "why": "The point is \\(\\left(\\frac\\pi2\\cos\\frac\\pi2, \\frac\\pi2\\sin\\frac\\pi2\\right) = \\left(0, \\frac\\pi2\\right)\\). With \\(f = \\theta\\), \\(f' = 1\\): numerator \\(\\sin\\theta + \\theta\\cos\\theta = 1\\), denominator \\(\\cos\\theta - \\theta\\sin\\theta = -\\frac\\pi2\\). Slope \\(-\\frac2\\pi\\), so \\(y = \\frac\\pi2 - \\frac{2}{\\pi}x\\)."
+    },
+    {
+     "id": "s4q3",
+     "kp": "k5",
+     "type": "written",
+     "prompt": "Find all points on the cardioid \\(r = 1 + \\cos\\theta\\) (\\(0 \\le \\theta < 2\\pi\\)) at which the tangent line is vertical. Show the factorisation you use and check the other derivative at each candidate.",
+     "rubric": [
+      "Writes \\(\\frac{dx}{d\\theta} = -(\\sin\\theta + \\sin2\\theta) = -\\sin\\theta(1 + 2\\cos\\theta)\\).",
+      "Candidates \\(\\theta = 0, \\pi, \\frac{2\\pi}3, \\frac{4\\pi}{3}\\).",
+      "Checks \\(\\frac{dy}{d\\theta} = \\cos\\theta + \\cos2\\theta\\): nonzero at \\(0, \\frac{2\\pi}3, \\frac{4\\pi}3\\), zero at \\(\\pi\\) (the cusp at the pole, excluded).",
+      "Gives the points \\((2, 0)\\), \\(\\left(-\\frac14, \\frac{\\sqrt3}{4}\\right)\\), \\(\\left(-\\frac14, -\\frac{\\sqrt3}4\\right)\\)."
+     ],
+     "model": "\\(x = (1 + \\cos\\theta)\\cos\\theta\\), \\(y = (1 + \\cos\\theta)\\sin\\theta\\), so \\(\\frac{dx}{d\\theta} = -\\sin\\theta - 2\\sin\\theta\\cos\\theta = -\\sin\\theta(1 + 2\\cos\\theta)\\) and \\(\\frac{dy}{d\\theta} = \\cos\\theta + \\cos 2\\theta\\). \\(\\frac{dx}{d\\theta} = 0\\) when \\(\\sin\\theta = 0\\) (\\(\\theta = 0, \\pi\\)) or \\(\\cos\\theta = -\\frac12\\) (\\(\\theta = \\frac{2\\pi}3, \\frac{4\\pi}3\\)). Check \\(\\frac{dy}{d\\theta}\\): at 0 it is \\(2\\); at \\(\\frac{2\\pi}3\\) and \\(\\frac{4\\pi}3\\) it is \\(-\\frac12 - \\frac12 = -1\\); at \\(\\pi\\) it is \\(-1 + 1 = 0\\), so \\(\\theta = \\pi\\) (the pole, a cusp) is excluded. The vertical tangents are at \\(\\theta = 0\\): \\(r = 2\\), point \\((2, 0)\\); and at \\(\\theta = \\frac{2\\pi}3, \\frac{4\\pi}3\\): \\(r = \\frac12\\), points \\(\\left(-\\frac14, \\pm\\frac{\\sqrt3}4\\right)\\).",
+     "why": "At the cusp both derivatives vanish; the limit of the slope there is 0, so the curve meets the pole along the polar axis rather than vertically."
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "Area in polar coordinates",
+   "kps": [
+    "k6",
+    "k7"
+   ],
+   "md": "The area under a graph is built from thin rectangles. For a region described in polar coordinates, bounded by a curve \\(r = f(\\theta)\\) and two rays from the pole, the natural building block is a thin circular sector. This section derives the resulting area formula, applies it to single curves and to regions between two curves, and explains how to find the limits of integration.\n\n**The formula.** A circular sector of radius \\(r\\) and angle \\(\\Delta\\theta\\) has area \\(\\frac12 r^2\\Delta\\theta\\). Let \\(f\\) be continuous and nonnegative on \\([\\alpha, \\beta]\\), with \\(0 < \\beta - \\alpha \\le 2\\pi\\), and let \\(R\\) be the region bounded by \\(r = f(\\theta)\\) and the rays \\(\\theta = \\alpha\\), \\(\\theta = \\beta\\). Divide \\([\\alpha, \\beta]\\) into subintervals of width \\(\\Delta\\theta\\) and choose \\(\\theta_i^*\\) in each. The part of \\(R\\) over the \\(i\\)th subinterval is approximately a sector of radius \\(f(\\theta_i^*)\\), so\n\\[ \\text{Area}(R) \\approx \\sum_{i}\\frac12 f(\\theta_i^*)^2\\,\\Delta\\theta \\;\\longrightarrow\\; A = \\frac12\\int_\\alpha^\\beta f(\\theta)^2\\,d\\theta = \\frac12\\int_\\alpha^\\beta r^2\\,d\\theta. \\]\nIn the graph, drag \\(\\theta\\): the radius sweeps out the region bounded by the cardioid traced so far, and the formula adds the areas of the thin sectors it sweeps.\n\n```plot\nx: -1.2, 3.56\ny: -1.4, 1.4\nslider: a, 0.1, 6.283, 2 | θ\nt: 0, a\nparam: (1 + cos(t))*cos(t); (1 + cos(t))*sin(t) | r = 1 + cos θ, traced from 0 to θ\nparam: (t/a)*(1 + cos(a))*cos(a); (t/a)*(1 + cos(a))*sin(a) | radius at angle θ\n```\n\n**Worked example 1 (cardioid).** The cardioid \\(r = 1 + \\cos\\theta\\) is traced once for \\(0 \\le \\theta \\le 2\\pi\\):\n\\[ A = \\frac12\\int_0^{2\\pi}(1 + 2\\cos\\theta + \\cos^2\\theta)\\,d\\theta = \\frac12(2\\pi + 0 + \\pi) = \\frac{3\\pi}{2}. \\]\n\n**Worked example 2 (one petal).** For \\(r = 3\\sin2\\theta\\), \\(r \\ge 0\\) on \\(\\left[0, \\frac\\pi2\\right]\\) and \\(r = 0\\) at both ends, so this interval traces exactly one petal:\n\\[ A = \\frac12\\int_0^{\\pi/2} 9\\sin^22\\theta\\,d\\theta = \\frac92\\cdot\\frac\\pi4 = \\frac{9\\pi}{8}. \\]\nThe limits come from the zeros of \\(r\\), which is where a petal begins and ends.\n\n**Between two curves.** If \\(0 \\le g(\\theta) \\le f(\\theta)\\) on \\([\\alpha, \\beta]\\), the region between the curves has area \\(\\frac12\\int_\\alpha^\\beta \\left(f(\\theta)^2 - g(\\theta)^2\\right)d\\theta\\): the outer sector minus the inner one, not a sector of radius \\(f - g\\).\n\n**Worked example 3.** Find the area inside \\(r = 3\\sin\\theta\\) and outside \\(r = 1 + \\sin\\theta\\). The curves meet where \\(3\\sin\\theta = 1 + \\sin\\theta\\), i.e. \\(\\sin\\theta = \\frac12\\), at \\(\\theta = \\frac\\pi6\\) and \\(\\frac{5\\pi}6\\); between these angles the circle is outside the cardioid. The integrand simplifies: \\(9\\sin^2\\theta - (1 + \\sin\\theta)^2 = 8\\sin^2\\theta - 2\\sin\\theta - 1 = 3 - 4\\cos2\\theta - 2\\sin\\theta\\). So\n\\[ A = \\frac12\\int_{\\pi/6}^{5\\pi/6}(3 - 4\\cos 2\\theta - 2\\sin\\theta)\\,d\\theta = \\frac12\\left[3\\theta - 2\\sin2\\theta + 2\\cos\\theta\\right]_{\\pi/6}^{5\\pi/6} = \\frac12\\left(2\\pi + 2\\sqrt3 - 2\\sqrt3\\right) = \\pi. \\]\n\n```plot\nx: -3.3, 3.3\ny: -0.4, 3.5\nt: 0, 6.2832\nparam: 3*sin(t)*cos(t); 3*sin(t)*sin(t) | r = 3 sin θ\nparam: (1 + sin(t))*cos(t); (1 + sin(t))*sin(t) | r = 1 + sin θ\npoint: 1.299, 0.75\npoint: -1.299, 0.75\n```\n\n**Finding all intersection points.** Solving \\(f(\\theta) = g(\\theta)\\) finds only intersections at which both curves use the same representation. Two curves may also meet at the pole, reached at different values of \\(\\theta\\), or at a point represented as \\((r, \\theta)\\) on one curve and \\((-r, \\theta + \\pi)\\) on the other. For \\(r = \\sin\\theta\\) and \\(r = \\cos\\theta\\), the equation \\(\\sin\\theta = \\cos\\theta\\) gives only \\(\\theta = \\frac\\pi4\\); but both circles also pass through the pole (\\(\\sin 0 = 0\\), \\(\\cos\\frac\\pi2 = 0\\)). Always sketch the curves.\n\n**Common mistakes.** Writing \\(\\frac12\\int(f - g)^2\\,d\\theta\\) instead of \\(\\frac12\\int(f^2 - g^2)\\,d\\theta\\). Integrating over an interval on which the curve is traced twice: \\(r = \\cos\\theta\\) traces its circle once on \\([0, \\pi]\\), and \\(\\frac12\\int_0^{2\\pi}\\cos^2\\theta\\,d\\theta = \\frac\\pi2\\) is twice the true area \\(\\frac\\pi4\\). And including an interval where \\(r < 0\\) when only the outer part of a curve is wanted.",
+   "questions": [
+    {
+     "id": "s5q1",
+     "kp": "k6",
+     "type": "number",
+     "prompt": "Find the area of one petal of the rose \\(r = 4\\cos 3\\theta\\).",
+     "answer": "4*pi/3",
+     "why": "One petal is traced for \\(-\\frac\\pi6 \\le \\theta \\le \\frac\\pi6\\), where \\(\\cos 3\\theta \\ge 0\\) and \\(r = 0\\) at the ends. \\(A = \\frac12\\int_{-\\pi/6}^{\\pi/6}16\\cos^23\\theta\\,d\\theta = 8\\int_{-\\pi/6}^{\\pi/6}\\frac{1 + \\cos6\\theta}{2}\\,d\\theta = 8\\cdot\\frac\\pi6 = \\frac{4\\pi}3\\)."
+    },
+    {
+     "id": "s5q2",
+     "kp": "k7",
+     "type": "number",
+     "prompt": "Find the area of the region inside the circle \\(r = 2\\cos\\theta\\) and outside the circle \\(r = 1\\).",
+     "answer": "pi/3 + sqrt(3)/2",
+     "why": "Intersections: \\(2\\cos\\theta = 1\\), \\(\\theta = \\pm\\frac\\pi3\\); between them \\(2\\cos\\theta \\ge 1\\). \\(A = \\frac12\\int_{-\\pi/3}^{\\pi/3}(4\\cos^2\\theta - 1)\\,d\\theta = \\frac12\\int_{-\\pi/3}^{\\pi/3}(1 + 2\\cos2\\theta)\\,d\\theta = \\frac12\\left[\\theta + \\sin2\\theta\\right]_{-\\pi/3}^{\\pi/3} = \\frac12\\left(\\frac{2\\pi}{3} + \\sqrt3\\right) = \\frac\\pi3 + \\frac{\\sqrt3}{2}\\)."
+    },
+    {
+     "id": "s5q3",
+     "kp": "k6",
+     "type": "written",
+     "prompt": "A student computes the area of the disc bounded by \\(r = \\cos\\theta\\) as \\(\\frac12\\int_0^{2\\pi}\\cos^2\\theta\\,d\\theta = \\frac\\pi2\\). Identify the curve, find its true area, and explain exactly what went wrong.",
+     "rubric": [
+      "Identifies the circle \\(\\left(x - \\frac12\\right)^2 + y^2 = \\frac14\\), radius \\(\\frac12\\), area \\(\\frac\\pi4\\).",
+      "Shows the circle is traced once for \\(0 \\le \\theta \\le \\pi\\) (or \\(-\\frac\\pi2 \\le \\theta \\le \\frac\\pi2\\)).",
+      "Explains that on \\([\\pi, 2\\pi]\\) the circle is traced again (with \\(r \\le 0\\) on \\(\\left[\\frac\\pi2, \\frac{3\\pi}2\\right]\\)), so the integral counts the area twice.",
+      "Gives the corrected integral \\(\\frac12\\int_0^\\pi\\cos^2\\theta\\,d\\theta = \\frac\\pi4\\)."
+     ],
+     "model": "Multiplying by \\(r\\): \\(x^2 + y^2 = x\\), i.e. \\(\\left(x - \\frac12\\right)^2 + y^2 = \\frac14\\), a circle of radius \\(\\frac12\\) with area \\(\\frac\\pi4\\). As \\(\\theta\\) runs from \\(-\\frac\\pi2\\) to \\(\\frac\\pi2\\) (\\(r \\ge 0\\)) the circle is traced once; for \\(\\frac\\pi2 \\le \\theta \\le \\frac{3\\pi}{2}\\), \\(r \\le 0\\) and the points \\((r, \\theta) = (-r, \\theta + \\pi)\\) retrace the same circle. So \\([0, 2\\pi]\\) traces it twice, and \\(\\frac12\\int_0^{2\\pi}r^2\\,d\\theta\\) counts the area twice. The area formula requires the region to be swept once; the correct computation is \\(\\frac12\\int_0^\\pi\\cos^2\\theta\\,d\\theta = \\frac12\\cdot\\frac\\pi2 = \\frac\\pi4\\).",
+     "why": "Always determine the \\(\\theta\\)-interval that traces the boundary exactly once before integrating."
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "title": "Arc length in polar coordinates",
+   "kps": [
+    "k8"
+   ],
+   "md": "The length of a polar curve follows from the arc length formula for parametric curves. This section derives the polar form, applies it, and repeats the warning about curves traced more than once.\n\n**The formula.** With \\(x = f(\\theta)\\cos\\theta\\), \\(y = f(\\theta)\\sin\\theta\\), the derivatives computed in the section on tangents give\n\\[ \\left(\\frac{dx}{d\\theta}\\right)^2 + \\left(\\frac{dy}{d\\theta}\\right)^2 = (f'\\cos\\theta - f\\sin\\theta)^2 + (f'\\sin\\theta + f\\cos\\theta)^2 = f'^2 + f^2, \\]\nbecause the cross terms \\(\\mp 2ff'\\sin\\theta\\cos\\theta\\) cancel and \\(\\sin^2\\theta + \\cos^2\\theta = 1\\). Hence:\n\n> **Arc length in polar coordinates.** If \\(f'\\) is continuous on \\([\\alpha, \\beta]\\) and the curve \\(r = f(\\theta)\\) is traced exactly once as \\(\\theta\\) goes from \\(\\alpha\\) to \\(\\beta\\), its length is\n> \\[ L = \\int_\\alpha^\\beta\\sqrt{r^2 + \\left(\\frac{dr}{d\\theta}\\right)^2}\\,d\\theta. \\]\n\nBoth terms matter: for a circle \\(r = a\\) the derivative is 0 and the formula gives \\(\\int_0^{2\\pi}a\\,d\\theta = 2\\pi a\\); the \\(r^2\\) term accounts for motion around the pole and the \\(\\left(\\frac{dr}{d\\theta}\\right)^2\\) term for motion toward or away from it.\n\n**Worked example 1 (circle through the pole).** For \\(r = 2a\\cos\\theta\\), traced once on \\([0, \\pi]\\): \\(r^2 + r'^2 = 4a^2\\cos^2\\theta + 4a^2\\sin^2\\theta = 4a^2\\), so \\(L = \\int_0^\\pi 2a\\,d\\theta = 2\\pi a\\), the circumference of a circle of radius \\(a\\).\n\n**Worked example 2 (cardioid).** For \\(r = 1 + \\cos\\theta\\): \\(r^2 + r'^2 = (1 + \\cos\\theta)^2 + \\sin^2\\theta = 2 + 2\\cos\\theta = 4\\cos^2\\frac\\theta2\\). The square root is \\(2\\left|\\cos\\frac\\theta2\\right|\\), and \\(\\cos\\frac\\theta2\\) changes sign at \\(\\theta = \\pi\\). Using the symmetry about the polar axis,\n\\[ L = 2\\int_0^{\\pi} 2\\cos\\tfrac\\theta2\\,d\\theta = 2\\left[4\\sin\\tfrac\\theta2\\right]_0^\\pi = 8. \\]\nIntegrating \\(2\\cos\\frac\\theta2\\) over \\([0, 2\\pi]\\) without the absolute value would give 0, which is impossible for a length.\n\n**Worked example 3 (spiral).** For \\(r = \\theta\\), \\(0 \\le \\theta \\le 2\\pi\\): \\(L = \\int_0^{2\\pi}\\sqrt{\\theta^2 + 1}\\,d\\theta\\). The trigonometric substitution \\(\\theta = \\tan u\\) (from the chapter on trigonometric substitution) gives the antiderivative \\(\\frac12\\left(\\theta\\sqrt{\\theta^2+1} + \\ln\\left(\\theta + \\sqrt{\\theta^2+1}\\right)\\right)\\), so\n\\[ L = \\pi\\sqrt{4\\pi^2 + 1} + \\tfrac12\\ln\\left(2\\pi + \\sqrt{4\\pi^2+1}\\right) \\approx 21.26. \\]\n\n```plot\nx: -8, 8.6\ny: -5.5, 4.3\nt: 0, 6.2832\nparam: t*cos(t); t*sin(t) | r = θ, 0 ≤ θ ≤ 2π\n```\n\n**Common mistakes.** Using \\(\\int\\left|\\frac{dr}{d\\theta}\\right|d\\theta\\) or \\(\\int r\\,d\\theta\\), each of which omits one of the two components of motion. Integrating over an interval that traces the curve twice, such as \\([0, 2\\pi]\\) for \\(r = 2a\\cos\\theta\\), which gives \\(4\\pi a\\). And simplifying \\(\\sqrt{4\\cos^2\\frac\\theta2}\\) to \\(2\\cos\\frac\\theta2\\) on an interval where the cosine is negative.",
+   "questions": [
+    {
+     "id": "s6q1",
+     "kp": "k8",
+     "type": "number",
+     "prompt": "Find the length of the curve \\(r = \\theta^2\\), \\(0 \\le \\theta \\le \\sqrt5\\).",
+     "answer": "19/3",
+     "why": "\\(r^2 + r'^2 = \\theta^4 + 4\\theta^2 = \\theta^2(\\theta^2 + 4)\\), so for \\(\\theta \\ge 0\\) the integrand is \\(\\theta\\sqrt{\\theta^2 + 4}\\). \\(L = \\int_0^{\\sqrt5}\\theta\\sqrt{\\theta^2+4}\\,d\\theta = \\frac13(\\theta^2 + 4)^{3/2}\\Big|_0^{\\sqrt5} = \\frac13(27 - 8) = \\frac{19}{3}\\)."
+    },
+    {
+     "id": "s6q2",
+     "kp": "k8",
+     "type": "number",
+     "prompt": "Find the total length of the cardioid \\(r = 2 - 2\\cos\\theta\\).",
+     "answer": "16",
+     "why": "\\(r^2 + r'^2 = (2 - 2\\cos\\theta)^2 + 4\\sin^2\\theta = 8 - 8\\cos\\theta = 16\\sin^2\\frac\\theta2\\). On \\([0, 2\\pi]\\), \\(\\sin\\frac\\theta2 \\ge 0\\), so \\(L = \\int_0^{2\\pi}4\\sin\\frac\\theta2\\,d\\theta = \\left[-8\\cos\\frac\\theta2\\right]_0^{2\\pi} = 16\\), twice the length of \\(r = 1 + \\cos\\theta\\), as scaling by 2 requires."
+    },
+    {
+     "id": "s6q3",
+     "kp": "k8",
+     "type": "written",
+     "prompt": "Derive the arc length formula \\(L = \\int_\\alpha^\\beta\\sqrt{r^2 + (dr/d\\theta)^2}\\,d\\theta\\) from the arc length formula for parametric curves, showing the algebra, and state the hypotheses.",
+     "rubric": [
+      "Writes \\(x = f(\\theta)\\cos\\theta\\), \\(y = f(\\theta)\\sin\\theta\\) with \\(\\theta\\) as parameter.",
+      "Computes \\(x' = f'\\cos\\theta - f\\sin\\theta\\), \\(y' = f'\\sin\\theta + f\\cos\\theta\\).",
+      "Expands the squares and shows the cross terms cancel, giving \\(f'^2 + f^2\\).",
+      "States hypotheses: \\(f'\\) continuous and the curve traced exactly once on \\([\\alpha, \\beta]\\)."
+     ],
+     "model": "The curve \\(r = f(\\theta)\\) is the parametric curve \\(x = f(\\theta)\\cos\\theta\\), \\(y = f(\\theta)\\sin\\theta\\), \\(\\alpha \\le \\theta \\le \\beta\\). By the product rule, \\(x' = f'\\cos\\theta - f\\sin\\theta\\) and \\(y' = f'\\sin\\theta + f\\cos\\theta\\). Then \\(x'^2 = f'^2\\cos^2\\theta - 2ff'\\sin\\theta\\cos\\theta + f^2\\sin^2\\theta\\) and \\(y'^2 = f'^2\\sin^2\\theta + 2ff'\\sin\\theta\\cos\\theta + f^2\\cos^2\\theta\\). Adding, the cross terms cancel and \\(x'^2 + y'^2 = f'^2 + f^2\\). The parametric formula \\(L = \\int_\\alpha^\\beta\\sqrt{x'^2 + y'^2}\\,d\\theta\\), valid when \\(x', y'\\) are continuous (which holds if \\(f'\\) is) and the curve is traced exactly once, becomes \\(L = \\int_\\alpha^\\beta\\sqrt{f(\\theta)^2 + f'(\\theta)^2}\\,d\\theta\\).",
+     "why": "Every polar calculus formula except area comes from the parametric formulas with \\(\\theta\\) as the parameter."
+    }
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "t": "pole",
+   "d": "The fixed point \\(O\\) of the polar coordinate system, corresponding to the origin; it has coordinates \\((0, \\theta)\\) for every \\(\\theta\\)."
+  },
+  {
+   "t": "polar axis",
+   "d": "The fixed ray from the pole from which angles are measured, usually the positive \\(x\\)-axis."
+  },
+  {
+   "t": "polar coordinates",
+   "d": "A pair \\((r, \\theta)\\) locating a point at directed distance \\(r\\) from the pole along the ray at angle \\(\\theta\\) (along the opposite ray if \\(r < 0\\))."
+  },
+  {
+   "t": "polar equation",
+   "d": "An equation in \\(r\\) and \\(\\theta\\); its graph is the set of points having at least one representation that satisfies it."
+  },
+  {
+   "t": "cardioid",
+   "d": "The heart-shaped curve \\(r = a(1 \\pm \\cos\\theta)\\) or \\(r = a(1 \\pm \\sin\\theta)\\), with a cusp at the pole."
+  },
+  {
+   "t": "limaçon",
+   "d": "A curve \\(r = a + b\\cos\\theta\\) or \\(r = a + b\\sin\\theta\\); with \\(a, b > 0\\) it has an inner loop if \\(a < b\\) and is a cardioid if \\(a = b\\)."
+  },
+  {
+   "t": "rose",
+   "d": "A curve \\(r = a\\cos n\\theta\\) or \\(r = a\\sin n\\theta\\) (\\(n \\ge 2\\) an integer), with \\(n\\) petals for odd \\(n\\) and \\(2n\\) petals for even \\(n\\)."
+  },
+  {
+   "t": "lemniscate",
+   "d": "A figure-eight curve such as \\(r^2 = a^2\\cos 2\\theta\\), symmetric about both axes and the pole."
+  },
+  {
+   "t": "Archimedean spiral",
+   "d": "The curve \\(r = a\\theta\\), whose distance from the pole grows in proportion to the angle."
+  },
+  {
+   "t": "polar area formula",
+   "d": "\\(A = \\frac12\\int_\\alpha^\\beta r^2\\,d\\theta\\) for the region bounded by \\(r = f(\\theta) \\ge 0\\) and the rays \\(\\theta = \\alpha\\), \\(\\theta = \\beta\\), \\(0 < \\beta - \\alpha \\le 2\\pi\\)."
+  }
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "formula",
+   "front": "Polar to rectangular conversion",
+   "back": "\\(x = r\\cos\\theta\\), \\(y = r\\sin\\theta\\); \\(r^2 = x^2 + y^2\\), \\(\\tan\\theta = \\frac yx\\) (choose the quadrant).",
+   "kp": "k2"
+  },
+  {
+   "id": "c2",
+   "type": "concept",
+   "front": "All polar representations of the point \\((r, \\theta)\\)",
+   "back": "\\((r, \\theta + 2\\pi k)\\) and \\((-r, \\theta + \\pi + 2\\pi k)\\), \\(k\\) an integer; the pole is \\((0, \\theta)\\) for any \\(\\theta\\).",
+   "kp": "k1"
+  },
+  {
+   "id": "c3",
+   "type": "concept",
+   "front": "Why is \\(\\theta = \\arctan(y/x)\\) unreliable?",
+   "back": "Arctangent returns angles in \\(\\left(-\\frac\\pi2, \\frac\\pi2\\right)\\); for \\(x < 0\\) add \\(\\pi\\).",
+   "kp": "k2"
+  },
+  {
+   "id": "c4",
+   "type": "concept",
+   "front": "What curve is \\(r = 2a\\sin\\theta\\)?",
+   "back": "The circle \\(x^2 + (y - a)^2 = a^2\\), through the pole with centre \\((0, a)\\).",
+   "kp": "k2"
+  },
+  {
+   "id": "c5",
+   "type": "concept",
+   "front": "Number of petals of \\(r = a\\cos n\\theta\\)",
+   "back": "\\(n\\) if \\(n\\) is odd, \\(2n\\) if \\(n\\) is even.",
+   "kp": "k3"
+  },
+  {
+   "id": "c6",
+   "type": "concept",
+   "front": "Shapes of \\(r = a + b\\cos\\theta\\) (\\(a, b > 0\\))",
+   "back": "Inner loop if \\(a < b\\); cardioid if \\(a = b\\); dimpled if \\(b < a < 2b\\); convex if \\(a \\ge 2b\\).",
+   "kp": "k3"
+  },
+  {
+   "id": "c7",
+   "type": "term",
+   "front": "Symmetry tests for polar equations",
+   "back": "Polar axis: \\(\\theta \\to -\\theta\\). Line \\(\\theta = \\frac\\pi2\\): \\(\\theta \\to \\pi - \\theta\\). Pole: \\(r \\to -r\\) or \\(\\theta \\to \\theta + \\pi\\). Sufficient, not necessary.",
+   "kp": "k4"
+  },
+  {
+   "id": "c8",
+   "type": "concept",
+   "front": "Does a failed symmetry test prove a polar curve is not symmetric?",
+   "back": "No. Try another representation: \\(r = \\sin 2\\theta\\) fails the \\(\\theta \\to -\\theta\\) test yet is symmetric about the polar axis.",
+   "kp": "k4"
+  },
+  {
+   "id": "c9",
+   "type": "formula",
+   "front": "Slope of the polar curve \\(r = f(\\theta)\\)",
+   "back": "\\(\\frac{dy}{dx} = \\frac{f'\\sin\\theta + f\\cos\\theta}{f'\\cos\\theta - f\\sin\\theta}\\)",
+   "kp": "k5"
+  },
+  {
+   "id": "c10",
+   "type": "concept",
+   "front": "Tangent line at the pole",
+   "back": "If \\(f(\\theta_0) = 0\\) and \\(f'(\\theta_0) \\ne 0\\), the curve is tangent at the pole to the line \\(\\theta = \\theta_0\\).",
+   "kp": "k5"
+  },
+  {
+   "id": "c11",
+   "type": "concept",
+   "front": "Is \\(\\frac{dr}{d\\theta}\\) the slope of a polar curve?",
+   "back": "No; it is the rate of change of distance from the pole. The slope is \\(\\frac{dy/d\\theta}{dx/d\\theta}\\).",
+   "kp": "k5"
+  },
+  {
+   "id": "c12",
+   "type": "formula",
+   "front": "Area in polar coordinates",
+   "back": "\\(A = \\frac12\\int_\\alpha^\\beta r^2\\,d\\theta\\), region swept once, \\(r \\ge 0\\).",
+   "kp": "k6"
+  },
+  {
+   "id": "c13",
+   "type": "formula",
+   "front": "Area between polar curves \\(g \\le r \\le f\\)",
+   "back": "\\(A = \\frac12\\int_\\alpha^\\beta\\left(f^2 - g^2\\right)d\\theta\\), not \\(\\frac12\\int(f - g)^2\\,d\\theta\\).",
+   "kp": "k7"
+  },
+  {
+   "id": "c14",
+   "type": "concept",
+   "front": "Why can solving \\(f(\\theta) = g(\\theta)\\) miss intersections of polar curves?",
+   "back": "Curves may meet at the pole at different \\(\\theta\\), or at a point with different representations such as \\((r, \\theta)\\) and \\((-r, \\theta + \\pi)\\).",
+   "kp": "k7"
+  },
+  {
+   "id": "c15",
+   "type": "formula",
+   "front": "Arc length in polar coordinates",
+   "back": "\\(L = \\int_\\alpha^\\beta\\sqrt{r^2 + \\left(\\frac{dr}{d\\theta}\\right)^2}\\,d\\theta\\), traced once.",
+   "kp": "k8"
+  },
+  {
+   "id": "c16",
+   "type": "problem",
+   "front": "Area enclosed by the cardioid \\(r = 1 + \\cos\\theta\\)",
+   "back": "\\(\\frac{3\\pi}{2}\\): \\(\\frac12\\int_0^{2\\pi}(1 + \\cos\\theta)^2\\,d\\theta\\).",
+   "kp": "k6",
+   "answer": "3*pi/2",
+   "check": "number"
+  },
+  {
+   "id": "c17",
+   "type": "problem",
+   "front": "Length of the cardioid \\(r = 1 + \\cos\\theta\\)",
+   "back": "8: the integrand is \\(2\\left|\\cos\\frac\\theta2\\right|\\).",
+   "kp": "k8",
+   "answer": "8",
+   "check": "number"
+  },
+  {
+   "id": "c18",
+   "type": "concept",
+   "front": "On what interval is the circle \\(r = \\cos\\theta\\) traced once?",
+   "back": "\\([0, \\pi]\\) (or \\(\\left[-\\frac\\pi2, \\frac\\pi2\\right]\\)); \\([0, 2\\pi]\\) traces it twice.",
+   "kp": "k6"
+  }
+ ],
+ "practice": [
+  {
+   "id": "p1",
+   "kp": "k2",
+   "type": "number",
+   "prompt": "Write \\((x, y) = (-1, -\\sqrt3)\\) in polar coordinates with \\(r > 0\\) and \\(0 \\le \\theta < 2\\pi\\). Enter \\(\\theta\\).",
+   "answer": "4*pi/3",
+   "why": "\\(r = 2\\) and \\(\\tan\\theta = \\sqrt3\\). The point is in the third quadrant, so \\(\\theta = \\frac\\pi3 + \\pi = \\frac{4\\pi}3\\)."
+  },
+  {
+   "id": "p2",
+   "kp": "k2",
+   "type": "written",
+   "prompt": "Convert \\(r = \\frac{2}{1 - \\cos\\theta}\\) to a rectangular equation and identify the curve.",
+   "rubric": [
+    "Clears the denominator: \\(r - r\\cos\\theta = 2\\), so \\(r = 2 + x\\).",
+    "Squares, noting \\(r = 2 + x\\) requires \\(2 + x \\ge 0\\) when \\(r > 0\\): \\(x^2 + y^2 = (2 + x)^2\\).",
+    "Simplifies to \\(y^2 = 4x + 4\\).",
+    "Identifies a parabola opening to the right with vertex \\((-1, 0)\\)."
+   ],
+   "model": "Multiply by \\(1 - \\cos\\theta\\): \\(r - r\\cos\\theta = 2\\), i.e. \\(r = 2 + x\\). Here \\(r > 0\\) for every \\(\\theta\\) with \\(\\cos\\theta \\ne 1\\), so squaring introduces nothing new provided \\(x \\ge -2\\), which holds on the curve. Squaring, \\(x^2 + y^2 = 4 + 4x + x^2\\), so \\(y^2 = 4x + 4 = 4(x + 1)\\): a parabola opening to the right with vertex \\((-1, 0)\\) and focus at the pole.",
+   "why": "Equations \\(r = \\frac{ed}{1 - e\\cos\\theta}\\) describe conic sections with a focus at the pole; \\(e = 1\\) gives a parabola."
+  },
+  {
+   "id": "p3",
+   "kp": "k6",
+   "type": "number",
+   "prompt": "Find the total area enclosed by the three-petal rose \\(r = \\cos 3\\theta\\).",
+   "answer": "pi/4",
+   "why": "One petal: \\(\\frac12\\int_{-\\pi/6}^{\\pi/6}\\cos^23\\theta\\,d\\theta = \\frac12\\cdot\\frac\\pi6 = \\frac\\pi{12}\\). Three petals give \\(\\frac\\pi4\\). Note that \\(\\frac12\\int_0^{2\\pi}\\cos^2 3\\theta\\,d\\theta = \\frac\\pi2\\) would be wrong: for odd \\(n\\) the rose is traced twice on \\([0, 2\\pi]\\)."
+  },
+  {
+   "id": "p4",
+   "kp": "k6",
+   "type": "number",
+   "prompt": "Find the area enclosed by the inner loop of the limaçon \\(r = 1 + 2\\cos\\theta\\).",
+   "answer": "pi - 3*sqrt(3)/2",
+   "why": "\\(r = 0\\) at \\(\\theta = \\frac{2\\pi}3\\) and \\(\\frac{4\\pi}3\\); for \\(\\theta\\) between them \\(r < 0\\) and the inner loop is traced. \\(A = \\frac12\\int_{2\\pi/3}^{4\\pi/3}(1 + 2\\cos\\theta)^2\\,d\\theta = \\frac12\\int_{2\\pi/3}^{4\\pi/3}(3 + 4\\cos\\theta + 2\\cos2\\theta)\\,d\\theta = \\frac12\\left[3\\theta + 4\\sin\\theta + \\sin 2\\theta\\right]_{2\\pi/3}^{4\\pi/3} = \\frac12\\left(2\\pi - 4\\sqrt3 + \\sqrt3\\right) = \\pi - \\frac{3\\sqrt3}{2}\\)."
+  },
+  {
+   "id": "p5",
+   "kp": "k7",
+   "type": "written",
+   "prompt": "Find all points of intersection of the circles \\(r = \\sin\\theta\\) and \\(r = \\cos\\theta\\), and explain why solving \\(\\sin\\theta = \\cos\\theta\\) does not find all of them.",
+   "rubric": [
+    "Solves \\(\\sin\\theta = \\cos\\theta\\): \\(\\theta = \\frac\\pi4\\) (in \\([0, \\pi)\\)), giving the point \\(\\left(\\frac{\\sqrt2}{2}, \\frac\\pi4\\right)\\), i.e. \\(\\left(\\frac12, \\frac12\\right)\\).",
+    "Identifies the pole as a second intersection: \\(r = \\sin\\theta\\) is 0 at \\(\\theta = 0\\), \\(r = \\cos\\theta\\) is 0 at \\(\\theta = \\frac\\pi2\\).",
+    "Explains that the curves reach the pole at different \\(\\theta\\), so no single \\(\\theta\\) satisfies both equations there.",
+    "(Optionally) confirms with rectangular forms: circles \\(x^2 + y^2 = y\\) and \\(x^2 + y^2 = x\\) meet where \\(x = y\\): \\((0,0)\\) and \\(\\left(\\frac12, \\frac12\\right)\\)."
+   ],
+   "model": "Setting \\(\\sin\\theta = \\cos\\theta\\) gives \\(\\tan\\theta = 1\\), \\(\\theta = \\frac\\pi4\\) (each circle is traced once on \\([0, \\pi)\\)), so \\(r = \\frac{\\sqrt2}{2}\\) and the point is \\(\\left(\\frac12, \\frac12\\right)\\). The pole is also on both curves: \\(r = \\sin\\theta\\) passes through it at \\(\\theta = 0\\), and \\(r = \\cos\\theta\\) at \\(\\theta = \\frac\\pi2\\). Solving \\(f(\\theta) = g(\\theta)\\) only finds points reached at the same \\(\\theta\\) by both curves; the pole is reached at different angles, so the equation misses it. In rectangular form the circles are \\(x^2 + y^2 = y\\) and \\(x^2 + y^2 = x\\); subtracting gives \\(x = y\\), and then \\(2x^2 = x\\) gives \\(x = 0\\) or \\(\\frac12\\): the two intersection points \\((0, 0)\\) and \\(\\left(\\frac12, \\frac12\\right)\\).",
+   "why": "A sketch, or conversion to rectangular form, is the reliable way to find every intersection."
+  },
+  {
+   "id": "p6",
+   "kp": "k7",
+   "type": "number",
+   "prompt": "Find the area of the region inside both circles \\(r = \\sin\\theta\\) and \\(r = \\cos\\theta\\).",
+   "answer": "(pi - 2)/8",
+   "why": "The region is symmetric about the line \\(\\theta = \\frac\\pi4\\). For \\(0 \\le \\theta \\le \\frac\\pi4\\) it is bounded by \\(r = \\sin\\theta\\) (the smaller of the two there). So \\(A = 2\\cdot\\frac12\\int_0^{\\pi/4}\\sin^2\\theta\\,d\\theta = \\int_0^{\\pi/4}\\frac{1 - \\cos2\\theta}{2}\\,d\\theta = \\frac\\pi8 - \\frac14 = \\frac{\\pi - 2}{8}\\)."
+  },
+  {
+   "id": "p7",
+   "kp": "k5",
+   "type": "number",
+   "prompt": "Find the slope of the tangent line to the cardioid \\(r = 1 + \\cos\\theta\\) at \\(\\theta = \\frac\\pi2\\).",
+   "answer": "1",
+   "why": "Numerator \\(f'\\sin\\theta + f\\cos\\theta = -\\sin^2\\theta + (1 + \\cos\\theta)\\cos\\theta = -1 + 0\\) at \\(\\frac\\pi2\\); denominator \\(f'\\cos\\theta - f\\sin\\theta = 0 - 1 = -1\\). Slope \\(\\frac{-1}{-1} = 1\\)."
+  },
+  {
+   "id": "p8",
+   "kp": "k5",
+   "type": "written",
+   "prompt": "Find the tangent lines to the rose \\(r = \\cos 2\\theta\\) at the pole, and justify the rule you use.",
+   "rubric": [
+    "States the rule: if \\(f(\\theta_0) = 0\\) and \\(f'(\\theta_0) \\ne 0\\), the tangent at the pole is the line \\(\\theta = \\theta_0\\).",
+    "Justifies it from the slope formula: with \\(f(\\theta_0) = 0\\) the slope reduces to \\(\\tan\\theta_0\\).",
+    "Finds \\(\\cos2\\theta = 0\\) at \\(\\theta = \\frac\\pi4, \\frac{3\\pi}4\\) (mod \\(\\pi\\)), with \\(f' = -2\\sin2\\theta = \\mp2 \\ne 0\\).",
+    "Gives the tangent lines \\(y = x\\) and \\(y = -x\\)."
+   ],
+   "model": "With \\(f(\\theta_0) = 0\\), the slope formula \\(\\frac{f'\\sin\\theta + f\\cos\\theta}{f'\\cos\\theta - f\\sin\\theta}\\) becomes \\(\\frac{f'(\\theta_0)\\sin\\theta_0}{f'(\\theta_0)\\cos\\theta_0} = \\tan\\theta_0\\), provided \\(f'(\\theta_0) \\ne 0\\); so the curve leaves the pole along the line \\(\\theta = \\theta_0\\). For \\(r = \\cos 2\\theta\\), \\(r = 0\\) when \\(2\\theta = \\frac\\pi2 + k\\pi\\), i.e. \\(\\theta = \\frac\\pi4, \\frac{3\\pi}{4}, \\frac{5\\pi}4, \\frac{7\\pi}4\\), and \\(f'(\\theta) = -2\\sin 2\\theta = \\mp2 \\ne 0\\) at these. The lines \\(\\theta = \\frac\\pi4\\) and \\(\\theta = \\frac{5\\pi}4\\) are both \\(y = x\\); \\(\\theta = \\frac{3\\pi}4\\) and \\(\\frac{7\\pi}{4}\\) are both \\(y = -x\\). The tangent lines at the pole are \\(y = x\\) and \\(y = -x\\).",
+   "why": "Each petal of the rose meets the pole tangent to one of these two lines."
+  },
+  {
+   "id": "p9",
+   "kp": "k8",
+   "type": "number",
+   "prompt": "Find the length of the curve \\(r = e^{2\\theta}\\), \\(0 \\le \\theta \\le 1\\).",
+   "answer": "sqrt(5)/2*(e^2 - 1)",
+   "why": "\\(r^2 + r'^2 = e^{4\\theta} + 4e^{4\\theta} = 5e^{4\\theta}\\), so the integrand is \\(\\sqrt5e^{2\\theta}\\) and \\(L = \\sqrt5\\int_0^1e^{2\\theta}\\,d\\theta = \\frac{\\sqrt5}{2}(e^2 - 1) \\approx 7.143\\)."
+  },
+  {
+   "id": "p10",
+   "kp": "k7",
+   "type": "mcq",
+   "prompt": "On \\([\\alpha, \\beta]\\), \\(0 \\le g(\\theta) \\le f(\\theta)\\). Which integral gives the area of the region between the polar curves \\(r = g(\\theta)\\) and \\(r = f(\\theta)\\) for \\(\\alpha \\le \\theta \\le \\beta\\)?",
+   "options": [
+    "\\(\\frac12\\int_\\alpha^\\beta\\left(f(\\theta) - g(\\theta)\\right)^2d\\theta\\)",
+    "\\(\\frac12\\int_\\alpha^\\beta\\left(f(\\theta)^2 - g(\\theta)^2\\right)d\\theta\\)",
+    "\\(\\int_\\alpha^\\beta\\left(f(\\theta) - g(\\theta)\\right)d\\theta\\)",
+    "\\(\\frac12\\int_0^{2\\pi}\\left(f(\\theta)^2 - g(\\theta)^2\\right)d\\theta\\), whatever \\(\\alpha\\) and \\(\\beta\\) are"
+   ],
+   "answer": 1,
+   "why": "The region is the outer sector region minus the inner one: \\(\\frac12\\int f^2 - \\frac12\\int g^2\\). Option 1 treats the region as sectors of radius \\(f - g\\), but a sector's area depends on its outer radius squared, and \\((f - g)^2 \\ne f^2 - g^2\\). Option 3 is the rectangular formula, which has no meaning in polar coordinates. Option 4 ignores where the curves intersect and which is outside."
+  },
+  {
+   "id": "p11",
+   "kp": "k6",
+   "type": "number",
+   "prompt": "Find the total area enclosed by the lemniscate \\(r^2 = 4\\cos 2\\theta\\).",
+   "answer": "4",
+   "why": "The right loop is traced for \\(-\\frac\\pi4 \\le \\theta \\le \\frac\\pi4\\) (where \\(\\cos2\\theta \\ge 0\\)), with area \\(\\frac12\\int_{-\\pi/4}^{\\pi/4}4\\cos2\\theta\\,d\\theta = \\left[\\sin 2\\theta\\right]_{-\\pi/4}^{\\pi/4} = 2\\). By symmetry about the pole, the left loop has the same area; the total is 4."
+  },
+  {
+   "id": "p12",
+   "kp": "k3",
+   "type": "written",
+   "prompt": "Sketch-analyse the limaçon \\(r = 2 + \\cos\\theta\\): state its symmetry, the values of \\(r\\) at \\(\\theta = 0, \\frac\\pi2, \\pi\\), whether it passes through the pole, and whether it has an inner loop. Classify it using the rule for \\(r = a + b\\cos\\theta\\).",
+   "rubric": [
+    "Symmetric about the polar axis (depends on \\(\\theta\\) only through \\(\\cos\\theta\\)).",
+    "\\(r(0) = 3\\), \\(r\\left(\\frac\\pi2\\right) = 2\\), \\(r(\\pi) = 1\\).",
+    "\\(r \\ge 1 > 0\\) always: never through the pole, no inner loop.",
+    "With \\(a = 2\\), \\(b = 1\\), \\(a \\ge 2b\\): a convex limaçon (no dimple)."
+   ],
+   "model": "The equation involves \\(\\theta\\) only through \\(\\cos\\theta\\), so the curve is symmetric about the polar axis; it suffices to trace \\(0 \\le \\theta \\le \\pi\\) and reflect. \\(r(0) = 3\\) (point \\((3, 0)\\)), \\(r\\left(\\frac\\pi2\\right) = 2\\) (point \\((0, 2)\\)), \\(r(\\pi) = 1\\) (point \\((-1, 0)\\)), and \\(r\\) decreases steadily on \\([0, \\pi]\\). Since \\(1 \\le r \\le 3\\), \\(r\\) is never 0 or negative: the curve never reaches the pole and has no inner loop. With \\(a = 2\\), \\(b = 1\\) we have \\(a \\ge 2b\\), so the limaçon is convex; it is an egg-shaped closed curve, wider on the right.",
+   "why": "The ratio \\(\\frac ab\\) controls the shape: inner loop (\\(< 1\\)), cardioid (\\(= 1\\)), dimple (between 1 and 2), convex (\\(\\ge 2\\))."
+  }
+ ],
+ "exam": [
+  {
+   "id": "e1",
+   "kp": "k7",
+   "type": "written",
+   "prompt": "Find the area of the region that lies inside \\(r = 3\\sin\\theta\\) and outside \\(r = 1 + \\sin\\theta\\). Justify the limits of integration and which curve is outer, and show the integration.",
+   "rubric": [
+    "Finds intersections from \\(3\\sin\\theta = 1 + \\sin\\theta\\): \\(\\theta = \\frac\\pi6, \\frac{5\\pi}6\\), and checks the pole is not a boundary point of this region.",
+    "Shows \\(3\\sin\\theta \\ge 1 + \\sin\\theta\\) on \\(\\left[\\frac\\pi6, \\frac{5\\pi}6\\right]\\) (since \\(\\sin\\theta \\ge \\frac12\\)).",
+    "Sets up \\(\\frac12\\int_{\\pi/6}^{5\\pi/6}\\left(9\\sin^2\\theta - (1 + \\sin\\theta)^2\\right)d\\theta\\).",
+    "Evaluates to \\(\\pi\\)."
+   ],
+   "model": "The curves meet where \\(3\\sin\\theta = 1 + \\sin\\theta\\), i.e. \\(\\sin\\theta = \\frac12\\): \\(\\theta = \\frac\\pi6\\) and \\(\\frac{5\\pi}6\\). (Both also pass through the pole, but the region inside the circle and outside the cardioid lies away from it, between these two rays.) For \\(\\frac\\pi6 \\le \\theta \\le \\frac{5\\pi}6\\), \\(\\sin\\theta \\ge \\frac12\\), so \\(3\\sin\\theta - (1 + \\sin\\theta) = 2\\sin\\theta - 1 \\ge 0\\): the circle is outer. \\(A = \\frac12\\int_{\\pi/6}^{5\\pi/6}\\left(9\\sin^2\\theta - 1 - 2\\sin\\theta - \\sin^2\\theta\\right)d\\theta = \\frac12\\int_{\\pi/6}^{5\\pi/6}(3 - 4\\cos2\\theta - 2\\sin\\theta)\\,d\\theta\\), using \\(8\\sin^2\\theta = 4 - 4\\cos 2\\theta\\). The antiderivative is \\(3\\theta - 2\\sin 2\\theta + 2\\cos\\theta\\); between the limits, \\(3\\theta\\) contributes \\(2\\pi\\), \\(-2\\sin2\\theta\\) contributes \\(-2\\left(-\\frac{\\sqrt3}2 - \\frac{\\sqrt3}{2}\\right) = 2\\sqrt3\\), and \\(2\\cos\\theta\\) contributes \\(2\\left(-\\frac{\\sqrt3}2 - \\frac{\\sqrt3}2\\right) = -2\\sqrt3\\). So \\(A = \\frac12\\cdot 2\\pi = \\pi\\).",
+   "why": "Area between polar curves: find the angles where they cross, decide which is outer, and integrate half the difference of the squares."
+  },
+  {
+   "id": "e2",
+   "kp": "k6",
+   "type": "number",
+   "prompt": "Find the area of one petal of the rose \\(r = 2\\sin3\\theta\\).",
+   "answer": "pi/3",
+   "why": "A petal is traced for \\(0 \\le \\theta \\le \\frac\\pi3\\), where \\(\\sin 3\\theta \\ge 0\\). \\(A = \\frac12\\int_0^{\\pi/3}4\\sin^23\\theta\\,d\\theta = \\int_0^{\\pi/3}(1 - \\cos6\\theta)\\,d\\theta = \\frac\\pi3\\)."
+  },
+  {
+   "id": "e3",
+   "kp": "k5",
+   "type": "number",
+   "prompt": "Find the slope of the tangent line to \\(r = 2 + \\sin\\theta\\) at \\(\\theta = \\frac\\pi3\\). Give the exact value.",
+   "answer": "-(4 + 3*sqrt(3))/11",
+   "why": "\\(f = 2 + \\sin\\theta\\), \\(f' = \\cos\\theta\\). Numerator: \\(\\cos\\theta\\sin\\theta + (2 + \\sin\\theta)\\cos\\theta = \\frac12\\cdot\\frac{\\sqrt3}{2} + \\left(2 + \\frac{\\sqrt3}{2}\\right)\\frac12 = 1 + \\frac{\\sqrt3}{2}\\). Denominator: \\(\\cos^2\\theta - (2 + \\sin\\theta)\\sin\\theta = \\frac14 - \\sqrt3 - \\frac34 = -\\frac12 - \\sqrt3\\). Slope \\(= -\\frac{2 + \\sqrt3}{1 + 2\\sqrt3} = -\\frac{(2 + \\sqrt3)(2\\sqrt3 - 1)}{11} = -\\frac{4 + 3\\sqrt3}{11} \\approx -0.836\\)."
+  },
+  {
+   "id": "e4",
+   "kp": "k6",
+   "type": "written",
+   "prompt": "Derive the formula \\(A = \\frac12\\int_\\alpha^\\beta f(\\theta)^2\\,d\\theta\\) for the area of the region bounded by \\(r = f(\\theta)\\) and the rays \\(\\theta = \\alpha\\), \\(\\theta = \\beta\\). State the hypotheses and explain why each is needed.",
+   "rubric": [
+    "Uses the sector area \\(\\frac12r^2\\Delta\\theta\\).",
+    "Partitions \\([\\alpha, \\beta]\\), approximates each slice by a sector of radius \\(f(\\theta_i^*)\\), and forms the Riemann sum \\(\\sum\\frac12 f(\\theta_i^*)^2\\Delta\\theta\\).",
+    "Passes to the limit to get the integral (continuity of \\(f\\) ensures the limit exists).",
+    "Hypotheses: \\(f\\) continuous, \\(f \\ge 0\\), \\(0 < \\beta - \\alpha \\le 2\\pi\\); explains that \\(\\beta - \\alpha > 2\\pi\\) or retracing would count area twice, and negative \\(r\\) places the slice on the opposite side."
+   ],
+   "model": "A circular sector of radius \\(r\\) and central angle \\(\\Delta\\theta\\) has area \\(\\frac12r^2\\Delta\\theta\\) (the fraction \\(\\frac{\\Delta\\theta}{2\\pi}\\) of the disc area \\(\\pi r^2\\)). Partition \\([\\alpha, \\beta]\\) into \\(n\\) subintervals of width \\(\\Delta\\theta\\) and pick \\(\\theta_i^*\\) in each. The part of the region between consecutive rays is approximately the sector of radius \\(f(\\theta_i^*)\\), so the area is approximately \\(\\sum_{i=1}^n\\frac12f(\\theta_i^*)^2\\Delta\\theta\\), a Riemann sum for \\(\\frac12f^2\\). If \\(f\\) is continuous, as \\(n \\to \\infty\\) the sums converge to \\(\\frac12\\int_\\alpha^\\beta f(\\theta)^2\\,d\\theta\\), and the approximation error tends to 0 because on each thin slice \\(f\\) varies little. Hypotheses: \\(f\\) continuous (so the integral exists and the sector approximation improves); \\(f \\ge 0\\) (so each slice lies in the direction \\(\\theta\\) and the boundary is really \\(r = f(\\theta)\\); with \\(r < 0\\) the slice lies on the opposite side); and \\(0 < \\beta - \\alpha \\le 2\\pi\\) (so no slice is counted twice).",
+   "why": "Area uses sectors rather than the parametric formula; the parametric route leads to the same result but less directly."
+  },
+  {
+   "id": "e5",
+   "kp": "k8",
+   "type": "number",
+   "prompt": "Find the length of the spiral \\(r = \\theta\\), \\(0 \\le \\theta \\le 2\\pi\\). Give the exact value or a decimal accurate to three decimal places.",
+   "answer": "pi*sqrt(4*pi^2 + 1) + log(2*pi + sqrt(4*pi^2 + 1))/2",
+   "tol": 0.0001,
+   "why": "\\(L = \\int_0^{2\\pi}\\sqrt{\\theta^2 + 1}\\,d\\theta\\). With the antiderivative \\(\\frac12\\left(\\theta\\sqrt{\\theta^2+1} + \\ln\\left(\\theta + \\sqrt{\\theta^2 + 1}\\right)\\right)\\) (trigonometric substitution \\(\\theta = \\tan u\\)), \\(L = \\pi\\sqrt{4\\pi^2 + 1} + \\frac12\\ln\\left(2\\pi + \\sqrt{4\\pi^2+1}\\right) \\approx 21.256\\)."
+  }
+ ],
+ "kit": {
+  "rules": [
+   {
+    "name": "Conversion",
+    "formula": "\\(x = r\\cos\\theta,\\ y = r\\sin\\theta,\\ r^2 = x^2 + y^2\\)",
+    "when": "Moving between polar and rectangular descriptions.",
+    "example": "\\((-1,-1) = \\left(\\sqrt2, \\frac{5\\pi}4\\right)\\)",
+    "watch": "Choose the angle by the quadrant, not by arctangent alone."
+   },
+   {
+    "name": "Converting equations",
+    "formula": "Multiply by \\(r\\), then substitute",
+    "when": "Recognising curves such as \\(r = 2a\\cos\\theta\\).",
+    "example": "\\(r = 4\\sin\\theta - 2\\cos\\theta\\): \\((x+1)^2 + (y-2)^2 = 5\\)",
+    "watch": "Multiplying or dividing by r can add or remove the pole."
+   },
+   {
+    "name": "Curve families",
+    "formula": "Limaçon \\(a + b\\cos\\theta\\); rose \\(a\\cos n\\theta\\); spiral \\(a\\theta\\)",
+    "when": "Sketching.",
+    "example": "\\(r = 3\\sin4\\theta\\): 8 petals",
+    "watch": "Negative \\(r\\) plots in the direction \\(\\theta + \\pi\\)."
+   },
+   {
+    "name": "Symmetry",
+    "formula": "\\(\\theta\\to-\\theta\\) (x-axis), \\(\\theta\\to\\pi-\\theta\\) (y-axis), \\(r\\to-r\\) (pole)",
+    "when": "Halving sketches and integrals.",
+    "example": "\\(r^2 = 4\\cos2\\theta\\) has all three.",
+    "watch": "Tests are sufficient, not necessary."
+   },
+   {
+    "name": "Slope",
+    "formula": "\\(\\frac{dy}{dx} = \\frac{f'\\sin\\theta + f\\cos\\theta}{f'\\cos\\theta - f\\sin\\theta}\\)",
+    "when": "Tangent lines; horizontal and vertical tangents.",
+    "example": "\\(r = 2\\sin\\theta\\): slope \\(\\tan 2\\theta\\)",
+    "watch": "Check both numerator and denominator; the slope is not \\(\\frac{dr}{d\\theta}\\)."
+   },
+   {
+    "name": "Tangent at the pole",
+    "formula": "\\(f(\\theta_0) = 0,\\ f'(\\theta_0) \\ne 0 \\Rightarrow\\) tangent line \\(\\theta = \\theta_0\\)",
+    "when": "Curves through the pole.",
+    "example": "\\(r = \\cos2\\theta\\): \\(y = \\pm x\\)",
+    "watch": "If \\(f'(\\theta_0) = 0\\) too, take a limit (cusp)."
+   },
+   {
+    "name": "Area",
+    "formula": "\\(A = \\frac12\\int_\\alpha^\\beta r^2\\,d\\theta\\)",
+    "when": "Regions swept by a radius.",
+    "example": "Petal of \\(3\\sin2\\theta\\): \\(\\frac{9\\pi}8\\)",
+    "watch": "Limits from the zeros of r; avoid retracing."
+   },
+   {
+    "name": "Area between curves",
+    "formula": "\\(A = \\frac12\\int_\\alpha^\\beta(f^2 - g^2)\\,d\\theta\\)",
+    "when": "Inside one curve, outside another.",
+    "example": "Inside \\(3\\sin\\theta\\), outside \\(1 + \\sin\\theta\\): \\(\\pi\\)",
+    "watch": "Find all intersections, including the pole, from a sketch."
+   },
+   {
+    "name": "Arc length",
+    "formula": "\\(L = \\int_\\alpha^\\beta\\sqrt{r^2 + r'^2}\\,d\\theta\\)",
+    "when": "Length of a polar curve traced once.",
+    "example": "Cardioid \\(1 + \\cos\\theta\\): 8",
+    "watch": "Take the absolute value inside the square root."
+   }
+  ],
+  "stuck": [
+   "Tabulate \\(r\\) at \\(\\theta = 0, \\frac\\pi6, \\frac\\pi4, \\frac\\pi3, \\frac\\pi2, \\dots\\) and note where \\(r = 0\\) and where \\(r < 0\\).",
+   "Convert to rectangular form when you suspect a line or a circle.",
+   "For petal or loop areas, the limits of integration are consecutive zeros of \\(r\\).",
+   "For intersections, solve \\(f(\\theta) = g(\\theta)\\), then check the pole and the representation \\((-r, \\theta + \\pi)\\) with a sketch.",
+   "For tangent lines, write \\(x = f(\\theta)\\cos\\theta\\), \\(y = f(\\theta)\\sin\\theta\\) and use the parametric slope formula.",
+   "Before integrating over \\([0, 2\\pi]\\), check whether the curve is traced once, twice, or only partly on that interval."
+  ]
+ }
+}

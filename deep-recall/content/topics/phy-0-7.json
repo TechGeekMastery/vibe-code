@@ -522,7 +522,7 @@
    "id": "p5",
    "kp": "k6",
    "type": "written",
-   "prompt": "A student analyses a 2.0 kg cart at 3.0 m/s that couples to a 1.0 kg cart at rest: \\\"Kinetic energy is conserved, so \\( \\tfrac12(2.0)(3.0)^2 = \\tfrac12(3.0)v^2 \\), giving \\( v = 2.45 \\) m/s.\\\" Find the error, give the correct final speed, and show that the student's answer violates a conservation law.",
+   "prompt": "A student analyses a 2.0 kg cart at 3.0 m/s that couples to a 1.0 kg cart at rest: \"Kinetic energy is conserved, so \\( \\tfrac12(2.0)(3.0)^2 = \\tfrac12(3.0)v^2 \\), giving \\( v = 2.45 \\) m/s.\" Find the error, give the correct final speed, and show that the student's answer violates a conservation law.",
    "rubric": [
     "Coupling is a perfectly inelastic collision; kinetic energy is not conserved.",
     "Momentum is the conserved quantity: \\( (2.0)(3.0) = 3.0v \\Rightarrow v = 2.0 \\) m/s.",

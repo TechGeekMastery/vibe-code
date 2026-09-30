@@ -220,7 +220,7 @@
      "id": "s4q2",
      "kp": "k5",
      "type": "written",
-     "prompt": "A student says: \\\"The moment of inertia of a rigid body, like its mass, is a fixed property of the body.\\\" Starting from the kinetic energy of the particles of a rotating body, derive \\( K = \\tfrac12I\\omega^2 \\), and use the derivation to explain precisely why the student is wrong. Give a concrete example.",
+     "prompt": "A student says: \"The moment of inertia of a rigid body, like its mass, is a fixed property of the body.\" Starting from the kinetic energy of the particles of a rotating body, derive \\( K = \\tfrac12I\\omega^2 \\), and use the derivation to explain precisely why the student is wrong. Give a concrete example.",
      "rubric": [
       "Writes \\( K = \\sum\\tfrac12m_iv_i^2 \\) with \\( v_i = r_i\\omega \\), the same \\( \\omega \\) for every particle.",
       "Factors out \\( \\omega^2 \\) to get \\( K = \\tfrac12(\\sum m_ir_i^2)\\omega^2 \\) and identifies \\( I = \\sum m_ir_i^2 \\).",
@@ -228,7 +228,7 @@
       "Gives a correct example, e.g. a uniform rod: \\( \\tfrac1{12}ML^2 \\) about its center versus \\( \\tfrac13ML^2 \\) about an end, or a dumbbell about its midpoint versus an end."
      ],
      "model": "Each particle of mass \\( m_i \\) at perpendicular distance \\( r_i \\) from the axis moves on a circle with speed \\( v_i = r_i\\omega \\), where \\( \\omega \\) is common to the whole rigid body. The kinetic energy is \\( K = \\sum\\tfrac12m_iv_i^2 = \\tfrac12\\left(\\sum m_ir_i^2\\right)\\omega^2 = \\tfrac12I\\omega^2 \\). The quantity \\( I = \\sum m_ir_i^2 \\) is built from the distances \\( r_i \\) to a particular axis. Changing the axis changes those distances and therefore changes \\( I \\), while the total mass \\( \\sum m_i \\) stays the same. So \\( I \\) is a property of the body together with an axis, not of the body alone. Example: two 2.0 kg particles on a light 1.0 m rod have \\( I = 1.0 \\) kg·m² about the midpoint but \\( 2.0 \\) kg·m² about an axis through one particle.",
-     "why": "Mass answers \\\"how much matter\\\"; moment of inertia answers \\\"how much matter, and how far from this axis\\\"."
+     "why": "Mass answers \"how much matter\"; moment of inertia answers \"how much matter, and how far from this axis\"."
     }
    ]
   },
@@ -335,6 +335,10 @@
    "d": "Motion of a rigid body in which every point moves on a circle centered on a stationary line, the axis of rotation."
   },
   {
+   "t": "axis of rotation",
+   "d": "The fixed line about which a rigid body turns; every point of the body moves on a circle centered on it, in a plane perpendicular to it."
+  },
+  {
    "t": "radian",
    "d": "The angle subtended by an arc equal in length to the radius; \\( \\theta = s/r \\), dimensionless, with \\( 2\\pi \\) rad in one revolution."
   },
@@ -357,6 +361,10 @@
   {
    "t": "right-hand rule",
    "d": "Curl the fingers of the right hand in the sense of rotation; the thumb gives the direction of \\( \\vec\\omega \\) (and of a cross product \\( \\vec A\\times\\vec B \\) when the fingers turn from \\( \\vec A \\) toward \\( \\vec B \\))."
+  },
+  {
+   "t": "tangential speed",
+   "d": "The speed \\( v = r\\omega \\) of a point of a rotating body at perpendicular distance \\( r \\) from the axis, directed along the tangent to its circular path."
   },
   {
    "t": "tangential acceleration",
@@ -385,6 +393,10 @@
   {
    "t": "torque",
    "d": "The turning effect of a force about a point, \\( \\vec\\tau = \\vec r\\times\\vec F \\), of magnitude \\( rF\\sin\\phi \\); unit N·m."
+  },
+  {
+   "t": "net torque",
+   "d": "The sum of the signed torques of all the forces on a body, every one computed about the same point or axis."
   },
   {
    "t": "line of action",

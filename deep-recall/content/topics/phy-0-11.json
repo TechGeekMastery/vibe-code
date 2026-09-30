@@ -375,6 +375,10 @@
    "d": "The constant \\( k \\) in \\( F = -kx \\), in N/m; the stiffness of a spring."
   },
   {
+   "t": "general solution",
+   "d": "The family of solutions containing every solution of a differential equation; for \\( \\ddot x = -\\omega^2x \\) it is \\( x = A\\cos(\\omega t + \\phi) \\), with two constants fixed by the initial position and velocity."
+  },
+  {
    "t": "amplitude",
    "d": "The maximum displacement \\( A \\ge 0 \\) from equilibrium in SHM."
   },
@@ -425,6 +429,10 @@
   {
    "t": "underdamped, critically damped, overdamped",
    "d": "Damping with \\( b < 2\\sqrt{mk} \\) (decaying oscillation), \\( b = 2\\sqrt{mk} \\) (fastest return without oscillation), \\( b > 2\\sqrt{mk} \\) (slow return without oscillation)."
+  },
+  {
+   "t": "driving frequency",
+   "d": "The angular frequency \\( \\omega_d \\) of a periodic external force \\( F_0\\cos\\omega_dt \\); in the steady state a driven oscillator vibrates at this frequency."
   },
   {
    "t": "resonance",
@@ -522,7 +530,7 @@
    "id": "c13",
    "type": "concept",
    "front": "How is SHM related to uniform circular motion?",
-   "back": "It is the projection on a diameter of a point moving uniformly on a circle of radius \\( A \\) at angular speed \\( \\omega \\); the phase is the point\\'s angle.",
+   "back": "It is the projection on a diameter of a point moving uniformly on a circle of radius \\( A \\) at angular speed \\( \\omega \\); the phase is the point's angle.",
    "kp": "k8"
   },
   {
@@ -826,7 +834,7 @@
    }
   ],
   "stuck": [
-   "Write Newton\\'s second law (or the rotational second law) about equilibrium and put it in the form \\( \\ddot x = -(\\text{constant})\\,x \\); the constant is \\( \\omega^2 \\).",
+   "Write Newton's second law (or the rotational second law) about equilibrium and put it in the form \\( \\ddot x = -(\\text{constant})\\,x \\); the constant is \\( \\omega^2 \\).",
    "If the force is not exactly linear, expand it (or U) about equilibrium and keep the linear (quadratic) term.",
    "For questions about speed at a position, use energy: \\( \\tfrac12mv^2 + \\tfrac12kx^2 = \\tfrac12kA^2 \\). For questions about time, use \\( x = A\\cos(\\omega t + \\phi) \\).",
    "Fix \\( A \\) and \\( \\phi \\) from the initial position and velocity, and check the quadrant of \\( \\phi \\) from the signs of \\( \\cos\\phi \\) and \\( \\sin\\phi \\).",
