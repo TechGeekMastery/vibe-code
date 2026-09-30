@@ -509,7 +509,7 @@ function cardShow() {
   const it = C.queue[C.i]; if (!it) return;
   const c = it.c;
   if (c.type === 'problem' && c.answer && c.check && str(C.input).trim()) {
-    const r = machineCheck({ptype:c.check, answer:c.answer, vars:varsOf(c), pos:it.key.startsWith('phy-'), tol:c.check === 'number' ? 0.001 : 1e-6}, C.input);
+    const r = machineCheck({ptype:c.check, answer:c.answer, vars:varsOf(c), pos:it.key.startsWith('phy-'), tol:+c.tol > 0 ? +c.tol : c.check === 'number' ? 0.005 : 1e-6}, C.input);
     C.res = r === true ? 'ok' : r === 'parse' ? 'parse' : r === false ? 'no' : null;
   }
   C.shown = true; render();

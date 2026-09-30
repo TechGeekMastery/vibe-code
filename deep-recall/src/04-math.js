@@ -8,7 +8,7 @@ const MX = {
     this.ready = true; return true;
   },
   norm(s) {
-    return String(s).replace(/[·×]/g, '*').replace(/÷/g, '/').replace(/π/g, 'pi').replace(/−|–/g, '-')
+    return String(s).replace(/[·×]/g, '*').replace(/÷/g, '/').replace(/π/g, 'pi').replace(/[θϑ]/g, 'theta').replace(/[φϕ]/g, 'phi').replace(/ω/g, 'omega').replace(/α/g, 'alpha').replace(/β/g, 'beta').replace(/τ/g, 'tau').replace(/λ/g, 'lambda').replace(/μ/g, 'mu').replace(/ρ/g, 'rho').replace(/σ/g, 'sigma').replace(/−|–/g, '-')
       .replace(/√\s*\(/g, 'sqrt(').replace(/√\s*([\w.]+)/g, 'sqrt($1)')
       .replace(/²/g, '^2').replace(/³/g, '^3').replace(/⁴/g, '^4')
       .replace(/\barc(sin|cos|tan)\b/g, 'a$1').replace(/\bsin\^-1\b/g, 'asin').replace(/\bcos\^-1\b/g, 'acos').replace(/\btan\^-1\b/g, 'atan')

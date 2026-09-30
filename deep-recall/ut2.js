@@ -21,6 +21,7 @@ const f=A.parseFields('WORK:\nx\n**VERDICT:** wrong\nANSWER: 2*x\nNOTE: n\nSOLUT
 A.MX.ok(); ok(A.MX.equiv('(-2)^n + 3^n', '3^n + (-2)^n', ['n'], false) === true, 'integer equiv'); ok(A.MX.equiv('(1 - 2*n)*(-1)^n', '(-1)^n - 2*n*(-1)^n', ['n'], false) === true, 'integer equiv 2'); ok(A.MX.equiv('2^n + (-2)^n', '3^n + (-2)^n', ['n'], false) === false, 'integer non-equiv');
 ok(A.MX.equiv('sqrt(v^2)', 'v', ['v'], false, true) === true && A.MX.equiv('sqrt(v^2)', 'v', ['v'], false) === false, 'positive-only sampling');
 { const P = A.parsePlotSpec('point: cos(0), sqrt(4)\npoint: (1, 2)\npoint: 3, 4', {}); ok(P.points.length === 3 && P.points[0].x === 1 && P.points[0].y === 2 && P.points[1].y === 2, 'plot points with calls'); }
+ok(A.MX.equiv('2 sin(θ) cos(θ)', 'sin(2*theta)', ['theta'], false) === true, 'greek letters typed');
 // language
 const items=A.validateLangItems([{type:'translate_to',node:'de-0-1',prompt:'The dog',answers:['der Hund'],focus:'gender'},{type:'build',node:'x',prompt:'I am tired',answer:'Ich bin müde.',distractors:['ist']},{type:'cloze',node:'de-0-1',prompt:'Ich ___ müde',answers:['bin']},{type:'choice',node:'de-0-1',prompt:'?',options:['a','b','c'],answer:2},{type:'listen',text:'Guten Morgen'},{type:'bogus'}],['de-0-1'],'de-0-1');
 ok(items.length===5,'lang items '+items.length); ok(items[1].tokens.length===4,'build tokens');

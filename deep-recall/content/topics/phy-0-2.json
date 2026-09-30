@@ -342,6 +342,10 @@
    "d": "A force on a chosen system exerted by something outside it; internal forces (between parts of the system) cancel in pairs."
   },
   {
+   "t": "internal force",
+   "d": "A force exerted by one part of a chosen system on another part; internal forces come in third-law pairs and cancel in the net force on the system."
+  },
+  {
    "t": "inertia",
    "d": "The tendency of a body to maintain its velocity; measured by its mass."
   },
@@ -413,6 +417,10 @@
   {
    "t": "Atwood machine",
    "d": "Two masses joined by a rope over a pulley; a = (m₂ − m₁)g/(m₁ + m₂), T = 2m₁m₂g/(m₁ + m₂) for ideal rope and pulley."
+  },
+  {
+   "t": "constraint",
+   "d": "A geometric condition on the motion that supplies an equation the forces alone do not, such as equal magnitudes of acceleration for bodies joined by a taut ideal rope."
   }
  ],
  "cards": [
@@ -475,9 +483,9 @@
   {
    "id": "c9",
    "type": "problem",
-   "front": "Weight of a 12.0 kg box on Earth (g = 9.80 m/s²), in N",
-   "back": "\\( w = mg = 118 \\) N",
-   "answer": "12*9.8",
+   "front": "Weight of a 10.0 kg box on Earth (g = 9.80 m/s²), in N",
+   "back": "\\( w = mg = (10.0)(9.80) = 98.0 \\) N",
+   "answer": "10*9.8",
    "check": "number",
    "kp": "k4"
   },
@@ -526,7 +534,7 @@
   {
    "id": "c16",
    "type": "problem",
-   "front": "Symmetric cable, each half at θ above horizontal, load mg: tension",
+   "front": "Symmetric cable, each half at θ (type theta) above horizontal, load mg: tension",
    "back": "\\( T = mg/(2\\sin\\theta) \\), from \\( 2T\\sin\\theta = mg \\)",
    "answer": "m*g/(2*sin(theta))",
    "vars": "m g theta",

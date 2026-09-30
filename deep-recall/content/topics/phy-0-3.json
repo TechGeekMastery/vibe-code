@@ -484,7 +484,7 @@
   {
    "id": "c20",
    "type": "problem",
-   "front": "Speed from rest with linear drag, in terms of v_t, t, τ",
+   "front": "Speed from rest with linear drag, in terms of v_t, t, τ (type vt, t, tau)",
    "back": "\\( v = v_t(1 - e^{-t/\\tau}),\\ \\tau = m/b \\)",
    "kp": "k10",
    "answer": "vt*(1 - exp(-t/tau))",
