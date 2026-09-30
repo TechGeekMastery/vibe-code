@@ -14,7 +14,7 @@ You are writing one chapter of a textbook that a single serious adult learner wi
 2. **Outline.** Break the topic into 6–14 knowledge points (`kps`): atomic, testable units in teaching order.
 3. **Write** the sections (see register rules below).
 4. **Verify.** Every numeric or symbolic answer must be computed, not recalled: use Python with sympy (`python3 -c ...`; sympy is installed). Check every definition and theorem statement against a source. Check that every worked example's arithmetic is right.
-5. **Validate**: `node /home/user/vibe-code/deep-recall/content/validate.mjs <key>`. Fix everything it reports until it prints `OK`.
+5. **Validate**: `node /home/user/vibe-code/deep-recall/content/validate.mjs <key>`. Fix everything it reports until it prints `OK`. Then `node /home/user/vibe-code/deep-recall/content/plots.mjs` to confirm every graph draws. Don't put `\\"` in strings (a raw-string artifact that renders as a visible backslash): write plain `"`.
 
 ## Register and pedagogy
 

@@ -1,6 +1,6 @@
 # Deep Recall: handoff
 
-A personal study app, published as a claude.ai artifact: https://claude.ai/artifact/BZiByjQAQSjPHEmb6Sej1T (version 17 is live).
+A personal study app, published as a claude.ai artifact: https://claude.ai/artifact/BZiByjQAQSjPHEmb6Sej1T.
 
 It is one self-contained HTML page. It runs inside claude.ai and uses the artifact runtime:
 - `window.claude.use('sample')`: model calls, with `modelTier` quick/default/complex.
@@ -36,7 +36,7 @@ Outside claude.ai, the page loads but has no model and no saving. The tests mock
     - mathjax 3.2.2 at `/tmp/mjx/package`
 
     To get them: `npm pack mathjs@13.2.0 pyodide@0.26.4 mathjax@3.2.2`, then untar each package into its folder.
-  - Lint: `npx eslint --no-eslintrc -c .eslintrc.json main.js`.
+  - Lint: `npx -y eslint@8 --no-eslintrc -c .eslintrc.json main.js` (eslint 10 dropped this config format).
 - **Publishing:** re-publish `deep-recall.html` to the same artifact URL from a Claude session that has the Artifact tool. Keep the declared capabilities (`sample`, `db`, `user`, `mcp: Parallel Search`).
 
 ## Learner and standing preferences
@@ -49,46 +49,56 @@ Outside claude.ai, the page loads but has no model and no saving. The tests mock
 - Proper math notation everywhere (LaTeX or Unicode, never keyboard notation).
 - Serious register: rigorous, logically built, no jokes, no clickbait titles.
 
-## Pending request (the next job)
-1. **Pre-written textbook.** Every course is pre-written as a researched, fact-checked textbook instead of being generated on demand:
-   - each topic is researched individually against at least two authoritative sources;
-   - the lesson, its questions and their answers are fixed in advance;
-   - it reads like a textbook he works through.
-2. **He writes his answers.** Answers are mostly written by him, especially outside math.
-   - Claude grades each written answer against a rubric and corrects what is wrong.
-   - Math may use answer boxes (expression/number) and occasional multiple choice.
-   - Exams are strict: correct or not, with no partial credit.
-3. **A side panel in lessons** for asking the "teacher" about the lesson. The free-study conversation per subject already exists (tutor and study sessions).
-4. **Field terminology.** Topic-specific terms are taught with precise definitions.
-5. **A flashcard deck per topic** (Anki style, FSRS). Cards unlock as lessons are completed: definitions, formulas, small problems.
-6. **Fix on-demand generation until content exists.** It still produces gimmicky hooks and weak multiple-choice guesses.
-   - Serious register only.
-   - Open-response prompts for non-math subjects.
-   - A question mix that is mostly written for concept subjects.
-7. **Order:** first wave is his current classes (`mth-6` Proof & Discrete Math, `mth-2` Calculus II, `phy-0` Mechanics); then continue course by course through all 130 (philosophy next, since he flagged its first lesson).
+## Textbook chapters (built; first wave written)
+**What exists now.**
+- Chapters: all 33 first-wave topics are written and fact-checked, in `content/topics/<key>.json`:
+  - `mth-6` Proof & Discrete Math: 9 chapters.
+  - `mth-2` Calculus II: 12 chapters.
+  - `phy-0` Mechanics: 12 chapters.
+- How they were made:
+  - One writer per 4–5 topics, following `content/AUTHORING.md`.
+  - Every answer computed with sympy; counting and graph claims brute-forced.
+  - Then an independent fact-check pass on every chapter: recompute everything, check statements against sources, fix in place.
+- Research caveat: the environment's proxy blocked most direct page fetches (openstax.org, lamar.edu, ocw.mit.edu, libretexts). Several chapters' statements were therefore checked against search excerpts of the cited pages, not the full text. The mathematics itself was verified by computation.
 
-## Content pipeline (prepared, not yet run)
-- **`content/AUTHORING.md`:** the full authoring spec for writer agents. It covers:
-  - audience and register;
-  - research and verification (sympy);
-  - the per-topic JSON schema: `kps`, `intro`, `sections` with `questions`, `terms`, `cards`, `practice`, `exam`, `kit`;
-  - question types: `written` with rubric and model answer, `expression`, `antiderivative`, `number`, `numbers`, and `mcq` (limited).
-- **`content/validate.mjs <key>|all`:** checks one topic file or all of them:
-  - schema, counts and ids;
-  - that every knowledge point is both taught and tested;
-  - that math answers parse in mathjs;
-  - LaTeX delimiters and `$` misuse;
-  - keyboard notation and register.
-- **`content/specs/{mth-6,mth-2,phy-0}.json`:** course specs (topic keys, titles, references, sibling courses).
-  - Regenerate for other courses with a small Node script that evaluates `main.js` and dumps `SUBJECTS[sid].units[ui]`. The `SUBJECTS` extraction pattern is at the top of `ut2.js`.
-- **Plan:**
-  - one writer per 4–6 topics writes `content/topics/<key>.json` and validates it;
-  - an independent fact-check pass follows;
-  - then build the app side:
-    - load `content/<course>.json` packs published alongside the page (artifact `files`);
-    - a textbook reader view with sections and inline questions, plus the teacher side panel;
-    - written answers graded by the model against the rubric;
-    - machine-checked math answers via the existing `MX.equiv` / `machineCheck`;
-    - strict exam mode;
-    - per-topic card decks on FSRS (`fsrsNext` exists in `08c-knowledge.js`);
-    - when a pack exists for a topic, the topic flow uses it instead of bits or generated lessons.
+**Build.** `python3 build.py`:
+- groups the chapters by course into `packs/<sid>-<ui>.json`;
+- compiles `PACK_INDEX` (which topics have a chapter) into the page;
+- builds `deep-recall.html` and `main.js`.
+
+Publish the packs with the page as artifact `files` (`packs/<course>.json`). The page fetches them by relative URL.
+
+**App side** (`src/17g-book.js`, plus hooks in 08b, 08c, 12, 15, 17b, 17e):
+- **Reader** (`book` view): intro and contents; sections with inline questions.
+  - Answer boxes are checked by mathjs, with two attempts.
+  - Written answers are graded by Claude against the rubric. Attempt 1 gets a hint only; after the last attempt he sees the corrections and the model answer.
+  - Answering again after seeing the solution is capped at 0.6.
+  - Each section shows the terms it introduces; there is a chapter review page.
+- **Teacher panel**: a side drawer, or a bottom sheet on phones. It works under his protocol, and its chat is saved as `lessons/<key>~teacher`.
+- **Flashcards** (`cards` view): per-chapter deck, unlocked by finished sections, FSRS-scheduled in `node.cards`. Due cards count in the Review badge.
+- **Question sources**: practice, reviews and course exams draw from the chapter's banks (`packProblem`).
+  - Chapter test (`packTest`): strict, one attempt, no hints, no partial credit, pass at 80%.
+  - Course exams and chapter tests score written answers right or wrong.
+- **Outlines and toolkits**: a chapter's knowledge points replace any generated outline. Old generated-outline progress moves to `node.kpPrev`.
+- **Fallback**: topics without a chapter still generate on demand. Those prompts now use the serious register and mostly open-response questions.
+
+**Checks**
+- `node content/validate.mjs <key>|all`: schema and coverage, answers parse, LaTeX, register. It also rejects stray backslashes before quotes and control characters.
+- `node content/plots.mjs`: every chapter graph draws.
+- `python3 content/fixquotes.py <keys>`: removes stray backslash-quotes.
+- `node book.mjs`: end-to-end test of the reader, teacher panel, cards, practice, strict test and course exam.
+- The other suites (`ut2.js`, `e2e.mjs`, `mkseed.py` then `seed.mjs`, `qa.mjs`, `qa2.mjs`) still apply. `qa2`'s "no gap to repair in crawl" predates this work.
+- The tests serve the page from a routed `http://dr.test/` origin, so pack fetches work.
+
+**Answer-checking notes**
+- Expression answers fall back to integer sampling when real sampling can't evaluate them, e.g. \( (-2)^n \).
+- Physics answers are compared on positive values only.
+- Greek letters typed in an answer read as their names (θ → theta).
+
+## Next
+1. Continue course by course through the other 97 courses. Philosophy comes next; he flagged its first lesson.
+   - Generate each course spec with the `SUBJECTS` extraction (top of `ut2.js`).
+   - Run writers with `content/AUTHORING.md`, then a fact-check pass.
+   - Then `python3 build.py`, run the checks above, and publish the page with all packs.
+   - For non-math subjects the question mix is mostly `written`.
+2. Verify, inside claude.ai, that pack files load next to the page. If a pack fails to load, that topic falls back to generation.

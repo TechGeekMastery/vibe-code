@@ -148,7 +148,7 @@
      "id": "s2q1",
      "kp": "k3",
      "type": "written",
-     "prompt": "Give parametric equations, with the parameter interval, for (a) the line segment from \\((-2, 5)\\) to \\((4, 1)\\), traced from the first point to the second; (b) the ellipse \\(\\frac{(x-2)^2}{9} + \\frac{(y+1)^2}{4} = 1\\), traced once counterclockwise; (c) the circle of radius 3 centred at \\((0, 0)\\), traced once clockwise starting at \\((3, 0)\\).",
+     "prompt": "Give parametric equations, with the parameter interval, for (a) the line segment from \\((-2, 5)\\) to \\((4, 1)\\), traced from the first point to the second; (b) the ellipse \\(\\frac{(x-2)^2}{9} + \\frac{(y+1)^2}{4} = 1\\), traced once counterclockwise; (c) the circle of radius 3 centred at \\((0, 0)\\), traced once clockwise starting at \\((3, 0)\\). In each case, check the starting point or the direction of travel.",
      "rubric": [
       "(a) \\(x = -2 + 6t\\), \\(y = 5 - 4t\\), \\(0 \\le t \\le 1\\) (or an equivalent parametrization with correct endpoints and direction).",
       "(b) \\(x = 2 + 3\\cos t\\), \\(y = -1 + 2\\sin t\\), \\(0 \\le t \\le 2\\pi\\).",
