@@ -18,6 +18,8 @@ slider: a, -3, 3, 1 | a
 Every line is optional except at least one of f, point, vector, param, or field. Expressions use ASCII math (* ^ sqrt() sin() exp() ln() pi). "field" draws a slope field for dy/dx. Text after | is a label. Keep plots simple: at most 4 curves.
 Explorable graphs: "slider: name, min, max, start" makes a draggable parameter (a single letter other than x, y, t). Any line can use it, e.g. "f: a*x^2", "point: a, a^2", "f: 2*a*(x - a) + a^2 | tangent at x = a". Use a slider whenever the idea is how something changes (a parameter, a point of tangency, a bound), and tell the learner what to drag and what to watch for.`;
 
+/* split on commas outside parentheses, so "point: cos(s), f(a, b)" keeps its function calls */
+function splitTop(s) { const out = []; let d = 0, cur = ''; for (const ch of String(s)) { if (ch === '(') d++; else if (ch === ')') d--; if (ch === ',' && d === 0) { out.push(cur.trim()); cur = ''; } else cur += ch; } out.push(cur.trim()); return out; }
 function parsePlotSpec(text, scope) {
   const spec = {f:[], points:[], vlines:[], hlines:[], shade:[], vectors:[], params:[], field:null, t:[0, 2 * Math.PI], sliders:[]};
   const E = x => MX.evalStr(x, scope);
@@ -28,7 +30,7 @@ function parsePlotSpec(text, scope) {
     const nums = s => s.split(',').map(x => E(x.trim()));
     if (k === 'x' || k === 'y' || k === 't') { const [a, b] = nums(val); if (isFinite(a) && isFinite(b) && b > a) spec[k] = [a, b]; }
     else if (k === 'f' || k === 'y=') spec.f.push({expr:val.replace(/^y\s*=\s*/, ''), label});
-    else if (k === 'point') { const [a, b] = nums(val.replace(/[()]/g, '')); if (isFinite(a) && isFinite(b)) spec.points.push({x:a, y:b, label}); }
+    else if (k === 'point') { const [a, b] = splitTop(val.replace(/^\s*\(([\s\S]*)\)\s*$/, (w, inner) => splitTop(inner).length === 2 ? inner : w)).map(x => E(x)); if (isFinite(a) && isFinite(b)) spec.points.push({x:a, y:b, label}); }
     else if (k === 'vline') { const a = E(val.replace(/^x\s*=\s*/, '')); if (isFinite(a)) spec.vlines.push({x:a, label}); }
     else if (k === 'hline') { const a = E(val.replace(/^y\s*=\s*/, '')); if (isFinite(a)) spec.hlines.push({y:a, label}); }
     else if (k === 'shade') { const parts = val.split(','); if (parts.length >= 3) { const b = E(parts.pop()), a = E(parts.pop()); if (isFinite(a) && isFinite(b)) spec.shade.push({expr:parts.join(','), a, b, label}); } }
