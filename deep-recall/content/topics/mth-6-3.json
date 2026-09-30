@@ -509,7 +509,7 @@
    "id": "c3",
    "type": "concept",
    "front": "Is \\( \\{1\\} \\subseteq \\{1, \\{1\\}\\} \\)? Is \\( \\{1\\} \\in \\{1, \\{1\\}\\} \\)?",
-   "back": "Both: \\( 1 \\) is an element, so \\( \\{1\\} \\subseteq \\); and \\( \\{1\\} \\) itself is listed, so \\( \\{1\\} \\in \\).",
+   "back": "Both: \\( 1 \\) is an element, so \\( \\{1\\} \\subseteq \\{1, \\{1\\}\\} \\); and \\( \\{1\\} \\) itself is listed, so \\( \\{1\\} \\in \\{1, \\{1\\}\\} \\).",
    "kp": "k1"
   },
   {

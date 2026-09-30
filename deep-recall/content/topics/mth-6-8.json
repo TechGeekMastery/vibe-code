@@ -467,7 +467,7 @@
   },
   {
    "t": "Fermat pseudoprime",
-   "d": "A composite \\( n \\) with \\( a^{n-1} \\equiv 1 \\pmod{n} \\) for some base \\( a \\); for example \\( 341 \\) for \\( a = 2 \\)."
+   "d": "A composite \\( n \\) with \\( a^{n-1} \\equiv 1 \\pmod{n} \\) for a given base \\( a \\) with \\( \\gcd(a, n) = 1 \\) (a pseudoprime to base \\( a \\)); for example \\( 341 \\) is a pseudoprime to base 2."
   }
  ],
  "cards": [

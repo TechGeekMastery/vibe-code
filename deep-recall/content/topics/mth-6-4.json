@@ -316,7 +316,7 @@
      "prompt": "Give a combinatorial proof of the **hockey-stick identity**: for integers \\( 0 \\le k \\le n \\), \\( \\sum_{i=k}^{n} \\binom{i}{k} = \\binom{n+1}{k+1} \\). (Classify the \\( (k+1) \\)-element subsets of \\( \\{1, 2, \\dots, n + 1\\} \\) by their largest element.)",
      "rubric": [
       "Right side counts (k + 1)-subsets of {1, …, n + 1}",
-      "The largest element is some j + 1 with k ≤ j ≤ n (at least k + 1 elements needed)",
+      "The largest element is some i + 1 with k ≤ i ≤ n (at least k + 1 elements needed)",
       "Given largest element i + 1, the other k elements are any k-subset of {1, …, i}: C(i, k) ways",
       "The cases are disjoint and exhaustive, so the total is Σ_{i=k}^{n} C(i, k)"
      ],

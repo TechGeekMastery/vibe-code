@@ -799,7 +799,7 @@
     "name": "Inequalities: chain plus auxiliary inequality",
     "formula": "\\( \\text{LHS}(k+1) \\le (\\text{via hypothesis}) \\le \\text{RHS}(k+1) \\)",
     "when": "Proving an inequality for all \\( n \\) beyond a starting value.",
-    "example": "\\( 2^{k+1} > 2k^{2} \\ge (k+1)^{2} \\) for \\( k \\ge 3 \\).",
+    "example": "\\( 2^{k+1} > 2k^{2} \\ge (k+1)^{2} \\) for \\( k \\ge 5 \\) (the second inequality alone holds for \\( k \\ge 3 \\)).",
     "watch": "Choose the base where the statement starts to hold; check signs before multiplying."
    },
    {
